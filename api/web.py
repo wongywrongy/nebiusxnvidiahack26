@@ -67,20 +67,28 @@ class WebClient:
         cache.put("tavily_extract", key, results)
         return results
 
-    async def map(self, url: str, instructions: Optional[str] = None) -> list[str]:
+    async def map(self, url: str, instructions: Optional[str] = None,
+                  limit: Optional[int] = None, max_depth: Optional[int] = None) -> list[str]:
+        limit = limit or settings.map_limit
+        max_depth = max_depth or settings.map_max_depth
         if not settings.live:
             self.credits += 1
-            return self._fixture().get("map", {}).get(url, [])
-        key = {"url": url, "i": instructions}
+            return self._fixture().get("map", {}).get(url, [])[:limit]
+        key = {"url": url, "i": instructions, "limit": limit, "depth": max_depth}
         hit = cache.get("tavily_map", key)
         if hit is not None:
             return hit
-        resp = await self.tavily.map(url=url, instructions=instructions) if instructions else await self.tavily.map(url=url)
-        links = resp.get("results", [])
-        self.credits += max(1, math.ceil(len(links) / 10)) * (2 if instructions else 1)
+        extra = {"instructions": instructions} if instructions else {}
+        resp = await self.tavily.map(url=url, limit=limit, max_depth=max_depth, **extra)
+        links = resp.get("results", [])[:limit]
+        self.credits += map_credits(len(links), instructions)
         cache.put("tavily_map", key, links)
         return links
 
+
+def map_credits(pages: int, instructions: Optional[str] = None) -> int:
+    """Tavily map price: 1 credit per 10 pages (2 with instructions). With pages=limit it is the worst case."""
+    return max(1, math.ceil(pages / 10)) * (2 if instructions else 1)
 
 def snapshot(url: str, text: str) -> dict[str, Any]:
     """Evidence record for a fetched page: what we saw, when, and a hash of it."""

@@ -76,7 +76,7 @@ async def main() -> None:
             print(f"   ERROR {type(e).__name__}: {str(e)[:300]}")
         else:
             print(f"   result: {obj.model_dump()}")
-            print(f"   latency={usage.latency_ms} ms  in={usage.input_tokens}  out={usage.output_tokens}  cached={usage.cached}")
+            print(f"   latency={usage.latency_ms} ms  in={usage.input_tokens}  out={usage.output_tokens}  cached={usage.cached}  format={usage.format}")
         for fmt, status in attempts:
             print(f"   response_format={fmt}: {status}")
         if not attempts:

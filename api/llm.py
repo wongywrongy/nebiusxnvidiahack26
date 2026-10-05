@@ -9,6 +9,7 @@ Mock mode answers from `data/fixtures/<case_id>.json` so the pipeline runs with 
 
 from __future__ import annotations
 
+import asyncio
 import json
 import re
 import time
@@ -33,6 +34,7 @@ TASK_TIER: dict[str, str] = {
     "reconcile": "ultra",
 }
 ESCALATE = {"nano": "super", "super": "ultra", "ultra": None}
+RATE_LIMIT_RETRIES = 3  # on 429, back off 1s, 2s, 4s
 
 # Which fixture key answers each task in mock mode.
 FIXTURE_KEY = {
@@ -51,6 +53,14 @@ class LLMError(RuntimeError):
 def _cost(tier: str, tin: int, tout: int) -> float:
     pin, pout = settings.prices.get(tier, (0.0, 0.0))
     return round((tin * pin + tout * pout) / 1_000_000, 6)
+
+
+def _rejects_format(e: Exception) -> bool:
+    """True only when the server said no to the response_format itself (400 naming it)."""
+    from openai import BadRequestError
+
+    msg = str(e).lower()
+    return isinstance(e, BadRequestError) and any(w in msg for w in ("response_format", "json_schema", "schema"))
 
 
 def _strip_fences(text: str) -> str:
@@ -82,7 +92,9 @@ class Router:
 
             if not settings.nebius_api_key:
                 raise LLMError("NEBIUS_API_KEY is not set (live mode)")
-            self._client = AsyncOpenAI(base_url=settings.nebius_base_url, api_key=settings.nebius_api_key)
+            self._client = AsyncOpenAI(
+                base_url=settings.nebius_base_url, api_key=settings.nebius_api_key, max_retries=0  # we retry 429s ourselves
+            )
         return self._client
 
     async def call(
@@ -137,6 +149,18 @@ class Router:
 
     # ---------- live ----------
 
+    async def _create(self, **kw):
+        """chat.completions.create with exponential backoff on 429. Other errors pass through."""
+        from openai import RateLimitError
+
+        for attempt in range(RATE_LIMIT_RETRIES + 1):
+            try:
+                return await self.client.chat.completions.create(**kw)
+            except RateLimitError:
+                if attempt == RATE_LIMIT_RETRIES:
+                    raise
+                await asyncio.sleep(2**attempt)
+
     async def _live(self, task, tier, schema, messages, retry_note=None) -> tuple[Any, Usage]:
         model = settings.models[tier]
         schema_json = schema.model_json_schema()
@@ -157,8 +181,9 @@ class Router:
             return obj, Usage(**{**hit["usage"], "cached": True})
 
         t0 = time.perf_counter()
+        fmt = "json_schema"
         try:
-            resp = await self.client.chat.completions.create(
+            resp = await self._create(
                 model=model,
                 messages=msgs,
                 temperature=0,
@@ -167,11 +192,13 @@ class Router:
                     "json_schema": {"name": schema.__name__, "schema": schema_json},
                 },
             )
-        except Exception:
+        except Exception as e:
             # Some models do not support json_schema on Token Factory: fall back to json_object.
-            resp = await self.client.chat.completions.create(
-                model=model, messages=msgs, temperature=0, response_format={"type": "json_object"}
-            )
+            # Anything else (auth, network, a 400 about something else) is a real error.
+            if not _rejects_format(e):
+                raise
+            fmt = "json_object"
+            resp = await self._create(model=model, messages=msgs, temperature=0, response_format={"type": "json_object"})
         text = resp.choices[0].message.content or ""
         obj = schema.model_validate(json.loads(_strip_fences(text)))
         tin = resp.usage.prompt_tokens if resp.usage else 0
@@ -184,6 +211,7 @@ class Router:
             output_tokens=tout,
             cost_usd=_cost(tier, tin, tout),
             latency_ms=int((time.perf_counter() - t0) * 1000),
+            format=fmt,
         )
         cache.put("llm", key, {"obj": obj.model_dump(), "usage": usage.model_dump()})
         return obj, usage
