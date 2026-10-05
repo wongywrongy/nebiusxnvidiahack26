@@ -16,9 +16,8 @@ os.environ["SPECCHECK_MODE"] = "live"  # before api.config is imported
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from api import cache  # noqa: E402
 from api.config import settings  # noqa: E402
-from api.web import WebClient  # noqa: E402
+from api.web import WebClient, map_credits  # noqa: E402
 
 # (label, url, search query, domains, words that should show up in usable text)
 TARGETS = [
@@ -29,29 +28,16 @@ TARGETS = [
     ("c07 Acuity TL discontinuation (HTML)", "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
      "Lithonia TL recessed troffer discontinued", ["acuitybrands.com"], ["TL", "discontinu"]),
 ]
-MAP_LIMIT = 20  # cap pages per map call: Tavily bills map at 1 credit per 10 pages
 
 
 def estimate() -> int:
     search = len(TARGETS)  # basic = 1 credit each
     extract = -(-len(TARGETS) // 5)  # 1 credit per 5 URLs, failed URLs are free
-    mapping = len(TARGETS) * -(-MAP_LIMIT // 10)  # worst case
+    mapping = len(TARGETS) * map_credits(settings.map_limit)  # worst case: every map hits the cap
     total = search + extract + mapping
     print(f"  search {search}  +  extract {extract}  +  map <= {mapping}  =  <= {total} credits"
           f"  (~${total * settings.tavily_credit_usd:.2f} at ${settings.tavily_credit_usd}/credit)")
     return total
-
-
-async def capped_map(web: WebClient, url: str) -> list[str]:
-    # WebClient.map has no limit, so a map of a big site could bill many credits. Call Tavily directly, capped, cached.
-    key = {"url": url, "limit": MAP_LIMIT, "max_depth": 1}
-    hit = cache.get("tavily_map", key)
-    if hit is not None:
-        return hit
-    resp = await web.tavily.map(url=url, limit=MAP_LIMIT, max_depth=1)
-    links = resp.get("results", [])
-    cache.put("tavily_map", key, links)
-    return links
 
 
 def usable(text: str, words: list[str]) -> str:
@@ -88,17 +74,17 @@ async def main() -> None:
         for r in results:
             print(f"   {r['url']}")
 
-    print("\n### map (limit 20, depth 1)")
+    print(f"\n### map (limit {settings.map_limit}, depth {settings.map_max_depth})")
     for label, url, *_ in TARGETS:
         try:
-            links = await capped_map(web, url)
+            links = await web.map(url)
             print(f"\n== {label}: {len(links)} links")
             for link in links[:5]:
                 print(f"   {link}")
         except Exception as e:
             print(f"\n== {label}: ERROR {type(e).__name__}: {str(e)[:200]}")
 
-    print(f"\nCredits counted by WebClient (search + extract, map not included): {web.credits}")
+    print(f"\nCredits counted by WebClient: {web.credits}")
 
 
 if __name__ == "__main__":

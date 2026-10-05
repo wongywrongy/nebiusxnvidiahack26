@@ -148,6 +148,7 @@ class Usage(BaseModel):
     cost_usd: float = 0.0
     latency_ms: int = 0
     cached: bool = False
+    format: Optional[str] = None  # live: "json_schema" or "json_object" (fallback)
 
 
 class Result(BaseModel):

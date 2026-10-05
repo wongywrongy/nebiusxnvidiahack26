@@ -34,6 +34,12 @@ class Settings:
     )
 
     # USD per 1M tokens (input, output). PLACEHOLDERS: replace with Token Factory prices before reporting cost.
+    # TODO fill from the Token Factory console / pricing page:
+    #   tier   model ID                                 input $/1M   output $/1M   checked on
+    #   nano   nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B    ?            ?             -
+    #   omni   nvidia/Nemotron-3-Nano-Omni              ?            ?             -
+    #   super  nvidia/Nemotron-3-Super-120B-A12B        ?            ?             -
+    #   ultra  nvidia/Nemotron-3-Ultra                  ?            ?             -
     prices: dict[str, tuple[float, float]] = field(
         default_factory=lambda: {
             "nano": (0.06, 0.24),
@@ -44,6 +50,9 @@ class Settings:
     )
     # USD per Tavily credit (pay-as-you-go list price).
     tavily_credit_usd: float = 0.008
+    # Tavily map is billed per page found, so every map call is capped.
+    map_limit: int = int(os.getenv("MAP_LIMIT", "20"))
+    map_max_depth: int = int(os.getenv("MAP_MAX_DEPTH", "1"))
 
     max_concurrency: int = int(os.getenv("MAX_CONCURRENCY", "4"))
     # Mock mode only: pause per stage so the UI animation looks like a real run. 0 for eval.

@@ -42,6 +42,9 @@ async def main(case_ids: list[str]) -> int:
 
     planted = caught = clean = false_flags = decision_ok = 0
     print(f"\nmode={settings.mode}  run={run.id}\n")
+    zero = [t for t, (pin, pout) in settings.prices.items() if not pin or not pout]
+    if settings.live and zero:
+        print(f"WARNING: price is 0 for {', '.join(zero)} in api/config.py: reported model cost is too low.\n")
     print(f"{'case':<5} {'expected':<18} {'got':<18} {'problems expected':<22} {'found':<26} {'ms':>6} {'cost $':>8} {'credits':>7}")
     for cid in case_ids:
         exp = cases[cid]["expected"]
