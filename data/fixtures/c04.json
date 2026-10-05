@@ -1,36 +1,40 @@
 {
-  "_note": "Mock fixture. Values summarized from the public Hilti system drawing W-L-2244 (Jan 21, 2020). The project condition (steel pipe) comes from the case.",
+  "_note": "Mock fixture. Pages are verbatim PyMuPDF text of Hilti UL System No. W-L-2078 (Apr. 17, 2018). The project condition (steel pipe) comes from the case.",
   "pages": [
-    {"page": 1, "text": "System No. W-L-2244. Gypsum wall. Penetrants: PVC pipe Schedule 40 up to 2 in, CPVC pipe SDR 13.5 up to 2 in. F Ratings 1 and 2 hr. T Ratings 0, 1 and 2 hr. FS-ONE MAX sealant. Tested to ANSI/UL1479 (ASTM E814)."}
+    {"page": 1, "text": "Sheet\nDrawing No.\nHILTI, Inc.\nPlano, Texas USA (800) 879-8000\nDate\nScale\nSaving Lives through Innovation and Education\nWL\n1 of 2\n5/32\" = 1\"\nUL SYSTEM NO. W-L-2078\nPLASTIC PIPE THROUGH GYPSUM WALL ASSEMBLY\n2078q\nApr. 17, 2018\nWL2078q.041718\nF-RATING = 1-HR. OR 2-HR.\nT-RATING = 0-HR., 1-HR., OR 2-HR.\nL-RATING AT AMBIENT = 3 CFM / SQ FT\nL-RATING AT 400° F = LESS THAN 1 CFM / SQ FT\nA\nA\nSECTION A-A\nFRONT VIEW\n1\n2\n3\n4\n5\n6\nHilti Firestop Systems\n"},
+    {"page": 2, "text": "Sheet\nDrawing No.\nHILTI, Inc.\nPlano, Texas USA (800) 879-8000\nDate\nScale\nSaving Lives through Innovation and Education\nWL\n2 of 2\n-\nUL SYSTEM NO. W-L-2078\nNOTES : 1. ANNULAR SPACE = MINIMUM 0\", MAXIMUM 1/2\".\n2. CLOSED OR VENTED PIPING SYSTEM (PVC, ABS, FRPP = SCHEDULE 40; CPVC = SDR 13.5;\nPVDF = SDR 32.5).\n3. L-RATINGS ONLY APPLY ON PIPES NOMINAL 6\" AND SMALLER, WHEN HILTI FS-ONE MAX\nOR FS-ONE INTUMESCENT FIRESTOP SEALANT IS USED.\n1. GYPSUM WALL ASSEMBLY (UL CLASSIFIED U300, U400, OR V400 SERIES) (1-HR. OR 2-HR. FIRE-RATING)\n(2-HR. SHOWN).\n2. [NOT SHOWN] WOOD STUDS TO CONSIST OF NOMINAL 2\" x 4\" LUMBER. STEEL STUDS TO BE MINIMUM\n2-1/2\" WIDE.\n3. PENETRATING ITEM TO BE ONE OF THE FOLLOWING (ALSO SEE NOTE NO. 3 BELOW) :\nA. MAXIMUM 10\" NOMINAL DIAMETER PVC PLASTIC PIPE (CELLULAR OR SOLID CORE).\nB. MAXIMUM 10\" NOMINAL DIAMETER CPVC PLASTIC PIPE (CLOSED PIPING SYSTEM ONLY).\nC. MAXIMUM 6\" NOMINAL DIAMETER ABS PLASTIC PIPE (CELLULAR OR SOLID CORE).\nD. MAXIMUM 6\" NOMINAL DIAMETER FRPP PLASTIC PIPE.\nE. MAXIMUM 4\" NOMINAL DIAMETER PVDF PLASTIC PIPE.\nF. MAXIMUM 4\" NOMINAL DIAMETER CROSS-LINKED POLYETHYLENE (PEX) TUBING (SDR 9) (AQUAPEX\nOR WIRSBO HEPEX BY UPONOR) (CLOSED PIPING SYSTEM ONLY).\n4. HILTI FS-ONE MAX OR FS-ONE INTUMESCENT FIRESTOP SEALANT :\nA. [OPTIONAL] MINIMUM 1/4\" DEPTH OF SEALANT INSTALLED ON PIPES NOMINAL 6\" AND SMALLER.\nEXCEPTION : WHEN ITEM 3F IS INSTALLED, SEALANT IS REQUIRED.\nB. MINIMUM 1/2\" DEPTH OF SEALANT INSTALLED ON PIPES LARGER THAN NOMINAL 6\".\n5. HILTI CP 643N OR CP 644 FIRESTOP COLLAR WITH FASTENING HOOKS (SEE TABLE BELOW).\n6. ATTACH EACH FASTENING HOOK TO WALL ASSEMBLY WITH HILTI 3/16\" TOGGLER BOLTS AND\nWASHERS. FOR PIPES 4\" OR SMALLER, COLLARS MAY BE FASTENED WITH NO. 10 x 1-1/2\" LONG\nDRYWALL OR LAMINATE SCREWS WITH 3/4\" STEEL WASHERS.\nPLASTIC PIPE THROUGH GYPSUM WALL ASSEMBLY\nNOMINAL PIPE DIAMETER PRODUCT DESCRIPITION\nNO. OF FASTENING HOOKS\nMAXIMUM HOLE SIZE\n1-1/2\"\nCP 643 50/1.5\" N\n2\n2-1/8\"\n2\"\nCP 643 63/2\" N\n2\n2-5/8\"\n3\"\nCP 643 90/3\" N\n3\n4\"\n4\"\nCP 643 110/4\" N\n3\n5\"\n6\"\nCP 643 160/6\" N\n4\n7\"\n8\"\nCP 644 200/8\"\n10\n9-1/2\"\n10\"\nCP 644 250/10\"\n12\n11-1/12\"\n2078q\nApr. 17, 2018\nWL2078q.04172018\nF-RATING = 1-HR. OR 2-HR.\nT-RATING = 0-HR., 1-HR., OR 2-HR.\nL-RATING AT AMBIENT = 3 CFM / SQ FT\nL-RATING AT 400° F = LESS THAN 1 CFM / SQ FT\nHilti Firestop Systems\n"}
   ],
-  "triage": {"pages": [{"page": 1, "kind": "system_drawing"}]},
+  "triage": {"pages": [{"page": 1, "kind": "system_drawing"}, {"page": 2, "kind": "system_drawing"}]},
   "claims": {
-    "product": "Firestop system W-L-2244",
+    "product": "Firestop system W-L-2078",
     "manufacturer": "Hilti",
-    "document_revision": "Jan 21, 2020",
+    "document_revision": "Apr. 17, 2018",
     "claims": [
-      {"id": "k1", "product": "W-L-2244", "manufacturer": "Hilti", "property": "f_rating_hr", "value": 2, "unit": "hr", "page": 1, "quote": "F Ratings 1 and 2 hr"},
-      {"id": "k2", "product": "W-L-2244", "manufacturer": "Hilti", "property": "t_rating_hr", "value": 2, "unit": "hr", "page": 1, "quote": "T Ratings 0, 1 and 2 hr"},
-      {"id": "k3", "product": "W-L-2244", "manufacturer": "Hilti", "property": "standards", "value": ["UL 1479"], "page": 1, "quote": "ANSI/UL1479 (ASTM E814)"},
-      {"id": "k4", "product": "W-L-2244", "manufacturer": "Hilti", "property": "penetrant_types", "value": ["PVC pipe (Schedule 40, up to 2 in)", "CPVC pipe (SDR 13.5, up to 2 in)"], "page": 1, "quote": "Penetrants: PVC pipe Schedule 40 up to 2 in, CPVC pipe SDR 13.5 up to 2 in"}
+      {"id": "k1", "product": "W-L-2078", "manufacturer": "Hilti", "property": "f_rating_hr", "value": 2, "unit": "hr", "page": 1, "quote": "F-RATING = 1-HR. OR 2-HR."},
+      {"id": "k2", "product": "W-L-2078", "manufacturer": "Hilti", "property": "t_rating_hr", "value": 2, "unit": "hr", "page": 1, "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR."},
+      {"id": "k3", "product": "W-L-2078", "manufacturer": "Hilti", "property": "penetrant_types", "value": ["PVC pipe (up to 10 in)", "CPVC pipe (up to 10 in)", "ABS pipe (up to 6 in)", "FRPP pipe (up to 6 in)", "PVDF pipe (up to 4 in)", "PEX tubing (SDR 9, up to 4 in)"], "page": 2, "quote": "MAXIMUM 10\" NOMINAL DIAMETER PVC PLASTIC PIPE (CELLULAR OR SOLID CORE)."}
     ]
   },
   "web": {
-    "search": [{"url": "https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW", "title": "System W-L-2244"}],
-    "extract": {"https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW": "System No. W-L-2244, January 21, 2020. Nonmetallic pipes: PVC and CPVC up to 2 in."}
+    "search": [
+      {"url": "https://files-ask.hilti.com/original/bd/bdfcdtzlxq.pdf", "title": "UL System No. W-L-2078, plastic pipe through gypsum wall"}
+    ],
+    "extract": {
+      "https://files-ask.hilti.com/original/bd/bdfcdtzlxq.pdf": "Sheet Drawing No. HILTI, Inc. Plano, Texas USA (800) 879-8000 Date Scale Saving Lives through Innovation and Education WL 1 of 2 5/32\" = 1\" UL SYSTEM NO. W-L-2078 PLASTIC PIPE THROUGH GYPSUM WALL ASSEMBLY 2078q Apr. 17, 2018 WL2078q.041718 F-RATING = 1-HR. OR 2-HR. T-RATING = 0-HR., 1-HR., OR 2-HR. 3. PENETRATING ITEM TO BE ONE OF THE FOLLOWING (ALSO SEE NOTE NO. 3 BELOW) : A. MAXIMUM 10\" NOMINAL DIAMETER PVC PLASTIC PIPE (CELLULAR OR SOLID CORE). B. MAXIMUM 10\" NOMINAL DIAMETER CPVC PLASTIC PIPE (CLOSED PIPING SYSTEM ONLY). C. MAXIMUM 6\" NOMINAL DIAMETER ABS PLASTIC PIPE (CELLULAR OR SOLID CORE). D. MAXIMUM 6\" NOMINAL DIAMETER FRPP PLASTIC PIPE. E. MAXIMUM 4\" NOMINAL DIAMETER PVDF PLASTIC PIPE. F. MAXIMUM 4\" NOMINAL DIAMETER CROSS-LINKED POLYETHYLENE (PEX) TUBING (SDR 9) (AQUAPEX OR WIRSBO HEPEX BY UPONOR) (CLOSED PIPING SYSTEM ONLY)."
+    }
   },
   "verify": {
     "status": "active",
-    "current_revision": "Jan 21, 2020",
+    "current_revision": "Apr. 17, 2018",
     "current_values": [
-      {"property": "penetrant_types", "value": ["PVC pipe (Schedule 40, up to 2 in)", "CPVC pipe (SDR 13.5, up to 2 in)"]}
+      {"property": "penetrant_types", "value": ["PVC pipe (up to 10 in)", "CPVC pipe (up to 10 in)", "ABS pipe (up to 6 in)", "FRPP pipe (up to 6 in)", "PVDF pipe (up to 4 in)", "PEX tubing (SDR 9, up to 4 in)"]}
     ],
-    "source_urls": ["https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW"]
+    "source_urls": ["https://files-ask.hilti.com/original/bd/bdfcdtzlxq.pdf"]
   },
   "report": {
     "summary": "The submitted firestop system is only listed for plastic pipe, but the drawings show steel pipe at this wall.",
     "note_to_subcontractor": "Please resubmit with a listed firestop system that covers steel pipe through a gypsum wall.",
-    "finding_titles": {"validity-cond-penetrant": "Fire listing doesn't cover steel pipe"},
+    "finding_titles": {"validity-cond-penetrant": "Fire listing doesn't cover steel pipe", "spec-fs-voc": "VOC content isn't stated on the system drawing", "spec-fs-std": "Test standard isn't stated on the system drawing"},
     "why_it_matters": {"validity-cond-penetrant": "A firestop system is only proven for what it was tested with. Used on steel pipe, this one has no fire rating at all."}
   }
 }

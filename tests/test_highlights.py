@@ -57,13 +57,13 @@ def test_rects_for_a_quote_in_the_downloaded_pdf(stored_result):
 
 
 def test_falls_back_to_fixture_text_without_a_pdf(stored_result):
-    # c07's submittal is not downloadable (Cloudflare), and a fixture-sourced result never uses the PDF anyway.
-    run_id = stored_result(_result("pdf", "not on any page").model_copy(update={"case_id": "c07"}))
-    body = client.get(f"/api/runs/{run_id}/results/c07/highlights").json()
+    # c08's submittal is not downloadable (Cloudflare), and a fixture-sourced result never uses the PDF anyway.
+    run_id = stored_result(_result("pdf", "not on any page").model_copy(update={"case_id": "c08"}))
+    body = client.get(f"/api/runs/{run_id}/results/c08/highlights").json()
     assert body["pages"][0]["image"] is False and body["pages"][0]["text"]
     (h,) = body["highlights"]
     assert h["rects"] == [] and h["page"] == 1 and h["quote"] == "not on any page"
-    assert client.get("/api/cases/c07/pages/1.png").status_code == 404
+    assert client.get("/api/cases/c08/pages/1.png").status_code == 404
 
 
 def test_fixture_quotes_appear_verbatim_on_their_page():

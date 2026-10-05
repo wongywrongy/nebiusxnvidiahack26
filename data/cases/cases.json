@@ -6,19 +6,22 @@
       "title": "Firestop sealant, through-penetrations",
       "section": "07 84 00",
       "submittal": [
-        {"role": "product_data", "file": "c01/hilti_fs-one-max_tds_2022-03.pdf", "url": "https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW"}
+        {"role": "product_data", "file": "c01/sti_specseal_lci_tds_2025.pdf", "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English"}
       ],
-      "manufacturer_domains": ["hilti.com", "hilti.ca"],
+      "compare": [
+        {"url": "https://stifirestop.com/products/lci-intumescent-firestop-sealant", "note": "STI product page for SpecSeal LCI"}
+      ],
+      "manufacturer_domains": ["stifirestop.com"],
       "expected": {"decision": "approve", "problems": []}
     },
     {
       "id": "c02",
-      "title": "Firestop system, rated wall",
+      "title": "Firestop system, floor penetration",
       "section": "07 84 00",
       "submittal": [
-        {"role": "system_drawing", "file": "c02/hilti_w-l-5143_2025-12.pdf", "url": "https://www.hilti.com/media-canonical/ASSET_DOC_LOC_919_APC_RAW"}
+        {"role": "system_drawing", "file": "c02/3m_c-aj-2738.pdf", "url": "https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf"}
       ],
-      "manufacturer_domains": ["hilti.com", "hilti.ca"],
+      "manufacturer_domains": ["3m.com"],
       "expected": {"decision": "send_back", "problems": ["spec"]}
     },
     {
@@ -29,7 +32,7 @@
         {"role": "product_data", "file": "c03/3m_ic15wb_2005.pdf", "url": "https://www.cableorganizer.com/cdn/shop/files/IC_15WB_Data_Sheet.pdf"}
       ],
       "compare": [
-        {"url": "https://www.farnell.com/datasheets/2165365.pdf", "note": "Rev B (2012): VOC <2 g/L, service temp -20 to 180 F"},
+        {"url": "https://www.farnell.com/datasheets/2165365.pdf", "note": "Rev B: VOC <2 g/L; flame spread 5 / smoke 50; service temp -20 to 180 F; up to 3 hr; adds CAN/ULC-S115."},
         {"url": "https://www.3m.com/3M/en_US/p/d/b40065443/", "note": "current product page"}
       ],
       "manufacturer_domains": ["3m.com"],
@@ -40,7 +43,7 @@
       "title": "Firestop system, steel pipe through gypsum wall",
       "section": "07 84 00",
       "submittal": [
-        {"role": "system_drawing", "file": "c04/hilti_w-l-2244_2020-01.pdf", "url": "https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW"}
+        {"role": "system_drawing", "file": "c04/hilti_w-l-2078.pdf", "url": "https://files-ask.hilti.com/original/bd/bdfcdtzlxq.pdf"}
       ],
       "conditions": [
         {
@@ -76,7 +79,8 @@
         {"role": "product_data", "file": "c06/lithonia_ldn6_2017-10.pdf", "url": "https://assets.usesi.com/product-media/specification-sheets/USESI_531911_specification_sheets.pdf"}
       ],
       "compare": [
-        {"url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf", "note": "Rev. 05/03/22: 1500 lm package at 17.5 W, 86.4 lm/W"}
+        {"url": "https://dmdmaps.cabq.gov/DRB/PR-2024-010931/DFT_Submittals/PR-2024-010931_SP-2025-00005_October_1_2025_Second%20Submittal/Other-Misc%20Documents-2025-09-05-24.BG1277.4812%20ACCS_DFT%20Lighting%20Cutsheets_2025.09.04_v1.pdf", "note": "Rev. 04/11/25 (Albuquerque city submittal): 1500 lm 3500K is 17.5 W / 1,514 lm / 86.4 lm/W"},
+        {"url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf", "note": "Rev. 05/03/22 (Dublin, OH): 1500 lm 3500K is 17.5 W / 1,514 lm / 86.4 lm/W"}
       ],
       "manufacturer_domains": ["acuitybrands.com"],
       "expected": {"decision": "send_back", "problems": ["currency"]}
@@ -86,10 +90,10 @@
       "title": "LED troffer, offices",
       "section": "26 51 00",
       "submittal": [
-        {"role": "product_data", "file": "c07/lithonia_tl_troffer.pdf", "url": "https://acuitybrands.com/products/detail/252702/lithonia-lighting/tl/t-series-recessed-led-troffer"}
+        {"role": "product_data", "file": "c07/lithonia_2tl4_2022-11.pdf", "url": "https://cdn.shopify.com/s/files/1/0681/6625/4899/files/lithonia-2TL4-spec.pdf"}
       ],
       "compare": [
-        {"url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2", "note": "discontinued June 30, 2024"}
+        {"url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2", "note": "Discontinuation of the TL recessed luminaire family effective June 30, 2024."}
       ],
       "manufacturer_domains": ["acuitybrands.com"],
       "expected": {"decision": "send_back", "problems": ["status"]}
@@ -102,7 +106,8 @@
         {"role": "product_data", "file": "c08/lithonia_lqm_2019-09.pdf", "url": "https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324751_Specification-PDF.pdf"}
       ],
       "compare": [
-        {"url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf", "note": "Rev. 08/07/24: same input watts"}
+        {"url": "https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324777_Specification-PDF.pdf", "note": "Rev. 03/09/21 on HD Supply: same watts."},
+        {"url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf", "note": "Acuity Rev. 08/07/24 (same watts); behind Cloudflare for scripts."}
       ],
       "not_applicable": ["cri", "dim_min_percent", "dlc_listed"],
       "manufacturer_domains": ["acuitybrands.com"],

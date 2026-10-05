@@ -50,6 +50,15 @@ def _as_list(value) -> list[str]:
     return [str(value).lower()]
 
 
+OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}
+
+
+def _label(prop: str) -> str:
+    from .verify import LABELS  # plain-language names live with the comparison table
+
+    return LABELS.get(prop, prop.replace("_", " "))
+
+
 def _fmt(value, unit) -> str:
     if isinstance(value, list):
         return ", ".join(map(str, value))
@@ -101,7 +110,7 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
             a, b = normalize(claim.value, claim.unit), normalize(r.value, r.unit)
             if a is not None and b is not None:
                 ok = {"gte": a >= b, "lte": a <= b, "eq": abs(a - b) < 1e-9}[r.operator]
-                detail = f"Package states {_fmt(claim.value, claim.unit)}; spec requires {r.operator} {_fmt(r.value, r.unit)}."
+                detail = f"Package states {_fmt(claim.value, claim.unit)}; spec requires {OPERATOR_WORDS[r.operator]} {_fmt(r.value, r.unit)}."
         elif r.operator == "eq_ref":
             other = by_prop.get(str(r.value), [])
             if other:
@@ -109,7 +118,8 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
                 a, b = normalize(claim.value, claim.unit), normalize(other[0].value, other[0].unit)
                 if a is not None and b is not None:
                     ok = abs(a - b) < 1e-9
-                    detail = f"{r.property} is {_fmt(claim.value, claim.unit)} but {r.value} is {_fmt(other[0].value, other[0].unit)}."
+                    detail = (f"{_label(r.property)} is {_fmt(claim.value, claim.unit)} but "
+                              f"{_label(str(r.value))} is {_fmt(other[0].value, other[0].unit)}.")
         elif r.operator == "contains":
             have = _as_list(claim.value)
             want = str(r.value).lower()

@@ -18,7 +18,7 @@ TONE = {"fail": "red", "outdated": "amber", "note": "gray", "unverified": "gray"
 
 
 def pdf_pages(path) -> list[dict]:
-    import fitz  # PyMuPDF
+    import pymupdf as fitz
 
     pages = []
     with fitz.open(path) as doc:
