@@ -1,0 +1,38 @@
+{
+  "_note": "Mock fixture. Lithonia TL / T Series: discontinuation notice dated April 9, 2024, discontinued June 30, 2024; no replacement named.",
+  "pages": [
+    {"page": 1, "text": "Lithonia Lighting T Series recessed LED troffer (TL). Product data sheet."}
+  ],
+  "triage": {"pages": [{"page": 1, "kind": "product_data"}]},
+  "claims": {
+    "product": "T Series recessed LED troffer (TL)",
+    "manufacturer": "Lithonia Lighting (Acuity Brands)",
+    "claims": []
+  },
+  "web": {
+    "search": [
+      {"url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2", "title": "Discontinuation notice: Lithonia Lighting TL recessed luminaire"},
+      {"url": "https://acuitybrands.com/products/detail/252702/lithonia-lighting/tl/t-series-recessed-led-troffer", "title": "T Series Recessed LED Troffer (Discontinued)"}
+    ],
+    "extract": {
+      "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2": "Discontinuation notice dated April 9, 2024. The Lithonia Lighting TL recessed luminaire will be discontinued effective June 30, 2024.",
+      "https://acuitybrands.com/products/detail/252702/lithonia-lighting/tl/t-series-recessed-led-troffer": "T Series Recessed LED Troffer. Discontinued."
+    }
+  },
+  "verify": {
+    "status": "discontinued",
+    "replacement": null,
+    "current_revision": null,
+    "current_values": [],
+    "source_urls": [
+      "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+      "https://acuitybrands.com/products/detail/252702/lithonia-lighting/tl/t-series-recessed-led-troffer"
+    ]
+  },
+  "report": {
+    "summary": "This fixture was discontinued in June 2024, so it can't be ordered for the project.",
+    "note_to_subcontractor": "The Lithonia TL troffer was discontinued on June 30, 2024. Please submit a current fixture that meets section 26 51 00.",
+    "finding_titles": {"status-discontinued": "Fixture is no longer made"},
+    "why_it_matters": {"status-discontinued": "A discontinued product can't be bought, which would stall the order and force a substitution later in the job."}
+  }
+}

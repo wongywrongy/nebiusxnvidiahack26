@@ -1,0 +1,37 @@
+{
+  "_note": "Mock-mode stand-in for the Super extraction of CPS 07 84 00. Paragraph numbers are left blank until the real extraction runs. The VOC limit value is a placeholder for the SCAQMD Rule 1168 limit: confirm the number for the product category.",
+  "requirements": [
+    {
+      "id": "fs-std",
+      "section": "07 84 00",
+      "paragraph": "",
+      "property": "standards",
+      "operator": "any_of",
+      "value": ["astm e814", "ul 1479"],
+      "text": "Tested to ASTM E814 / UL 1479",
+      "severity": "major"
+    },
+    {
+      "id": "fs-t-eq-f",
+      "section": "07 84 00",
+      "paragraph": "",
+      "property": "t_rating_hr",
+      "operator": "eq_ref",
+      "value": "f_rating_hr",
+      "unit": "hr",
+      "text": "T rating must equal the F rating",
+      "severity": "critical"
+    },
+    {
+      "id": "fs-voc",
+      "section": "07 84 00",
+      "paragraph": "",
+      "property": "voc_g_per_l",
+      "operator": "lte",
+      "value": 250,
+      "unit": "g/L",
+      "text": "VOC below the SCAQMD Rule 1168 limit",
+      "severity": "major"
+    }
+  ]
+}

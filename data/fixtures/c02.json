@@ -1,0 +1,42 @@
+{
+  "_note": "Mock fixture. Values summarized from the public Hilti system drawing W-L-5143 (Dec 18, 2025).",
+  "pages": [
+    {"page": 1, "text": "System No. W-L-5143. F Ratings 1 and 2 hr. T Rating 1/2 hr. Copper pipe or tube up to 1 in with foam insulation through gypsum wall. Hilti FS-ONE MAX sealant."}
+  ],
+  "triage": {"pages": [{"page": 1, "kind": "system_drawing"}]},
+  "claims": {
+    "product": "Firestop system W-L-5143",
+    "manufacturer": "Hilti",
+    "document_revision": "Dec 18, 2025",
+    "claims": [
+      {"id": "k1", "product": "W-L-5143", "manufacturer": "Hilti", "property": "f_rating_hr", "value": 2, "unit": "hr", "page": 1, "quote": "F Ratings 1 and 2 hr"},
+      {"id": "k2", "product": "W-L-5143", "manufacturer": "Hilti", "property": "t_rating_hr", "value": "1/2", "unit": "hr", "page": 1, "quote": "T Rating 1/2 hr"},
+      {"id": "k3", "product": "W-L-5143", "manufacturer": "Hilti", "property": "standards", "value": ["UL 1479"], "page": 1},
+      {"id": "k4", "product": "W-L-5143", "manufacturer": "Hilti", "property": "penetrant_types", "value": ["copper pipe with foam insulation"], "page": 1}
+    ]
+  },
+  "web": {
+    "search": [{"url": "https://www.hilti.com/media-canonical/ASSET_DOC_LOC_919_APC_RAW", "title": "System W-L-5143"}],
+    "extract": {"https://www.hilti.com/media-canonical/ASSET_DOC_LOC_919_APC_RAW": "System No. W-L-5143, December 18, 2025. F Ratings 1 and 2 hr, T Rating 1/2 hr."}
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "Dec 18, 2025",
+    "current_values": [
+      {"property": "f_rating_hr", "value": 2, "unit": "hr"},
+      {"property": "t_rating_hr", "value": "1/2", "unit": "hr"}
+    ],
+    "source_urls": ["https://www.hilti.com/media-canonical/ASSET_DOC_LOC_919_APC_RAW"]
+  },
+  "report": {
+    "summary": "The firestop system's temperature rating is lower than its fire rating, which this project's spec does not allow.",
+    "note_to_subcontractor": "Please resubmit with a listed system whose T rating equals its F rating for this wall, as required by spec section 07 84 00.",
+    "finding_titles": {
+      "spec-fs-t-eq-f": "Temperature rating is lower than the fire rating",
+      "spec-fs-voc": "VOC content isn't stated on the system drawing"
+    },
+    "why_it_matters": {
+      "spec-fs-t-eq-f": "This school's standard requires the T rating to match the F rating, so heat can't pass through the wall for as long as fire is held back."
+    }
+  }
+}

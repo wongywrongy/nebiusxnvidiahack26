@@ -1,0 +1,36 @@
+{
+  "_note": "Mock fixture. Values summarized from the public Hilti system drawing W-L-2244 (Jan 21, 2020). The project condition (steel pipe) comes from the case.",
+  "pages": [
+    {"page": 1, "text": "System No. W-L-2244. Gypsum wall. Penetrants: PVC pipe Schedule 40 up to 2 in, CPVC pipe SDR 13.5 up to 2 in. F Ratings 1 and 2 hr. T Ratings 0, 1 and 2 hr. FS-ONE MAX sealant."}
+  ],
+  "triage": {"pages": [{"page": 1, "kind": "system_drawing"}]},
+  "claims": {
+    "product": "Firestop system W-L-2244",
+    "manufacturer": "Hilti",
+    "document_revision": "Jan 21, 2020",
+    "claims": [
+      {"id": "k1", "product": "W-L-2244", "manufacturer": "Hilti", "property": "f_rating_hr", "value": 2, "unit": "hr", "page": 1},
+      {"id": "k2", "product": "W-L-2244", "manufacturer": "Hilti", "property": "t_rating_hr", "value": 2, "unit": "hr", "page": 1},
+      {"id": "k3", "product": "W-L-2244", "manufacturer": "Hilti", "property": "standards", "value": ["UL 1479"], "page": 1},
+      {"id": "k4", "product": "W-L-2244", "manufacturer": "Hilti", "property": "penetrant_types", "value": ["PVC pipe (Schedule 40, up to 2 in)", "CPVC pipe (SDR 13.5, up to 2 in)"], "page": 1, "quote": "PVC ... CPVC"}
+    ]
+  },
+  "web": {
+    "search": [{"url": "https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW", "title": "System W-L-2244"}],
+    "extract": {"https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW": "System No. W-L-2244, January 21, 2020. Nonmetallic pipes: PVC and CPVC up to 2 in."}
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "Jan 21, 2020",
+    "current_values": [
+      {"property": "penetrant_types", "value": ["PVC pipe (Schedule 40, up to 2 in)", "CPVC pipe (SDR 13.5, up to 2 in)"]}
+    ],
+    "source_urls": ["https://hilti.com/media-canonical/ASSET_DOC_LOC_830_APC_RAW"]
+  },
+  "report": {
+    "summary": "The submitted firestop system is only listed for plastic pipe, but the drawings show steel pipe at this wall.",
+    "note_to_subcontractor": "Please resubmit with a listed firestop system that covers steel pipe through a gypsum wall.",
+    "finding_titles": {"validity-cond-penetrant": "Fire listing doesn't cover steel pipe"},
+    "why_it_matters": {"validity-cond-penetrant": "A firestop system is only proven for what it was tested with. Used on steel pipe, this one has no fire rating at all."}
+  }
+}

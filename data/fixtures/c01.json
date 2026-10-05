@@ -1,0 +1,36 @@
+{
+  "_note": "Mock fixture. Values summarized from the public Hilti FS-ONE MAX TDS (03/22). Replace with recorded live output once real runs exist.",
+  "pages": [
+    {"page": 1, "text": "Hilti FS-ONE MAX Intumescent Firestop Sealant. Technical data sheet 03/22. VOC 9 g/L, glycol-free. Fire ratings up to 4 hours. Tested to UL 1479, ASTM E814, ASTM E84, ASTM G21."}
+  ],
+  "triage": {"pages": [{"page": 1, "kind": "product_data"}]},
+  "claims": {
+    "product": "FS-ONE MAX Intumescent Firestop Sealant",
+    "manufacturer": "Hilti",
+    "document_revision": "03/22",
+    "claims": [
+      {"id": "k1", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "f_rating_hr", "value": 4, "unit": "hr", "page": 1, "quote": "up to 4 hours"},
+      {"id": "k2", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "voc_g_per_l", "value": 9, "unit": "g/L", "page": 1, "quote": "VOC 9 g/L"},
+      {"id": "k3", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "standards", "value": ["UL 1479", "ASTM E814", "ASTM E84", "ASTM G21"], "page": 1}
+    ]
+  },
+  "web": {
+    "search": [{"url": "https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW", "title": "FS-ONE MAX technical data sheet"}],
+    "extract": {"https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW": "FS-ONE MAX Intumescent Firestop Sealant technical data sheet 03/22. VOC 9 g/L. Up to 4 hr fire ratings."}
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "03/22",
+    "current_values": [
+      {"property": "voc_g_per_l", "value": 9, "unit": "g/L"},
+      {"property": "f_rating_hr", "value": 4, "unit": "hr"}
+    ],
+    "source_urls": ["https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW"]
+  },
+  "report": {
+    "summary": "Matches the spec and the manufacturer's current data sheet.",
+    "note_to_subcontractor": "Approved. No changes needed.",
+    "finding_titles": {},
+    "why_it_matters": {}
+  }
+}
