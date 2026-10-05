@@ -10,12 +10,12 @@
     "model": "2BLT4 40L ADP EZ1 LP840",
     "document_revision": "07/18/24",
     "claims": [
-      {"id": "k1", "product": "BLT", "manufacturer": "Lithonia", "property": "cri", "value": 82, "page": 1},
-      {"id": "k2", "product": "BLT", "manufacturer": "Lithonia", "property": "dim_min_percent", "value": 1, "unit": "%", "page": 1},
-      {"id": "k3", "product": "BLT", "manufacturer": "Lithonia", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1},
-      {"id": "k4", "product": "BLT", "manufacturer": "Lithonia", "property": "dlc_listed", "value": "DLC Premium", "page": 1},
-      {"id": "k5", "product": "BLT", "manufacturer": "Lithonia", "property": "lumens", "value": 4312, "unit": "lm", "page": 1},
-      {"id": "k6", "product": "BLT", "manufacturer": "Lithonia", "property": "watts", "value": 30.5, "unit": "W", "page": 1}
+      {"id": "k1", "product": "BLT", "manufacturer": "Lithonia", "property": "cri", "value": 82, "page": 1, "quote": "82 CRI"},
+      {"id": "k2", "product": "BLT", "manufacturer": "Lithonia", "property": "dim_min_percent", "value": 1, "unit": "%", "page": 1, "quote": "EZ1 driver dims to 1% (0-10V)"},
+      {"id": "k3", "product": "BLT", "manufacturer": "Lithonia", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1, "quote": "5-year limited warranty"},
+      {"id": "k4", "product": "BLT", "manufacturer": "Lithonia", "property": "dlc_listed", "value": "DLC Premium", "page": 1, "quote": "DLC Premium"},
+      {"id": "k5", "product": "BLT", "manufacturer": "Lithonia", "property": "lumens", "value": 4312, "unit": "lm", "page": 1, "quote": "4,312 lm"},
+      {"id": "k6", "product": "BLT", "manufacturer": "Lithonia", "property": "watts", "value": 30.5, "unit": "W", "page": 1, "quote": "30.5 W"}
     ]
   },
   "web": {

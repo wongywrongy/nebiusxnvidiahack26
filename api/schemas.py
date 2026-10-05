@@ -119,6 +119,7 @@ class Finding(BaseModel):
     why_it_matters: Optional[str] = None
     requirement_id: Optional[str] = None
     claim_id: Optional[str] = None
+    claim_ids: list[str] = []  # claims on the page that this finding is about (for highlights)
     spec_ref: Optional[str] = None
     evidence: list[Evidence] = []
     decided_by: str = "code"
@@ -158,6 +159,9 @@ class Result(BaseModel):
     summary: str
     findings: list[Finding]
     comparison: list[CompareRow] = []
+    claims: list[Claim] = []
+    document_revision: Optional[str] = None
+    document_source: Literal["pdf", "fixture"] = "fixture"  # where claim pages and quotes came from
     note_to_subcontractor: str = ""
     usage: list[Usage] = []
     web_credits: float = 0.0

@@ -27,11 +27,16 @@ export interface Finding {
   detail: string
   why_it_matters?: string | null
   spec_ref?: string | null
+  requirement_id?: string | null
+  claim_ids: string[]
   evidence: Evidence[]
   decided_by: string
 }
 export interface CompareRow { property: string; label: string; submitted: string | null; current: string | null; changed: boolean }
-export interface Usage { task: string; tier: string; model: string; input_tokens: number; output_tokens: number; cost_usd: number }
+export interface Usage {
+  task: string; tier: string; model: string; input_tokens: number; output_tokens: number; cost_usd: number; latency_ms: number
+}
+export interface Claim { id: string; property: string; value: unknown; unit?: string | null; page?: number | null; quote?: string | null }
 export interface Result {
   case_id: string
   title: string
@@ -39,6 +44,9 @@ export interface Result {
   summary: string
   findings: Finding[]
   comparison: CompareRow[]
+  claims: Claim[]
+  document_revision?: string | null
+  document_source: 'pdf' | 'fixture'
   note_to_subcontractor: string
   usage: Usage[]
   web_credits: number
@@ -67,6 +75,24 @@ export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: 
 
 export async function getResult(runId: string, caseId: string): Promise<Result> {
   return (await fetch(`/api/runs/${runId}/results/${caseId}`)).json()
+}
+
+export type Tone = 'red' | 'amber' | 'gray'
+export interface Highlight { finding_id: string; claim_id: string; page: number; quote: string | null; tone: Tone; rects: number[][] }
+export interface Page { page: number; image: boolean; text: string | null }
+export interface Highlights { pages: Page[]; highlights: Highlight[] }
+
+export async function getHighlights(runId: string, caseId: string): Promise<Highlights> {
+  return (await fetch(`/api/runs/${runId}/results/${caseId}/highlights`)).json()
+}
+
+export async function startReplay(sourceRunId: string): Promise<string> {
+  const r = await fetch('/api/runs/replay', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ source_run_id: sourceRunId }),
+  })
+  return (await r.json()).run_id
 }
 
 export const DECISION_LABEL: Record<Decision, string> = {
