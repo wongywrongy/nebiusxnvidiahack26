@@ -1,8 +1,8 @@
-import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, getHighlights, getProject, getResult, startReplay, startRun, streamEvents,
-  type Case, type CompareRow, type Decision, type Event, type Finding, type Highlight, type Highlights, type Page,
-  type Project, type Result, type Stage, type Tone,
+  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getProject, getResult, pageUrl, startReplay, startRun, streamEvents,
+  type Case, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Mark,
+  type Project, type Result, type Stage, type TextPage, type Tone,
 } from './api'
 
 type View = 'ready' | 'running' | 'done' | 'detail'
@@ -11,7 +11,8 @@ type CaseState = { stage: Stage; message: string; model: string | null; decision
 const ACTIVE: Stage[] = ['ingest', 'triage', 'extract', 'spec_check', 'verify', 'reconcile', 'report']
 const NBSP = '\u00a0'
 
-type Loaded = { result: Result; hl: Highlights }
+// docs: page sizes of each downloaded submittal PDF; null when one is missing, then text holds the fixture pages.
+type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null }
 
 export default function App() {
   const [project, setProject] = useState<Project | null>(null)
@@ -28,8 +29,10 @@ export default function App() {
   const openable = cases.filter((c) => states[c.id]?.stage === 'done').map((c) => c.id)
 
   async function load(id: string, caseId: string): Promise<Loaded> {
-    const [result, hl] = await Promise.all([getResult(id, caseId), getHighlights(id, caseId)])
-    const l = { result, hl }
+    const files = cases.find((c) => c.id === caseId)?.submittal.map((d) => d.file) ?? []
+    const [result, ...found] = await Promise.all([getResult(id, caseId), ...files.map((f) => getDocPages(caseId, f))])
+    const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
+    const l = { result: result as Result, docs, text: docs ? null : await getCaseText(caseId) }
     setLoaded((m) => ({ ...m, [caseId]: l }))
     return l
   }
@@ -115,7 +118,7 @@ export default function App() {
         {view === 'ready' && <Ready cases={cases} onRun={run} />}
         {view === 'running' && <Running cases={cases} states={states} done={openable.length} onOpen={open} />}
         {view === 'done' && <Done cases={cases} states={states} onOpen={open} onAgain={run} />}
-        {detail && <Detail key={current} result={detail.result} hl={detail.hl} runId={runId!} onReplay={replay} />}
+        {detail && <Detail key={current} result={detail.result} docs={detail.docs} text={detail.text} runId={runId!} onReplay={replay} />}
       </main>
     </div>
   )
@@ -281,8 +284,8 @@ function Done({ cases, states, onOpen, onAgain }: {
 
 // ---------- result view ----------
 
-const TONE_COLOR: Record<Tone, string> = { red: '#e5534b', amber: '#e5a93b', gray: '#8b8f98' }
-const TONE_RANK: Record<Tone, number> = { red: 0, amber: 1, gray: 2 }
+const TONE_COLOR: Record<Tone, string> = { red: '#e5534b', amber: '#f0892a', gray: '#8b8f98', green: '#2e9e68' }
+const TONE_RANK: Record<Tone, number> = { red: 0, amber: 1, gray: 2, green: 3 }
 const SEVERITY_RANK: Record<Finding['severity'], number> = { critical: 0, major: 1, minor: 2, info: 3 }
 const toneOf = (f: Finding): Tone => (f.verdict === 'fail' ? 'red' : f.verdict === 'outdated' ? 'amber' : 'gray')
 const LABEL: Record<Finding['verdict'], string> = {
@@ -317,19 +320,43 @@ function Verdict({ result }: { result: Result }) {
   )
 }
 
-function Detail({ result, hl, runId, onReplay }: { result: Result; hl: Highlights; runId: string; onReplay: () => void }) {
+type Placed = Mark & { finding: Finding; tone: Tone }
+type PdfPage = { key: string; file: string; n: number; width: number; height: number }
+
+const pageKey = (file: string | null, n: number | null) => `${file}#${n}`
+// A finding's page: the first claim that was located, else the first claim with a page.
+const firstMark = (f: Finding) => f.highlights.find((h) => h.boxes.length) ?? f.highlights.find((h) => h.page)
+
+function Detail({ result, docs, text, runId, onReplay }: {
+  result: Result; docs: DocPages[] | null; text: TextPage[] | null; runId: string; onReplay: () => void
+}) {
   // Worst first: must fix, then out of date, then notes and not-stated.
   const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass')
     .sort((a, b) => TONE_RANK[toneOf(a)] - TONE_RANK[toneOf(b)] || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity]), [result])
+  const marks: Placed[] = useMemo(() => result.findings.flatMap((f) =>
+    f.highlights.map((h) => ({ ...h, finding: f, tone: h.kind === 'checked' ? 'green' as Tone : toneOf(f) }))), [result])
   const [selId, setSelId] = useState<string | null>(issues[0]?.id ?? null)
   const sel = issues.find((f) => f.id === selId) ?? null
-  const pageOf = (f: Finding) => hl.highlights.find((h) => h.finding_id === f.id)?.page ?? null
-  const [page, setPage] = useState<number>((sel && pageOf(sel)) ?? 1)
+  const [pulse, setPulse] = useState(0)
+  const [textPage, setTextPage] = useState(() => (sel && firstMark(sel)?.page) || 1)
+  const pdf = useRef<{ scrollTo: (key: string) => void }>(null)
 
   function select(f: Finding) {
     setSelId(f.id)
-    setPage(pageOf(f) ?? page)
+    setPulse((n) => n + 1)
+    const m = firstMark(f)
+    if (!m?.page) return
+    if (docs) pdf.current?.scrollTo(pageKey(m.doc_file, m.page))
+    else setTextPage(m.page)
   }
+
+  const pageCount = docs ? docs.reduce((a, d) => a + d.pages.length, 0) : text?.length ?? 0
+  const lost = sel && sel.highlights.length > 0 && docs && sel.highlights.every((h) => h.boxes.length === 0)
+  const banner = !sel ? null
+    : notFound(sel) ? <>Searched all {plural(pageCount, 'page')}: nothing in the package covers this{sel.spec_ref ? ` (spec ${sel.spec_ref})` : ''}.</>
+    : sel.claim_ids.length === 0 ? <>This applies to the whole document, not one spot on a page.</>
+    : lost ? <>Couldn't locate this on the page. The quote was: “{sel.highlights[0].quote}”</>
+    : null
 
   return (
     <div className="grid grid-cols-1 gap-4 min-[1100px]:grid-cols-[270px_minmax(0,1fr)_360px]">
@@ -337,7 +364,7 @@ function Detail({ result, hl, runId, onReplay }: { result: Result; hl: Highlight
       <aside className="contents min-[1100px]:flex min-[1100px]:min-w-0 min-[1100px]:flex-col min-[1100px]:gap-4">
         <nav className="panel overflow-hidden">
           {issues.map((f) => {
-            const p = pageOf(f)
+            const p = firstMark(f)?.page
             return (
               <button key={f.id} onClick={() => select(f)}
                 aria-current={sel?.id === f.id ? 'true' : undefined}
@@ -357,17 +384,12 @@ function Detail({ result, hl, runId, onReplay }: { result: Result; hl: Highlight
         <div className="order-last min-[1100px]:order-none"><HowChecked result={result} runId={runId} onReplay={onReplay} /></div>
       </aside>
 
-      <section className="panel flex min-w-0 flex-col gap-4 p-4">
-        <PageStrip pages={hl.pages} highlights={hl.highlights} findings={issues} current={page} onPick={setPage} />
-        {sel && notFound(sel)
-          ? <NotFound finding={sel} pages={hl.pages} caseId={result.case_id} />
-          : <>
-              {sel && sel.claim_ids.length === 0 && (
-                <p className="text-xs text-muted">This applies to the whole document, not one spot on a page.</p>
-              )}
-              <PageView caseId={result.case_id} page={hl.pages.find((p) => p.page === page)}
-                highlights={hl.highlights.filter((h) => h.page === page)} selId={sel?.id ?? null} result={result} />
-            </>}
+      <section className="panel flex min-w-0 flex-col gap-3 p-3 min-[1100px]:sticky min-[1100px]:top-[66px] min-[1100px]:h-[calc(100vh-82px)]">
+        {docs
+          ? <PdfPages ref={pdf} caseId={result.case_id} docs={docs} marks={marks} selId={sel?.id ?? null} pulse={pulse}
+              result={result} banner={banner} onPick={select} />
+          : <TextPages pages={text ?? []} marks={marks} selId={sel?.id ?? null} result={result} banner={banner}
+              page={textPage} onPage={setTextPage} />}
       </section>
 
       <aside className="contents min-[1100px]:flex min-[1100px]:min-w-0 min-[1100px]:flex-col min-[1100px]:gap-4">
@@ -375,6 +397,175 @@ function Detail({ result, hl, runId, onReplay }: { result: Result; hl: Highlight
         <Note text={result.note_to_subcontractor} />
       </aside>
     </div>
+  )
+}
+
+function worstTone(ms: Placed[]): Tone | undefined {
+  return ms.map((m) => m.tone).sort((a, b) => TONE_RANK[a] - TONE_RANK[b])[0]
+}
+
+// "now 17.5 W · 86.4 lm/W": one label per problem finding on a page, under its leftmost box.
+function callouts(ms: Placed[], result: Result) {
+  const by = new Map<string, Placed[]>()
+  for (const m of ms) if (m.kind === 'problem') by.set(m.finding.id, [...(by.get(m.finding.id) ?? []), m])
+  return [...by.values()].flatMap((group) => {
+    const rows = group.map((m) => changedRow(result, m.claim_id)).filter((r): r is CompareRow => !!r)
+    const boxes = group.flatMap((m) => m.boxes)
+    if (!rows.length || !boxes.length) return []
+    return [{ finding: group[0].finding, x: Math.min(...boxes.map((b) => b.x0)), y: Math.max(...boxes.map((b) => b.y1)),
+      text: [...new Set(rows.map((r) => r.current))].join(' · '), color: TONE_COLOR[group[0].tone] }]
+  })
+}
+
+function changedRow(result: Result, claimId: string): CompareRow | undefined {
+  const claim = result.claims.find((c) => c.id === claimId)
+  return claim && result.comparison.find((r) => r.property === claim.property && r.changed)
+}
+
+// Real PDF pages in a scrolling column, with every located claim drawn over them.
+const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
+  caseId: string; docs: DocPages[]; marks: Placed[]; selId: string | null; pulse: number; result: Result
+  banner: ReactNode; onPick: (f: Finding) => void
+}>(function PdfPages({ caseId, docs, marks, selId, pulse, result, banner, onPick }, ref) {
+  const pages: PdfPage[] = docs.flatMap((d) => d.pages.map((s, i) => ({ key: pageKey(d.file, i + 1), file: d.file, n: i + 1, ...s })))
+  const multi = docs.length > 1
+  const scroller = useRef<HTMLDivElement>(null)
+  const refs = useRef<Record<string, HTMLDivElement | null>>({})
+  const byPage = useMemo(() => {
+    const m: Record<string, Placed[]> = {}
+    for (const p of marks) if (p.boxes.length) (m[pageKey(p.doc_file, p.page)] ??= []).push(p)
+    return m
+  }, [marks])
+
+  function scrollTo(key: string) {
+    const el = refs.current[key], box = scroller.current
+    if (!el || !box) return
+    // The column scrolls on its own; fall back to the window if it ever doesn't.
+    if (box.scrollHeight > box.clientHeight + 1) box.scrollTo({ top: el.offsetTop - 4, behavior: 'smooth' })
+    else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+  useImperativeHandle(ref, () => ({ scrollTo }))
+  useEffect(() => { // open on the selected finding's page
+    const m = marks.find((p) => p.finding.id === selId && p.boxes.length)
+    if (m) requestAnimationFrame(() => {
+      const el = refs.current[pageKey(m.doc_file, m.page)], box = scroller.current
+      if (el && box && box.scrollHeight > box.clientHeight + 1) box.scrollTop = el.offsetTop - 4
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  return (
+    <>
+      <div className="flex shrink-0 gap-2 overflow-x-auto pb-1 pt-1.5 pr-1.5" role="list" aria-label="Pages">
+        {pages.map((p) => {
+          const t = worstTone(byPage[p.key] ?? [])
+          return (
+            <button key={p.key} role="listitem" onClick={() => scrollTo(p.key)} aria-label={`Page ${p.n}${t ? ', has highlights' : ''}`}
+              className="relative w-11 shrink-0 rounded-sm bg-white ring-1 ring-line transition-shadow hover:ring-edge"
+              style={{ aspectRatio: `${p.width} / ${p.height}` }}>
+              <img src={pageUrl(caseId, p.file, p.n)} alt="" className="h-full w-full rounded-sm object-cover" />
+              <span className="absolute bottom-0.5 left-0.5 rounded-sm bg-black/65 px-1 font-mono text-[9px] leading-tight text-white">{p.n}</span>
+              {t && <span className="absolute -right-1.5 -top-1.5 h-3 w-3 rounded-full ring-2 ring-panel" style={{ background: TONE_COLOR[t] }} />}
+            </button>
+          )
+        })}
+      </div>
+      {banner && <p className="shrink-0 rounded-md border border-line bg-well px-3 py-2 text-xs text-soft">{banner}</p>}
+      <div ref={scroller} className="relative flex max-h-[75vh] min-h-0 flex-1 flex-col gap-4 overflow-y-auto rounded min-[1100px]:max-h-none">
+        {pages.map((p) => (
+          <div key={p.key} ref={(el) => { refs.current[p.key] = el }}
+            className="relative w-full shrink-0 overflow-hidden rounded-sm bg-white shadow-[0_8px_24px_-12px_rgba(0,0,0,0.6)]"
+            style={{ aspectRatio: `${p.width} / ${p.height}` }}>
+            <img src={pageUrl(caseId, p.file, p.n)} alt={`Page ${p.n}`} decoding="async" className="absolute inset-0 h-full w-full" />
+            {/* checked first so problems draw on top; the selected finding last of all */}
+            {[...(byPage[p.key] ?? [])]
+              .sort((a, b) => Number(a.kind === 'problem') - Number(b.kind === 'problem') || Number(a.finding.id === selId) - Number(b.finding.id === selId))
+              .map((m) => m.boxes.map((b, i) => {
+                const on = m.finding.id === selId
+                const c = TONE_COLOR[m.tone]
+                return (
+                  <Fragment key={`${m.finding.id}-${m.claim_id}-${i}`}>
+                    <div key={on ? `p${pulse}` : 'still'} title={`${m.kind === 'checked' ? 'Checked' : LABEL[m.finding.verdict]}: ${m.finding.title}`}
+                      onClick={m.kind === 'problem' ? () => onPick(m.finding) : undefined}
+                      className={`absolute rounded-[2px] ${on ? 'pulse' : ''} ${m.kind === 'problem' ? 'cursor-pointer' : ''}`}
+                      style={{
+                        left: `calc(${b.x0 * 100}% - 2px)`, top: `calc(${b.y0 * 100}% - 2px)`,
+                        width: `calc(${(b.x1 - b.x0) * 100}% + 4px)`, height: `calc(${(b.y1 - b.y0) * 100}% + 4px)`,
+                        color: c, background: `${c}${on ? '38' : m.kind === 'checked' ? '1a' : '22'}`,
+                        outline: `${on ? 2 : 1}px solid ${c}${on ? '' : m.kind === 'checked' ? '66' : '99'}`,
+                      }} />
+                  </Fragment>
+                )
+              }))}
+            {callouts(byPage[p.key] ?? [], result).map(({ finding, x, y, text, color }) => (
+              <span key={finding.id} className={`absolute z-10 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold text-on-accent shadow ${finding.id === selId ? '' : 'opacity-75'}`}
+                style={{ left: `${x * 100}%`, top: `calc(${y * 100}% + 5px)`, background: color }}>
+                now {text}
+              </span>
+            ))}
+            <span className="absolute right-2 top-2 rounded bg-black/60 px-1.5 py-0.5 font-mono text-[10px] text-white">
+              {multi ? `${docs.find((d) => d.file === p.file)?.name} · ` : ''}p. {p.n}
+            </span>
+          </div>
+        ))}
+      </div>
+    </>
+  )
+})
+
+// Fallback when the PDF is not in data/raw: the fixture page text with each quote marked.
+function TextPages({ pages, marks, selId, result, banner, page, onPage }: {
+  pages: TextPage[]; marks: Placed[]; selId: string | null; result: Result; banner: ReactNode
+  page: number; onPage: (n: number) => void
+}) {
+  const current = pages.find((p) => p.page === page) ?? pages[0]
+  const text = current?.text ?? ''
+  const spans = marks
+    .filter((m) => m.page === current?.page && m.quote)
+    .sort((a, b) => Number(a.finding.id === selId) - Number(b.finding.id === selId))
+    .map((m) => ({ m, at: text.indexOf(m.quote!) }))
+    .filter((s) => s.at >= 0)
+    .sort((a, b) => a.at - b.at)
+  const out: ReactNode[] = []
+  let pos = 0
+  for (const { m, at } of spans) {
+    if (at < pos) continue // overlapping quote: keep the first
+    const on = m.finding.id === selId
+    const c = TONE_COLOR[m.tone]
+    const row = m.kind === 'problem' ? changedRow(result, m.claim_id) : undefined
+    out.push(text.slice(pos, at))
+    out.push(
+      <mark key={`${m.finding.id}-${m.claim_id}`} className="rounded-sm px-0.5 text-inherit"
+        style={{ background: `${c}${on ? '55' : '22'}`, outline: on ? `2px solid ${c}` : 'none' }}>{m.quote}</mark>,
+    )
+    if (row) out.push(
+      <span key={`${m.claim_id}-now`} className="ml-1 rounded px-1.5 py-0.5 align-middle font-sans text-[11px] font-semibold text-on-accent"
+        style={{ background: c }}>now {row.current}</span>,
+    )
+    pos = at + m.quote!.length
+  }
+  out.push(text.slice(pos))
+  return (
+    <>
+      <div className="flex flex-wrap items-center gap-1 font-mono text-xs">
+        <span className="mr-2 font-sans text-muted">Page</span>
+        {pages.map((p) => {
+          const t = worstTone(marks.filter((m) => m.page === p.page))
+          return (
+            <button key={p.page} onClick={() => onPage(p.page)}
+              className={`h-7 min-w-7 rounded px-2 tabular-nums ${p.page === current?.page ? 'bg-selected text-ink shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'text-muted hover:bg-raised hover:text-ink'}`}
+              style={{ boxShadow: t ? `inset 0 -2px 0 ${TONE_COLOR[t]}` : undefined }}>{p.page}</button>
+          )
+        })}
+        <span className="ml-auto font-sans text-[11px] text-faint">PDF not downloaded: showing extracted text</span>
+      </div>
+      {banner && <p className="rounded-md border border-line bg-well px-3 py-2 text-xs text-soft">{banner}</p>}
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="whitespace-pre-line rounded bg-paper p-8 font-serif text-[15px] leading-7 text-paper-ink">
+          <div className="mb-4 font-sans text-[11px] uppercase tracking-wide text-paper-meta">Page {current?.page} · text from the package</div>
+          {out}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -398,129 +589,6 @@ function HowChecked({ result, runId, onReplay }: { result: Result; runId: string
       <button onClick={onReplay} className="w-full border-t border-line px-3.5 py-2.5 text-left text-flare hover:bg-raised">
         Replay run {runId.slice(-6)} →
       </button>
-    </div>
-  )
-}
-
-function PageStrip({ pages, highlights, findings, current, onPick }: {
-  pages: Page[]; highlights: Highlight[]; findings: Finding[]; current: number; onPick: (n: number) => void
-}) {
-  const live = new Set(findings.map((f) => f.id))
-  const tone = (n: number) => highlights.filter((h) => h.page === n && live.has(h.finding_id))
-    .map((h) => h.tone).sort((a, b) => TONE_RANK[a] - TONE_RANK[b])[0]
-  return (
-    <div className="flex flex-wrap items-center gap-1 font-mono text-xs">
-      <span className="mr-2 font-sans text-muted">Page</span>
-      {pages.map((p) => {
-        const t = tone(p.page)
-        return (
-          <button key={p.page} onClick={() => onPick(p.page)}
-            className={`h-7 min-w-7 rounded px-2 tabular-nums ${p.page === current ? 'bg-selected text-ink shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'text-muted hover:bg-raised hover:text-ink'}`}
-            style={{ boxShadow: t ? `inset 0 -2px 0 ${TONE_COLOR[t]}` : undefined }}>
-            {p.page}
-          </button>
-        )
-      })}
-    </div>
-  )
-}
-
-function changedRow(result: Result, claimId: string): CompareRow | undefined {
-  const claim = result.claims.find((c) => c.id === claimId)
-  return claim && result.comparison.find((r) => r.property === claim.property && r.changed)
-}
-
-function PageView({ caseId, page, highlights, selId, result }: {
-  caseId: string; page?: Page; highlights: Highlight[]; selId: string | null; result: Result
-}) {
-  if (!page) return <p className="text-muted">No page text available.</p>
-  // Selected finding on top, strong; the others faint.
-  const ordered = [...highlights].sort((a, b) => Number(a.finding_id === selId) - Number(b.finding_id === selId))
-
-  if (page.image) {
-    return (
-      <div className="relative mx-auto w-full max-w-[920px] overflow-hidden rounded bg-white">
-        <img src={`/api/cases/${caseId}/pages/${page.page}.png`} alt={`Page ${page.page}`} className="block w-full" />
-        {ordered.map((h) => {
-          const on = h.finding_id === selId
-          const c = TONE_COLOR[h.tone]
-          const row = on ? changedRow(result, h.claim_id) : undefined
-          return h.rects.map((r, i) => (
-            <Fragment key={`${h.finding_id}-${h.claim_id}-${i}`}>
-              <div className="absolute rounded-sm" style={{
-                left: `${r[0] * 100}%`, top: `${r[1] * 100}%`, width: `${(r[2] - r[0]) * 100}%`, height: `${(r[3] - r[1]) * 100}%`,
-                background: `${c}${on ? '40' : '18'}`, outline: on ? `2px solid ${c}` : `1px solid ${c}55`, outlineOffset: 1,
-              }} />
-              {row && i === 0 && (
-                <span className="absolute z-10 mt-1 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold text-on-accent shadow"
-                  style={{ left: `${r[0] * 100}%`, top: `${r[3] * 100}%`, background: c }}>
-                  Today: {row.current}
-                </span>
-              )}
-            </Fragment>
-          ))
-        })}
-      </div>
-    )
-  }
-
-  // No page image (mock mode): show the page text and mark each quote.
-  const text = page.text ?? ''
-  const spans = ordered
-    .map((h) => ({ h, at: h.quote ? text.indexOf(h.quote) : -1 }))
-    .filter((s) => s.at >= 0)
-    .sort((a, b) => a.at - b.at)
-  const out: ReactNode[] = []
-  let pos = 0
-  for (const { h, at } of spans) {
-    if (at < pos) continue // overlapping quote: keep the first
-    const on = h.finding_id === selId
-    const c = TONE_COLOR[h.tone]
-    const row = on ? changedRow(result, h.claim_id) : undefined
-    out.push(text.slice(pos, at))
-    out.push(
-      <mark key={`${h.finding_id}-${h.claim_id}`} className="rounded-sm px-0.5 text-inherit"
-        style={{ background: `${c}${on ? '55' : '22'}`, outline: on ? `2px solid ${c}` : 'none' }}>
-        {h.quote}
-      </mark>,
-    )
-    if (row) {
-      out.push(
-        <span key={`${h.claim_id}-today`} className="ml-1 rounded px-1.5 py-0.5 align-middle font-sans text-[11px] font-semibold text-on-accent"
-          style={{ background: c }}>Today: {row.current}</span>,
-      )
-    }
-    pos = at + (h.quote?.length ?? 0)
-  }
-  out.push(text.slice(pos))
-  return (
-    <div className="mx-auto w-full max-w-[920px] rounded bg-paper p-8 font-serif text-[15px] leading-8 text-paper-ink">
-      <div className="mb-4 font-sans text-[11px] uppercase tracking-wide text-paper-meta">Page {page.page} · text from the package</div>
-      {out}
-    </div>
-  )
-}
-
-function NotFound({ finding, pages, caseId }: { finding: Finding; pages: Page[]; caseId: string }) {
-  return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <h3 className="text-base font-semibold">All {pages.length} page{pages.length === 1 ? '' : 's'} searched, not found</h3>
-        <p className="text-muted">
-          Expected: {finding.title.replace(/^Not stated in the package: |^Missing: /, '')}
-          {finding.spec_ref ? <span className="font-mono text-xs text-faint"> · spec {finding.spec_ref}</span> : null}
-        </p>
-      </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(120px,1fr))] gap-3">
-        {pages.map((p) => (
-          <div key={p.page} className="flex flex-col gap-1">
-            {p.image
-              ? <img src={`/api/cases/${caseId}/pages/${p.page}.png`} alt={`Page ${p.page}`} className="aspect-[17/22] w-full rounded bg-white object-cover object-top opacity-80" />
-              : <div className="aspect-[17/22] overflow-hidden rounded bg-paper p-2 font-serif text-[7px] leading-[10px] text-paper-meta">{p.text}</div>}
-            <span className="font-mono text-[11px] text-faint">p. {p.page}</span>
-          </div>
-        ))}
-      </div>
     </div>
   )
 }

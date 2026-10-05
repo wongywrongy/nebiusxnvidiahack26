@@ -17,7 +17,8 @@ from ..config import settings
 from ..schemas import Event, Requirement, Result, Usage
 from . import decide, extract, spec_check, verify
 from .cases import all_specs, get_case
-from .ingest import load_spec_text, load_submittal_pages, submittal_pdfs
+from .ingest import load_spec_text, load_submittal_pages
+from .render import attach_highlights
 
 
 class Run:
@@ -113,12 +114,12 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             run.emit("report", "Writing the result", case_id, settings.models["super"])
             rep, u = await decide.report(case_id, case["title"], decision, findings)
             usage += u
+            attach_highlights(case, claims.claims, findings)
             await run.pause()
 
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
                 comparison=rows, claims=claims.claims, document_revision=claims.document_revision,
-                document_source="pdf" if settings.live and submittal_pdfs(case) else "fixture",
                 note_to_subcontractor=rep.note_to_subcontractor, usage=usage, web_credits=credits,
                 duration_ms=int((time.perf_counter() - t0) * 1000),
             )

@@ -1,8 +1,7 @@
-"""Document highlights: quotes found in a real PDF, clean fallback without one, fixture quotes stay verbatim."""
+"""Real PDF pages: every fixture quote lands on the page, locate() fallbacks, and the document endpoints."""
 
 import json
 import os
-import shutil
 import sys
 from pathlib import Path
 
@@ -16,54 +15,17 @@ from fastapi.testclient import TestClient  # noqa: E402
 from api.config import settings  # noqa: E402
 from api.main import app  # noqa: E402
 from api.pipeline.cases import all_cases  # noqa: E402
-from api.schemas import Claim, Finding, Result  # noqa: E402
+from api.pipeline.render import locate  # noqa: E402
 
 client = TestClient(app)
-C03_PDF = settings.raw_dir / all_cases()["c03"]["submittal"][0]["file"]
 
 
-@pytest.fixture
-def stored_result():
-    """Write a result into a throwaway run folder; yields a function that stores one and returns its run id."""
-    run_dir = settings.runs_dir / "test-highlights"
-
-    def store(result: Result) -> str:
-        (run_dir / "results").mkdir(parents=True, exist_ok=True)
-        (run_dir / "results" / f"{result.case_id}.json").write_text(result.model_dump_json())
-        return run_dir.name
-
-    yield store
-    shutil.rmtree(run_dir, ignore_errors=True)
+def _pdf(case_id: str) -> Path:
+    return settings.raw_dir / all_cases()[case_id]["submittal"][0]["file"]
 
 
-def _result(source: str, quote: str) -> Result:
-    claim = Claim(id="k1", product="IC 15WB+", manufacturer="3M", property="voc_g_per_l", value="0", page=1, quote=quote)
-    finding = Finding(id="currency-outdated", check="currency", verdict="outdated", severity="major",
-                      title="Out of date", claim_ids=["k1"])
-    return Result(case_id="c03", title="t", decision="send_back", summary="", findings=[finding],
-                  claims=[claim], document_source=source)
-
-
-@pytest.mark.skipif(not C03_PDF.exists(), reason="run scripts/fetch_docs.py to download the c03 PDF")
-def test_rects_for_a_quote_in_the_downloaded_pdf(stored_result):
-    run_id = stored_result(_result("pdf", "Fire Barrier"))
-    body = client.get(f"/api/runs/{run_id}/results/c03/highlights").json()
-    assert body["pages"][0]["image"] is True and len(body["pages"]) == 4
-    (h,) = body["highlights"]
-    assert h["tone"] == "amber" and h["page"] == 1 and h["rects"]
-    assert all(0 <= v <= 1 for r in h["rects"] for v in r)
-    png = client.get("/api/cases/c03/pages/1.png")
-    assert png.status_code == 200 and png.content[:4] == b"\x89PNG"
-
-
-def test_falls_back_to_fixture_text_without_a_pdf(stored_result):
-    # c08's submittal is not downloadable (Cloudflare), and a fixture-sourced result never uses the PDF anyway.
-    run_id = stored_result(_result("pdf", "not on any page").model_copy(update={"case_id": "c08"}))
-    body = client.get(f"/api/runs/{run_id}/results/c08/highlights").json()
-    assert body["pages"][0]["image"] is False and body["pages"][0]["text"]
-    (h,) = body["highlights"]
-    assert h["rects"] == [] and h["page"] == 1 and h["quote"] == "not on any page"
-    assert client.get("/api/cases/c08/pages/1.png").status_code == 404
+C03, C06 = _pdf("c03"), _pdf("c06")
+needs = lambda p: pytest.mark.skipif(not p.exists(), reason="run scripts/fetch_docs.py to download the PDFs")  # noqa: E731
 
 
 def test_fixture_quotes_appear_verbatim_on_their_page():
@@ -72,3 +34,53 @@ def test_fixture_quotes_appear_verbatim_on_their_page():
         pages = {p["page"]: p["text"] for p in fx["pages"]}
         for c in fx.get("claims", {}).get("claims", []):
             assert c.get("quote") and c["quote"] in pages[c["page"]], (path.name, c["id"])
+
+
+def test_every_fixture_quote_resolves_to_a_box():
+    checked = 0
+    for cid in sorted(all_cases()):
+        pdf = _pdf(cid)
+        if not pdf.exists():
+            continue  # c08 sits behind Cloudflare until downloaded by hand
+        for c in json.loads((settings.fixtures_dir / f"{cid}.json").read_text())["claims"]["claims"]:
+            page, boxes = locate(pdf, c["page"], c["quote"])
+            assert boxes, (cid, c["id"], c["quote"])
+            assert all(0 <= b[k] <= 1 for b in boxes for k in ("x0", "y0", "x1", "y1"))
+            checked += 1
+    if not checked:
+        pytest.skip("no PDFs downloaded")
+
+
+@needs(C06)
+def test_locate_falls_back_to_normalized_text_then_the_key_value_line():
+    page, exact = locate(C06, 3, "1606.0")
+    assert page == 3 and exact
+    page, other_page = locate(C06, 1, "1606.0")  # wrong page given: found on the page that has it
+    assert page == 3 and other_page
+    page, line = locate(C06, 3, "1500 lumen package at 20.5 W")  # not verbatim: line holding "20.5"
+    assert page == 3 and line
+    assert locate(C06, 3, "qqq zzz nowhere") == (3, [])
+
+
+@needs(C03)
+def test_locate_ignores_line_breaks_and_dash_style():
+    _, boxes = locate(C03, 1, "not  to exceed\n120°F (48°C).")
+    assert boxes
+
+
+@needs(C03)
+def test_doc_endpoints_serve_pages_and_reject_other_files():
+    info = client.get("/api/docs/c03/3m_ic15wb_2005.pdf/pages").json()
+    assert info["count"] == 4 and info["pages"][0]["width"] > 0
+    png = client.get("/api/docs/c03/3m_ic15wb_2005.pdf/pages/1.png")
+    assert png.status_code == 200 and png.content[:4] == b"\x89PNG"
+    assert client.get("/api/docs/c03/3m_ic15wb_2005.pdf/pages/9.png").status_code == 404
+    for bad in ("..%2F..%2F..%2Fetc%2Fpasswd", "manifest.json", "lithonia_ldn6_2017-10.pdf"):  # traversal, non-submittal, other case
+        assert client.get(f"/api/docs/c03/{bad}/pages").status_code == 404, bad
+
+
+def test_missing_pdf_falls_back_to_text():
+    if _pdf("c08").exists():
+        pytest.skip("c08 PDF is downloaded")
+    assert client.get("/api/docs/c08/lithonia_lqm_2019-09.pdf/pages").status_code == 404
+    assert client.get("/api/cases/c08/text").json()["pages"][0]["text"]
