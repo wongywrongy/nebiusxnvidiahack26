@@ -1,0 +1,189 @@
+{
+  "_about": "SpecCheck demo document set. Each doc lists URLs in priority order; fetch_docs should try them in order and keep the first that returns a real PDF (starts with %PDF). Values under 'verified' were read from the document during research on 2026-10-05; re-check after download.",
+  "specs": [
+    {
+      "section": "07 84 00",
+      "file": "specs/cps_07_84_00.pdf",
+      "urls": [
+        "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/firestopping-new/07-84-00-firestopping.pdf",
+        "https://afd.calpoly.edu/facilities/planning-capital-projects/construction-standard/docs/standard-specifications/division-07-thermal-and-moisture-protection/07-84-00_firestopping.pdf"
+      ],
+      "verified": "CPS control 07/01/2025. T rating must equal F rating; VOC below SCAQMD 1168; listed by FM, ITS or UL. (Cal Poly backup: T = F unless code exempts; VOC per CALGreen.)"
+    },
+    {
+      "section": "26 51 00",
+      "file": "specs/cps_26_51_00.pdf",
+      "urls": [
+        "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/electrical-new/26-51-00-interior-lighting.pdf",
+        "https://www.bcit.ca/files/facilities/projectservices/standards/26/26_51_00_lighting_interior.pdf"
+      ],
+      "verified": "CPS control 08/09/2024. CRI >= 80; L70 at 50,000 h; dims to 5%; 5-year warranty; DLC listed. (BCIT backup: efficacy >= 75 lm/W, no CRI rule.)"
+    }
+  ],
+  "cases": [
+    {
+      "id": "c01",
+      "title": "Firestop sealant, through-penetrations",
+      "expected": {"decision": "approve", "problems": []},
+      "submittal": [
+        {
+          "role": "product_data",
+          "file": "c01/sti_specseal_lci_tds_2025.pdf",
+          "urls": [
+            "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English"
+          ],
+          "verified": "STI SpecSeal LCI Intumescent Sealant, (c) 2025, rev ZSFOD5062 25171 (the PDS linked from STI's product page on 2026-10-05). VOC Content 26 g/L; ASTM E84 Class A; up to a 4-hour fire rating; ASTM E814 (UL1479), ASTM E1966 (UL2079), CAN/ULC-S115."
+        }
+      ],
+      "compare": [
+        "https://stifirestop.com/products/lci-intumescent-firestop-sealant"
+      ],
+      "backup_case": {
+        "note": "If LCI turns out to have a newer sheet, use Hilti FS-ONE MAX instead.",
+        "urls": ["https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf"],
+        "verified": "FS-ONE MAX TDS dated 12/16; UL 723 flame 0 / smoke 10; CSFM 4485-1200:0108. No numeric VOC on this sheet."
+      },
+      "notes": "Replaces the Hilti FS-ONE MAX case: Hilti media-canonical links 404 for scripts. LCI meets the CPS VOC and test-standard rules. Submits the current 2025 sheet: the 2020 copy on emisupply.com (rev ZSFOD5062 3409, same values) is superseded, which would make this clean control an approve-with-note."
+    },
+    {
+      "id": "c02",
+      "title": "Firestop system, floor penetration",
+      "expected": {"decision": "send_back", "problems": ["spec"]},
+      "submittal": [
+        {
+          "role": "system_drawing",
+          "file": "c02/3m_c-aj-2738.pdf",
+          "urls": [
+            "https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf"
+          ],
+          "verified": "3M System C-AJ-2738 (floor). F Rating 2 hr, T Rating 0 hr. Penetrants: PVC Sch 40 up to 2 in, rigid PVC conduit up to 2 in, CPVC SDR 13.5 up to 2 in, PEX SDR 9 up to 1 in."
+        }
+      ],
+      "backup_case": {
+        "urls": ["https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf"],
+        "verified": "STI W-L-1079 (wall). F 1 and 2 hr, T 0 hr. Metallic pipe only."
+      },
+      "notes": "Fails the CPS rule T = F (T 0 vs F 2). Note: under a spec like UCSF, which needs T only at floors, this would be judged differently; the spec decides."
+    },
+    {
+      "id": "c03",
+      "title": "Firestop sealant, cable penetrations",
+      "expected": {"decision": "send_back", "problems": ["currency"]},
+      "submittal": [
+        {
+          "role": "product_data",
+          "file": "c03/3m_ic15wb_2005.pdf",
+          "urls": ["https://www.cableorganizer.com/cdn/shop/files/IC_15WB_Data_Sheet.pdf"],
+          "verified": "3M Fire Barrier Sealant IC 15WB+, (c) 2005, doc 98-0400-5077-9. VOC 0; flame spread 0 / smoke 0; continuous operating temp not to exceed 120 F."
+        }
+      ],
+      "compare": [
+        "https://www.farnell.com/datasheets/2165365.pdf",
+        "https://www.3m.com/3M/en_US/p/d/b40065443/"
+      ],
+      "compare_verified": "Rev B: VOC <2 g/L; flame spread 5 / smoke 50; service temp -20 to 180 F; up to 3 hr; adds CAN/ULC-S115.",
+      "notes": "Cleanest real old-vs-current pair in the set: VOC, flame/smoke and temperature all changed."
+    },
+    {
+      "id": "c04",
+      "title": "Firestop system, steel pipe through gypsum wall",
+      "expected": {"decision": "send_back", "problems": ["validity"]},
+      "submittal": [
+        {
+          "role": "system_drawing",
+          "file": "c04/hilti_w-l-2078.pdf",
+          "urls": [
+            "https://files-ask.hilti.com/original/bd/bdfcdtzlxq.pdf"
+          ],
+          "verified": "Hilti W-L-2078. F 1 or 2 hr; T 0, 1 or 2 hr. Plastic pipe only: PVC and CPVC up to 10 in, ABS and FRPP up to 6 in, PVDF and PEX up to 4 in. No insulation."
+        }
+      ],
+      "conditions": "Drawings show steel pipe at this wall (case condition penetrant_types contains 'steel pipe').",
+      "backup_case": {
+        "note": "If the Hilti host blocks scripts, use STI W-L-1079 (metal pipe only) and change the planted condition to 'PVC pipe'. W-L-1079 also has T 0 hr, so it would fail T = F too.",
+        "urls": ["https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf"]
+      },
+      "notes": "T can be read as 0 for some ratings; the answer key requires the validity problem and allows a spec problem as well."
+    },
+    {
+      "id": "c05",
+      "title": "LED troffer, classrooms",
+      "expected": {"decision": "approve", "problems": []},
+      "submittal": [
+        {
+          "role": "product_data",
+          "file": "c05/lithonia_blt_2x4_2024-07.pdf",
+          "urls": ["https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf"],
+          "verified": "Lithonia BLT 2x4, Rev. 07/18/24. 40L 30.5 W / 137.81 LPW; 48LHE 34.3 W / 162.5 LPW; 80+ and 90 CRI options; EZ1 dims to 1%; DLC Premium; 5-year warranty."
+        }
+      ],
+      "decoy": {
+        "note": "Same host has an OLD BLT sheet (Rev. 07/01/19, 40L 31.69 W / 128.23 LPW). Useful as an extra out-of-date case.",
+        "url": "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/2BLT4-40L-ADP-LP835.pdf"
+      },
+      "notes": "No second host found for the 07/18/24 revision."
+    },
+    {
+      "id": "c06",
+      "title": "LED downlight, corridors",
+      "expected": {"decision": "send_back", "problems": ["currency"]},
+      "submittal": [
+        {
+          "role": "product_data",
+          "file": "c06/lithonia_ldn6_2017-10.pdf",
+          "urls": [
+            "https://assets.usesi.com/product-media/specification-sheets/USESI_531911_specification_sheets.pdf",
+            "https://cdn.shopify.com/s/files/1/0681/6625/4899/files/lithonia-LDN6-spec.pdf"
+          ],
+          "verified": "Lithonia LDN6, Rev. 10/25/17. 1500 lm 3500K: 20.5 W / 1,606 lm / 78.3 lm/W. (Shopify backup is Rev. 04/16/18 with the same values.)"
+        }
+      ],
+      "compare": [
+        "https://dmdmaps.cabq.gov/DRB/PR-2024-010931/DFT_Submittals/PR-2024-010931_SP-2025-00005_October_1_2025_Second%20Submittal/Other-Misc%20Documents-2025-09-05-24.BG1277.4812%20ACCS_DFT%20Lighting%20Cutsheets_2025.09.04_v1.pdf",
+        "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"
+      ],
+      "compare_verified": "Rev. 04/11/25 (Albuquerque city submittal) and Rev. 05/03/22 (Dublin, OH): 1500 lm 3500K is 17.5 W / 1,514 lm / 86.4 lm/W.",
+      "notes": "Both newer copies sit inside multi-fixture city submittals; the verify step must find the LDN6 page within them."
+    },
+    {
+      "id": "c07",
+      "title": "LED troffer, offices",
+      "expected": {"decision": "send_back", "problems": ["status"]},
+      "submittal": [
+        {
+          "role": "product_data",
+          "file": "c07/lithonia_2tl4_2022-11.pdf",
+          "urls": [
+            "https://cdn.shopify.com/s/files/1/0681/6625/4899/files/lithonia-2TL4-spec.pdf",
+            "https://www.alconlighting.com/specsheets/Lithonia/2tled-2x4.pdf"
+          ],
+          "verified": "Lithonia 2TL 2x4 recessed LED, Rev. 11/18/22. 30L 25 W / 120.4 LPW; 48L 40 W / 121.6 LPW. (Alcon backup is Rev. 06/02/15.)"
+        }
+      ],
+      "compare": [
+        "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+      ],
+      "compare_verified": "Discontinuation of the TL recessed luminaire family effective June 30, 2024.",
+      "notes": "The notice is on an Acuity subdomain (possible Cloudflare). It is only needed by the verify step, not downloaded."
+    },
+    {
+      "id": "c08",
+      "title": "Exit sign",
+      "expected": {"decision": "approve_with_note", "problems": ["currency_note"]},
+      "submittal": [
+        {
+          "role": "product_data",
+          "file": "c08/lithonia_lqm_2019-09.pdf",
+          "urls": ["https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324751_Specification-PDF.pdf"],
+          "verified": "Lithonia LQM, Rev. 09/05/19. AC only 0.62 to 0.74 W; EL N 0.66 to 0.92 W."
+        }
+      ],
+      "compare": [
+        "https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324777_Specification-PDF.pdf",
+        "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf"
+      ],
+      "compare_verified": "Rev. 03/09/21 on HD Supply: same watts. The Acuity Rev. 08/07/24 copy (same watts) is behind Cloudflare for scripts.",
+      "notes": "Negative control. Newer LQM sheets on other hosts are the RG Selectable variant (different watts), so don't use them as the comparison."
+    }
+  ]
+}

@@ -63,7 +63,7 @@ tests/             pytest
 
 ## Test documents
 
-The 8 test cases use public documents (Chicago Public Schools spec sections, Hilti, 3M and Acuity/Lithonia data sheets). The PDFs are not committed; `scripts/fetch_docs.py` downloads them from the URLs in `data/cases/cases.json`.
+The 8 test cases use public documents (Chicago Public Schools spec sections, STI, Hilti, 3M and Acuity/Lithonia data sheets). The PDFs are not committed; `scripts/fetch_docs.py` downloads them from the URLs in `data/cases/documents.json` (first URL that returns a real PDF wins).
 
 ## License
 
