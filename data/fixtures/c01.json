@@ -11,7 +11,7 @@
     "claims": [
       {"id": "k1", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "f_rating_hr", "value": 4, "unit": "hr", "page": 1, "quote": "up to 4 hours"},
       {"id": "k2", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "voc_g_per_l", "value": 9, "unit": "g/L", "page": 1, "quote": "VOC 9 g/L"},
-      {"id": "k3", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "standards", "value": ["UL 1479", "ASTM E814", "ASTM E84", "ASTM G21"], "page": 1}
+      {"id": "k3", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "standards", "value": ["UL 1479", "ASTM E814", "ASTM E84", "ASTM G21"], "page": 1, "quote": "Tested to UL 1479, ASTM E814, ASTM E84, ASTM G21"}
     ]
   },
   "web": {

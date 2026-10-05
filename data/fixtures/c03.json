@@ -11,7 +11,7 @@
     "claims": [
       {"id": "k1", "product": "IC 15WB+", "manufacturer": "3M", "property": "voc_g_per_l", "value": "0", "unit": "g/L", "page": 1, "quote": "VOC 0"},
       {"id": "k2", "product": "IC 15WB+", "manufacturer": "3M", "property": "service_temp_max_f", "value": 120, "unit": "F", "page": 1, "quote": "not to exceed 120 F"},
-      {"id": "k3", "product": "IC 15WB+", "manufacturer": "3M", "property": "standards", "value": ["ASTM E814", "UL 1479"], "page": 1}
+      {"id": "k3", "product": "IC 15WB+", "manufacturer": "3M", "property": "standards", "value": ["ASTM E814", "UL 1479"], "page": 1, "quote": "Tested to ASTM E814 (UL 1479)"}
     ]
   },
   "web": {

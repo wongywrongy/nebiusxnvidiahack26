@@ -10,9 +10,9 @@
     "model": "LQM S W 3 R 120/277",
     "document_revision": "09/05/19",
     "claims": [
-      {"id": "k1", "product": "LQM", "manufacturer": "Lithonia", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1},
-      {"id": "k2", "product": "LQM", "manufacturer": "Lithonia", "property": "input_watts_120v", "value": 0.62, "unit": "W", "page": 1},
-      {"id": "k3", "product": "LQM", "manufacturer": "Lithonia", "property": "input_watts_277v", "value": 0.69, "unit": "W", "page": 1}
+      {"id": "k1", "product": "LQM", "manufacturer": "Lithonia", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1, "quote": "5-year warranty"},
+      {"id": "k2", "product": "LQM", "manufacturer": "Lithonia", "property": "input_watts_120v", "value": 0.62, "unit": "W", "page": 1, "quote": "0.62 W at 120 V"},
+      {"id": "k3", "product": "LQM", "manufacturer": "Lithonia", "property": "input_watts_277v", "value": 0.69, "unit": "W", "page": 1, "quote": "0.69 W at 277 V"}
     ]
   },
   "web": {

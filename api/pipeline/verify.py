@@ -146,6 +146,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
         findings.append(Finding(
             id="currency-outdated", check="currency", verdict="outdated", severity="major",
             title="Data sheet is out of date",
+            claim_ids=[claims[r.property].id for r in changed],
             detail=f"The submitted sheet ({submitted.document_revision}) differs from the current one ({out.current_revision}) on: "
             + ", ".join(r.label for r in changed) + ".",
             evidence=evidence, decided_by="tavily + super",

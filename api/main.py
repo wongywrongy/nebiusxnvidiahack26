@@ -8,6 +8,8 @@
   GET  /api/runs/{id}/events           server-sent events: history, then live
   GET  /api/runs/{id}/results          all results of a run
   GET  /api/runs/{id}/results/{case}   one result
+  GET  /api/runs/{id}/results/{case}/highlights   pages + where each finding sits on them
+  GET  /api/cases/{case}/pages/{n}.png  submittal page image (needs the PDF in data/raw/)
 
 The built web app (web/dist) is served at / from the same container.
 """
@@ -19,12 +21,13 @@ import json
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .config import settings
 from .pipeline.cases import all_cases, all_specs
+from .pipeline.ingest import highlights, page_png
 from .pipeline.runner import Run, execute, list_runs, load_result, replay
 from .schemas import Event
 
@@ -131,6 +134,24 @@ def result(run_id: str, case_id: str):
     if res is None:
         raise HTTPException(404, "No result yet")
     return res
+
+
+@app.get("/api/runs/{run_id}/results/{case_id}/highlights")
+def result_highlights(run_id: str, case_id: str):
+    res = load_result(run_id, case_id)
+    if res is None or case_id not in all_cases():
+        raise HTTPException(404, "No result yet")
+    return highlights(all_cases()[case_id], res)
+
+
+@app.get("/api/cases/{case_id}/pages/{n}.png")
+def page_image(case_id: str, n: int):
+    if case_id not in all_cases():
+        raise HTTPException(404, "Unknown case")
+    png = page_png(all_cases()[case_id], n)
+    if png is None:
+        raise HTTPException(404, "No PDF for this page in data/raw/")
+    return Response(png, media_type="image/png", headers={"Cache-Control": "max-age=3600"})
 
 
 def _sse(ev: Event) -> str:

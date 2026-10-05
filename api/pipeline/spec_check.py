@@ -68,6 +68,7 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
         found = by_prop.get(r.property, [])
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
+        related: list[str] = []  # other claims the comparison used (eq_ref)
 
         def make(verdict: str, title: str, detail: str = "", severity: Optional[str] = None) -> Finding:
             return Finding(
@@ -79,6 +80,7 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
                 detail=detail,
                 requirement_id=r.id,
                 claim_id=claim.id if claim else None,
+                claim_ids=[claim.id, *related] if claim else [],
                 spec_ref=ref,
             )
 
@@ -103,6 +105,7 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
         elif r.operator == "eq_ref":
             other = by_prop.get(str(r.value), [])
             if other:
+                related = [other[0].id]
                 a, b = normalize(claim.value, claim.unit), normalize(other[0].value, other[0].unit)
                 if a is not None and b is not None:
                     ok = abs(a - b) < 1e-9
