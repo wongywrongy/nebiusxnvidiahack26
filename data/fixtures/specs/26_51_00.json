@@ -1,0 +1,47 @@
+{
+  "_note": "Mock-mode stand-in for the Super extraction of CPS 26 51 00. The spec also requires L70 >= 50,000 h; it is left out of the fixture until real sheet values are extracted, to avoid made-up numbers.",
+  "requirements": [
+    {
+      "id": "lt-cri",
+      "section": "26 51 00",
+      "paragraph": "",
+      "property": "cri",
+      "operator": "gte",
+      "value": 80,
+      "text": "Color rendering (CRI) of at least 80",
+      "severity": "major"
+    },
+    {
+      "id": "lt-dim",
+      "section": "26 51 00",
+      "paragraph": "",
+      "property": "dim_min_percent",
+      "operator": "lte",
+      "value": 5,
+      "unit": "%",
+      "text": "Dims down to 5% or lower without flicker",
+      "severity": "major"
+    },
+    {
+      "id": "lt-warranty",
+      "section": "26 51 00",
+      "paragraph": "",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 5,
+      "unit": "yr",
+      "text": "5-year warranty on fixture and driver",
+      "severity": "major"
+    },
+    {
+      "id": "lt-dlc",
+      "section": "26 51 00",
+      "paragraph": "",
+      "property": "dlc_listed",
+      "operator": "any_of",
+      "value": ["dlc standard", "dlc premium"],
+      "text": "Listed as a DesignLights Consortium qualified product",
+      "severity": "major"
+    }
+  ]
+}

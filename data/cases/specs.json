@@ -1,0 +1,20 @@
+{
+  "specs": [
+    {
+      "section": "07 84 00",
+      "title": "Firestopping",
+      "owner": "Chicago Public Schools",
+      "version": "CPS control 02_07/01/2025",
+      "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/firestopping-new/07-84-00-firestopping.pdf",
+      "file": "specs/cps_07_84_00.pdf"
+    },
+    {
+      "section": "26 51 00",
+      "title": "Interior Lighting",
+      "owner": "Chicago Public Schools",
+      "version": "CPS control 04_08/09/2024",
+      "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/electrical-new/26-51-00-interior-lighting.pdf",
+      "file": "specs/cps_26_51_00.pdf"
+    }
+  ]
+}

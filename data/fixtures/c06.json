@@ -1,0 +1,50 @@
+{
+  "_note": "Mock fixture. Submitted: LDN6 Rev. 10/25/17. Current: Rev. 05/03/22. Warranty and DLC status are not taken from the 2017 sheet, so they show as not stated.",
+  "pages": [
+    {"page": 1, "text": "Lithonia LDN6 6-inch LED downlight. 3500K, AR LD trim. 1500 lumen package: 1,606 lm, 20.5 W, 78.3 LPW. 80 CRI minimum. EZ1 0-10V dimming driver to 1%. Rev. 10/25/17."}
+  ],
+  "triage": {"pages": [{"page": 1, "kind": "product_data"}]},
+  "claims": {
+    "product": "LDN6 LED downlight",
+    "manufacturer": "Lithonia Lighting (Acuity Brands)",
+    "model": "LDN6 35/15 AR LD",
+    "document_revision": "10/25/17",
+    "claims": [
+      {"id": "k1", "product": "LDN6", "manufacturer": "Lithonia", "property": "cri", "value": 80, "page": 1},
+      {"id": "k2", "product": "LDN6", "manufacturer": "Lithonia", "property": "dim_min_percent", "value": 1, "unit": "%", "page": 1},
+      {"id": "k3", "product": "LDN6", "manufacturer": "Lithonia", "property": "watts", "value": 20.5, "unit": "W", "page": 1},
+      {"id": "k4", "product": "LDN6", "manufacturer": "Lithonia", "property": "efficacy_lm_per_w", "value": 78.3, "unit": "lm/W", "page": 1}
+    ]
+  },
+  "web": {
+    "search": [
+      {"url": "https://www.acuitybrands.com/products/detail/564909", "title": "LDN6 LED downlight"},
+      {"url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf", "title": "LDN6 spec sheet Rev. 05/03/22 (agency copy)"}
+    ],
+    "extract": {
+      "https://www.acuitybrands.com/products/detail/564909": "LDN6 LED downlight. 2700K-5000K. 0-10V or DALI dimming.",
+      "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf": "LDN6 spec sheet Rev. 05/03/22. 3500K 1500 lm package: 17.5 W, 86.4 LPW."
+    }
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "05/03/22",
+    "current_values": [
+      {"property": "watts", "value": 17.5, "unit": "W"},
+      {"property": "efficacy_lm_per_w", "value": 86.4, "unit": "lm/W"}
+    ],
+    "source_urls": ["https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf", "https://www.acuitybrands.com/products/detail/564909"]
+  },
+  "report": {
+    "summary": "The spec sheet in this package is from 2017. The current version lists different power and efficiency for the same fixture.",
+    "note_to_subcontractor": "Please resubmit with the current LDN6 spec sheet (Rev. 05/03/22) and include the warranty and DLC listing.",
+    "finding_titles": {
+      "currency-outdated": "Spec sheet is from 2017",
+      "spec-lt-warranty": "Warranty isn't stated in the package",
+      "spec-lt-dlc": "DLC listing isn't stated in the package"
+    },
+    "why_it_matters": {
+      "currency-outdated": "Power and efficiency feed the lighting energy calculations, so old numbers can make the energy compliance paperwork wrong."
+    }
+  }
+}

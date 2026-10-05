@@ -1,0 +1,8 @@
+.git
+.env
+.cache
+runs
+data/raw
+web/node_modules
+web/dist
+**/__pycache__
