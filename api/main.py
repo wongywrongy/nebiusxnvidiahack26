@@ -8,8 +8,9 @@
   GET  /api/runs/{id}/events           server-sent events: history, then live
   GET  /api/runs/{id}/results          all results of a run
   GET  /api/runs/{id}/results/{case}   one result
-  GET  /api/runs/{id}/results/{case}/highlights   pages + where each finding sits on them
-  GET  /api/cases/{case}/pages/{n}.png  submittal page image (needs the PDF in data/raw/)
+  GET  /api/docs/{case}/{file}/pages            page count and sizes of a downloaded submittal PDF
+  GET  /api/docs/{case}/{file}/pages/{n}.png     one page as PNG
+  GET  /api/cases/{case}/text                    fixture page text (fallback when the PDF is missing)
 
 The built web app (web/dist) is served at / from the same container.
 """
@@ -27,7 +28,8 @@ from pydantic import BaseModel
 
 from .config import settings
 from .pipeline.cases import all_cases, all_specs
-from .pipeline.ingest import highlights, page_png
+from .llm import load_fixture
+from .pipeline.render import page_sizes, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, replay
 from .schemas import Event
 
@@ -136,22 +138,35 @@ def result(run_id: str, case_id: str):
     return res
 
 
-@app.get("/api/runs/{run_id}/results/{case_id}/highlights")
-def result_highlights(run_id: str, case_id: str):
-    res = load_result(run_id, case_id)
-    if res is None or case_id not in all_cases():
-        raise HTTPException(404, "No result yet")
-    return highlights(all_cases()[case_id], res)
+def _submittal_pdf(case_id: str, file: str):
+    """Path of a downloaded submittal PDF, by file name. Only files the case lists, only under data/raw/."""
+    case = all_cases().get(case_id)
+    rels = [d["file"] for d in (case or {}).get("submittal", []) if d["file"].rsplit("/", 1)[-1] == file]
+    path = (settings.raw_dir / rels[0]).resolve() if rels else None
+    if path is None or not path.is_relative_to(settings.raw_dir.resolve()) or not path.is_file():
+        raise HTTPException(404, "No such document in data/raw/")
+    return path
 
 
-@app.get("/api/cases/{case_id}/pages/{n}.png")
-def page_image(case_id: str, n: int):
+@app.get("/api/docs/{case_id}/{file}/pages")
+def doc_pages(case_id: str, file: str):
+    sizes = page_sizes(_submittal_pdf(case_id, file))
+    return {"count": len(sizes), "pages": sizes}
+
+
+@app.get("/api/docs/{case_id}/{file}/pages/{n}.png")
+def doc_page_png(case_id: str, file: str, n: int):
+    path = _submittal_pdf(case_id, file)
+    if not 1 <= n <= len(page_sizes(path)):
+        raise HTTPException(404, "No such page")
+    return Response(render_page(path, n), media_type="image/png", headers={"Cache-Control": "max-age=86400"})
+
+
+@app.get("/api/cases/{case_id}/text")
+def case_text(case_id: str):
     if case_id not in all_cases():
         raise HTTPException(404, "Unknown case")
-    png = page_png(all_cases()[case_id], n)
-    if png is None:
-        raise HTTPException(404, "No PDF for this page in data/raw/")
-    return Response(png, media_type="image/png", headers={"Cache-Control": "max-age=3600"})
+    return {"pages": load_fixture(case_id).get("pages", [])}
 
 
 def _sse(ev: Event) -> str:

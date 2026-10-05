@@ -103,6 +103,17 @@ class CompareRow(BaseModel):
 
 # ---------- findings and result ----------
 
+class Highlight(BaseModel):
+    """Where one claim behind a finding sits in the submittal."""
+
+    claim_id: str
+    doc_file: Optional[str] = None  # path under data/raw/; None when the PDF is not downloaded
+    page: Optional[int] = None  # page in doc_file (package page when doc_file is None)
+    quote: Optional[str] = None
+    boxes: list[dict[str, float]] = []  # {x0, y0, x1, y1} as fractions of the page; [] = not located
+    kind: Literal["problem", "checked"] = "problem"
+
+
 Check = Literal["spec", "currency", "validity", "status", "completeness"]
 Verdict = Literal["pass", "fail", "outdated", "unverified", "note"]
 Severity = Literal["critical", "major", "minor", "info"]
@@ -119,7 +130,8 @@ class Finding(BaseModel):
     why_it_matters: Optional[str] = None
     requirement_id: Optional[str] = None
     claim_id: Optional[str] = None
-    claim_ids: list[str] = []  # claims on the page that this finding is about (for highlights)
+    claim_ids: list[str] = []  # claims on the page that this finding is about
+    highlights: list[Highlight] = []
     spec_ref: Optional[str] = None
     evidence: list[Evidence] = []
     decided_by: str = "code"
@@ -161,7 +173,6 @@ class Result(BaseModel):
     comparison: list[CompareRow] = []
     claims: list[Claim] = []
     document_revision: Optional[str] = None
-    document_source: Literal["pdf", "fixture"] = "fixture"  # where claim pages and quotes came from
     note_to_subcontractor: str = ""
     usage: list[Usage] = []
     web_credits: float = 0.0

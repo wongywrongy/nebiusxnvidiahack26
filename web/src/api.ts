@@ -4,7 +4,7 @@ export type Decision = 'approve' | 'approve_with_note' | 'send_back'
 export type Stage =
   | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'reconcile' | 'report' | 'done' | 'error'
 
-export interface Case { id: string; title: string; section: string }
+export interface Case { id: string; title: string; section: string; submittal: { file: string }[] }
 export interface Project { name: string; cases: Case[] }
 
 export interface Event {
@@ -29,6 +29,7 @@ export interface Finding {
   spec_ref?: string | null
   requirement_id?: string | null
   claim_ids: string[]
+  highlights: Mark[]
   evidence: Evidence[]
   decided_by: string
 }
@@ -46,7 +47,6 @@ export interface Result {
   comparison: CompareRow[]
   claims: Claim[]
   document_revision?: string | null
-  document_source: 'pdf' | 'fixture'
   note_to_subcontractor: string
   usage: Usage[]
   web_credits: number
@@ -77,13 +77,28 @@ export async function getResult(runId: string, caseId: string): Promise<Result> 
   return (await fetch(`/api/runs/${runId}/results/${caseId}`)).json()
 }
 
-export type Tone = 'red' | 'amber' | 'gray'
-export interface Highlight { finding_id: string; claim_id: string; page: number; quote: string | null; tone: Tone; rects: number[][] }
-export interface Page { page: number; image: boolean; text: string | null }
-export interface Highlights { pages: Page[]; highlights: Highlight[] }
+export type Tone = 'red' | 'amber' | 'gray' | 'green'
+export interface Box { x0: number; y0: number; x1: number; y1: number }
+// Where one claim behind a finding sits: file and page in data/raw, boxes as fractions of the page.
+export interface Mark {
+  claim_id: string; doc_file: string | null; page: number | null; quote: string | null; boxes: Box[]; kind: 'problem' | 'checked'
+}
+export interface DocPages { file: string; name: string; pages: { width: number; height: number }[] }
+export interface TextPage { page: number; text: string }
 
-export async function getHighlights(runId: string, caseId: string): Promise<Highlights> {
-  return (await fetch(`/api/runs/${runId}/results/${caseId}/highlights`)).json()
+const basename = (f: string) => f.split('/').pop()!
+
+/** Page sizes of a downloaded submittal PDF, or null when it is not in data/raw. */
+export async function getDocPages(caseId: string, file: string): Promise<DocPages | null> {
+  const r = await fetch(`/api/docs/${caseId}/${encodeURIComponent(basename(file))}/pages`)
+  return r.ok ? { file, name: basename(file), pages: (await r.json()).pages } : null
+}
+
+export const pageUrl = (caseId: string, file: string, n: number) =>
+  `/api/docs/${caseId}/${encodeURIComponent(basename(file))}/pages/${n}.png`
+
+export async function getCaseText(caseId: string): Promise<TextPage[]> {
+  return (await (await fetch(`/api/cases/${caseId}/text`)).json()).pages
 }
 
 export async function startReplay(sourceRunId: string): Promise<string> {
