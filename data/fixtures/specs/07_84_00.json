@@ -3,6 +3,7 @@
   "requirements": [
     {
       "id": "fs-std",
+      "applies_to": ["product_data"],
       "section": "07 84 00",
       "paragraph": "",
       "property": "standards",
@@ -24,6 +25,7 @@
     },
     {
       "id": "fs-voc",
+      "applies_to": ["product_data"],
       "section": "07 84 00",
       "paragraph": "",
       "property": "voc_g_per_l",

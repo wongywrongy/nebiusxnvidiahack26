@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Optional
 
-from ..schemas import Claim, Finding, Requirement
+from ..schemas import Claim, Compare, Finding, Requirement
 
 UNIT_TO_BASE = {
     # length -> inches
@@ -67,7 +67,25 @@ def _fmt(value, unit) -> str:
     return f"{value} {unit}".strip() if unit else str(value)
 
 
-def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]:
+SYMBOL = {"gte": "≥", "lte": "≤", "eq": "="}
+SHORT = {"t_rating_hr": "T", "f_rating_hr": "F"}
+
+
+def _wanted(r: Requirement):
+    """What the requirement asks for, in the form the comparison shows it."""
+    if r.operator in SYMBOL:
+        return f"{SYMBOL[r.operator]} {_fmt(r.value, r.unit)}"
+    if r.operator == "eq_ref":
+        return f"{SHORT.get(r.property, _label(r.property))} = {SHORT.get(str(r.value), _label(str(r.value)))}"
+    if r.operator == "contains":
+        return [str(r.value)]
+    if r.operator == "any_of":
+        return list(r.value) if isinstance(r.value, list) else [str(r.value)]
+    return r.text
+
+
+def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[set[str]] = None) -> list[Finding]:
+    """roles: the submittal's document roles; a requirement whose applies_to misses them all is not applicable."""
     by_prop: dict[str, list[Claim]] = {}
     for c in claims:
         by_prop.setdefault(c.property, []).append(c)
@@ -78,23 +96,33 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
         related: list[str] = []  # other claims the comparison used (eq_ref)
+        left_label, right_label = ("Job needs", "Listing covers") if r.check == "validity" else ("Spec requires", "Submitted")
 
-        def make(verdict: str, title: str, detail: str = "", severity: Optional[str] = None) -> Finding:
+        def make(verdict: str, title: str, detail: str = "", severity: Optional[str] = None,
+                 left=None, right=None) -> Finding:
+            shown = right if right is not None else (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not stated"
             return Finding(
                 id=f"{r.check}-{r.id}",
                 check=r.check,
                 verdict=verdict,
-                severity="info" if verdict == "pass" else (severity or r.severity),
+                severity="info" if verdict in ("pass", "not_applicable") else (severity or r.severity),
                 title=title,
                 detail=detail,
                 requirement_id=r.id,
                 claim_id=claim.id if claim else None,
                 claim_ids=[claim.id, *related] if claim else [],
                 spec_ref=ref,
+                compare=Compare(left_label=left_label, left_value=left if left is not None else _wanted(r),
+                                right_label=right_label, right_value=shown, verdict="pass" if verdict == "pass" else "fail"),
             )
 
+        if r.applies_to and roles and not set(r.applies_to) & roles:
+            findings.append(make("not_applicable", r.text, f"Applies to {', '.join(r.applies_to)} only."))
+            continue
+
         if r.operator == "exists":
-            findings.append(make("pass", r.text) if found else make("fail", f"Missing: {r.text}", "Not found in the package."))
+            findings.append(make("pass", r.text, right="Included") if found
+                            else make("fail", f"Missing: {r.text}", "Not found in the package.", right="Not found"))
             continue
 
         if r.operator == "eq_ref" and (claim is None or not by_prop.get(str(r.value))):
@@ -106,6 +134,7 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
 
         ok: Optional[bool] = None
         detail = ""
+        left = None
         if r.operator in ("gte", "lte", "eq"):
             a, b = normalize(claim.value, claim.unit), normalize(r.value, r.unit)
             if a is not None and b is not None:
@@ -118,6 +147,7 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
                 a, b = normalize(claim.value, claim.unit), normalize(other[0].value, other[0].unit)
                 if a is not None and b is not None:
                     ok = abs(a - b) < 1e-9
+                    left = f"{_wanted(r)} ({_fmt(other[0].value, other[0].unit)})"  # "T = F (2 hr)"
                     detail = (f"{_label(r.property)} is {_fmt(claim.value, claim.unit)} but "
                               f"{_label(str(r.value))} is {_fmt(other[0].value, other[0].unit)}.")
         elif r.operator == "contains":
@@ -131,9 +161,9 @@ def check(requirements: list[Requirement], claims: list[Claim]) -> list[Finding]
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:
-            findings.append(make("unverified", f"Could not compare: {r.text}", "Values were not comparable.", severity="minor"))
+            findings.append(make("unverified", f"Could not compare: {r.text}", "Values were not comparable.", severity="minor", left=left))
         elif ok:
-            findings.append(make("pass", r.text, detail))
+            findings.append(make("pass", r.text, detail, left=left))
         else:
-            findings.append(make("fail", f"Does not meet: {r.text}", detail))
+            findings.append(make("fail", f"Does not meet: {r.text}", detail, left=left))
     return findings

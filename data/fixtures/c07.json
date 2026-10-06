@@ -27,7 +27,7 @@
     }
   },
   "verify": {
-    "status": "discontinued",
+    "status": "discontinued", "status_date": "June 30, 2024",
     "replacement": null,
     "current_revision": null,
     "current_values": [],

@@ -10,7 +10,7 @@ import json
 from urllib.parse import urlparse
 
 from ..llm import router
-from ..schemas import ClaimsOut, CompareRow, Evidence, Finding, Usage, VerifyOut
+from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Usage, VerifyOut
 from ..web import WebClient, snapshot
 
 LISTING_BODIES = ("ul.com", "intertek.com", "icc-es.org", "designlights.org", "energystar.gov")
@@ -134,12 +134,15 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
         rows.insert(0, CompareRow(property="document_revision", label=LABELS["document_revision"],
                                   submitted=submitted.document_revision, current=out.current_revision, changed=True))
 
+    sent, now = submitted.document_revision or "undated", out.current_revision or "unknown"
     findings: list[Finding] = []
     if out.status == "discontinued":
         findings.append(Finding(
             id="status-discontinued", check="status", verdict="fail", severity="major",
             title="Product is no longer made",
             detail=f"The manufacturer lists it as discontinued.{' Replacement: ' + out.replacement if out.replacement else ''}",
+            compare=Compare(left_label="Status", right_label="Manufacturer", verdict="fail",
+                            right_value=" ".join(x for x in ["Discontinued", out.status_date or ""] if x)),
             evidence=evidence, decided_by="tavily + super",
         ))
     if changed:
@@ -147,6 +150,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             id="currency-outdated", check="currency", verdict="outdated", severity="major",
             title="Data sheet is out of date",
             claim_ids=[claims[r.property].id for r in changed],
+            compare=Compare(left_label=f"Submitted ({sent})", right_label=f"Current ({now})", verdict="changed", rows=changed),
             detail=f"The submitted sheet ({submitted.document_revision}) differs from the current one ({out.current_revision}) on: "
             + ", ".join(r.label for r in changed) + ".",
             evidence=evidence, decided_by="tavily + super",
@@ -156,6 +160,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             id="currency-newer", check="currency", verdict="note", severity="minor",
             title="A newer data sheet exists; no values changed",
             detail=f"Submitted {submitted.document_revision}, current {out.current_revision}. Ask for the current sheet for the record.",
+            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value=now, verdict="changed"),
             evidence=evidence, decided_by="tavily + super",
         ))
     if out.status == "unknown" and not pages:
@@ -163,11 +168,13 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             id="currency-unverified", check="currency", verdict="unverified", severity="minor",
             title="Could not find the manufacturer's current documents",
             detail="No usable source was found; check manually.", decided_by="tavily",
+            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value="Not found", verdict="fail"),
         ))
     if not findings:
         findings.append(Finding(
             id="currency-current", check="currency", verdict="pass", severity="info",
             title="Data sheet matches the manufacturer's current version", evidence=evidence, decided_by="tavily + super",
+            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value=now, verdict="pass"),
         ))
     return findings, rows, [usage], web.credits
 

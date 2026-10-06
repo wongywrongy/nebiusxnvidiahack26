@@ -34,7 +34,7 @@
   "report": {
     "summary": "The firestop system has a 0 hr temperature rating against a 2 hr fire rating, which this project's spec does not allow.",
     "note_to_subcontractor": "Please resubmit with a listed system whose T rating equals its F rating for this floor, as required by spec section 07 84 00.",
-    "finding_titles": {"spec-fs-t-eq-f": "Temperature rating is lower than the fire rating", "spec-fs-voc": "VOC content isn't stated on the system drawing", "spec-fs-std": "Test standard isn't stated on the system drawing"},
+    "finding_titles": {"spec-fs-t-eq-f": "Temperature rating is lower than the fire rating"},
     "why_it_matters": {"spec-fs-t-eq-f": "This school's standard requires the T rating to match the F rating, so heat can't pass through the floor for as long as fire is held back."}
   }
 }
