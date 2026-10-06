@@ -1,8 +1,8 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
   DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getProject, getResult, pageUrl, startReplay, startRun, streamEvents,
-  type Case, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Mark,
-  type Project, type Result, type Stage, type TextPage, type Tone,
+  type Case, type Compare, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Mark,
+  type Project, type Result, type Stage, type TextPage, type Tone, type Value,
 } from './api'
 
 type View = 'ready' | 'running' | 'done' | 'detail'
@@ -289,7 +289,7 @@ const TONE_RANK: Record<Tone, number> = { red: 0, amber: 1, gray: 2, green: 3 }
 const SEVERITY_RANK: Record<Finding['severity'], number> = { critical: 0, major: 1, minor: 2, info: 3 }
 const toneOf = (f: Finding): Tone => (f.verdict === 'fail' ? 'red' : f.verdict === 'outdated' ? 'amber' : 'gray')
 const LABEL: Record<Finding['verdict'], string> = {
-  fail: 'Must fix', outdated: 'Out of date', note: 'Note', unverified: 'Not stated', pass: 'Passed',
+  fail: 'Must fix', outdated: 'Out of date', note: 'Note', unverified: 'Not stated', pass: 'Passed', not_applicable: 'Not applicable',
 }
 // A requirement was looked for but no claim was found on any page.
 const notFound = (f: Finding) => !!f.requirement_id && f.claim_ids.length === 0
@@ -331,7 +331,7 @@ function Detail({ result, docs, text, runId, onReplay }: {
   result: Result; docs: DocPages[] | null; text: TextPage[] | null; runId: string; onReplay: () => void
 }) {
   // Worst first: must fix, then out of date, then notes and not-stated.
-  const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass')
+  const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass' && f.verdict !== 'not_applicable')
     .sort((a, b) => TONE_RANK[toneOf(a)] - TONE_RANK[toneOf(b)] || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity]), [result])
   const marks: Placed[] = useMemo(() => result.findings.flatMap((f) =>
     f.highlights.map((h) => ({ ...h, finding: f, tone: h.kind === 'checked' ? 'green' as Tone : toneOf(f) }))), [result])
@@ -350,6 +350,8 @@ function Detail({ result, docs, text, runId, onReplay }: {
     else setTextPage(m.page)
   }
 
+  const passed = result.findings.filter((f) => f.verdict === 'pass').length
+  const skipped = result.findings.filter((f) => f.verdict === 'not_applicable').length
   const pageCount = docs ? docs.reduce((a, d) => a + d.pages.length, 0) : text?.length ?? 0
   const lost = sel && sel.highlights.length > 0 && docs && sel.highlights.every((h) => h.boxes.length === 0)
   const banner = !sel ? null
@@ -378,7 +380,8 @@ function Detail({ result, docs, text, runId, onReplay }: {
             )
           })}
           <div className="px-3.5 py-3 text-muted">
-            {issues.length ? '' : 'No problems found. '}{plural(result.findings.length - issues.length, 'check')} passed
+            {issues.length ? '' : 'No problems found. '}{plural(passed, 'check')} passed
+            {skipped > 0 && <span className="block text-xs text-faint">{plural(skipped, 'check')} not applicable to this document type</span>}
           </div>
         </nav>
         <div className="order-last min-[1100px]:order-none"><HowChecked result={result} runId={runId} onReplay={onReplay} /></div>
@@ -392,9 +395,8 @@ function Detail({ result, docs, text, runId, onReplay }: {
               page={textPage} onPage={setTextPage} />}
       </section>
 
-      <aside className="contents min-[1100px]:flex min-[1100px]:min-w-0 min-[1100px]:flex-col min-[1100px]:gap-4">
-        <FindingCard finding={sel} result={result} />
-        <Note text={result.note_to_subcontractor} />
+      <aside className="contents min-[1100px]:block min-[1100px]:min-w-0">
+        <FindingCard finding={sel} result={result} passed={passed} />
       </aside>
     </div>
   )
@@ -405,7 +407,7 @@ function worstTone(ms: Placed[]): Tone | undefined {
 }
 
 // "now 17.5 W · 86.4 lm/W": one label per problem finding on a page, under its leftmost box.
-function callouts(ms: Placed[], result: Result) {
+function callouts(ms: Placed[], result: Result, selId: string | null) {
   const by = new Map<string, Placed[]>()
   for (const m of ms) if (m.kind === 'problem') by.set(m.finding.id, [...(by.get(m.finding.id) ?? []), m])
   return [...by.values()].flatMap((group) => {
@@ -413,7 +415,7 @@ function callouts(ms: Placed[], result: Result) {
     const boxes = group.flatMap((m) => m.boxes)
     if (!rows.length || !boxes.length) return []
     return [{ finding: group[0].finding, x: Math.min(...boxes.map((b) => b.x0)), y: Math.max(...boxes.map((b) => b.y1)),
-      text: [...new Set(rows.map((r) => r.current))].join(' · '), color: TONE_COLOR[group[0].tone] }]
+      text: [...new Set(rows.map((r) => r.current))].join(' · '), color: TONE_COLOR[group[0].finding.id === selId ? 'red' : group[0].tone] }]
   })
 }
 
@@ -481,7 +483,7 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
               .sort((a, b) => Number(a.kind === 'problem') - Number(b.kind === 'problem') || Number(a.finding.id === selId) - Number(b.finding.id === selId))
               .map((m) => m.boxes.map((b, i) => {
                 const on = m.finding.id === selId
-                const c = TONE_COLOR[m.tone]
+                const c = TONE_COLOR[on ? 'red' : m.tone]
                 return (
                   <Fragment key={`${m.finding.id}-${m.claim_id}-${i}`}>
                     <div key={on ? `p${pulse}` : 'still'} title={`${m.kind === 'checked' ? 'Checked' : LABEL[m.finding.verdict]}: ${m.finding.title}`}
@@ -496,7 +498,7 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
                   </Fragment>
                 )
               }))}
-            {callouts(byPage[p.key] ?? [], result).map(({ finding, x, y, text, color }) => (
+            {callouts(byPage[p.key] ?? [], result, selId).map(({ finding, x, y, text, color }) => (
               <span key={finding.id} className={`absolute z-10 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold text-on-accent shadow ${finding.id === selId ? '' : 'opacity-75'}`}
                 style={{ left: `${x * 100}%`, top: `calc(${y * 100}% + 5px)`, background: color }}>
                 now {text}
@@ -593,62 +595,114 @@ function HowChecked({ result, runId, onReplay }: { result: Result; runId: string
   )
 }
 
-function FindingCard({ finding: f, result }: { finding: Finding | null; result: Result }) {
-  if (!f) {
+function Icon({ kind }: { kind: 'x' | 'check' }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden className="shrink-0">
+      <path d={kind === 'x' ? 'm4 4 8 8M12 4l-8 8' : 'm3.5 8.5 3 3 6-7'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+const CAPS = 'text-[10px] font-medium uppercase tracking-[0.08em] text-faint'
+const BIG = 'text-[20px] font-semibold leading-tight'
+const show = (v: Value) => (v === null || v === undefined ? '—' : String(v))
+
+// Lists as chips. On the "needs" side, an item the other side lacks is a red outlined chip.
+function Chips({ items, against, fail }: { items: string[]; against?: Value; fail?: boolean }) {
+  const other = (Array.isArray(against) ? against : [show(against ?? null)]).join(' | ').toLowerCase()
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {items.map((it) => {
+        const missing = fail && against !== undefined && !other.includes(it.toLowerCase())
+        return (
+          <span key={it} className={`rounded-md border px-2 py-0.5 text-xs ${missing ? 'border-bad font-semibold text-[#ff8a84]' : 'border-line bg-well text-soft'}`}>
+            {it}
+          </span>
+        )
+      })}
+    </div>
+  )
+}
+
+function Side({ label, value, against, tone }: { label: string; value: Value; against?: Value; tone?: 'fail' | 'pass' | 'changed' }) {
+  return (
+    <div className="flex min-w-0 flex-col gap-1.5">
+      <span className={CAPS}>{label}</span>
+      {Array.isArray(value)
+        ? <Chips items={value} against={against} fail={against !== undefined} />
+        : <span className={`flex items-center gap-1.5 ${BIG} ${tone === 'fail' ? 'text-[#ff8a84]' : tone === 'changed' ? 'text-today' : 'text-ink'}`}>
+            {show(value)}{tone === 'fail' && <Icon kind="x" />}{tone === 'pass' && <span className="text-good"><Icon kind="check" /></span>}
+          </span>}
+    </div>
+  )
+}
+
+function CompareBlock({ c }: { c: Compare }) {
+  if (c.rows.length) {
     return (
-      <div className="panel flex flex-col gap-2 p-5">
-        <span className="text-xs text-good">No problems</span>
-        <h2 className="text-lg font-bold leading-snug">All {result.findings.length} checks passed</h2>
-        <p className="text-muted">{result.summary}</p>
+      <div className="flex flex-col gap-3 rounded-lg border border-line bg-well p-3.5">
+        <div className="grid grid-cols-2 gap-3">
+          <span className={CAPS}>{c.left_label}</span><span className={CAPS}>{c.right_label}</span>
+        </div>
+        {c.rows.map((r) => (
+          <div key={r.property} className="flex flex-col gap-1">
+            <span className="text-xs text-muted">{r.label}</span>
+            <div className="grid grid-cols-2 items-baseline gap-3">
+              <span className={`${BIG} text-muted line-through decoration-1`}>{r.submitted ?? '—'}</span>
+              <span className={`${BIG} text-today`}><span className="mr-1.5 text-sm text-faint" aria-hidden>→</span>{r.current ?? '—'}</span>
+            </div>
+          </div>
+        ))}
       </div>
     )
   }
-  const props = new Set(result.claims.filter((c) => f.claim_ids.includes(c.id)).map((c) => c.property))
-  const rows = f.check === 'currency' ? result.comparison : result.comparison.filter((r) => props.has(r.property))
-  const src = f.evidence[0]
+  if (c.left_value === null || c.left_value === undefined) { // single fact, e.g. Status: Discontinued June 30, 2024
+    return (
+      <div className="flex flex-col gap-1.5 rounded-lg border border-line bg-well p-3.5">
+        <span className={CAPS}>{c.left_label}</span>
+        <span className={`flex items-center gap-1.5 ${BIG} ${c.verdict === 'fail' ? 'text-[#ff8a84]' : 'text-ink'}`}>
+          {show(c.right_value)}{c.verdict === 'fail' && <Icon kind="x" />}
+        </span>
+      </div>
+    )
+  }
+  return (
+    <div className="grid grid-cols-2 gap-4 rounded-lg border border-line bg-well p-3.5">
+      <Side label={c.left_label} value={c.left_value} against={c.verdict === 'fail' ? c.right_value : undefined} />
+      <Side label={c.right_label} value={c.right_value} tone={c.verdict} />
+    </div>
+  )
+}
+
+function FindingCard({ finding: f, result, passed }: { finding: Finding | null; result: Result; passed: number }) {
+  const src = f?.evidence[0]
   return (
     <div className="panel flex flex-col gap-4 p-5">
-      <div className="flex flex-col gap-1.5">
-        <span className="text-xs" style={{ color: TONE_COLOR[toneOf(f)] }}>
-          {LABEL[f.verdict]}{f.severity !== 'info' ? ` · ${f.severity}` : ''}
-        </span>
-        <h2 className="text-lg font-bold leading-snug">{f.title}</h2>
-        {f.detail && <p className="text-soft">{f.detail}</p>}
-      </div>
-
-      {rows.length > 0 && (
-        <div className="grid grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-x-3 gap-y-1.5 text-xs">
-          <span className="text-faint" /><span className="text-faint">Sent</span><span className="text-today">Today</span>
-          {rows.map((r) => (
-            <Fragment key={r.property}>
-              <span className={r.changed ? '' : 'text-muted'}>{r.label}</span>
-              <span className={r.changed ? 'text-muted line-through' : ''}>{r.submitted ?? '—'}</span>
-              <span className={r.changed ? 'font-semibold text-today' : ''}>{r.current ?? '—'}</span>
-            </Fragment>
-          ))}
+      {f ? (
+        <>
+          <div className="flex min-w-0 flex-col gap-1">
+            <span className="text-xs" style={{ color: TONE_COLOR[toneOf(f)] }}>
+              {LABEL[f.verdict]}{f.severity !== 'info' ? ` · ${f.severity}` : ''}
+            </span>
+            <h2 className="truncate text-lg font-bold" title={f.title}>{f.title}</h2>
+          </div>
+          {f.compare && <CompareBlock c={f.compare} />}
+          {f.why_it_matters && <p className="text-[13px] leading-snug text-soft"><span className="text-faint">Why it matters: </span>{f.why_it_matters}</p>}
+          <div className="truncate text-xs text-faint">
+            {src ? (
+              <>Checked against <a href={src.url} target="_blank" rel="noreferrer" className="text-soft underline decoration-edge underline-offset-2 hover:decoration-ink">{src.title || src.url}</a>
+                {src.retrieved_at ? ` · ${new Date(src.retrieved_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}` : ''}</>
+            ) : <>Checked against spec {f.spec_ref || 'section'}{result.document_revision ? ` · sheet ${result.document_revision}` : ''}</>}
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col gap-1">
+          <span className="text-xs text-good">No problems</span>
+          <h2 className="text-lg font-bold">All {plural(passed, 'check')} passed</h2>
+          <p className="text-muted">{result.summary}</p>
         </div>
       )}
-
-      {f.why_it_matters && (
-        <p className="rounded-lg border border-warn/20 bg-warn/5 px-3 py-2.5"><b>Why it matters:</b> {f.why_it_matters}</p>
-      )}
-
-      <div className="flex flex-col gap-1 border-t border-line pt-3 text-xs">
-        <span className="text-faint">Checked against</span>
-        {src ? (
-          <>
-            <a href={src.url} target="_blank" rel="noreferrer" className="truncate text-ink underline decoration-edge underline-offset-2 hover:decoration-ink">
-              {src.title || src.url}
-            </a>
-            <span className="font-mono text-[11px] text-faint">
-              {src.tier}{src.retrieved_at ? ` · ${new Date(src.retrieved_at).toLocaleString()}` : ''}
-              {f.evidence.length > 1 ? ` · +${f.evidence.length - 1} more` : ''}
-            </span>
-          </>
-        ) : (
-          <span>Spec {f.spec_ref || 'section'}{result.document_revision ? ` · sheet ${result.document_revision}` : ''}</span>
-        )}
-      </div>
+      <Note text={result.note_to_subcontractor} />
     </div>
   )
 }
@@ -657,9 +711,9 @@ function Note({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)
   if (!text) return null
   return (
-    <div className="panel flex flex-col gap-2 p-5">
+    <div className="flex flex-col gap-2 border-t border-line pt-4">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-medium">Note to the subcontractor</span>
+        <span className="text-xs font-medium">Note to send</span>
         <button onClick={() => navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) })}
           className="btn h-7">{copied ? 'Copied' : 'Copy'}</button>
       </div>

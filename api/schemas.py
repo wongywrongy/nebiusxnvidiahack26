@@ -37,6 +37,7 @@ class Requirement(BaseModel):
     text: str = Field(description="Plain-language requirement")
     severity: Literal["critical", "major", "minor"] = "major"
     check: Literal["spec", "validity", "completeness"] = "spec"
+    applies_to: list[str] = Field(default=[], description="Submittal roles it applies to (product_data, system_drawing); empty = all")
 
 
 class RequirementsOut(BaseModel):
@@ -88,6 +89,7 @@ class VerifyOut(BaseModel):
     status: Literal["active", "discontinued", "unknown"]
     replacement: Optional[str] = None
     current_revision: Optional[str] = None
+    status_date: Optional[str] = Field(default=None, description="Date it was discontinued or replaced, as stated")
     current_values: list[PropertyValue] = []
     source_urls: list[str] = []
     notes: Optional[str] = None
@@ -115,9 +117,20 @@ class Highlight(BaseModel):
 
 
 Check = Literal["spec", "currency", "validity", "status", "completeness"]
-Verdict = Literal["pass", "fail", "outdated", "unverified", "note"]
+Verdict = Literal["pass", "fail", "outdated", "unverified", "note", "not_applicable"]
 Severity = Literal["critical", "major", "minor", "info"]
 Decision = Literal["approve", "approve_with_note", "send_back"]
+
+
+class Compare(BaseModel):
+    """One side-by-side comparison per finding, built in code. Values may be lists (shown as chips)."""
+
+    left_label: str
+    left_value: Value = None
+    right_label: str
+    right_value: Value = None
+    verdict: Literal["fail", "pass", "changed"]
+    rows: list[CompareRow] = []  # currency: only the fields whose values differ
 
 
 class Finding(BaseModel):
@@ -132,6 +145,7 @@ class Finding(BaseModel):
     claim_id: Optional[str] = None
     claim_ids: list[str] = []  # claims on the page that this finding is about
     highlights: list[Highlight] = []
+    compare: Optional[Compare] = None
     spec_ref: Optional[str] = None
     evidence: list[Evidence] = []
     decided_by: str = "code"

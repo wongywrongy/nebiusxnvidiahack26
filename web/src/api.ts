@@ -21,7 +21,7 @@ export interface Evidence { url: string; tier: string; title: string; retrieved_
 export interface Finding {
   id: string
   check: string
-  verdict: 'pass' | 'fail' | 'outdated' | 'unverified' | 'note'
+  verdict: 'pass' | 'fail' | 'outdated' | 'unverified' | 'note' | 'not_applicable'
   severity: 'critical' | 'major' | 'minor' | 'info'
   title: string
   detail: string
@@ -30,8 +30,15 @@ export interface Finding {
   requirement_id?: string | null
   claim_ids: string[]
   highlights: Mark[]
+  compare?: Compare | null
   evidence: Evidence[]
   decided_by: string
+}
+export type Value = string | number | string[] | null
+// One comparison per finding. rows: currency findings, only the fields that changed.
+export interface Compare {
+  left_label: string; left_value: Value; right_label: string; right_value: Value
+  verdict: 'fail' | 'pass' | 'changed'; rows: CompareRow[]
 }
 export interface CompareRow { property: string; label: string; submitted: string | null; current: string | null; changed: boolean }
 export interface Usage {

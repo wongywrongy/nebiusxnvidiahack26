@@ -124,6 +124,8 @@ def attach_highlights(case: dict, claims: list, findings: list) -> None:
             offset += n
     by_id = {c.id: c for c in claims}
     for f in findings:
+        if f.verdict == "not_applicable":
+            continue
         kind = "checked" if f.verdict == "pass" else "problem"
         for cid in f.claim_ids:
             c = by_id.get(cid)

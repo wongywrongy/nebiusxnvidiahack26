@@ -34,7 +34,7 @@
   "report": {
     "summary": "The submitted firestop system is only listed for plastic pipe, but the drawings show steel pipe at this wall.",
     "note_to_subcontractor": "Please resubmit with a listed firestop system that covers steel pipe through a gypsum wall.",
-    "finding_titles": {"validity-cond-penetrant": "Fire listing doesn't cover steel pipe", "spec-fs-voc": "VOC content isn't stated on the system drawing", "spec-fs-std": "Test standard isn't stated on the system drawing"},
+    "finding_titles": {"validity-cond-penetrant": "Fire listing doesn't cover steel pipe"},
     "why_it_matters": {"validity-cond-penetrant": "A firestop system is only proven for what it was tested with. Used on steel pipe, this one has no fire rating at all."}
   }
 }

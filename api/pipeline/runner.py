@@ -97,7 +97,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             usage.append(u)
 
             run.emit("spec_check", "Checking each requirement", case_id, "code")
-            findings = spec_check.check(requirements, claims.claims)
+            findings = spec_check.check(requirements, claims.claims, {d["role"] for d in case["submittal"]})
             await run.pause()
 
             run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['super']}")
