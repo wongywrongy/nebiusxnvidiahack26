@@ -69,7 +69,10 @@ def _strip_fences(text: str) -> str:
     return m.group(1) if m else text
 
 
-def load_fixture(case_id: str) -> dict:
+def load_fixture(case_id: Optional[str]) -> dict:
+    """A case's recorded responses. None (an upload that matches no case) has none: every task uses its default."""
+    if case_id is None:
+        return {}
     path = settings.fixtures_dir / f"{case_id}.json"
     if not path.exists():
         raise LLMError(f"No fixture for case {case_id} at {path}")
@@ -222,9 +225,15 @@ def _default_payload(task: str, ctx: dict) -> dict:
     if task == "reconcile":
         return {"keep": ctx.get("finding_ids", []), "drop": [], "rationale": "All flagged findings stand."}
     if task == "report":
-        return {"summary": "", "note_to_subcontractor": "", "finding_titles": {}, "why_it_matters": {}}
+        summary = "" if ctx.get("case_id") else (
+            "Mock mode has no recorded answers for this PDF, so no values were read from it. Run in live mode to check it.")
+        return {"summary": summary, "note_to_subcontractor": "", "finding_titles": {}, "why_it_matters": {}}
     if task == "verify":
         return {"status": "unknown", "current_values": [], "source_urls": []}
+    if task == "triage":
+        return {"pages": [{"page": n, "kind": "product_data"} for n in ctx.get("pages", [])]}
+    if task == "extract_claims":
+        return {"product": ctx.get("name", "Uploaded document"), "manufacturer": "", "claims": []}
     raise LLMError(f"No fixture and no default for task {task}")
 
 

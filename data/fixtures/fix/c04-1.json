@@ -1,0 +1,37 @@
+{
+  "_note": "PLACEHOLDER candidate: the values are what a passing system must have, not read from any document.",
+  "claims": {
+    "product": "[Listed system W-L-1### with T = F]",
+    "manufacturer": "[maker]",
+    "claims": [
+      {
+        "id": "k1",
+        "product": "[Listed system W-L-1### with T = F]",
+        "manufacturer": "[maker]",
+        "property": "f_rating_hr",
+        "value": 2,
+        "page": 1,
+        "unit": "hr"
+      },
+      {
+        "id": "k2",
+        "product": "[Listed system W-L-1### with T = F]",
+        "manufacturer": "[maker]",
+        "property": "t_rating_hr",
+        "value": 2,
+        "page": 1,
+        "unit": "hr"
+      },
+      {
+        "id": "k3",
+        "product": "[Listed system W-L-1### with T = F]",
+        "manufacturer": "[maker]",
+        "property": "penetrant_types",
+        "value": [
+          "steel pipe"
+        ],
+        "page": 1
+      }
+    ]
+  }
+}

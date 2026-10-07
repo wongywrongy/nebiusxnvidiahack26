@@ -14,7 +14,7 @@ Built for the Nebius x NVIDIA Global AI Hackathon (Best Apps and Agents track).
 cd api
 pip install -r requirements.txt
 cd ..
-python scripts/eval.py            # runs all 8 cases from fixtures, scores against the answer key
+python scripts/eval.py            # runs all 8 cases from fixtures, scores against the answer key, writes runs/scores.json
 uvicorn api.main:app --reload     # API at http://localhost:8000
 ```
 
@@ -39,18 +39,37 @@ api/
   llm.py           model router: task -> Nemotron tier, JSON schema, retries, token + cost log
   web.py           Tavily wrapper with the same mock/live switch
   cache.py         disk cache for live calls
-  pipeline/        ingest, triage, extract, spec_check, verify, reconcile, report, runner
-  main.py          FastAPI: runs, SSE events, results, replay, static web app
+  pipeline/        ingest, triage, extract, spec_check, verify, reconcile, fix, report, runner
+  main.py          FastAPI: runs, uploads, SSE events, results, scores, replay, static web app
 data/
   cases/           cases.json (8 test submittals + answer key), specs.json
-  fixtures/        recorded responses per case for mock mode
+  fixtures/        recorded responses per case for mock mode; fixtures/fix/ for the fix step
   raw/             downloaded PDFs (gitignored)
 scripts/
   fetch_docs.py    download test documents and record sha256
-  eval.py          scoreboard: problems caught, false flags, time, cost
+  eval.py          scoreboard: right call, problems caught, false alarms, fixes that pass, time, cost
 web/               React + Vite app
 tests/             pytest
 ```
+
+## Fixes for send-backs
+
+When the call is send back, SpecCheck looks for what the sub should send instead:
+
+- **Out of date or discontinued:** Tavily search for the maker's current sheet, or a current product in the same category.
+- **Spec or listing problem:** Tavily search for listed systems for the same penetrant and assembly.
+
+Each candidate (at most 3, under a Tavily credit cap per item: `FIX_MAX_CANDIDATES`, `FIX_CREDIT_CAP`) goes through the
+same extract, spec check and web check as a new submittal. The finding then carries the candidates, their checks, and the
+best one to suggest. In mock mode two of the five fixes (c02, c04) are marked placeholders: they stand for the listed
+system a live run should find.
+
+## Uploads and scores
+
+- `POST /api/uploads?name=x.pdf` with the PDF as the body adds it as one more item, checked against the project specs
+  on its own run. In mock mode, a PDF that matches a test case (by sha256) replays that case's fixture; any other PDF
+  runs with no recorded answers, so every requirement shows as not stated.
+- `GET /api/scores` serves `runs/scores.json` from `scripts/eval.py`; the Results page in the app shows it.
 
 ## Model routing
 

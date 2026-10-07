@@ -2,9 +2,9 @@
 
 export type Decision = 'approve' | 'approve_with_note' | 'send_back'
 export type Stage =
-  | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'reconcile' | 'report' | 'done' | 'error'
+  | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'reconcile' | 'fix' | 'report' | 'done' | 'error'
 
-export interface Case { id: string; title: string; section: string; submittal: { file: string }[] }
+export interface Case { id: string; title: string; section: string; submittal: { file: string }[]; upload?: boolean; mock_fixture?: string | null }
 export interface Project { name: string; cases: Case[] }
 
 export interface Event {
@@ -33,7 +33,12 @@ export interface Finding {
   compare?: Compare | null
   evidence: Evidence[]
   decided_by: string
+  fix?: Fix | null
 }
+// Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
+export interface FixCheck { label: string; ok: boolean | null; note: string }
+export interface FixCandidate { name: string; source_url: string | null; checks: FixCheck[]; passes: boolean; placeholder: boolean }
+export interface Fix { head: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
 export interface Compare {
@@ -106,6 +111,34 @@ export const pageUrl = (caseId: string, file: string, n: number) =>
 
 export async function getCaseText(caseId: string): Promise<TextPage[]> {
   return (await (await fetch(`/api/cases/${caseId}/text`)).json()).pages
+}
+
+/** Upload a PDF: it becomes a new item checked against the project specs, on its own run. */
+export async function uploadPdf(file: File, delayMs = 700): Promise<{ run_id: string; case: Case }> {
+  const r = await fetch(`/api/uploads?name=${encodeURIComponent(file.name)}&delay_ms=${delayMs}`, {
+    method: 'POST', headers: { 'content-type': 'application/pdf' }, body: file,
+  })
+  if (!r.ok) throw new Error((await r.json().catch(() => null))?.detail ?? `Upload failed (${r.status})`)
+  return r.json()
+}
+
+export interface Ratio { n: number; of: number }
+export interface ScoreRow {
+  id: string; title: string; expected: Decision; expected_problems: string[]; error?: boolean
+  decision?: Decision; found_problems?: string[]; right_call?: boolean; caught?: number; false_alarm?: boolean
+  fix?: { suggest: string | null; passes: boolean; placeholder: boolean; candidates: number } | null
+  time_ms?: number; cost_usd?: number; web_credits?: number
+}
+export interface Scores {
+  generated_at: string; mode: string; run_id: string; models: Record<string, string>
+  right_call: Ratio; caught: Ratio; false_alarms: Ratio; fixes_passing: Ratio & { placeholders: number }
+  time_ms_per_item: number; cost_usd_per_item: number; rows: ScoreRow[]
+}
+
+/** The answer-key scores from scripts/eval.py, or null before it has been run. */
+export async function getScores(): Promise<Scores | null> {
+  const r = await fetch('/api/scores')
+  return r.ok ? r.json() : null
 }
 
 export async function startReplay(sourceRunId: string): Promise<string> {

@@ -1,0 +1,114 @@
+{
+  "_note": "Candidate 1 of the c07 fix: the BLT 2x4 claims and web check recorded for c05.",
+  "claims": {
+    "product": "BLT Series 2x4 LED troffer",
+    "manufacturer": "Lithonia Lighting (Acuity Brands)",
+    "model": "2BLT4 40L ADP EZ1 LP835",
+    "document_revision": "Rev. 07/18/24",
+    "claims": [
+      {
+        "id": "k1",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "cri",
+        "value": 82,
+        "page": 2,
+        "quote": "82CRI, 3500 K"
+      },
+      {
+        "id": "k2",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "dim_min_percent",
+        "value": 1,
+        "unit": "%",
+        "page": 2,
+        "quote": "1% (0-10 volt "
+      },
+      {
+        "id": "k3",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "warranty_years",
+        "value": 5,
+        "unit": "yr",
+        "page": 1,
+        "quote": "WARRANTY — 5-year limited warranty."
+      },
+      {
+        "id": "k4",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "dlc_listed",
+        "value": "DLC Premium",
+        "page": 1,
+        "quote": "DesignLights Consortium® (DLC) Premium qualified product"
+      },
+      {
+        "id": "k5",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "lumens",
+        "value": 4197,
+        "unit": "lm",
+        "page": 11,
+        "quote": "4197"
+      },
+      {
+        "id": "k6",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "efficacy_lm_per_w",
+        "value": 137.81,
+        "unit": "lm/W",
+        "page": 11,
+        "quote": "137.81"
+      },
+      {
+        "id": "k7",
+        "product": "BLT",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "watts",
+        "value": 30.5,
+        "unit": "W",
+        "page": 11,
+        "quote": "30.5"
+      }
+    ]
+  },
+  "web": {
+    "search": [
+      {
+        "url": "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf",
+        "title": "BLT-2X4 BLT Series LED spec sheet"
+      }
+    ],
+    "extract": {
+      "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf": "BLT-2X4 BLT Series LED 2BLT4 2' x 4' LED. Performance Data Model Number Lumens LPW Watts DLC Listing DLC ID 2BLT4 30LHE ADP EZ1 (GZ1, GZ10) LP835 [All Options] 3138 135.16 23.2 Premium P7KEICW5 2BLT4 30LHE ADP EZ1 (GZ1, GZ10) LP840 [All Options] 3224 138.86 23.2 Premium PDOM06BH 2BLT4 30LHE ADPT EZ1 (GZ1, GZ10) LP835 [All Options] 3067 132.08 23.2 Premium P7PZAJDZ 2BLT4 30LHE ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 3151 135.7 23.2 Premium P2N23EBP 2BLT4 40LHE ADP EZ1 (GZ1, GZ10) LP835 [All Options] 4111 142.98 28.8 Premium P67P6S5Y 2BLT4 40LHE ADP EZ1 (GZ1, GZ10) LP840 [All Options] 4224 146.9 28.8 Premium P95UQD66 2BLT4 40LHE ADPT EZ1 (GZ1, GZ10) LP835 [All Options] 4018 139.73 28.8 Premium PC15DQEC 2BLT4 40LHE ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 4128 143.55 28.8 Premium PGRCSJ2T 2BLT4 48LHE ADP EZ1 (GZ1, GZ10) LP835 [All Options] 5424 158.16 34.3 Premium PXBJBGN8 2BLT4 48LHE ADP EZ1 (GZ1, GZ10) LP840 [All Options] 5573 162.5 34.3 Premium P5PQ5RRX 2BLT4 48LHE ADPT EZ1 (GZ1, GZ10) LP835 [All Options] 5301 154.56 34.3 Premium P2NK2H33 2BLT4 48LHE ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 5446 158.8 34.3 Premium PK8C1321 2BLT4 60LHE ADP EZ1 (GZ1, GZ10) LP835 [All Options] 5970 139.64 42.8 Premium PQZN176R 2BLT4 60LHE ADP EZ1 (GZ1, GZ10) LP840 [All Options] 6134 143.46 42.8 Premium PG5CYJUC 2BLT4 60LHE ADPT EZ1 (GZ1, GZ10) LP835 [All Options] 5834 136.46 42.8 Premium PZ72TAWM 2BLT4 60LHE ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 5994 140.19 42.8 Premium PRC4W72B 2BLT4 72LHE ADP EZ1 (GZ1, GZ10) LP835 [All Options] 7275 144.19 50.5 Standard PUB38GEQ 2BLT4 72LHE ADP EZ1 (GZ1, GZ10) LP840 [All Options] 7475 148.14 50.5 Standard P7GDHZTN 2BLT4 72LHE ADPT EZ1 (GZ1, GZ10) LP835 [All Options] 7110 140.91 50.5 Standard P5CC2VKV 2BLT4 72LHE ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 7304 144.77 50.5 Standard P6P1BKDM 2BLT4 85LHE ADP EZ1 (GZ1, GZ10) LP835 [All Options] 8162 130.76 62.4 Standard PRTW6BXW 2BLT4 85LHE ADP EZ1 (GZ1, GZ10) LP840 [All Options] 8283 132.69 62.4 Standard P6H1V2D6 2BLT4 85LHE ADPT EZ1 (GZ1, GZ10) LP835 [All Options] 7977 127.78 62.4 Standard P1VG5TA3 2BLT4 85LHE ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 8095 129.67 62.4 Standard PN5BKJ6E DLC information is subject to change, for the most up-to-date information please refer to www.dlc.org. Above listings do not cover 347v or SLD. How to Estimate Delivered Lumens in Emergency Mode Use the formula below to estimate the delivered lumens in emergency mode Delivered Lumens = 1.25 x P x LPW P = Ouput power of emergency driver. P = 10W for E10WLCP option. LPW = Lumen per watt rating of the luminaire. This information is available on the ABL luminaire spec sheet. LPW = Lumen per watt rating of the luminaire. LPW information available in Performance Data section. Performance Data Model Number Lumens LPW Watts DLC Listing DLC ID 2BLT4 30L ADP EZ1 (GZ1, GZ10) LP835 [All Options] 3188 141.56 22.5 Premium PWJDEMHS 2BLT4 30L ADP EZ1 (GZ1, GZ10) LP840 [All Options] 3276 145.44 22.5 Premium P18J5GLD 2BLT4 30L ADPT EZ1 (GZ1, GZ10) LP840 [All Options] 3201 142.13 22.5 Premium P3HB2XSG 2BLT4 40L ADP EZ1 (GZ1, GZ10) LP835 [All Options] 4197 137.81 30.5 Premium PDWKYXFD Rev. 07/18/24"
+    }
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "Rev. 07/18/24",
+    "current_values": [
+      {
+        "property": "lumens",
+        "value": 4197,
+        "unit": "lm"
+      },
+      {
+        "property": "efficacy_lm_per_w",
+        "value": 137.81,
+        "unit": "lm/W"
+      },
+      {
+        "property": "watts",
+        "value": 30.5,
+        "unit": "W"
+      }
+    ],
+    "source_urls": [
+      "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf"
+    ]
+  }
+}

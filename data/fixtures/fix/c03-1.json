@@ -1,0 +1,49 @@
+{
+  "_note": "Candidate 1 of the c03 fix: claims read from the Rev B text. The excerpt does not quote the ASTM E814 / UL 1479 test line, so that stays 'not stated' rather than assumed.",
+  "claims": {
+    "product": "Fire Barrier Sealant IC 15WB+",
+    "manufacturer": "3M",
+    "document_revision": "98-0400-5077-9 REV B (2012)",
+    "claims": [
+      {
+        "id": "k1",
+        "product": "Fire Barrier Sealant IC 15WB+",
+        "manufacturer": "3M",
+        "property": "voc_g_per_l",
+        "value": "<2",
+        "page": 1,
+        "unit": "g/L",
+        "quote": "VOC Less H2O and Exempt Solvents: <2 g/L"
+      },
+      {
+        "id": "k2",
+        "product": "Fire Barrier Sealant IC 15WB+",
+        "manufacturer": "3M",
+        "property": "service_temp_max_f",
+        "value": 180,
+        "page": 1,
+        "unit": "F",
+        "quote": "Service Temperature Range: -20° to 180°F"
+      }
+    ]
+  },
+  "web": {
+    "search": [
+      {
+        "url": "https://www.farnell.com/datasheets/2165365.pdf",
+        "title": "3M Fire Barrier Sealant IC 15WB+ product data sheet, Rev B"
+      }
+    ],
+    "extract": {
+      "https://www.farnell.com/datasheets/2165365.pdf": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M ™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, gun-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor, floor/ceiling or wall assemblies, as well as other fire-rated interior building partitions and assemblies (e.g. static construction joints or blank openings). In addition, the unique intumescent property of this material allows 3M ™ Fire Barrier Sealant IC 15WB+ to expand and help maintain a firestop penetration seal for up to 3 hours as penetrants are exposed to fire. 3M ™ Fire Barrier Sealant IC 15WB+ bonds to most construction substrates, including: gypsum wallboard, concrete, metals, wood, plastic (including CPVC) and cable jacketing. No mixing is required. Product Features • Firestop tested up to 3 hours 4. Performance & Typical Physical Properties Color: Yellow Application Temperature Range: 40° to 122°F (4° to 50°C) (ASTM C 1299) Service Temperature Range: -20° to 180°F (-28° to 82°C) Surface Burning (ASTM E 84): Flame Spread 5, Smoke Development 50 VOC Less H2O and Exempt Solvents: <2 g/L © 3M 2012. All rights reserved. 98-0400-5077-9 REV B"
+    }
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "98-0400-5077-9 REV B (2012)",
+    "current_values": [],
+    "source_urls": [
+      "https://www.farnell.com/datasheets/2165365.pdf"
+    ]
+  }
+}

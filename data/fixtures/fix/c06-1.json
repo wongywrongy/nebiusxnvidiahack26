@@ -1,0 +1,60 @@
+{
+  "_note": "Candidate 1 of the c06 fix: claims from the Rev. 04/11/25 excerpt only.",
+  "claims": {
+    "product": "LDN6 LED downlight",
+    "manufacturer": "Lithonia Lighting (Acuity Brands)",
+    "model": "LDN6 35/15",
+    "document_revision": "Rev. 04/11/25",
+    "claims": [
+      {
+        "id": "k1",
+        "product": "LDN6 LED downlight",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "lumens",
+        "value": 1514,
+        "page": 1,
+        "unit": "lm",
+        "quote": "1514"
+      },
+      {
+        "id": "k2",
+        "product": "LDN6 LED downlight",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "watts",
+        "value": 17.5,
+        "page": 1,
+        "unit": "W",
+        "quote": "17.5"
+      },
+      {
+        "id": "k3",
+        "product": "LDN6 LED downlight",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "efficacy_lm_per_w",
+        "value": 86.4,
+        "page": 1,
+        "unit": "lm/W",
+        "quote": "86.4"
+      }
+    ]
+  },
+  "web": {
+    "search": [
+      {
+        "url": "https://dmdmaps.cabq.gov/DRB/PR-2024-010931/DFT_Submittals/PR-2024-010931_SP-2025-00005_October_1_2025_Second%20Submittal/Other-Misc%20Documents-2025-09-05-24.BG1277.4812%20ACCS_DFT%20Lighting%20Cutsheets_2025.09.04_v1.pdf",
+        "title": "Lithonia LDN6 spec sheet, Rev. 04/11/25 (Albuquerque city submittal)"
+      }
+    ],
+    "extract": {
+      "https://dmdmaps.cabq.gov/DRB/PR-2024-010931/DFT_Submittals/PR-2024-010931_SP-2025-00005_October_1_2025_Second%20Submittal/Other-Misc%20Documents-2025-09-05-24.BG1277.4812%20ACCS_DFT%20Lighting%20Cutsheets_2025.09.04_v1.pdf": "LDN6 6” OPEN and WALLWASH LED Non-IC New Construction Downlight. Rev. 04/11/25. LDN6 Nominal Lumens Lumens Wattage Lm/W 1500 1514 17.5 86.4"
+    }
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": "Rev. 04/11/25",
+    "current_values": [],
+    "source_urls": [
+      "https://dmdmaps.cabq.gov/DRB/PR-2024-010931/DFT_Submittals/PR-2024-010931_SP-2025-00005_October_1_2025_Second%20Submittal/Other-Misc%20Documents-2025-09-05-24.BG1277.4812%20ACCS_DFT%20Lighting%20Cutsheets_2025.09.04_v1.pdf"
+    ]
+  }
+}
