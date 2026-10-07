@@ -4,6 +4,8 @@
   GET  /api/project                    sample project, specs and cases
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
+  POST /api/uploads?name=x.pdf         body: the PDF. Starts a run of it against the project specs
+  GET  /api/scores                     the answer-key scores written by scripts/eval.py
   GET  /api/runs                       recorded runs, newest first
   GET  /api/runs/{id}/events           server-sent events: history, then live
   GET  /api/runs/{id}/results          all results of a run
@@ -21,14 +23,15 @@ import asyncio
 import json
 from typing import Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .config import settings
-from .pipeline.cases import all_cases, all_specs
+from .pipeline.cases import add_upload, all_cases, all_specs, get_case
 from .llm import load_fixture
+from .pipeline.ingest import pdf_pages
 from .pipeline.render import page_sizes, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, replay
 from .schemas import Event
@@ -82,6 +85,37 @@ async def start_run(body: StartRun):
     RUNS[run.id] = run
     _spawn(execute(run))
     return {"run_id": run.id, "mode": settings.mode, "case_ids": ids}
+
+
+@app.post("/api/uploads")
+async def upload(request: Request, name: str = "upload.pdf", delay_ms: Optional[int] = None):
+    """Raw PDF body (no multipart dependency). The new item streams on its own run like any other row."""
+    pdf = await request.body()
+    if len(pdf) > settings.max_upload_mb * 1024 * 1024:
+        raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
+    if not pdf.startswith(b"%PDF"):
+        raise HTTPException(400, "Not a PDF")
+    try:
+        text = "\n".join(p["text"] for p in pdf_pages(pdf))
+    except Exception:
+        raise HTTPException(400, "Could not read this PDF")
+    case = add_upload(name, pdf, text)
+    run = Run([case["id"]], delay_ms=delay_ms)
+    RUNS[run.id] = run
+    _spawn(execute(run))
+    return {"run_id": run.id, "mode": settings.mode, "case": _public(case)}
+
+
+@app.get("/api/scores")
+def scores():
+    if not settings.scores_file.exists():
+        raise HTTPException(404, "No scores yet: run python scripts/eval.py")
+    return json.loads(settings.scores_file.read_text())
+
+
+def _public(case: dict) -> dict:
+    return {"id": case["id"], "title": case["title"], "section": case["section"], "submittal": case["submittal"],
+            "upload": bool(case.get("upload")), "mock_fixture": case.get("fixture")}
 
 
 @app.post("/api/runs/replay")
@@ -140,7 +174,10 @@ def result(run_id: str, case_id: str):
 
 def _submittal_pdf(case_id: str, file: str):
     """Path of a downloaded submittal PDF, by file name. Only files the case lists, only under data/raw/."""
-    case = all_cases().get(case_id)
+    try:
+        case = get_case(case_id)
+    except KeyError:
+        case = None
     rels = [d["file"] for d in (case or {}).get("submittal", []) if d["file"].rsplit("/", 1)[-1] == file]
     path = (settings.raw_dir / rels[0]).resolve() if rels else None
     if path is None or not path.is_relative_to(settings.raw_dir.resolve()) or not path.is_file():
@@ -164,9 +201,11 @@ def doc_page_png(case_id: str, file: str, n: int):
 
 @app.get("/api/cases/{case_id}/text")
 def case_text(case_id: str):
-    if case_id not in all_cases():
+    try:
+        case = get_case(case_id)
+    except KeyError:
         raise HTTPException(404, "Unknown case")
-    return {"pages": load_fixture(case_id).get("pages", [])}
+    return {"pages": load_fixture(case.get("fixture", case_id)).get("pages", [])}
 
 
 def _sse(ev: Event) -> str:

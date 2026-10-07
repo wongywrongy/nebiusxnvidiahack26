@@ -1,0 +1,15 @@
+{
+  "_note": "Mock fixture for the fix step of c02. The only candidate is a PLACEHOLDER for the system a live run should find.",
+  "web": {
+    "search": [
+      {
+        "url": "placeholder:c02-1",
+        "title": "[3M listed system, concrete floor, T 2 hr]",
+        "placeholder": true
+      }
+    ],
+    "extract": {
+      "placeholder:c02-1": "[Placeholder: a live run fills this in with a listed system found online.]"
+    }
+  }
+}

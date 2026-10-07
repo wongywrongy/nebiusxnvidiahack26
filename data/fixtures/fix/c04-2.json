@@ -1,0 +1,59 @@
+{
+  "_note": "Candidate 2 of the c04 fix: STI W-L-1079. Covers steel pipe through a gypsum wall, but T 0 hr fails T = F.",
+  "claims": {
+    "product": "SpecSeal System W-L-1079",
+    "manufacturer": "STI",
+    "claims": [
+      {
+        "id": "k1",
+        "product": "SpecSeal System W-L-1079",
+        "manufacturer": "STI",
+        "property": "f_rating_hr",
+        "value": 2,
+        "page": 1,
+        "unit": "hr",
+        "quote": "F Ratings — 1 and 2 Hr"
+      },
+      {
+        "id": "k2",
+        "product": "SpecSeal System W-L-1079",
+        "manufacturer": "STI",
+        "property": "t_rating_hr",
+        "value": 0,
+        "page": 1,
+        "unit": "hr",
+        "quote": "T Rating — 0 Hr"
+      },
+      {
+        "id": "k3",
+        "product": "SpecSeal System W-L-1079",
+        "manufacturer": "STI",
+        "property": "penetrant_types",
+        "value": [
+          "steel pipe"
+        ],
+        "page": 1,
+        "quote": "One metallic pipe (steel pipe)"
+      }
+    ]
+  },
+  "web": {
+    "search": [
+      {
+        "url": "https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf",
+        "title": "STI SpecSeal System No. W-L-1079, metallic pipe through gypsum wall"
+      }
+    ],
+    "extract": {
+      "https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf": "System No. W-L-1079. F Ratings — 1 and 2 Hr (See Item 1). T Rating — 0 Hr. L Rating At Ambient — Less Than 1 CFM/sq ft. L Rating At 400 F — Less Than 1 CFM/sq ft. 1. Wall Assembly — The 1 or 2 hr fire-rated gypsum board/stud wall assembly. Through Penetrants — One metallic pipe (steel pipe)."
+    }
+  },
+  "verify": {
+    "status": "active",
+    "current_revision": null,
+    "current_values": [],
+    "source_urls": [
+      "https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf"
+    ]
+  }
+}

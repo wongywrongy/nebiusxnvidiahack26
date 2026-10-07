@@ -1,0 +1,20 @@
+{
+  "_note": "Mock fixture for the fix step of c04. Candidate 1 is a PLACEHOLDER for the passing system a live run should find. Candidate 2 (STI W-L-1079): F 1 and 2 hr, T 0 hr and the gypsum wall come from the search index text of this URL, which returned 404 when fetched on 2026-10-07; 'steel pipe' follows UL's W-L-1000 series (metallic pipe).",
+  "web": {
+    "search": [
+      {
+        "url": "placeholder:c04-1",
+        "title": "[Listed system W-L-1### with T = F]",
+        "placeholder": true
+      },
+      {
+        "url": "https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf",
+        "title": "STI SpecSeal System No. W-L-1079, metallic pipe through gypsum wall"
+      }
+    ],
+    "extract": {
+      "placeholder:c04-1": "[Placeholder: a live run fills this in with a listed system found online.]",
+      "https://safe-energy.cl/pdf/fuego/UL/WL1079SE.pdf": "System No. W-L-1079. F Ratings — 1 and 2 Hr (See Item 1). T Rating — 0 Hr. L Rating At Ambient — Less Than 1 CFM/sq ft. L Rating At 400 F — Less Than 1 CFM/sq ft. 1. Wall Assembly — The 1 or 2 hr fire-rated gypsum board/stud wall assembly. Through Penetrants — One metallic pipe (steel pipe)."
+    }
+  }
+}

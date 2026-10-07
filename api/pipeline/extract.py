@@ -3,14 +3,15 @@
 from __future__ import annotations
 
 import json
+from typing import Optional
 
 from ..llm import router
-from ..schemas import ClaimsOut, RequirementsOut, TriageOut, Usage
+from ..schemas import ClaimsOut, PageLabel, RequirementsOut, TriageOut, Usage
 
 MAX_PAGE_CHARS = 6000
 
 
-async def triage(case_id: str, pages: list[dict]) -> tuple[TriageOut, Usage]:
+async def triage(case_id: Optional[str], pages: list[dict]) -> tuple[TriageOut, Usage]:
     preview = [{"page": p["page"], "text": p["text"][:1500]} for p in pages]
     messages = [
         {
@@ -18,7 +19,7 @@ async def triage(case_id: str, pages: list[dict]) -> tuple[TriageOut, Usage]:
             "content": "Label each page of this construction submittal by kind.\n" + json.dumps(preview),
         }
     ]
-    return await router.call("triage", TriageOut, messages, {"case_id": case_id})
+    return await router.call("triage", TriageOut, messages, {"case_id": case_id, "pages": [p["page"] for p in pages]})
 
 
 async def extract_requirements(section: str, spec_text: str) -> tuple[RequirementsOut, Usage]:
@@ -36,7 +37,7 @@ async def extract_requirements(section: str, spec_text: str) -> tuple[Requiremen
     return await router.call("extract_requirements", RequirementsOut, messages, {"section": section})
 
 
-async def extract_claims(case_id: str, pages: list[dict], labels: TriageOut, properties: list[str]) -> tuple[ClaimsOut, Usage]:
+async def extract_claims(case_id: Optional[str], pages: list[dict], labels: TriageOut, properties: list[str]) -> tuple[ClaimsOut, Usage]:
     useful = {l.page for l in labels.pages if l.kind != "other"}
     text = [{"page": p["page"], "text": p["text"][:MAX_PAGE_CHARS]} for p in pages if p["page"] in useful]
     messages = [
@@ -51,3 +52,8 @@ async def extract_claims(case_id: str, pages: list[dict], labels: TriageOut, pro
         }
     ]
     return await router.call("extract_claims", ClaimsOut, messages, {"case_id": case_id})
+
+
+def all_product_data(pages: list[dict]) -> TriageOut:
+    """Labels for a document already known to be one product's data (a fix candidate): no triage call needed."""
+    return TriageOut(pages=[PageLabel(page=p["page"], kind="product_data") for p in pages])

@@ -62,7 +62,8 @@ def _same(a, b) -> bool:
 
 
 async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[CompareRow], list[Usage], float]:
-    web = WebClient(case["id"])
+    fx = case.get("fixture", case["id"])  # uploads: the matching case's fixture, or None
+    web = WebClient(fx)
     domains = case.get("manufacturer_domains", [])
     name = " ".join(x for x in [submitted.manufacturer, submitted.product, submitted.model or ""] if x)
 
@@ -102,7 +103,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
                 ),
             }
         ],
-        {"case_id": case["id"]},
+        {"case_id": fx},
     )
 
     evidence = [

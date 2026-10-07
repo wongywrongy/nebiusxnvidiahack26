@@ -7,6 +7,7 @@ so it is predictable and easy to explain.
 from __future__ import annotations
 
 import json
+from typing import Optional
 
 from ..llm import router
 from ..schemas import Decision, Finding, ReconcileOut, ReportOut, Usage
@@ -14,7 +15,7 @@ from ..schemas import Decision, Finding, ReconcileOut, ReportOut, Usage
 FLAGGED = ("fail", "outdated")
 
 
-async def reconcile(case_id: str, findings: list[Finding]) -> tuple[list[Finding], list[Usage]]:
+async def reconcile(case_id: Optional[str], findings: list[Finding]) -> tuple[list[Finding], list[Usage]]:
     flagged = [f for f in findings if f.verdict in FLAGGED]
     if not flagged:
         return findings, []  # nothing to judge: Ultra is never called, which keeps cost down
@@ -49,7 +50,7 @@ def decide(findings: list[Finding]) -> Decision:
     return "approve"
 
 
-async def report(case_id: str, title: str, decision: Decision, findings: list[Finding]) -> tuple[ReportOut, list[Usage]]:
+async def report(case_id: Optional[str], title: str, decision: Decision, findings: list[Finding]) -> tuple[ReportOut, list[Usage]]:
     issues = [f for f in findings if f.verdict != "pass"]
     out, usage = await router.call(
         "report",
@@ -60,9 +61,10 @@ async def report(case_id: str, title: str, decision: Decision, findings: list[Fi
                 "content": (
                     "Write the result of a submittal review for a busy project engineer. Plain language, no jargon, no model names. "
                     "Give a one or two sentence summary, a short note to send to the subcontractor, a plain title for each issue, "
-                    "and one sentence on why each issue matters on site.\n\n"
+                    "and one sentence on why each issue matters on site. Where an issue has a suggested_fix, name it in the note.\n\n"
                     + json.dumps({"submittal": title, "decision": decision,
-                                  "issues": [f.model_dump(include={"id", "title", "detail", "spec_ref"}) for f in issues]})
+                                  "issues": [{**f.model_dump(include={"id", "title", "detail", "spec_ref"}),
+                                              "suggested_fix": f.fix.suggest if f.fix else None} for f in issues]})
                 ),
             }
         ],

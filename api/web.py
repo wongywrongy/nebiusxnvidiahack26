@@ -17,7 +17,7 @@ from .llm import load_fixture
 
 
 class WebClient:
-    def __init__(self, case_id: str) -> None:
+    def __init__(self, case_id: Optional[str]) -> None:  # case_id: which fixture answers in mock mode
         self.case_id = case_id
         self.credits = 0.0
         self._tavily = None

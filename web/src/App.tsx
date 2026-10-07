@@ -1,14 +1,15 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getProject, getResult, pageUrl, startReplay, startRun, streamEvents,
-  type Case, type Compare, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Mark,
-  type Project, type Result, type Stage, type TextPage, type Tone, type Value,
+  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getProject, getResult, getScores, pageUrl, startReplay, startRun,
+  streamEvents, uploadPdf,
+  type Case, type Compare, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Fix, type Mark,
+  type Project, type Result, type Scores, type Stage, type TextPage, type Tone, type Value,
 } from './api'
 
-type View = 'ready' | 'running' | 'done' | 'detail'
+type View = 'ready' | 'running' | 'done' | 'detail' | 'results'
 type CaseState = { stage: Stage; message: string; model: string | null; decision?: Decision; summary?: string }
 
-const ACTIVE: Stage[] = ['ingest', 'triage', 'extract', 'spec_check', 'verify', 'reconcile', 'report']
+const ACTIVE: Stage[] = ['ingest', 'triage', 'extract', 'spec_check', 'verify', 'reconcile', 'fix', 'report']
 const NBSP = '\u00a0'
 
 // docs: page sizes of each downloaded submittal PDF; null when one is missing, then text holds the fixture pages.
@@ -22,14 +23,18 @@ export default function App() {
   const [states, setStates] = useState<Record<string, CaseState>>({})
   const [loaded, setLoaded] = useState<Record<string, Loaded>>({})
   const [current, setCurrent] = useState<string | null>(null)
+  // Uploaded PDFs: extra rows, each on its own run.
+  const [uploads, setUploads] = useState<Case[]>([])
+  const [uploadRun, setUploadRun] = useState<Record<string, string>>({})
 
   useEffect(() => { getProject().then(setProject) }, [])
 
-  const cases = project?.cases ?? []
+  const cases = [...(project?.cases ?? []), ...uploads]
   const openable = cases.filter((c) => states[c.id]?.stage === 'done').map((c) => c.id)
+  const runOf = (caseId: string) => uploadRun[caseId] ?? runId
 
-  async function load(id: string, caseId: string): Promise<Loaded> {
-    const files = cases.find((c) => c.id === caseId)?.submittal.map((d) => d.file) ?? []
+  async function load(id: string, caseId: string, files?: string[]): Promise<Loaded> {
+    files ??= cases.find((c) => c.id === caseId)?.submittal.map((d) => d.file) ?? []
     const [result, ...found] = await Promise.all([getResult(id, caseId), ...files.map((f) => getDocPages(caseId, f))])
     const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
     const l = { result: result as Result, docs, text: docs ? null : await getCaseText(caseId) }
@@ -37,15 +42,10 @@ export default function App() {
     return l
   }
 
-  function follow(id: string) {
-    setStates({})
-    setLoaded({})
-    setRunId(id)
-    setRunDone(false)
-    setView('running')
-    streamEvents(id, (e: Event) => {
+  function track(id: string, files?: Record<string, string[]>) {
+    return (e: Event) => {
       if (!e.case_id) return
-      if (e.stage === 'done') load(id, e.case_id) // prefetch, so opening and switching are instant
+      if (e.stage === 'done') load(id, e.case_id, files?.[e.case_id]) // prefetch, so opening and switching are instant
       setStates((s) => ({
         ...s,
         [e.case_id!]: {
@@ -56,11 +56,29 @@ export default function App() {
           summary: (e.data?.summary as string) ?? s[e.case_id!]?.summary,
         },
       }))
-    }, () => {
+    }
+  }
+
+  function follow(id: string) {
+    // Uploads keep their own state; only the project's items start over.
+    setStates((s) => Object.fromEntries(Object.entries(s).filter(([k]) => k in uploadRun)))
+    setLoaded((m) => Object.fromEntries(Object.entries(m).filter(([k]) => k in uploadRun)))
+    setRunId(id)
+    setRunDone(false)
+    setView('running')
+    streamEvents(id, track(id), () => {
       setRunDone(true)
       // Move on only if the reviewer is still watching the run, never out of a result they opened.
       setTimeout(() => setView((v) => (v === 'running' ? 'done' : v)), 900)
     })
+  }
+
+  async function upload(file: File) {
+    const { run_id, case: c } = await uploadPdf(file)
+    setUploads((u) => [...u, c])
+    setUploadRun((m) => ({ ...m, [c.id]: run_id }))
+    setStates((s) => ({ ...s, [c.id]: { stage: 'queued', message: 'Waiting', model: null } }))
+    streamEvents(run_id, track(run_id, { [c.id]: c.submittal.map((d) => d.file) }), () => {})
   }
 
   async function run() {
@@ -72,8 +90,9 @@ export default function App() {
   }
 
   async function open(caseId: string) {
-    if (!runId || !openable.includes(caseId)) return
-    if (!loaded[caseId]) await load(runId, caseId)
+    const id = runOf(caseId)
+    if (!id || !openable.includes(caseId)) return
+    if (!loaded[caseId]) await load(id, caseId)
     setCurrent(caseId)
     setView('detail')
     window.scrollTo({ top: 0 }) // a new result starts at its top, not where the list was scrolled
@@ -103,11 +122,15 @@ export default function App() {
             <span className="flare h-3.5 w-3.5 rounded" />SpecCheck
           </button>
           <span className="text-faint" aria-hidden>/</span>
-          <span className="truncate text-muted">{project?.name ?? '…'}</span>
+          <span className="truncate text-muted">{view === 'results' ? 'Results' : project?.name ?? '…'}</span>
         </div>
-        {detail
-          ? <Verdict result={detail.result} />
-          : <span className="font-mono text-[11px] text-faint">Nemotron on Nebius · Tavily</span>}
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          {detail
+            ? <Verdict result={detail.result} />
+            : <span className="hidden font-mono text-[11px] text-faint sm:inline">Nemotron on Nebius · Tavily</span>}
+          <button onClick={() => setView(view === 'results' ? (runId ? (runDone ? 'done' : 'running') : 'ready') : 'results')}
+            aria-pressed={view === 'results'} className={`btn ${view === 'results' ? 'bg-selected' : ''}`}>Results</button>
+        </div>
       </header>
 
       {detail && (
@@ -115,10 +138,12 @@ export default function App() {
       )}
 
       <main className={detail ? 'mx-auto max-w-[1680px] px-4 py-4' : 'mx-auto flex max-w-[1120px] flex-col gap-7 px-4 py-10 sm:px-6 sm:py-12'}>
-        {view === 'ready' && <Ready cases={cases} onRun={run} />}
-        {view === 'running' && <Running cases={cases} states={states} done={openable.length} onOpen={open} />}
-        {view === 'done' && <Done cases={cases} states={states} onOpen={open} onAgain={run} />}
-        {detail && <Detail key={current} result={detail.result} docs={detail.docs} text={detail.text} runId={runId!} onReplay={replay} />}
+        {view === 'ready' && <Ready cases={cases} states={states} onRun={run} onOpen={open} onUpload={upload} />}
+        {view === 'running' && <Running cases={cases} states={states} done={openable.length} onOpen={open} onUpload={upload} />}
+        {view === 'done' && <Done cases={cases} states={states} onOpen={open} onAgain={run} onUpload={upload} />}
+        {view === 'results' && <Results />}
+        {detail && <Detail key={current} result={detail.result} docs={detail.docs} text={detail.text} runId={runOf(current!)!}
+          onReplay={uploadRun[current!] ? undefined : replay} />}
       </main>
     </div>
   )
@@ -172,39 +197,79 @@ function DocSwitcher({ cases, states, current, openable, onOpen, onAll }: {
   )
 }
 
-function Ready({ cases, onRun }: { cases: Case[]; onRun: () => void }) {
+// Drop or choose a PDF: it becomes one more row, checked against this project's specs like the others.
+function Upload({ onUpload }: { onUpload: (f: File) => Promise<void> }) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [over, setOver] = useState(false)
+  async function send(f?: File | null) {
+    if (!f) return
+    setBusy(true); setError(null)
+    try { await onUpload(f) } catch (e) { setError((e as Error).message) } finally { setBusy(false) }
+  }
+  return (
+    <label onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)}
+      onDrop={(e) => { e.preventDefault(); setOver(false); send(e.dataTransfer.files[0]) }}
+      className={`flex cursor-pointer flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed px-4 py-3.5 transition-colors ${over ? 'border-flare bg-flare/5' : 'border-edge hover:border-flare'}`}>
+      <span className="flex min-w-0 flex-col gap-0.5">
+        <span className="font-medium">Check your own submittal</span>
+        <span className="text-xs text-muted">
+          {error ?? "Drop any firestop or light fixture PDF. It's checked against this project's specs like any other submittal."}
+        </span>
+      </span>
+      <span className="btn pointer-events-none">{busy ? 'Uploading…' : 'Choose a PDF'}</span>
+      <input type="file" accept="application/pdf,.pdf" className="sr-only" disabled={busy}
+        onChange={(e) => { send(e.target.files?.[0]); e.target.value = '' }} />
+    </label>
+  )
+}
+
+function Ready({ cases, states, onRun, onOpen, onUpload }: {
+  cases: Case[]; states: Record<string, CaseState>; onRun: () => void; onOpen: (id: string) => void; onUpload: (f: File) => Promise<void>
+}) {
+  const base = cases.filter((c) => !c.upload).length
   return (
     <>
       <section className="flex flex-col items-center gap-4 pt-6 text-center">
-        <h1 className="text-[40px] font-bold leading-tight tracking-tight">{cases.length} submittals are waiting for review</h1>
+        <h1 className="text-[40px] font-bold leading-tight tracking-tight">{base} submittals are waiting for review</h1>
         <p className="max-w-[540px] text-[15px] text-muted">
           SpecCheck reads each package, compares it to the spec, and checks the manufacturer's current documents online.
+          Anything it sends back comes with a fix.
         </p>
         <button onClick={onRun} className="flare mt-3 h-[52px] rounded-[10px] px-7 text-base font-bold">
-          Review all {cases.length} submittals
+          Review all {base} submittals
         </button>
       </section>
+      <Upload onUpload={onUpload} />
       <section className="panel grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-px overflow-hidden bg-line">
-        {cases.map((c) => (
-          <div key={c.id} className="flex flex-col gap-1 bg-panel px-4 py-3.5">
-            <span>{c.title}</span>
-            <span className="font-mono text-[11px] text-faint">{c.section}</span>
-          </div>
-        ))}
+        {cases.map((c) => {
+          const s = states[c.id]
+          return (
+            <button key={c.id} onClick={() => onOpen(c.id)} disabled={s?.stage !== 'done'}
+              className="flex flex-col gap-1 bg-panel px-4 py-3.5 text-left enabled:hover:bg-raised">
+              <span className="truncate">{c.title}</span>
+              <span className="flex items-center gap-2 font-mono text-[11px] text-faint">
+                {c.section}{c.upload && <span className="text-flare">your upload</span>}
+                {s && <span className={ACTIVE.includes(s.stage) ? 'blink text-soft' : 'text-soft'}>
+                  {s.decision ? DECISION_LABEL[s.decision] : s.message}</span>}
+              </span>
+            </button>
+          )
+        })}
       </section>
     </>
   )
 }
 
-function Running({ cases, states, done, onOpen }: {
-  cases: Case[]; states: Record<string, CaseState>; done: number; onOpen: (id: string) => void
+function Running({ cases, states, done, onOpen, onUpload }: {
+  cases: Case[]; states: Record<string, CaseState>; done: number; onOpen: (id: string) => void; onUpload: (f: File) => Promise<void>
 }) {
   return (
     <>
       <section className="flex flex-wrap items-end justify-between gap-5">
         <div>
           <h1 className="text-[28px] font-bold tracking-tight">Nemotron is reviewing {cases.length} submittals</h1>
-          <p className="text-muted">Each package is read, checked against the spec, then checked against the manufacturer's site. Open any finished card.</p>
+          <p className="text-muted">Each package is read, checked against the spec, then checked against the manufacturer's site. Send-backs get a fix. Open any finished card.</p>
         </div>
         <div className="flex min-w-[200px] flex-col gap-1.5">
           <span className="text-right font-mono text-xs tabular-nums">{done} of {cases.length} done</span>
@@ -238,38 +303,43 @@ function Running({ cases, states, done, onOpen }: {
               <div className="flex min-w-0 flex-col gap-1">
                 <span className="h-5 truncate font-medium leading-5" title={c.title}>{c.title}</span>
                 <span className={`h-4 truncate text-xs leading-4 ${active ? 'blink' : 'text-muted'}`}>{s?.message ?? 'Waiting'}</span>
-                <span className="h-4 truncate font-mono text-[11px] leading-4 text-faint">{(active && s?.model) || NBSP}</span>
+                <span className="h-4 truncate font-mono text-[11px] leading-4 text-faint">{(active && s?.model) || (c.upload ? 'your upload' : NBSP)}</span>
               </div>
             </button>
           )
         })}
       </section>
+      <Upload onUpload={onUpload} />
     </>
   )
 }
 
-function Done({ cases, states, onOpen, onAgain }: {
-  cases: Case[]; states: Record<string, CaseState>; onOpen: (id: string) => void; onAgain: () => void
+function Done({ cases, states, onOpen, onAgain, onUpload }: {
+  cases: Case[]; states: Record<string, CaseState>; onOpen: (id: string) => void; onAgain: () => void; onUpload: (f: File) => Promise<void>
 }) {
   const sendBack = cases.filter((c) => states[c.id]?.decision === 'send_back').length
   return (
     <>
       <section className="flex flex-wrap items-end justify-between gap-5">
         <h1 className="text-[30px] font-bold tracking-tight">
-          {sendBack} submittal{sendBack === 1 ? '' : 's'} need{sendBack === 1 ? 's' : ''} to go back
+          {sendBack} submittal{sendBack === 1 ? '' : 's'} need{sendBack === 1 ? 's' : ''} to go back, each with a fix
         </h1>
         <button onClick={onAgain} className="btn h-9 px-3.5">Run again</button>
       </section>
       <section className="panel overflow-hidden">
         {cases.map((c) => {
           const s = states[c.id]
+          const active = !!s && ACTIVE.includes(s.stage)
           return (
             <button key={c.id} onClick={() => onOpen(c.id)} disabled={!s?.decision}
               className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 border-b border-line px-4 py-3 text-left last:border-b-0 enabled:hover:bg-raised disabled:cursor-not-allowed md:min-h-14 md:grid-cols-[minmax(0,1fr)_170px_minmax(0,1.4fr)_64px] md:py-2">
-              <span className="font-medium md:font-normal">{c.title}</span>
+              <span className="flex min-w-0 flex-col font-medium md:font-normal">
+                <span className="truncate">{c.title}</span>
+                {c.upload && <span className="font-mono text-[11px] text-flare">your upload</span>}
+              </span>
               <span className="flex items-center gap-2 justify-self-end font-medium md:justify-self-auto">
                 {s?.decision && <span className="h-[7px] w-[7px] rounded-full" style={{ background: DECISION_COLOR[s.decision] }} />}
-                {s?.decision ? DECISION_LABEL[s.decision] : s?.stage === 'error' ? 'Error' : '—'}
+                {s?.decision ? DECISION_LABEL[s.decision] : s?.stage === 'error' ? 'Error' : active ? <span className="blink text-muted">{s.message}</span> : '—'}
               </span>
               <span className="col-span-2 text-muted md:col-span-1">{s?.summary}</span>
               <span className="hidden text-right text-muted md:block">{s?.decision ? 'Open →' : ''}</span>
@@ -277,10 +347,10 @@ function Done({ cases, states, onOpen, onAgain }: {
           )
         })}
       </section>
+      <Upload onUpload={onUpload} />
     </>
   )
 }
-
 
 // ---------- result view ----------
 
@@ -328,7 +398,7 @@ const pageKey = (file: string | null, n: number | null) => `${file}#${n}`
 const firstMark = (f: Finding) => f.highlights.find((h) => h.boxes.length) ?? f.highlights.find((h) => h.page)
 
 function Detail({ result, docs, text, runId, onReplay }: {
-  result: Result; docs: DocPages[] | null; text: TextPage[] | null; runId: string; onReplay: () => void
+  result: Result; docs: DocPages[] | null; text: TextPage[] | null; runId: string; onReplay?: () => void
 }) {
   // Worst first: must fix, then out of date, then notes and not-stated.
   const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass' && f.verdict !== 'not_applicable')
@@ -571,7 +641,7 @@ function TextPages({ pages, marks, selId, result, banner, page, onPage }: {
   )
 }
 
-function HowChecked({ result, runId, onReplay }: { result: Result; runId: string; onReplay: () => void }) {
+function HowChecked({ result, runId, onReplay }: { result: Result; runId: string; onReplay?: () => void }) {
   const tokens = result.usage.reduce((a, u) => a + u.input_tokens + u.output_tokens, 0)
   const cost = result.usage.reduce((a, u) => a + u.cost_usd, 0)
   return (
@@ -588,69 +658,54 @@ function HowChecked({ result, runId, onReplay }: { result: Result; runId: string
         <span>${cost.toFixed(4)} + {result.web_credits} credits</span>
         <span>{(result.duration_ms / 1000).toFixed(1)} s</span>
       </div>
-      <button onClick={onReplay} className="w-full border-t border-line px-3.5 py-2.5 text-left text-flare hover:bg-raised">
-        Replay run {runId.slice(-6)} →
-      </button>
+      {onReplay && (
+        <button onClick={onReplay} className="w-full border-t border-line px-3.5 py-2.5 text-left text-flare hover:bg-raised">
+          Replay run {runId.slice(-6)} →
+        </button>
+      )}
     </div>
   )
 }
 
-function Icon({ kind }: { kind: 'x' | 'check' }) {
+function Icon({ kind }: { kind: 'x' | 'check' | 'dash' }) {
+  const d = { x: 'm4 4 8 8M12 4l-8 8', check: 'm3.5 8.5 3 3 6-7', dash: 'M4.5 8h7' }[kind]
   return (
     <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden className="shrink-0">
-      <path d={kind === 'x' ? 'm4 4 8 8M12 4l-8 8' : 'm3.5 8.5 3 3 6-7'} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
 
-const CAPS = 'text-[10px] font-medium uppercase tracking-[0.08em] text-faint'
-const BIG = 'text-[20px] font-semibold leading-tight'
+const CAPS = 'font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-faint'
+const BIG = 'text-[22px] font-bold leading-tight'
+const BAD = 'text-[#ff8a84]'
 const show = (v: Value) => (v === null || v === undefined ? '—' : String(v))
+const lower = (v: Value) => (Array.isArray(v) ? v : [show(v)]).join(' | ').toLowerCase()
 
-// Lists as chips. On the "needs" side, an item the other side lacks is a red outlined chip.
-function Chips({ items, against, fail }: { items: string[]; against?: Value; fail?: boolean }) {
-  const other = (Array.isArray(against) ? against : [show(against ?? null)]).join(' | ').toLowerCase()
-  return (
-    <div className="flex flex-wrap gap-1.5">
-      {items.map((it) => {
-        const missing = fail && against !== undefined && !other.includes(it.toLowerCase())
-        return (
-          <span key={it} className={`rounded-md border px-2 py-0.5 text-xs ${missing ? 'border-bad font-semibold text-[#ff8a84]' : 'border-line bg-well text-soft'}`}>
-            {it}
-          </span>
-        )
-      })}
-    </div>
-  )
-}
-
-function Side({ label, value, against, tone }: { label: string; value: Value; against?: Value; tone?: 'fail' | 'pass' | 'changed' }) {
-  return (
-    <div className="flex min-w-0 flex-col gap-1.5">
-      <span className={CAPS}>{label}</span>
-      {Array.isArray(value)
-        ? <Chips items={value} against={against} fail={against !== undefined} />
-        : <span className={`flex items-center gap-1.5 ${BIG} ${tone === 'fail' ? 'text-[#ff8a84]' : tone === 'changed' ? 'text-today' : 'text-ink'}`}>
-            {show(value)}{tone === 'fail' && <Icon kind="x" />}{tone === 'pass' && <span className="text-good"><Icon kind="check" /></span>}
-          </span>}
-    </div>
-  )
-}
-
+// What the spec (or the job) needs, next to what was sent. Lists are chips; a needed item the other side lacks is outlined red.
 function CompareBlock({ c }: { c: Compare }) {
-  if (c.rows.length) {
+  if (c.rows.length) { // currency: only the values that changed, sent -> current
     return (
-      <div className="flex flex-col gap-3 rounded-lg border border-line bg-well p-3.5">
-        <div className="grid grid-cols-2 gap-3">
-          <span className={CAPS}>{c.left_label}</span><span className={CAPS}>{c.right_label}</span>
+      <div className="overflow-hidden rounded-[10px] border border-line">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_16px_minmax(0,1.1fr)] gap-2 border-b border-line bg-well px-3.5 py-2.5">
+          <span />
+          {[c.left_label, null, c.right_label].map((l, i) => {
+            if (l === null) return <span key={i} />
+            const [head, rev] = splitLabel(l)
+            return (
+              <span key={i} className="flex min-w-0 flex-col gap-0.5">
+                <span className={`${CAPS} ${i ? '!text-today' : ''}`}>{head}</span>
+                {rev && <span className="truncate font-mono text-[10px] text-faint" title={rev}>{rev}</span>}
+              </span>
+            )
+          })}
         </div>
         {c.rows.map((r) => (
-          <div key={r.property} className="flex flex-col gap-1">
-            <span className="text-xs text-muted">{r.label}</span>
-            <div className="grid grid-cols-2 items-baseline gap-3">
-              <span className={`${BIG} text-muted line-through decoration-1`}>{r.submitted ?? '—'}</span>
-              <span className={`${BIG} text-today`}><span className="mr-1.5 text-sm text-faint" aria-hidden>→</span>{r.current ?? '—'}</span>
-            </div>
+          <div key={r.property} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_16px_minmax(0,1.1fr)] items-baseline gap-2 border-t border-line px-3.5 py-2.5 first-of-type:border-t-0">
+            <span className="text-muted">{r.label}</span>
+            <span className="text-[15px] text-muted">{r.submitted ?? '—'}</span>
+            <span className="text-faint" aria-hidden>→</span>
+            <span className="text-[17px] font-bold text-today">{r.current ?? '—'}</span>
           </div>
         ))}
       </div>
@@ -658,33 +713,126 @@ function CompareBlock({ c }: { c: Compare }) {
   }
   if (c.left_value === null || c.left_value === undefined) { // single fact, e.g. Status: Discontinued June 30, 2024
     return (
-      <div className="flex flex-col gap-1.5 rounded-lg border border-line bg-well p-3.5">
+      <div className="flex flex-col gap-1.5 rounded-[10px] border border-line bg-well p-3.5">
         <span className={CAPS}>{c.left_label}</span>
-        <span className={`flex items-center gap-1.5 ${BIG} ${c.verdict === 'fail' ? 'text-[#ff8a84]' : 'text-ink'}`}>
-          {show(c.right_value)}{c.verdict === 'fail' && <Icon kind="x" />}
+        <span className={`flex items-center gap-1.5 ${BIG} ${c.verdict === 'fail' ? BAD : 'text-ink'}`}>
+          {c.verdict === 'fail' && <Icon kind="x" />}{show(c.right_value)}
         </span>
       </div>
     )
   }
+  const fail = c.verdict === 'fail'
+  const missing = (Array.isArray(c.left_value) ? c.left_value : []).filter((it) => fail && !lower(c.right_value).includes(it.toLowerCase()))
+  const notStated = c.right_value === 'Not stated' || c.right_value === 'Not found'
+  const chips = Array.isArray(c.left_value) || Array.isArray(c.right_value)
   return (
-    <div className="grid grid-cols-2 gap-4 rounded-lg border border-line bg-well p-3.5">
-      <Side label={c.left_label} value={c.left_value} against={c.verdict === 'fail' ? c.right_value : undefined} />
-      <Side label={c.right_label} value={c.right_value} tone={c.verdict} />
+    <div className={`grid overflow-hidden rounded-[10px] border border-line ${chips ? 'grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]' : 'grid-cols-2'}`}>
+      <div className="flex min-w-0 flex-col gap-2 bg-well px-3.5 py-3">
+        <span className={CAPS}>{c.left_label}</span>
+        {Array.isArray(c.left_value)
+          ? <div className="flex flex-wrap gap-1.5">{c.left_value.map((it) => (
+              <span key={it} className={`rounded-md px-2.5 py-1 font-bold ${missing.includes(it) ? `border-[1.5px] border-bad text-base ${BAD}` : 'border border-line text-sm text-soft'}`}>{it}</span>))}</div>
+          : <span className={BIG}>{show(c.left_value)}</span>}
+      </div>
+      <div className={`flex min-w-0 flex-col gap-2 border-l border-line px-3.5 py-3 ${fail && !notStated && !chips ? 'bg-bad/[0.07]' : ''}`}>
+        <span className={CAPS}>{c.right_label}</span>
+        {Array.isArray(c.right_value)
+          ? <div className="flex flex-wrap gap-1.5">{c.right_value.map((it) => (
+              <span key={it} className="rounded-md bg-white/[0.06] px-2 py-0.5 text-xs text-soft">{it}</span>))}</div>
+          : <span className={`flex items-center gap-1.5 ${BIG} ${notStated ? 'text-muted' : fail ? BAD : c.verdict === 'changed' ? 'text-today' : 'text-ink'}`}>
+              {fail && !notStated && <Icon kind="x" />}{show(c.right_value)}
+              {c.verdict === 'pass' && <span className="text-good"><Icon kind="check" /></span>}
+            </span>}
+        {missing.length > 0 && <span className={`text-xs ${BAD}`}>✗ doesn't cover {missing.join(', ')}</span>}
+      </div>
+    </div>
+  )
+}
+
+// "Submitted (98-0400-5077-9 (2005))" -> ["Submitted", "98-0400-5077-9 (2005)"]
+function splitLabel(l: string): [string, string] {
+  const i = l.indexOf(' (')
+  return i < 0 || !l.endsWith(')') ? [l, ''] : [l.slice(0, i), l.slice(i + 2, -1)]
+}
+
+const hostOf = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, '') } catch { return url } }
+
+// Send-backs: what to send instead. Every candidate went through the same checks as a new submittal.
+function FixPanel({ fix, attach, onAttach }: { fix: Fix; attach: boolean; onAttach: (on: boolean) => void }) {
+  const ok = fix.candidates.filter((c) => c.passes).length
+  return (
+    <div className="flex flex-col gap-3 rounded-xl border border-flare/35 p-4">
+      <span className="flex items-center gap-2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5A35A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z" />
+        </svg>
+        <span className={`${CAPS} !text-[#F5A35A]`}>{fix.suggest ? 'SpecCheck found a fix' : 'Looked for a fix'}</span>
+      </span>
+      <span className="-mt-1 font-semibold">{fix.head}</span>
+      {fix.candidates.map((c, i) => (
+        <div key={i} className={`flex flex-col gap-2 rounded-[10px] border p-3 ${c.placeholder ? 'border-dashed' : ''} ${c.passes ? 'border-good/40 bg-good/[0.05]' : 'border-line'}`}>
+          <span className="flex items-start justify-between gap-2.5">
+            <span className="flex min-w-0 flex-col gap-0.5">
+              <span className="font-semibold">{c.name}</span>
+              {c.source_url
+                ? <a href={c.source_url} target="_blank" rel="noreferrer" className="truncate font-mono text-[11px] text-faint underline decoration-edge underline-offset-2 hover:text-soft">{hostOf(c.source_url)}</a>
+                : <span className="font-mono text-[11px] text-faint">placeholder · a live run fills this in</span>}
+            </span>
+            {(() => {
+              const bad = c.checks.find((k) => k.ok === false)
+              return (
+                <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${c.passes ? 'bg-good/15 text-[#4CC38A]' : 'bg-bad/15 text-[#E57373]'}`}>
+                  {c.passes ? 'Passes' : `Fails: ${bad?.note || bad?.label || 'spec'}`}
+                </span>
+              )
+            })()}
+          </span>
+          <div className="flex flex-col gap-1">
+            {c.checks.map((k, j) => {
+              const color = k.ok === true ? 'text-[#4CC38A]' : k.ok === false ? 'text-[#E57373]' : 'text-faint'
+              return (
+                <span key={j} className="flex items-baseline gap-2 text-xs">
+                  <span className={`self-center ${color}`}><Icon kind={k.ok === true ? 'check' : k.ok === false ? 'x' : 'dash'} /></span>
+                  <span className="text-soft">{k.label}</span>
+                  <span className={`ml-auto shrink-0 ${color}`}>{k.note}</span>
+                </span>
+              )
+            })}
+          </div>
+        </div>
+      ))}
+      {fix.candidates.length > 0 && (
+        <span className="text-xs leading-normal text-muted">
+          {ok} of {fix.candidates.length} pass{ok === 1 && fix.candidates.length === 1 ? 'es' : ''}. Each was checked with the same steps as a new submittal; “not stated” items are minor and don't block it.
+        </span>
+      )}
+      {fix.suggest && (
+        <label className="flex min-h-8 cursor-pointer items-center gap-2">
+          <input type="checkbox" checked={attach} onChange={(e) => onAttach(e.target.checked)} className="accent-[#F5791A]" />
+          Attach to the note
+        </label>
+      )}
     </div>
   )
 }
 
 function FindingCard({ finding: f, result, passed }: { finding: Finding | null; result: Result; passed: number }) {
   const src = f?.evidence[0]
+  const [attach, setAttach] = useState(true)
+  const fixes = result.findings.flatMap((x) => (x.fix?.suggest ? [x.fix.suggest] : []))
+  const note = result.note_to_subcontractor && attach && fixes.length
+    ? `${result.note_to_subcontractor}\n\nSuggested: ${fixes.join('; ')}. Checked against the spec; details attached.`
+    : result.note_to_subcontractor
   return (
     <div className="panel flex flex-col gap-4 p-5">
       {f ? (
         <>
           <div className="flex min-w-0 flex-col gap-1">
-            <span className="text-xs" style={{ color: TONE_COLOR[toneOf(f)] }}>
-              {LABEL[f.verdict]}{f.severity !== 'info' ? ` · ${f.severity}` : ''}
+            <span className="flex justify-between font-mono text-[11px] uppercase tracking-[0.06em]">
+              <span style={{ color: TONE_COLOR[toneOf(f)] }}>{LABEL[f.verdict]}{f.severity !== 'info' ? ` · ${f.severity}` : ''}</span>
+              {firstMark(f)?.page && <span className="text-faint">page {firstMark(f)!.page}</span>}
             </span>
-            <h2 className="truncate text-lg font-bold" title={f.title}>{f.title}</h2>
+            <h2 className="text-lg font-bold leading-snug">{f.title}</h2>
           </div>
           {f.compare && <CompareBlock c={f.compare} />}
           {f.why_it_matters && <p className="text-[13px] leading-snug text-soft"><span className="text-faint">Why it matters: </span>{f.why_it_matters}</p>}
@@ -694,6 +842,7 @@ function FindingCard({ finding: f, result, passed }: { finding: Finding | null; 
                 {src.retrieved_at ? ` · ${new Date(src.retrieved_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}` : ''}</>
             ) : <>Checked against spec {f.spec_ref || 'section'}{result.document_revision ? ` · sheet ${result.document_revision}` : ''}</>}
           </div>
+          {f.fix && <FixPanel fix={f.fix} attach={attach} onAttach={setAttach} />}
         </>
       ) : (
         <div className="flex flex-col gap-1">
@@ -702,7 +851,7 @@ function FindingCard({ finding: f, result, passed }: { finding: Finding | null; 
           <p className="text-muted">{result.summary}</p>
         </div>
       )}
-      <Note text={result.note_to_subcontractor} />
+      <Note text={note} />
     </div>
   )
 }
@@ -717,7 +866,120 @@ function Note({ text }: { text: string }) {
         <button onClick={() => navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) })}
           className="btn h-7">{copied ? 'Copied' : 'Copy'}</button>
       </div>
-      <p className="rounded-lg border border-line bg-well p-3 leading-relaxed">{text}</p>
+      <p className="whitespace-pre-line rounded-lg border border-line bg-well p-3 leading-relaxed">{text}</p>
     </div>
+  )
+}
+
+// ---------- results ----------
+
+const PROBLEM: Record<string, string> = {
+  spec: 'spec', currency: 'out of date', validity: 'listing', status: 'discontinued', currency_note: 'newer, same values', completeness: 'missing',
+}
+const callOf = (d: Decision, problems: string[]) =>
+  `${DECISION_LABEL[d]}${problems.length ? `: ${problems.map((p) => PROBLEM[p] ?? p).join(', ')}` : ''}`
+
+function Stat({ value, of, label, accent }: { value: ReactNode; of?: number; label: string; accent?: boolean }) {
+  return (
+    <div className={`panel flex flex-col gap-1.5 p-3.5 ${accent ? '!border-flare/35' : ''}`}>
+      <span className={`text-[26px] font-bold tabular-nums ${accent ? 'text-[#F5A35A]' : ''}`}>
+        {value}{of !== undefined && <span className="text-[15px] font-semibold text-faint"> / {of}</span>}
+      </span>
+      <span className="text-xs text-muted">{label}</span>
+    </div>
+  )
+}
+
+function Results() {
+  const [scores, setScores] = useState<Scores | null | undefined>(undefined)
+  useEffect(() => { getScores().then(setScores) }, [])
+  if (scores === undefined) return <p className="text-muted">Loading…</p>
+  if (scores === null) {
+    return (
+      <section className="panel flex flex-col gap-2 p-6">
+        <h1 className="text-[24px] font-bold tracking-tight">No scores yet</h1>
+        <p className="text-muted">Run <code className="font-mono text-soft">python scripts/eval.py</code> to score all 8 cases against the answer key.</p>
+      </section>
+    )
+  }
+  const s = scores
+  const when = new Date(s.generated_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+  const ph = s.fixes_passing.placeholders
+  return (
+    <>
+      <section className="flex flex-wrap items-end justify-between gap-4">
+        <div className="flex flex-col gap-1.5">
+          <h1 className="text-[28px] font-bold tracking-tight">How well it works</h1>
+          <span className="text-muted">{s.rows.length} real submittals with a known answer, run end to end.</span>
+        </div>
+        <span className="font-mono text-xs text-faint">{s.mode} run {s.run_id.slice(-6)} · {when}</span>
+      </section>
+
+      {s.mode !== 'live' && (
+        <p className="rounded-lg border border-line bg-well px-3.5 py-2.5 text-xs text-soft">
+          Mock mode: model and web answers are replayed from recorded fixtures, so time is near zero and cost uses placeholder prices.
+          {ph > 0 && ` ${ph} of the passing fixes ${ph === 1 ? 'is a placeholder' : 'are placeholders'} that a live run fills in.`}
+        </p>
+      )}
+
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <Stat value={s.right_call.n} of={s.right_call.of} label="Right call" />
+        <Stat value={s.caught.n} of={s.caught.of} label="Problems caught" />
+        <Stat value={s.false_alarms.n} of={s.false_alarms.of} label="False alarms on clean items" />
+        <Stat value={s.fixes_passing.n} of={s.fixes_passing.of} label={`Fixes that pass the spec${ph ? ` (${ph} placeholder)` : ''}`} accent />
+        <Stat value={`${(s.time_ms_per_item / 1000).toFixed(1)} s`} label="Per submittal" />
+        <Stat value={`$${s.cost_usd_per_item.toFixed(3)}`} label="Per submittal, models + search" />
+      </section>
+
+      <section className="panel overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[920px] border-collapse text-left">
+            <thead className="font-mono text-[11px] text-faint">
+              <tr className="border-b border-line">
+                {['Case', 'Document', 'Answer key', 'SpecCheck', 'Fix', 'Time', 'Cost'].map((h, i) => (
+                  <th key={h} className={`px-4 py-2.5 font-normal ${i >= 5 ? 'text-right' : ''}`}>{h.toUpperCase()}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {s.rows.map((r) => (
+                <tr key={r.id} className="border-b border-line last:border-b-0">
+                  <td className="px-4 py-3 font-mono text-xs text-muted">{r.id}</td>
+                  <td className="px-4 py-3">{r.title}</td>
+                  <td className="px-4 py-3">
+                    <span className="flex items-center gap-2">
+                      <span className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: DECISION_COLOR[r.expected] }} />
+                      {callOf(r.expected, r.expected_problems)}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    {r.error || !r.decision ? <span className={BAD}>Error</span> : (
+                      <span className={`flex items-center gap-1.5 ${r.right_call && r.caught === r.expected_problems.length ? '' : BAD}`}>
+                        <span className={r.right_call ? 'text-good' : BAD}><Icon kind={r.right_call ? 'check' : 'x'} /></span>
+                        {callOf(r.decision, r.found_problems ?? [])}
+                      </span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-muted">
+                    {!r.fix ? 'none needed' : r.fix.passes
+                      ? <span className="flex items-center gap-1.5"><span className="text-good"><Icon kind="check" /></span>
+                          <span className={r.fix.placeholder ? 'text-faint' : 'text-soft'}>{r.fix.placeholder ? 'placeholder' : r.fix.suggest}</span></span>
+                      : <span className={BAD}>no passing fix</span>}
+                  </td>
+                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-xs tabular-nums text-muted">{r.time_ms !== undefined ? `${(r.time_ms / 1000).toFixed(1)} s` : '—'}</td>
+                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-xs tabular-nums text-muted">{r.cost_usd !== undefined ? `$${r.cost_usd.toFixed(3)}` : '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section className="panel grid gap-2 p-5 text-soft sm:grid-cols-3 sm:gap-6">
+        <span><b className="text-ink">Right call:</b> approve, approve with note, or send back matches the key.</span>
+        <span><b className="text-ink">Caught:</b> the problem type matches too (spec, listing, out of date, discontinued).</span>
+        <span><b className="text-ink">Fix passes:</b> the suggested sheet or product clears the same checks as a new submittal.</span>
+      </section>
+    </>
   )
 }

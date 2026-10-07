@@ -133,6 +133,28 @@ class Compare(BaseModel):
     rows: list[CompareRow] = []  # currency: only the fields whose values differ
 
 
+class FixCheck(BaseModel):
+    label: str
+    ok: Optional[bool]  # None: not stated in the candidate's document
+    note: str = ""
+
+
+class FixCandidate(BaseModel):
+    name: str
+    source_url: Optional[str]  # None for a placeholder
+    checks: list[FixCheck] = []
+    passes: bool
+    placeholder: bool = False  # mock stand-in for a candidate only a live run can find
+
+
+class Fix(BaseModel):
+    """What to send instead: candidates found online, each run through the same checks as a new submittal."""
+
+    head: str
+    candidates: list[FixCandidate] = []
+    suggest: str = ""  # the best passing candidate, "" when none passes
+
+
 class Finding(BaseModel):
     id: str
     check: Check
@@ -149,6 +171,7 @@ class Finding(BaseModel):
     spec_ref: Optional[str] = None
     evidence: list[Evidence] = []
     decided_by: str = "code"
+    fix: Optional[Fix] = None
 
 
 class ReconcileOut(BaseModel):
@@ -199,7 +222,7 @@ class Result(BaseModel):
 
 # ---------- streaming ----------
 
-Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "reconcile", "report", "done", "error"]
+Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "reconcile", "fix", "report", "done", "error"]
 
 
 class Event(BaseModel):

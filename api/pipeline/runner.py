@@ -15,7 +15,7 @@ from typing import AsyncIterator, Optional
 
 from ..config import settings
 from ..schemas import Event, Requirement, Result, Usage
-from . import decide, extract, spec_check, verify
+from . import decide, extract, fix, spec_check, verify
 from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages
 from .render import attach_highlights
@@ -75,13 +75,14 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     async with sem:
         t0 = time.perf_counter()
         spec = all_specs()[case["section"]]
+        fx = case.get("fixture", case_id)  # which recorded answers mock mode uses; None for an unknown upload
         try:
             run.emit("ingest", "Reading the pages", case_id)
             pages = load_submittal_pages(case)
             await run.pause()
 
             run.emit("triage", "Sorting pages", case_id, settings.models["nano"])
-            labels, u = await extract.triage(case_id, pages)
+            labels, u = await extract.triage(fx, pages)
             usage.append(u)
             await run.pause()
 
@@ -93,7 +94,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             skip = set(case.get("not_applicable", []))
             requirements = [r for r in requirements if r.property not in skip]
             props = sorted({r.property for r in requirements})
-            claims, u = await extract.extract_claims(case_id, pages, labels, props)
+            claims, u = await extract.extract_claims(fx, pages, labels, props)
             usage.append(u)
 
             run.emit("spec_check", "Checking each requirement", case_id, "code")
@@ -107,12 +108,19 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             await run.pause()
 
             run.emit("reconcile", "Making the call", case_id, settings.models["ultra"])
-            findings, u = await decide.reconcile(case_id, findings)
+            findings, u = await decide.reconcile(fx, findings)
             usage += u
             decision = decide.decide(findings)
+            if decision == "send_back":
+                run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['super']}")
+                u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
+                                                      settings.fix_max_candidates, settings.fix_credit_cap)
+                usage += u
+                credits += fix_credits
+                await run.pause()
 
             run.emit("report", "Writing the result", case_id, settings.models["super"])
-            rep, u = await decide.report(case_id, case["title"], decision, findings)
+            rep, u = await decide.report(fx, case["title"], decision, findings)
             usage += u
             attach_highlights(case, claims.claims, findings)
             await run.pause()

@@ -54,6 +54,11 @@ class Settings:
     map_limit: int = int(os.getenv("MAP_LIMIT", "20"))
     map_max_depth: int = int(os.getenv("MAP_MAX_DEPTH", "1"))
 
+    # Fix step (send-backs only): candidates checked per finding, and the Tavily credit cap per item.
+    fix_max_candidates: int = int(os.getenv("FIX_MAX_CANDIDATES", "3"))
+    fix_credit_cap: float = float(os.getenv("FIX_CREDIT_CAP", "12"))
+    max_upload_mb: int = int(os.getenv("MAX_UPLOAD_MB", "25"))
+
     max_concurrency: int = int(os.getenv("MAX_CONCURRENCY", "4"))
     # Mock mode only: pause per stage so the UI animation looks like a real run. 0 for eval.
     mock_stage_delay_ms: int = int(os.getenv("MOCK_STAGE_DELAY_MS", "0"))
@@ -65,6 +70,8 @@ class Settings:
     raw_dir: Path = ROOT / "data" / "raw"
     cache_dir: Path = ROOT / ".cache"
     runs_dir: Path = ROOT / "runs"
+    uploads_dir: Path = ROOT / "data" / "raw" / "uploads"
+    scores_file: Path = ROOT / "runs" / "scores.json"
     web_dist: Path = ROOT / "web" / "dist"
 
     @property
