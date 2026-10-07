@@ -21,7 +21,6 @@ type CaseState = { stage: Stage; message: string; models: string[]; decision?: D
 // docs: page sizes of each downloaded submittal PDF; null when one is missing, then text holds the fixture pages.
 type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null }
 
-const ACTIVE: Stage[] = ['ingest', 'triage', 'extract', 'spec_check', 'verify', 'reconcile', 'fix', 'report']
 const STEPS = ['Read', 'Compare to spec', 'Check the maker online', 'Find the fix', 'Write it up']
 const STEP_OF: Partial<Record<Stage, number>> = {
   ingest: 0, triage: 0, extract: 1, spec_check: 1, verify: 2, reconcile: 2, fix: 3, report: 4, done: 5,
