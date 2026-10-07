@@ -53,9 +53,30 @@ def _as_list(value) -> list[str]:
 OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}
 
 
-def _label(prop: str) -> str:
-    from .verify import LABELS  # plain-language names live with the comparison table
+LABELS = {
+    "f_rating_hr": "Fire rating (F)",
+    "t_rating_hr": "Temperature rating (T)",
+    "voc_g_per_l": "VOC (air quality)",
+    "max_annular_space_in": "Largest gap it can seal",
+    "service_temp_max_f": "Highest service temperature",
+    "service_temp_range_f": "Service temperature range",
+    "lumens": "Light output",
+    "watts": "Power draw",
+    "efficacy_lm_per_w": "Efficiency (lumens per watt)",
+    "cri": "Color quality (CRI)",
+    "warranty_years": "Warranty",
+    "l70_hours": "Rated life (L70)",
+    "dim_min_percent": "Dims down to",
+    "input_watts_120v": "Power at 120 V",
+    "input_watts_277v": "Power at 277 V",
+    "standards": "Test standards",
+    "dlc_listed": "DLC listing",
+    "penetrant_types": "Pipe types covered",
+    "document_revision": "Data sheet version",
+}
 
+
+def _label(prop: str) -> str:
     return LABELS.get(prop, prop.replace("_", " "))
 
 

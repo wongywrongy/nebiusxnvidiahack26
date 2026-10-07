@@ -234,7 +234,7 @@ def test_health_never_leaks_a_key(live):
     for k in (NEBIUS_KEY, TAVILY_KEY, ADMIN):
         assert k not in body
     h = r.json()
-    assert h["mode"] == "live" and h["keys"]["NEBIUS_API_KEY"] is True and h["keys"]["LANGSMITH_API_KEY"] is False
+    assert h["mode"] == "live" and h["keys"]["NEBIUS_API_KEY"] is True and set(h["keys"]) == {"NEBIUS_API_KEY", "TAVILY_API_KEY", "ADMIN_TOKEN"}
     assert h["models"]["triage"] == settings.model_triage and set(h["today"]) == {"usd", "credits"}
 
 

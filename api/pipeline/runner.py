@@ -28,11 +28,10 @@ from .render import attach_highlights
 
 
 class Run:
-    def __init__(self, case_ids: list[str], replay_of: Optional[str] = None, delay_ms: Optional[int] = None,
+    def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None,
                  mock: bool = False):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
-        self.replay_of = replay_of
         self.mock = mock  # force mock mode for this run even when the server is live
         self.ledger = budget.Ledger()
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms

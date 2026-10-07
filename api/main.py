@@ -176,7 +176,7 @@ def _public(case: dict) -> dict:
 async def start_replay(body: StartReplay):
     if not run_dir(body.source_run_id):
         raise HTTPException(404, "No such recorded run")
-    run = Run([], replay_of=body.source_run_id)
+    run = Run([])
     RUNS[run.id] = run
     _spawn(replay(run, body.source_run_id, body.speed))
     return {"run_id": run.id, "replay_of": body.source_run_id}

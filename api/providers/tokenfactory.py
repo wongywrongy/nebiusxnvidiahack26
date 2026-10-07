@@ -29,7 +29,6 @@ log = logging.getLogger("speccheck.tokenfactory")
 # Which configured model (settings.models role) answers each task. Change routing here, nowhere else.
 TASK_MODEL: dict[str, str] = {
     "triage": "triage",
-    "plan_queries": "triage",
     "extract_requirements": "extract",
     "extract_claims": "extract",
     "verify": "verify",

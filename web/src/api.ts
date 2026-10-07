@@ -2,7 +2,7 @@
 
 export type Decision = 'approve' | 'approve_with_note' | 'send_back'
 export type Stage =
-  | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'reconcile' | 'fix' | 'report' | 'done' | 'error'
+  | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'fix' | 'report' | 'done' | 'error'
 
 export interface Case {
   id: string; number?: string; title: string; product?: string; from?: string; section: string
