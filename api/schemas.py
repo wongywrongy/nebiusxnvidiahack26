@@ -218,8 +218,7 @@ class Result(BaseModel):
 
 # ---------- streaming ----------
 
-# "reconcile" only appears in older recorded runs (replay); new runs don't emit it.
-Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "reconcile", "fix", "report", "done", "error"]
+Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "fix", "report", "done", "error"]
 
 
 class Event(BaseModel):

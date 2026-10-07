@@ -6,14 +6,14 @@ from datetime import datetime, timezone
 
 from ..config import settings
 from .cases import all_cases
+from .decide import FLAGGED
 
-FLAG = {"fail", "outdated"}
 
 
 def found_problems(result) -> set[str]:
     out = set()
     for f in result.findings:
-        if f.verdict in FLAG:
+        if f.verdict in FLAGGED:
             out.add(f.check)
         if f.verdict == "note" and f.check == "currency":
             out.add("currency_note")

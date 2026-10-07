@@ -13,31 +13,10 @@ from ..llm import router
 from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Usage, VerifyOut
 from ..web import WebClient, snapshot
 from .extract import quoted
+from .spec_check import _fmt, _label, to_number
 
 LISTING_BODIES = ("ul.com", "intertek.com", "icc-es.org", "designlights.org", "energystar.gov")
 TIER_RANK = {"manufacturer": 0, "listing_body": 1, "distributor": 2, "agency": 3, "archive": 4, "other": 5}
-
-LABELS = {
-    "f_rating_hr": "Fire rating (F)",
-    "t_rating_hr": "Temperature rating (T)",
-    "voc_g_per_l": "VOC (air quality)",
-    "max_annular_space_in": "Largest gap it can seal",
-    "service_temp_max_f": "Highest service temperature",
-    "service_temp_range_f": "Service temperature range",
-    "lumens": "Light output",
-    "watts": "Power draw",
-    "efficacy_lm_per_w": "Efficiency (lumens per watt)",
-    "cri": "Color quality (CRI)",
-    "warranty_years": "Warranty",
-    "l70_hours": "Rated life (L70)",
-    "dim_min_percent": "Dims down to",
-    "input_watts_120v": "Power at 120 V",
-    "input_watts_277v": "Power at 277 V",
-    "standards": "Test standards",
-    "dlc_listed": "DLC listing",
-    "penetrant_types": "Pipe types covered",
-    "document_revision": "Data sheet version",
-}
 
 
 def classify(url: str, manufacturer_domains: list[str]) -> str:
@@ -56,8 +35,6 @@ def classify(url: str, manufacturer_domains: list[str]) -> str:
 def _same(a, b) -> bool:
     if isinstance(a, list) or isinstance(b, list):
         return sorted(map(str, a or [])) == sorted(map(str, b or []))
-    from .spec_check import to_number
-
     na, nb = to_number(a), to_number(b)
     if na is not None and nb is not None and str(a).strip()[:1] not in "<>" and str(b).strip()[:1] not in "<>":
         return abs(na - nb) < 1e-9
@@ -136,9 +113,9 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             continue
         row = CompareRow(
             property=pv.property,
-            label=LABELS.get(pv.property, pv.property.replace("_", " ")),
-            submitted=_show(c.value, c.unit),
-            current=_show(pv.value, pv.unit),
+            label=_label(pv.property),
+            submitted=_fmt(c.value, c.unit),
+            current=_fmt(pv.value, pv.unit),
             changed=not _same(c.value, pv.value),
             source_url=confirmed[pv.property], quote=pv.quote,
         )
@@ -148,7 +125,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
 
     newer = bool(out.current_revision and submitted.document_revision and out.current_revision != submitted.document_revision)
     if newer:
-        rows.insert(0, CompareRow(property="document_revision", label=LABELS["document_revision"],
+        rows.insert(0, CompareRow(property="document_revision", label=_label("document_revision"),
                                   submitted=submitted.document_revision, current=out.current_revision, changed=True))
 
     sent, now = submitted.document_revision or "undated", out.current_revision or "unknown"
@@ -204,9 +181,3 @@ def unconfirmed(reason: str) -> Finding:
         decided_by="budget",
         compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="fail"),
     )
-
-
-def _show(value, unit) -> str:
-    from .spec_check import _fmt
-
-    return _fmt(value, unit)

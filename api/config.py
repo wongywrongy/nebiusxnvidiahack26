@@ -21,7 +21,7 @@ PRICES: dict[str, tuple[float, float]] = {
     "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": (0.06, 0.24),
     "nvidia/nemotron-3-super-120b-a12b": (0.30, 0.90),
 }
-KEYS = ("nebius_api_key", "tavily_api_key", "langsmith_api_key", "admin_token")
+KEYS = ("nebius_api_key", "tavily_api_key", "admin_token")
 LIVE_REQUIRES = ("nebius_api_key", "tavily_api_key")
 
 
@@ -33,14 +33,12 @@ class Settings(BaseSettings):
     nebius_api_key: SecretStr = SecretStr("")
     nebius_base_url: str = "https://api.tokenfactory.nebius.com/v1/"
     tavily_api_key: SecretStr = SecretStr("")
-    langsmith_api_key: SecretStr = SecretStr("")
     admin_token: SecretStr = SecretStr("")
 
     model_triage: str = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
     model_extract: str = "nvidia/nemotron-3-super-120b-a12b"
     model_verify: str = "nvidia/nemotron-3-super-120b-a12b"
     model_write: str = "nvidia/nemotron-3-super-120b-a12b"
-    model_vision: str = ""
 
     budget_usd_per_run: float = 5.0
     budget_tavily_credits_per_item: float = 25
@@ -83,7 +81,7 @@ class Settings(BaseSettings):
 
     @property
     def models(self) -> dict[str, str]:
-        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write", "vision")}
+        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write")}
 
     @property
     def keys_present(self) -> dict[str, bool]:

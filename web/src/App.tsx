@@ -27,7 +27,7 @@ type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null
 
 const STEPS = ['Read', 'Compare to spec', 'Check the maker online', 'Find the fix', 'Write it up']
 const STEP_OF: Partial<Record<Stage, number>> = {
-  ingest: 0, triage: 0, extract: 1, spec_check: 1, verify: 2, reconcile: 2, fix: 3, report: 4, done: 5,
+  ingest: 0, triage: 0, extract: 1, spec_check: 1, verify: 2, fix: 3, report: 4, done: 5,
 }
 const REC: Record<Decision, Act> = { approve: 'forward', approve_with_note: 'note', send_back: 'return' }
 const ACT: Record<Act, { label: string; short: string; done: string }> = {

@@ -19,15 +19,6 @@ from .schemas import Usage
 
 T = TypeVar("T", bound=BaseModel)
 
-# Which fixture key answers each task in mock mode.
-FIXTURE_KEY = {
-    "triage": "triage",
-    "extract_claims": "claims",
-    "verify": "verify",
-    "report": "report",
-}
-
-
 class LLMError(RuntimeError):
     pass
 
@@ -65,8 +56,7 @@ class Router:
             payload = load_spec_fixture(ctx["section"])
         else:
             fixture = load_fixture(ctx["case_id"])
-            key = FIXTURE_KEY.get(task, task)
-            payload = fixture.get(key)
+            payload = fixture.get("claims" if task == "extract_claims" else task)
             if payload is None:
                 payload = _default_payload(task, ctx)
         obj = schema.model_validate(payload)

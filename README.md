@@ -50,7 +50,7 @@ api/
   providers/       tokenfactory.py (Nemotron chat, JSON, retries, cost), tavily.py (search/extract/map,
                    credits, fetch_pdf), budget.py (run/item/day caps, BudgetExceeded)
   cache.py         disk cache for live calls
-  pipeline/        ingest, triage, extract, spec_check, verify, reconcile, fix, report, runner
+  pipeline/        ingest, triage, extract, spec_check, verify, fix, report, runner
   main.py          FastAPI: runs, uploads, SSE events, results, scores, replay, static web app
 data/
   cases/           cases.json (8 test submittals + answer key), specs.json
