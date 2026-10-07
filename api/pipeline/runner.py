@@ -13,8 +13,10 @@ import time
 import uuid
 from typing import AsyncIterator, Optional
 
-from ..config import settings
-from ..schemas import Event, Requirement, Result, Usage
+from ..config import FORCE_MOCK, redact, settings
+from ..providers import budget
+from ..providers.budget import BudgetExceeded
+from ..schemas import Event, ReportOut, Requirement, Result, Usage
 from . import decide, extract, fix, spec_check, verify
 from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages
@@ -22,10 +24,13 @@ from .render import attach_highlights
 
 
 class Run:
-    def __init__(self, case_ids: list[str], replay_of: Optional[str] = None, delay_ms: Optional[int] = None):
+    def __init__(self, case_ids: list[str], replay_of: Optional[str] = None, delay_ms: Optional[int] = None,
+                 mock: bool = False):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
         self.replay_of = replay_of
+        self.mock = mock  # force mock mode for this run even when the server is live
+        self.ledger = budget.Ledger()
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms
         self.events: list[Event] = []
         self.results: dict[str, Result] = {}
@@ -37,7 +42,7 @@ class Run:
 
     def emit(self, stage: str, message: str, case_id: Optional[str] = None, model: Optional[str] = None,
              data: Optional[dict] = None, t_ms: Optional[int] = None) -> Event:
-        ev = Event(run_id=self.id, case_id=case_id, stage=stage, message=message, model=model, data=data,
+        ev = Event(run_id=self.id, case_id=case_id, stage=stage, message=redact(message), model=model, data=data,
                    t_ms=int((time.perf_counter() - self._t0) * 1000) if t_ms is None else t_ms)
         self.events.append(ev)
         with (self.dir / "events.jsonl").open("a") as f:
@@ -72,6 +77,7 @@ class Run:
 async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     case = get_case(case_id)
     usage: list[Usage] = []
+    budget.ITEM.set(case_id)  # this task's own context: credit caps are per item
     async with sem:
         t0 = time.perf_counter()
         spec = all_specs()[case["section"]]
@@ -81,12 +87,12 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             pages = load_submittal_pages(case)
             await run.pause()
 
-            run.emit("triage", "Sorting pages", case_id, settings.models["nano"])
+            run.emit("triage", "Sorting pages", case_id, settings.models["triage"])
             labels, u = await extract.triage(fx, pages)
             usage.append(u)
             await run.pause()
 
-            run.emit("extract", "Comparing to the spec", case_id, settings.models["super"])
+            run.emit("extract", "Comparing to the spec", case_id, settings.models["extract"])
             reqs, u = await extract.extract_requirements(case["section"], load_spec_text(case["section"], spec))
             usage.append(u)
             # Project-specific conditions (e.g. "penetrant is steel pipe") come from the case cover sheet.
@@ -102,11 +108,14 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             await run.pause()
 
             tally = {v: sum(f.verdict == v for f in findings) for v in ("pass", "fail", "unverified")}
-            run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['super']}",
+            run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
                      data={"spec": tally})
-            vf, rows, u, credits = await verify.verify(case, claims)
+            try:
+                vf, rows, u, credits = await verify.verify(case, claims)
+                usage += u
+            except BudgetExceeded as e:  # this step can't confirm; the rest of the item and the run go on
+                vf, rows, credits = [verify.unconfirmed(str(e))], [], run.ledger.credits.get(case_id, 0.0)
             findings += vf
-            usage += u
             await run.pause()
 
             decision = decide.decide(findings)
@@ -114,18 +123,26 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             web = {"sheet": next((f.title for f in vf), ""), "verdict": next((f.verdict for f in vf), ""),
                    "sources": [{"url": e.url, "tier": e.tier} for e in ev]}
             if decision == "send_back":
-                run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['super']}", data={"web": web})
-                u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
-                                                      settings.fix_max_candidates, settings.fix_credit_cap)
-                usage += u
-                credits += fix_credits
+                run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['verify']}", data={"web": web})
+                try:
+                    u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
+                                                          settings.fix_max_candidates, settings.fix_credit_cap)
+                    usage += u
+                    credits += fix_credits
+                except BudgetExceeded as e:
+                    run.emit("fix", f"Couldn't confirm a fix: {e}", case_id)
+                    credits = run.ledger.credits.get(case_id, credits)
                 await run.pause()
 
             fixed = next((f.fix for f in findings if f.fix), None)
-            run.emit("report", "Writing the result", case_id, settings.models["super"],
+            run.emit("report", "Writing the result", case_id, settings.models["write"],
                      data={"web": web, **({"fix": fixed.head} if fixed else {})})
-            rep, u = await decide.report(fx, case["title"], decision, findings)
-            usage += u
+            try:
+                rep, u = await decide.report(fx, case["title"], decision, findings)
+                usage += u
+            except BudgetExceeded as e:
+                rep = ReportOut(summary=f"Couldn't write the summary: {e}. The decision and findings above stand.",
+                                note_to_subcontractor="")
             attach_highlights(case, claims.claims, findings)
             await run.pause()
 
@@ -147,6 +164,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
 
 
 async def execute(run: Run) -> Run:
+    budget.LEDGER.set(run.ledger)  # inherited by every item task below
+    FORCE_MOCK.set(run.mock)
     sem = asyncio.Semaphore(settings.max_concurrency)
     for cid in run.case_ids:
         run.emit("queued", "Waiting", cid)

@@ -196,6 +196,16 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
     return findings, rows, [usage], web.credits
 
 
+def unconfirmed(reason: str) -> Finding:
+    """The web check could not run (budget cap): say so instead of failing the item."""
+    return Finding(
+        id="currency-unverified", check="currency", verdict="unverified", severity="minor",
+        title="Couldn't confirm the current documents", detail=f"Web check skipped: {reason}. Check manually.",
+        decided_by="budget",
+        compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="fail"),
+    )
+
+
 def _show(value, unit) -> str:
     from .spec_check import _fmt
 

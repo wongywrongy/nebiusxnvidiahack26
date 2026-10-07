@@ -29,15 +29,22 @@ SPECCHECK_MODE=live python scripts/eval.py --case c03
 ```
 
 Every live response is cached in `.cache/`, so re-running a case does not spend credits.
+Spend is capped per run (USD), per item and per day (Tavily credits); a cap marks that step "Couldn't confirm".
+A live deployment needs `ADMIN_TOKEN` (sent as `X-Admin-Token`) for live runs; without it the public demo
+plays recorded runs and uploads run in mock mode. `GET /api/health` shows mode, which keys are set, models and today's spend.
+
+Secret scan: `pip install pre-commit && pre-commit install` (gitleaks runs on every commit).
 
 ## Layout
 
 ```
 api/
-  config.py        settings, mode (mock | live), model IDs, prices
+  config.py        settings (pydantic-settings, .env), mode, model per task, prices, log redaction
   schemas.py       Pydantic models: Requirement, Claim, Evidence, Finding, Result, Event
-  llm.py           model router: task -> Nemotron tier, JSON schema, retries, token + cost log
-  web.py           Tavily wrapper with the same mock/live switch
+  llm.py           model router: mock fixtures, or providers/tokenfactory in live mode
+  web.py           web lookups: mock fixtures, or providers/tavily in live mode
+  providers/       tokenfactory.py (Nemotron chat, JSON, retries, cost), tavily.py (search/extract/map,
+                   credits, fetch_pdf), budget.py (run/item/day caps, BudgetExceeded)
   cache.py         disk cache for live calls
   pipeline/        ingest, triage, extract, spec_check, verify, reconcile, fix, report, runner
   main.py          FastAPI: runs, uploads, SSE events, results, scores, replay, static web app
