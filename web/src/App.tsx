@@ -1,10 +1,14 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getMode, getProject, getResult, getScores, pageUrl, runScores,
+  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getHealth, getProject, getResult, getScores, pageUrl, runScores,
   startReplay, startRun, streamEvents, uploadPdf,
   type Case, type Compare, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Fix, type Mark,
   type Project, type Result, type Scores, type Stage, type TextPage, type Tone, type Value,
 } from './api'
+
+// Run ids start with the date: 20261007-182233-ab12cd.
+const recordedOn = (id: string) =>
+  new Date(`${id.slice(0, 4)}-${id.slice(4, 6)}-${id.slice(6, 8)}T00:00`).toLocaleDateString(undefined, { dateStyle: 'medium' })
 
 // Five screens, one question each. Log: what came in and what needs me? Live run: what is it doing now?
 // Review: what's wrong, and what's the fix? Alert: what changed since approval? Results: how good is it?
@@ -47,14 +51,18 @@ export default function App() {
   const [acts, setActs] = useState<Record<string, Act>>({}) // the reviewer's call on each item
   const [handled, setHandled] = useState<Record<string, boolean>>({}) // alerts dealt with
   const [lastRun, setLastRun] = useState<string | null>(null)
+  const [recorded, setRecorded] = useState<string | null>(null) // the recorded live run playing, if any
   const files = useRef<Record<string, string[]>>({})
 
   useEffect(() => {
     getProject().then((p) => {
       for (const c of p.cases) files.current[c.id] = c.submittal.map((d) => d.file)
       setProject(p)
-      // Intake is on: in mock mode the sample submittals check themselves as soon as the log opens.
-      getMode().then((m) => { if (m === 'mock') check(p.cases.filter((c) => !c.watch).map((c) => c.id), true) })
+      // The newest recorded live run plays as soon as the log opens. Without one, in mock mode the samples check themselves.
+      getHealth().then(({ mode, recorded }) => {
+        if (recorded) { setRecorded(recorded); setLastRun(recorded); startReplay(recorded).then(follow) }
+        else if (mode === 'mock') check(p.cases.filter((c) => !c.watch).map((c) => c.id), true)
+      })
     }, () => setLoadFailed(true))
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -93,7 +101,7 @@ export default function App() {
 
   async function check(ids: string[], isIntake: boolean) {
     const run = await startRun(ids)
-    if (isIntake) { setLastRun(run); setActs({}) }
+    if (isIntake) { setLastRun(run); setRecorded(null); setActs({}) }
     follow(run)
   }
 
@@ -158,7 +166,7 @@ export default function App() {
         </nav>
         {view === 'log' && (
           <span className="flex shrink-0 items-center gap-3 text-xs text-muted">
-            <span className="hidden sm:inline">Intake on</span>
+            <span className="hidden sm:inline">{recorded ? `Recorded live run ${recordedOn(recorded)}` : 'Intake on'}</span>
             <button onClick={replay} disabled={!lastRun} className="font-mono hover:text-ink disabled:opacity-40">replay</button>
           </span>
         )}

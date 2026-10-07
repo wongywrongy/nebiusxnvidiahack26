@@ -138,8 +138,9 @@ export interface Scores {
   time_ms_per_item: number; cost_usd_per_item: number; rows: ScoreRow[]
 }
 
-export async function getMode(): Promise<string> {
-  return (await (await fetch('/api/health')).json()).mode
+/** Server mode, and the newest recorded live run (null before scripts/record_live.py has run). */
+export async function getHealth(): Promise<{ mode: string; recorded: string | null }> {
+  return (await fetch('/api/health')).json()
 }
 
 /** Run all cases now and rewrite the scores (the Results page's "Run the scoring set"). */

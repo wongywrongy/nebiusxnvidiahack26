@@ -34,7 +34,6 @@ TASK_MODEL: dict[str, str] = {
     "extract_claims": "extract",
     "verify": "verify",
     "report": "write",
-    "reconcile": "reconcile",
 }
 RATE_LIMIT_RETRIES = 3  # on 429, back off 1s, 2s, 4s, then RateLimited
 
