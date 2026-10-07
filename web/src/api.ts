@@ -20,7 +20,7 @@ export interface Event {
   data: Record<string, unknown> | null
 }
 
-export interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string }
+interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string }
 export interface Finding {
   id: string
   check: string
@@ -39,8 +39,8 @@ export interface Finding {
   fix?: Fix | null
 }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
-export interface FixCheck { label: string; ok: boolean | null; note: string }
-export interface FixCandidate { name: string; source_url: string; checks: FixCheck[]; passes: boolean }
+interface FixCheck { label: string; ok: boolean | null; note: string }
+interface FixCandidate { name: string; source_url: string; checks: FixCheck[]; passes: boolean }
 export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
@@ -49,10 +49,10 @@ export interface Compare {
   verdict: 'fail' | 'pass' | 'changed'; rows: CompareRow[]
 }
 export interface CompareRow { property: string; label: string; submitted: string | null; current: string | null; changed: boolean }
-export interface Usage {
+interface Usage {
   task: string; tier: string; model: string; input_tokens: number; output_tokens: number; cost_usd: number; latency_ms: number
 }
-export interface Claim { id: string; property: string; value: unknown; unit?: string | null; page?: number | null; quote?: string | null }
+interface Claim { id: string; property: string; value: unknown; unit?: string | null; page?: number | null; quote?: string | null }
 export interface Result {
   case_id: string
   title: string
@@ -93,7 +93,7 @@ export async function getResult(runId: string, caseId: string): Promise<Result> 
 }
 
 export type Tone = 'red' | 'amber' | 'blue' | 'green'
-export interface Box { x0: number; y0: number; x1: number; y1: number }
+interface Box { x0: number; y0: number; x1: number; y1: number }
 // Where one claim behind a finding sits: file and page in data/raw, boxes as fractions of the page.
 export interface Mark {
   claim_id: string; doc_file: string | null; page: number | null; quote: string | null; boxes: Box[]; kind: 'problem' | 'checked'
@@ -125,8 +125,8 @@ export async function uploadPdf(file: File, delayMs = 700): Promise<{ run_id: st
   return r.json()
 }
 
-export interface Ratio { n: number; of: number }
-export interface ScoreRow {
+interface Ratio { n: number; of: number }
+interface ScoreRow {
   id: string; title: string; product: string; expected: Decision; expected_problems: string[]; error?: boolean
   decision?: Decision; found_problems?: string[]; right_call?: boolean; caught?: number; false_alarm?: boolean
   fix?: { suggest: string | null; passes: boolean; candidates: number } | null
