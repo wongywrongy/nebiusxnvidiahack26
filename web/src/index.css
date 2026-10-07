@@ -1,6 +1,12 @@
 @import "tailwindcss";
 
 @theme {
+  /* The only type sizes: 11, 13, 15, 20, 28. */
+  --text-xs: 11px; --text-xs--line-height: 16px;
+  --text-sm: 13px; --text-sm--line-height: 20px;
+  --text-base: 15px; --text-base--line-height: 24px;
+  --text-lg: 20px; --text-lg--line-height: 28px;
+  --text-2xl: 28px; --text-2xl--line-height: 36px;
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
   --color-ink: #e6e7ea;
@@ -14,7 +20,7 @@
   --color-line: #202329; /* dividers */
   --color-edge: #686e79; /* control borders: >=3:1 on page, panel and button fill */
   --color-on-accent: #0b0c0f;
-  --color-today: #f5c25e;
+  --color-fyi: #7fa7d9; /* blue = FYI: notes, couldn't confirm */
   --color-paper: #edebe6;
   --color-paper-rule: #d2cfc7;
   --color-paper-ink: #1d1f23;
@@ -28,10 +34,7 @@
 body {
   margin: 0;
   color: var(--color-ink);
-  background:
-    radial-gradient(900px 420px at 50% -14%, rgba(245, 121, 26, 0.12), transparent 62%),
-    radial-gradient(700px 520px at 100% 0%, rgba(36, 59, 85, 0.55), transparent 62%),
-    #0b0c0f;
+  background: #0b0c0f;
   min-height: 100vh;
 }
 
@@ -49,7 +52,7 @@ body {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem;
   height: 2rem; padding: 0 0.75rem; border-radius: 0.5rem;
   border: 1px solid var(--color-edge); background: #1d2026; color: var(--color-ink);
-  font-size: 12px; font-weight: 500; white-space: nowrap;
+  font-size: 13px; font-weight: 500; white-space: nowrap;
   transition: background-color 150ms ease-out, border-color 150ms ease-out;
 }
 .btn:hover { background: var(--color-selected); border-color: #8b919c; }
@@ -64,7 +67,7 @@ body {
 @keyframes pop { from { opacity: 0; transform: scale(.92) } }
 .pop { animation: pop .35s cubic-bezier(.16, 1, .3, 1) both; }
 @keyframes pulse { from { box-shadow: 0 0 0 0 currentColor } to { box-shadow: 0 0 0 12px transparent } }
-.pulse { animation: pulse .9s cubic-bezier(.16, 1, .3, 1) 2; }
+.pulse { animation: pulse .4s cubic-bezier(.16, 1, .3, 1) 1; }
 @keyframes blink { 50% { opacity: .4 } }
 .blink { animation: blink 1.2s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }

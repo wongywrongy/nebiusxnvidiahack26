@@ -81,6 +81,7 @@ class PropertyValue(BaseModel):
     property: str
     value: Value
     unit: Optional[str] = None
+    quote: Optional[str] = Field(default=None, description="Exact text from the source stating this value")
 
 
 class VerifyOut(BaseModel):
@@ -88,8 +89,9 @@ class VerifyOut(BaseModel):
 
     status: Literal["active", "discontinued", "unknown"]
     replacement: Optional[str] = None
-    current_revision: Optional[str] = None
+    current_revision: Optional[str] = Field(default=None, description="Revision or date exactly as printed on the source")
     status_date: Optional[str] = Field(default=None, description="Date it was discontinued or replaced, as stated")
+    status_quote: Optional[str] = Field(default=None, description="Exact text from the source stating the status")
     current_values: list[PropertyValue] = []
     source_urls: list[str] = []
     notes: Optional[str] = None
@@ -101,6 +103,8 @@ class CompareRow(BaseModel):
     submitted: Optional[str]
     current: Optional[str]
     changed: bool
+    source_url: Optional[str] = None  # where the current value was quoted from
+    quote: Optional[str] = None
 
 
 # ---------- findings and result ----------
@@ -141,16 +145,16 @@ class FixCheck(BaseModel):
 
 class FixCandidate(BaseModel):
     name: str
-    source_url: Optional[str]  # None for a placeholder
+    source_url: str
     checks: list[FixCheck] = []
     passes: bool
-    placeholder: bool = False  # mock stand-in for a candidate only a live run can find
 
 
 class Fix(BaseModel):
     """What to send instead: candidates found online, each run through the same checks as a new submittal."""
 
     head: str
+    query: str = ""  # what was searched, so "nothing passed" still shows what was tried
     candidates: list[FixCandidate] = []
     suggest: str = ""  # the best passing candidate, "" when none passes
 
@@ -172,14 +176,6 @@ class Finding(BaseModel):
     evidence: list[Evidence] = []
     decided_by: str = "code"
     fix: Optional[Fix] = None
-
-
-class ReconcileOut(BaseModel):
-    """Ultra reviews flagged findings: keep, drop as false positive, or adjust severity."""
-
-    keep: list[str] = Field(description="Finding ids that stand")
-    drop: list[str] = Field(default=[], description="Finding ids that are false positives")
-    rationale: str
 
 
 class ReportOut(BaseModel):
@@ -222,6 +218,7 @@ class Result(BaseModel):
 
 # ---------- streaming ----------
 
+# "reconcile" only appears in older recorded runs (replay); new runs don't emit it.
 Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "reconcile", "fix", "report", "done", "error"]
 
 

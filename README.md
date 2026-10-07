@@ -60,9 +60,10 @@ When the call is send back, SpecCheck looks for what the sub should send instead
 - **Spec or listing problem:** Tavily search for listed systems for the same penetrant and assembly.
 
 Each candidate (at most 3, under a Tavily credit cap per item: `FIX_MAX_CANDIDATES`, `FIX_CREDIT_CAP`) goes through the
-same extract, spec check and web check as a new submittal. The finding then carries the candidates, their checks, and the
-best one to suggest. In mock mode two of the five fixes (c02, c04) are marked placeholders: they stand for the listed
-system a live run should find.
+same extract, spec check and web check as a new submittal. A candidate passes only if every check passed on quoted
+evidence; otherwise the fix says "No passing replacement found" and lists what was tried. In mock mode 2 of 5 fixes
+pass (c03, c07): c02's recorded search found nothing, c04's one candidate fails T = F, and c06's 2025 sheet doesn't
+state CRI, dimming, warranty or DLC.
 
 ## Uploads and scores
 
@@ -77,8 +78,11 @@ system a live run should find.
 | --- | --- | --- |
 | Page triage | Nemotron 3 Nano | cheap, runs on every page |
 | Requirement and claim extraction, sheet comparison, report | Nemotron 3 Super | long context, structured output |
-| Final calls on flagged items | Nemotron 3 Ultra | strongest reasoning, called only when something is flagged |
-| Spec comparison of numbers and units | plain code | deterministic, no model |
+| Spec comparison, unit conversion, the decision | plain code | deterministic, no model |
+
+Models read; code decides. Every claim needs a quote found on its page, and every web value, revision or status needs a
+quote found on a fetched page, or it is dropped. A value nothing confirms is "couldn't confirm": a note, never a send-back.
+Ultra is not called: it's reserved for when sources disagree, which isn't built yet.
 
 ## Test documents
 

@@ -1,42 +1,115 @@
 {
   "_note": "Mock fixture. Pages are verbatim PyMuPDF text of the Lithonia 2TL 2x4 spec sheet (Rev. 11/18/22). The notice extract is verbatim page text (2026-10-05); its replacement options are not in the page text, so no replacement is named. The sheet states no CRI and no DLC listing.",
   "pages": [
-    {"page": 1, "text": "LED\t\n2TL-2X4\nCatalog  \nNumber\nNotes\nType\nFEATURES & SPECIFICATIONS\nINTENDED USE —The T Series LED combines digital lighting and control technologies with a high-\nperformance optical system to deliver general ambient lighting for many applications such as schools, \noffices and hospitals.\nHigh-efficacy light engine delivers long life and excellent color, ensuring a superior quality lighting \ninstallation that is highly efficient and sustainable. Certain airborne contaminants can diminish the \nintegrity of acrylic and/or polycarbonate. Click here for Acrylic-Polycarbonate Compatibility \ntable for suitable uses.\nCONSTRUCTION — Housing formed from cold-rolled steel. Polyester powder-paint after fabrication \noption available.\nSmooth hemmed sides and smooth inward-formed end flanges, for easy handling.\nStandard extruded aluminum door frame has superior structural integrity with premium appearance and \nmitered corners. Powder-painted rotary cam latches provide easy, secure door closure. Integral T-bar clips \nare standard. Acrylic shielding material is 100% UV stabilized.\nOPTICS — Standard pattern #19 lens, 0.156\" thick with highly transmissive overlay, is standard for superior \nbrightness control. Overlay is 0.040\" thick. Other lenses are available. \nELECTRICAL — Long-life LEDs, coupled with high-efficiency drivers, provide superior level and quality of \nillumination for extended service life. 90% LED lumen maintenance at 60,000 hours (L90/60,000). \neldoLED driver options deliver choice of dimming range, and choices for control, while assuring flicker-free, \nlow-current inrush, 89% efficiency and low EMI. Optional nLight® embedded controls continuously monitor \nsystem performance, allow for constant lumen management/compensation function, facilitate simple \n\"plug-and-play\" network and controls upgrading via Cat-5 cable.\nDriver disconnect is provided where required to comply with U.S. and Canadian codes.\nINSTALLATION — Drivers and internal components are accessible from floor. LED boards include plug-in \nconnectors for easy replacement or servicing. Suitable for direct insulation contact. Suitable for damp \nlocation.\nLISTINGS — CSA certified to U.S. and Canadian standards. IC rated. \nBUY AMERICAN ACT — Product with the BAA option is assembled in the USA and meets the Buy America(n) \ngovernment procurement requirements under FAR, DFARS and DOT regulations. \nPlease refer to www.acuitybrands.com/buy-american for additional information.\nWARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements \nin this specification sheet create any warranty of any kind. All other express and implied warranties are \ndisclaimed. Complete warranty terms located at:  \nwww.acuitybrands.com/support/warranty/terms-and-conditions\nNote: Actual performance may differ as a result of end-user environment and application. \nAll values are design or typical values, measured under laboratory conditions at 25 °C. \nSpecifications subject to change without notice.\nT SERIES LED\n2TL\n2' x 4' LED\nSpecifications\nLength:  47.75 (121.3)\nWidth:  23.75 (60.3)\nDepth:  3.75 (9.5)\n3.75\n(9.5)\n23.75\n(60.3)\nAll dimensions are inches (centimeters) unless otherwise noted.\nCapable Luminaire\nThis item is an A+ capable luminaire, which has been designed and tested to  \nprovide consistent color appearance and out-of-the-box control compatibility with \nsimple commissioning.\n•\t All configurations of this luminaire meet the Acuity Brands’ specification for \nchromatic consistency\n•\t This luminaire is part of an A+ Certified solution for nLight® control networks \nwhen ordered with drivers marked by a shaded background*\n•\t This luminaire is part of an A+ Certified solution for nLight control networks, \nproviding advanced control functionality at the luminaire level, when selection \nincludes driver and control options marked by a shaded background*\nTo learn more about A+, visit www.acuitybrands.com/aplus.\n*See ordering tree for details\n"},
-    {"page": 2, "text": "\t\n2TL-2X4\nLED: \nOne Lithonia Way Conyers, GA 30012 \nPhone: 1-800-705-SERV (7378) \nwww.lithonia.com\t\n© 2011-2022 Acuity Brands Lighting, Inc. All rights reserved. \nRev. 11/18/22\n2TL 2X4   Recessed LED Lighting \nPerformance Data\nLumen\nPackage\nLumens\nInput Watts\nLPW\n30L\nLP830\n 3,010.9 \n25\n120.4\n30L\nLP835\n 3,075.5 \n25\n123.0\n30L\nLP840\n 3,097.0 \n25\n123.9\n30L\nLP850\n 3,204.7 \n25\n128.2\n40L\nLP830\n 3,835.1 \n32\n119.8\n40L\nLP835\n 3,918.2 \n32\n122.4\n40L\nLP840\n 3,945.8 \n32\n123.3\n40L\nLP850\n 4,084.2 \n32\n127.6\n48L\nLP830\n 4,730.1 \n40\n118.3\n48L\nLP835\n 4,831.6 \n40\n120.8\n48L\nLP840\n 4,865.4 \n40\n121.6\n48L\nLP850\n 5,034.6 \n40\n125.9\n60L\nLP830\n 5,431.3 \n47\n115.6\n60L\nLP835\n 5,548.2 \n47\n118.0\n60L\nLP840\n 5,588.2 \n47\n118.9\n60L\nLP850\n 5,785.0 \n47\n123.1\n72L\nLP830\n 7,513.4 \n67\n112.1\n72L\nLP835\n 7,673.3 \n67\n114.5\n72L\nLP840\n 7,728.7 \n67\n115.4\n72L\nLP850\n 7,999.3 \n67\n119.4\nPerformance based on standard #12 pattern acrylic lens.\nExample: 2TL4 40L RW A19 EZ1 LP835 N80\nAccessories: Order as separate catalog number.\nDGA24\nDrywall grid adapter for 2x4 recessed fixture.\nNotes \n1\t Approximate lumen output.\n2\t Not available with EL7L or EL14L battery packs or SLD driver.\n3\t GZ1, GZ10 drivers not available with any Controls options. \n4\t Not available with N80, N80EMG, N100, or N100EMG. Not available with PWS1836, \nPWS1846, PWS1856LV, or PWS1846 PWSLV.\n2TL4\nSeries\nLumens 1\nDoor\nLens\nVoltage\n2TL4\nRecessed LED 2x4\n30L\n3000 lumens\n40L\n4000 lumens\n48L\n4800 lumens\n60L\n6000 lumens\n72L\n7200 lumens\nFW\nFlush aluminum, white\nRW\nRegressed aluminum, white\nA12\n#12 pattern acrylic\nA19\n#19 pattern acrylic, 0.156\" thick\nMWS\nMatte white .040\" thick\nMPL\nMicro prism\nSWL\nSatin white\n(blank)\nMVOLT (120-277V)\n347\n347V 2\nDriver\nColor temperature\nControl\nOptions\nEZ1\neldoLED dims to 1% (0-10 volt dimming)\nEZB\neldoLED dims to  0.1% (0-10 volt \ndimming) \nGZ1\nDims to 1% (0-10V dimming) 3\nGZ10\nDims to 10% (0-10V dimming) 3\nEDB\neldoLED DALI4\nSLD\nStep-level dimming4\nLP830\n3000 K\nLP835\n3500 K\nLP840\n4000 K\nLP850\n5000 K\n(blank)\nNo controls\nN80\nnLight with 80% (L80) lumen management\nN80EMG\nnLight with 80% (L80) lumen management for use \nwith generator supply EM power\nN100\nnLight without lumen management\nN100EMG\nnLight without lumen management for use with \ngenerator supply EM power\nEL7L\n700 nominal lumen battery pack \n(Noncompliant with CA T20)\nEL14L\n1400 nominal lumen battery pack \n(Noncompliant with CA T20)\nE10WLCP\nEM Self-Diagnostic battery pack, \n10W Constant Power, Certified in CA \nTitle 20 MAEDBS\nCP\nChicago plenum4\nBAA\nBuy America(n) Act Compliant\nPAF\nPaint after fabrication\nORDERING INFORMATION\nLead times will vary depending on options selected. Consult with your sales representative.\nA+ Capable options indicated  \nby this color background.\nHow to Estimate Delivered Lumens in Emergency Mode\nUse the formula below to estimate the delivered lumens in emergency \nmode\nDelivered Lumens = 1.25 x P x LPW\nP = Ouput power of emergency driver. P = 10W for E10WLCP option.\nLPW = Lumen per watt rating of the luminaire. LPW information \navailable in Performance Data section.\n"},
-    {"page": 3, "text": "2TL 2X4   Recessed LED Lighting \nConstant Lumen Management\nEnabled by the embedded nLight control, the T Series LED actively tracks its run-time and manages its light source such that constant lumen output is maintained \nover the system life. Referred to as lumen management, theis feature eliminates the energy waste created by the traditional practice of over-lighting.\n0\n10\n20\n30\n40\n50\nTHOUSAND OPERATING HOURS\n \n \n0\n10\n20\n30\n40\n50\nTHOUSAND OPERATING HOURS \n \nPOWER INPUT\nLIGHT\nOUTPUT\n100%\n80%\n100%\n80%\n67W\n54W\n67W\n54W\nLIGHT OUTPUT\nLIGHT OUTPUT\n \nPOWER INPUT\n \nPOWER INPUT\nWithout Lumen Management\nEnergy is wasted and light level is inconsistent.\nPOWER\nINPUT\nLIGHT OUTPUT\nWith Lumen Management\nEnergy is saved and light level remains consistent.\nWasted Energy\nSaved Energy\nPHOTOMETRICS\n2TL4 48L FW A12 EZ1 LP840, 4865.4 delivered lumens, test no. LTL26934P10, tested in accordance to IESNA LM-79. \n0°\n 20°\n 40°\n 60°\n 80°\n 90°\n0°\n0°\n0°\n90°\n180°\n400\n800\n1200\n1600\n2000\nCoefficients of Utilization\npf\n20%\npc\n80%\n70%\n50%\npw 70%50%30% 50%30%10% 50%30%10%\n119\n110\n101\n93\n86\n80\n74\n69\n64\n60\n57\n119\n106\n94\n84\n75\n68\n62\n56\n52\n48\n44\n119\n102\n88\n76\n67\n60\n53\n48\n44\n40\n37\n116\n103\n92\n82\n74\n67\n61\n56\n51\n47\n44\n116\n100\n86\n75\n66\n59\n53\n48\n43\n40\n37\n116\n97\n81\n70\n61\n53\n47\n42\n38\n35\n32\n111\n99\n88\n79\n71\n65\n59\n54\n50\n46\n43\n111\n96\n84\n73\n65\n58\n52\n47\n43\n39\n36\n111\n94\n80\n69\n60\n53\n47\n42\n38\n34\n32\nRCR\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\nZonal Lumen Summary\nZone\nLumens % Lamp % Fixture\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n1713\n2710\n4192\n4865\n0\n0\n0\n0\n4865\n35.2\n55.7\n86.2\n100.0\n0.0\n0.0\n0.0\n0.0\n100.0\n35.2\n55.7\n86.2\n100.0\n0.0\n0.0\n0.0\n0.0\n100.0\nCP Summary\n0°\n90\n0°\n5°\n15°\n25°\n35°\n45°\n55°\n65°\n75°\n85°\n90\n2239\n2234\n2163\n1990\n1661\n1174\n717\n403\n228\n97\n0\n2239\n2231\n2144\n1933\n1569\n1109\n668\n370\n240\n108\n0\n\t\n2TL-2X4\nLED: \nOne Lithonia Way Conyers, GA 30012 \nPhone: 1-800-705-SERV (7378) \nwww.lithonia.com\t\n© 2011-2022 Acuity Brands Lighting, Inc. All rights reserved. \nRev. 11/18/22\n"}
+    {
+      "page": 1,
+      "text": "LED\t\n2TL-2X4\nCatalog  \nNumber\nNotes\nType\nFEATURES & SPECIFICATIONS\nINTENDED USE —The T Series LED combines digital lighting and control technologies with a high-\nperformance optical system to deliver general ambient lighting for many applications such as schools, \noffices and hospitals.\nHigh-efficacy light engine delivers long life and excellent color, ensuring a superior quality lighting \ninstallation that is highly efficient and sustainable. Certain airborne contaminants can diminish the \nintegrity of acrylic and/or polycarbonate. Click here for Acrylic-Polycarbonate Compatibility \ntable for suitable uses.\nCONSTRUCTION — Housing formed from cold-rolled steel. Polyester powder-paint after fabrication \noption available.\nSmooth hemmed sides and smooth inward-formed end flanges, for easy handling.\nStandard extruded aluminum door frame has superior structural integrity with premium appearance and \nmitered corners. Powder-painted rotary cam latches provide easy, secure door closure. Integral T-bar clips \nare standard. Acrylic shielding material is 100% UV stabilized.\nOPTICS — Standard pattern #19 lens, 0.156\" thick with highly transmissive overlay, is standard for superior \nbrightness control. Overlay is 0.040\" thick. Other lenses are available. \nELECTRICAL — Long-life LEDs, coupled with high-efficiency drivers, provide superior level and quality of \nillumination for extended service life. 90% LED lumen maintenance at 60,000 hours (L90/60,000). \neldoLED driver options deliver choice of dimming range, and choices for control, while assuring flicker-free, \nlow-current inrush, 89% efficiency and low EMI. Optional nLight® embedded controls continuously monitor \nsystem performance, allow for constant lumen management/compensation function, facilitate simple \n\"plug-and-play\" network and controls upgrading via Cat-5 cable.\nDriver disconnect is provided where required to comply with U.S. and Canadian codes.\nINSTALLATION — Drivers and internal components are accessible from floor. LED boards include plug-in \nconnectors for easy replacement or servicing. Suitable for direct insulation contact. Suitable for damp \nlocation.\nLISTINGS — CSA certified to U.S. and Canadian standards. IC rated. \nBUY AMERICAN ACT — Product with the BAA option is assembled in the USA and meets the Buy America(n) \ngovernment procurement requirements under FAR, DFARS and DOT regulations. \nPlease refer to www.acuitybrands.com/buy-american for additional information.\nWARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements \nin this specification sheet create any warranty of any kind. All other express and implied warranties are \ndisclaimed. Complete warranty terms located at:  \nwww.acuitybrands.com/support/warranty/terms-and-conditions\nNote: Actual performance may differ as a result of end-user environment and application. \nAll values are design or typical values, measured under laboratory conditions at 25 °C. \nSpecifications subject to change without notice.\nT SERIES LED\n2TL\n2' x 4' LED\nSpecifications\nLength:  47.75 (121.3)\nWidth:  23.75 (60.3)\nDepth:  3.75 (9.5)\n3.75\n(9.5)\n23.75\n(60.3)\nAll dimensions are inches (centimeters) unless otherwise noted.\nCapable Luminaire\nThis item is an A+ capable luminaire, which has been designed and tested to  \nprovide consistent color appearance and out-of-the-box control compatibility with \nsimple commissioning.\n•\t All configurations of this luminaire meet the Acuity Brands’ specification for \nchromatic consistency\n•\t This luminaire is part of an A+ Certified solution for nLight® control networks \nwhen ordered with drivers marked by a shaded background*\n•\t This luminaire is part of an A+ Certified solution for nLight control networks, \nproviding advanced control functionality at the luminaire level, when selection \nincludes driver and control options marked by a shaded background*\nTo learn more about A+, visit www.acuitybrands.com/aplus.\n*See ordering tree for details\n"
+    },
+    {
+      "page": 2,
+      "text": "\t\n2TL-2X4\nLED: \nOne Lithonia Way Conyers, GA 30012 \nPhone: 1-800-705-SERV (7378) \nwww.lithonia.com\t\n© 2011-2022 Acuity Brands Lighting, Inc. All rights reserved. \nRev. 11/18/22\n2TL 2X4   Recessed LED Lighting \nPerformance Data\nLumen\nPackage\nLumens\nInput Watts\nLPW\n30L\nLP830\n 3,010.9 \n25\n120.4\n30L\nLP835\n 3,075.5 \n25\n123.0\n30L\nLP840\n 3,097.0 \n25\n123.9\n30L\nLP850\n 3,204.7 \n25\n128.2\n40L\nLP830\n 3,835.1 \n32\n119.8\n40L\nLP835\n 3,918.2 \n32\n122.4\n40L\nLP840\n 3,945.8 \n32\n123.3\n40L\nLP850\n 4,084.2 \n32\n127.6\n48L\nLP830\n 4,730.1 \n40\n118.3\n48L\nLP835\n 4,831.6 \n40\n120.8\n48L\nLP840\n 4,865.4 \n40\n121.6\n48L\nLP850\n 5,034.6 \n40\n125.9\n60L\nLP830\n 5,431.3 \n47\n115.6\n60L\nLP835\n 5,548.2 \n47\n118.0\n60L\nLP840\n 5,588.2 \n47\n118.9\n60L\nLP850\n 5,785.0 \n47\n123.1\n72L\nLP830\n 7,513.4 \n67\n112.1\n72L\nLP835\n 7,673.3 \n67\n114.5\n72L\nLP840\n 7,728.7 \n67\n115.4\n72L\nLP850\n 7,999.3 \n67\n119.4\nPerformance based on standard #12 pattern acrylic lens.\nExample: 2TL4 40L RW A19 EZ1 LP835 N80\nAccessories: Order as separate catalog number.\nDGA24\nDrywall grid adapter for 2x4 recessed fixture.\nNotes \n1\t Approximate lumen output.\n2\t Not available with EL7L or EL14L battery packs or SLD driver.\n3\t GZ1, GZ10 drivers not available with any Controls options. \n4\t Not available with N80, N80EMG, N100, or N100EMG. Not available with PWS1836, \nPWS1846, PWS1856LV, or PWS1846 PWSLV.\n2TL4\nSeries\nLumens 1\nDoor\nLens\nVoltage\n2TL4\nRecessed LED 2x4\n30L\n3000 lumens\n40L\n4000 lumens\n48L\n4800 lumens\n60L\n6000 lumens\n72L\n7200 lumens\nFW\nFlush aluminum, white\nRW\nRegressed aluminum, white\nA12\n#12 pattern acrylic\nA19\n#19 pattern acrylic, 0.156\" thick\nMWS\nMatte white .040\" thick\nMPL\nMicro prism\nSWL\nSatin white\n(blank)\nMVOLT (120-277V)\n347\n347V 2\nDriver\nColor temperature\nControl\nOptions\nEZ1\neldoLED dims to 1% (0-10 volt dimming)\nEZB\neldoLED dims to  0.1% (0-10 volt \ndimming) \nGZ1\nDims to 1% (0-10V dimming) 3\nGZ10\nDims to 10% (0-10V dimming) 3\nEDB\neldoLED DALI4\nSLD\nStep-level dimming4\nLP830\n3000 K\nLP835\n3500 K\nLP840\n4000 K\nLP850\n5000 K\n(blank)\nNo controls\nN80\nnLight with 80% (L80) lumen management\nN80EMG\nnLight with 80% (L80) lumen management for use \nwith generator supply EM power\nN100\nnLight without lumen management\nN100EMG\nnLight without lumen management for use with \ngenerator supply EM power\nEL7L\n700 nominal lumen battery pack \n(Noncompliant with CA T20)\nEL14L\n1400 nominal lumen battery pack \n(Noncompliant with CA T20)\nE10WLCP\nEM Self-Diagnostic battery pack, \n10W Constant Power, Certified in CA \nTitle 20 MAEDBS\nCP\nChicago plenum4\nBAA\nBuy America(n) Act Compliant\nPAF\nPaint after fabrication\nORDERING INFORMATION\nLead times will vary depending on options selected. Consult with your sales representative.\nA+ Capable options indicated  \nby this color background.\nHow to Estimate Delivered Lumens in Emergency Mode\nUse the formula below to estimate the delivered lumens in emergency \nmode\nDelivered Lumens = 1.25 x P x LPW\nP = Ouput power of emergency driver. P = 10W for E10WLCP option.\nLPW = Lumen per watt rating of the luminaire. LPW information \navailable in Performance Data section.\n"
+    },
+    {
+      "page": 3,
+      "text": "2TL 2X4   Recessed LED Lighting \nConstant Lumen Management\nEnabled by the embedded nLight control, the T Series LED actively tracks its run-time and manages its light source such that constant lumen output is maintained \nover the system life. Referred to as lumen management, theis feature eliminates the energy waste created by the traditional practice of over-lighting.\n0\n10\n20\n30\n40\n50\nTHOUSAND OPERATING HOURS\n \n \n0\n10\n20\n30\n40\n50\nTHOUSAND OPERATING HOURS \n \nPOWER INPUT\nLIGHT\nOUTPUT\n100%\n80%\n100%\n80%\n67W\n54W\n67W\n54W\nLIGHT OUTPUT\nLIGHT OUTPUT\n \nPOWER INPUT\n \nPOWER INPUT\nWithout Lumen Management\nEnergy is wasted and light level is inconsistent.\nPOWER\nINPUT\nLIGHT OUTPUT\nWith Lumen Management\nEnergy is saved and light level remains consistent.\nWasted Energy\nSaved Energy\nPHOTOMETRICS\n2TL4 48L FW A12 EZ1 LP840, 4865.4 delivered lumens, test no. LTL26934P10, tested in accordance to IESNA LM-79. \n0°\n 20°\n 40°\n 60°\n 80°\n 90°\n0°\n0°\n0°\n90°\n180°\n400\n800\n1200\n1600\n2000\nCoefficients of Utilization\npf\n20%\npc\n80%\n70%\n50%\npw 70%50%30% 50%30%10% 50%30%10%\n119\n110\n101\n93\n86\n80\n74\n69\n64\n60\n57\n119\n106\n94\n84\n75\n68\n62\n56\n52\n48\n44\n119\n102\n88\n76\n67\n60\n53\n48\n44\n40\n37\n116\n103\n92\n82\n74\n67\n61\n56\n51\n47\n44\n116\n100\n86\n75\n66\n59\n53\n48\n43\n40\n37\n116\n97\n81\n70\n61\n53\n47\n42\n38\n35\n32\n111\n99\n88\n79\n71\n65\n59\n54\n50\n46\n43\n111\n96\n84\n73\n65\n58\n52\n47\n43\n39\n36\n111\n94\n80\n69\n60\n53\n47\n42\n38\n34\n32\nRCR\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\nZonal Lumen Summary\nZone\nLumens % Lamp % Fixture\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n1713\n2710\n4192\n4865\n0\n0\n0\n0\n4865\n35.2\n55.7\n86.2\n100.0\n0.0\n0.0\n0.0\n0.0\n100.0\n35.2\n55.7\n86.2\n100.0\n0.0\n0.0\n0.0\n0.0\n100.0\nCP Summary\n0°\n90\n0°\n5°\n15°\n25°\n35°\n45°\n55°\n65°\n75°\n85°\n90\n2239\n2234\n2163\n1990\n1661\n1174\n717\n403\n228\n97\n0\n2239\n2231\n2144\n1933\n1569\n1109\n668\n370\n240\n108\n0\n\t\n2TL-2X4\nLED: \nOne Lithonia Way Conyers, GA 30012 \nPhone: 1-800-705-SERV (7378) \nwww.lithonia.com\t\n© 2011-2022 Acuity Brands Lighting, Inc. All rights reserved. \nRev. 11/18/22\n"
+    }
   ],
-  "triage": {"pages": [{"page": 1, "kind": "product_data"}, {"page": 2, "kind": "product_data"}, {"page": 3, "kind": "product_data"}]},
+  "triage": {
+    "pages": [
+      {
+        "page": 1,
+        "kind": "product_data"
+      },
+      {
+        "page": 2,
+        "kind": "product_data"
+      },
+      {
+        "page": 3,
+        "kind": "product_data"
+      }
+    ]
+  },
   "claims": {
     "product": "2TL 2x4 T Series recessed LED troffer",
     "manufacturer": "Lithonia Lighting (Acuity Brands)",
     "model": "2TL4 30L EZ1 LP830",
     "document_revision": "Rev. 11/18/22",
     "claims": [
-      {"id": "k1", "product": "2TL4", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "dim_min_percent", "value": 1, "unit": "%", "page": 2, "quote": "eldoLED dims to 1% (0-10 volt dimming)"},
-      {"id": "k2", "product": "2TL4", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1, "quote": "WARRANTY — 5-year limited warranty."},
-      {"id": "k3", "product": "2TL4", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "lumens", "value": 3010.9, "unit": "lm", "page": 2, "quote": "3,010.9"},
-      {"id": "k4", "product": "2TL4", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "efficacy_lm_per_w", "value": 120.4, "unit": "lm/W", "page": 2, "quote": "120.4"}
+      {
+        "id": "k1",
+        "product": "2TL4",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "dim_min_percent",
+        "value": 1,
+        "unit": "%",
+        "page": 2,
+        "quote": "eldoLED dims to 1% (0-10 volt dimming)"
+      },
+      {
+        "id": "k2",
+        "product": "2TL4",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "warranty_years",
+        "value": 5,
+        "unit": "yr",
+        "page": 1,
+        "quote": "WARRANTY — 5-year limited warranty."
+      },
+      {
+        "id": "k3",
+        "product": "2TL4",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "lumens",
+        "value": 3010.9,
+        "unit": "lm",
+        "page": 2,
+        "quote": "3,010.9"
+      },
+      {
+        "id": "k4",
+        "product": "2TL4",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "efficacy_lm_per_w",
+        "value": 120.4,
+        "unit": "lm/W",
+        "page": 2,
+        "quote": "120.4"
+      }
     ]
   },
   "web": {
     "search": [
-      {"url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2", "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire"}
+      {
+        "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+        "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire"
+      }
     ],
     "extract": {
       "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire April 9, 2024 Lithonia Lighting® Discontinuation Notice As of June 30th, 2024, the TL family will be discontinued. Please begin converting this business to the following replacements options."
     }
   },
   "verify": {
-    "status": "discontinued", "status_date": "June 30, 2024",
+    "status": "discontinued",
+    "status_date": "June 30, 2024",
     "replacement": null,
     "current_revision": null,
     "current_values": [],
-    "source_urls": ["https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"]
+    "source_urls": [
+      "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+    ],
+    "status_quote": "As of June 30th, 2024, the TL family will be discontinued."
   },
   "report": {
     "summary": "This fixture family was discontinued on June 30, 2024, so it can't be ordered for the project.",
     "note_to_subcontractor": "The Lithonia TL (T Series) troffer was discontinued on June 30, 2024. Please submit a current fixture that meets section 26 51 00, with its CRI and DLC listing.",
-    "finding_titles": {"status-discontinued": "Fixture is no longer made", "spec-lt-cri": "Color rendering (CRI) isn't stated in the package", "spec-lt-dlc": "DLC listing isn't stated in the package"},
-    "why_it_matters": {"status-discontinued": "A discontinued product can't be bought, which would stall the order and force a substitution later in the job."}
+    "finding_titles": {
+      "status-discontinued": "Fixture is no longer made",
+      "spec-lt-cri": "Color rendering (CRI) isn't stated in the package",
+      "spec-lt-dlc": "DLC listing isn't stated in the package"
+    },
+    "why_it_matters": {
+      "status-discontinued": "A discontinued product can't be bought, which would stall the order and force a substitution later in the job."
+    }
   }
 }

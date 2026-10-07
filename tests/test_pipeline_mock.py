@@ -22,8 +22,17 @@ def test_all_cases_match_answer_key():
     assert {"queued", "ingest", "triage", "extract", "spec_check", "verify", "report", "done"} <= stages
 
 
-def test_ultra_only_called_when_something_is_flagged():
-    run = asyncio.run(execute(Run(["c01", "c03"], delay_ms=0)))
-    tiers = {cid: {u.tier for u in run.results[cid].usage} for cid in ("c01", "c03")}
-    assert "ultra" not in tiers["c01"]
-    assert "ultra" in tiers["c03"]
+def test_code_decides_and_titles_are_short():
+    run = asyncio.run(execute(Run(sorted(all_cases()), delay_ms=0)))
+    for cid, res in run.results.items():
+        assert "ultra" not in {u.tier for u in res.usage}, cid  # no model reviews or drops findings
+        for f in res.findings:
+            assert len(f.title.split()) <= 8, (cid, f.title)
+
+
+def test_claims_without_their_quote_on_the_page_are_dropped():
+    from api.pipeline.extract import quoted
+
+    assert quoted("not  to exceed\n120°F", "Continuous operating temperature not to exceed 120°F (48°C).")
+    assert not quoted("not to exceed 150°F", "not to exceed 120°F")
+    assert not quoted(None, "anything") and not quoted("  ", "anything")

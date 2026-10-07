@@ -2,7 +2,7 @@
 
 Every model call in the pipeline goes through `router.call(task, schema, messages, ctx)`.
 The router picks the Nemotron tier for the task, asks for JSON that matches `schema`,
-validates it, retries once, escalates a tier if needed, and logs tokens, latency and cost.
+validates it, retries once, then fails the step, and logs tokens, latency and cost.
 
 Mock mode answers from `data/fixtures/<case_id>.json` so the pipeline runs with no API calls.
 """
@@ -31,9 +31,7 @@ TASK_TIER: dict[str, str] = {
     "extract_claims": "super",
     "verify": "super",
     "report": "super",
-    "reconcile": "ultra",
 }
-ESCALATE = {"nano": "super", "super": "ultra", "ultra": None}
 RATE_LIMIT_RETRIES = 3  # on 429, back off 1s, 2s, 4s
 
 # Which fixture key answers each task in mock mode.
@@ -41,7 +39,6 @@ FIXTURE_KEY = {
     "triage": "triage",
     "extract_claims": "claims",
     "verify": "verify",
-    "reconcile": "reconcile",
     "report": "report",
 }
 
@@ -113,15 +110,12 @@ class Router:
             return self._mock(task, tier, schema, messages, ctx)
 
         last_err: Optional[Exception] = None
-        current: Optional[str] = tier
-        while current:
-            for attempt in range(2):
-                try:
-                    return await self._live(task, current, schema, messages, retry_note=last_err if attempt else None)
-                except (ValidationError, json.JSONDecodeError) as e:
-                    last_err = e
-            current = ESCALATE[current]
-        raise LLMError(f"{task}: no valid JSON after retries and escalation: {last_err}")
+        for attempt in range(2):  # one retry, then the step fails
+            try:
+                return await self._live(task, tier, schema, messages, retry_note=last_err if attempt else None)
+            except (ValidationError, json.JSONDecodeError) as e:
+                last_err = e
+        raise LLMError(f"{task}: no valid JSON after one retry: {last_err}")
 
     # ---------- mock ----------
 
@@ -222,8 +216,6 @@ class Router:
 
 def _default_payload(task: str, ctx: dict) -> dict:
     """Reasonable answers when a fixture omits a task (mock mode only)."""
-    if task == "reconcile":
-        return {"keep": ctx.get("finding_ids", []), "drop": [], "rationale": "All flagged findings stand."}
     if task == "report":
         summary = "" if ctx.get("case_id") else (
             "Mock mode has no recorded answers for this PDF, so no values were read from it. Run in live mode to check it.")
