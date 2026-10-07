@@ -20,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from api.config import settings  # noqa: E402
+from api.config import PRICES, settings  # noqa: E402
 from api.pipeline.cases import all_cases  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.pipeline.scores import scores  # noqa: E402
@@ -31,9 +31,9 @@ async def main(case_ids: list[str]) -> int:
     s = scores(run, case_ids)
 
     print(f"\nmode={settings.mode}  run={run.id}\n")
-    zero = [t for t, (pin, pout) in settings.prices.items() if not pin or not pout]
+    zero = sorted({m for m in settings.models.values() if m and not all(PRICES.get(m, (0, 0)))})
     if settings.live and zero:
-        print(f"WARNING: price is 0 for {', '.join(zero)} in api/config.py: reported model cost is too low.\n")
+        print(f"WARNING: no price for {', '.join(zero)} in api/config.py PRICES: reported model cost is too low.\n")
     print(f"{'case':<5} {'expected':<18} {'got':<18} {'problems expected':<22} {'found':<26} {'fix':<5} {'ms':>6} {'cost $':>8} {'credits':>7}")
     for r in s["rows"]:
         if r.get("error"):

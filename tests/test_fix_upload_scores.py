@@ -141,20 +141,14 @@ def test_upload_rejects_non_pdf_and_unknown_pdf_runs_on_defaults(cleanup):
 
 
 def test_scores_endpoint(tmp_path, monkeypatch):
-    import dataclasses
-    fake = dataclasses.replace(settings, scores_file=tmp_path / "scores.json")
-    monkeypatch.setattr(main, "settings", fake)
+    monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
     assert client.get("/api/scores").status_code == 404
-    fake.scores_file.write_text(json.dumps({"right_call": {"n": 8, "of": 8}}))
+    settings.scores_file.write_text(json.dumps({"right_call": {"n": 8, "of": 8}}))
     assert client.get("/api/scores").json()["right_call"]["n"] == 8
 
 
 def test_run_scoring_set_endpoint(tmp_path, monkeypatch):
-    import dataclasses
-
-    from api.pipeline import scores as scores_mod
-
-    monkeypatch.setattr(scores_mod, "settings", dataclasses.replace(settings, scores_file=tmp_path / "scores.json"))
+    monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
     s = client.post("/api/scores/run").json()
     assert s["right_call"] == {"n": 8, "of": 8} and s["false_alarms"]["n"] == 0
     assert json.loads((tmp_path / "scores.json").read_text())["run_id"] == s["run_id"]

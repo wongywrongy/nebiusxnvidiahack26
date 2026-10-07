@@ -19,14 +19,10 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from api.config import settings  # noqa: E402
+from api.providers.tavily import BROWSER_HEADERS as HEADERS  # noqa: E402
 
 DOCUMENTS = settings.data_dir / "cases" / "documents.json"
 
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0 Safari/537.36",
-    "Accept": "application/pdf,text/html;q=0.9,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-}
 
 
 def not_pdf_reason(r: httpx.Response) -> str:

@@ -1,12 +1,13 @@
 """HTTP API.
 
-  GET  /api/health                     mode and model IDs
+  GET  /api/health                     mode, which keys are set (true/false), model IDs, today's spend
   GET  /api/project                    sample project, specs and cases
-  POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}
+  POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
   POST /api/uploads?name=x.pdf         body: the PDF. Starts a run of it against the project specs
+                                       (live without the admin token: runs in mock mode, with a note)
   GET  /api/scores                     the answer-key scores written by scripts/eval.py
-  POST /api/scores/run                 run all cases now and rewrite the scores
+  POST /api/scores/run                 run all cases now and rewrite the scores               [admin when live]
   GET  /api/runs                       recorded runs, newest first
   GET  /api/runs/{id}/events           server-sent events: history, then live
   GET  /api/runs/{id}/results          all results of a run
@@ -15,13 +16,18 @@
   GET  /api/docs/{case}/{file}/pages/{n}.png     one page as PNG
   GET  /api/cases/{case}/text                    fixture page text (fallback when the PDF is missing)
 
+Admin = header X-Admin-Token equal to ADMIN_TOKEN. In live mode the public demo is replay-only.
 The built web app (web/dist) is served at / from the same container.
 """
 
 from __future__ import annotations
 
 import asyncio
+import hmac
 import json
+import logging
+import time
+from collections import defaultdict, deque
 from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Request
@@ -36,8 +42,10 @@ from .pipeline.ingest import pdf_pages
 from .pipeline.render import page_sizes, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, replay
 from .pipeline.scores import run_scoring_set
+from .providers import budget
 from .schemas import Event
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
 app = FastAPI(title="SpecCheck")
 RUNS: dict[str, Run] = {}
 _tasks: set[asyncio.Task] = set()
@@ -59,9 +67,32 @@ def _spawn(coro) -> None:
     task.add_done_callback(_tasks.discard)
 
 
+def _is_admin(request: Request) -> bool:
+    token = settings.secret("admin_token")
+    return bool(token) and hmac.compare_digest(request.headers.get("x-admin-token", "").encode(), token.encode())
+
+
+def _live_needs_admin(request: Request) -> None:
+    if settings.live and not _is_admin(request):
+        raise HTTPException(403, "Live runs need the admin token (X-Admin-Token header). The public demo plays recorded runs.")
+
+
+# ponytail: in-memory per process and keyed on the socket address; behind a proxy read X-Forwarded-For from it.
+_uploads_by_ip: dict[str, deque] = defaultdict(deque)
+
+
+def _rate_limit(request: Request) -> None:
+    now, q = time.time(), _uploads_by_ip[request.client.host if request.client else "?"]
+    while q and now - q[0] > 3600:
+        q.popleft()
+    if len(q) >= settings.uploads_per_ip_per_hour:
+        raise HTTPException(429, "Too many uploads from this address; try again in an hour.")
+    q.append(now)
+
+
 @app.get("/api/health")
 def health():
-    return {"mode": settings.mode, "models": settings.models}
+    return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today()}
 
 
 @app.get("/api/project")
@@ -78,7 +109,8 @@ def project():
 
 
 @app.post("/api/runs")
-async def start_run(body: StartRun):
+async def start_run(body: StartRun, request: Request):
+    _live_needs_admin(request)
     ids = body.case_ids or sorted(all_cases())
     unknown = [i for i in ids if i not in all_cases()]
     if unknown:
@@ -92,8 +124,14 @@ async def start_run(body: StartRun):
 @app.post("/api/uploads")
 async def upload(request: Request, name: str = "upload.pdf", delay_ms: Optional[int] = None):
     """Raw PDF body (no multipart dependency). The new item streams on its own run like any other row."""
+    limit = settings.max_upload_mb * 1024 * 1024
+    if int(request.headers.get("content-length") or 0) > limit:
+        raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
+    admin = _is_admin(request)
+    if not admin:
+        _rate_limit(request)
     pdf = await request.body()
-    if len(pdf) > settings.max_upload_mb * 1024 * 1024:
+    if len(pdf) > limit:
         raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
     if not pdf.startswith(b"%PDF"):
         raise HTTPException(400, "Not a PDF")
@@ -102,14 +140,18 @@ async def upload(request: Request, name: str = "upload.pdf", delay_ms: Optional[
     except Exception:
         raise HTTPException(400, "Could not read this PDF")
     case = add_upload(name, pdf, text)
-    run = Run([case["id"]], delay_ms=delay_ms)
+    mock = settings.live and not admin
+    run = Run([case["id"]], delay_ms=delay_ms, mock=mock)
     RUNS[run.id] = run
     _spawn(execute(run))
-    return {"run_id": run.id, "mode": settings.mode, "case": _public(case)}
+    note = ("Ran in mock mode: live checks need the admin token. Results are recorded answers, not read from this PDF."
+            if mock else None)
+    return {"run_id": run.id, "mode": "mock" if mock else settings.mode, "note": note, "case": _public(case)}
 
 
 @app.post("/api/scores/run")
-async def run_scores():
+async def run_scores(request: Request):
+    _live_needs_admin(request)
     return await run_scoring_set()
 
 
