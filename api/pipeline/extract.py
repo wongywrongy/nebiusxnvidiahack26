@@ -51,7 +51,16 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
             ),
         }
     ]
-    return await router.call("extract_claims", ClaimsOut, messages, {"case_id": case_id})
+    out, usage = await router.call("extract_claims", ClaimsOut, messages, {"case_id": case_id})
+    # Evidence or nothing: a claim whose quote isn't on the page it cites (any page, if none) is dropped.
+    texts = {p["page"]: p["text"] for p in pages}
+    out.claims = [c for c in out.claims if quoted(c.quote, texts[c.page] if c.page in texts else " ".join(texts.values()))]
+    return out, usage
+
+
+def quoted(quote: Optional[str], text: str) -> bool:
+    """True when quote appears verbatim in text, ignoring runs of whitespace."""
+    return bool(quote and quote.strip()) and " ".join(quote.split()) in " ".join(text.split())
 
 
 def all_product_data(pages: list[dict]) -> TriageOut:

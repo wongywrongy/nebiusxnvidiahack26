@@ -27,7 +27,8 @@ export default function App() {
   const [uploads, setUploads] = useState<Case[]>([])
   const [uploadRun, setUploadRun] = useState<Record<string, string>>({})
 
-  useEffect(() => { getProject().then(setProject) }, [])
+  const [loadFailed, setLoadFailed] = useState(false)
+  useEffect(() => { getProject().then(setProject, () => setLoadFailed(true)) }, [])
 
   const cases = [...(project?.cases ?? []), ...uploads]
   const openable = cases.filter((c) => states[c.id]?.stage === 'done').map((c) => c.id)
@@ -115,9 +116,9 @@ export default function App() {
   })
 
   return (
-    <div className="min-h-screen font-sans text-[13px]">
+    <div className="min-h-screen font-sans text-sm">
       <header className="flex min-h-[52px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-white/5 px-4 py-2 sm:px-6">
-        <div className="flex min-w-0 items-center gap-2.5">
+        <div className="flex min-w-0 items-center gap-3">
           <button onClick={overview} className="flex shrink-0 items-center gap-2 font-semibold">
             <span className="flare h-3.5 w-3.5 rounded" />SpecCheck
           </button>
@@ -125,9 +126,7 @@ export default function App() {
           <span className="truncate text-muted">{view === 'results' ? 'Results' : project?.name ?? '…'}</span>
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          {detail
-            ? <Verdict result={detail.result} />
-            : <span className="hidden font-mono text-[11px] text-faint sm:inline">Nemotron on Nebius · Tavily</span>}
+          {detail && <Verdict result={detail.result} />}
           <button onClick={() => setView(view === 'results' ? (runId ? (runDone ? 'done' : 'running') : 'ready') : 'results')}
             aria-pressed={view === 'results'} className={`btn ${view === 'results' ? 'bg-selected' : ''}`}>Results</button>
         </div>
@@ -138,8 +137,10 @@ export default function App() {
       )}
 
       <main className={detail ? 'mx-auto max-w-[1680px] px-4 py-4' : 'mx-auto flex max-w-[1120px] flex-col gap-7 px-4 py-10 sm:px-6 sm:py-12'}>
-        {view === 'ready' && <Ready cases={cases} states={states} onRun={run} onOpen={open} onUpload={upload} />}
-        {view === 'running' && <Running cases={cases} states={states} done={openable.length} onOpen={open} onUpload={upload} />}
+        {view === 'ready' && (loadFailed
+          ? <p className="panel p-6 text-muted">Couldn't load the project. Check that the API is running, then reload.</p>
+          : <Ready cases={cases} loading={!project} states={states} onRun={run} onOpen={open} onUpload={upload} />)}
+        {view === 'running' && <Running cases={cases} states={states} done={openable.length} onOpen={open} />}
         {view === 'done' && <Done cases={cases} states={states} onOpen={open} onAgain={run} onUpload={upload} />}
         {view === 'results' && <Results />}
         {detail && <Detail key={current} result={detail.result} docs={detail.docs} text={detail.text} runId={runOf(current!)!}
@@ -181,15 +182,15 @@ function DocSwitcher({ cases, states, current, openable, onOpen, onAll }: {
           return (
             <button key={c.id} onClick={() => onOpen(c.id)} disabled={!openable.includes(c.id)} aria-current={on ? 'page' : undefined}
               title={s?.decision ? `${c.title}: ${DECISION_LABEL[s.decision]}` : c.title}
-              className={`flex h-8 max-w-[210px] shrink-0 items-center gap-2 rounded-md px-2.5 text-xs transition-colors disabled:opacity-40 ${on ? 'bg-selected text-ink shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'text-muted enabled:hover:bg-raised enabled:hover:text-ink'}`}>
-              <span className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: s?.decision ? DECISION_COLOR[s.decision] : 'var(--color-faint)' }} />
+              className={`flex h-8 max-w-[210px] shrink-0 items-center gap-2 rounded-md px-3 text-xs transition-colors disabled:opacity-40 ${on ? 'bg-selected text-ink shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'text-muted enabled:hover:bg-raised enabled:hover:text-ink'}`}>
+              <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: s?.decision ? DECISION_COLOR[s.decision] : 'var(--color-faint)' }} />
               <span className="truncate">{c.title}</span>
             </button>
           )
         })}
       </div>
       <div className="flex shrink-0 items-center gap-1">
-        <span className="mr-1 hidden font-mono text-[11px] tabular-nums text-faint sm:inline">{i + 1}/{openable.length}</span>
+        <span className="mr-1 hidden font-mono text-xs tabular-nums text-faint sm:inline">{i + 1}/{openable.length}</span>
         <button className="btn w-8 px-0" onClick={() => onOpen(openable[i - 1])} disabled={i <= 0} aria-label="Previous submittal" title="Previous submittal (←)"><Chevron dir="left" /></button>
         <button className="btn w-8 px-0" onClick={() => onOpen(openable[i + 1])} disabled={i >= openable.length - 1} aria-label="Next submittal" title="Next submittal (→)"><Chevron dir="right" /></button>
       </div>
@@ -210,8 +211,8 @@ function Upload({ onUpload }: { onUpload: (f: File) => Promise<void> }) {
   return (
     <label onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)}
       onDrop={(e) => { e.preventDefault(); setOver(false); send(e.dataTransfer.files[0]) }}
-      className={`flex cursor-pointer flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed px-4 py-3.5 transition-colors ${over ? 'border-flare bg-flare/5' : 'border-edge hover:border-flare'}`}>
-      <span className="flex min-w-0 flex-col gap-0.5">
+      className={`flex cursor-pointer flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed px-4 py-4 transition-colors ${over ? 'border-soft bg-raised' : 'border-edge hover:border-soft'}`}>
+      <span className="flex min-w-0 flex-col gap-1">
         <span className="font-medium">Check your own submittal</span>
         <span className="text-xs text-muted">
           {error ?? "Drop any firestop or light fixture PDF. It's checked against this project's specs like any other submittal."}
@@ -224,33 +225,33 @@ function Upload({ onUpload }: { onUpload: (f: File) => Promise<void> }) {
   )
 }
 
-function Ready({ cases, states, onRun, onOpen, onUpload }: {
-  cases: Case[]; states: Record<string, CaseState>; onRun: () => void; onOpen: (id: string) => void; onUpload: (f: File) => Promise<void>
+function Ready({ cases, loading, states, onRun, onOpen, onUpload }: {
+  cases: Case[]; loading: boolean; states: Record<string, CaseState>; onRun: () => void; onOpen: (id: string) => void; onUpload: (f: File) => Promise<void>
 }) {
   const base = cases.filter((c) => !c.upload).length
   return (
     <>
       <section className="flex flex-col items-center gap-4 pt-6 text-center">
-        <h1 className="text-[40px] font-bold leading-tight tracking-tight">{base} submittals are waiting for review</h1>
-        <p className="max-w-[540px] text-[15px] text-muted">
+        <h1 className="text-2xl font-bold leading-tight tracking-tight">{loading ? NBSP : `${base} submittals are waiting for review`}</h1>
+        <p className="max-w-[540px] text-base text-muted">
           SpecCheck reads each package, compares it to the spec, and checks the manufacturer's current documents online.
-          Anything it sends back comes with a fix.
         </p>
-        <button onClick={onRun} className="flare mt-3 h-[52px] rounded-[10px] px-7 text-base font-bold">
+        <button onClick={onRun} disabled={loading} className="flare mt-3 h-[52px] rounded-[10px] px-7 text-base font-bold">
           Review all {base} submittals
         </button>
       </section>
       <Upload onUpload={onUpload} />
       <section className="panel grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-px overflow-hidden bg-line">
+        {loading && Array.from({ length: 8 }, (_, i) => <div key={i} className="h-16 bg-panel p-4"><div className="h-4 w-2/3 rounded bg-raised" /></div>)}
         {cases.map((c) => {
           const s = states[c.id]
           return (
             <button key={c.id} onClick={() => onOpen(c.id)} disabled={s?.stage !== 'done'}
-              className="flex flex-col gap-1 bg-panel px-4 py-3.5 text-left enabled:hover:bg-raised">
+              className="flex h-16 flex-col justify-center gap-1 bg-panel px-4 text-left enabled:hover:bg-raised">
               <span className="truncate">{c.title}</span>
-              <span className="flex items-center gap-2 font-mono text-[11px] text-faint">
-                {c.section}{c.upload && <span className="text-flare">your upload</span>}
-                {s && <span className={ACTIVE.includes(s.stage) ? 'blink text-soft' : 'text-soft'}>
+              <span className="flex items-center gap-2 font-mono text-xs text-faint">
+                {c.section}{c.upload && <span>your upload</span>}
+                {s && <span className="text-soft">
                   {s.decision ? DECISION_LABEL[s.decision] : s.message}</span>}
               </span>
             </button>
@@ -261,20 +262,20 @@ function Ready({ cases, states, onRun, onOpen, onUpload }: {
   )
 }
 
-function Running({ cases, states, done, onOpen, onUpload }: {
-  cases: Case[]; states: Record<string, CaseState>; done: number; onOpen: (id: string) => void; onUpload: (f: File) => Promise<void>
+function Running({ cases, states, done, onOpen }: {
+  cases: Case[]; states: Record<string, CaseState>; done: number; onOpen: (id: string) => void
 }) {
   return (
     <>
       <section className="flex flex-wrap items-end justify-between gap-5">
         <div>
-          <h1 className="text-[28px] font-bold tracking-tight">Nemotron is reviewing {cases.length} submittals</h1>
-          <p className="text-muted">Each package is read, checked against the spec, then checked against the manufacturer's site. Send-backs get a fix. Open any finished card.</p>
+          <h1 className="text-2xl font-bold tracking-tight">Nemotron is reviewing {cases.length} submittals</h1>
+          <p className="text-muted">Each package is read, checked against the spec, then checked against the manufacturer's site. Open any finished card.</p>
         </div>
-        <div className="flex min-w-[200px] flex-col gap-1.5">
+        <div className="flex min-w-[200px] flex-col gap-2">
           <span className="text-right font-mono text-xs tabular-nums">{done} of {cases.length} done</span>
           <div className="h-1 rounded bg-line">
-            <div className="flare h-1 rounded transition-all duration-500" style={{ width: `${(done / Math.max(cases.length, 1)) * 100}%` }} />
+            <div className="flare h-1 rounded transition-all duration-300" style={{ width: `${(done / Math.max(cases.length, 1)) * 100}%` }} />
           </div>
         </div>
       </section>
@@ -286,15 +287,15 @@ function Running({ cases, states, done, onOpen, onUpload }: {
           return (
             // Fixed height and single-line rows: cards never resize while stages change.
             <button key={c.id} onClick={() => onOpen(c.id)} disabled={!finished} title={finished ? 'Open result' : undefined}
-              className={`panel flex h-[214px] flex-col gap-3 p-3.5 text-left transition-colors enabled:hover:border-edge ${s ? '' : 'opacity-55'}`}>
-              <div className="relative flex h-28 shrink-0 flex-col gap-[7px] overflow-hidden rounded bg-paper p-3">
+              className={`panel flex h-[216px] flex-col gap-3 p-4 text-left transition-colors enabled:hover:border-edge ${s ? '' : 'opacity-55'}`}>
+              <div className="relative flex h-28 shrink-0 flex-col gap-2 overflow-hidden rounded bg-paper p-3">
                 {[60, 88, 80, 84, 70, 76].map((w, i) => (
                   <div key={i} className="h-1 bg-paper-rule" style={{ width: `${w}%`, height: i === 0 ? 6 : 4 }} />
                 ))}
                 {active && <div className="scan absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-flare to-transparent shadow-[0_0_10px_2px_rgba(245,121,26,0.6)]" />}
                 {finished && s.decision && (
                   <div className="pop absolute inset-0 flex items-center justify-center bg-panel/55">
-                    <span className="rounded-md px-3 py-1.5 font-bold text-on-accent" style={{ background: DECISION_COLOR[s.decision] }}>
+                    <span className="rounded-md px-3 py-2 font-bold text-on-accent" style={{ background: DECISION_COLOR[s.decision] }}>
                       {DECISION_LABEL[s.decision]}
                     </span>
                   </div>
@@ -302,14 +303,13 @@ function Running({ cases, states, done, onOpen, onUpload }: {
               </div>
               <div className="flex min-w-0 flex-col gap-1">
                 <span className="h-5 truncate font-medium leading-5" title={c.title}>{c.title}</span>
-                <span className={`h-4 truncate text-xs leading-4 ${active ? 'blink' : 'text-muted'}`}>{s?.message ?? 'Waiting'}</span>
-                <span className="h-4 truncate font-mono text-[11px] leading-4 text-faint">{(active && s?.model) || (c.upload ? 'your upload' : NBSP)}</span>
+                <span className={`h-4 truncate text-xs leading-4 ${active ? 'blink' : 'text-muted'}`}>{finished && s.decision ? DECISION_LABEL[s.decision] : s?.message ?? 'Waiting'}</span>
+                <span className="h-4 truncate font-mono text-xs leading-4 text-faint">{(active && s?.model) || (c.upload ? 'your upload' : NBSP)}</span>
               </div>
             </button>
           )
         })}
       </section>
-      <Upload onUpload={onUpload} />
     </>
   )
 }
@@ -321,10 +321,10 @@ function Done({ cases, states, onOpen, onAgain, onUpload }: {
   return (
     <>
       <section className="flex flex-wrap items-end justify-between gap-5">
-        <h1 className="text-[30px] font-bold tracking-tight">
-          {sendBack} submittal{sendBack === 1 ? '' : 's'} need{sendBack === 1 ? 's' : ''} to go back, each with a fix
+        <h1 className="text-2xl font-bold tracking-tight">
+          {sendBack} submittal{sendBack === 1 ? '' : 's'} need{sendBack === 1 ? 's' : ''} to go back
         </h1>
-        <button onClick={onAgain} className="btn h-9 px-3.5">Run again</button>
+        <button onClick={onAgain} className="btn h-9 px-4">Run again</button>
       </section>
       <section className="panel overflow-hidden">
         {cases.map((c) => {
@@ -332,16 +332,16 @@ function Done({ cases, states, onOpen, onAgain, onUpload }: {
           const active = !!s && ACTIVE.includes(s.stage)
           return (
             <button key={c.id} onClick={() => onOpen(c.id)} disabled={!s?.decision}
-              className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 border-b border-line px-4 py-3 text-left last:border-b-0 enabled:hover:bg-raised disabled:cursor-not-allowed md:min-h-14 md:grid-cols-[minmax(0,1fr)_170px_minmax(0,1.4fr)_64px] md:py-2">
+              className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 border-b border-line px-4 py-3 text-left last:border-b-0 enabled:hover:bg-raised disabled:cursor-not-allowed md:h-14 md:grid-cols-[minmax(0,1fr)_170px_minmax(0,1.4fr)_64px] md:py-0">
               <span className="flex min-w-0 flex-col font-medium md:font-normal">
                 <span className="truncate">{c.title}</span>
-                {c.upload && <span className="font-mono text-[11px] text-flare">your upload</span>}
+                {c.upload && <span className="font-mono text-xs text-faint">your upload</span>}
               </span>
               <span className="flex items-center gap-2 justify-self-end font-medium md:justify-self-auto">
-                {s?.decision && <span className="h-[7px] w-[7px] rounded-full" style={{ background: DECISION_COLOR[s.decision] }} />}
-                {s?.decision ? DECISION_LABEL[s.decision] : s?.stage === 'error' ? 'Error' : active ? <span className="blink text-muted">{s.message}</span> : '—'}
+                {s?.decision && <span className="h-2 w-2 rounded-full" style={{ background: DECISION_COLOR[s.decision] }} />}
+                {s?.decision ? DECISION_LABEL[s.decision] : s?.stage === 'error' ? 'Error' : active ? <span className="text-muted">{s.message}</span> : '—'}
               </span>
-              <span className="col-span-2 text-muted md:col-span-1">{s?.summary}</span>
+              <span className="col-span-2 truncate text-muted md:col-span-1" title={s?.summary}>{s?.summary}</span>
               <span className="hidden text-right text-muted md:block">{s?.decision ? 'Open →' : ''}</span>
             </button>
           )
@@ -354,12 +354,12 @@ function Done({ cases, states, onOpen, onAgain, onUpload }: {
 
 // ---------- result view ----------
 
-const TONE_COLOR: Record<Tone, string> = { red: '#e5534b', amber: '#f0892a', gray: '#8b8f98', green: '#2e9e68' }
-const TONE_RANK: Record<Tone, number> = { red: 0, amber: 1, gray: 2, green: 3 }
+const TONE_COLOR: Record<Tone, string> = { red: '#e5534b', amber: '#e5a93b', blue: '#7fa7d9', green: '#2e9e68' }
+const TONE_RANK: Record<Tone, number> = { red: 0, amber: 1, blue: 2, green: 3 }
 const SEVERITY_RANK: Record<Finding['severity'], number> = { critical: 0, major: 1, minor: 2, info: 3 }
-const toneOf = (f: Finding): Tone => (f.verdict === 'fail' ? 'red' : f.verdict === 'outdated' ? 'amber' : 'gray')
+const toneOf = (f: Finding): Tone => (f.verdict === 'fail' ? 'red' : f.verdict === 'outdated' ? 'amber' : 'blue')
 const LABEL: Record<Finding['verdict'], string> = {
-  fail: 'Must fix', outdated: 'Out of date', note: 'Note', unverified: 'Not stated', pass: 'Passed', not_applicable: 'Not applicable',
+  fail: 'Must fix', outdated: 'Out of date', note: 'Note', unverified: "Couldn't confirm", pass: 'Passed', not_applicable: 'Not applicable',
 }
 // A requirement was looked for but no claim was found on any page.
 const notFound = (f: Finding) => !!f.requirement_id && f.claim_ids.length === 0
@@ -367,8 +367,8 @@ const notFound = (f: Finding) => !!f.requirement_id && f.claim_ids.length === 0
 function counts(result: Result) {
   const by = (v: Finding['verdict']) => result.findings.filter((f) => f.verdict === v).length
   return [
-    [by('fail'), 'must fix', 'red'], [by('outdated'), 'out of date', 'amber'], [by('unverified'), 'not stated', 'gray'],
-    [by('note'), 'note', 'gray'], [by('pass'), 'passed', null],
+    [by('fail'), 'must fix', 'red'], [by('outdated'), 'out of date', 'amber'], [by('unverified'), "couldn't confirm", 'blue'],
+    [by('note'), 'note', 'blue'], [by('pass'), 'passed', null],
   ].filter(([n]) => n) as [number, string, Tone | null][]
 }
 
@@ -378,7 +378,7 @@ function Verdict({ result }: { result: Result }) {
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <span className="hidden max-w-[260px] truncate text-muted lg:inline">{result.title}</span>
       <span className="flex items-center gap-2 font-semibold">
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: color, boxShadow: `0 0 10px ${color}` }} />
+        <span className="h-2.5 w-2.5 rounded-full" style={{ background: color }} />
         {DECISION_LABEL[result.decision]}
       </span>
       <span className="flex gap-3 text-xs tabular-nums text-muted">
@@ -431,7 +431,7 @@ function Detail({ result, docs, text, runId, onReplay }: {
     : null
 
   return (
-    <div className="grid grid-cols-1 gap-4 min-[1100px]:grid-cols-[270px_minmax(0,1fr)_360px]">
+    <div className="grid grid-cols-1 gap-4 min-[1100px]:grid-cols-[272px_minmax(0,1fr)_360px]">
       {/* Below 1100px the asides dissolve so the order is list, document, details, how it was checked. */}
       <aside className="contents min-[1100px]:flex min-[1100px]:min-w-0 min-[1100px]:flex-col min-[1100px]:gap-4">
         <nav className="panel overflow-hidden">
@@ -440,7 +440,7 @@ function Detail({ result, docs, text, runId, onReplay }: {
             return (
               <button key={f.id} onClick={() => select(f)}
                 aria-current={sel?.id === f.id ? 'true' : undefined}
-                className={`flex w-full flex-col gap-1 border-b border-line px-3.5 py-3 text-left transition-colors ${sel?.id === f.id ? 'bg-selected shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'hover:bg-raised'}`}>
+                className={`flex w-full flex-col gap-1 border-b border-line px-4 py-3 text-left transition-colors ${sel?.id === f.id ? 'bg-selected shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'hover:bg-raised'}`}>
                 <span className="flex justify-between text-xs">
                   <span style={{ color: TONE_COLOR[toneOf(f)] }}>{LABEL[f.verdict]}</span>
                   <span className="font-mono text-faint">{p ? `p. ${p}` : notFound(f) ? 'not found' : 'whole doc'}</span>
@@ -449,15 +449,15 @@ function Detail({ result, docs, text, runId, onReplay }: {
               </button>
             )
           })}
-          <div className="px-3.5 py-3 text-muted">
+          <div className="px-4 py-3 text-muted">
             {issues.length ? '' : 'No problems found. '}{plural(passed, 'check')} passed
-            {skipped > 0 && <span className="block text-xs text-faint">{plural(skipped, 'check')} not applicable to this document type</span>}
+            {skipped > 0 && <span className="block text-xs text-faint">{skipped} not applicable</span>}
           </div>
         </nav>
         <div className="order-last min-[1100px]:order-none"><HowChecked result={result} runId={runId} onReplay={onReplay} /></div>
       </aside>
 
-      <section className="panel flex min-w-0 flex-col gap-3 p-3 min-[1100px]:sticky min-[1100px]:top-[66px] min-[1100px]:h-[calc(100vh-82px)]">
+      <section className="panel flex min-w-0 flex-col gap-3 p-3 min-[1100px]:sticky min-[1100px]:top-[68px] min-[1100px]:h-[calc(100vh-84px)]">
         {docs
           ? <PdfPages ref={pdf} caseId={result.case_id} docs={docs} marks={marks} selId={sel?.id ?? null} pulse={pulse}
               result={result} banner={banner} onPick={select} />
@@ -527,7 +527,7 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
 
   return (
     <>
-      <div className="flex shrink-0 gap-2 overflow-x-auto pb-1 pt-1.5 pr-1.5" role="list" aria-label="Pages">
+      <div className="flex shrink-0 gap-2 overflow-x-auto pb-1 pt-2 pr-2" role="list" aria-label="Pages">
         {pages.map((p) => {
           const t = worstTone(byPage[p.key] ?? [])
           return (
@@ -535,8 +535,8 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
               className="relative w-11 shrink-0 rounded-sm bg-white ring-1 ring-line transition-shadow hover:ring-edge"
               style={{ aspectRatio: `${p.width} / ${p.height}` }}>
               <img src={pageUrl(caseId, p.file, p.n)} alt="" className="h-full w-full rounded-sm object-cover" />
-              <span className="absolute bottom-0.5 left-0.5 rounded-sm bg-black/65 px-1 font-mono text-[9px] leading-tight text-white">{p.n}</span>
-              {t && <span className="absolute -right-1.5 -top-1.5 h-3 w-3 rounded-full ring-2 ring-panel" style={{ background: TONE_COLOR[t] }} />}
+              <span className="absolute bottom-1 left-1 rounded-sm bg-black/65 px-1 font-mono text-xs leading-tight text-white">{p.n}</span>
+              {t && <span className="absolute -right-2 -top-2 h-3 w-3 rounded-full ring-2 ring-panel" style={{ background: TONE_COLOR[t] }} />}
             </button>
           )
         })}
@@ -569,12 +569,12 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
                 )
               }))}
             {callouts(byPage[p.key] ?? [], result, selId).map(({ finding, x, y, text, color }) => (
-              <span key={finding.id} className={`absolute z-10 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold text-on-accent shadow ${finding.id === selId ? '' : 'opacity-75'}`}
+              <span key={finding.id} className={`absolute z-10 whitespace-nowrap rounded px-2 py-1 text-xs font-semibold text-on-accent shadow ${finding.id === selId ? '' : 'opacity-75'}`}
                 style={{ left: `${x * 100}%`, top: `calc(${y * 100}% + 5px)`, background: color }}>
                 now {text}
               </span>
             ))}
-            <span className="absolute right-2 top-2 rounded bg-black/60 px-1.5 py-0.5 font-mono text-[10px] text-white">
+            <span className="absolute right-2 top-2 rounded bg-black/60 px-2 py-1 font-mono text-xs text-white">
               {multi ? `${docs.find((d) => d.file === p.file)?.name} · ` : ''}p. {p.n}
             </span>
           </div>
@@ -606,11 +606,11 @@ function TextPages({ pages, marks, selId, result, banner, page, onPage }: {
     const row = m.kind === 'problem' ? changedRow(result, m.claim_id) : undefined
     out.push(text.slice(pos, at))
     out.push(
-      <mark key={`${m.finding.id}-${m.claim_id}`} className="rounded-sm px-0.5 text-inherit"
+      <mark key={`${m.finding.id}-${m.claim_id}`} className="rounded-sm px-1 text-inherit"
         style={{ background: `${c}${on ? '55' : '22'}`, outline: on ? `2px solid ${c}` : 'none' }}>{m.quote}</mark>,
     )
     if (row) out.push(
-      <span key={`${m.claim_id}-now`} className="ml-1 rounded px-1.5 py-0.5 align-middle font-sans text-[11px] font-semibold text-on-accent"
+      <span key={`${m.claim_id}-now`} className="ml-1 rounded px-2 py-1 align-middle font-sans text-xs font-semibold text-on-accent"
         style={{ background: c }}>now {row.current}</span>,
     )
     pos = at + m.quote!.length
@@ -628,12 +628,12 @@ function TextPages({ pages, marks, selId, result, banner, page, onPage }: {
               style={{ boxShadow: t ? `inset 0 -2px 0 ${TONE_COLOR[t]}` : undefined }}>{p.page}</button>
           )
         })}
-        <span className="ml-auto font-sans text-[11px] text-faint">PDF not downloaded: showing extracted text</span>
+        <span className="ml-auto font-sans text-xs text-faint">PDF not downloaded: showing extracted text</span>
       </div>
       {banner && <p className="rounded-md border border-line bg-well px-3 py-2 text-xs text-soft">{banner}</p>}
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="whitespace-pre-line rounded bg-paper p-8 font-serif text-[15px] leading-7 text-paper-ink">
-          <div className="mb-4 font-sans text-[11px] uppercase tracking-wide text-paper-meta">Page {current?.page} · text from the package</div>
+        <div className="whitespace-pre-line rounded bg-paper p-8 text-base leading-7 text-paper-ink">
+          <div className="mb-4 font-sans text-xs uppercase tracking-wide text-paper-meta">Page {current?.page} · text from the package</div>
           {out}
         </div>
       </div>
@@ -645,21 +645,24 @@ function HowChecked({ result, runId, onReplay }: { result: Result; runId: string
   const tokens = result.usage.reduce((a, u) => a + u.input_tokens + u.output_tokens, 0)
   const cost = result.usage.reduce((a, u) => a + u.cost_usd, 0)
   return (
-    <div className="panel overflow-hidden font-mono text-[11px]">
-      <div className="px-3.5 pb-1 pt-3 font-sans text-xs font-medium">How it was checked</div>
-      {result.usage.map((u, i) => (
-        <div key={i} className="flex justify-between gap-3 px-3.5 py-1">
-          <span className="shrink-0 whitespace-nowrap">{u.task.replace(/_/g, ' ')}</span>
-          <span className="truncate text-muted">{u.model.split('/').pop()}</span>
+    <div className="panel overflow-hidden font-mono text-xs">
+      {/* Models, tokens and cost stay collapsed: they're for whoever asks how, not for the decision. */}
+      <details>
+        <summary className="cursor-pointer px-4 py-3 font-sans text-sm text-muted hover:text-ink">How it was checked</summary>
+        {result.usage.map((u, i) => (
+          <div key={i} className="flex justify-between gap-3 px-4 py-1">
+            <span className="shrink-0 whitespace-nowrap">{u.task.replace(/_/g, ' ')}</span>
+            <span className="truncate text-muted">{u.model.split('/').pop()}</span>
+          </div>
+        ))}
+        <div className="mt-2 flex flex-wrap justify-between gap-x-3 gap-y-1 border-t border-line px-4 py-3 tabular-nums text-muted">
+          <span>{tokens.toLocaleString()} tok</span>
+          <span>${cost.toFixed(4)} + {result.web_credits} credits</span>
+          <span>{(result.duration_ms / 1000).toFixed(1)} s</span>
         </div>
-      ))}
-      <div className="mt-2 flex flex-wrap justify-between gap-x-3 gap-y-1 border-t border-line px-3.5 py-2.5 tabular-nums text-muted">
-        <span>{tokens.toLocaleString()} tok</span>
-        <span>${cost.toFixed(4)} + {result.web_credits} credits</span>
-        <span>{(result.duration_ms / 1000).toFixed(1)} s</span>
-      </div>
+      </details>
       {onReplay && (
-        <button onClick={onReplay} className="w-full border-t border-line px-3.5 py-2.5 text-left text-flare hover:bg-raised">
+        <button onClick={onReplay} className="w-full border-t border-line px-4 py-3 text-left text-soft hover:bg-raised">
           Replay run {runId.slice(-6)} →
         </button>
       )}
@@ -676,8 +679,8 @@ function Icon({ kind }: { kind: 'x' | 'check' | 'dash' }) {
   )
 }
 
-const CAPS = 'font-mono text-[10px] font-medium uppercase tracking-[0.08em] text-faint'
-const BIG = 'text-[22px] font-bold leading-tight'
+const CAPS = 'font-mono text-xs font-medium uppercase tracking-[0.08em] text-faint'
+const BIG = 'text-lg font-bold leading-tight'
 const BAD = 'text-[#ff8a84]'
 const show = (v: Value) => (v === null || v === undefined ? '—' : String(v))
 const lower = (v: Value) => (Array.isArray(v) ? v : [show(v)]).join(' | ').toLowerCase()
@@ -687,25 +690,25 @@ function CompareBlock({ c }: { c: Compare }) {
   if (c.rows.length) { // currency: only the values that changed, sent -> current
     return (
       <div className="overflow-hidden rounded-[10px] border border-line">
-        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_16px_minmax(0,1.1fr)] gap-2 border-b border-line bg-well px-3.5 py-2.5">
+        <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_16px_minmax(0,1.1fr)] gap-2 border-b border-line bg-well px-4 py-3">
           <span />
           {[c.left_label, null, c.right_label].map((l, i) => {
             if (l === null) return <span key={i} />
             const [head, rev] = splitLabel(l)
             return (
-              <span key={i} className="flex min-w-0 flex-col gap-0.5">
-                <span className={`${CAPS} ${i ? '!text-today' : ''}`}>{head}</span>
-                {rev && <span className="truncate font-mono text-[10px] text-faint" title={rev}>{rev}</span>}
+              <span key={i} className="flex min-w-0 flex-col gap-1">
+                <span className={`${CAPS} ${i ? '!text-warn' : ''}`}>{head}</span>
+                {rev && <span className="truncate font-mono text-xs text-faint" title={rev}>{rev}</span>}
               </span>
             )
           })}
         </div>
         {c.rows.map((r) => (
-          <div key={r.property} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_16px_minmax(0,1.1fr)] items-baseline gap-2 border-t border-line px-3.5 py-2.5 first-of-type:border-t-0">
+          <div key={r.property} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_16px_minmax(0,1.1fr)] items-baseline gap-2 border-t border-line px-4 py-3 first-of-type:border-t-0">
             <span className="text-muted">{r.label}</span>
-            <span className="text-[15px] text-muted">{r.submitted ?? '—'}</span>
+            <span className="text-base text-muted">{r.submitted ?? '—'}</span>
             <span className="text-faint" aria-hidden>→</span>
-            <span className="text-[17px] font-bold text-today">{r.current ?? '—'}</span>
+            <span className="text-lg font-bold text-warn">{r.current ?? '—'}</span>
           </div>
         ))}
       </div>
@@ -713,9 +716,9 @@ function CompareBlock({ c }: { c: Compare }) {
   }
   if (c.left_value === null || c.left_value === undefined) { // single fact, e.g. Status: Discontinued June 30, 2024
     return (
-      <div className="flex flex-col gap-1.5 rounded-[10px] border border-line bg-well p-3.5">
+      <div className="flex flex-col gap-2 rounded-[10px] border border-line bg-well p-4">
         <span className={CAPS}>{c.left_label}</span>
-        <span className={`flex items-center gap-1.5 ${BIG} ${c.verdict === 'fail' ? BAD : 'text-ink'}`}>
+        <span className={`flex items-center gap-2 ${BIG} ${c.verdict === 'fail' ? BAD : 'text-ink'}`}>
           {c.verdict === 'fail' && <Icon kind="x" />}{show(c.right_value)}
         </span>
       </div>
@@ -727,19 +730,19 @@ function CompareBlock({ c }: { c: Compare }) {
   const chips = Array.isArray(c.left_value) || Array.isArray(c.right_value)
   return (
     <div className={`grid overflow-hidden rounded-[10px] border border-line ${chips ? 'grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]' : 'grid-cols-2'}`}>
-      <div className="flex min-w-0 flex-col gap-2 bg-well px-3.5 py-3">
+      <div className="flex min-w-0 flex-col gap-2 bg-well px-4 py-3">
         <span className={CAPS}>{c.left_label}</span>
         {Array.isArray(c.left_value)
-          ? <div className="flex flex-wrap gap-1.5">{c.left_value.map((it) => (
-              <span key={it} className={`rounded-md px-2.5 py-1 font-bold ${missing.includes(it) ? `border-[1.5px] border-bad text-base ${BAD}` : 'border border-line text-sm text-soft'}`}>{it}</span>))}</div>
+          ? <div className="flex flex-wrap gap-2">{c.left_value.map((it) => (
+              <span key={it} className={`rounded-md px-3 py-1 font-bold ${missing.includes(it) ? `border-[1.5px] border-bad text-base ${BAD}` : 'border border-line text-sm text-soft'}`}>{it}</span>))}</div>
           : <span className={BIG}>{show(c.left_value)}</span>}
       </div>
-      <div className={`flex min-w-0 flex-col gap-2 border-l border-line px-3.5 py-3 ${fail && !notStated && !chips ? 'bg-bad/[0.07]' : ''}`}>
+      <div className={`flex min-w-0 flex-col gap-2 border-l border-line px-4 py-3 ${fail && !notStated && !chips ? 'bg-bad/[0.07]' : ''}`}>
         <span className={CAPS}>{c.right_label}</span>
         {Array.isArray(c.right_value)
-          ? <div className="flex flex-wrap gap-1.5">{c.right_value.map((it) => (
-              <span key={it} className="rounded-md bg-white/[0.06] px-2 py-0.5 text-xs text-soft">{it}</span>))}</div>
-          : <span className={`flex items-center gap-1.5 ${BIG} ${notStated ? 'text-muted' : fail ? BAD : c.verdict === 'changed' ? 'text-today' : 'text-ink'}`}>
+          ? <div className="flex flex-wrap gap-2">{c.right_value.map((it) => (
+              <span key={it} className="rounded-md bg-white/[0.06] px-2 py-1 text-xs text-soft">{it}</span>))}</div>
+          : <span className={`flex items-center gap-2 ${BIG} ${notStated ? 'text-muted' : fail ? BAD : c.verdict === 'changed' ? 'text-warn' : 'text-ink'}`}>
               {fail && !notStated && <Icon kind="x" />}{show(c.right_value)}
               {c.verdict === 'pass' && <span className="text-good"><Icon kind="check" /></span>}
             </span>}
@@ -770,26 +773,22 @@ function FixPanel({ fix, attach, onAttach }: { fix: Fix; attach: boolean; onAtta
       </span>
       <span className="-mt-1 font-semibold">{fix.head}</span>
       {fix.candidates.map((c, i) => (
-        <div key={i} className={`flex flex-col gap-2 rounded-[10px] border p-3 ${c.placeholder ? 'border-dashed' : ''} ${c.passes ? 'border-good/40 bg-good/[0.05]' : 'border-line'}`}>
-          <span className="flex items-start justify-between gap-2.5">
-            <span className="flex min-w-0 flex-col gap-0.5">
+        <div key={i} className={`flex flex-col gap-2 rounded-[10px] border p-3 ${c.passes ? 'border-good/40 bg-good/[0.05]' : 'border-line'}`}>
+          <span className="flex items-start justify-between gap-3">
+            <span className="flex min-w-0 flex-col gap-1">
               <span className="font-semibold">{c.name}</span>
-              {c.source_url
-                ? <a href={c.source_url} target="_blank" rel="noreferrer" className="truncate font-mono text-[11px] text-faint underline decoration-edge underline-offset-2 hover:text-soft">{hostOf(c.source_url)}</a>
-                : <span className="font-mono text-[11px] text-faint">placeholder · a live run fills this in</span>}
+              <a href={c.source_url} target="_blank" rel="noreferrer" className="truncate font-mono text-xs text-faint underline decoration-edge underline-offset-2 hover:text-soft">{hostOf(c.source_url)}</a>
             </span>
             {(() => {
               const bad = c.checks.find((k) => k.ok === false)
-              return (
-                <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${c.passes ? 'bg-good/15 text-[#4CC38A]' : 'bg-bad/15 text-[#E57373]'}`}>
-                  {c.passes ? 'Passes' : `Fails: ${bad?.note || bad?.label || 'spec'}`}
-                </span>
-              )
+              const [label, cls] = c.passes ? ['Passes', 'bg-good/15 text-good']
+                : bad ? [`Fails: ${bad.note || bad.label}`, 'bg-bad/15 text-[#ff8a84]'] : ["Couldn't confirm", 'bg-fyi/15 text-fyi']
+              return <span className={`shrink-0 rounded-full px-2 py-1 text-xs font-semibold ${cls}`}>{label}</span>
             })()}
           </span>
           <div className="flex flex-col gap-1">
             {c.checks.map((k, j) => {
-              const color = k.ok === true ? 'text-[#4CC38A]' : k.ok === false ? 'text-[#E57373]' : 'text-faint'
+              const color = k.ok === true ? 'text-good' : k.ok === false ? 'text-[#ff8a84]' : 'text-faint'
               return (
                 <span key={j} className="flex items-baseline gap-2 text-xs">
                   <span className={`self-center ${color}`}><Icon kind={k.ok === true ? 'check' : k.ok === false ? 'x' : 'dash'} /></span>
@@ -801,9 +800,10 @@ function FixPanel({ fix, attach, onAttach }: { fix: Fix; attach: boolean; onAtta
           </div>
         </div>
       ))}
+      {fix.candidates.length === 0 && <span className="text-xs text-muted">Nothing found to check. Searched: “{fix.query}”</span>}
       {fix.candidates.length > 0 && (
         <span className="text-xs leading-normal text-muted">
-          {ok} of {fix.candidates.length} pass{ok === 1 && fix.candidates.length === 1 ? 'es' : ''}. Each was checked with the same steps as a new submittal; “not stated” items are minor and don't block it.
+          {ok} of {fix.candidates.length} pass{ok === 1 && fix.candidates.length === 1 ? 'es' : ''}, checked like a new submittal
         </span>
       )}
       {fix.suggest && (
@@ -828,14 +828,14 @@ function FindingCard({ finding: f, result, passed }: { finding: Finding | null; 
       {f ? (
         <>
           <div className="flex min-w-0 flex-col gap-1">
-            <span className="flex justify-between font-mono text-[11px] uppercase tracking-[0.06em]">
+            <span className="flex justify-between font-mono text-xs uppercase tracking-[0.06em]">
               <span style={{ color: TONE_COLOR[toneOf(f)] }}>{LABEL[f.verdict]}{f.severity !== 'info' ? ` · ${f.severity}` : ''}</span>
               {firstMark(f)?.page && <span className="text-faint">page {firstMark(f)!.page}</span>}
             </span>
             <h2 className="text-lg font-bold leading-snug">{f.title}</h2>
           </div>
           {f.compare && <CompareBlock c={f.compare} />}
-          {f.why_it_matters && <p className="text-[13px] leading-snug text-soft"><span className="text-faint">Why it matters: </span>{f.why_it_matters}</p>}
+          {f.why_it_matters && <p className="text-sm leading-snug text-soft"><span className="text-faint">Why it matters: </span>{f.why_it_matters}</p>}
           <div className="truncate text-xs text-faint">
             {src ? (
               <>Checked against <a href={src.url} target="_blank" rel="noreferrer" className="text-soft underline decoration-edge underline-offset-2 hover:decoration-ink">{src.title || src.url}</a>
@@ -881,9 +881,9 @@ const callOf = (d: Decision, problems: string[]) =>
 
 function Stat({ value, of, label, accent }: { value: ReactNode; of?: number; label: string; accent?: boolean }) {
   return (
-    <div className={`panel flex flex-col gap-1.5 p-3.5 ${accent ? '!border-flare/35' : ''}`}>
-      <span className={`text-[26px] font-bold tabular-nums ${accent ? 'text-[#F5A35A]' : ''}`}>
-        {value}{of !== undefined && <span className="text-[15px] font-semibold text-faint"> / {of}</span>}
+    <div className={`panel flex h-24 flex-col justify-center gap-1 p-4 ${accent ? '!border-flare/35' : ''}`}>
+      <span className={`text-2xl font-bold tabular-nums ${accent ? 'text-[#F5A35A]' : ''}`}>
+        {value}{of !== undefined && <span className="text-base font-semibold text-faint"> / {of}</span>}
       </span>
       <span className="text-xs text-muted">{label}</span>
     </div>
@@ -891,53 +891,61 @@ function Stat({ value, of, label, accent }: { value: ReactNode; of?: number; lab
 }
 
 function Results() {
-  const [scores, setScores] = useState<Scores | null | undefined>(undefined)
-  useEffect(() => { getScores().then(setScores) }, [])
-  if (scores === undefined) return <p className="text-muted">Loading…</p>
+  const [scores, setScores] = useState<Scores | null | 'error' | undefined>(undefined)
+  useEffect(() => { getScores().then(setScores, () => setScores('error')) }, [])
+  if (scores === undefined) { // skeleton in the final layout, so nothing jumps when the numbers arrive
+    return (
+      <>
+        <div className="h-16 w-1/2 rounded bg-raised" />
+        <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {Array.from({ length: 5 }, (_, i) => <div key={i} className="panel h-24" />)}
+        </section>
+        <div className="panel h-96" />
+      </>
+    )
+  }
+  if (scores === 'error') return <p className="panel p-6 text-muted">Couldn't load the scores. Check that the API is running, then reload.</p>
   if (scores === null) {
     return (
       <section className="panel flex flex-col gap-2 p-6">
-        <h1 className="text-[24px] font-bold tracking-tight">No scores yet</h1>
+        <h1 className="text-lg font-bold tracking-tight">No scores yet</h1>
         <p className="text-muted">Run <code className="font-mono text-soft">python scripts/eval.py</code> to score all 8 cases against the answer key.</p>
       </section>
     )
   }
   const s = scores
   const when = new Date(s.generated_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
-  const ph = s.fixes_passing.placeholders
   return (
     <>
       <section className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-col gap-1.5">
-          <h1 className="text-[28px] font-bold tracking-tight">How well it works</h1>
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl font-bold tracking-tight">How well it works</h1>
           <span className="text-muted">{s.rows.length} real submittals with a known answer, run end to end.</span>
         </div>
         <span className="font-mono text-xs text-faint">{s.mode} run {s.run_id.slice(-6)} · {when}</span>
       </section>
 
       {s.mode !== 'live' && (
-        <p className="rounded-lg border border-line bg-well px-3.5 py-2.5 text-xs text-soft">
-          Mock mode: model and web answers are replayed from recorded fixtures, so time is near zero and cost uses placeholder prices.
-          {ph > 0 && ` ${ph} of the passing fixes ${ph === 1 ? 'is a placeholder' : 'are placeholders'} that a live run fills in.`}
+        <p className="rounded-lg border border-line bg-well px-4 py-3 text-xs text-soft">
+          Mock mode: answers are replayed from recorded runs, so time is near zero.
         </p>
       )}
 
-      <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <Stat value={s.right_call.n} of={s.right_call.of} label="Right call" />
         <Stat value={s.caught.n} of={s.caught.of} label="Problems caught" />
         <Stat value={s.false_alarms.n} of={s.false_alarms.of} label="False alarms on clean items" />
-        <Stat value={s.fixes_passing.n} of={s.fixes_passing.of} label={`Fixes that pass the spec${ph ? ` (${ph} placeholder)` : ''}`} accent />
+        <Stat value={s.fixes_passing.n} of={s.fixes_passing.of} label="Fixes that pass the spec" accent />
         <Stat value={`${(s.time_ms_per_item / 1000).toFixed(1)} s`} label="Per submittal" />
-        <Stat value={`$${s.cost_usd_per_item.toFixed(3)}`} label="Per submittal, models + search" />
       </section>
 
       <section className="panel overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[920px] border-collapse text-left">
-            <thead className="font-mono text-[11px] text-faint">
+            <thead className="font-mono text-xs text-faint">
               <tr className="border-b border-line">
-                {['Case', 'Document', 'Answer key', 'SpecCheck', 'Fix', 'Time', 'Cost'].map((h, i) => (
-                  <th key={h} className={`px-4 py-2.5 font-normal ${i >= 5 ? 'text-right' : ''}`}>{h.toUpperCase()}</th>
+                {['Case', 'Document', 'Answer key', 'SpecCheck', 'Fix', 'Time'].map((h, i) => (
+                  <th key={h} className={`px-4 py-3 font-normal ${i >= 5 ? 'text-right' : ''}`}>{h.toUpperCase()}</th>
                 ))}
               </tr>
             </thead>
@@ -948,13 +956,13 @@ function Results() {
                   <td className="px-4 py-3">{r.title}</td>
                   <td className="px-4 py-3">
                     <span className="flex items-center gap-2">
-                      <span className="h-[7px] w-[7px] shrink-0 rounded-full" style={{ background: DECISION_COLOR[r.expected] }} />
+                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: DECISION_COLOR[r.expected] }} />
                       {callOf(r.expected, r.expected_problems)}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     {r.error || !r.decision ? <span className={BAD}>Error</span> : (
-                      <span className={`flex items-center gap-1.5 ${r.right_call && r.caught === r.expected_problems.length ? '' : BAD}`}>
+                      <span className={`flex items-center gap-2 ${r.right_call && r.caught === r.expected_problems.length ? '' : BAD}`}>
                         <span className={r.right_call ? 'text-good' : BAD}><Icon kind={r.right_call ? 'check' : 'x'} /></span>
                         {callOf(r.decision, r.found_problems ?? [])}
                       </span>
@@ -962,12 +970,11 @@ function Results() {
                   </td>
                   <td className="px-4 py-3 text-muted">
                     {!r.fix ? 'none needed' : r.fix.passes
-                      ? <span className="flex items-center gap-1.5"><span className="text-good"><Icon kind="check" /></span>
-                          <span className={r.fix.placeholder ? 'text-faint' : 'text-soft'}>{r.fix.placeholder ? 'placeholder' : r.fix.suggest}</span></span>
-                      : <span className={BAD}>no passing fix</span>}
+                      ? <span className="flex items-center gap-2"><span className="text-good"><Icon kind="check" /></span>
+                          <span className="text-soft">{r.fix.suggest}</span></span>
+                      : <span>no passing fix</span>}
                   </td>
                   <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-xs tabular-nums text-muted">{r.time_ms !== undefined ? `${(r.time_ms / 1000).toFixed(1)} s` : '—'}</td>
-                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-xs tabular-nums text-muted">{r.cost_usd !== undefined ? `$${r.cost_usd.toFixed(3)}` : '—'}</td>
                 </tr>
               ))}
             </tbody>

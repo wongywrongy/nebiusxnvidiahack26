@@ -1,37 +1,95 @@
 {
   "_note": "Mock fixture. Negative control: LQM Rev. 09/05/19 submitted, current Rev. 08/07/24, same input watts.",
   "pages": [
-    {"page": 1, "text": "Lithonia LQM Quantum thermoplastic LED exit sign. LQM S W 3 R 120/277: 0.62 W at 120 V, 0.69 W at 277 V. 5-year warranty. Rev. 09/05/19."}
+    {
+      "page": 1,
+      "text": "Lithonia LQM Quantum thermoplastic LED exit sign. LQM S W 3 R 120/277: 0.62 W at 120 V, 0.69 W at 277 V. 5-year warranty. Rev. 09/05/19."
+    }
   ],
-  "triage": {"pages": [{"page": 1, "kind": "product_data"}]},
+  "triage": {
+    "pages": [
+      {
+        "page": 1,
+        "kind": "product_data"
+      }
+    ]
+  },
   "claims": {
     "product": "LQM Quantum LED exit sign",
     "manufacturer": "Lithonia Lighting (Acuity Brands)",
     "model": "LQM S W 3 R 120/277",
     "document_revision": "09/05/19",
     "claims": [
-      {"id": "k1", "product": "LQM", "manufacturer": "Lithonia", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1, "quote": "5-year warranty"},
-      {"id": "k2", "product": "LQM", "manufacturer": "Lithonia", "property": "input_watts_120v", "value": 0.62, "unit": "W", "page": 1, "quote": "0.62 W at 120 V"},
-      {"id": "k3", "product": "LQM", "manufacturer": "Lithonia", "property": "input_watts_277v", "value": 0.69, "unit": "W", "page": 1, "quote": "0.69 W at 277 V"}
+      {
+        "id": "k1",
+        "product": "LQM",
+        "manufacturer": "Lithonia",
+        "property": "warranty_years",
+        "value": 5,
+        "unit": "yr",
+        "page": 1,
+        "quote": "5-year warranty"
+      },
+      {
+        "id": "k2",
+        "product": "LQM",
+        "manufacturer": "Lithonia",
+        "property": "input_watts_120v",
+        "value": 0.62,
+        "unit": "W",
+        "page": 1,
+        "quote": "0.62 W at 120 V"
+      },
+      {
+        "id": "k3",
+        "product": "LQM",
+        "manufacturer": "Lithonia",
+        "property": "input_watts_277v",
+        "value": 0.69,
+        "unit": "W",
+        "page": 1,
+        "quote": "0.69 W at 277 V"
+      }
     ]
   },
   "web": {
-    "search": [{"url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf", "title": "LQM spec sheet"}],
-    "extract": {"https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf": "Contractor Select LQM LED exit sign. Rev. 08/07/24. 0.62 W at 120 V, 0.69 W at 277 V."}
+    "search": [
+      {
+        "url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+        "title": "LQM spec sheet"
+      }
+    ],
+    "extract": {
+      "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf": "Contractor Select LQM LED exit sign. Rev. 08/07/24. 0.62 W at 120 V, 0.69 W at 277 V."
+    }
   },
   "verify": {
     "status": "active",
     "current_revision": "08/07/24",
     "current_values": [
-      {"property": "input_watts_120v", "value": 0.62, "unit": "W"},
-      {"property": "input_watts_277v", "value": 0.69, "unit": "W"}
+      {
+        "property": "input_watts_120v",
+        "value": 0.62,
+        "unit": "W",
+        "quote": "0.62 W at 120 V"
+      },
+      {
+        "property": "input_watts_277v",
+        "value": 0.69,
+        "unit": "W",
+        "quote": "0.69 W at 277 V"
+      }
     ],
-    "source_urls": ["https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf"]
+    "source_urls": [
+      "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf"
+    ]
   },
   "report": {
     "summary": "Meets the spec. A newer spec sheet exists, but none of the values changed.",
     "note_to_subcontractor": "Approved. For the record, please send the current LQM spec sheet (Rev. 08/07/24).",
-    "finding_titles": {"currency-newer": "A newer spec sheet exists; nothing changed"},
+    "finding_titles": {
+      "currency-newer": "A newer spec sheet exists; nothing changed"
+    },
     "why_it_matters": {}
   }
 }

@@ -107,9 +107,6 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             usage += u
             await run.pause()
 
-            run.emit("reconcile", "Making the call", case_id, settings.models["ultra"])
-            findings, u = await decide.reconcile(fx, findings)
-            usage += u
             decision = decide.decide(findings)
             if decision == "send_back":
                 run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['super']}")
@@ -133,7 +130,9 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result
-            run.emit("done", decision, case_id, data={"decision": decision, "summary": rep.summary})
+            # The run log keeps tokens, cost and credits for every call.
+            run.emit("done", decision, case_id, data={"decision": decision, "summary": rep.summary,
+                                                      "usage": [u.model_dump() for u in usage], "web_credits": credits})
             return result
         except Exception as e:  # keep the other cases running
             run.emit("error", f"{type(e).__name__}: {e}", case_id)

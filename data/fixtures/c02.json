@@ -1,22 +1,66 @@
 {
   "_note": "Mock fixture. Page is verbatim PyMuPDF text of 3M System No. C-AJ-2738 (July 30, 2015). Web extract is an excerpt of the same document.",
   "pages": [
-    {"page": 1, "text": " \n3M Fire Protection Products \nwww.3M.com/firestop  1-800-328-1687 \nThrough Penetrations Applicators and Specifiers Guide\nC-AJ-2738 • 1 of 1\nNon-Metallic Pipes\nThrough Penetrations\n2000 Series\nConcrete\nCAJ\nSystem No. C-AJ-2738\nJuly 30, 2015\nF Rating — 2 Hr\nT Rating — 0 Hr\nW Rating — Class 1 (See Item 4)\n1. \t Floor or Wall Assembly — Min 4-1/2 in. (114 mm) thick reinforced lightweight or normal weight (100-150 pcf or 1778 - 2400 kg/m3) \nconcrete. Floor assembly may also be constructed of any min 6 in. (152 mm) thick UL Classified hollow-core Precast Concrete Units*. \nWall may also be constructed of any UL Classified Concrete Blocks*. Max diam of opening 5 in. (127 mm).\nSee Concrete Blocks (CAZT) and Precast Concrete Units (CFTV) categories in Fire Resistance Directory for names of manufacturers.\n2. \t Steel Sleeve — (Optional) - Nom 5 in. (127 mm) diam (or smaller) Schedule 10 (or heavier) steel sleeve cast or grouted into floor or wall \nassembly. Steel sleeve may be installed flush or may project max 2 in. (51 mm) beyond the floor or wall surfaces.\n3. \t Through-Penetrants — One nonmetallic pipe, conduit or tube installed concentrically or eccentrically within opening. Annular space \nbetween penetrant and periphery of opening or sleeve shall be min of 1/4 in. (6 mm) to max 2 in. (51 mm). The space between penetrant shall \nbe min of 1/4 in. (6 mm) to max 2 in. (51 mm). Penetrant to be rigidly supported on both sides of floor or wall assembly. The following types \nand sizes of penetrants may be used:\nA. \t Polyvinyl Chloride (PVC) Pipe — Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe for use in closed (process or \nsupply) or vented (drain, waste or vent) piping systems.\nB. \t Rigid Nonmetallic Conduit+ — Nom 2 in. (51 mm) diam (or smaller) Schedule 40 PVC conduit installed in accordance with Article \n347 of the National Electrical Code (NFPA No. 70).\nC. \t Chlorinated Polyvinyl Chloride (CPVC) Pipe — Nom 2 in. (51 mm) diam (or smaller) SDR13.5 CPVC pipe for use in closed \n(process or supply) piping systems.\nD. \t Crosslinked Polyethylene (PEX) Tubing — Nom 1 in. (25 mm) diam (or smaller) SDR 9 PEX tubing for use in closed (process or \nsupply) or vented (drain, waste or vent) piping systems.\n4. \t Firestop System — The details of the firestop system shall be as follows:\nA. \t Packing Material — Min 3 in. (76 mm) thickness of min 4 pcf (64 kg/m3) mineral wool batt insulation firmly packed into opening \nas a permanent form. Packing material to be recessed from top surface of floor or top edge of sleeve or from both surfaces of wall or \nboth ends of sleeve as required to accommodate the required thickness of fill material. In floors constructed of hollow-core concrete, \npacking material to be recessed from top and bottom surfaces of floor or sleeve as required to accommodate the required thickness of fill \nmaterial.\nB. \t Fill, Void or Cavity Materials* - Caulk or Sealant — Min 1/2 in. (13 mm) thickness of caulk applied within the annulus, flush with \ntop surface of floor or top edge of sleeve or with both surfaces of wall or both ends of sleeves. In floors constructed of hollow-core \nconcrete, min 1/2 in. (13 mm) thickness of caulk applied within the annulus, flush with top and bottom surfaces of floor or sleeve. Min \n1/4 in. (6 mm) diam bead of caulk applied to the penetrant/concrete or penetrant/sleeve interface at the point contact location on the top \nsurface of floor or both surfaces of wall or hollow-core concrete.\n3M COMPANY 3M FIRE PROTECTION PRODUCTS — IC 15WB+, CP 25WB+ caulk or FB-3000 WT sealant\n(Note - W Rating applies only when FB-3000 WT is used. CP 25WB+ not suitable for use with CPVC pipes.)\n* Indicates such products shall bear the UL or cUL Certification Mark for jurisdictions employing the UL or cUL Certification (such as \nCanada), respectively.\n"}
+    {
+      "page": 1,
+      "text": " \n3M Fire Protection Products \nwww.3M.com/firestop  1-800-328-1687 \nThrough Penetrations Applicators and Specifiers Guide\nC-AJ-2738 • 1 of 1\nNon-Metallic Pipes\nThrough Penetrations\n2000 Series\nConcrete\nCAJ\nSystem No. C-AJ-2738\nJuly 30, 2015\nF Rating — 2 Hr\nT Rating — 0 Hr\nW Rating — Class 1 (See Item 4)\n1. \t Floor or Wall Assembly — Min 4-1/2 in. (114 mm) thick reinforced lightweight or normal weight (100-150 pcf or 1778 - 2400 kg/m3) \nconcrete. Floor assembly may also be constructed of any min 6 in. (152 mm) thick UL Classified hollow-core Precast Concrete Units*. \nWall may also be constructed of any UL Classified Concrete Blocks*. Max diam of opening 5 in. (127 mm).\nSee Concrete Blocks (CAZT) and Precast Concrete Units (CFTV) categories in Fire Resistance Directory for names of manufacturers.\n2. \t Steel Sleeve — (Optional) - Nom 5 in. (127 mm) diam (or smaller) Schedule 10 (or heavier) steel sleeve cast or grouted into floor or wall \nassembly. Steel sleeve may be installed flush or may project max 2 in. (51 mm) beyond the floor or wall surfaces.\n3. \t Through-Penetrants — One nonmetallic pipe, conduit or tube installed concentrically or eccentrically within opening. Annular space \nbetween penetrant and periphery of opening or sleeve shall be min of 1/4 in. (6 mm) to max 2 in. (51 mm). The space between penetrant shall \nbe min of 1/4 in. (6 mm) to max 2 in. (51 mm). Penetrant to be rigidly supported on both sides of floor or wall assembly. The following types \nand sizes of penetrants may be used:\nA. \t Polyvinyl Chloride (PVC) Pipe — Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe for use in closed (process or \nsupply) or vented (drain, waste or vent) piping systems.\nB. \t Rigid Nonmetallic Conduit+ — Nom 2 in. (51 mm) diam (or smaller) Schedule 40 PVC conduit installed in accordance with Article \n347 of the National Electrical Code (NFPA No. 70).\nC. \t Chlorinated Polyvinyl Chloride (CPVC) Pipe — Nom 2 in. (51 mm) diam (or smaller) SDR13.5 CPVC pipe for use in closed \n(process or supply) piping systems.\nD. \t Crosslinked Polyethylene (PEX) Tubing — Nom 1 in. (25 mm) diam (or smaller) SDR 9 PEX tubing for use in closed (process or \nsupply) or vented (drain, waste or vent) piping systems.\n4. \t Firestop System — The details of the firestop system shall be as follows:\nA. \t Packing Material — Min 3 in. (76 mm) thickness of min 4 pcf (64 kg/m3) mineral wool batt insulation firmly packed into opening \nas a permanent form. Packing material to be recessed from top surface of floor or top edge of sleeve or from both surfaces of wall or \nboth ends of sleeve as required to accommodate the required thickness of fill material. In floors constructed of hollow-core concrete, \npacking material to be recessed from top and bottom surfaces of floor or sleeve as required to accommodate the required thickness of fill \nmaterial.\nB. \t Fill, Void or Cavity Materials* - Caulk or Sealant — Min 1/2 in. (13 mm) thickness of caulk applied within the annulus, flush with \ntop surface of floor or top edge of sleeve or with both surfaces of wall or both ends of sleeves. In floors constructed of hollow-core \nconcrete, min 1/2 in. (13 mm) thickness of caulk applied within the annulus, flush with top and bottom surfaces of floor or sleeve. Min \n1/4 in. (6 mm) diam bead of caulk applied to the penetrant/concrete or penetrant/sleeve interface at the point contact location on the top \nsurface of floor or both surfaces of wall or hollow-core concrete.\n3M COMPANY 3M FIRE PROTECTION PRODUCTS — IC 15WB+, CP 25WB+ caulk or FB-3000 WT sealant\n(Note - W Rating applies only when FB-3000 WT is used. CP 25WB+ not suitable for use with CPVC pipes.)\n* Indicates such products shall bear the UL or cUL Certification Mark for jurisdictions employing the UL or cUL Certification (such as \nCanada), respectively.\n"
+    }
   ],
-  "triage": {"pages": [{"page": 1, "kind": "system_drawing"}]},
+  "triage": {
+    "pages": [
+      {
+        "page": 1,
+        "kind": "system_drawing"
+      }
+    ]
+  },
   "claims": {
     "product": "Firestop system C-AJ-2738",
     "manufacturer": "3M",
     "document_revision": "July 30, 2015",
     "claims": [
-      {"id": "k1", "product": "C-AJ-2738", "manufacturer": "3M", "property": "f_rating_hr", "value": 2, "unit": "hr", "page": 1, "quote": "F Rating — 2 Hr"},
-      {"id": "k2", "product": "C-AJ-2738", "manufacturer": "3M", "property": "t_rating_hr", "value": 0, "unit": "hr", "page": 1, "quote": "T Rating — 0 Hr"},
-      {"id": "k3", "product": "C-AJ-2738", "manufacturer": "3M", "property": "penetrant_types", "value": ["PVC pipe (Schedule 40, up to 2 in)", "rigid PVC conduit (Schedule 40, up to 2 in)", "CPVC pipe (SDR 13.5, up to 2 in)", "PEX tubing (SDR 9, up to 1 in)"], "page": 1, "quote": "Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe"}
+      {
+        "id": "k1",
+        "product": "C-AJ-2738",
+        "manufacturer": "3M",
+        "property": "f_rating_hr",
+        "value": 2,
+        "unit": "hr",
+        "page": 1,
+        "quote": "F Rating — 2 Hr"
+      },
+      {
+        "id": "k2",
+        "product": "C-AJ-2738",
+        "manufacturer": "3M",
+        "property": "t_rating_hr",
+        "value": 0,
+        "unit": "hr",
+        "page": 1,
+        "quote": "T Rating — 0 Hr"
+      },
+      {
+        "id": "k3",
+        "product": "C-AJ-2738",
+        "manufacturer": "3M",
+        "property": "penetrant_types",
+        "value": [
+          "PVC pipe (Schedule 40, up to 2 in)",
+          "rigid PVC conduit (Schedule 40, up to 2 in)",
+          "CPVC pipe (SDR 13.5, up to 2 in)",
+          "PEX tubing (SDR 9, up to 1 in)"
+        ],
+        "page": 1,
+        "quote": "Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe"
+      }
     ]
   },
   "web": {
     "search": [
-      {"url": "https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf", "title": "3M System No. C-AJ-2738"}
+      {
+        "url": "https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf",
+        "title": "3M System No. C-AJ-2738"
+      }
     ],
     "extract": {
       "https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf": "3M Fire Protection Products www.3M.com/firestop 1-800-328-1687 Through Penetrations Applicators and Specifiers Guide C-AJ-2738 • 1 of 1 Non-Metallic Pipes Through Penetrations 2000 Series Concrete CAJ System No. C-AJ-2738 July 30, 2015 F Rating — 2 Hr T Rating — 0 Hr W Rating — Class 1 (See Item 4) 1. Floor or Wall Assembly — Min 4-1/2 in. (114 mm) thick reinforced lightweight or normal weight (100-150 pcf or 1778 - 2400 kg/m3) concrete. Floor assembly may also be constructed of any min 6 in. (152 mm) thick UL Classified hollow-core Precast Concrete Units*. Wall may also be constructed of any UL Classified Concrete Blocks*. Max diam of opening 5 in. (127 mm). See Concrete Blocks (CAZT) and Precast Concrete Units (CFTV) categories in Fire Resistance Directory for names of manufacturers. 2. Steel Sleeve — (Optional) - Nom 5 in. (127 mm) diam (or smaller) Schedule 10 (or heavier) steel sleeve cast or grouted into floor or wall assembly. Steel sleeve may be installed flush or may project max 2 in. (51 mm) beyond the floor or wall surfaces. 3. Through-Penetrants — One nonmetallic pipe, conduit or tube installed concentrically or eccentrically within opening. Annular space between penetrant and periphery of opening or sleeve shall be min of 1/4 in. (6 mm) to max 2 in. (51 mm). The space between penetrant shall be min of 1/4 in. (6 mm) to max 2 in. (51 mm). Penetrant to be rigidly supported on both sides of floor or wall assembly. The following types and sizes of penetrants may be used: A. Polyvinyl Chloride (PVC) Pipe — Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe for use in closed (process or supply) or vented (drain, waste or vent) piping systems. B. Rigid Nonmetallic Conduit+ — Nom 2 in. (51 mm) diam (or smaller) Schedule 40 PVC conduit installed in accordance with Article 347 of the National Electrical Code (NFPA No. 70). C. Chlorinated Polyvinyl Chloride (CPVC) Pipe — Nom 2 in. (51 mm) diam (or smaller) SDR13.5 CPVC pipe for use in closed (process or supply) piping systems. D. Crosslinked Polyethylene (PEX) Tubing — Nom 1 in. (25 mm) diam (or smaller) SDR 9 PEX tubing for use in closed (process or supply) or vented (drain, waste or vent) piping systems."
@@ -26,15 +70,31 @@
     "status": "active",
     "current_revision": "July 30, 2015",
     "current_values": [
-      {"property": "f_rating_hr", "value": 2, "unit": "hr"},
-      {"property": "t_rating_hr", "value": 0, "unit": "hr"}
+      {
+        "property": "f_rating_hr",
+        "value": 2,
+        "unit": "hr",
+        "quote": "F Rating — 2 Hr"
+      },
+      {
+        "property": "t_rating_hr",
+        "value": 0,
+        "unit": "hr",
+        "quote": "T Rating — 0 Hr"
+      }
     ],
-    "source_urls": ["https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf"]
+    "source_urls": [
+      "https://multimedia.3m.com/mws/media/1213657O/system-no-c-aj-2738.pdf"
+    ]
   },
   "report": {
     "summary": "The firestop system has a 0 hr temperature rating against a 2 hr fire rating, which this project's spec does not allow.",
     "note_to_subcontractor": "Please resubmit with a listed system whose T rating equals its F rating for this floor, as required by spec section 07 84 00.",
-    "finding_titles": {"spec-fs-t-eq-f": "Temperature rating is lower than the fire rating"},
-    "why_it_matters": {"spec-fs-t-eq-f": "This school's standard requires the T rating to match the F rating, so heat can't pass through the floor for as long as fire is held back."}
+    "finding_titles": {
+      "spec-fs-t-eq-f": "Temperature rating is lower than the fire rating"
+    },
+    "why_it_matters": {
+      "spec-fs-t-eq-f": "This school's standard requires the T rating to match the F rating, so heat can't pass through the floor for as long as fire is held back."
+    }
   }
 }

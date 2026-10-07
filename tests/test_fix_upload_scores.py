@@ -39,11 +39,16 @@ def test_fix_only_on_send_backs(run):
         assert ("fix" in {e.stage for e in run.events if e.case_id == cid}) == (cid in SEND_BACK), cid
 
 
-def test_every_send_back_has_a_passing_candidate(run):
+def test_passes_only_with_every_check_passed(run):
     for cid in SEND_BACK:
         (f,) = fixes(run.results[cid])
-        assert f.suggest and any(c.passes for c in f.candidates), cid
         assert len(f.candidates) <= settings.fix_max_candidates
+        for c in f.candidates:
+            assert c.passes == (bool(c.checks) and all(k.ok is True for k in c.checks)), (cid, c.name)
+        best = next((c for c in f.candidates if c.passes), None)
+        assert f.suggest == (best.name if best else ""), cid
+        if not best:
+            assert f.head == "No passing replacement found", cid
 
 
 def test_c04_sti_fails_on_t_rating(run):
@@ -52,14 +57,14 @@ def test_c04_sti_fails_on_t_rating(run):
     assert not sti.passes and sti.source_url
     t = next(k for k in sti.checks if k.label.startswith("T rating"))
     assert t.ok is False and t.note == "T 0 hr"
-    ph = next(c for c in f.candidates if c.placeholder)
-    assert ph.passes and ph.source_url is None
+    assert f.head == "No passing replacement found" and not f.suggest
 
 
 def test_fix_names_the_current_documents(run):
     assert "Rev B" in fixes(run.results["c03"])[0].suggest
-    assert "04/11/25" in fixes(run.results["c06"])[0].suggest
     assert "BLT 2x4" in fixes(run.results["c07"])[0].suggest
+    c06 = fixes(run.results["c06"])[0]  # the 2025 sheet doesn't state CRI, dimming, warranty or DLC
+    assert not c06.suggest and "04/11/25" in c06.candidates[0].name
 
 
 def test_fix_respects_the_credit_cap(run):
@@ -78,7 +83,7 @@ def test_fix_respects_the_credit_cap(run):
     _, credits = asyncio.run(fix.find_fixes(case, reqs, claims, findings, max_candidates=3, credit_cap=4))
     got = next(f.fix for f in findings if f.fix)
     assert credits <= 4
-    assert all(c.placeholder for c in got.candidates)  # the real candidate needs verify credits the cap doesn't allow
+    assert not got.candidates and got.query  # no credits left to verify a candidate; the search is still shown
 
 
 @pytest.fixture

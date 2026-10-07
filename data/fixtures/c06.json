@@ -1,29 +1,116 @@
 {
   "_note": "Mock fixture. Pages are verbatim PyMuPDF text of the Lithonia LDN6 spec sheet (Rev. 10/25/17). Dublin extract is verbatim text of the LDN6 Rev. 05/03/22 pages in the city's lighting submittal. The Albuquerque copy (Rev. 04/11/25) in documents.json returned 404 on 2026-10-05.",
   "pages": [
-    {"page": 1, "text": "LDN6\n6” OPEN and WALLWASH LED \nNon-IC \nNew Construction Downlight\nORDERING INFORMATION\nExample: LDN6 35/15 LO6AR LSS MVOLT EZ10\nDOWNLIGHTING\t\nLDN6\nLead times will vary depending on options selected. Consult with your sales representative.\nAccessories: Order as separate catalog number.\nEAC ISSM 375\nCompact interruptible emergency AC power system\nEAC ISSM 125\nCompact interruptible emergency AC power system\nGRA68 JZ\nOversized trim ring with 8” outside diameter 1\nSCA6\nSloped ceiling adapter. Refer to TECH-SCA for more options.\nNotes \n1\t\nOverall height varies based on lumen package; refer to dimensional chart on page 3.\n2\t\nNot available with finishes.\n3\t\nNot available with emergency options.\n4\t\n120V only. \n5\t\nAvailable with clear (AR) reflector only.\n6\t\nAdd “SD” for self-diagnostic option (i.e. ELSD)\n7\t\nMust specify voltage 120V or 277V.\n8\t\nFixture height is 6.5” for all lumen packages with HAO.\nCatalog  \nNumber\nNotes\nType\nLDN6\nSeries\nColor temperature\nLumens1\nAperture/Trim Color\nFinish\nVoltage\nLDN6\n6\" round\n27/\n2700K \n30/\n3000K\n35/\n3500K\n40/\n4000K\n50/\n5000K\n05\n500 lumens\n10\n1000 lumens\n15\n1500 lumens\n20\n2000 lumens\n25\n2500 lumens\n30\n3000 lumens\n40\n4000 lumens\n50\n5000 lumens\nLO6\nDownlight\nLW6\nWallwash\nAR\nClear\nWR2\nWhite\nBR2\nBlack\nLSS Semi-specular\nLD\nMatte diffuse\nLS\nSpecular\nMVOLT Multi-volt\n120\n120V\n277\n277V\n3473\n347V\nDriver\nOptions\nEZ10 eldoLED 10% 0-10V\nEZ1\neldoLED 1% 0-10V\nSF4\nSingle fuse\nTRW5\nWhite painted flange\nTRBL5\nBlack painted flange\nEL6\nBatterypack with integral test switch\nELR\nBatterypack with remote test switch\nNPS80EZ7\nnLight® dimming pack controls 0-10V eldoLED drivers.\nNPS80EZER7\nnLight® dimming pack controls 0-10V eldoLED drivers. ER \ncontrols fixtures on emergency circuit. \nHAO8\nHigh ambient option\nCP\nChicago Plenum\nWL\nWet location, specify for exterior applications\nRRL__\nRELOC®-ready luminaire connectors enable a simple and consistent \nfactory installed option across all ABL luminaire brands. Refer to RRL \nfor complete nomenclature. Available only in RRLA, RRLB, RRLAE, \nand RRLC12S.\nUSPOM\nUS point of manufacture\nD\nI\nM\nM\nA\nB\nL\nE\nFEATURES & SPECIFICATIONS\nINTENDED USE — Typical applications include corridors, lobbies, conference rooms and private offices. \nCONSTRUCTION — Galvanized steel mounting/plaster frame; galvanized steel junction box with \nbottom-hinged access covers and spring latches. Reflectors are retained by torsion springs.\nVertically adjustable mounting brackets with commercial bar hangers provide 3-3/4” total adjustment. \nTwo combination ½”-3/4” and four ½” knockouts for straight-through conduit runs.  Capacity: 8 (4 in, 4 \nout).  No. 12 AWG conductors, rated for 90°C.\nAccommodates 12”-24” joist spacing.\nPassive cooling thermal management for 25°C standard; high ambient (40°C) option available. Light \nengine and drivers are accessible from above or below ceiling.\nMax ceiling thickness 1-1/2”.\nOPTICS — LEDs are binned to a 3-step SDCM; 80 CRI minimum.\nLED light source concealed with diffusing optical lens. \nGeneral illumination lighting with 1.0 S/MH and 55° cutoff to source and source image.\nSelf-flanged anodized reflectors in specular, semi-specular, or matte diffuse finishes.  Also available in \nwhite and black painted reflectors.\nELECTRICAL — Multi-volt (120-277V, 50/60Hz) eldoLED 0-10V dimming drivers mounted to junction \nbox, 10% or 1% minimum dimming level available.\n0-10V dimming fixture requires two (2) additional low-voltage wires to be pulled.\n70% lumen maintenance at 50,000 hours.\nLISTINGS — Certified to US and Canadian safety standards. Damp location standard (wet location, \ncovered ceiling optional). ENERGY STAR® certified product.\nWARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx\nNote: Actual performance may differ as a result of end-user environment and application.\nAll values are design or typical values, measured under laboratory conditions at 25 °C.\nSpecifications subject to change without notice.\nA+ Capable options indicated  \nby this color background.\n"},
-    {"page": 2, "text": "LDN6\nDOWNLIGHTING:  One Lithonia Way  Conyers, GA 30012   Phone:  800-315-4935   Fax: 770-860-3129   www.lithonia.com\t\n© 2014-2017 Acuity Brands Lighting, Inc. All rights reserved.  \nRev. 10/25/17\nLDN6\nLDN6 35/10 LO6AR, input watts: 12.75, delivered lumens: 1082, LM/W = 84.86, spacing criterion at 0= 1.02, test no. ISF 30716P31.\nLDN6 35/30 LO6AR, input watts: 34.69, delivered lumens: 3033.9, LM/W = 87.45, spacing criterion at 0= 1.02, test no. ISF 30716P22.\nLDN6 35/50 LO6AR, input watts: 55.56, delivered lumens: 4922.1, LM/W = 88.59, spacing criterion at 0= 1.02, test no. ISF 30716P40.\nPHOTOMETRY\n\t\nDistribution Curve\t\nDistribution Data\t\nOutput Data\t\nCoefficient of Utilization\t\nIlluminance Data at 30” Above Floor for \n\t\n\t\n\t\n\t\n\t\na Single Luminaire\n0°\n 20°\n 40°\n 60°\n 80°\n400\n800\nAve\nLumens\n0\n5\n15\n25\n35\n45\n55\n65\n75\n85\n90\n961\n992\n1064\n789\n362\n121\n2\n1\n0\n0\n0\n98\n295\n353\n235\n96\n4\n1\n0\n0\nZone\nLumens % Lamp\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n746.1\n981.1\n1080.9\n1082.0\n0.0\n0.0\n0.0\n0.0\n1082.0\n69.0\n90.7\n99.9\n100.0\n0.0\n0.0\n0.0\n0.0\n*100.0\n*Efficiency\nCoefficients of Utilization\n%\n0\n2\nf\np\npc\n80%\n70%\n50%\npw\n50% 30% 10%\n50% 30% 10%\n50% 30% 10%\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n119\n111\n103\n96\n89\n83\n78\n73\n69\n65\n61\n119\n108\n99\n91\n84\n77\n72\n67\n63\n59\n55\n119\n106\n95\n87\n79\n73\n68\n63\n59\n55\n51\n116\n109\n101\n94\n88\n82\n77\n73\n68\n64\n61\n116\n106\n97\n90\n83\n77\n72\n67\n62\n59\n55\n116\n104\n94\n86\n79\n73\n67\n63\n58\n55\n51\n111\n104\n98\n92\n86\n81\n76\n71\n67\n63\n60\n111\n103\n95\n88\n81\n76\n71\n66\n62\n58\n55\n111\n101\n92\n85\n78\n72\n67\n62\n58\n54\n51\nRCR\n50% beam -\n54.5°\n10% beam -\n82.2°\nMounting\nHeight\nInital FC\nCenter\nBeam\nDiameter\nFC\nDiameter\nFC\n8.0\n10.0\n12.0\n14.0\n16.0\n31.8\n17.1\n10.6\n7.3\n5.3\n5.7\n7.7\n9.8\n11.8\n13.9\n15.9\n8.5\n5.3\n3.6\n2.6\n9.6\n13.1\n16.6\n20.1\n23.6\n3.2\n1.7\n1.1\n0.7\n0.5\n0°\n 20°\n 40°\n 60°\n 80°\n1200\n2400\nAve\nLumens\n0\n5\n15\n25\n35\n45\n55\n65\n75\n85\n90\n2693\n2782\n2984\n2212\n1014\n339\n4\n2\n1\n0\n0\n274\n827\n991\n659\n268\n12\n2\n1\n0\nZone\nLumens % Lamp\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n2092.2\n2751.0\n3030.8\n3033.9\n0.0\n0.0\n0.0\n0.0\n3033.9\n69.0\n90.7\n99.9\n100.0\n0.0\n0.0\n0.0\n0.0\n*100.0\n*Efficiency\nCoefficients of Utilization\n%\n0\n2\nf\np\npc\n80%\n70%\n50%\npw\n50% 30% 10%\n50% 30% 10%\n50% 30% 10%\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n119\n111\n103\n96\n89\n83\n78\n73\n69\n65\n61\n119\n108\n99\n91\n84\n77\n72\n67\n63\n59\n55\n119\n106\n95\n87\n79\n73\n68\n63\n59\n55\n51\n116\n109\n101\n94\n88\n82\n77\n73\n68\n64\n61\n116\n106\n97\n90\n83\n77\n72\n67\n62\n59\n55\n116\n104\n94\n86\n79\n73\n67\n63\n58\n55\n51\n111\n104\n98\n92\n86\n81\n76\n71\n67\n63\n60\n111\n103\n95\n88\n81\n76\n71\n66\n62\n58\n55\n111\n101\n92\n85\n78\n72\n67\n62\n58\n54\n51\nRCR\n50% beam -\n54.5°\n10% beam -\n82.2°\nMounting\nHeight\nInital FC\nCenter\nBeam\nDiameter\nFC\nDiameter\nFC\n8.0\n10.0\n12.0\n14.0\n16.0\n89.0\n47.9\n29.8\n20.4\n14.8\n5.7\n7.7\n9.8\n11.8\n13.9\n44.5\n23.9\n14.9\n10.2\n7.4\n9.6\n13.1\n16.6\n20.1\n23.6\n8.9\n4.8\n3.0\n2.0\n1.5\n0°\n 20°\n 40°\n 60°\n 80°\n1800\n3600\nAve\nLumens\n0\n5\n15\n25\n35\n45\n55\n65\n75\n85\n90\n4370\n4513\n4841\n3589\n1645\n550\n7\n3\n2\n0\n0\n445\n1341\n1608\n1069\n435\n19\n3\n2\n0\nZone\nLumens % Lamp\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n3394.2\n4463.2\n4917.1\n4922.1\n0.0\n0.0\n0.0\n0.0\n4922.1\n69.0\n90.7\n99.9\n100.0\n0.0\n0.0\n0.0\n0.0\n*100.0\n*Efficiency\nCoefficients of Utilization\n%\n0\n2\nf\np\npc\n80%\n70%\n50%\npw\n50% 30% 10%\n50% 30% 10%\n50% 30% 10%\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n119\n111\n103\n96\n89\n83\n78\n73\n69\n65\n61\n119\n108\n99\n91\n84\n77\n72\n67\n63\n59\n55\n119\n106\n95\n87\n79\n73\n68\n63\n59\n55\n51\n116\n109\n101\n94\n88\n82\n77\n73\n68\n64\n61\n116\n106\n97\n90\n83\n77\n72\n67\n62\n59\n55\n116\n104\n94\n86\n79\n73\n67\n63\n58\n55\n51\n111\n104\n98\n92\n86\n81\n76\n71\n67\n63\n60\n111\n103\n95\n88\n81\n76\n71\n66\n62\n58\n55\n111\n101\n92\n85\n78\n72\n67\n62\n58\n54\n51\nRCR\n50% beam -\n54.5°\n10% beam -\n82.2°\nMounting\nHeight\nInital FC\nCenter\nBeam\nDiameter\nFC\nDiameter\nFC\n8.0\n10.0\n12.0\n14.0\n16.0\n144.4\n77.7\n48.4\n33.0\n24.0\n5.7\n7.7\n9.8\n11.8\n13.9\n72.2\n38.8\n24.2\n16.5\n12.0\n9.6\n13.1\n16.6\n20.1\n23.6\n14.4\n7.8\n4.8\n3.3\n2.4\n"},
-    {"page": 3, "text": "LDN6\nDOWNLIGHTING:  One Lithonia Way  Conyers, GA 30012   Phone:  800-315-4935   Fax: 770-860-3129   www.lithonia.com\t\n© 2014-2017 Acuity Brands Lighting, Inc. All rights reserved.  \nRev. 10/25/17\nLDN6\nNotes \n•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.\n•\t CRI: 80 typical.\nLDN6 1500 LUMEN \nLDN6 CP\nLDN6 3000 LUMEN\nLDN6 1500 EL-ELR\nLDN6 5000 LUMEN\n11 [27.9]\n5 1\n16 [12.9]\n10 5\n16 [26.2]\n511\n16 [14.5]\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n11 [27.9]\n57\n8 [14.9]\n10 5\n16 [26.2]\n61\n2 [16.5]\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n11 [27.9]\n57\n8 [14.9]\n10 5\n16 [26.2]\n61\n2 [16.5]\nMarked Spacing: 24 x 24 x 10\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n151\n16 [38.2]\n73\n4 [19.7]\n81\n4 [20.9]\n111\n2 [29.3]\n133\n4 [34.9]\nMarked Spacing above 3000 lumen: 24 x 24 x 10\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n1915\n16 [50.6]\n57\n8 [14.9]\n191\n8 [48.5]\n61\n2 [16.5]\nMarked Spacing above 3000 lumen: 24 x 24 x 10\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n* All dimensions are inches (centimeters) unless otherwise noted.\nLDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3\n2000\n2023.0\n22.6\n89.5\n2500\n2529.5\n27.1\n93.3\n3000\n3034.0\n34.7\n87.4\n4000\n3977.5\n44.1\n90.2\n5000\n4922.2\n55.5\n88.7\nEL/ELR AVAILABILITY/COMPATIBILITY - INITIAL LUMENS\nLumen \npackage\nWatts\nInitial lumens \nEL/ELR\nEmergency \nLED driver\n600\n12\n500\nPS1050\n1000\n18\n575\nPS1050\n1500\n26\n640\nPS1050\n2000\n35\n690\nPS1050\nLUMEN OUTPUT MULTIPLIERS - FINISH\nClear (AR)\nWhite (WR)\nBlack (BR)\nSpecular (LS)\n1.0\nN/A\nN/A\nSemi-specular (LSS)\n0.950\nN/A\nN/A\nMatte diffuse (LD)\n0.85\nN/A\nN/A\nPainted\nN/A\n0.87\n0.73\nLUMEN OUTPUT MULTIPLIERS - CCT\n2700K\n3000K\n3500K\n4000K\n5000K\n80CRI\n0.950\n0.966\n1.000\n1.025\n1.101\n"},
-    {"page": 4, "text": "LDN6\nDOWNLIGHTING:  One Lithonia Way  Conyers, GA 30012   Phone:  800-315-4935   Fax: 770-860-3129   www.lithonia.com\t\n© 2014-2017 Acuity Brands Lighting, Inc. All rights reserved.  \nRev. 10/25/17\nLDN6\nADDITIONAL DATA\nCOMPATIBLE 0-10V WALL-MOUNT DIMMERS\nMANUFACTURER\nPART NO.\nPOWER BOOSTER \nAVAILABLE\nLutron®\nDiva® DVTV\nDiva® DVSCTV\nNova T® NTFTV\nNova® NFTV\nLeviton®\nAWSMT-7DW\nCN100\nAWSMG-7DW\nPE300\nAMRMG-7DW\nLeviton Centura Fluorescent Control System\nIllumaTech® IP7 Series\nSynergy®\nISD BC\nRDMFC\nSLD LPCS\nDigital Equinox (DEQ BC)\nDouglas Lighting \nControls\nWPC-5721\nEntertainment Technol-\nogy\nTap Glide TG600FAM120 (120V)\nTap Glide Heatsink TGH1500FAM120 (120V)\nOasis 0A2000FAMU\nHoneywell\nEL7315A1019\nEL7305A1010 \n(optional)\nEL7315A1009\nHUNT Dimming\nPreset slide: PS-010-IV and PS-010-WH\nPreset slide: PS-010-3W-IV and PS-010-3W-WH\nPreset slide, controls FD-010: PS-IFC-010-IV and \nPS-IFC-010-WH-120/277V\nPreset slide, controls FD-010: PS-IFC-010-3W-IV \nand PS-IFC-010-3W-WH-120/277V\nRemote mounted unit: FD-010\nLehigh Electronic \nProducts\nSolitaire\nPBX\nPDM Electrical Products\nWPC-5721\nStarfield Controls\nTR61 with DALI interface port\nRT03 DALInet Router\nWattStopper®\nLS-4 used with LCD-101 and LCD-103\nnLight® Control Accessories: \nOrder as separate catalog number.  \nVisit www.sensorswitch.com/nLight for complete listing of nLight controls.\nWallPod \nstations\nModel number\nOccupancy sensors\nModel number\nOn/Off\nnPODM [color]\nSmall motion 360°, ceiling \n(PIR / dual tech)\nnCM 9 / nCM PDT 9\nOn/Off &  \nRaise/Lower\nnPODM DX [color]\nLarge motion 360°, ceiling \n(PIR / dual tech)\nnCM 10 / nCM PDT 10\nGraphic \nTouchscreen\nnPOD GFX [color]\nWide view (PIR / dual tech)\nnWV 16 / nWV PDT 16\nPhotocell \ncontrols\nModel number\nWall Switch w/ Raise/Lower \n(PIR / dual tech)\nnWSX LV DX / nWSX \nPDT LV DX\nDimming\nnCM ADCX\nCat-5 cables  \n(plenum rated)\nModel number\n10', CAT5 10FT\nCAT5 10FT J1\n15', CAT5 15FT\nCAT5 15FT J1\nA\nA\nB\nB\nA\nnPS 80 EZ\nnCM ADCX\nnCM PDT 9\nnPS 80 EZ\nnPODM 2P DX \nB\nC\nC\nA\nOPTIONAL\nWIRING KEY\nB\nA\nC\nCAT-5e Cable\nLine Power\nLow Voltage\nDimming Wires\nCapable Luminaire\nThis item is an A+ capable luminaire, which has been designed and tested to  \nprovide consistent color appearance and out-of-the-box control compatibility with \nsimple commissioning.\n•\t All configurations of this luminaire meet the Acuity Brands’ specification for \nchromatic consistency\n•\t This luminaire is part of an A+ Certified solution for nLight® control networks when \nordered with drivers marked by a shaded background*\n•\t This luminaire is part of an A+ Certified solution for nLight control networks, \nproviding advanced control functionality at the luminaire level, when selection \nincludes driver and control options marked by a shaded background*\nTo learn more about A+, visit www.acuitybrands.com/aplus.\n*See ordering tree for details\n"}
+    {
+      "page": 1,
+      "text": "LDN6\n6” OPEN and WALLWASH LED \nNon-IC \nNew Construction Downlight\nORDERING INFORMATION\nExample: LDN6 35/15 LO6AR LSS MVOLT EZ10\nDOWNLIGHTING\t\nLDN6\nLead times will vary depending on options selected. Consult with your sales representative.\nAccessories: Order as separate catalog number.\nEAC ISSM 375\nCompact interruptible emergency AC power system\nEAC ISSM 125\nCompact interruptible emergency AC power system\nGRA68 JZ\nOversized trim ring with 8” outside diameter 1\nSCA6\nSloped ceiling adapter. Refer to TECH-SCA for more options.\nNotes \n1\t\nOverall height varies based on lumen package; refer to dimensional chart on page 3.\n2\t\nNot available with finishes.\n3\t\nNot available with emergency options.\n4\t\n120V only. \n5\t\nAvailable with clear (AR) reflector only.\n6\t\nAdd “SD” for self-diagnostic option (i.e. ELSD)\n7\t\nMust specify voltage 120V or 277V.\n8\t\nFixture height is 6.5” for all lumen packages with HAO.\nCatalog  \nNumber\nNotes\nType\nLDN6\nSeries\nColor temperature\nLumens1\nAperture/Trim Color\nFinish\nVoltage\nLDN6\n6\" round\n27/\n2700K \n30/\n3000K\n35/\n3500K\n40/\n4000K\n50/\n5000K\n05\n500 lumens\n10\n1000 lumens\n15\n1500 lumens\n20\n2000 lumens\n25\n2500 lumens\n30\n3000 lumens\n40\n4000 lumens\n50\n5000 lumens\nLO6\nDownlight\nLW6\nWallwash\nAR\nClear\nWR2\nWhite\nBR2\nBlack\nLSS Semi-specular\nLD\nMatte diffuse\nLS\nSpecular\nMVOLT Multi-volt\n120\n120V\n277\n277V\n3473\n347V\nDriver\nOptions\nEZ10 eldoLED 10% 0-10V\nEZ1\neldoLED 1% 0-10V\nSF4\nSingle fuse\nTRW5\nWhite painted flange\nTRBL5\nBlack painted flange\nEL6\nBatterypack with integral test switch\nELR\nBatterypack with remote test switch\nNPS80EZ7\nnLight® dimming pack controls 0-10V eldoLED drivers.\nNPS80EZER7\nnLight® dimming pack controls 0-10V eldoLED drivers. ER \ncontrols fixtures on emergency circuit. \nHAO8\nHigh ambient option\nCP\nChicago Plenum\nWL\nWet location, specify for exterior applications\nRRL__\nRELOC®-ready luminaire connectors enable a simple and consistent \nfactory installed option across all ABL luminaire brands. Refer to RRL \nfor complete nomenclature. Available only in RRLA, RRLB, RRLAE, \nand RRLC12S.\nUSPOM\nUS point of manufacture\nD\nI\nM\nM\nA\nB\nL\nE\nFEATURES & SPECIFICATIONS\nINTENDED USE — Typical applications include corridors, lobbies, conference rooms and private offices. \nCONSTRUCTION — Galvanized steel mounting/plaster frame; galvanized steel junction box with \nbottom-hinged access covers and spring latches. Reflectors are retained by torsion springs.\nVertically adjustable mounting brackets with commercial bar hangers provide 3-3/4” total adjustment. \nTwo combination ½”-3/4” and four ½” knockouts for straight-through conduit runs.  Capacity: 8 (4 in, 4 \nout).  No. 12 AWG conductors, rated for 90°C.\nAccommodates 12”-24” joist spacing.\nPassive cooling thermal management for 25°C standard; high ambient (40°C) option available. Light \nengine and drivers are accessible from above or below ceiling.\nMax ceiling thickness 1-1/2”.\nOPTICS — LEDs are binned to a 3-step SDCM; 80 CRI minimum.\nLED light source concealed with diffusing optical lens. \nGeneral illumination lighting with 1.0 S/MH and 55° cutoff to source and source image.\nSelf-flanged anodized reflectors in specular, semi-specular, or matte diffuse finishes.  Also available in \nwhite and black painted reflectors.\nELECTRICAL — Multi-volt (120-277V, 50/60Hz) eldoLED 0-10V dimming drivers mounted to junction \nbox, 10% or 1% minimum dimming level available.\n0-10V dimming fixture requires two (2) additional low-voltage wires to be pulled.\n70% lumen maintenance at 50,000 hours.\nLISTINGS — Certified to US and Canadian safety standards. Damp location standard (wet location, \ncovered ceiling optional). ENERGY STAR® certified product.\nWARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx\nNote: Actual performance may differ as a result of end-user environment and application.\nAll values are design or typical values, measured under laboratory conditions at 25 °C.\nSpecifications subject to change without notice.\nA+ Capable options indicated  \nby this color background.\n"
+    },
+    {
+      "page": 2,
+      "text": "LDN6\nDOWNLIGHTING:  One Lithonia Way  Conyers, GA 30012   Phone:  800-315-4935   Fax: 770-860-3129   www.lithonia.com\t\n© 2014-2017 Acuity Brands Lighting, Inc. All rights reserved.  \nRev. 10/25/17\nLDN6\nLDN6 35/10 LO6AR, input watts: 12.75, delivered lumens: 1082, LM/W = 84.86, spacing criterion at 0= 1.02, test no. ISF 30716P31.\nLDN6 35/30 LO6AR, input watts: 34.69, delivered lumens: 3033.9, LM/W = 87.45, spacing criterion at 0= 1.02, test no. ISF 30716P22.\nLDN6 35/50 LO6AR, input watts: 55.56, delivered lumens: 4922.1, LM/W = 88.59, spacing criterion at 0= 1.02, test no. ISF 30716P40.\nPHOTOMETRY\n\t\nDistribution Curve\t\nDistribution Data\t\nOutput Data\t\nCoefficient of Utilization\t\nIlluminance Data at 30” Above Floor for \n\t\n\t\n\t\n\t\n\t\na Single Luminaire\n0°\n 20°\n 40°\n 60°\n 80°\n400\n800\nAve\nLumens\n0\n5\n15\n25\n35\n45\n55\n65\n75\n85\n90\n961\n992\n1064\n789\n362\n121\n2\n1\n0\n0\n0\n98\n295\n353\n235\n96\n4\n1\n0\n0\nZone\nLumens % Lamp\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n746.1\n981.1\n1080.9\n1082.0\n0.0\n0.0\n0.0\n0.0\n1082.0\n69.0\n90.7\n99.9\n100.0\n0.0\n0.0\n0.0\n0.0\n*100.0\n*Efficiency\nCoefficients of Utilization\n%\n0\n2\nf\np\npc\n80%\n70%\n50%\npw\n50% 30% 10%\n50% 30% 10%\n50% 30% 10%\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n119\n111\n103\n96\n89\n83\n78\n73\n69\n65\n61\n119\n108\n99\n91\n84\n77\n72\n67\n63\n59\n55\n119\n106\n95\n87\n79\n73\n68\n63\n59\n55\n51\n116\n109\n101\n94\n88\n82\n77\n73\n68\n64\n61\n116\n106\n97\n90\n83\n77\n72\n67\n62\n59\n55\n116\n104\n94\n86\n79\n73\n67\n63\n58\n55\n51\n111\n104\n98\n92\n86\n81\n76\n71\n67\n63\n60\n111\n103\n95\n88\n81\n76\n71\n66\n62\n58\n55\n111\n101\n92\n85\n78\n72\n67\n62\n58\n54\n51\nRCR\n50% beam -\n54.5°\n10% beam -\n82.2°\nMounting\nHeight\nInital FC\nCenter\nBeam\nDiameter\nFC\nDiameter\nFC\n8.0\n10.0\n12.0\n14.0\n16.0\n31.8\n17.1\n10.6\n7.3\n5.3\n5.7\n7.7\n9.8\n11.8\n13.9\n15.9\n8.5\n5.3\n3.6\n2.6\n9.6\n13.1\n16.6\n20.1\n23.6\n3.2\n1.7\n1.1\n0.7\n0.5\n0°\n 20°\n 40°\n 60°\n 80°\n1200\n2400\nAve\nLumens\n0\n5\n15\n25\n35\n45\n55\n65\n75\n85\n90\n2693\n2782\n2984\n2212\n1014\n339\n4\n2\n1\n0\n0\n274\n827\n991\n659\n268\n12\n2\n1\n0\nZone\nLumens % Lamp\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n2092.2\n2751.0\n3030.8\n3033.9\n0.0\n0.0\n0.0\n0.0\n3033.9\n69.0\n90.7\n99.9\n100.0\n0.0\n0.0\n0.0\n0.0\n*100.0\n*Efficiency\nCoefficients of Utilization\n%\n0\n2\nf\np\npc\n80%\n70%\n50%\npw\n50% 30% 10%\n50% 30% 10%\n50% 30% 10%\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n119\n111\n103\n96\n89\n83\n78\n73\n69\n65\n61\n119\n108\n99\n91\n84\n77\n72\n67\n63\n59\n55\n119\n106\n95\n87\n79\n73\n68\n63\n59\n55\n51\n116\n109\n101\n94\n88\n82\n77\n73\n68\n64\n61\n116\n106\n97\n90\n83\n77\n72\n67\n62\n59\n55\n116\n104\n94\n86\n79\n73\n67\n63\n58\n55\n51\n111\n104\n98\n92\n86\n81\n76\n71\n67\n63\n60\n111\n103\n95\n88\n81\n76\n71\n66\n62\n58\n55\n111\n101\n92\n85\n78\n72\n67\n62\n58\n54\n51\nRCR\n50% beam -\n54.5°\n10% beam -\n82.2°\nMounting\nHeight\nInital FC\nCenter\nBeam\nDiameter\nFC\nDiameter\nFC\n8.0\n10.0\n12.0\n14.0\n16.0\n89.0\n47.9\n29.8\n20.4\n14.8\n5.7\n7.7\n9.8\n11.8\n13.9\n44.5\n23.9\n14.9\n10.2\n7.4\n9.6\n13.1\n16.6\n20.1\n23.6\n8.9\n4.8\n3.0\n2.0\n1.5\n0°\n 20°\n 40°\n 60°\n 80°\n1800\n3600\nAve\nLumens\n0\n5\n15\n25\n35\n45\n55\n65\n75\n85\n90\n4370\n4513\n4841\n3589\n1645\n550\n7\n3\n2\n0\n0\n445\n1341\n1608\n1069\n435\n19\n3\n2\n0\nZone\nLumens % Lamp\n0° - 30°\n0° - 40°\n0° - 60°\n0° - 90°\n90° - 120°\n90° - 130°\n90° - 150°\n90° - 180°\n0° - 180°\n3394.2\n4463.2\n4917.1\n4922.1\n0.0\n0.0\n0.0\n0.0\n4922.1\n69.0\n90.7\n99.9\n100.0\n0.0\n0.0\n0.0\n0.0\n*100.0\n*Efficiency\nCoefficients of Utilization\n%\n0\n2\nf\np\npc\n80%\n70%\n50%\npw\n50% 30% 10%\n50% 30% 10%\n50% 30% 10%\n0\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n119\n111\n103\n96\n89\n83\n78\n73\n69\n65\n61\n119\n108\n99\n91\n84\n77\n72\n67\n63\n59\n55\n119\n106\n95\n87\n79\n73\n68\n63\n59\n55\n51\n116\n109\n101\n94\n88\n82\n77\n73\n68\n64\n61\n116\n106\n97\n90\n83\n77\n72\n67\n62\n59\n55\n116\n104\n94\n86\n79\n73\n67\n63\n58\n55\n51\n111\n104\n98\n92\n86\n81\n76\n71\n67\n63\n60\n111\n103\n95\n88\n81\n76\n71\n66\n62\n58\n55\n111\n101\n92\n85\n78\n72\n67\n62\n58\n54\n51\nRCR\n50% beam -\n54.5°\n10% beam -\n82.2°\nMounting\nHeight\nInital FC\nCenter\nBeam\nDiameter\nFC\nDiameter\nFC\n8.0\n10.0\n12.0\n14.0\n16.0\n144.4\n77.7\n48.4\n33.0\n24.0\n5.7\n7.7\n9.8\n11.8\n13.9\n72.2\n38.8\n24.2\n16.5\n12.0\n9.6\n13.1\n16.6\n20.1\n23.6\n14.4\n7.8\n4.8\n3.3\n2.4\n"
+    },
+    {
+      "page": 3,
+      "text": "LDN6\nDOWNLIGHTING:  One Lithonia Way  Conyers, GA 30012   Phone:  800-315-4935   Fax: 770-860-3129   www.lithonia.com\t\n© 2014-2017 Acuity Brands Lighting, Inc. All rights reserved.  \nRev. 10/25/17\nLDN6\nNotes \n•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.\n•\t CRI: 80 typical.\nLDN6 1500 LUMEN \nLDN6 CP\nLDN6 3000 LUMEN\nLDN6 1500 EL-ELR\nLDN6 5000 LUMEN\n11 [27.9]\n5 1\n16 [12.9]\n10 5\n16 [26.2]\n511\n16 [14.5]\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n11 [27.9]\n57\n8 [14.9]\n10 5\n16 [26.2]\n61\n2 [16.5]\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n11 [27.9]\n57\n8 [14.9]\n10 5\n16 [26.2]\n61\n2 [16.5]\nMarked Spacing: 24 x 24 x 10\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n151\n16 [38.2]\n73\n4 [19.7]\n81\n4 [20.9]\n111\n2 [29.3]\n133\n4 [34.9]\nMarked Spacing above 3000 lumen: 24 x 24 x 10\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n1915\n16 [50.6]\n57\n8 [14.9]\n191\n8 [48.5]\n61\n2 [16.5]\nMarked Spacing above 3000 lumen: 24 x 24 x 10\nAperture: 6-1/4 (15.9)\nCeiling Opening: 7-1/8 (18.1)\nOverlap trim: 7-1/2 (19.1)\n* All dimensions are inches (centimeters) unless otherwise noted.\nLDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3\n2000\n2023.0\n22.6\n89.5\n2500\n2529.5\n27.1\n93.3\n3000\n3034.0\n34.7\n87.4\n4000\n3977.5\n44.1\n90.2\n5000\n4922.2\n55.5\n88.7\nEL/ELR AVAILABILITY/COMPATIBILITY - INITIAL LUMENS\nLumen \npackage\nWatts\nInitial lumens \nEL/ELR\nEmergency \nLED driver\n600\n12\n500\nPS1050\n1000\n18\n575\nPS1050\n1500\n26\n640\nPS1050\n2000\n35\n690\nPS1050\nLUMEN OUTPUT MULTIPLIERS - FINISH\nClear (AR)\nWhite (WR)\nBlack (BR)\nSpecular (LS)\n1.0\nN/A\nN/A\nSemi-specular (LSS)\n0.950\nN/A\nN/A\nMatte diffuse (LD)\n0.85\nN/A\nN/A\nPainted\nN/A\n0.87\n0.73\nLUMEN OUTPUT MULTIPLIERS - CCT\n2700K\n3000K\n3500K\n4000K\n5000K\n80CRI\n0.950\n0.966\n1.000\n1.025\n1.101\n"
+    },
+    {
+      "page": 4,
+      "text": "LDN6\nDOWNLIGHTING:  One Lithonia Way  Conyers, GA 30012   Phone:  800-315-4935   Fax: 770-860-3129   www.lithonia.com\t\n© 2014-2017 Acuity Brands Lighting, Inc. All rights reserved.  \nRev. 10/25/17\nLDN6\nADDITIONAL DATA\nCOMPATIBLE 0-10V WALL-MOUNT DIMMERS\nMANUFACTURER\nPART NO.\nPOWER BOOSTER \nAVAILABLE\nLutron®\nDiva® DVTV\nDiva® DVSCTV\nNova T® NTFTV\nNova® NFTV\nLeviton®\nAWSMT-7DW\nCN100\nAWSMG-7DW\nPE300\nAMRMG-7DW\nLeviton Centura Fluorescent Control System\nIllumaTech® IP7 Series\nSynergy®\nISD BC\nRDMFC\nSLD LPCS\nDigital Equinox (DEQ BC)\nDouglas Lighting \nControls\nWPC-5721\nEntertainment Technol-\nogy\nTap Glide TG600FAM120 (120V)\nTap Glide Heatsink TGH1500FAM120 (120V)\nOasis 0A2000FAMU\nHoneywell\nEL7315A1019\nEL7305A1010 \n(optional)\nEL7315A1009\nHUNT Dimming\nPreset slide: PS-010-IV and PS-010-WH\nPreset slide: PS-010-3W-IV and PS-010-3W-WH\nPreset slide, controls FD-010: PS-IFC-010-IV and \nPS-IFC-010-WH-120/277V\nPreset slide, controls FD-010: PS-IFC-010-3W-IV \nand PS-IFC-010-3W-WH-120/277V\nRemote mounted unit: FD-010\nLehigh Electronic \nProducts\nSolitaire\nPBX\nPDM Electrical Products\nWPC-5721\nStarfield Controls\nTR61 with DALI interface port\nRT03 DALInet Router\nWattStopper®\nLS-4 used with LCD-101 and LCD-103\nnLight® Control Accessories: \nOrder as separate catalog number.  \nVisit www.sensorswitch.com/nLight for complete listing of nLight controls.\nWallPod \nstations\nModel number\nOccupancy sensors\nModel number\nOn/Off\nnPODM [color]\nSmall motion 360°, ceiling \n(PIR / dual tech)\nnCM 9 / nCM PDT 9\nOn/Off &  \nRaise/Lower\nnPODM DX [color]\nLarge motion 360°, ceiling \n(PIR / dual tech)\nnCM 10 / nCM PDT 10\nGraphic \nTouchscreen\nnPOD GFX [color]\nWide view (PIR / dual tech)\nnWV 16 / nWV PDT 16\nPhotocell \ncontrols\nModel number\nWall Switch w/ Raise/Lower \n(PIR / dual tech)\nnWSX LV DX / nWSX \nPDT LV DX\nDimming\nnCM ADCX\nCat-5 cables  \n(plenum rated)\nModel number\n10', CAT5 10FT\nCAT5 10FT J1\n15', CAT5 15FT\nCAT5 15FT J1\nA\nA\nB\nB\nA\nnPS 80 EZ\nnCM ADCX\nnCM PDT 9\nnPS 80 EZ\nnPODM 2P DX \nB\nC\nC\nA\nOPTIONAL\nWIRING KEY\nB\nA\nC\nCAT-5e Cable\nLine Power\nLow Voltage\nDimming Wires\nCapable Luminaire\nThis item is an A+ capable luminaire, which has been designed and tested to  \nprovide consistent color appearance and out-of-the-box control compatibility with \nsimple commissioning.\n•\t All configurations of this luminaire meet the Acuity Brands’ specification for \nchromatic consistency\n•\t This luminaire is part of an A+ Certified solution for nLight® control networks when \nordered with drivers marked by a shaded background*\n•\t This luminaire is part of an A+ Certified solution for nLight control networks, \nproviding advanced control functionality at the luminaire level, when selection \nincludes driver and control options marked by a shaded background*\nTo learn more about A+, visit www.acuitybrands.com/aplus.\n*See ordering tree for details\n"
+    }
   ],
-  "triage": {"pages": [{"page": 1, "kind": "product_data"}, {"page": 2, "kind": "product_data"}, {"page": 3, "kind": "product_data"}, {"page": 4, "kind": "product_data"}]},
+  "triage": {
+    "pages": [
+      {
+        "page": 1,
+        "kind": "product_data"
+      },
+      {
+        "page": 2,
+        "kind": "product_data"
+      },
+      {
+        "page": 3,
+        "kind": "product_data"
+      },
+      {
+        "page": 4,
+        "kind": "product_data"
+      }
+    ]
+  },
   "claims": {
     "product": "LDN6 LED downlight",
     "manufacturer": "Lithonia Lighting (Acuity Brands)",
     "model": "LDN6 35/15",
     "document_revision": "Rev. 10/25/17",
     "claims": [
-      {"id": "k1", "product": "LDN6", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "cri", "value": 80, "page": 1, "quote": "80 CRI minimum"},
-      {"id": "k2", "product": "LDN6", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "dim_min_percent", "value": 1, "unit": "%", "page": 1, "quote": "eldoLED 1% 0-10V"},
-      {"id": "k3", "product": "LDN6", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "warranty_years", "value": 5, "unit": "yr", "page": 1, "quote": "WARRANTY — 5-year limited warranty."},
-      {"id": "k4", "product": "LDN6", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "lumens", "value": 1606.0, "unit": "lm", "page": 3, "quote": "1606.0"},
-      {"id": "k5", "product": "LDN6", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "watts", "value": 20.5, "unit": "W", "page": 3, "quote": "20.5"},
-      {"id": "k6", "product": "LDN6", "manufacturer": "Lithonia Lighting (Acuity Brands)", "property": "efficacy_lm_per_w", "value": 78.3, "unit": "lm/W", "page": 3, "quote": "78.3"}
+      {
+        "id": "k1",
+        "product": "LDN6",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "cri",
+        "value": 80,
+        "page": 1,
+        "quote": "80 CRI minimum"
+      },
+      {
+        "id": "k2",
+        "product": "LDN6",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "dim_min_percent",
+        "value": 1,
+        "unit": "%",
+        "page": 1,
+        "quote": "eldoLED 1% 0-10V"
+      },
+      {
+        "id": "k3",
+        "product": "LDN6",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "warranty_years",
+        "value": 5,
+        "unit": "yr",
+        "page": 1,
+        "quote": "WARRANTY — 5-year limited warranty."
+      },
+      {
+        "id": "k4",
+        "product": "LDN6",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "lumens",
+        "value": 1606.0,
+        "unit": "lm",
+        "page": 3,
+        "quote": "1606.0"
+      },
+      {
+        "id": "k5",
+        "product": "LDN6",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "watts",
+        "value": 20.5,
+        "unit": "W",
+        "page": 3,
+        "quote": "20.5"
+      },
+      {
+        "id": "k6",
+        "product": "LDN6",
+        "manufacturer": "Lithonia Lighting (Acuity Brands)",
+        "property": "efficacy_lm_per_w",
+        "value": 78.3,
+        "unit": "lm/W",
+        "page": 3,
+        "quote": "78.3"
+      }
     ]
   },
   "web": {
     "search": [
-      {"url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf", "title": "LDN6 spec sheet Rev. 05/03/22 (agency copy)"}
+      {
+        "url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf",
+        "title": "LDN6 spec sheet Rev. 05/03/22 (agency copy)"
+      }
     ],
     "extract": {
       "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf": "LDN6 6” OPEN and WALLWASH LED. OPTICS — LEDs are binned to a 3-step SDCM; 80 CRI minimum. 90 CRI optional. 70% lumen maintenance at 60,000 hours. WARRANTY — 5-year limited warranty. Rev. 05/03/22 • CRI: 80 typical. LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4 2000 2006 22.5 89.1"
@@ -33,17 +120,43 @@
     "status": "active",
     "current_revision": "Rev. 05/03/22",
     "current_values": [
-      {"property": "lumens", "value": 1514, "unit": "lm"},
-      {"property": "watts", "value": 17.5, "unit": "W"},
-      {"property": "efficacy_lm_per_w", "value": 86.4, "unit": "lm/W"},
-      {"property": "cri", "value": 80}
+      {
+        "property": "lumens",
+        "value": 1514,
+        "unit": "lm",
+        "quote": "1500 1514 17.5 86.4"
+      },
+      {
+        "property": "watts",
+        "value": 17.5,
+        "unit": "W",
+        "quote": "1500 1514 17.5 86.4"
+      },
+      {
+        "property": "efficacy_lm_per_w",
+        "value": 86.4,
+        "unit": "lm/W",
+        "quote": "1500 1514 17.5 86.4"
+      },
+      {
+        "property": "cri",
+        "value": 80,
+        "quote": "80 CRI minimum"
+      }
     ],
-    "source_urls": ["https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"]
+    "source_urls": [
+      "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"
+    ]
   },
   "report": {
     "summary": "The spec sheet in this package is from 2017. The current version lists different light output, power and efficiency for the same 1500 lumen fixture.",
     "note_to_subcontractor": "Please resubmit with the current LDN6 spec sheet and include the DLC listing.",
-    "finding_titles": {"currency-outdated": "Spec sheet is from 2017", "spec-lt-dlc": "DLC listing isn't stated in the package"},
-    "why_it_matters": {"currency-outdated": "Power and efficiency feed the lighting energy calculations, so old numbers can make the energy compliance paperwork wrong."}
+    "finding_titles": {
+      "currency-outdated": "Spec sheet is from 2017",
+      "spec-lt-dlc": "DLC listing isn't stated in the package"
+    },
+    "why_it_matters": {
+      "currency-outdated": "Power and efficiency feed the lighting energy calculations, so old numbers can make the energy compliance paperwork wrong."
+    }
   }
 }

@@ -37,8 +37,8 @@ export interface Finding {
 }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
 export interface FixCheck { label: string; ok: boolean | null; note: string }
-export interface FixCandidate { name: string; source_url: string | null; checks: FixCheck[]; passes: boolean; placeholder: boolean }
-export interface Fix { head: string; candidates: FixCandidate[]; suggest: string }
+export interface FixCandidate { name: string; source_url: string; checks: FixCheck[]; passes: boolean }
+export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
 export interface Compare {
@@ -89,7 +89,7 @@ export async function getResult(runId: string, caseId: string): Promise<Result> 
   return (await fetch(`/api/runs/${runId}/results/${caseId}`)).json()
 }
 
-export type Tone = 'red' | 'amber' | 'gray' | 'green'
+export type Tone = 'red' | 'amber' | 'blue' | 'green'
 export interface Box { x0: number; y0: number; x1: number; y1: number }
 // Where one claim behind a finding sits: file and page in data/raw, boxes as fractions of the page.
 export interface Mark {
@@ -126,12 +126,12 @@ export interface Ratio { n: number; of: number }
 export interface ScoreRow {
   id: string; title: string; expected: Decision; expected_problems: string[]; error?: boolean
   decision?: Decision; found_problems?: string[]; right_call?: boolean; caught?: number; false_alarm?: boolean
-  fix?: { suggest: string | null; passes: boolean; placeholder: boolean; candidates: number } | null
+  fix?: { suggest: string | null; passes: boolean; candidates: number } | null
   time_ms?: number; cost_usd?: number; web_credits?: number
 }
 export interface Scores {
   generated_at: string; mode: string; run_id: string; models: Record<string, string>
-  right_call: Ratio; caught: Ratio; false_alarms: Ratio; fixes_passing: Ratio & { placeholders: number }
+  right_call: Ratio; caught: Ratio; false_alarms: Ratio; fixes_passing: Ratio
   time_ms_per_item: number; cost_usd_per_item: number; rows: ScoreRow[]
 }
 
@@ -157,6 +157,6 @@ export const DECISION_LABEL: Record<Decision, string> = {
 }
 export const DECISION_COLOR: Record<Decision, string> = {
   approve: '#2e9e68',
-  approve_with_note: '#c98a1b',
+  approve_with_note: '#7fa7d9', // FYI blue: approved, with a note
   send_back: '#d9534f',
 }

@@ -65,7 +65,7 @@ def scores(run, case_ids: list[str]) -> dict:
             "caught": len(want & got), "false_alarm": not want and bool(got & {"spec", "currency", "validity", "status", "completeness"}),
             "fix": None if exp["decision"] != "send_back" else {
                 "suggest": cand.name if cand else None, "passes": cand is not None,
-                "placeholder": bool(cand and cand.placeholder), "candidates": len(fix.candidates) if fix else 0},
+                "candidates": len(fix.candidates) if fix else 0},
             "time_ms": res.duration_ms, "model_cost_usd": round(res.cost_usd, 6), "web_credits": res.web_credits,
             "cost_usd": round(item_cost(res), 6),
         })
@@ -79,8 +79,7 @@ def scores(run, case_ids: list[str]) -> dict:
         "caught": {"n": sum(r["caught"] for r in ok), "of": sum(len(cases[c]["expected"]["problems"]) for c in case_ids)},
         "false_alarms": {"n": sum(r["false_alarm"] for r in ok),
                          "of": sum(not cases[c]["expected"]["problems"] for c in case_ids)},
-        "fixes_passing": {"n": sum(f["passes"] for f in fixes), "of": sum(cases[c]["expected"]["decision"] == "send_back" for c in case_ids),
-                          "placeholders": sum(f["placeholder"] for f in fixes)},
+        "fixes_passing": {"n": sum(f["passes"] for f in fixes), "of": sum(cases[c]["expected"]["decision"] == "send_back" for c in case_ids)},
         "time_ms_per_item": round(sum(r["time_ms"] for r in ok) / n),
         "cost_usd_per_item": round(sum(r["cost_usd"] for r in ok) / n, 6),
         "rows": rows,
@@ -101,7 +100,7 @@ async def main(case_ids: list[str]) -> int:
         if r.get("error"):
             print(f"{r['id']:<5} ERROR  (see runs/{run.id}/events.jsonl)")
             continue
-        fix = "-" if r["fix"] is None else ("pass" + ("*" if r["fix"]["placeholder"] else "") if r["fix"]["passes"] else "none")
+        fix = "-" if r["fix"] is None else ("pass" if r["fix"]["passes"] else "none")
         mark = "✓" if r["right_call"] and r["caught"] == len(r["expected_problems"]) else "✗"
         print(f"{r['id']:<5} {r['expected']:<18} {r['decision']:<18} {','.join(r['expected_problems']) or '-':<22} "
               f"{','.join(r['found_problems']) or '-':<26} {fix:<5} {r['time_ms']:>6} {r['cost_usd']:>8.4f} {r['web_credits']:>7.0f} {mark}")
@@ -111,7 +110,7 @@ async def main(case_ids: list[str]) -> int:
     print(f"  right call                      {rc['n']} of {rc['of']}")
     print(f"  planted problems caught         {ca['n']} of {ca['of']}")
     print(f"  clean packages wrongly flagged  {fa['n']} of {fa['of']}")
-    print(f"  fixes that pass the spec        {fx['n']} of {fx['of']}" + (f"   (* {fx['placeholders']} placeholder)" if fx["placeholders"] else ""))
+    print(f"  fixes that pass the spec        {fx['n']} of {fx['of']}")
     print(f"  average time per submittal      {s['time_ms_per_item'] / 1000:.1f} s")
     print(f"  cost per submittal (model+web)  ${s['cost_usd_per_item']:.4f}" + ("   (mock: model prices are placeholders)" if not settings.live else ""))
 
@@ -119,7 +118,10 @@ async def main(case_ids: list[str]) -> int:
         settings.scores_file.parent.mkdir(parents=True, exist_ok=True)
         settings.scores_file.write_text(json.dumps(s, indent=2))
         print(f"\nwrote {settings.scores_file.relative_to(ROOT)}")
-    return 0 if rc["n"] == rc["of"] and ca["n"] == ca["of"] and fa["n"] == 0 and fx["n"] == fx["of"] else 1
+    # Fails on: a wrong call, a missed problem, a false alarm, or a fix marked "Passes" with any check not passed.
+    bad_fix = [c for r in run.results.values() for f in r.findings if f.fix for c in f.fix.candidates
+               if c.passes and not all(k.ok is True for k in c.checks)]
+    return 0 if rc["n"] == rc["of"] and ca["n"] == ca["of"] and fa["n"] == 0 and not bad_fix else 1
 
 
 if __name__ == "__main__":

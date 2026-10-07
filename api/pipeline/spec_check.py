@@ -117,19 +117,19 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             )
 
         if r.applies_to and roles and not set(r.applies_to) & roles:
-            findings.append(make("not_applicable", r.text, f"Applies to {', '.join(r.applies_to)} only."))
+            findings.append(make("not_applicable", _label(r.property), f"Applies to {', '.join(r.applies_to)} only."))
             continue
 
         if r.operator == "exists":
-            findings.append(make("pass", r.text, right="Included") if found
-                            else make("fail", f"Missing: {r.text}", "Not found in the package.", right="Not found"))
+            findings.append(make("pass", _label(r.property), right="Included") if found
+                            else make("fail", f"Missing: {_label(r.property)}", "Not found in the package.", right="Not found"))
             continue
 
         if r.operator == "eq_ref" and (claim is None or not by_prop.get(str(r.value))):
             continue  # rule only applies when both values are present (e.g. T = F applies to systems, not sealant sheets)
 
         if claim is None:
-            findings.append(make("unverified", f"Not stated in the package: {r.text}", severity="minor"))
+            findings.append(make("unverified", f"Not stated: {_label(r.property)}", r.text, severity="minor"))
             continue
 
         ok: Optional[bool] = None
@@ -161,9 +161,9 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:
-            findings.append(make("unverified", f"Could not compare: {r.text}", "Values were not comparable.", severity="minor", left=left))
+            findings.append(make("unverified", f"Couldn't compare: {_label(r.property)}", "Values were not comparable.", severity="minor", left=left))
         elif ok:
-            findings.append(make("pass", r.text, detail, left=left))
+            findings.append(make("pass", _label(r.property), detail, left=left))
         else:
-            findings.append(make("fail", f"Does not meet: {r.text}", detail, left=left))
+            findings.append(make("fail", f"Does not meet: {_label(r.property)}", detail, left=left))
     return findings

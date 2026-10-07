@@ -12,9 +12,10 @@ from urllib.parse import urlparse
 from ..llm import router
 from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Usage, VerifyOut
 from ..web import WebClient, snapshot
+from .extract import quoted
 
 LISTING_BODIES = ("ul.com", "intertek.com", "icc-es.org", "designlights.org", "energystar.gov")
-TIER_RANK = {"manufacturer": 0, "listing_body": 1, "agency": 2, "distributor": 3, "archive": 4, "other": 5}
+TIER_RANK = {"manufacturer": 0, "listing_body": 1, "distributor": 2, "agency": 3, "archive": 4, "other": 5}
 
 LABELS = {
     "f_rating_hr": "Fire rating (F)",
@@ -33,6 +34,8 @@ LABELS = {
     "input_watts_120v": "Power at 120 V",
     "input_watts_277v": "Power at 277 V",
     "standards": "Test standards",
+    "dlc_listed": "DLC listing",
+    "penetrant_types": "Pipe types covered",
     "document_revision": "Data sheet version",
 }
 
@@ -97,8 +100,9 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
                 "role": "user",
                 "content": (
                     "Compare the submitted product data with these current web sources. "
-                    "Report product status, the current document revision, and the CURRENT value for each submitted property "
-                    "you can find. Use the same property names. Only use values stated in the sources.\n\n"
+                    "Report product status, the current document revision exactly as printed, and the CURRENT value for each "
+                    "submitted property you can find, each with the exact quote from the source that states it. "
+                    "Use the same property names. Only use values stated in the sources.\n\n"
                     f"SUBMITTED:\n{json.dumps(submitted_view)}\n\nSOURCES:\n{json.dumps(sources)}"
                 ),
             }
@@ -111,7 +115,18 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
         for p in pages
     ]
 
-    # 4. Diff in code.
+    # 4. Keep only what the sources actually say: every value, revision and status needs a quote found on a fetched page.
+    def source_of(quote):
+        return next((p["url"] for p in pages if quoted(quote, p["raw_content"])), None)
+
+    if out.current_revision and not source_of(out.current_revision):
+        out.current_revision = None
+    if out.status == "discontinued" and not source_of(out.status_quote):
+        out.status = "unknown"
+    confirmed = {pv.property: url for pv in out.current_values if (url := source_of(pv.quote))}
+    out.current_values = [pv for pv in out.current_values if pv.property in confirmed]
+
+    # 5. Diff in code.
     claims = {c.property: c for c in submitted.claims}
     rows: list[CompareRow] = []
     changed: list[CompareRow] = []
@@ -125,6 +140,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             submitted=_show(c.value, c.unit),
             current=_show(pv.value, pv.unit),
             changed=not _same(c.value, pv.value),
+            source_url=confirmed[pv.property], quote=pv.quote,
         )
         rows.append(row)
         if row.changed:
@@ -164,11 +180,11 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value=now, verdict="changed"),
             evidence=evidence, decided_by="tavily + super",
         ))
-    if out.status == "unknown" and not pages:
+    if not findings and not (out.current_revision or rows):  # nothing quoted from a source: can't call it current
         findings.append(Finding(
             id="currency-unverified", check="currency", verdict="unverified", severity="minor",
-            title="Could not find the manufacturer's current documents",
-            detail="No usable source was found; check manually.", decided_by="tavily",
+            title="Couldn't confirm the current documents",
+            detail="No source quoted a revision or a value; check manually.", decided_by="tavily",
             compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value="Not found", verdict="fail"),
         ))
     if not findings:

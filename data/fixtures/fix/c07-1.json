@@ -94,17 +94,20 @@
       {
         "property": "lumens",
         "value": 4197,
-        "unit": "lm"
+        "unit": "lm",
+        "quote": "4197 137.81 30.5"
       },
       {
         "property": "efficacy_lm_per_w",
         "value": 137.81,
-        "unit": "lm/W"
+        "unit": "lm/W",
+        "quote": "4197 137.81 30.5"
       },
       {
         "property": "watts",
         "value": 30.5,
-        "unit": "W"
+        "unit": "W",
+        "quote": "4197 137.81 30.5"
       }
     ],
     "source_urls": [
