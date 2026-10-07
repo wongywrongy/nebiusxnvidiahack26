@@ -1,8 +1,12 @@
 {
   "project": "Elementary School Modernization (sample)",
+  "_note": "number, product and from (the sub) are sample log data. watch: an item already approved and re-checked nightly; c07 is the approved troffer that was later discontinued.",
   "cases": [
     {
       "id": "c01",
+      "number": "07 84 00-01",
+      "product": "STI SpecSeal LCI",
+      "from": "Coastline Firestop",
       "title": "Firestop sealant, through-penetrations",
       "section": "07 84 00",
       "submittal": [
@@ -16,6 +20,9 @@
     },
     {
       "id": "c02",
+      "number": "07 84 00-02",
+      "product": "3M C-AJ-2738",
+      "from": "Coastline Firestop",
       "title": "Firestop system, floor penetration",
       "section": "07 84 00",
       "submittal": [
@@ -26,6 +33,9 @@
     },
     {
       "id": "c03",
+      "number": "07 84 00-03",
+      "product": "3M IC 15WB+",
+      "from": "Coastline Firestop",
       "title": "Firestop sealant, cable penetrations",
       "section": "07 84 00",
       "submittal": [
@@ -40,6 +50,9 @@
     },
     {
       "id": "c04",
+      "number": "07 84 00-04",
+      "product": "Hilti W-L-2078",
+      "from": "Coastline Firestop",
       "title": "Firestop system, steel pipe through gypsum wall",
       "section": "07 84 00",
       "submittal": [
@@ -63,6 +76,9 @@
     },
     {
       "id": "c05",
+      "number": "26 51 00-01",
+      "product": "Lithonia BLT 2x4",
+      "from": "Northgate Electric",
       "title": "LED troffer, classrooms",
       "section": "26 51 00",
       "submittal": [
@@ -73,6 +89,9 @@
     },
     {
       "id": "c06",
+      "number": "26 51 00-02",
+      "product": "Lithonia LDN6",
+      "from": "Northgate Electric",
       "title": "LED downlight, corridors",
       "section": "26 51 00",
       "submittal": [
@@ -87,6 +106,10 @@
     },
     {
       "id": "c07",
+      "number": "26 51 00-03",
+      "product": "Lithonia 2TL4",
+      "from": "Northgate Electric",
+      "watch": {"approved": "2024-03-12"},
       "title": "LED troffer, offices",
       "section": "26 51 00",
       "submittal": [
@@ -100,6 +123,9 @@
     },
     {
       "id": "c08",
+      "number": "26 51 00-04",
+      "product": "Lithonia LQM",
+      "from": "Northgate Electric",
       "title": "Exit sign",
       "section": "26 51 00",
       "submittal": [
