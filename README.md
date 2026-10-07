@@ -4,7 +4,7 @@ Checks construction submittals against the project spec **and** against the manu
 
 Built for the Nebius x NVIDIA Global AI Hackathon (Best Apps and Agents track).
 
-- **Models:** NVIDIA Nemotron 3 (Nano, Super, Ultra) on Nebius Token Factory
+- **Models:** NVIDIA Nemotron 3 (Nano, Super) on Nebius Token Factory
 - **Web verification:** Tavily (Search, Map, Extract)
 - **Stack:** Python + FastAPI, React + Vite, one container
 
@@ -26,7 +26,11 @@ Mock mode replays recorded model and web responses from `data/fixtures/`, so the
 cp .env.example .env              # add NEBIUS_API_KEY and TAVILY_API_KEY
 python scripts/fetch_docs.py      # download the public test documents into data/raw/
 SPECCHECK_MODE=live python scripts/eval.py --case c03
+python scripts/record_live.py     # all 8 cases live, saved to runs/recorded/<run_id>/ (commit it)
 ```
+
+The app replays the newest recording in `runs/recorded/` on open, labeled "Recorded live run <date>", and the
+Results page falls back to its scores.
 
 Every live response is cached in `.cache/`, so re-running a case does not spend credits.
 Spend is capped per run (USD), per item and per day (Tavily credits); a cap marks that step "Couldn't confirm".
@@ -55,6 +59,7 @@ data/
 scripts/
   fetch_docs.py    download test documents and record sha256
   eval.py          scoreboard: right call, problems caught, false alarms, fixes that pass, time, cost
+  record_live.py   live run of all cases, recorded for the public demo
 web/               React + Vite app
 tests/             pytest
 ```
@@ -77,7 +82,7 @@ state CRI, dimming, warranty or DLC.
 - `POST /api/uploads?name=x.pdf` with the PDF as the body adds it as one more item, checked against the project specs
   on its own run. In mock mode, a PDF that matches a test case (by sha256) replays that case's fixture; any other PDF
   runs with no recorded answers, so every requirement shows as not stated.
-- `GET /api/scores` serves `runs/scores.json` from `scripts/eval.py`; the Results page shows it, and its
+- `GET /api/scores` serves `runs/scores.json` from `scripts/eval.py` (else the newest recording's); the Results page shows it, and its
   "Run the scoring set" button (`POST /api/scores/run`) reruns all 8 cases and rewrites it.
 - Watchlist: cases with `watch` in `cases.json` are already approved. "Run nightly watch" re-checks them; c07 (the
   approved troffer, since discontinued) opens the Alert screen with its replacement.
@@ -92,7 +97,6 @@ state CRI, dimming, warranty or DLC.
 
 Models read; code decides. Every claim needs a quote found on its page, and every web value, revision or status needs a
 quote found on a fetched page, or it is dropped. A value nothing confirms is "couldn't confirm": a note, never a send-back.
-Ultra is not called: it's reserved for when sources disagree, which isn't built yet.
 
 ## Test documents
 

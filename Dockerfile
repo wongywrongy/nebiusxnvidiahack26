@@ -14,6 +14,8 @@ RUN pip install --no-cache-dir -r api/requirements.txt
 COPY api/ api/
 COPY data/cases/ data/cases/
 COPY data/fixtures/ data/fixtures/
+# Recorded live runs (scripts/record_live.py): the public demo replays the newest.
+COPY runs/recorded/ runs/recorded/
 COPY --from=web /web/dist web/dist
 ENV SPECCHECK_MODE=mock MOCK_STAGE_DELAY_MS=700
 EXPOSE 8000

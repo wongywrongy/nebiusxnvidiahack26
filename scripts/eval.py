@@ -51,7 +51,7 @@ async def main(case_ids: list[str]) -> int:
     print(f"  clean packages wrongly flagged  {fa['n']} of {fa['of']}")
     print(f"  fixes that pass the spec        {fx['n']} of {fx['of']}")
     print(f"  average time per submittal      {s['time_ms_per_item'] / 1000:.1f} s")
-    print(f"  cost per submittal (model+web)  ${s['cost_usd_per_item']:.4f}" + ("   (mock: model prices are placeholders)" if not settings.live else ""))
+    print(f"  cost per submittal (model+web)  ${s['cost_usd_per_item']:.4f}" + ("   (mock: estimated token counts)" if not settings.live else ""))
 
     if sorted(case_ids) == sorted(all_cases()):
         settings.scores_file.parent.mkdir(parents=True, exist_ok=True)

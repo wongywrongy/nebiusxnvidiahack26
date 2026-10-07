@@ -3,14 +3,18 @@
 A run writes to runs/<run_id>/:
   events.jsonl         every event, in order, with timing (this is the replay recording)
   results/<case>.json  the final result for each case
+Live runs recorded for the public demo (scripts/record_live.py) are committed under runs/recorded/<run_id>/.
 """
 
 from __future__ import annotations
 
 import asyncio
 import json
+import re
+import shutil
 import time
 import uuid
+from pathlib import Path
 from typing import AsyncIterator, Optional
 
 from ..config import FORCE_MOCK, redact, settings
@@ -176,28 +180,48 @@ async def execute(run: Run) -> Run:
 
 async def replay(run: Run, source_run_id: str, speed: float = 1.0) -> Run:
     """Re-emit a recorded run's events with their original timing."""
-    src = settings.runs_dir / source_run_id
+    src = run_dir(source_run_id)
     events = [Event.model_validate_json(line) for line in (src / "events.jsonl").read_text().splitlines() if line]
+    # Results first: the app fetches each one as soon as its "done" event arrives.
+    for p in (src / "results").glob("*.json"):
+        res = Result.model_validate_json(p.read_text())
+        run.results[res.case_id] = res
+        shutil.copy(p, run.dir / "results" / p.name)
     start = time.perf_counter()
     for ev in events:
         wait = ev.t_ms / 1000 / speed - (time.perf_counter() - start)
         if wait > 0:
             await asyncio.sleep(wait)
         run.emit(ev.stage, ev.message, ev.case_id, ev.model, ev.data)
-    for p in (src / "results").glob("*.json"):
-        res = Result.model_validate_json(p.read_text())
-        run.results[res.case_id] = res
-        (run.dir / "results" / p.name).write_text(p.read_text())
     run.done.set()
     return run
 
 
+RUN_ID = re.compile(r"\d{8}-\d{6}-[0-9a-f]{6}")
+
+
+def run_dir(run_id: str) -> Optional[Path]:
+    """A run's folder (runs/<id>, else runs/recorded/<id>), or None. Only well-formed ids: they come from URLs."""
+    if not RUN_ID.fullmatch(run_id):
+        return None
+    return next((d for d in (settings.runs_dir / run_id, settings.recorded_dir / run_id)
+                 if (d / "events.jsonl").exists()), None)
+
+
 def load_result(run_id: str, case_id: str) -> Optional[Result]:
-    p = settings.runs_dir / run_id / "results" / f"{case_id}.json"
-    return Result.model_validate_json(p.read_text()) if p.exists() else None
+    d = run_dir(run_id)
+    p = d / "results" / f"{case_id}.json" if d else None
+    return Result.model_validate_json(p.read_text()) if p and p.exists() else None
+
+
+def _runs_in(folder: Path) -> list[str]:
+    return [p.name for p in folder.iterdir() if (p / "events.jsonl").exists()] if folder.exists() else []
+
+
+def recorded_runs() -> list[str]:
+    """Committed live recordings, newest first."""
+    return sorted(_runs_in(settings.recorded_dir), reverse=True)
 
 
 def list_runs() -> list[str]:
-    if not settings.runs_dir.exists():
-        return []
-    return sorted((p.name for p in settings.runs_dir.iterdir() if (p / "events.jsonl").exists()), reverse=True)
+    return sorted(_runs_in(settings.runs_dir) + _runs_in(settings.recorded_dir), reverse=True)

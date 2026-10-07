@@ -24,7 +24,7 @@ from api.config import PRICES, settings  # noqa: E402
 from api.providers import tokenfactory  # noqa: E402
 
 # One task per distinct configured model.
-TASKS = {"triage": "triage", "extract_claims": "extract", "reconcile": "reconcile"}
+TASKS = {"triage": "triage", "extract_claims": "extract"}
 MESSAGES = [{"role": "user", "content": "Firestop sealant, 2 hr F-rating, tested to ASTM E814. Extract the rating."}]
 EST_IN, EST_OUT = 300, 1000  # schema prompt + message; output is generous because reasoning models think out loud
 
@@ -45,7 +45,7 @@ async def main() -> None:
         pin, pout = PRICES.get(model, (0.0, 0.0))
         total += (EST_IN * pin + EST_OUT * pout) / 1e6
         print(f"  {role:9} {model:45} {'listed' if model in available else 'NOT LISTED'}")
-    print(f"Estimated cost: ~${total:.5f} (0.0 prices in api/config.py PRICES are placeholders)")
+    print(f"Estimated cost: ~${total:.5f}")
     if input("Run live? [y/N] ").strip().lower() != "y":
         sys.exit("aborted")
 

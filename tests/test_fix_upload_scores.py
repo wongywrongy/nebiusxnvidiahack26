@@ -3,6 +3,7 @@
 import asyncio
 import json
 import os
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -18,7 +19,7 @@ from api import main  # noqa: E402
 from api.config import settings  # noqa: E402
 from api.pipeline import fix  # noqa: E402
 from api.pipeline.cases import all_cases  # noqa: E402
-from api.pipeline.runner import Run, execute  # noqa: E402
+from api.pipeline.runner import Run, execute, replay  # noqa: E402
 
 client = TestClient(main.app)
 SEND_BACK = sorted(c for c, v in all_cases().items() if v["expected"]["decision"] == "send_back")
@@ -89,7 +90,6 @@ def test_fix_respects_the_credit_cap(run):
 @pytest.fixture
 def cleanup():
     """Upload ids a test created; their folders under data/raw/uploads are removed afterwards."""
-    import shutil
 
     ids: list[str] = []
     yield ids
@@ -142,6 +142,7 @@ def test_upload_rejects_non_pdf_and_unknown_pdf_runs_on_defaults(cleanup):
 
 def test_scores_endpoint(tmp_path, monkeypatch):
     monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
+    monkeypatch.setattr(settings, "recorded_dir", tmp_path / "recorded")
     assert client.get("/api/scores").status_code == 404
     settings.scores_file.write_text(json.dumps({"right_call": {"n": 8, "of": 8}}))
     assert client.get("/api/scores").json()["right_call"]["n"] == 8
@@ -152,3 +153,22 @@ def test_run_scoring_set_endpoint(tmp_path, monkeypatch):
     s = client.post("/api/scores/run").json()
     assert s["right_call"] == {"n": 8, "of": 8} and s["false_alarms"]["n"] == 0
     assert json.loads((tmp_path / "scores.json").read_text())["run_id"] == s["run_id"]
+
+
+def test_recorded_run_is_the_public_demo(run, tmp_path, monkeypatch):
+    """Only a recording on disk, as in the container: health names it, it backs scores, results and replay."""
+    monkeypatch.setattr(settings, "runs_dir", tmp_path / "runs")
+    monkeypatch.setattr(settings, "recorded_dir", tmp_path / "recorded")
+    monkeypatch.setattr(settings, "scores_file", tmp_path / "runs" / "scores.json")
+    rec = settings.recorded_dir / run.id
+    shutil.copytree(run.dir, rec)
+    (rec / "scores.json").write_text(json.dumps({"run_id": run.id}))
+
+    assert client.get("/api/health").json()["recorded"] == run.id
+    assert client.get("/api/scores").json()["run_id"] == run.id
+    assert len(client.get(f"/api/runs/{run.id}/results").json()["results"]) == len(run.results)
+    assert client.get("/api/runs/..%2Frecorded/results").status_code == 404
+    assert client.post("/api/runs/replay", json={"source_run_id": f"../recorded/{run.id}"}).status_code == 404
+
+    again = asyncio.run(replay(Run([]), run.id, speed=1e6))
+    assert {c: r.decision for c, r in again.results.items()} == {c: r.decision for c, r in run.results.items()}

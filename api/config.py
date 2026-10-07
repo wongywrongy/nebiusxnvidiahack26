@@ -16,11 +16,10 @@ ROOT = Path(__file__).resolve().parent.parent
 # A run can be forced to mock while the server is live (public uploads without the admin token).
 FORCE_MOCK: ContextVar[bool] = ContextVar("force_mock", default=False)
 
-# Model ID -> USD per 1M tokens (input, output). PLACEHOLDERS: fill from the Token Factory pricing page.
+# Model ID -> USD per 1M tokens (input, output), from the Token Factory pricing page.
 PRICES: dict[str, tuple[float, float]] = {
     "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": (0.06, 0.24),
-    "nvidia/nemotron-3-super-120b-a12b": (0.0, 0.0),
-    "nvidia/Nemotron-3-Ultra-550b-a55b": (0.0, 0.0),
+    "nvidia/nemotron-3-super-120b-a12b": (0.30, 0.90),
 }
 KEYS = ("nebius_api_key", "tavily_api_key", "langsmith_api_key", "admin_token")
 LIVE_REQUIRES = ("nebius_api_key", "tavily_api_key")
@@ -41,12 +40,11 @@ class Settings(BaseSettings):
     model_extract: str = "nvidia/nemotron-3-super-120b-a12b"
     model_verify: str = "nvidia/nemotron-3-super-120b-a12b"
     model_write: str = "nvidia/nemotron-3-super-120b-a12b"
-    model_reconcile: str = "nvidia/Nemotron-3-Ultra-550b-a55b"
     model_vision: str = ""
 
     budget_usd_per_run: float = 5.0
     budget_tavily_credits_per_item: float = 25
-    budget_tavily_credits_per_day: float = 500
+    budget_tavily_credits_per_day: float = 150
     max_upload_mb: int = 15
     uploads_per_ip_per_hour: int = 10
 
@@ -69,6 +67,7 @@ class Settings(BaseSettings):
     raw_dir: Path = ROOT / "data" / "raw"
     cache_dir: Path = ROOT / ".cache"
     runs_dir: Path = ROOT / "runs"
+    recorded_dir: Path = ROOT / "runs" / "recorded"
     uploads_dir: Path = ROOT / "data" / "raw" / "uploads"
     scores_file: Path = ROOT / "runs" / "scores.json"
     web_dist: Path = ROOT / "web" / "dist"
@@ -84,7 +83,7 @@ class Settings(BaseSettings):
 
     @property
     def models(self) -> dict[str, str]:
-        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write", "reconcile", "vision")}
+        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write", "vision")}
 
     @property
     def keys_present(self) -> dict[str, bool]:

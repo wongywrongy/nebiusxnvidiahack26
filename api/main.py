@@ -1,12 +1,13 @@
 """HTTP API.
 
-  GET  /api/health                     mode, which keys are set (true/false), model IDs, today's spend
+  GET  /api/health                     mode, which keys are set (true/false), model IDs, today's spend,
+                                       newest recorded live run (the app replays it on open)
   GET  /api/project                    sample project, specs and cases
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
   POST /api/uploads?name=x.pdf         body: the PDF. Starts a run of it against the project specs
                                        (live without the admin token: runs in mock mode, with a note)
-  GET  /api/scores                     the answer-key scores written by scripts/eval.py
+  GET  /api/scores                     the answer-key scores written by scripts/eval.py (else the newest recording's)
   POST /api/scores/run                 run all cases now and rewrite the scores               [admin when live]
   GET  /api/runs                       recorded runs, newest first
   GET  /api/runs/{id}/events           server-sent events: history, then live
@@ -40,7 +41,7 @@ from .pipeline.cases import add_upload, all_cases, all_specs, get_case
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
 from .pipeline.render import page_sizes, render_page
-from .pipeline.runner import Run, execute, list_runs, load_result, replay
+from .pipeline.runner import Run, execute, list_runs, load_result, recorded_runs, replay, run_dir
 from .pipeline.scores import run_scoring_set
 from .providers import budget
 from .schemas import Event
@@ -92,7 +93,9 @@ def _rate_limit(request: Request) -> None:
 
 @app.get("/api/health")
 def health():
-    return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today()}
+    rec = recorded_runs()
+    return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today(),
+            "recorded": rec[0] if rec else None}
 
 
 @app.get("/api/project")
@@ -157,9 +160,11 @@ async def run_scores(request: Request):
 
 @app.get("/api/scores")
 def scores():
-    if not settings.scores_file.exists():
+    rec = recorded_runs()
+    path = settings.scores_file if settings.scores_file.exists() or not rec else settings.recorded_dir / rec[0] / "scores.json"
+    if not path.exists():
         raise HTTPException(404, "No scores yet: run python scripts/eval.py")
-    return json.loads(settings.scores_file.read_text())
+    return json.loads(path.read_text())
 
 
 def _public(case: dict) -> dict:
@@ -169,7 +174,7 @@ def _public(case: dict) -> dict:
 
 @app.post("/api/runs/replay")
 async def start_replay(body: StartReplay):
-    if not (settings.runs_dir / body.source_run_id / "events.jsonl").exists():
+    if not run_dir(body.source_run_id):
         raise HTTPException(404, "No such recorded run")
     run = Run([], replay_of=body.source_run_id)
     RUNS[run.id] = run
@@ -189,17 +194,16 @@ async def events(run_id: str):
             yield _sse(ev)
         yield "event: end\ndata: {}\n\n"
 
-    async def from_disk():
-        path = settings.runs_dir / run_id / "events.jsonl"
-        for line in path.read_text().splitlines():
+    async def from_disk(folder):
+        for line in (folder / "events.jsonl").read_text().splitlines():
             if line:
                 yield _sse(Event.model_validate_json(line))
         yield "event: end\ndata: {}\n\n"
 
     if run_id in RUNS:
         gen = from_memory(RUNS[run_id])
-    elif (settings.runs_dir / run_id / "events.jsonl").exists():
-        gen = from_disk()
+    elif folder := run_dir(run_id):
+        gen = from_disk(folder)
     else:
         raise HTTPException(404, "No such run")
     return StreamingResponse(gen, media_type="text/event-stream", headers={"Cache-Control": "no-cache"})
@@ -207,10 +211,10 @@ async def events(run_id: str):
 
 @app.get("/api/runs/{run_id}/results")
 def results(run_id: str):
-    folder = settings.runs_dir / run_id / "results"
-    if not folder.exists():
+    folder = run_dir(run_id)
+    if not folder:
         raise HTTPException(404, "No such run")
-    return {"results": [json.loads(p.read_text()) for p in sorted(folder.glob("*.json"))]}
+    return {"results": [json.loads(p.read_text()) for p in sorted((folder / "results").glob("*.json"))]}
 
 
 @app.get("/api/runs/{run_id}/results/{case_id}")
