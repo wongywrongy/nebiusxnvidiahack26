@@ -70,7 +70,10 @@ state CRI, dimming, warranty or DLC.
 - `POST /api/uploads?name=x.pdf` with the PDF as the body adds it as one more item, checked against the project specs
   on its own run. In mock mode, a PDF that matches a test case (by sha256) replays that case's fixture; any other PDF
   runs with no recorded answers, so every requirement shows as not stated.
-- `GET /api/scores` serves `runs/scores.json` from `scripts/eval.py`; the Results page in the app shows it.
+- `GET /api/scores` serves `runs/scores.json` from `scripts/eval.py`; the Results page shows it, and its
+  "Run the scoring set" button (`POST /api/scores/run`) reruns all 8 cases and rewrites it.
+- Watchlist: cases with `watch` in `cases.json` are already approved. "Run nightly watch" re-checks them; c07 (the
+  approved troffer, since discontinued) opens the Alert screen with its replacement.
 
 ## Model routing
 

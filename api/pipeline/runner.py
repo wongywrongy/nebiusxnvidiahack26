@@ -101,22 +101,29 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             findings = spec_check.check(requirements, claims.claims, {d["role"] for d in case["submittal"]})
             await run.pause()
 
-            run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['super']}")
+            tally = {v: sum(f.verdict == v for f in findings) for v in ("pass", "fail", "unverified")}
+            run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['super']}",
+                     data={"spec": tally})
             vf, rows, u, credits = await verify.verify(case, claims)
             findings += vf
             usage += u
             await run.pause()
 
             decision = decide.decide(findings)
+            ev = next((f.evidence for f in vf if f.evidence), [])
+            web = {"sheet": next((f.title for f in vf), ""), "verdict": next((f.verdict for f in vf), ""),
+                   "sources": [{"url": e.url, "tier": e.tier} for e in ev]}
             if decision == "send_back":
-                run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['super']}")
+                run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['super']}", data={"web": web})
                 u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
                                                       settings.fix_max_candidates, settings.fix_credit_cap)
                 usage += u
                 credits += fix_credits
                 await run.pause()
 
-            run.emit("report", "Writing the result", case_id, settings.models["super"])
+            fixed = next((f.fix for f in findings if f.fix), None)
+            run.emit("report", "Writing the result", case_id, settings.models["super"],
+                     data={"web": web, **({"fix": fixed.head} if fixed else {})})
             rep, u = await decide.report(fx, case["title"], decision, findings)
             usage += u
             attach_highlights(case, claims.claims, findings)

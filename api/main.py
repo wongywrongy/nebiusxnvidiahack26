@@ -6,6 +6,7 @@
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
   POST /api/uploads?name=x.pdf         body: the PDF. Starts a run of it against the project specs
   GET  /api/scores                     the answer-key scores written by scripts/eval.py
+  POST /api/scores/run                 run all cases now and rewrite the scores
   GET  /api/runs                       recorded runs, newest first
   GET  /api/runs/{id}/events           server-sent events: history, then live
   GET  /api/runs/{id}/results          all results of a run
@@ -34,6 +35,7 @@ from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
 from .pipeline.render import page_sizes, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, replay
+from .pipeline.scores import run_scoring_set
 from .schemas import Event
 
 app = FastAPI(title="SpecCheck")
@@ -69,7 +71,7 @@ def project():
         "name": data["project"],
         "specs": list(all_specs().values()),
         "cases": [
-            {"id": c["id"], "title": c["title"], "section": c["section"], "submittal": c["submittal"]}
+            {k: c[k] for k in ("id", "number", "title", "product", "from", "section", "submittal", "watch") if k in c}
             for c in all_cases().values()
         ],
     }
@@ -104,6 +106,11 @@ async def upload(request: Request, name: str = "upload.pdf", delay_ms: Optional[
     RUNS[run.id] = run
     _spawn(execute(run))
     return {"run_id": run.id, "mode": settings.mode, "case": _public(case)}
+
+
+@app.post("/api/scores/run")
+async def run_scores():
+    return await run_scoring_set()
 
 
 @app.get("/api/scores")

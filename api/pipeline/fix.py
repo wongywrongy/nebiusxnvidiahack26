@@ -98,7 +98,7 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
         note = "" if right in (None, "unknown") else str(right)
         if r and r.operator == "eq_ref":
             note = f"{spec_check.SHORT.get(r.property, '')} {note}".strip()  # "T 0 hr"
-    label = r.text if r else VERIFY_LABEL.get(f.id, f.title)
+    label = spec_check._label(r.property) if r else VERIFY_LABEL.get(f.id, f.title)
     return FixCheck(label=label, ok=ok, note=note)
 
 

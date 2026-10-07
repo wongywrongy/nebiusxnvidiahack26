@@ -1,156 +1,196 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getProject, getResult, getScores, pageUrl, startReplay, startRun,
-  streamEvents, uploadPdf,
+  DECISION_COLOR, DECISION_LABEL, getCaseText, getDocPages, getMode, getProject, getResult, getScores, pageUrl, runScores,
+  startReplay, startRun, streamEvents, uploadPdf,
   type Case, type Compare, type CompareRow, type Decision, type DocPages, type Event, type Finding, type Fix, type Mark,
   type Project, type Result, type Scores, type Stage, type TextPage, type Tone, type Value,
 } from './api'
 
-type View = 'ready' | 'running' | 'done' | 'detail' | 'results'
-type CaseState = { stage: Stage; message: string; model: string | null; decision?: Decision; summary?: string }
-
-const ACTIVE: Stage[] = ['ingest', 'triage', 'extract', 'spec_check', 'verify', 'reconcile', 'fix', 'report']
-const NBSP = '\u00a0'
-
+// Five screens, one question each. Log: what came in and what needs me? Live run: what is it doing now?
+// Review: what's wrong, and what's the fix? Alert: what changed since approval? Results: how good is it?
+type View = 'log' | 'live' | 'review' | 'alert' | 'results'
+type Tab = 'all' | 'action' | 'watch'
+type Act = 'forward' | 'note' | 'return'
+// What each pipeline step found, carried on the next step's event (see api/pipeline/runner.py).
+type Info = {
+  spec?: { pass: number; fail: number; unverified: number }
+  web?: { sheet: string; verdict: string; sources: { url: string; tier: string }[] }
+  fix?: string
+}
+type CaseState = { stage: Stage; message: string; models: string[]; decision?: Decision; summary?: string; info: Info; run: string }
 // docs: page sizes of each downloaded submittal PDF; null when one is missing, then text holds the fixture pages.
 type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null }
 
+const ACTIVE: Stage[] = ['ingest', 'triage', 'extract', 'spec_check', 'verify', 'reconcile', 'fix', 'report']
+const STEPS = ['Read', 'Compare to spec', 'Check the maker online', 'Find the fix', 'Write it up']
+const STEP_OF: Partial<Record<Stage, number>> = {
+  ingest: 0, triage: 0, extract: 1, spec_check: 1, verify: 2, reconcile: 2, fix: 3, report: 4, done: 5,
+}
+const REC: Record<Decision, Act> = { approve: 'forward', approve_with_note: 'note', send_back: 'return' }
+const ACT: Record<Act, { label: string; short: string; done: string }> = {
+  forward: { label: 'Stamp and forward', short: 'Approve instead', done: 'Forwarded' },
+  note: { label: 'Forward with note', short: 'Approve with note', done: 'Forwarded with note' },
+  return: { label: 'Send back with fix', short: 'Send back', done: 'Sent back' },
+}
+const NBSP = ' '
+const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`
+const fixOf = (r?: Result) => r?.findings.find((f) => f.fix)?.fix ?? null
+
 export default function App() {
   const [project, setProject] = useState<Project | null>(null)
-  const [view, setView] = useState<View>('ready')
-  const [runId, setRunId] = useState<string | null>(null)
-  const [runDone, setRunDone] = useState(false)
+  const [loadFailed, setLoadFailed] = useState(false)
+  const [view, setView] = useState<View>('log')
+  const [tab, setTab] = useState<Tab>('all')
   const [states, setStates] = useState<Record<string, CaseState>>({})
   const [loaded, setLoaded] = useState<Record<string, Loaded>>({})
   const [current, setCurrent] = useState<string | null>(null)
-  // Uploaded PDFs: extra rows, each on its own run.
   const [uploads, setUploads] = useState<Case[]>([])
-  const [uploadRun, setUploadRun] = useState<Record<string, string>>({})
+  const [acts, setActs] = useState<Record<string, Act>>({}) // the reviewer's call on each item
+  const [handled, setHandled] = useState<Record<string, boolean>>({}) // alerts dealt with
+  const [lastRun, setLastRun] = useState<string | null>(null)
+  const files = useRef<Record<string, string[]>>({})
 
-  const [loadFailed, setLoadFailed] = useState(false)
-  useEffect(() => { getProject().then(setProject, () => setLoadFailed(true)) }, [])
+  useEffect(() => {
+    getProject().then((p) => {
+      for (const c of p.cases) files.current[c.id] = c.submittal.map((d) => d.file)
+      setProject(p)
+      // Intake is on: in mock mode the sample submittals check themselves as soon as the log opens.
+      getMode().then((m) => { if (m === 'mock') check(p.cases.filter((c) => !c.watch).map((c) => c.id), true) })
+    }, () => setLoadFailed(true))
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  const cases = [...(project?.cases ?? []), ...uploads]
-  const openable = cases.filter((c) => states[c.id]?.stage === 'done').map((c) => c.id)
-  const runOf = (caseId: string) => uploadRun[caseId] ?? runId
+  const watched = (project?.cases ?? []).filter((c) => c.watch)
+  const intake = [...(project?.cases ?? []).filter((c) => !c.watch), ...uploads]
+  const queue = intake.filter((c) => states[c.id]?.stage === 'done' && loaded[c.id])
+  const caseOf = (id: string | null) => [...intake, ...watched].find((c) => c.id === id)
 
-  async function load(id: string, caseId: string, files?: string[]): Promise<Loaded> {
-    files ??= cases.find((c) => c.id === caseId)?.submittal.map((d) => d.file) ?? []
-    const [result, ...found] = await Promise.all([getResult(id, caseId), ...files.map((f) => getDocPages(caseId, f))])
+  async function load(run: string, caseId: string) {
+    const fs = files.current[caseId] ?? []
+    const [result, ...found] = await Promise.all([getResult(run, caseId), ...fs.map((f) => getDocPages(caseId, f))])
     const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
     const l = { result: result as Result, docs, text: docs ? null : await getCaseText(caseId) }
     setLoaded((m) => ({ ...m, [caseId]: l }))
-    return l
   }
 
-  function track(id: string, files?: Record<string, string[]>) {
-    return (e: Event) => {
-      if (!e.case_id) return
-      if (e.stage === 'done') load(id, e.case_id, files?.[e.case_id]) // prefetch, so opening and switching are instant
-      setStates((s) => ({
-        ...s,
-        [e.case_id!]: {
-          stage: e.stage,
-          message: e.message,
-          model: e.model,
-          decision: (e.data?.decision as Decision) ?? s[e.case_id!]?.decision,
-          summary: (e.data?.summary as string) ?? s[e.case_id!]?.summary,
-        },
-      }))
-    }
+  function follow(run: string) {
+    streamEvents(run, (e: Event) => {
+      const id = e.case_id
+      if (!id) return
+      if (e.stage === 'done') load(run, id) // prefetch, so opening is instant
+      setStates((s) => {
+        const p = e.stage === 'queued' ? undefined : s[id]
+        return {
+          ...s, [id]: {
+            stage: e.stage, message: e.message, run,
+            models: e.model && !p?.models.includes(e.model) ? [...(p?.models ?? []), e.model] : p?.models ?? [],
+            decision: (e.data?.decision as Decision) ?? p?.decision,
+            summary: (e.data?.summary as string) ?? p?.summary,
+            info: { ...p?.info, ...(e.data as Info | null) },
+          },
+        }
+      })
+    }, () => {})
   }
 
-  function follow(id: string) {
-    // Uploads keep their own state; only the project's items start over.
-    setStates((s) => Object.fromEntries(Object.entries(s).filter(([k]) => k in uploadRun)))
-    setLoaded((m) => Object.fromEntries(Object.entries(m).filter(([k]) => k in uploadRun)))
-    setRunId(id)
-    setRunDone(false)
-    setView('running')
-    streamEvents(id, track(id), () => {
-      setRunDone(true)
-      // Move on only if the reviewer is still watching the run, never out of a result they opened.
-      setTimeout(() => setView((v) => (v === 'running' ? 'done' : v)), 900)
-    })
+  async function check(ids: string[], isIntake: boolean) {
+    const run = await startRun(ids)
+    if (isIntake) { setLastRun(run); setActs({}) }
+    follow(run)
+  }
+
+  async function replay() {
+    if (lastRun) { setActs({}); follow(await startReplay(lastRun)) }
   }
 
   async function upload(file: File) {
     const { run_id, case: c } = await uploadPdf(file)
-    setUploads((u) => [...u, c])
-    setUploadRun((m) => ({ ...m, [c.id]: run_id }))
-    setStates((s) => ({ ...s, [c.id]: { stage: 'queued', message: 'Waiting', model: null } }))
-    streamEvents(run_id, track(run_id, { [c.id]: c.submittal.map((d) => d.file) }), () => {})
+    files.current[c.id] = c.submittal.map((d) => d.file)
+    setUploads((u) => [...u, { ...c, number: 'Upload', product: 'Your PDF', from: 'you' }])
+    follow(run_id)
   }
 
-  async function run() {
-    if (project) follow(await startRun(project.cases.map((c) => c.id)))
+  function open(id: string) {
+    const s = states[id]
+    if (!s) return
+    setCurrent(id)
+    setView(s.stage !== 'done' || !loaded[id] ? 'live' : caseOf(id)?.watch ? 'alert' : 'review')
+    window.scrollTo({ top: 0 })
   }
 
-  async function replay() {
-    if (runId) follow(await startReplay(runId))
-  }
-
-  async function open(caseId: string) {
-    const id = runOf(caseId)
-    if (!id || !openable.includes(caseId)) return
-    if (!loaded[caseId]) await load(id, caseId)
-    setCurrent(caseId)
-    setView('detail')
-    window.scrollTo({ top: 0 }) // a new result starts at its top, not where the list was scrolled
-  }
-
-  const overview = () => setView(runId ? (runDone ? 'done' : 'running') : 'ready')
-  const detail = view === 'detail' && current ? loaded[current] : undefined
-
-  // Left/right arrows step through submittals while a result is open.
+  // The live run opens the result when it's done.
   useEffect(() => {
-    if (view !== 'detail' || !current) return
-    function onKey(e: KeyboardEvent) {
-      if (e.altKey || e.metaKey || e.ctrlKey || (e.target as HTMLElement).closest('input, textarea, select')) return
-      const i = openable.indexOf(current!)
-      const next = e.key === 'ArrowRight' ? openable[i + 1] : e.key === 'ArrowLeft' ? openable[i - 1] : undefined
-      if (next) { e.preventDefault(); open(next) }
-    }
-    window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  })
+    if (view === 'live' && current && states[current]?.stage === 'done' && loaded[current]) open(current)
+  }) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function decide(id: string, act: Act) {
+    const next = { ...acts, [id]: act }
+    setActs(next)
+    const i = queue.findIndex((c) => c.id === id)
+    const after = [...queue.slice(i + 1), ...queue.slice(0, i)].find((c) => !next[c.id])
+    setCurrent(after?.id ?? null) // null: everything reviewed
+  }
+
+  function toLog(t: Tab = 'all') { setTab(t); setView('log') }
+
+  const cur = caseOf(current)
+  const pos = queue.findIndex((c) => c.id === current)
+  const step = (d: number) => { const c = queue[pos + d]; if (c) setCurrent(c.id) }
+
+  const crumbs: [string, (() => void) | null][] =
+    view === 'live' ? [['Submittals', () => toLog()], [`${cur?.number ?? ''} ${cur?.title ?? ''}`, null]]
+    : view === 'review' ? [['Submittals', () => toLog()], ['Review', null]]
+    : view === 'alert' ? [['Watchlist', () => toLog('watch')], [cur?.number ?? '', null]]
+    : view === 'results' ? [['Results', null]]
+    : [[project?.name ?? NBSP, null]]
 
   return (
-    <div className="min-h-screen font-sans text-sm">
-      <header className="flex min-h-[52px] flex-wrap items-center justify-between gap-x-6 gap-y-2 border-b border-white/5 px-4 py-2 sm:px-6">
-        <div className="flex min-w-0 items-center gap-3">
-          <button onClick={overview} className="flex shrink-0 items-center gap-2 font-semibold">
-            <span className="flare h-3.5 w-3.5 rounded" />SpecCheck
+    <div className="flex min-h-screen flex-col font-sans text-sm">
+      <header className="flex min-h-[52px] items-center justify-between gap-4 border-b border-line px-4 sm:px-6">
+        <nav className="flex min-w-0 items-center gap-2" aria-label="Breadcrumb">
+          <button onClick={() => toLog()} className="flex shrink-0 items-center gap-2 font-semibold">
+            <span className="h-3 w-3 rounded-sm bg-flare" />SpecCheck
           </button>
-          <span className="text-faint" aria-hidden>/</span>
-          <span className="truncate text-muted">{view === 'results' ? 'Results' : project?.name ?? '…'}</span>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          {detail && <Verdict result={detail.result} />}
-          <button onClick={() => setView(view === 'results' ? (runId ? (runDone ? 'done' : 'running') : 'ready') : 'results')}
-            aria-pressed={view === 'results'} className={`btn ${view === 'results' ? 'bg-selected' : ''}`}>Results</button>
-        </div>
+          {crumbs.map(([label, go], i) => (
+            <Fragment key={i}>
+              <span className="text-faint" aria-hidden>/</span>
+              {go ? <button onClick={go} className="shrink-0 text-muted hover:text-ink">{label}</button> : <span className="truncate">{label}</span>}
+            </Fragment>
+          ))}
+        </nav>
+        {view === 'log' && (
+          <span className="flex shrink-0 items-center gap-3 text-xs text-muted">
+            <span className="hidden sm:inline">Intake on</span>
+            <button onClick={replay} disabled={!lastRun} className="font-mono hover:text-ink disabled:opacity-40">replay</button>
+          </span>
+        )}
+        {view === 'live' && <span className="hidden text-xs text-muted sm:inline">Opens the result when done</span>}
+        {view === 'review' && cur && (
+          <span className="flex shrink-0 items-center gap-2 font-mono text-xs text-muted">
+            <button className="btn w-8 px-0" onClick={() => step(-1)} disabled={pos <= 0} aria-label="Previous submittal"><Chevron dir="left" /></button>
+            <span className="tabular-nums">{pos + 1} / {queue.length}</span>
+            <button className="btn w-8 px-0" onClick={() => step(1)} disabled={pos >= queue.length - 1} aria-label="Next submittal"><Chevron dir="right" /></button>
+          </span>
+        )}
       </header>
 
-      {detail && (
-        <DocSwitcher cases={cases} states={states} current={current!} openable={openable} onOpen={open} onAll={overview} />
+      {view === 'log' && (loadFailed
+        ? <p className="m-6 text-muted">Couldn't load the project. Check that the API is running, then reload.</p>
+        : <Log project={project} intake={intake} watched={watched} states={states} loaded={loaded} acts={acts} handled={handled}
+            tab={tab} onTab={setTab} onOpen={open} onUpload={upload} onResults={() => setView('results')}
+            onCheck={() => check(intake.map((c) => c.id), true)} onWatch={() => check(watched.map((c) => c.id), false)}
+            onReview={() => { const c = queue.find((q) => !acts[q.id]) ?? queue[0]; if (c) open(c.id) }} />)}
+      {view === 'live' && cur && states[cur.id] && <LiveRun c={cur} s={states[cur.id]} />}
+      {view === 'review' && (
+        <Review queue={queue} current={cur ?? null} loaded={loaded} states={states} acts={acts}
+          onPick={(id) => setCurrent(id)} onDecide={decide} onResults={() => setView('results')} onAgain={() => { setActs({}); setCurrent(queue[0]?.id ?? null) }} />
       )}
-
-      <main className={detail ? 'mx-auto max-w-[1680px] px-4 py-4' : 'mx-auto flex max-w-[1120px] flex-col gap-7 px-4 py-10 sm:px-6 sm:py-12'}>
-        {view === 'ready' && (loadFailed
-          ? <p className="panel p-6 text-muted">Couldn't load the project. Check that the API is running, then reload.</p>
-          : <Ready cases={cases} loading={!project} states={states} onRun={run} onOpen={open} onUpload={upload} />)}
-        {view === 'running' && <Running cases={cases} states={states} done={openable.length} onOpen={open} />}
-        {view === 'done' && <Done cases={cases} states={states} onOpen={open} onAgain={run} onUpload={upload} />}
-        {view === 'results' && <Results />}
-        {detail && <Detail key={current} result={detail.result} docs={detail.docs} text={detail.text} runId={runOf(current!)!}
-          onReplay={uploadRun[current!] ? undefined : replay} />}
-      </main>
+      {view === 'alert' && cur && loaded[cur.id] && (
+        <Alert c={cur} result={loaded[cur.id].result} onDone={() => { setHandled((h) => ({ ...h, [cur.id]: true })); toLog('watch') }} />
+      )}
+      {view === 'results' && <Results />}
     </div>
   )
 }
-
-const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`
 
 function Chevron({ dir }: { dir: 'left' | 'right' }) {
   return (
@@ -160,41 +200,131 @@ function Chevron({ dir }: { dir: 'left' | 'right' }) {
   )
 }
 
-// Every submittal one click away while reviewing; arrows and prev/next step through them in order.
-function DocSwitcher({ cases, states, current, openable, onOpen, onAll }: {
-  cases: Case[]; states: Record<string, CaseState>; current: string; openable: string[]
-  onOpen: (id: string) => void; onAll: () => void
+// ---------- log: what came in and what needs me? ----------
+
+function Log({ project, intake, watched, states, loaded, acts, handled, tab, onTab, onOpen, onUpload, onResults, onCheck, onWatch, onReview }: {
+  project: Project | null; intake: Case[]; watched: Case[]; states: Record<string, CaseState>; loaded: Record<string, Loaded>
+  acts: Record<string, Act>; handled: Record<string, boolean>; tab: Tab; onTab: (t: Tab) => void; onOpen: (id: string) => void
+  onUpload: (f: File) => Promise<void>; onResults: () => void; onCheck: () => void; onWatch: () => void; onReview: () => void
 }) {
-  const i = openable.indexOf(current)
-  const strip = useRef<HTMLDivElement>(null)
-  useEffect(() => {
-    // Scroll only the strip (scrollIntoView would also scroll the page).
-    const el = strip.current, chip = el?.querySelector<HTMLElement>('[aria-current=page]')
-    if (el && chip) el.scrollTo({ left: chip.offsetLeft - el.offsetLeft - (el.clientWidth - chip.offsetWidth) / 2, behavior: 'smooth' })
-  }, [current])
+  const done = (id: string) => states[id]?.stage === 'done' && !!loaded[id]
+  const checking = intake.filter((c) => states[c.id] && !done(c.id) && states[c.id].stage !== 'error').length
+  const ready = intake.filter((c) => done(c.id) && !acts[c.id])
+  const alerts = watched.filter((c) => done(c.id) && loaded[c.id].result.decision === 'send_back' && !handled[c.id])
+  const watching = [...watched, ...intake.filter((c) => acts[c.id] && acts[c.id] !== 'return')]
+  const lists: Record<Tab, Case[]> = { all: [...intake, ...watched], action: ready, watch: watching }
+  const started = intake.some((c) => states[c.id])
+  const headline = !project ? NBSP : checking ? `${checking} checking now`
+    : started && !ready.length && intake.every((c) => done(c.id)) ? `All ${intake.length} checked`
+    : started ? `${plural(ready.length, 'item')} need your call` : 'New packages are checked as they arrive.'
+
+  const nav: [string, boolean, () => void, ReactNode?][] = [
+    ['Submittals', tab !== 'watch', () => onTab('all')],
+    ['Watchlist', tab === 'watch', () => onTab('watch'), alerts.length ? <span className="text-bad">{plural(alerts.length, 'alert')}</span> : null],
+    ['Results', false, onResults],
+  ]
   return (
-    <nav aria-label="Submittals" className="sticky top-0 z-20 flex items-center gap-2 border-b border-line bg-[#0b0c0f]/90 px-4 py-2 backdrop-blur">
-      <button onClick={onAll} className="btn shrink-0">All {cases.length}</button>
-      <div ref={strip} className="flex min-w-0 flex-1 gap-1 overflow-x-auto [scrollbar-width:none]">
-        {cases.map((c) => {
-          const s = states[c.id]
-          const on = c.id === current
-          return (
-            <button key={c.id} onClick={() => onOpen(c.id)} disabled={!openable.includes(c.id)} aria-current={on ? 'page' : undefined}
-              title={s?.decision ? `${c.title}: ${DECISION_LABEL[s.decision]}` : c.title}
-              className={`flex h-8 max-w-[210px] shrink-0 items-center gap-2 rounded-md px-3 text-xs transition-colors disabled:opacity-40 ${on ? 'bg-selected text-ink shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'text-muted enabled:hover:bg-raised enabled:hover:text-ink'}`}>
-              <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: s?.decision ? DECISION_COLOR[s.decision] : 'var(--color-faint)' }} />
-              <span className="truncate">{c.title}</span>
+    <div className="flex flex-1 flex-col md:flex-row">
+      <aside className="flex shrink-0 flex-col justify-between gap-4 border-line px-3 py-2 md:w-[180px] md:border-r md:py-5">
+        <nav className="flex gap-1 md:flex-col">
+          {nav.map(([label, on, go, extra]) => (
+            <button key={label} onClick={go} aria-current={on ? 'page' : undefined}
+              className={`flex h-9 items-center justify-between gap-2 rounded-md px-3 text-left ${on ? 'bg-selected font-medium text-ink' : 'text-soft hover:bg-raised hover:text-ink'}`}>
+              {label}{extra && <span className="text-xs">{extra}</span>}
             </button>
-          )
-        })}
-      </div>
-      <div className="flex shrink-0 items-center gap-1">
-        <span className="mr-1 hidden font-mono text-xs tabular-nums text-faint sm:inline">{i + 1}/{openable.length}</span>
-        <button className="btn w-8 px-0" onClick={() => onOpen(openable[i - 1])} disabled={i <= 0} aria-label="Previous submittal" title="Previous submittal (←)"><Chevron dir="left" /></button>
-        <button className="btn w-8 px-0" onClick={() => onOpen(openable[i + 1])} disabled={i >= openable.length - 1} aria-label="Next submittal" title="Next submittal (→)"><Chevron dir="right" /></button>
-      </div>
-    </nav>
+          ))}
+        </nav>
+        <p className="hidden px-3 text-xs text-faint md:block">
+          Specs: {project?.specs.map((s) => s.section).join(', ')}<br />{project?.specs[0]?.owner} standards
+        </p>
+      </aside>
+
+      <main className="flex min-w-0 flex-1 flex-col gap-6 px-4 py-6 sm:px-8 sm:py-8">
+        <section className="flex flex-wrap items-end justify-between gap-4">
+          <div className="flex flex-col gap-1">
+            <h1 className="text-2xl font-bold tracking-tight">Submittals</h1>
+            <span className="text-muted">{headline}</span>
+          </div>
+          <div className="flex gap-2">
+            <button className="btn h-10" onClick={onWatch} disabled={!project}>Run nightly watch</button>
+            {started
+              ? <button className="flare h-10 rounded-lg px-4 font-semibold disabled:opacity-40" onClick={onReview} disabled={!ready.length}>Review {ready.length} ready</button>
+              : <button className="flare h-10 rounded-lg px-4 font-semibold disabled:opacity-40" onClick={onCheck} disabled={!project}>Check {intake.length} submittals</button>}
+          </div>
+        </section>
+
+        <nav className="flex gap-6 border-b border-line" aria-label="Filter">
+          {([['all', 'All'], ['action', 'Needs your call'], ['watch', 'Approved, watching']] as [Tab, string][]).map(([k, label]) => (
+            <button key={k} onClick={() => onTab(k)} aria-current={tab === k ? 'page' : undefined}
+              className={`-mb-px h-10 border-b-2 ${tab === k ? 'border-ink text-ink' : 'border-transparent text-muted hover:text-ink'}`}>
+              {label} <span className="text-faint">{lists[k].length}</span>
+            </button>
+          ))}
+        </nav>
+
+        <section className="flex flex-col">
+          {!project && Array.from({ length: 7 }, (_, i) => <div key={i} className="flex h-16 items-center border-b border-line"><div className="h-4 w-1/2 rounded bg-raised" /></div>)}
+          {project && !lists[tab].length && <p className="py-8 text-muted">{tab === 'action' ? 'Nothing needs your call right now.' : 'Nothing here yet.'}</p>}
+          {lists[tab].map((c) => <LogRow key={c.id} c={c} s={states[c.id]} l={loaded[c.id]} act={acts[c.id]} handled={!!handled[c.id]} onOpen={onOpen} />)}
+        </section>
+
+        <Upload onUpload={onUpload} />
+      </main>
+    </div>
+  )
+}
+
+function LogRow({ c, s, l, act, handled, onOpen }: {
+  c: Case; s?: CaseState; l?: Loaded; act?: Act; handled: boolean; onOpen: (id: string) => void
+}) {
+  const done = s?.stage === 'done' && !!l
+  const running = !!s && !done && s.stage !== 'error'
+  let status: ReactNode
+  if (s?.stage === 'error') status = <span className="text-bad">Couldn't check this one</span>
+  else if (running) {
+    status = (
+      <span className="flex flex-col gap-2">
+        <span className="truncate text-xs text-muted">{s.stage === 'done' ? 'Writing the result' : s.message}</span>
+        <span className="h-px bg-line"><span className="block h-px bg-flare transition-[width] duration-300" style={{ width: `${((STEP_OF[s.stage] ?? 0) + 1) / 5 * 100}%` }} /></span>
+      </span>
+    )
+  } else if (done && c.watch) {
+    const alert = l.result.decision === 'send_back'
+    const fact = l.result.findings.find((f) => f.check === 'status' && f.verdict === 'fail')?.compare?.right_value
+    status = alert && !handled
+      ? <Status label="Changed since approval" color={DECISION_COLOR.send_back} reason={`${show(fact ?? 'Changed')}${fixOf(l.result)?.suggest ? ' · replacement found' : ''}`} />
+      : <Status label={handled ? 'Handled' : 'No change'} reason="Checked nightly" />
+  } else if (done) {
+    const fix = fixOf(l.result)
+    status = act
+      ? <Status label={ACT[act].done} reason={l.result.summary} />
+      : <Status label={DECISION_LABEL[l.result.decision]} color={DECISION_COLOR[l.result.decision]}
+          reason={`${l.result.summary}${fix ? (fix.suggest ? ' · fix ready' : ' · no passing fix') : ''}`} />
+  } else status = c.watch ? <Status label="No change" reason={`Approved ${new Date(c.watch.approved).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}`} /> : <span className="text-xs text-faint">Waiting</span>
+
+  return (
+    <button onClick={() => onOpen(c.id)} disabled={!s}
+      className="arrive grid h-20 w-full md:h-16 grid-cols-[minmax(0,1fr)_16px] items-center gap-4 border-b border-line px-2 text-left enabled:hover:bg-raised md:grid-cols-[104px_minmax(0,1fr)_minmax(0,1.2fr)_16px]">
+      <span className="hidden font-mono text-xs text-muted md:block">{c.number}</span>
+      <span className="flex min-w-0 flex-col gap-1 max-md:hidden">
+        <span className="truncate">{c.title}</span>
+        <span className="truncate text-xs text-faint">{c.product}{c.watch ? ` · approved ${new Date(c.watch.approved).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}` : ''}</span>
+      </span>
+      <span className="flex min-w-0 flex-col gap-1">
+        <span className="truncate md:hidden">{c.title}</span>
+        {status}
+      </span>
+      <span className="text-faint" aria-hidden><Chevron dir="right" /></span>
+    </button>
+  )
+}
+
+function Status({ label, color, reason }: { label: string; color?: string; reason: string }) {
+  return (
+    <span className="flex min-w-0 flex-col">
+      <span className="truncate font-medium" style={{ color }}>{label}</span>
+      <span className="truncate text-xs text-muted" title={reason}>{reason}</span>
+    </span>
   )
 }
 
@@ -211,148 +341,72 @@ function Upload({ onUpload }: { onUpload: (f: File) => Promise<void> }) {
   return (
     <label onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDragLeave={() => setOver(false)}
       onDrop={(e) => { e.preventDefault(); setOver(false); send(e.dataTransfer.files[0]) }}
-      className={`flex cursor-pointer flex-wrap items-center justify-between gap-3 rounded-xl border border-dashed px-4 py-4 transition-colors ${over ? 'border-soft bg-raised' : 'border-edge hover:border-soft'}`}>
-      <span className="flex min-w-0 flex-col gap-1">
-        <span className="font-medium">Check your own submittal</span>
-        <span className="text-xs text-muted">
-          {error ?? "Drop any firestop or light fixture PDF. It's checked against this project's specs like any other submittal."}
-        </span>
-      </span>
-      <span className="btn pointer-events-none">{busy ? 'Uploading…' : 'Choose a PDF'}</span>
+      className={`flex min-h-16 cursor-pointer items-center justify-between gap-4 rounded-xl border border-dashed px-4 transition-colors ${over ? 'border-soft bg-raised' : 'border-edge hover:border-soft'}`}>
+      <span className="text-muted">{error ?? 'Try it with your own data sheet. Drop a firestop or lighting PDF here.'}</span>
+      <span className="shrink-0 font-medium">{busy ? 'Uploading…' : 'Choose PDF'}</span>
       <input type="file" accept="application/pdf,.pdf" className="sr-only" disabled={busy}
         onChange={(e) => { send(e.target.files?.[0]); e.target.value = '' }} />
     </label>
   )
 }
 
-function Ready({ cases, loading, states, onRun, onOpen, onUpload }: {
-  cases: Case[]; loading: boolean; states: Record<string, CaseState>; onRun: () => void; onOpen: (id: string) => void; onUpload: (f: File) => Promise<void>
-}) {
-  const base = cases.filter((c) => !c.upload).length
-  return (
-    <>
-      <section className="flex flex-col items-center gap-4 pt-6 text-center">
-        <h1 className="text-2xl font-bold leading-tight tracking-tight">{loading ? NBSP : `${base} submittals are waiting for review`}</h1>
-        <p className="max-w-[540px] text-base text-muted">
-          SpecCheck reads each package, compares it to the spec, and checks the manufacturer's current documents online.
-        </p>
-        <button onClick={onRun} disabled={loading} className="flare mt-3 h-[52px] rounded-[10px] px-7 text-base font-bold">
-          Review all {base} submittals
-        </button>
-      </section>
-      <Upload onUpload={onUpload} />
-      <section className="panel grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-px overflow-hidden bg-line">
-        {loading && Array.from({ length: 8 }, (_, i) => <div key={i} className="h-16 bg-panel p-4"><div className="h-4 w-2/3 rounded bg-raised" /></div>)}
-        {cases.map((c) => {
-          const s = states[c.id]
-          return (
-            <button key={c.id} onClick={() => onOpen(c.id)} disabled={s?.stage !== 'done'}
-              className="flex h-16 flex-col justify-center gap-1 bg-panel px-4 text-left enabled:hover:bg-raised">
-              <span className="truncate">{c.title}</span>
-              <span className="flex items-center gap-2 font-mono text-xs text-faint">
-                {c.section}{c.upload && <span>your upload</span>}
-                {s && <span className="text-soft">
-                  {s.decision ? DECISION_LABEL[s.decision] : s.message}</span>}
-              </span>
-            </button>
-          )
-        })}
-      </section>
-    </>
-  )
-}
+// ---------- live run: what is it doing right now? ----------
 
-function Running({ cases, states, done, onOpen }: {
-  cases: Case[]; states: Record<string, CaseState>; done: number; onOpen: (id: string) => void
-}) {
+const TIER: Record<string, string> = { manufacturer: 'maker', listing_body: 'listing', distributor: 'distributor', agency: 'public copy', archive: 'archive', other: 'other' }
+
+function LiveRun({ c, s }: { c: Case; s: CaseState }) {
+  const at = STEP_OF[s.stage] ?? 0
+  const [img, setImg] = useState(true)
+  const sp = s.info.spec
+  const web = s.info.web
+  const rows: [string, ReactNode][] = [
+    ['Spec items', !sp ? <span className="text-faint">{at >= 1 ? 'checking' : '—'}</span>
+      : sp.fail ? <span className="text-bad">{sp.fail} must fix</span>
+      : sp.unverified ? <span className="text-fyi">{sp.unverified} couldn't confirm</span> : <span className="text-good">Pass</span>],
+    ['Data sheet', !web ? <span className="text-faint">{at >= 2 ? 'checking' : '—'}</span>
+      : <span className={web.verdict === 'pass' ? 'text-good' : web.verdict === 'outdated' ? 'text-warn' : web.verdict === 'fail' ? 'text-bad' : 'text-fyi'}>{web.sheet}</span>],
+  ]
+  if (s.stage === 'fix' || s.info.fix) rows.push(['Fix', s.info.fix ? <span>{s.info.fix}</span> : <span className="text-faint">checking</span>])
   return (
-    <>
-      <section className="flex flex-wrap items-end justify-between gap-5">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Nemotron is reviewing {cases.length} submittals</h1>
-          <p className="text-muted">Each package is read, checked against the spec, then checked against the manufacturer's site. Open any finished card.</p>
+    <div className="flex flex-1 flex-col">
+      <nav className="flex gap-6 overflow-x-auto border-b border-line px-4 sm:px-8" aria-label="Steps">
+        {STEPS.map((label, i) => (
+          <span key={label} className={`flex h-12 shrink-0 items-center gap-2 ${i === at ? 'font-medium text-flare' : i < at ? 'text-muted' : 'text-faint'}`}>
+            {i < at ? '✓' : i === at ? <span className="h-2 w-2 rounded-full bg-flare" /> : null}{label}
+          </span>
+        ))}
+      </nav>
+      <div className="grid flex-1 gap-8 px-4 py-8 sm:px-8 lg:grid-cols-[minmax(0,1fr)_420px]">
+        <div className="relative mx-auto aspect-[8.5/11] w-full max-w-[520px] overflow-hidden rounded-sm bg-paper">
+          {img && c.submittal[0] && <img src={pageUrl(c.id, c.submittal[0].file, 1)} alt="" className="absolute inset-0 h-full w-full object-cover object-top" onError={() => setImg(false)} />}
+          {!img && <div className="flex flex-col gap-3 p-10">{[60, 88, 80, 84, 70, 76].map((w, i) => <div key={i} className="h-1 bg-paper-rule" style={{ width: `${w}%` }} />)}</div>}
+          {at < 5 && <div className="scan absolute inset-x-0 h-0.5 bg-flare" />}
         </div>
-        <div className="flex min-w-[200px] flex-col gap-2">
-          <span className="text-right font-mono text-xs tabular-nums">{done} of {cases.length} done</span>
-          <div className="h-1 rounded bg-line">
-            <div className="flare h-1 rounded transition-all duration-300" style={{ width: `${(done / Math.max(cases.length, 1)) * 100}%` }} />
+        <section className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2">
+            <span className="text-flare">{s.message}</span>
+            <h1 className="text-lg font-semibold">{c.product ?? c.title} against {c.section}</h1>
           </div>
-        </div>
-      </section>
-      <section className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-4">
-        {cases.map((c) => {
-          const s = states[c.id]
-          const active = !!s && ACTIVE.includes(s.stage)
-          const finished = s?.stage === 'done'
-          return (
-            // Fixed height and single-line rows: cards never resize while stages change.
-            <button key={c.id} onClick={() => onOpen(c.id)} disabled={!finished} title={finished ? 'Open result' : undefined}
-              className={`panel flex h-[216px] flex-col gap-3 p-4 text-left transition-colors enabled:hover:border-edge ${s ? '' : 'opacity-55'}`}>
-              <div className="relative flex h-28 shrink-0 flex-col gap-2 overflow-hidden rounded bg-paper p-3">
-                {[60, 88, 80, 84, 70, 76].map((w, i) => (
-                  <div key={i} className="h-1 bg-paper-rule" style={{ width: `${w}%`, height: i === 0 ? 6 : 4 }} />
-                ))}
-                {active && <div className="scan absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-flare to-transparent shadow-[0_0_10px_2px_rgba(245,121,26,0.6)]" />}
-                {finished && s.decision && (
-                  <div className="pop absolute inset-0 flex items-center justify-center bg-panel/55">
-                    <span className="rounded-md px-3 py-2 font-bold text-on-accent" style={{ background: DECISION_COLOR[s.decision] }}>
-                      {DECISION_LABEL[s.decision]}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <div className="flex min-w-0 flex-col gap-1">
-                <span className="h-5 truncate font-medium leading-5" title={c.title}>{c.title}</span>
-                <span className={`h-4 truncate text-xs leading-4 ${active ? 'blink' : 'text-muted'}`}>{finished && s.decision ? DECISION_LABEL[s.decision] : s?.message ?? 'Waiting'}</span>
-                <span className="h-4 truncate font-mono text-xs leading-4 text-faint">{(active && s?.model) || (c.upload ? 'your upload' : NBSP)}</span>
-              </div>
-            </button>
-          )
-        })}
-      </section>
-    </>
+          <div className="flex flex-col border-t border-line">
+            {rows.map(([k, v]) => <div key={k} className="flex min-h-12 items-center justify-between gap-4 border-b border-line">{k}<span className="text-right">{v}</span></div>)}
+          </div>
+          {web && web.sources.length > 0 && (
+            <div className="flex flex-col gap-2">
+              <span className="text-muted">Where it looked</span>
+              {web.sources.map((x) => (
+                <span key={x.url} className="flex justify-between gap-4"><span className="truncate">{hostOf(x.url)}</span><span className="font-mono text-xs text-faint">{TIER[x.tier] ?? x.tier}</span></span>
+              ))}
+            </div>
+          )}
+          <span className="mt-auto font-mono text-xs text-faint">{s.models.filter((m) => m !== 'code').map((m) => m.replace('tavily + ', '').split('/').pop()).filter((m, i, a) => a.indexOf(m) === i).join(', ')} · Tavily</span>
+        </section>
+      </div>
+    </div>
   )
 }
 
-function Done({ cases, states, onOpen, onAgain, onUpload }: {
-  cases: Case[]; states: Record<string, CaseState>; onOpen: (id: string) => void; onAgain: () => void; onUpload: (f: File) => Promise<void>
-}) {
-  const sendBack = cases.filter((c) => states[c.id]?.decision === 'send_back').length
-  return (
-    <>
-      <section className="flex flex-wrap items-end justify-between gap-5">
-        <h1 className="text-2xl font-bold tracking-tight">
-          {sendBack} submittal{sendBack === 1 ? '' : 's'} need{sendBack === 1 ? 's' : ''} to go back
-        </h1>
-        <button onClick={onAgain} className="btn h-9 px-4">Run again</button>
-      </section>
-      <section className="panel overflow-hidden">
-        {cases.map((c) => {
-          const s = states[c.id]
-          const active = !!s && ACTIVE.includes(s.stage)
-          return (
-            <button key={c.id} onClick={() => onOpen(c.id)} disabled={!s?.decision}
-              className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 border-b border-line px-4 py-3 text-left last:border-b-0 enabled:hover:bg-raised disabled:cursor-not-allowed md:h-14 md:grid-cols-[minmax(0,1fr)_170px_minmax(0,1.4fr)_64px] md:py-0">
-              <span className="flex min-w-0 flex-col font-medium md:font-normal">
-                <span className="truncate">{c.title}</span>
-                {c.upload && <span className="font-mono text-xs text-faint">your upload</span>}
-              </span>
-              <span className="flex items-center gap-2 justify-self-end font-medium md:justify-self-auto">
-                {s?.decision && <span className="h-2 w-2 rounded-full" style={{ background: DECISION_COLOR[s.decision] }} />}
-                {s?.decision ? DECISION_LABEL[s.decision] : s?.stage === 'error' ? 'Error' : active ? <span className="text-muted">{s.message}</span> : '—'}
-              </span>
-              <span className="col-span-2 truncate text-muted md:col-span-1" title={s?.summary}>{s?.summary}</span>
-              <span className="hidden text-right text-muted md:block">{s?.decision ? 'Open →' : ''}</span>
-            </button>
-          )
-        })}
-      </section>
-      <Upload onUpload={onUpload} />
-    </>
-  )
-}
 
-// ---------- result view ----------
+// ---------- the document, with findings drawn on it ----------
 
 const TONE_COLOR: Record<Tone, string> = { red: '#e5534b', amber: '#e5a93b', blue: '#7fa7d9', green: '#2e9e68' }
 const TONE_RANK: Record<Tone, number> = { red: 0, amber: 1, blue: 2, green: 3 }
@@ -364,31 +418,6 @@ const LABEL: Record<Finding['verdict'], string> = {
 // A requirement was looked for but no claim was found on any page.
 const notFound = (f: Finding) => !!f.requirement_id && f.claim_ids.length === 0
 
-function counts(result: Result) {
-  const by = (v: Finding['verdict']) => result.findings.filter((f) => f.verdict === v).length
-  return [
-    [by('fail'), 'must fix', 'red'], [by('outdated'), 'out of date', 'amber'], [by('unverified'), "couldn't confirm", 'blue'],
-    [by('note'), 'note', 'blue'], [by('pass'), 'passed', null],
-  ].filter(([n]) => n) as [number, string, Tone | null][]
-}
-
-function Verdict({ result }: { result: Result }) {
-  const color = DECISION_COLOR[result.decision]
-  return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <span className="hidden max-w-[260px] truncate text-muted lg:inline">{result.title}</span>
-      <span className="flex items-center gap-2 font-semibold">
-        <span className="h-2.5 w-2.5 rounded-full" style={{ background: color }} />
-        {DECISION_LABEL[result.decision]}
-      </span>
-      <span className="flex gap-3 text-xs tabular-nums text-muted">
-        {counts(result).map(([n, label, tone]) => (
-          <span key={label} style={tone ? { color: TONE_COLOR[tone] } : undefined}>{n} {label}</span>
-        ))}
-      </span>
-    </div>
-  )
-}
 
 type Placed = Mark & { finding: Finding; tone: Tone }
 type PdfPage = { key: string; file: string; n: number; width: number; height: number }
@@ -396,81 +425,6 @@ type PdfPage = { key: string; file: string; n: number; width: number; height: nu
 const pageKey = (file: string | null, n: number | null) => `${file}#${n}`
 // A finding's page: the first claim that was located, else the first claim with a page.
 const firstMark = (f: Finding) => f.highlights.find((h) => h.boxes.length) ?? f.highlights.find((h) => h.page)
-
-function Detail({ result, docs, text, runId, onReplay }: {
-  result: Result; docs: DocPages[] | null; text: TextPage[] | null; runId: string; onReplay?: () => void
-}) {
-  // Worst first: must fix, then out of date, then notes and not-stated.
-  const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass' && f.verdict !== 'not_applicable')
-    .sort((a, b) => TONE_RANK[toneOf(a)] - TONE_RANK[toneOf(b)] || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity]), [result])
-  const marks: Placed[] = useMemo(() => result.findings.flatMap((f) =>
-    f.highlights.map((h) => ({ ...h, finding: f, tone: h.kind === 'checked' ? 'green' as Tone : toneOf(f) }))), [result])
-  const [selId, setSelId] = useState<string | null>(issues[0]?.id ?? null)
-  const sel = issues.find((f) => f.id === selId) ?? null
-  const [pulse, setPulse] = useState(0)
-  const [textPage, setTextPage] = useState(() => (sel && firstMark(sel)?.page) || 1)
-  const pdf = useRef<{ scrollTo: (key: string) => void }>(null)
-
-  function select(f: Finding) {
-    setSelId(f.id)
-    setPulse((n) => n + 1)
-    const m = firstMark(f)
-    if (!m?.page) return
-    if (docs) pdf.current?.scrollTo(pageKey(m.doc_file, m.page))
-    else setTextPage(m.page)
-  }
-
-  const passed = result.findings.filter((f) => f.verdict === 'pass').length
-  const skipped = result.findings.filter((f) => f.verdict === 'not_applicable').length
-  const pageCount = docs ? docs.reduce((a, d) => a + d.pages.length, 0) : text?.length ?? 0
-  const lost = sel && sel.highlights.length > 0 && docs && sel.highlights.every((h) => h.boxes.length === 0)
-  const banner = !sel ? null
-    : notFound(sel) ? <>Searched all {plural(pageCount, 'page')}: nothing in the package covers this{sel.spec_ref ? ` (spec ${sel.spec_ref})` : ''}.</>
-    : sel.claim_ids.length === 0 ? <>This applies to the whole document, not one spot on a page.</>
-    : lost ? <>Couldn't locate this on the page. The quote was: “{sel.highlights[0].quote}”</>
-    : null
-
-  return (
-    <div className="grid grid-cols-1 gap-4 min-[1100px]:grid-cols-[272px_minmax(0,1fr)_360px]">
-      {/* Below 1100px the asides dissolve so the order is list, document, details, how it was checked. */}
-      <aside className="contents min-[1100px]:flex min-[1100px]:min-w-0 min-[1100px]:flex-col min-[1100px]:gap-4">
-        <nav className="panel overflow-hidden">
-          {issues.map((f) => {
-            const p = firstMark(f)?.page
-            return (
-              <button key={f.id} onClick={() => select(f)}
-                aria-current={sel?.id === f.id ? 'true' : undefined}
-                className={`flex w-full flex-col gap-1 border-b border-line px-4 py-3 text-left transition-colors ${sel?.id === f.id ? 'bg-selected shadow-[inset_0_0_0_1px_var(--color-edge)]' : 'hover:bg-raised'}`}>
-                <span className="flex justify-between text-xs">
-                  <span style={{ color: TONE_COLOR[toneOf(f)] }}>{LABEL[f.verdict]}</span>
-                  <span className="font-mono text-faint">{p ? `p. ${p}` : notFound(f) ? 'not found' : 'whole doc'}</span>
-                </span>
-                <span className="leading-snug">{f.title}</span>
-              </button>
-            )
-          })}
-          <div className="px-4 py-3 text-muted">
-            {issues.length ? '' : 'No problems found. '}{plural(passed, 'check')} passed
-            {skipped > 0 && <span className="block text-xs text-faint">{skipped} not applicable</span>}
-          </div>
-        </nav>
-        <div className="order-last min-[1100px]:order-none"><HowChecked result={result} runId={runId} onReplay={onReplay} /></div>
-      </aside>
-
-      <section className="panel flex min-w-0 flex-col gap-3 p-3 min-[1100px]:sticky min-[1100px]:top-[68px] min-[1100px]:h-[calc(100vh-84px)]">
-        {docs
-          ? <PdfPages ref={pdf} caseId={result.case_id} docs={docs} marks={marks} selId={sel?.id ?? null} pulse={pulse}
-              result={result} banner={banner} onPick={select} />
-          : <TextPages pages={text ?? []} marks={marks} selId={sel?.id ?? null} result={result} banner={banner}
-              page={textPage} onPage={setTextPage} />}
-      </section>
-
-      <aside className="contents min-[1100px]:block min-[1100px]:min-w-0">
-        <FindingCard finding={sel} result={result} passed={passed} />
-      </aside>
-    </div>
-  )
-}
 
 function worstTone(ms: Placed[]): Tone | undefined {
   return ms.map((m) => m.tone).sort((a, b) => TONE_RANK[a] - TONE_RANK[b])[0]
@@ -497,10 +451,12 @@ function changedRow(result: Result, claimId: string): CompareRow | undefined {
 // Real PDF pages in a scrolling column, with every located claim drawn over them.
 const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
   caseId: string; docs: DocPages[]; marks: Placed[]; selId: string | null; pulse: number; result: Result
-  banner: ReactNode; onPick: (f: Finding) => void
-}>(function PdfPages({ caseId, docs, marks, selId, pulse, result, banner, onPick }, ref) {
+  banner: ReactNode; label: string; onPick: (f: Finding) => void
+}>(function PdfPages({ caseId, docs, marks, selId, pulse, result, banner, label, onPick }, ref) {
   const pages: PdfPage[] = docs.flatMap((d) => d.pages.map((s, i) => ({ key: pageKey(d.file, i + 1), file: d.file, n: i + 1, ...s })))
   const multi = docs.length > 1
+  const sel = marks.find((p) => p.finding.id === selId && p.page)
+  const [at, setAt] = useState(sel ? pageKey(sel.doc_file, sel.page) : pages[0]?.key)
   const scroller = useRef<HTMLDivElement>(null)
   const refs = useRef<Record<string, HTMLDivElement | null>>({})
   const byPage = useMemo(() => {
@@ -510,6 +466,7 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
   }, [marks])
 
   function scrollTo(key: string) {
+    setAt(key)
     const el = refs.current[key], box = scroller.current
     if (!el || !box) return
     // The column scrolls on its own; fall back to the window if it ever doesn't.
@@ -527,19 +484,18 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
 
   return (
     <>
-      <div className="flex shrink-0 gap-2 overflow-x-auto pb-1 pt-2 pr-2" role="list" aria-label="Pages">
-        {pages.map((p) => {
-          const t = worstTone(byPage[p.key] ?? [])
-          return (
-            <button key={p.key} role="listitem" onClick={() => scrollTo(p.key)} aria-label={`Page ${p.n}${t ? ', has highlights' : ''}`}
-              className="relative w-11 shrink-0 rounded-sm bg-white ring-1 ring-line transition-shadow hover:ring-edge"
-              style={{ aspectRatio: `${p.width} / ${p.height}` }}>
-              <img src={pageUrl(caseId, p.file, p.n)} alt="" className="h-full w-full rounded-sm object-cover" />
-              <span className="absolute bottom-1 left-1 rounded-sm bg-black/65 px-1 font-mono text-xs leading-tight text-white">{p.n}</span>
-              {t && <span className="absolute -right-2 -top-2 h-3 w-3 rounded-full ring-2 ring-panel" style={{ background: TONE_COLOR[t] }} />}
-            </button>
-          )
-        })}
+      <div className="flex shrink-0 items-center justify-between gap-3">
+        <span className="truncate text-xs text-muted">{label} · page {pages.findIndex((p) => p.key === at) + 1} of {pages.length}</span>
+        <nav className="flex gap-1 font-mono text-xs" aria-label="Pages">
+          {pages.map((p, i) => {
+            const t = worstTone(byPage[p.key] ?? [])
+            return (
+              <button key={p.key} onClick={() => scrollTo(p.key)} aria-current={p.key === at ? 'page' : undefined}
+                className={`h-6 min-w-6 rounded px-1 tabular-nums ${p.key === at ? 'bg-selected text-ink' : 'text-faint hover:text-ink'}`}
+                style={{ boxShadow: t ? `inset 0 -2px 0 ${TONE_COLOR[t]}` : undefined }}>{i + 1}</button>
+            )
+          })}
+        </nav>
       </div>
       {banner && <p className="shrink-0 rounded-md border border-line bg-well px-3 py-2 text-xs text-soft">{banner}</p>}
       <div ref={scroller} className="relative flex max-h-[75vh] min-h-0 flex-1 flex-col gap-4 overflow-y-auto rounded min-[1100px]:max-h-none">
@@ -641,34 +597,6 @@ function TextPages({ pages, marks, selId, result, banner, page, onPage }: {
   )
 }
 
-function HowChecked({ result, runId, onReplay }: { result: Result; runId: string; onReplay?: () => void }) {
-  const tokens = result.usage.reduce((a, u) => a + u.input_tokens + u.output_tokens, 0)
-  const cost = result.usage.reduce((a, u) => a + u.cost_usd, 0)
-  return (
-    <div className="panel overflow-hidden font-mono text-xs">
-      {/* Models, tokens and cost stay collapsed: they're for whoever asks how, not for the decision. */}
-      <details>
-        <summary className="cursor-pointer px-4 py-3 font-sans text-sm text-muted hover:text-ink">How it was checked</summary>
-        {result.usage.map((u, i) => (
-          <div key={i} className="flex justify-between gap-3 px-4 py-1">
-            <span className="shrink-0 whitespace-nowrap">{u.task.replace(/_/g, ' ')}</span>
-            <span className="truncate text-muted">{u.model.split('/').pop()}</span>
-          </div>
-        ))}
-        <div className="mt-2 flex flex-wrap justify-between gap-x-3 gap-y-1 border-t border-line px-4 py-3 tabular-nums text-muted">
-          <span>{tokens.toLocaleString()} tok</span>
-          <span>${cost.toFixed(4)} + {result.web_credits} credits</span>
-          <span>{(result.duration_ms / 1000).toFixed(1)} s</span>
-        </div>
-      </details>
-      {onReplay && (
-        <button onClick={onReplay} className="w-full border-t border-line px-4 py-3 text-left text-soft hover:bg-raised">
-          Replay run {runId.slice(-6)} →
-        </button>
-      )}
-    </div>
-  )
-}
 
 function Icon({ kind }: { kind: 'x' | 'check' | 'dash' }) {
   const d = { x: 'm4 4 8 8M12 4l-8 8', check: 'm3.5 8.5 3 3 6-7', dash: 'M4.5 8h7' }[kind]
@@ -760,54 +688,179 @@ function splitLabel(l: string): [string, string] {
 
 const hostOf = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, '') } catch { return url } }
 
-// Send-backs: what to send instead. Every candidate went through the same checks as a new submittal.
-function FixPanel({ fix, attach, onAttach }: { fix: Fix; attach: boolean; onAttach: (on: boolean) => void }) {
-  const ok = fix.candidates.filter((c) => c.passes).length
+
+// ---------- review: what's wrong, and what's the fix? ----------
+
+function Review({ queue, current, loaded, states, acts, onPick, onDecide, onResults, onAgain }: {
+  queue: Case[]; current: Case | null; loaded: Record<string, Loaded>; states: Record<string, CaseState>; acts: Record<string, Act>
+  onPick: (id: string) => void; onDecide: (id: string, a: Act) => void; onResults: () => void; onAgain: () => void
+}) {
+  const count = (a: Act) => Object.values(acts).filter((x) => x === a).length
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-flare/35 p-4">
-      <span className="flex items-center gap-2">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F5A35A" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z" />
-        </svg>
-        <span className={`${CAPS} !text-[#F5A35A]`}>{fix.suggest ? 'SpecCheck found a fix' : 'Looked for a fix'}</span>
-      </span>
-      <span className="-mt-1 font-semibold">{fix.head}</span>
-      {fix.candidates.map((c, i) => (
-        <div key={i} className={`flex flex-col gap-2 rounded-[10px] border p-3 ${c.passes ? 'border-good/40 bg-good/[0.05]' : 'border-line'}`}>
-          <span className="flex items-start justify-between gap-3">
-            <span className="flex min-w-0 flex-col gap-1">
-              <span className="font-semibold">{c.name}</span>
-              <a href={c.source_url} target="_blank" rel="noreferrer" className="truncate font-mono text-xs text-faint underline decoration-edge underline-offset-2 hover:text-soft">{hostOf(c.source_url)}</a>
-            </span>
-            {(() => {
-              const bad = c.checks.find((k) => k.ok === false)
-              const [label, cls] = c.passes ? ['Passes', 'bg-good/15 text-good']
-                : bad ? [`Fails: ${bad.note || bad.label}`, 'bg-bad/15 text-[#ff8a84]'] : ["Couldn't confirm", 'bg-fyi/15 text-fyi']
-              return <span className={`shrink-0 rounded-full px-2 py-1 text-xs font-semibold ${cls}`}>{label}</span>
-            })()}
-          </span>
-          <div className="flex flex-col gap-1">
-            {c.checks.map((k, j) => {
-              const color = k.ok === true ? 'text-good' : k.ok === false ? 'text-[#ff8a84]' : 'text-faint'
-              return (
-                <span key={j} className="flex items-baseline gap-2 text-xs">
-                  <span className={`self-center ${color}`}><Icon kind={k.ok === true ? 'check' : k.ok === false ? 'x' : 'dash'} /></span>
-                  <span className="text-soft">{k.label}</span>
-                  <span className={`ml-auto shrink-0 ${color}`}>{k.note}</span>
-                </span>
-              )
-            })}
-          </div>
+    <div className="grid flex-1 grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)]">
+      <nav className="hidden flex-col border-r border-line py-4 lg:flex" aria-label="Queue">
+        {queue.map((c) => {
+          const r = loaded[c.id].result
+          const on = c.id === current?.id
+          return (
+            <button key={c.id} onClick={() => onPick(c.id)} aria-current={on ? 'true' : undefined}
+              className={`flex h-14 flex-col justify-center gap-1 px-5 text-left ${on ? 'bg-raised shadow-[inset_2px_0_0_var(--color-ink)]' : 'hover:bg-raised'} ${acts[c.id] ? 'opacity-50' : ''}`}>
+              <span className="truncate">{c.title}</span>
+              <span className="text-xs" style={{ color: acts[c.id] ? undefined : DECISION_COLOR[r.decision] }}>
+                {acts[c.id] ? ACT[acts[c.id]].done : DECISION_LABEL[r.decision]}
+              </span>
+            </button>
+          )
+        })}
+      </nav>
+      {current && loaded[current.id]
+        ? <Reviewing key={current.id} c={current} l={loaded[current.id]} act={acts[current.id]} runId={states[current.id]?.run}
+            onDecide={(a) => onDecide(current.id, a)} />
+        : (
+          <section className="flex flex-col items-center gap-4 px-6 py-24 text-center">
+            <h1 className="text-2xl font-semibold">All {queue.length} reviewed</h1>
+            <span className="text-muted">{count('forward')} forwarded · {count('note')} with a note · {count('return')} sent back</span>
+            <div className="mt-3 flex items-center gap-4">
+              <button className="flare h-10 rounded-lg px-4 font-semibold" onClick={onResults}>See how it scored</button>
+              <button className="text-muted underline underline-offset-4 hover:text-ink" onClick={onAgain}>Review again</button>
+            </div>
+          </section>
+        )}
+    </div>
+  )
+}
+
+function Reviewing({ c, l, act, onDecide }: { c: Case; l: Loaded; act?: Act; runId?: string; onDecide: (a: Act) => void }) {
+  const { result, docs, text } = l
+  // Worst first: must fix, then out of date, then notes and couldn't-confirm.
+  const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass' && f.verdict !== 'not_applicable')
+    .sort((a, b) => TONE_RANK[toneOf(a)] - TONE_RANK[toneOf(b)] || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity]), [result])
+  const marks: Placed[] = useMemo(() => result.findings.flatMap((f) =>
+    f.highlights.map((h) => ({ ...h, finding: f, tone: h.kind === 'checked' ? 'green' as Tone : toneOf(f) }))), [result])
+  const [selId, setSelId] = useState<string | null>(issues[0]?.id ?? null)
+  const sel = issues.find((f) => f.id === selId) ?? null
+  const [pulse, setPulse] = useState(0)
+  const [textPage, setTextPage] = useState(() => (sel && firstMark(sel)?.page) || 1)
+  const pdf = useRef<{ scrollTo: (key: string) => void }>(null)
+  const fix = fixOf(result)
+  const [attach, setAttach] = useState(true)
+  const rec = REC[result.decision]
+  const sub = c.from ?? 'the sender'
+  const defaultNote = rec === 'forward' ? 'Reviewed. No exceptions taken.'
+    : `${result.note_to_subcontractor || result.summary}${rec === 'return' && attach && fix?.suggest ? `\n\nSuggested: ${fix.suggest}. Checked against the spec.` : ''}`
+  const [edited, setEdited] = useState<string | null>(null)
+  const note = edited ?? defaultNote
+  const actLabel = (a: Act) => (a === 'return' && !fix?.suggest ? 'Send back' : ACT[a].label)
+
+  function select(f: Finding) {
+    setSelId(f.id)
+    setPulse((n) => n + 1)
+    const m = firstMark(f)
+    if (!m?.page) return
+    if (docs) pdf.current?.scrollTo(pageKey(m.doc_file, m.page))
+    else setTextPage(m.page)
+  }
+
+  const pageCount = docs ? docs.reduce((a, d) => a + d.pages.length, 0) : text?.length ?? 0
+  const lost = sel && sel.highlights.length > 0 && docs && sel.highlights.every((h) => h.boxes.length === 0)
+  const banner = !sel ? null
+    : notFound(sel) ? <>Searched all {plural(pageCount, 'page')}: nothing in the package covers this.</>
+    : lost ? <>Couldn't locate this on the page. The quote was: “{sel.highlights[0].quote}”</>
+    : null
+  const skipped = result.findings.filter((f) => f.verdict === 'not_applicable').length
+  const src = sel?.evidence[0]
+
+  return (
+    <div className="grid min-w-0 grid-cols-1 xl:grid-cols-[minmax(0,1fr)_400px]">
+      {/* On narrow screens the decision comes first, then the document. */}
+      <section className="order-2 flex min-w-0 flex-col gap-3 p-4 sm:p-6 xl:order-1 xl:sticky xl:top-0 xl:h-[calc(100vh-52px)]">
+        {docs
+          ? <PdfPages ref={pdf} caseId={result.case_id} docs={docs} marks={marks} selId={sel?.id ?? null} pulse={pulse}
+              result={result} banner={banner} label={sub === 'you' ? 'Your upload' : sub} onPick={select} />
+          : <TextPages pages={text ?? []} marks={marks} selId={sel?.id ?? null} result={result} banner={banner}
+              page={textPage} onPage={setTextPage} />}
+      </section>
+
+      <aside className="order-1 flex min-w-0 flex-col gap-6 border-line p-4 sm:p-6 xl:order-2 xl:border-l">
+        <div className="flex flex-col gap-1">
+          <span className="font-semibold" style={{ color: DECISION_COLOR[result.decision] }}>{DECISION_LABEL[result.decision]}</span>
+          <p className="text-base">{result.summary}</p>
         </div>
-      ))}
-      {fix.candidates.length === 0 && <span className="text-xs text-muted">Nothing found to check. Searched: “{fix.query}”</span>}
-      {fix.candidates.length > 0 && (
-        <span className="text-xs leading-normal text-muted">
-          {ok} of {fix.candidates.length} pass{ok === 1 && fix.candidates.length === 1 ? 'es' : ''}, checked like a new submittal
-        </span>
-      )}
+
+        {sel ? (
+          <div className="flex flex-col gap-3">
+            {issues.length > 1 && (
+              <nav className="flex flex-wrap gap-x-4 gap-y-1 text-xs" aria-label="Findings">
+                {issues.map((f) => (
+                  <button key={f.id} onClick={() => select(f)} aria-current={f.id === sel.id ? 'true' : undefined}
+                    className={f.id === sel.id ? 'text-ink' : 'text-muted underline underline-offset-4 hover:text-ink'}>{LABEL[f.verdict]}: {f.title}</button>
+                ))}
+              </nav>
+            )}
+            <span className="flex justify-between text-xs">
+              <span style={{ color: TONE_COLOR[toneOf(sel)] }}>{LABEL[sel.verdict]}</span>
+              <span className="text-muted">{firstMark(sel)?.page ? `page ${firstMark(sel)!.page}` : notFound(sel) ? 'not found' : 'whole document'}</span>
+            </span>
+            <h2 className="-mt-2 text-lg font-semibold leading-tight">{sel.title}</h2>
+            {sel.compare && <CompareBlock c={sel.compare} />}
+            {sel.why_it_matters && <p className="text-soft">{sel.why_it_matters}</p>}
+            <span className="truncate text-xs text-muted">
+              Source: {src
+                ? <a href={src.url} target="_blank" rel="noreferrer" className="underline decoration-edge underline-offset-2 hover:text-ink">{src.title || hostOf(src.url)} ↗</a>
+                : <>spec {sel.spec_ref || result.case_id}{result.document_revision ? ` · sheet ${result.document_revision}` : ''}</>}
+            </span>
+          </div>
+        ) : (
+          <ul className="flex flex-col gap-1 text-soft">
+            {result.findings.filter((f) => f.verdict === 'pass').map((f) => <li key={f.id}><span className="text-good">✓</span> {f.title}</li>)}
+            {skipped > 0 && <li className="text-xs text-faint">{skipped} not applicable</li>}
+          </ul>
+        )}
+
+        {fix && <FixSection fix={fix} section={c.section} attach={attach} onAttach={(on) => { setAttach(on); setEdited(null) }} />}
+
+        <div className="flex flex-col gap-2 border-t border-line pt-6">
+          <label htmlFor="note" className="text-muted">{rec === 'return' ? `Note to ${sub}` : 'Stamp note'}</label>
+          <textarea id="note" rows={5} value={note} onChange={(e) => setEdited(e.target.value)}
+            className="resize-y rounded-lg border border-line bg-well p-3 leading-relaxed text-ink" />
+          <button className="flare mt-2 h-12 rounded-lg font-semibold" onClick={() => onDecide(rec)}>{actLabel(rec)}</button>
+          <div className="flex justify-center gap-6 text-muted">
+            {(Object.keys(ACT) as Act[]).filter((a) => a !== rec).map((a) => (
+              <button key={a} className="h-8 underline underline-offset-4 hover:text-ink" onClick={() => onDecide(a)}>{ACT[a].short}</button>
+            ))}
+          </div>
+          {act && <span className="text-center text-xs text-faint">Already decided: {ACT[act].done}. Choosing again replaces it.</span>}
+        </div>
+      </aside>
+    </div>
+  )
+}
+
+const checkLine = (k: { ok: boolean | null; label: string; note: string }) =>
+  `${k.ok === true ? '✓' : k.ok === false ? '✗' : '–'} ${k.label}${k.note && k.ok !== null ? ` ${k.note}` : ''}`
+
+// What to send instead. Every candidate went through the same checks as a new submittal.
+function FixSection({ fix, section, attach, onAttach }: { fix: Fix; section: string; attach: boolean; onAttach: (on: boolean) => void }) {
+  return (
+    <div className="flex flex-col gap-3 border-t border-line pt-6">
+      <span className="text-xs text-flare">Fix</span>
+      <span className="-mt-2 font-semibold">{fix.head}</span>
+      {fix.candidates.map((c, i) => {
+        const bad = c.checks.some((k) => k.ok === false)
+        const [verdict, color] = c.passes ? ['Passes', 'text-good'] : bad ? ['Fails', 'text-bad'] : ["Couldn't confirm", 'text-fyi']
+        return (
+          <div key={i} className={`flex flex-col gap-2 rounded-lg border p-3 ${c.passes ? 'border-good/40' : 'border-line'}`}>
+            <span className="flex items-start justify-between gap-3">
+              <a href={c.source_url} target="_blank" rel="noreferrer" className="font-medium hover:underline">{c.name}</a>
+              <span className={`shrink-0 text-xs ${color}`}>{verdict}</span>
+            </span>
+            <span className="text-xs leading-relaxed text-muted">{c.checks.map(checkLine).join('   ')}</span>
+          </div>
+        )
+      })}
+      {!fix.candidates.length && <span className="text-xs text-muted">Nothing found to check against {section}. Searched: “{fix.query}”</span>}
       {fix.suggest && (
-        <label className="flex min-h-8 cursor-pointer items-center gap-2">
+        <label className="flex min-h-8 cursor-pointer items-center gap-2 text-soft">
           <input type="checkbox" checked={attach} onChange={(e) => onAttach(e.target.checked)} className="accent-[#F5791A]" />
           Attach to the note
         </label>
@@ -816,177 +869,174 @@ function FixPanel({ fix, attach, onAttach }: { fix: Fix; attach: boolean; onAtta
   )
 }
 
-function FindingCard({ finding: f, result, passed }: { finding: Finding | null; result: Result; passed: number }) {
-  const src = f?.evidence[0]
-  const [attach, setAttach] = useState(true)
-  const fixes = result.findings.flatMap((x) => (x.fix?.suggest ? [x.fix.suggest] : []))
-  const note = result.note_to_subcontractor && attach && fixes.length
-    ? `${result.note_to_subcontractor}\n\nSuggested: ${fixes.join('; ')}. Checked against the spec; details attached.`
-    : result.note_to_subcontractor
+// ---------- alert: what changed since approval? ----------
+
+type Order = 'none' | 'ordered' | 'installed'
+
+function Alert({ c, result, onDone }: { c: Case; result: Result; onDone: () => void }) {
+  const [order, setOrder] = useState<Order>('none')
+  const [edits, setEdits] = useState<Partial<Record<Order, string>>>({})
+  const status = result.findings.find((f) => f.check === 'status' && f.verdict === 'fail')
+  const changed = status ?? result.findings.find((f) => f.verdict === 'fail' || f.verdict === 'outdated')
+  const fix = fixOf(result)
+  const best = fix?.candidates.find((x) => x.passes)
+  const category = c.title.split(',')[0].replace(/^LED /, '').toLowerCase()
+  const fact = show(changed?.compare?.right_value ?? 'Changed') // "Discontinued June 30, 2024"
+  const [now, ...when] = fact.split(' ')
+  const changedTo = `${now.toLowerCase()}${when.length ? ` (effective ${when.join(' ')})` : ''}`
+  const approved = c.watch ? new Date(c.watch.approved).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : ''
+  const src = changed?.evidence[0]
+  if (!changed) {
+    return <p className="m-6 text-muted">No change since approval. SpecCheck keeps checking this item nightly.</p>
+  }
+  const repl = best ? ` ${best.name} meets ${c.section}; checks attached.` : ''
+  const drafts: Record<Order, [string, string, string]> = { // [label, draft, action]
+    none: [`Message to ${c.from}`, `The ${c.product} approved under ${c.number} was ${changedTo}.${repl} Please submit ${best ? 'it or another' : 'a'} current substitute before ordering.`,
+      best ? 'Send replacement to sub' : 'Ask sub for a substitute'],
+    ordered: [`Message to ${c.from}`, `The ${c.product} on order for ${c.number} was ${changedTo}. Please confirm with your supplier that the full quantity will ship.${best ? ` If it can't,${repl}` : ''}`,
+      'Ask sub to confirm'],
+    installed: ['Closeout note', `Installed ${c.product} (${c.number}) was ${changedTo} after installation. For the O&M manual: replacements need a current substitute${best ? `, such as ${best.name}` : ''}.`,
+      'Add to closeout'],
+  }
+  const [label, draft, action] = drafts[order]
   return (
-    <div className="panel flex flex-col gap-4 p-5">
-      {f ? (
-        <>
-          <div className="flex min-w-0 flex-col gap-1">
-            <span className="flex justify-between font-mono text-xs uppercase tracking-[0.06em]">
-              <span style={{ color: TONE_COLOR[toneOf(f)] }}>{LABEL[f.verdict]}{f.severity !== 'info' ? ` · ${f.severity}` : ''}</span>
-              {firstMark(f)?.page && <span className="text-faint">page {firstMark(f)!.page}</span>}
-            </span>
-            <h2 className="text-lg font-bold leading-snug">{f.title}</h2>
-          </div>
-          {f.compare && <CompareBlock c={f.compare} />}
-          {f.why_it_matters && <p className="text-sm leading-snug text-soft"><span className="text-faint">Why it matters: </span>{f.why_it_matters}</p>}
-          <div className="truncate text-xs text-faint">
-            {src ? (
-              <>Checked against <a href={src.url} target="_blank" rel="noreferrer" className="text-soft underline decoration-edge underline-offset-2 hover:decoration-ink">{src.title || src.url}</a>
-                {src.retrieved_at ? ` · ${new Date(src.retrieved_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}` : ''}</>
-            ) : <>Checked against spec {f.spec_ref || 'section'}{result.document_revision ? ` · sheet ${result.document_revision}` : ''}</>}
-          </div>
-          {f.fix && <FixPanel fix={f.fix} attach={attach} onAttach={setAttach} />}
-        </>
-      ) : (
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-good">No problems</span>
-          <h2 className="text-lg font-bold">All {plural(passed, 'check')} passed</h2>
-          <p className="text-muted">{result.summary}</p>
+    <div className="mx-auto grid w-full max-w-[1120px] flex-1 grid-cols-1 gap-12 px-4 py-8 sm:px-6 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <section className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <span className="font-semibold text-bad">Changed since approval</span>
+          <h1 className="text-2xl font-bold tracking-tight">The approved {category} was {status ? 'discontinued' : 'changed'}</h1>
+          <span className="text-xs text-muted">{c.title} · {c.product} · approved {approved} · caught by the nightly watch</span>
         </div>
-      )}
-      <Note text={note} />
+        <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-line">
+          <div className="flex flex-col gap-1 bg-well p-4"><span className="text-xs text-muted">At approval</span><span className="text-lg font-semibold">Active</span></div>
+          <div className="flex flex-col gap-1 border-l border-line p-4">
+            <span className="text-xs text-muted">Today</span>
+            <span className="text-lg font-semibold text-bad">{now}</span>
+            {when.length > 0 && <span className="text-xs text-muted">effective {when.join(' ')}</span>}
+          </div>
+        </div>
+        {src && <a href={src.url} target="_blank" rel="noreferrer" className="-mt-3 text-xs text-muted underline decoration-edge underline-offset-2 hover:text-ink">Source: {src.title} ↗</a>}
+        <div className="flex flex-col gap-3 border-t border-line pt-6">
+          <span className="text-xs text-flare">Fix</span>
+          {best ? (
+            <div className="flex flex-col gap-2 rounded-xl border border-good/40 p-4">
+              <span className="flex items-start justify-between gap-3">
+                <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
+                <span className="shrink-0 text-xs text-good">Meets {c.section}</span>
+              </span>
+              <span className="text-xs leading-relaxed text-muted">{best.checks.map(checkLine).join('   ')}</span>
+            </div>
+          ) : <span className="text-muted">No passing replacement found.</span>}
+        </div>
+      </section>
+
+      <aside className="flex flex-col gap-4">
+        <span className="text-muted" id="order">Where is the order?</span>
+        <div role="radiogroup" aria-labelledby="order" className="grid grid-cols-3 overflow-hidden rounded-lg border border-line">
+          {([['none', 'Not ordered'], ['ordered', 'Ordered'], ['installed', 'Installed']] as [Order, string][]).map(([k, t]) => (
+            <button key={k} role="radio" aria-checked={order === k} onClick={() => setOrder(k)}
+              className={`h-10 border-l border-line first:border-l-0 ${order === k ? 'bg-selected text-ink' : 'text-muted hover:text-ink'}`}>{t}</button>
+          ))}
+        </div>
+        <label htmlFor="msg" className="mt-2 text-muted">{label}</label>
+        <textarea id="msg" rows={7} value={edits[order] ?? draft} onChange={(e) => setEdits((m) => ({ ...m, [order]: e.target.value }))}
+          className="resize-y rounded-lg border border-line bg-well p-3 leading-relaxed text-ink" />
+        <button className="flare h-12 rounded-lg font-semibold" onClick={onDone}>{action}</button>
+        <button className="h-8 text-muted underline underline-offset-4 hover:text-ink" onClick={onDone}>Mark handled, keep watching</button>
+      </aside>
     </div>
   )
 }
 
-function Note({ text }: { text: string }) {
-  const [copied, setCopied] = useState(false)
-  if (!text) return null
-  return (
-    <div className="flex flex-col gap-2 border-t border-line pt-4">
-      <div className="flex items-center justify-between">
-        <span className="text-xs font-medium">Note to send</span>
-        <button onClick={() => navigator.clipboard.writeText(text).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500) })}
-          className="btn h-7">{copied ? 'Copied' : 'Copy'}</button>
-      </div>
-      <p className="whitespace-pre-line rounded-lg border border-line bg-well p-3 leading-relaxed">{text}</p>
-    </div>
-  )
-}
-
-// ---------- results ----------
+// ---------- results: how good is it? ----------
 
 const PROBLEM: Record<string, string> = {
   spec: 'spec', currency: 'out of date', validity: 'listing', status: 'discontinued', currency_note: 'newer, same values', completeness: 'missing',
 }
 const callOf = (d: Decision, problems: string[]) =>
-  `${DECISION_LABEL[d]}${problems.length ? `: ${problems.map((p) => PROBLEM[p] ?? p).join(', ')}` : ''}`
+  `${DECISION_LABEL[d]}${problems.length ? ` · ${problems.map((p) => PROBLEM[p] ?? p).join(', ')}` : ''}`
 
-function Stat({ value, of, label, accent }: { value: ReactNode; of?: number; label: string; accent?: boolean }) {
-  return (
-    <div className={`panel flex h-24 flex-col justify-center gap-1 p-4 ${accent ? '!border-flare/35' : ''}`}>
-      <span className={`text-2xl font-bold tabular-nums ${accent ? 'text-[#F5A35A]' : ''}`}>
-        {value}{of !== undefined && <span className="text-base font-semibold text-faint"> / {of}</span>}
-      </span>
-      <span className="text-xs text-muted">{label}</span>
-    </div>
-  )
-}
+// About 40 working hours (one week) by hand for ~100 submittals: the canvas's reviewer estimate.
+const BY_HAND_HOURS = 40
 
 function Results() {
   const [scores, setScores] = useState<Scores | null | 'error' | undefined>(undefined)
+  const [running, setRunning] = useState(false)
   useEffect(() => { getScores().then(setScores, () => setScores('error')) }, [])
-  if (scores === undefined) { // skeleton in the final layout, so nothing jumps when the numbers arrive
-    return (
-      <>
-        <div className="h-16 w-1/2 rounded bg-raised" />
-        <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {Array.from({ length: 5 }, (_, i) => <div key={i} className="panel h-24" />)}
-        </section>
-        <div className="panel h-96" />
-      </>
-    )
+  async function rerun() {
+    setRunning(true)
+    try { setScores(await runScores()) } catch { setScores('error') } finally { setRunning(false) }
   }
-  if (scores === 'error') return <p className="panel p-6 text-muted">Couldn't load the scores. Check that the API is running, then reload.</p>
-  if (scores === null) {
-    return (
-      <section className="panel flex flex-col gap-2 p-6">
-        <h1 className="text-lg font-bold tracking-tight">No scores yet</h1>
-        <p className="text-muted">Run <code className="font-mono text-soft">python scripts/eval.py</code> to score all 8 cases against the answer key.</p>
-      </section>
-    )
-  }
-  const s = scores
-  const when = new Date(s.generated_at).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+  const s = scores && scores !== 'error' ? scores : null
+  const hours = s ? (s.time_ms_per_item * 100) / 3_600_000 : 0
   return (
-    <>
+    <main className="mx-auto flex w-full max-w-[1056px] flex-col gap-8 px-4 py-8 sm:px-6">
       <section className="flex flex-wrap items-end justify-between gap-4">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-bold tracking-tight">How well it works</h1>
-          <span className="text-muted">{s.rows.length} real submittals with a known answer, run end to end.</span>
+          <span className="text-muted">
+            {s ? `${s.rows.length} real submittals with a known answer. Last run ${new Date(s.generated_at).toLocaleDateString(undefined, { dateStyle: 'medium' })}${s.mode === 'live' ? '.' : ', replayed from recordings.'}` : NBSP}
+          </span>
         </div>
-        <span className="font-mono text-xs text-faint">{s.mode} run {s.run_id.slice(-6)} · {when}</span>
+        <button className="flare h-10 rounded-lg px-4 font-semibold disabled:opacity-40" onClick={rerun} disabled={running}>
+          {running ? 'Running…' : 'Run the scoring set'}
+        </button>
       </section>
 
-      {s.mode !== 'live' && (
-        <p className="rounded-lg border border-line bg-well px-4 py-3 text-xs text-soft">
-          Mock mode: answers are replayed from recorded runs, so time is near zero.
-        </p>
-      )}
+      {scores === undefined && <div className="grid h-[400px] grid-cols-2 gap-6 md:grid-cols-4">{Array.from({ length: 4 }, (_, i) => <div key={i} className="h-20 rounded bg-raised" />)}</div>}
+      {scores === 'error' && <p className="text-muted">Couldn't load the scores. Check that the API is running, then reload.</p>}
+      {scores === null && <p className="text-muted">No scores yet. Run the scoring set, or <code className="font-mono text-soft">python scripts/eval.py</code>.</p>}
 
-      <section className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        <Stat value={s.right_call.n} of={s.right_call.of} label="Right call" />
-        <Stat value={s.caught.n} of={s.caught.of} label="Problems caught" />
-        <Stat value={s.false_alarms.n} of={s.false_alarms.of} label="False alarms on clean items" />
-        <Stat value={s.fixes_passing.n} of={s.fixes_passing.of} label="Fixes that pass the spec" accent />
-        <Stat value={`${(s.time_ms_per_item / 1000).toFixed(1)} s`} label="Per submittal" />
-      </section>
+      {s && (
+        <>
+          <section className="grid grid-cols-2 gap-6 md:grid-cols-4">
+            <Stat value={s.right_call.n} of={s.right_call.of} label="Right call" />
+            <Stat value={s.caught.n} of={s.caught.of} label={`Problems caught, ${plural(s.false_alarms.n, 'false alarm')}`} />
+            <Stat value={s.fixes_passing.n} of={s.fixes_passing.of} label="Fixes that pass the spec" accent />
+            <Stat value={`${(s.time_ms_per_item / 1000).toFixed(1)} s`} label="Per submittal" />
+          </section>
 
-      <section className="panel overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[920px] border-collapse text-left">
-            <thead className="font-mono text-xs text-faint">
-              <tr className="border-b border-line">
-                {['Case', 'Document', 'Answer key', 'SpecCheck', 'Fix', 'Time'].map((h, i) => (
-                  <th key={h} className={`px-4 py-3 font-normal ${i >= 5 ? 'text-right' : ''}`}>{h.toUpperCase()}</th>
+          <section className="grid grid-cols-[96px_minmax(0,1fr)_120px] items-center gap-x-4 gap-y-3">
+            <span className="col-span-3 text-muted">A project with about 100 submittals</span>
+            <span className="text-muted">By hand</span><span className="h-2 rounded bg-edge" /><span>about a week</span>
+            <span>SpecCheck</span>
+            <span className="h-2 rounded bg-line"><span className="block h-2 rounded bg-flare" style={{ width: `${Math.max(1, Math.min(100, (hours / BY_HAND_HOURS) * 100))}%` }} /></span>
+            <span>{hours < 1 ? `${Math.max(1, Math.round(hours * 60))} min` : `${hours.toFixed(1)} hours`}</span>
+          </section>
+
+          <section className="overflow-x-auto">
+            <table className="w-full min-w-[720px] border-collapse text-left">
+              <thead className="text-muted">
+                <tr className="border-b border-line">{['Case', 'Document', 'Answer key', 'SpecCheck', 'Fix'].map((h, i) => <th key={h} className={`h-10 font-normal ${i === 0 ? 'w-16' : i === 1 ? 'w-44' : ''}`}>{h}</th>)}</tr>
+              </thead>
+              <tbody>
+                {s.rows.map((r) => (
+                  <tr key={r.id} className="h-12 border-b border-line">
+                    <td className="font-mono text-xs text-faint">{r.id}</td>
+                    <td>{r.product || r.title}</td>
+                    <td style={{ color: DECISION_COLOR[r.expected] }}>{callOf(r.expected, r.expected_problems)}</td>
+                    <td>{r.error || !r.decision ? <span className="text-bad">Error</span>
+                      : <span className="flex items-center gap-2"><span className={r.right_call ? 'text-good' : 'text-bad'}><Icon kind={r.right_call ? 'check' : 'x'} /></span>{DECISION_LABEL[r.decision]}</span>}</td>
+                    <td className="text-muted">{!r.fix ? '—' : r.fix.passes ? r.fix.suggest : 'no passing fix'}</td>
+                  </tr>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              {s.rows.map((r) => (
-                <tr key={r.id} className="border-b border-line last:border-b-0">
-                  <td className="px-4 py-3 font-mono text-xs text-muted">{r.id}</td>
-                  <td className="px-4 py-3">{r.title}</td>
-                  <td className="px-4 py-3">
-                    <span className="flex items-center gap-2">
-                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: DECISION_COLOR[r.expected] }} />
-                      {callOf(r.expected, r.expected_problems)}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    {r.error || !r.decision ? <span className={BAD}>Error</span> : (
-                      <span className={`flex items-center gap-2 ${r.right_call && r.caught === r.expected_problems.length ? '' : BAD}`}>
-                        <span className={r.right_call ? 'text-good' : BAD}><Icon kind={r.right_call ? 'check' : 'x'} /></span>
-                        {callOf(r.decision, r.found_problems ?? [])}
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-4 py-3 text-muted">
-                    {!r.fix ? 'none needed' : r.fix.passes
-                      ? <span className="flex items-center gap-2"><span className="text-good"><Icon kind="check" /></span>
-                          <span className="text-soft">{r.fix.suggest}</span></span>
-                      : <span>no passing fix</span>}
-                  </td>
-                  <td className="whitespace-nowrap px-4 py-3 text-right font-mono text-xs tabular-nums text-muted">{r.time_ms !== undefined ? `${(r.time_ms / 1000).toFixed(1)} s` : '—'}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </tbody>
+            </table>
+          </section>
+          <p className="text-xs text-muted">A problem counts as caught only if its type matches the key. A fix counts only if every check passes on quoted evidence, the same checks as a new submittal. All documents are public; sources are in the repo.</p>
+        </>
+      )}
+    </main>
+  )
+}
 
-      <section className="panel grid gap-2 p-5 text-soft sm:grid-cols-3 sm:gap-6">
-        <span><b className="text-ink">Right call:</b> approve, approve with note, or send back matches the key.</span>
-        <span><b className="text-ink">Caught:</b> the problem type matches too (spec, listing, out of date, discontinued).</span>
-        <span><b className="text-ink">Fix passes:</b> the suggested sheet or product clears the same checks as a new submittal.</span>
-      </section>
-    </>
+function Stat({ value, of, label, accent }: { value: ReactNode; of?: number; label: string; accent?: boolean }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <span className={`text-2xl font-bold tabular-nums ${accent ? 'text-flare' : ''}`}>
+        {value}{of !== undefined && <span className="text-base font-medium text-faint">/{of}</span>}
+      </span>
+      <span className="text-xs text-muted">{label}</span>
+    </div>
   )
 }

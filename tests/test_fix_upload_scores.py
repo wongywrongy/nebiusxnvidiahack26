@@ -55,7 +55,7 @@ def test_c04_sti_fails_on_t_rating(run):
     (f,) = fixes(run.results["c04"])
     sti = next(c for c in f.candidates if "W-L-1079" in c.name)
     assert not sti.passes and sti.source_url
-    t = next(k for k in sti.checks if k.label.startswith("T rating"))
+    t = next(k for k in sti.checks if k.label == "Temperature rating (T)")
     assert t.ok is False and t.note == "T 0 hr"
     assert f.head == "No passing replacement found" and not f.suggest
 
@@ -147,3 +147,14 @@ def test_scores_endpoint(tmp_path, monkeypatch):
     assert client.get("/api/scores").status_code == 404
     fake.scores_file.write_text(json.dumps({"right_call": {"n": 8, "of": 8}}))
     assert client.get("/api/scores").json()["right_call"]["n"] == 8
+
+
+def test_run_scoring_set_endpoint(tmp_path, monkeypatch):
+    import dataclasses
+
+    from api.pipeline import scores as scores_mod
+
+    monkeypatch.setattr(scores_mod, "settings", dataclasses.replace(settings, scores_file=tmp_path / "scores.json"))
+    s = client.post("/api/scores/run").json()
+    assert s["right_call"] == {"n": 8, "of": 8} and s["false_alarms"]["n"] == 0
+    assert json.loads((tmp_path / "scores.json").read_text())["run_id"] == s["run_id"]
