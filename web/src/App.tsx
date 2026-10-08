@@ -32,9 +32,13 @@ const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`
 const now = () => `Today ${new Date().toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
 const longDate = (d: string) =>
   new Date(/^\d{4}-\d\d-\d\d$/.test(d) ? `${d}T00:00` : d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+const ASKS_SEP = ' · '
 const fileName = (c: Case) => c.submittal[0]?.file.split('/').pop() ?? ''
 const fixOf = (r?: Result) => r?.findings.find((f) => f.fix)?.fix ?? null
-const show = (v: Value | undefined) => (v === null || v === undefined || v === '' ? '—' : Array.isArray(v) ? v.join(', ') : String(v))
+// Spec values come lower-cased ("astm e814"); acronyms back to capitals, list items joined.
+const ACRONYM = /\b(astm|ul|ulc|can|dlc|cri|voc|fm|its|ic|cpvc|pvc|abs|pex|frpp|pvdf)\b/gi
+const show = (v: Value | undefined) => (v === null || v === undefined || v === '' ? '—'
+  : (Array.isArray(v) ? v.join(', ') : String(v)).replace(ACRONYM, (m) => m.toUpperCase()).replace(/\b([a-z])(\d{3,})\b/g, (_, a: string, n: string) => a.toUpperCase() + n))
 const hostOf = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, '') } catch { return url } }
 const discontinued = (r?: Result) => r?.findings.find((f) => f.check === 'status' && f.verdict === 'fail')
 // "tavily + nvidia/nemotron-3-super-120b-a12b" -> "Tavily + Super"
@@ -171,16 +175,22 @@ export default function App() {
 
 function StepBar({ step, reached, onGo }: { step: Step; reached: Step; onGo: (s: Step) => void }) {
   return (
-    <nav aria-label="Steps" className="order-last -ml-2 flex w-full items-center sm:order-none sm:w-auto">
-      {STEPS.map(([n, label], i) => (
-        <Fragment key={n}>
-          {i > 0 && <span className="text-faint" aria-hidden>·</span>}
-          <button onClick={() => onGo(n)} disabled={n > reached} aria-current={n === step ? 'step' : undefined}
-            className={`flex h-9 items-center gap-2 rounded-md px-2 disabled:cursor-not-allowed disabled:text-faint ${n === step ? 'font-medium text-ink' : 'text-muted enabled:hover:text-ink'}`}>
-            <span className={`font-mono text-xs ${n === step ? 'text-flare' : ''}`}>{n}</span>{label}
-          </button>
-        </Fragment>
-      ))}
+    <nav aria-label="Steps" className="order-last -ml-2 flex w-full items-center gap-1 overflow-x-auto sm:order-none sm:w-auto">
+      {STEPS.map(([n, label], i) => {
+        const on = n === step, done = n < step
+        return (
+          <Fragment key={n}>
+            {i > 0 && <span className={`h-px w-3 shrink-0 sm:w-4 ${n <= reached ? 'bg-edge' : 'bg-line'}`} aria-hidden />}
+            <button onClick={() => onGo(n)} disabled={n > reached} aria-current={on ? 'step' : undefined} aria-label={`${n} ${label}${done ? ', done' : ''}`}
+              className={`flex h-8 shrink-0 items-center gap-2 rounded-lg px-2.5 disabled:cursor-not-allowed disabled:text-faint ${on ? 'bg-raised font-medium text-ink' : 'text-soft enabled:hover:text-ink'}`}>
+              <span className={`flex h-5 w-5 items-center justify-center rounded-full font-mono text-xs ${on ? 'bg-flare text-on-accent' : done ? 'bg-good/15 text-good' : 'bg-line text-faint'}`}>
+                {done ? <Icon kind="check" /> : n}
+              </span>
+              <span className={on ? '' : 'hidden sm:inline'}>{label}</span>
+            </button>
+          </Fragment>
+        )
+      })}
     </nav>
   )
 }
@@ -254,7 +264,7 @@ function InboxStep({ project, inbox, rows, error, onAdd, onUpload, onRemove, onS
   return (
     <>
       <Heading title="Inbox" count={project ? count : NBSP}>
-        <button className={PRIMARY} onClick={onScan} disabled={!fresh.length}>Scan {plural(fresh.length, 'submittal')}</button>
+        <button className={PRIMARY} onClick={onScan} disabled={!fresh.length}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
       </Heading>
 
       <section onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDrop={drop}
@@ -325,8 +335,9 @@ function Tile({ c, added, onAdd }: { c: Case; added: boolean; onAdd: (id: string
         onDragStart={(e) => { e.dataTransfer.setData(TRAY_MIME, c.id); e.dataTransfer.effectAllowed = 'copy' }}
         className="flex w-full min-w-0 items-start gap-3 rounded-lg border border-line bg-well p-3 text-left enabled:cursor-grab enabled:hover:border-edge disabled:cursor-not-allowed disabled:opacity-40">
         <PdfIcon />
-        <span className="flex min-w-0 flex-col gap-1">
-          <span className="truncate font-mono text-xs text-ink">{fileName(c)}</span>
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <span className="truncate font-medium text-ink">{c.product}</span>
+          <span className="truncate font-mono text-xs text-soft" title={fileName(c)}>{fileName(c)}</span>
           <span className="truncate text-xs text-muted">{c.number} · {KIND[c.submittal[0]?.role ?? ''] ?? 'Document'}</span>
         </span>
       </button>
@@ -444,6 +455,37 @@ const toneOf = (f: Finding): Tone =>
   f.verdict === 'pass' ? 'green' : f.verdict === 'fail' ? 'red' : f.verdict === 'outdated' ? 'amber' : 'blue'
 const WEB = new Set(['currency', 'status'])
 
+// What the sub has to send to clear each problem, in the reviewer's words.
+const FLAGGED = (f: Finding) => f.verdict === 'fail' || f.verdict === 'outdated'
+function asks(r: Result, section: string): string[] {
+  const out = r.findings.filter(FLAGGED).map((f) =>
+    f.check === 'currency' ? "The manufacturer's current data sheet"
+    : f.check === 'status' ? `A current product that meets ${section}`
+    : f.check === 'validity' ? `A listed system that covers ${show(f.compare?.left_value)}`
+    : /=/.test(show(f.compare?.left_value)) ? `A listed system with ${show(f.compare?.left_value)}`
+    : `${f.title}: ${show(f.compare?.left_value)} required`)
+  return [...new Set(out)]
+}
+
+function returnNote(c: Case, r: Result, best?: { name: string }): string {
+  return [
+    `Revise and resubmit ${c.number ?? c.title}.`,
+    r.summary,
+    `Please send:\n${asks(r, c.section).map((a) => `- ${a.charAt(0).toLowerCase()}${a.slice(1)}`).join('\n')}`,
+    ...(best ? [`Suggested replacement: ${best.name}.`] : []),
+  ].join('\n\n')
+}
+
+// Web checks as rows of the one check table: Required is what the maker publishes today.
+const WEB_LABEL: Record<string, string> = { 'status-discontinued': 'Product status' }
+function webRows(f: Finding): CheckRow[] {
+  if (f.compare?.rows.length) return f.compare.rows.map((r: CompareRow): CheckRow => [f, r.label, `Current: ${r.current ?? '—'}`, r.submitted])
+  if (f.id === 'status-discontinued') return [[f, WEB_LABEL[f.id], 'In production', f.compare?.right_value]]
+  const now = f.compare?.right_value
+  const current = f.verdict === 'pass' && (now === 'unknown' || !now) ? 'Same values as current' : `Current: ${show(now)}`
+  return [[f, 'Data sheet version', current, f.compare?.left_value]]
+}
+
 function Reviewing({ c, at, of, l, call, onDecide }: {
   c: Case; at: number; of: number; l: Loaded; call?: Call; onDecide: (call: Call) => void
 }) {
@@ -460,7 +502,7 @@ function Reviewing({ c, at, of, l, call, onDecide }: {
   const rec: Act = result.decision === 'send_back' ? 'return' : 'approve'
   const who = c.from ?? 'sender'
   const draft = (a: Act) => a === 'return'
-    ? result.note_to_subcontractor || result.summary
+    ? returnNote(c, result, best)
     : `No exceptions taken. Forwarding ${c.number ?? c.title} for approval.${result.decision === 'approve_with_note' && result.note_to_subcontractor ? `\n\n${result.note_to_subcontractor}` : ''}`
   const [message, setMessage] = useState(call?.act === rec ? call.message : draft(rec))
   const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
@@ -473,7 +515,7 @@ function Reviewing({ c, at, of, l, call, onDecide }: {
         {docs
           ? <PdfPages caseId={result.case_id} docs={docs} marks={marks} selId={first?.id ?? null} result={result} href={c.submittal[0]?.url} />
           : <TextPages pages={text ?? []} marks={marks} selId={first?.id ?? null} result={result} page={textPage} onPage={setTextPage}
-              name={fileName(c)} href={c.submittal[0]?.url} />}
+              name={fileName(c)} href={c.submittal[0]?.url} product={c.product} />}
       </section>
 
       <aside className="order-1 flex min-w-0 flex-col gap-5 lg:order-2">
@@ -484,15 +526,12 @@ function Reviewing({ c, at, of, l, call, onDecide }: {
           <p className="text-base text-soft">{result.summary}</p>
         </div>
 
-        <div className="flex flex-col gap-3">
-          {spec.length > 0 && <Checks head={['Check', 'Required', 'Submitted']} rows={spec.map((f) => [f, f.title, f.compare?.left_value, f.compare?.right_value])} />}
-          {web.length > 0 && (
-            <Checks head={['Check', 'Submitted', 'Current']} rows={web.flatMap((f) => f.compare?.rows.length
-              ? f.compare.rows.map((r: CompareRow): CheckRow => [f, r.label, r.submitted, r.current])
-              : [[f, f.title, f.compare?.left_value, f.compare?.right_value] as CheckRow])} />
-          )}
-          <span className="truncate text-xs text-muted">
-            Source: spec {c.section}{result.document_revision ? ` · submitted sheet ${result.document_revision}` : ''}
+        <div className="flex flex-col gap-2">
+          <Checks head={['Check', 'Required', 'Submitted']}
+            rows={[...spec.map((f): CheckRow => [f, f.title, f.compare?.left_value, f.compare?.right_value]), ...web.flatMap(webRows)]
+              .sort((x, y) => TONE_RANK[toneOf(x[0])] - TONE_RANK[toneOf(y[0])])} />
+          <span className="text-xs leading-5 text-muted">
+            Sources: spec {c.section}{result.document_revision ? ` · submitted sheet ${result.document_revision}` : ''}
             {source && <> · <a href={source.url} target="_blank" rel="noreferrer" className="underline decoration-edge underline-offset-2 hover:text-ink">{source.title || hostOf(source.url)} ↗</a></>}
           </span>
         </div>
@@ -510,7 +549,7 @@ function Reviewing({ c, at, of, l, call, onDecide }: {
             <label htmlFor="message" className={CAPS}>{rec === 'return' ? `Return to ${who}` : 'Forward to architect'}</label>
             {rec === 'return' && c.email && <span className="font-mono text-xs text-muted">{c.email}</span>}
           </span>
-          <textarea id="message" rows={6} value={message} onChange={(e) => setMessage(e.target.value)}
+          <textarea id="message" rows={9} value={message} onChange={(e) => setMessage(e.target.value)}
             className="resize-y rounded-lg border border-line bg-well p-3 leading-relaxed text-ink" />
           <div className="flex flex-wrap gap-2">
             {rec === 'return' ? (
@@ -681,37 +720,52 @@ const PdfPages = forwardRef<{ scrollTo: (key: string) => void }, {
   )
 })
 
-// Fallback when the PDF is not downloaded: the recorded page text with each quote marked.
-function TextPages({ pages, marks, selId, result, page, onPage, name, href }: {
+// Fallback when the PDF is not downloaded: a page-style excerpt of the recorded text, only the lines around each
+// finding, each marked. PDF text is cleaned first: letter-per-line headings are joined, "Label:" lines meet their value.
+const squash = (t: string) => t.replace(/\s+/g, ' ').trim().toLowerCase()
+
+function cleanLines(text: string): string[] {
+  const out: string[] = []
+  let letters = ''
+  for (const raw of text.split('\n')) {
+    const line = raw.trim()
+    if (line.length <= 1) { letters += line || ' '; continue }
+    if (letters.trim()) out.push(letters.replace(/\s+/g, ' ').trim())
+    letters = ''
+    out.push(line.replace(/\s+/g, ' '))
+  }
+  if (letters.trim()) out.push(letters.replace(/\s+/g, ' ').trim())
+  const merged: string[] = []
+  for (let i = 0; i < out.length; i++) {
+    const next = out[i + 1]
+    if (out[i].endsWith(':') && next && next.length <= 48 && !next.endsWith(':')) { merged.push(`${out[i]} ${next}`); i++ }
+    else merged.push(out[i])
+  }
+  return merged
+}
+
+function TextPages({ pages, marks, selId, result, page, onPage, name, href, product }: {
   pages: TextPage[]; marks: Placed[]; selId: string | null; result: Result; page: number; onPage: (n: number) => void
-  name: string; href?: string
+  name: string; href?: string; product?: string
 }) {
   const current = pages.find((p) => p.page === page) ?? pages[0]
-  const text = current?.text ?? ''
-  const spans = marks
-    .filter((m) => m.page === current?.page && m.quote)
-    .sort((a, b) => Number(a.finding.id === selId) - Number(b.finding.id === selId))
-    .map((m) => ({ m, at: text.indexOf(m.quote!) }))
-    .filter((s) => s.at >= 0)
-    .sort((a, b) => a.at - b.at)
-  const out: ReactNode[] = []
-  let pos = 0
-  for (const { m, at } of spans) {
-    if (at < pos) continue // overlapping quote: keep the first
-    const c = TONE_COLOR[m.tone]
-    const row = m.kind === 'problem' ? changedRow(result, m.claim_id) : undefined
-    out.push(text.slice(pos, at))
-    out.push(
-      <mark key={`${m.finding.id}-${m.claim_id}`} className="rounded-sm px-1 text-inherit"
-        style={{ background: `${c}${m.finding.id === selId ? '55' : '22'}`, outline: m.finding.id === selId ? `2px solid ${c}` : 'none' }}>{m.quote}</mark>,
-    )
-    if (row) out.push(
-      <span key={`${m.claim_id}-now`} className="ml-1 rounded px-2 py-1 align-middle font-sans text-xs font-semibold text-on-accent"
-        style={{ background: c }}>now {row.current}</span>,
-    )
-    pos = at + m.quote!.length
+  const lines = useMemo(() => cleanLines(current?.text ?? ''), [current])
+  // Each marked line: the worst mark on it (problems over checked, the selected finding over the rest).
+  const hit = new Map<number, Placed>()
+  for (const m of marks.filter((x) => x.page === current?.page && x.quote)) {
+    const q = squash(m.quote!)
+    let i = lines.findIndex((l) => squash(l).includes(q))
+    if (i < 0 && q.length > 24) i = lines.findIndex((l) => squash(l).includes(q.slice(0, 24)))
+    if (i < 0) continue
+    const had = hit.get(i)
+    const rank = (x: Placed) => (x.kind === 'problem' ? 2 : 0) + (x.finding.id === selId ? 1 : 0)
+    if (!had || rank(m) > rank(had)) hit.set(i, m)
   }
-  out.push(text.slice(pos))
+  const keep = new Set<number>()
+  for (const i of hit.keys()) for (let k = i - 2; k <= i + 2; k++) if (k >= 0 && k < lines.length) keep.add(k)
+  if (!keep.size) lines.slice(0, 14).forEach((_, k) => keep.add(k))
+  const shown = [...keep].sort((x, y) => x - y)
+
   return (
     <>
       <DocHeader name={name} page={current?.page ?? 1} pages={pages.length} href={href}>
@@ -728,11 +782,31 @@ function TextPages({ pages, marks, selId, result, page, onPage, name, href }: {
           </nav>
         )}
       </DocHeader>
-      <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="whitespace-pre-line rounded bg-paper p-6 text-base leading-7 text-paper-ink sm:p-8">
-          <div className="mb-4 font-sans text-xs uppercase tracking-wide text-paper-meta">Page {current?.page} · text from the package</div>
-          {out}
-        </div>
+      <div className="flex min-h-0 flex-1 justify-center overflow-y-auto rounded-xl bg-well p-4 sm:p-8">
+        <article className="flex w-full max-w-[560px] flex-col gap-1 self-start rounded-sm bg-paper px-6 py-8 text-paper-ink shadow-[0_16px_40px_-18px_rgba(0,0,0,0.9)] sm:px-10 sm:py-10">
+          <header className="mb-4 flex items-baseline justify-between gap-4 border-b border-paper-rule pb-3">
+            <span className="text-base font-bold">{product ?? name}</span>
+            {result.document_revision && <span className="shrink-0 font-mono text-xs text-paper-meta">{result.document_revision}</span>}
+          </header>
+          <span className="mb-2 font-mono text-xs uppercase tracking-[0.08em] text-paper-meta">Page {current?.page} · excerpt</span>
+          {shown.map((k, j) => {
+            const m = hit.get(k)
+            const gap = j > 0 && k !== shown[j - 1] + 1
+            const c = m ? TONE_COLOR[m.tone] : ''
+            const row = m?.kind === 'problem' ? changedRow(result, m.claim_id) : undefined
+            return (
+              <Fragment key={k}>
+                {gap && <span className="py-1 text-center text-paper-meta" aria-hidden>⋯</span>}
+                <span className={`-mx-2 flex flex-wrap items-baseline justify-between gap-x-3 rounded-sm px-2 py-1 leading-6 ${m ? 'font-semibold' : ''}`}
+                  style={m ? { background: `${c}${m.finding.id === selId ? '40' : '26'}`, boxShadow: `inset 3px 0 0 ${c}` } : undefined}
+                  title={m ? `${m.kind === 'checked' ? 'Checked' : 'Problem'}: ${m.finding.title}` : undefined}>
+                  <span className="min-w-0">{lines[k]}</span>
+                  {row && <span className="shrink-0 rounded px-2 py-0.5 font-sans text-xs font-semibold text-on-accent" style={{ background: c }}>now {row.current}</span>}
+                </span>
+              </Fragment>
+            )
+          })}
+        </article>
       </div>
     </>
   )
@@ -745,9 +819,11 @@ function replacement(fix: Fix | null): [string, boolean] {
   if (!fix) return ['—', false]
   if (fix.suggest) return [fix.suggest, true]
   const c = fix.candidates[0]
-  if (!c) return ['None found.', false]
+  if (!c) return ['None found', false]
   const bad = c.checks.find((k) => k.ok === false) ?? c.checks.find((k) => k.ok === null)
-  return [`None passed. ${c.name} checked${bad ? `: ${bad.label}${bad.note ? ` ${bad.note}` : ''}` : ''}.`, false]
+  const name = c.name.split(',')[0].replace(/^(\S+) SpecSeal System No\. /, '$1 ')  // "STI SpecSeal System No. W-L-1079, metallic…" -> "STI W-L-1079"
+  const why = bad ? (bad.note || (bad.ok === null ? `${bad.label} not stated` : bad.label)) : ''
+  return [`None passed · ${name}${why ? ` fails on ${why}` : ''}`, false]
 }
 
 function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, onCheck, onRequest }: {
@@ -778,7 +854,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
             <Table cols={back} head={['Number', 'Sent to', 'Requested', 'Suggested replacement']}>
               {returned.map((c) => {
                 const r = loaded[c.id].result
-                const asked = r.findings.filter((f) => f.verdict === 'fail' || f.verdict === 'outdated').map((f) => f.title)
+                const asked = asks(r, c.section)
                 const [text, passes] = replacement(fixOf(r))
                 return (
                   <TableRow key={c.id} cols={back}>
@@ -787,7 +863,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
                       <span className="truncate">{c.from ?? 'Sender'}</span>
                       <span className="truncate text-xs text-muted">{c.product ?? c.title}</span>
                     </span>
-                    <span className="text-soft">{asked.length ? asked.join('; ') : '—'}</span>
+                    <span className="text-soft">{asked.length ? asked.join(ASKS_SEP) : '—'}</span>
                     <span className={passes ? 'flex items-center gap-1 font-medium text-good' : 'text-xs text-muted'}>
                       {passes && <Icon kind="check" />}{text}
                     </span>
@@ -812,7 +888,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
               const scannedAt = c.watch ? undefined : rows[c.id]?.at
               const status = w && !res ? <span className="flex items-center gap-2 text-soft"><span className="blink h-2 w-2 rounded-full bg-flare" />Checking</span>
                 : res ? (discontinued(res) ? <span className="font-medium text-bad">Discontinued</span> : <span className="text-good">No change</span>)
-                : scannedAt ? <span className="text-good">No change</span> : <span className="text-faint">—</span>
+                : scannedAt ? <span className="text-good">No change</span> : <span className="text-muted">Watching</span>
               return (
                 <TableRow key={c.id} cols={fwd}>
                   <span className="font-mono text-xs text-muted">{c.number ?? 'Upload'}</span>
