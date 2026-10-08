@@ -97,6 +97,27 @@ def test_other_400_is_not_swallowed(live):
     assert formats(route) == ["json_schema"]
 
 
+def test_spend_guards_stop_before_paying(live, monkeypatch):
+    route = live[0].post(CHAT).mock(return_value=reply())
+    monkeypatch.setattr(settings, "budget_usd_per_day", 0.001)  # below one call's worst case
+    with pytest.raises(budget.BudgetExceeded, match="daily"):
+        chat()
+    monkeypatch.setattr(settings, "budget_usd_per_day", 2.0)
+    monkeypatch.setattr(settings, "model_triage", "unpriced/model")
+    with pytest.raises(ProviderError, match="No price"):
+        chat()
+    assert not route.calls
+
+
+def test_cut_off_reply_is_not_retried(live):
+    body = reply('{"ok": tr').json()
+    body["choices"][0]["finish_reason"] = "length"
+    route = live[0].post(CHAT).mock(return_value=httpx.Response(200, json=body))
+    with pytest.raises(ProviderError, match="MAX_OUTPUT_TOKENS"):
+        chat()
+    assert len(route.calls) == 1 and json.loads(route.calls[0].request.content)["max_tokens"] == settings.max_output_tokens
+
+
 def test_invalid_json_retried_once(live):
     route = live[0].post(CHAT).mock(side_effect=[reply('{"ok": "maybe"}'), reply()])
     assert chat()[0].ok and len(route.calls) == 2

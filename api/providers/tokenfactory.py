@@ -104,24 +104,32 @@ async def _once(task, messages, schema, retry_note=None) -> tuple[Any, Usage]:
     if hit := cache.get("llm", key):
         return schema.model_validate(hit["obj"]), Usage(**{**hit["usage"], "cached": True})
 
-    budget.check_usd()
+    if model not in PRICES:  # cost would read $0 and no cap could hold
+        raise ProviderError(f"No price for {model} in api/config.py PRICES: refusing the live call")
+    pin, pout = PRICES[model]
+    # ponytail: input estimated at 2 chars per token (real is ~4), so the worst case is over, never under.
+    budget.check_usd((len(json.dumps(msgs)) / 2 * pin + settings.max_output_tokens * pout) / 1e6, real=True)
     t0 = time.perf_counter()
     fmt = "json_schema"
     try:
-        resp = await _create(model=model, messages=msgs, temperature=0, response_format={
+        resp = await _create(model=model, messages=msgs, temperature=0, max_tokens=settings.max_output_tokens, response_format={
             "type": "json_schema", "json_schema": {"name": schema.__name__, "schema": schema_json}})
     except Exception as e:
         if not _rejects_format(e):  # auth, rate limit, network, a 400 about something else: real errors
             raise
         fmt = "json_object"
-        resp = await _create(model=model, messages=msgs, temperature=0, response_format={"type": "json_object"})
+        resp = await _create(model=model, messages=msgs, temperature=0, max_tokens=settings.max_output_tokens,
+                             response_format={"type": "json_object"})
     tin = (resp.get("usage") or {}).get("prompt_tokens", 0)
     tout = (resp.get("usage") or {}).get("completion_tokens", 0)
     usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout, cost_usd=cost(model, tin, tout),
                   latency_ms=int((time.perf_counter() - t0) * 1000), format=fmt)
     budget.charge_usd(usage.cost_usd, real=True)  # paid even if the reply is invalid
     log.info("%s model=%s in=%d out=%d ms=%d cost=$%.6f format=%s", task, model, tin, tout, usage.latency_ms, usage.cost_usd, fmt)
-    obj = schema.model_validate(json.loads(_strip_fences(resp["choices"][0]["message"].get("content") or "")))
+    choice = resp["choices"][0]
+    if choice.get("finish_reason") == "length":  # cut off: a retry would pay for the same cut-off again
+        raise ProviderError(f"{task}: reply hit MAX_OUTPUT_TOKENS ({settings.max_output_tokens})")
+    obj = schema.model_validate(json.loads(_strip_fences(choice["message"].get("content") or "")))
     cache.put("llm", key, {"obj": obj.model_dump(), "usage": usage.model_dump()})
     return obj, usage
 

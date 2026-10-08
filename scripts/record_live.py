@@ -17,8 +17,6 @@ import sys
 from pathlib import Path
 
 os.environ["SPECCHECK_MODE"] = "live"  # before api.config is imported: fails fast, naming any missing key
-# The public daily Tavily cap (150) is below one full run of 8 items; this is a deliberate local run.
-os.environ.setdefault("BUDGET_TAVILY_CREDITS_PER_DAY", "400")
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "scripts"))

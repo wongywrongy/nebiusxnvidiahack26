@@ -40,7 +40,10 @@ class Settings(BaseSettings):
     model_verify: str = "nvidia/nemotron-3-super-120b-a12b"
     model_write: str = "nvidia/nemotron-3-super-120b-a12b"
 
-    budget_usd_per_run: float = 5.0
+    budget_usd_per_run: float = 1.0
+    budget_usd_per_day: float = 2.0
+    # Hard ceiling on each model reply; the worst case (this many output tokens) is checked against the caps first.
+    max_output_tokens: int = 8192
     budget_tavily_credits_per_item: float = 25
     budget_tavily_credits_per_day: float = 150
     max_upload_mb: int = 15
