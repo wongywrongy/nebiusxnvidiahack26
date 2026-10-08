@@ -174,7 +174,12 @@ async def execute(run: Run) -> Run:
     sem = asyncio.Semaphore(settings.max_concurrency)
     for cid in run.case_ids:
         run.emit("queued", "Waiting", cid)
-    await asyncio.gather(*(run_case(run, cid, sem) for cid in run.case_ids), return_exceptions=True)
+    async def staggered(i: int, cid: str):
+        if not settings.live and run.delay_ms:  # mock only: rows start a beat apart, as real calls would finish
+            await asyncio.sleep(i * run.delay_ms / 1000 * 0.6)
+        return await run_case(run, cid, sem)
+
+    await asyncio.gather(*(staggered(i, cid) for i, cid in enumerate(run.case_ids)), return_exceptions=True)
     run.done.set()
     return run
 
