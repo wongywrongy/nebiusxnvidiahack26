@@ -64,6 +64,7 @@ class Settings(BaseSettings):
     data_dir: Path = ROOT / "data"
     cases_file: Path = ROOT / "data" / "cases" / "cases.json"
     specs_file: Path = ROOT / "data" / "cases" / "specs.json"
+    samples_file: Path = ROOT / "data" / "cases" / "samples.json"
     fixtures_dir: Path = ROOT / "data" / "fixtures"
     raw_dir: Path = ROOT / "data" / "raw"
     cache_dir: Path = ROOT / ".cache"
