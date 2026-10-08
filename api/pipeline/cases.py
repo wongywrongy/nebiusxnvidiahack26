@@ -25,6 +25,12 @@ def all_specs() -> dict[str, dict]:
 
 
 @lru_cache
+def senders() -> dict[str, dict]:
+    """Sender name -> trade and email (sample companies)."""
+    return json.loads(settings.cases_file.read_text()).get("senders", {})
+
+
+@lru_cache
 def all_samples() -> dict[str, dict]:
     """The sample inbox (data/cases/samples.json): real documents a viewer can send into the project."""
     data = json.loads(settings.samples_file.read_text()) if settings.samples_file.exists() else {"samples": []}

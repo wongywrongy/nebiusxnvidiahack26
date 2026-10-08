@@ -2,13 +2,13 @@
 
   GET  /api/health                     mode, which keys are set (true/false), model IDs, today's spend,
                                        newest recorded live run (the app replays it on open)
-  GET  /api/project                    sample project, specs and cases
+  GET  /api/project                    project, specs, the sample tray (grouped by sender) and the watched item
+  POST /api/inbox                      add one item, no run: {"id": "c03"} for a tray item, or a raw PDF body
+                                       with ?name=x.pdf for an upload
+  POST /api/scan                       one run over inbox items {"ids": [...], "delay_ms": 600}. Tray and watched
+                                       items run as the server is; live uploads need the admin token, else mock
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
-  POST /api/samples/{id}                send one sample-inbox document into the project: a run of it, live or mock as
-                                       the server is (fixed public documents and cached, so no admin token)
-  POST /api/uploads?name=x.pdf         body: the PDF. Starts a run of it against the project specs
-                                       (live without the admin token: runs in mock mode, with a note)
   GET  /api/scores                     the answer-key scores written by scripts/eval.py (else the newest recording's)
   POST /api/scores/run                 run all cases now and rewrite the scores               [admin when live]
   GET  /api/runs                       recorded runs, newest first
@@ -39,10 +39,10 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .config import settings
-from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, mock_ready
+from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
-from .pipeline.render import page_sizes, render_page
+from .pipeline.render import page_count, page_sizes, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, recorded_runs, replay, run_dir
 from .pipeline.scores import run_scoring_set
 from .providers import budget
@@ -56,6 +56,11 @@ _tasks: set[asyncio.Task] = set()
 
 class StartRun(BaseModel):
     case_ids: Optional[list[str]] = None
+    delay_ms: Optional[int] = None
+
+
+class Scan(BaseModel):
+    ids: list[str]
     delay_ms: Optional[int] = None
 
 
@@ -103,18 +108,15 @@ def health():
 @app.get("/api/project")
 def project():
     data = json.loads(settings.cases_file.read_text())
+    groups: dict[str, list[dict]] = {}
+    for c in {**all_cases(), **all_samples()}.values():
+        if c.get("tray"):
+            groups.setdefault(c["from"], []).append(_public(c))
     return {
         "name": data["project"],
         "specs": list(all_specs().values()),
-        "cases": [
-            {k: c[k] for k in ("id", "number", "title", "product", "from", "section", "submittal", "watch") if k in c}
-            for c in all_cases().values()
-        ],
-        "samples": [
-            {**{k: s[k] for k in ("id", "number", "title", "product", "from", "tag", "subject", "hint", "section", "submittal")},
-             "url": s["submittal"][0].get("url"), "ready": settings.live or mock_ready(s)}
-            for s in all_samples().values()
-        ],
+        "tray": [{"from": name, **senders().get(name, {}), "items": items} for name, items in groups.items()],
+        "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
     }
 
 
@@ -131,30 +133,28 @@ async def start_run(body: StartRun, request: Request):
     return {"run_id": run.id, "mode": settings.mode, "case_ids": ids}
 
 
-@app.post("/api/samples/{sample_id}")
-async def send_sample(sample_id: str, request: Request, delay_ms: Optional[int] = None):
-    """A sample is a fixed public document: its live calls are cached after the first run, and the run/day caps hold."""
-    sample = all_samples().get(sample_id)
-    if sample is None:
-        raise HTTPException(404, "No such sample")
-    if not settings.live and not mock_ready(sample):
-        raise HTTPException(409, "This sample has no recorded answers yet: it runs in live mode only")
-    if not _is_admin(request):
-        _rate_limit(request)
-    run = Run([sample_id], delay_ms=delay_ms)
-    RUNS[run.id] = run
-    _spawn(execute(run))
-    return {"run_id": run.id, "mode": settings.mode, "case": _public(sample)}
+def _scannable(case_id: str) -> Optional[dict]:
+    """A tray item, a watched item or an upload: what the app may run without the admin token."""
+    case = {**all_cases(), **all_samples()}.get(case_id)
+    return case if case and (case.get("tray") or case.get("watch")) else get_upload(case_id)
 
 
-@app.post("/api/uploads")
-async def upload(request: Request, name: str = "upload.pdf", delay_ms: Optional[int] = None):
-    """Raw PDF body (no multipart dependency). The new item streams on its own run like any other row."""
+@app.post("/api/inbox")
+async def inbox(request: Request, name: str = "upload.pdf"):
+    """Add one item to the inbox. Nothing runs until /api/scan."""
+    if request.headers.get("content-type", "").startswith("application/json"):
+        body = await request.json()
+        case = {**all_cases(), **all_samples()}.get(body.get("id", "") if isinstance(body, dict) else "")
+        if not case or not case.get("tray"):
+            raise HTTPException(404, "No such tray item")
+        if not (settings.live or mock_ready(case)):
+            raise HTTPException(409, "Available in live mode")
+        return _public(case)
+
     limit = settings.max_upload_mb * 1024 * 1024
     if int(request.headers.get("content-length") or 0) > limit:
         raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
-    admin = _is_admin(request)
-    if not admin:
+    if not _is_admin(request):
         _rate_limit(request)
     pdf = await request.body()
     if len(pdf) > limit:
@@ -165,14 +165,29 @@ async def upload(request: Request, name: str = "upload.pdf", delay_ms: Optional[
         text = "\n".join(p["text"] for p in pdf_pages(pdf))
     except Exception:
         raise HTTPException(400, "Could not read this PDF")
-    case = add_upload(name, pdf, text)
-    mock = settings.live and not admin
-    run = Run([case["id"]], delay_ms=delay_ms, mock=mock)
+    return _public(add_upload(name, pdf, text))
+
+
+@app.post("/api/scan")
+async def scan(body: Scan, request: Request):
+    """One run over inbox items. Tray and watched items are fixed public documents: live, their calls are cached after
+    the first run and the run/day caps hold, so no admin token. Uploads run live only with the admin token."""
+    ids = list(dict.fromkeys(body.ids))
+    cases = {i: _scannable(i) for i in ids}
+    unknown = [i for i, c in cases.items() if c is None]
+    if not ids or unknown:
+        raise HTTPException(400, f"Unknown items: {unknown}" if unknown else "Nothing to scan")
+    if not settings.live and any(not (c.get("upload") or mock_ready(c)) for c in cases.values()):
+        raise HTTPException(409, "Available in live mode")
+    admin = _is_admin(request)
+    if not admin:
+        _rate_limit(request)
+    mock = [i for i, c in cases.items() if c.get("upload")] if settings.live and not admin else []
+    run = Run(ids, delay_ms=body.delay_ms, mock=mock)
     RUNS[run.id] = run
     _spawn(execute(run))
-    note = ("Ran in mock mode: live checks need the admin token. Results are recorded answers, not read from this PDF."
-            if mock else None)
-    return {"run_id": run.id, "mode": "mock" if mock else settings.mode, "note": note, "case": _public(case)}
+    note = "Uploads ran in mock mode: live checks need the admin token." if mock else None
+    return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note}
 
 
 @app.post("/api/scores/run")
@@ -191,9 +206,20 @@ def scores():
 
 
 def _public(case: dict) -> dict:
-    return {"id": case["id"], "title": case["title"], "section": case["section"], "submittal": case["submittal"],
-            "upload": bool(case.get("upload")), "mock_fixture": case.get("fixture"),
-            **{k: case[k] for k in ("number", "product", "from") if k in case}}
+    """What the app shows of an item: no answer key."""
+    return {**{k: case[k] for k in ("id", "number", "title", "product", "from", "section", "received", "watch") if k in case},
+            **senders().get(case.get("from", ""), {}),
+            "submittal": [{k: d[k] for k in ("role", "file", "url") if k in d} for d in case["submittal"]],
+            "pages": _pages(case), "upload": bool(case.get("upload")), "mock_fixture": case.get("fixture"),
+            "ready": settings.live or bool(case.get("upload")) or mock_ready(case)}
+
+
+def _pages(case: dict) -> int:
+    """Page count of the downloaded PDFs, else of the recorded page text, else 0."""
+    paths = [settings.raw_dir / d["file"] for d in case["submittal"]]
+    if all(p.is_file() for p in paths):
+        return sum(page_count(p) for p in paths)
+    return len(load_fixture(case.get("fixture", case["id"])).get("pages", [])) if mock_ready(case) else 0
 
 
 @app.post("/api/runs/replay")

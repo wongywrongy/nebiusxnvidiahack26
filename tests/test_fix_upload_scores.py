@@ -101,6 +101,12 @@ def _pdf(cid):
     return settings.raw_dir / all_cases()[cid]["submittal"][0]["file"]
 
 
+def _upload_and_scan(body, name):
+    """Add a PDF to the inbox (no run), then scan it. Returns (public case, scan response)."""
+    case = client.post(f"/api/inbox?name={name}", content=body, headers={"content-type": "application/pdf"}).json()
+    return case, client.post("/api/scan", json={"ids": [case["id"]], "delay_ms": 0}).json()
+
+
 def _wait_result(run_id, case_id, timeout=10):
     t0 = time.time()
     while time.time() - t0 < timeout:
@@ -113,14 +119,10 @@ def _wait_result(run_id, case_id, timeout=10):
 
 @pytest.mark.skipif(not _pdf("c03").exists(), reason="run scripts/fetch_docs.py to download the PDFs")
 def test_upload_of_a_known_pdf_runs_like_its_case(cleanup):
-    body = _pdf("c03").read_bytes()
-    r = client.post("/api/uploads?name=IC 15WB.pdf&delay_ms=0", content=body, headers={"content-type": "application/pdf"})
-    assert r.status_code == 200, r.text
-    up = r.json()
-    case = up["case"]
+    case, scan = _upload_and_scan(_pdf("c03").read_bytes(), "IC 15WB.pdf")
     cleanup.append(case["id"])
-    assert case["upload"] and case["mock_fixture"] == "c03" and case["section"] == "07 84 00"
-    res = _wait_result(up["run_id"], case["id"])
+    assert case["upload"] and case["mock_fixture"] == "c03" and case["section"] == "07 84 00" and case["pages"] == 4
+    res = _wait_result(scan["run_id"], case["id"])
     assert res["decision"] == "send_back"
     assert any(f.get("fix") for f in res["findings"])
     pages = client.get(f"/api/docs/{case['id']}/{case['submittal'][0]['file'].rsplit('/', 1)[-1]}/pages").json()
@@ -128,14 +130,14 @@ def test_upload_of_a_known_pdf_runs_like_its_case(cleanup):
 
 
 def test_upload_rejects_non_pdf_and_unknown_pdf_runs_on_defaults(cleanup):
-    assert client.post("/api/uploads?name=x.pdf", content=b"hello").status_code == 400
+    assert client.post("/api/inbox?name=x.pdf", content=b"hello").status_code == 400
     import pymupdf
     doc = pymupdf.open()
     doc.new_page().insert_text((72, 72), "LED troffer 4000 lumens, luminaire data")
-    up = client.post("/api/uploads?name=mine.pdf&delay_ms=0", content=doc.tobytes()).json()
-    cleanup.append(up["case"]["id"])
-    assert up["case"]["mock_fixture"] is None and up["case"]["section"] == "26 51 00"
-    res = _wait_result(up["run_id"], up["case"]["id"])
+    case, scan = _upload_and_scan(doc.tobytes(), "mine.pdf")
+    cleanup.append(case["id"])
+    assert case["mock_fixture"] is None and case["section"] == "26 51 00"
+    res = _wait_result(scan["run_id"], case["id"])
     assert res["decision"] == "approve_with_note"  # nothing could be read in mock mode: everything is "not stated"
     assert "Mock mode" in res["summary"]
 

@@ -131,13 +131,14 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
     sent, now = submitted.document_revision or "undated", out.current_revision or "unknown"
     findings: list[Finding] = []
     if out.status == "discontinued":
+        on = source_of(out.status_quote)
         findings.append(Finding(
             id="status-discontinued", check="status", verdict="fail", severity="major",
             title="Product is no longer made",
             detail=f"The manufacturer lists it as discontinued.{' Replacement: ' + out.replacement if out.replacement else ''}",
             compare=Compare(left_label="Status", right_label="Manufacturer", verdict="fail",
                             right_value=" ".join(x for x in ["Discontinued", out.status_date or ""] if x)),
-            evidence=evidence, decided_by="tavily + super",
+            evidence=sorted(evidence, key=lambda e: e.url != on), quote=out.status_quote, decided_by="tavily + super",
         ))
     if changed:
         findings.append(Finding(

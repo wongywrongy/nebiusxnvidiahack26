@@ -270,26 +270,27 @@ def test_live_without_token_runs_are_refused_and_uploads_go_to_mock(live):
     assert client.post("/api/scores/run").status_code == 403
     assert client.post("/api/runs", json={"case_ids": ["nope"]}, headers={"x-admin-token": "wrong"}).status_code == 403
 
-    r = client.post("/api/uploads?name=mine.pdf&delay_ms=0", content=_pdf_bytes())
+    case = client.post("/api/inbox?name=mine.pdf", content=_pdf_bytes()).json()
+    r = client.post("/api/scan", json={"ids": [case["id"]], "delay_ms": 0})
     up = r.json()
     try:
-        assert r.status_code == 200 and up["mode"] == "mock" and "admin token" in up["note"]
+        assert r.status_code == 200 and up["mock"] == [case["id"]] and "admin token" in up["note"]
         t0 = time.time()
-        while (res := client.get(f"/api/runs/{up['run_id']}/results/{up['case']['id']}")).status_code != 200:
+        while (res := client.get(f"/api/runs/{up['run_id']}/results/{case['id']}")).status_code != 200:
             assert time.time() - t0 < 10
             time.sleep(0.05)
         assert "Mock mode" in res.json()["summary"]
         assert not live[0].calls  # nothing went to Token Factory or Tavily
     finally:
-        shutil.rmtree(settings.uploads_dir / up["case"]["id"], ignore_errors=True)
+        shutil.rmtree(settings.uploads_dir / case["id"], ignore_errors=True)
 
 
 def test_upload_rejects_non_pdf_big_files_and_floods(live, monkeypatch):
-    assert client.post("/api/uploads?name=x.pdf", content=b"hello").status_code == 400
+    assert client.post("/api/inbox?name=x.pdf", content=b"hello").status_code == 400
     monkeypatch.setattr(settings, "max_upload_mb", 0)
-    assert client.post("/api/uploads?name=x.pdf", content=_pdf_bytes()).status_code == 413
+    assert client.post("/api/inbox?name=x.pdf", content=_pdf_bytes()).status_code == 413
     monkeypatch.setattr(settings, "uploads_per_ip_per_hour", 2)
     main._uploads_by_ip.clear()
     monkeypatch.setattr(settings, "max_upload_mb", 15)
-    codes = [client.post("/api/uploads?name=x.pdf", content=b"x" * 10).status_code for _ in range(3)]
+    codes = [client.post("/api/inbox?name=x.pdf", content=b"x" * 10).status_code for _ in range(3)]
     assert codes == [400, 400, 429]
