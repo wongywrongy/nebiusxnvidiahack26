@@ -29,14 +29,14 @@ SPECCHECK_MODE=live python scripts/eval.py --case c03
 python scripts/record_live.py     # all 8 cases live, saved to runs/recorded/<run_id>/ (commit it)
 ```
 
-The app replays the newest recording in `runs/recorded/` on open, labeled "Recorded live run <date>", and the
-Results page falls back to its scores.
+`GET /api/scores` falls back to the newest recording's scores.
 
 Every live response is cached in `.cache/`, so re-running a case does not spend credits.
 Spend is capped per run and per day (USD; each call's worst case is checked before it is made) and per item and per day
 (Tavily credits); a cap marks that step "Couldn't confirm". Each model reply is capped at `MAX_OUTPUT_TOKENS`.
-A live deployment needs `ADMIN_TOKEN` (sent as `X-Admin-Token`) for live runs; without it the public demo
-plays recorded runs and uploads run in mock mode. `GET /api/health` shows mode, which keys are set, models and today's spend.
+Live, the tray items and the watched item run without a token: they are fixed public documents, cached after their
+first run, and the caps still hold. Uploaded PDFs run live only with `ADMIN_TOKEN` (sent as `X-Admin-Token`), else in
+mock mode. `GET /api/health` shows mode, which keys are set, models and today's spend.
 
 Secret scan: `pip install pre-commit && pre-commit install` (gitleaks runs on every commit).
 
@@ -52,7 +52,7 @@ api/
                    credits, fetch_pdf), budget.py (run/item/day caps, BudgetExceeded)
   cache.py         disk cache for live calls
   pipeline/        ingest, triage, extract, spec_check, verify, fix, report, runner
-  main.py          FastAPI: runs, uploads, SSE events, results, scores, replay, static web app
+  main.py          FastAPI: project, inbox, scan, SSE events, results, scores, replay, static web app
 data/
   cases/           cases.json (8 test submittals + answer key), specs.json
   fixtures/        recorded responses per case for mock mode; fixtures/fix/ for the fix step
@@ -78,15 +78,20 @@ evidence; otherwise the fix says "No passing replacement found" and lists what w
 pass (c03, c07): c02's recorded search found nothing, c04's one candidate fails T = F, and c06's 2025 sheet doesn't
 state CRI, dimming, warranty or DLC.
 
-## Uploads and scores
+## The app: Inbox, Scan, Review, Outcome
 
-- `POST /api/uploads?name=x.pdf` with the PDF as the body adds it as one more item, checked against the project specs
-  on its own run. In mock mode, a PDF that matches a test case (by sha256) replays that case's fixture; any other PDF
-  runs with no recorded answers, so every requirement shows as not stated.
-- `GET /api/scores` serves `runs/scores.json` from `scripts/eval.py` (else the newest recording's); the Results page shows it, and its
-  "Run the scoring set" button (`POST /api/scores/run`) reruns all 8 cases and rewrites it.
-- Watchlist: cases with `watch` in `cases.json` are already approved. "Run nightly watch" re-checks them; c07 (the
-  approved troffer, since discontinued) opens the Alert screen with its replacement.
+1. **Inbox.** Drag sample submittals from the tray (`"tray": true` in `cases.json` / `samples.json`, grouped by sender)
+   or drop your own PDFs. `POST /api/inbox` adds an item; nothing runs yet. In mock mode a tray item with no recording
+   (s3) is disabled.
+2. **Scan.** `POST /api/scan` runs the inbox in one run; rows stream stages over `/api/runs/{id}/events`.
+3. **Review.** One submittal at a time: the PDF with highlights, the checks, a passing replacement if the fix step found
+   one, and an editable message to the sub or the architect. Decisions stay in the browser.
+4. **Outcome.** What was returned and what was approved. "Check approved now" re-runs the approved items and the watched
+   c07 (approved Mar 2024, since discontinued), which raises the alert with the maker's quote and a replacement.
+
+An uploaded PDF that matches a test case (by sha256) replays that case's fixture in mock mode; any other PDF runs with
+no recorded answers, so every requirement shows as not stated. `GET /api/scores` serves `runs/scores.json` from
+`scripts/eval.py`; `POST /api/scores/run` (admin when live) reruns all 8 cases.
 
 ## Model routing
 

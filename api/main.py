@@ -1,7 +1,7 @@
 """HTTP API.
 
   GET  /api/health                     mode, which keys are set (true/false), model IDs, today's spend,
-                                       newest recorded live run (the app replays it on open)
+                                       newest recorded live run
   GET  /api/project                    project, specs, the sample tray (grouped by sender) and the watched item
   POST /api/inbox                      add one item, no run: {"id": "c03"} for a tray item, or a raw PDF body
                                        with ?name=x.pdf for an upload
@@ -19,7 +19,7 @@
   GET  /api/docs/{case}/{file}/pages/{n}.png     one page as PNG
   GET  /api/cases/{case}/text                    fixture page text (fallback when the PDF is missing)
 
-Admin = header X-Admin-Token equal to ADMIN_TOKEN. In live mode the public demo is replay-only.
+Admin = header X-Admin-Token equal to ADMIN_TOKEN.
 The built web app (web/dist) is served at / from the same container.
 """
 
@@ -180,7 +180,7 @@ async def scan(body: Scan, request: Request):
     if not settings.live and any(not (c.get("upload") or mock_ready(c)) for c in cases.values()):
         raise HTTPException(409, "Available in live mode")
     admin = _is_admin(request)
-    if not admin:
+    if settings.live and not admin:  # only live runs spend; a mock scan is free
         _rate_limit(request)
     mock = [i for i, c in cases.items() if c.get("upload")] if settings.live and not admin else []
     run = Run(ids, delay_ms=body.delay_ms, mock=mock)
