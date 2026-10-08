@@ -173,7 +173,8 @@ class Finding(BaseModel):
     highlights: list[Highlight] = []
     compare: Optional[Compare] = None
     spec_ref: Optional[str] = None
-    evidence: list[Evidence] = []
+    evidence: list[Evidence] = []  # status findings: the page the quote is on comes first
+    quote: Optional[str] = None  # status findings: the source's exact words
     decided_by: str = "code"
     fix: Optional[Fix] = None
 

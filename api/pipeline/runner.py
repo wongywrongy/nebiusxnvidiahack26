@@ -15,7 +15,7 @@ import shutil
 import time
 import uuid
 from pathlib import Path
-from typing import AsyncIterator, Optional
+from typing import AsyncIterator, Iterable, Optional
 
 from ..config import FORCE_MOCK, redact, settings
 from ..providers import budget
@@ -28,11 +28,10 @@ from .render import attach_highlights
 
 
 class Run:
-    def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None,
-                 mock: bool = False):
+    def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None, mock: Iterable[str] = ()):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
-        self.mock = mock  # force mock mode for this run even when the server is live
+        self.mock = set(mock)  # items forced to mock mode even when the server is live (public uploads)
         self.ledger = budget.Ledger()
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms
         self.events: list[Event] = []
@@ -81,6 +80,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     case = get_case(case_id)
     usage: list[Usage] = []
     budget.ITEM.set(case_id)  # this task's own context: credit caps are per item
+    FORCE_MOCK.set(case_id in run.mock)
     async with sem:
         t0 = time.perf_counter()
         spec = all_specs()[case["section"]]
@@ -171,7 +171,6 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
 
 async def execute(run: Run) -> Run:
     budget.LEDGER.set(run.ledger)  # inherited by every item task below
-    FORCE_MOCK.set(run.mock)
     sem = asyncio.Semaphore(settings.max_concurrency)
     for cid in run.case_ids:
         run.emit("queued", "Waiting", cid)
