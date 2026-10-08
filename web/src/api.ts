@@ -4,11 +4,14 @@ export type Decision = 'approve' | 'approve_with_note' | 'send_back'
 export type Stage =
   | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'fix' | 'report' | 'done' | 'error'
 
+// An item as /api/project, /api/inbox return it (api/main.py _public).
 export interface Case {
-  id: string; number?: string; title: string; product?: string; from?: string; section: string
-  submittal: { file: string }[]; watch?: { approved: string }; upload?: boolean; mock_fixture?: string | null
+  id: string; number?: string; title: string; product?: string; from?: string; trade?: string; email?: string
+  section: string; received?: string; watch?: { approved: string }; submittal: { role?: string; file: string; url?: string }[]
+  pages: number; upload: boolean; ready: boolean
 }
-export interface Project { name: string; cases: Case[]; specs: { section: string; owner: string }[] }
+export interface Sender { from: string; trade?: string; email?: string; items: Case[] }
+export interface Project { name: string; specs: { section: string; owner: string }[]; tray: Sender[]; watched: Case[] }
 
 export interface Event {
   run_id: string
@@ -35,6 +38,7 @@ export interface Finding {
   highlights: Mark[]
   compare?: Compare | null
   evidence: Evidence[]
+  quote?: string | null // status findings: the source's exact words
   decided_by: string
   fix?: Fix | null
 }
@@ -72,13 +76,28 @@ export async function getProject(): Promise<Project> {
   return (await fetch('/api/project')).json()
 }
 
-export async function startRun(caseIds?: string[], delayMs = 700): Promise<string> {
-  const r = await fetch('/api/runs', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ case_ids: caseIds, delay_ms: delayMs }),
-  })
-  return (await r.json()).run_id
+async function ok<T>(r: Response): Promise<T> {
+  if (!r.ok) throw new Error((await r.json().catch(() => null))?.detail ?? `Request failed (${r.status})`)
+  return r.json()
+}
+
+/** Add a tray item to the inbox. Nothing runs until scan(). */
+export async function addToInbox(id: string): Promise<Case> {
+  return ok(await fetch('/api/inbox', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ id }) }))
+}
+
+/** Add an uploaded PDF to the inbox. Nothing runs until scan(). */
+export async function uploadToInbox(file: File): Promise<Case> {
+  return ok(await fetch(`/api/inbox?name=${encodeURIComponent(file.name)}`, {
+    method: 'POST', headers: { 'content-type': 'application/pdf' }, body: file,
+  }))
+}
+
+/** One run over inbox items. delayMs paces mock mode so the stages are visible. */
+export async function scan(ids: string[], delayMs = 700): Promise<string> {
+  return (await ok<{ run_id: string }>(await fetch('/api/scan', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids, delay_ms: delayMs }),
+  }))).run_id
 }
 
 export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: () => void): () => void {
@@ -114,55 +133,6 @@ export const pageUrl = (caseId: string, file: string, n: number) =>
 
 export async function getCaseText(caseId: string): Promise<TextPage[]> {
   return (await (await fetch(`/api/cases/${caseId}/text`)).json()).pages
-}
-
-/** Upload a PDF: it becomes a new item checked against the project specs, on its own run. */
-export async function uploadPdf(file: File, delayMs = 700): Promise<{ run_id: string; case: Case }> {
-  const r = await fetch(`/api/uploads?name=${encodeURIComponent(file.name)}&delay_ms=${delayMs}`, {
-    method: 'POST', headers: { 'content-type': 'application/pdf' }, body: file,
-  })
-  if (!r.ok) throw new Error((await r.json().catch(() => null))?.detail ?? `Upload failed (${r.status})`)
-  return r.json()
-}
-
-interface Ratio { n: number; of: number }
-interface ScoreRow {
-  id: string; title: string; product: string; expected: Decision; expected_problems: string[]; error?: boolean
-  decision?: Decision; found_problems?: string[]; right_call?: boolean; caught?: number; false_alarm?: boolean
-  fix?: { suggest: string | null; passes: boolean; candidates: number } | null
-  time_ms?: number; cost_usd?: number; web_credits?: number
-}
-export interface Scores {
-  generated_at: string; mode: string; run_id: string; models: Record<string, string>
-  right_call: Ratio; caught: Ratio; false_alarms: Ratio; fixes_passing: Ratio
-  time_ms_per_item: number; cost_usd_per_item: number; rows: ScoreRow[]
-}
-
-/** Server mode, and the newest recorded live run (null before scripts/record_live.py has run). */
-export async function getHealth(): Promise<{ mode: string; recorded: string | null }> {
-  return (await fetch('/api/health')).json()
-}
-
-/** Run all cases now and rewrite the scores (the Results page's "Run the scoring set"). */
-export async function runScores(): Promise<Scores> {
-  const r = await fetch('/api/scores/run', { method: 'POST' })
-  if (!r.ok) throw new Error(`Scoring failed (${r.status})`)
-  return r.json()
-}
-
-/** The answer-key scores from scripts/eval.py, or null before it has been run. */
-export async function getScores(): Promise<Scores | null> {
-  const r = await fetch('/api/scores')
-  return r.ok ? r.json() : null
-}
-
-export async function startReplay(sourceRunId: string): Promise<string> {
-  const r = await fetch('/api/runs/replay', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ source_run_id: sourceRunId }),
-  })
-  return (await r.json()).run_id
 }
 
 export const DECISION_LABEL: Record<Decision, string> = {

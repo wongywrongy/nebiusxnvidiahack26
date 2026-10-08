@@ -3,8 +3,8 @@
   python scripts/record_live.py
 
 Runs every case live (needs NEBIUS_API_KEY and TAVILY_API_KEY), prints the eval scoreboard, then copies the run
-(events.jsonl, results/) and its scores.json to runs/recorded/<run_id>/. Commit that folder: the app replays the
-newest recording on open, labeled "Recorded live run <date>". Nothing in it holds a key (events are redacted).
+(events.jsonl, results/) and its scores.json to runs/recorded/<run_id>/. Commit that folder: GET /api/scores falls
+back to it and POST /api/runs/replay can play it. Nothing in it holds a key (events are redacted).
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ def record() -> int:
     dest = settings.recorded_dir / run_id
     shutil.copytree(settings.runs_dir / run_id, dest)
     shutil.copy(settings.scores_file, dest / "scores.json")
-    print(f"recorded {dest.relative_to(ROOT)}  (commit it; the app replays the newest recording)")
+    print(f"recorded {dest.relative_to(ROOT)}  (commit it)")
     return rc
 
 
