@@ -77,6 +77,12 @@ def _word_match(page, quote: str) -> list[tuple]:
     return []
 
 
+def _same_token(word: str, key: str) -> bool:
+    """Equal ignoring punctuation, or the word is the key with a unit glued on ("0.62W" for "0.62")."""
+    w, k = re.sub(r"[^\w.]", "", word), re.sub(r"[^\w.]", "", key)
+    return w == k or (w.startswith(k) and w[len(k):].isalpha() and len(w) - len(k) <= 3)
+
+
 def _key_line(page, quote: str) -> list[tuple]:
     """Last resort: the line holding the quote's key token (first token with a digit, else its first two words)."""
     toks = _norm(quote).split()
@@ -86,7 +92,7 @@ def _key_line(page, quote: str) -> list[tuple]:
     words = page.get_text("words")
     norm = [_norm(w[4]) for w in words]
     for i in range(len(words) - len(key) + 1):
-        if norm[i:i + len(key)] == key or (len(key) == 1 and re.sub(r"[^\w.]", "", norm[i]) == re.sub(r"[^\w.]", "", key[0])):
+        if norm[i:i + len(key)] == key or (len(key) == 1 and _same_token(norm[i], key[0])):
             line = (words[i][5], words[i][6])
             return _line_rects([w for w in words if (w[5], w[6]) == line])
     return []

@@ -24,8 +24,21 @@ def all_specs() -> dict[str, dict]:
     return {s["section"]: s for s in data["specs"]}
 
 
+@lru_cache
+def all_samples() -> dict[str, dict]:
+    """The sample inbox (data/cases/samples.json): real documents a viewer can send into the project."""
+    data = json.loads(settings.samples_file.read_text()) if settings.samples_file.exists() else {"samples": []}
+    return {s["id"]: s for s in data["samples"]}
+
+
+def mock_ready(case: dict) -> bool:
+    """Mock mode can only replay a case that has recorded answers."""
+    fx = case.get("fixture", case["id"])
+    return bool(fx) and (settings.fixtures_dir / f"{fx}.json").exists()
+
+
 def get_case(case_id: str) -> dict:
-    case = all_cases().get(case_id) or get_upload(case_id)
+    case = all_cases().get(case_id) or all_samples().get(case_id) or get_upload(case_id)
     if case is None:
         raise KeyError(f"Unknown case {case_id}")
     return case

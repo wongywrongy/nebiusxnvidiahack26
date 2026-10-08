@@ -2,6 +2,7 @@
 
   python scripts/eval.py                 # all cases, mock mode by default
   python scripts/eval.py --case c03      # one case
+  python scripts/eval.py --samples       # the sample inbox (data/cases/samples.json); in mock mode, only recorded ones
   SPECCHECK_MODE=live python scripts/eval.py --case c03
 
 Prints per-case results and the panel numbers: right call, problems caught, false alarms on clean
@@ -21,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from api.config import PRICES, settings  # noqa: E402
-from api.pipeline.cases import all_cases  # noqa: E402
+from api.pipeline.cases import all_cases, all_samples, mock_ready  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.pipeline.scores import scores  # noqa: E402
 
@@ -66,6 +67,10 @@ async def main(case_ids: list[str]) -> int:
 if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--case", action="append", help="case id, repeatable (default: all)")
+    p.add_argument("--samples", action="store_true", help="score the sample inbox instead of the test cases")
     args = p.parse_args()
-    ids = args.case or sorted(all_cases())
+    if args.samples:
+        ids = sorted(i for i, s in all_samples().items() if settings.live or mock_ready(s))
+    else:
+        ids = args.case or sorted(all_cases())
     sys.exit(asyncio.run(main(ids)))

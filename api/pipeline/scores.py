@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 
 from ..config import settings
-from .cases import all_cases
+from .cases import all_cases, all_samples
 from .decide import FLAGGED
 
 
@@ -31,7 +31,7 @@ def item_cost(result) -> float:
 
 
 def scores(run, case_ids: list[str]) -> dict:
-    cases = all_cases()
+    cases = {**all_cases(), **all_samples()}  # samples score against their own expected (scripts/eval.py --samples)
     rows = []
     for cid in case_ids:
         exp, res = cases[cid]["expected"], run.results.get(cid)

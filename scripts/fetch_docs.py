@@ -41,6 +41,10 @@ def targets() -> list[tuple[list[str], str]]:
     out = [(s["urls"], s["file"]) for s in docs["specs"]]
     for c in docs["cases"]:
         out += [(d["urls"], d["file"]) for d in c.get("submittal", [])]
+    # Sample inbox documents (one URL each); a file shared with a case is fetched once.
+    samples = json.loads((settings.data_dir / "cases" / "samples.json").read_text())["samples"]
+    have = {f for _, f in out}
+    out += [([d["url"]], d["file"]) for s in samples for d in s["submittal"] if d["file"] not in have]
     return out
 
 

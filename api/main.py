@@ -5,6 +5,8 @@
   GET  /api/project                    sample project, specs and cases
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
+  POST /api/samples/{id}                send one sample-inbox document into the project: a run of it, live or mock as
+                                       the server is (fixed public documents and cached, so no admin token)
   POST /api/uploads?name=x.pdf         body: the PDF. Starts a run of it against the project specs
                                        (live without the admin token: runs in mock mode, with a note)
   GET  /api/scores                     the answer-key scores written by scripts/eval.py (else the newest recording's)
@@ -37,7 +39,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .config import settings
-from .pipeline.cases import add_upload, all_cases, all_specs, get_case
+from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, mock_ready
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
 from .pipeline.render import page_sizes, render_page
@@ -108,6 +110,11 @@ def project():
             {k: c[k] for k in ("id", "number", "title", "product", "from", "section", "submittal", "watch") if k in c}
             for c in all_cases().values()
         ],
+        "samples": [
+            {**{k: s[k] for k in ("id", "number", "title", "product", "from", "tag", "subject", "hint", "section", "submittal")},
+             "url": s["submittal"][0].get("url"), "ready": settings.live or mock_ready(s)}
+            for s in all_samples().values()
+        ],
     }
 
 
@@ -122,6 +129,22 @@ async def start_run(body: StartRun, request: Request):
     RUNS[run.id] = run
     _spawn(execute(run))
     return {"run_id": run.id, "mode": settings.mode, "case_ids": ids}
+
+
+@app.post("/api/samples/{sample_id}")
+async def send_sample(sample_id: str, request: Request, delay_ms: Optional[int] = None):
+    """A sample is a fixed public document: its live calls are cached after the first run, and the run/day caps hold."""
+    sample = all_samples().get(sample_id)
+    if sample is None:
+        raise HTTPException(404, "No such sample")
+    if not settings.live and not mock_ready(sample):
+        raise HTTPException(409, "This sample has no recorded answers yet: it runs in live mode only")
+    if not _is_admin(request):
+        _rate_limit(request)
+    run = Run([sample_id], delay_ms=delay_ms)
+    RUNS[run.id] = run
+    _spawn(execute(run))
+    return {"run_id": run.id, "mode": settings.mode, "case": _public(sample)}
 
 
 @app.post("/api/uploads")
@@ -169,7 +192,8 @@ def scores():
 
 def _public(case: dict) -> dict:
     return {"id": case["id"], "title": case["title"], "section": case["section"], "submittal": case["submittal"],
-            "upload": bool(case.get("upload")), "mock_fixture": case.get("fixture")}
+            "upload": bool(case.get("upload")), "mock_fixture": case.get("fixture"),
+            **{k: case[k] for k in ("number", "product", "from") if k in case}}
 
 
 @app.post("/api/runs/replay")

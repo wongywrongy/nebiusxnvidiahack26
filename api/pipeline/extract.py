@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import json
+import unicodedata
 from typing import Optional
 
+from ..config import settings
 from ..llm import router
 from ..schemas import ClaimsOut, PageLabel, RequirementsOut, TriageOut, Usage
 
@@ -22,14 +24,33 @@ async def triage(case_id: Optional[str], pages: list[dict]) -> tuple[TriageOut, 
     return await router.call("triage", TriageOut, messages, {"case_id": case_id, "pages": [p["page"] for p in pages]})
 
 
+def checklist_path(section: str):
+    return settings.data_dir / "requirements" / f"{section.replace(' ', '_')}.json"
+
+
+async def requirements_for(section: str, spec_text: str) -> tuple[RequirementsOut, Optional[Usage]]:
+    """The reviewed checklist for this section when there is one (data/requirements/<section>.json, written by
+    scripts/draft_requirements.py and checked by a person), else a model extraction of the spec text."""
+    path = checklist_path(section)
+    if settings.live and path.exists():
+        return RequirementsOut.model_validate(json.loads(path.read_text())), None
+    if settings.live and not spec_text.strip():
+        raise RuntimeError(f"No text for spec {section}: run scripts/fetch_docs.py (data/raw/ is empty)")
+    return await extract_requirements(section, spec_text)
+
+
 async def extract_requirements(section: str, spec_text: str) -> tuple[RequirementsOut, Usage]:
     messages = [
         {
             "role": "user",
             "content": (
-                f"From spec section {section}, list every requirement a product submittal can be checked against. "
+                f"From spec section {section}, list the requirements a manufacturer's product data sheet or a listed "
+                "system drawing can be checked against: numbers, ratings, listings, test standards, warranty. "
+                "Leave out installation, execution, scheduling, contractor qualifications and anything only the "
+                "drawings or the site can show. Give the paragraph number for each. "
                 "Use snake_case property names with the unit in the name (t_rating_hr, voc_g_per_l, cri, warranty_years). "
-                "Use operator eq_ref when one property must equal another (value = the other property name).\n\n"
+                "Use operator eq_ref when one property must equal another (value = the other property name). "
+                "Set applies_to to product_data or system_drawing when a requirement only makes sense for one.\n\n"
                 + spec_text[:60000]
             ),
         }
@@ -58,9 +79,18 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     return out, usage
 
 
+# PDF text and model output often differ only in typography: ligatures (ﬁ), dashes, curly quotes, ™/®.
+_TYPO = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2012": "-", "\u2013": "-", "\u2014": "-", "\u2212": "-",
+                       "\u2018": "'", "\u2019": "'", "\u201c": '"', "\u201d": '"', "\u2122": "", "\u00ae": "", "\u00a0": " "})
+
+
+def _plain(text: str) -> str:
+    return " ".join(unicodedata.normalize("NFKC", text).translate(_TYPO).split())
+
+
 def quoted(quote: Optional[str], text: str) -> bool:
-    """True when quote appears verbatim in text, ignoring runs of whitespace."""
-    return bool(quote and quote.strip()) and " ".join(quote.split()) in " ".join(text.split())
+    """True when quote appears in text, ignoring whitespace runs and typography (ligatures, dashes, curly quotes)."""
+    return bool(quote and quote.strip()) and _plain(quote) in _plain(text)
 
 
 def all_product_data(pages: list[dict]) -> TriageOut:

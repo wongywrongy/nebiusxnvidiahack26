@@ -88,6 +88,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
         try:
             run.emit("ingest", "Reading the pages", case_id)
             pages = load_submittal_pages(case)
+            if settings.live and not any(p["text"].strip() for p in pages):
+                raise RuntimeError("No text in the submittal: the PDF is missing from data/raw/ or is a scan")
             await run.pause()
 
             run.emit("triage", "Sorting pages", case_id, settings.models["triage"])
@@ -96,8 +98,9 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             await run.pause()
 
             run.emit("extract", "Comparing to the spec", case_id, settings.models["extract"])
-            reqs, u = await extract.extract_requirements(case["section"], load_spec_text(case["section"], spec))
-            usage.append(u)
+            reqs, u = await extract.requirements_for(case["section"], load_spec_text(case["section"], spec))
+            if u:
+                usage.append(u)
             # Project-specific conditions (e.g. "penetrant is steel pipe") come from the case cover sheet.
             requirements = reqs.requirements + [Requirement(**c) for c in case.get("conditions", [])]
             skip = set(case.get("not_applicable", []))
