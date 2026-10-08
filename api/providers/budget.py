@@ -1,4 +1,4 @@
-"""Spend ledger: USD per run, Tavily credits per item and per day.
+"""Spend ledger: USD per run and per day, Tavily credits per item and per day.
 
 The runner opens a Ledger per run (LEDGER) and names the item it is working on (ITEM); both are
 context variables, so concurrent items each see their own. Providers check before a call and
@@ -48,11 +48,13 @@ def _add_today(usd: float = 0.0, credits: float = 0.0) -> None:
     p.write_text(json.dumps(t))
 
 
-def check_usd() -> None:
-    """Before a model call: stop once the run has spent its USD budget."""
+def check_usd(worst: float = 0.0, real: bool = False) -> None:
+    """Before a model call: raise if its worst-case cost would cross the run cap, or (real) today's cap."""
     led = LEDGER.get()
-    if led and led.usd >= settings.budget_usd_per_run:
+    if led and (led.usd >= settings.budget_usd_per_run or led.usd + worst > settings.budget_usd_per_run):
         raise BudgetExceeded(f"run budget of ${settings.budget_usd_per_run:g} reached")
+    if real and today()["usd"] + worst > settings.budget_usd_per_day:
+        raise BudgetExceeded(f"daily model budget of ${settings.budget_usd_per_day:g} reached")
 
 
 def charge_usd(usd: float, real: bool) -> None:

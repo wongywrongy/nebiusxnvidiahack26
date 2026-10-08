@@ -33,7 +33,8 @@ The app replays the newest recording in `runs/recorded/` on open, labeled "Recor
 Results page falls back to its scores.
 
 Every live response is cached in `.cache/`, so re-running a case does not spend credits.
-Spend is capped per run (USD), per item and per day (Tavily credits); a cap marks that step "Couldn't confirm".
+Spend is capped per run and per day (USD; each call's worst case is checked before it is made) and per item and per day
+(Tavily credits); a cap marks that step "Couldn't confirm". Each model reply is capped at `MAX_OUTPUT_TOKENS`.
 A live deployment needs `ADMIN_TOKEN` (sent as `X-Admin-Token`) for live runs; without it the public demo
 plays recorded runs and uploads run in mock mode. `GET /api/health` shows mode, which keys are set, models and today's spend.
 
