@@ -132,6 +132,30 @@ SPECCHECK_MODE=live BUDGET_USD_PER_DAY=0 uvicorn api.main:app
 
 Secret scan: `pip install pre-commit && pre-commit install` (gitleaks on every commit).
 
+The header's **Specs** page shows each project source, control version and checklist. Bundled fixture checklists
+are labelled mock stand-ins; missing draft/review dates are never invented. In live mode, dropping a spec PDF
+drafts a checklist with Nemotron 3 Super, under the same public rate/size and model-budget limits. The response
+includes its model, source name/hash and draft date. It is not saved as a project checklist or used by scans;
+normal model response caching still applies. Only an admin can save it after reviewing the requirements and
+setting `reviewed_at`. `scripts/draft_requirements.py` writes the same provenance fields.
+
+**Scoreboard**, linked from the header and Scan totals, displays `/api/scores`: four computed panel values,
+per-case expected/actual calls, problems, fixes, time and cost. Its label comes from the score file's mode/date.
+The answer key is a small hand-authored demonstration set, not an unseen validation set.
+
+Owner checklist workflow (the draft call below spends real model tokens):
+
+```bash
+SPECCHECK_MODE=live uvicorn api.main:app
+# In another shell, with ADMIN_TOKEN available only in your environment:
+curl --fail-with-body -X POST 'http://localhost:8000/api/specs/draft?section=07%2084%2000&name=project-spec.pdf' \
+  -H 'Content-Type: application/pdf' --data-binary @data/raw/specs/cps_07_84_00.pdf > /tmp/checklist-response.json
+jq '.draft' /tmp/checklist-response.json > /tmp/reviewed-checklist.json
+# Review/edit every requirement in that file, then set reviewed_at to the date you reviewed it (YYYY-MM-DD).
+curl --fail-with-body -X POST 'http://localhost:8000/api/specs/07%2084%2000' \
+  -H "X-Admin-Token: $ADMIN_TOKEN" -H 'Content-Type: application/json' --data-binary @/tmp/reviewed-checklist.json
+```
+
 ## Layout
 
 ```

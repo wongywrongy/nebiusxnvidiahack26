@@ -6,6 +6,7 @@ to the model as part of the JSON schema.
 
 from __future__ import annotations
 
+from datetime import date, datetime
 from typing import Literal, Optional, Union
 
 from pydantic import BaseModel, Field, PrivateAttr
@@ -42,6 +43,20 @@ class Requirement(BaseModel):
 
 class RequirementsOut(BaseModel):
     requirements: list[Requirement]
+
+
+class Checklist(RequirementsOut):
+    """Draft provenance stays beside the requirements; only an admin-reviewed file is used live."""
+    drafted_by: Optional[str] = None
+    source_name: str = ""
+    source_url: Optional[str] = None
+    source_sha256: Optional[str] = None
+    drafted_at: Optional[datetime] = None
+    reviewed_at: Optional[date] = None
+
+
+class ReviewedChecklist(Checklist):
+    reviewed_at: date
 
 
 class Claim(BaseModel):
