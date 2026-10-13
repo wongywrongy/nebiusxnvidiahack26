@@ -1,91 +1,93 @@
-# The nightly re-check, as a Nebius Serverless Job.
-#
-# Every night this workflow asks Nebius AI Cloud to run scripts/recheck.py in the SpecCheck image: the approved
-# submittals are checked again against the manufacturers' current documents (Nemotron 3 on Token Factory reads,
-# Tavily fetches, code diffs), and the report is posted to the running demo so the Outcome step shows when the job
-# last ran and what it found. Serverless Jobs run to completion and exit; they have no schedule of their own, so
-# GitHub's cron is the clock and Nebius is the compute.
-#
-# Secrets (repository settings → Secrets and variables → Actions):
-#   NEBIUS_SA_ID, NEBIUS_PUBLIC_KEY_ID, NEBIUS_PRIVATE_KEY  a Nebius service account with an authorized key
-#   NEBIUS_PROJECT_ID                                        the Nebius project (parent) id
-#   NEBIUS_API_KEY, TAVILY_API_KEY                           the same keys the app uses
-#   SPECCHECK_ADMIN_TOKEN                                    ADMIN_TOKEN of the running demo
-# Variables: SPECCHECK_URL (the demo's https URL), SPECCHECK_IMAGE (default ghcr.io/<owner>/speccheck:latest)
-# See deploy/nebius/README.md.
+# GitHub supplies the clock; Nebius Serverless Jobs have no schedule of their own.
+# TODO(owner): paste real CLI state strings after the first live job. Only COMPLETED is assumed below.
 name: nightly-recheck
-
 on:
   schedule:
-    - cron: "17 9 * * *"   # 09:17 UTC = 02:17 PT, after the manufacturers' sites have had their quiet hours
+    - cron: "17 9 * * *"
   workflow_dispatch:
-
 permissions:
   contents: read
-
+concurrency:
+  group: nightly-recheck
+  cancel-in-progress: false
 jobs:
   recheck:
+    # Deliberately disabled until the owner has verified the test deployment and its costs.
+    if: ${{ vars.ENABLE_NEBIUS_JOBS == 'true' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 75
     env:
       IMAGE: ${{ vars.SPECCHECK_IMAGE || format('ghcr.io/{0}/speccheck:latest', github.repository_owner) }}
+      SPECCHECK_URL: ${{ vars.SPECCHECK_URL }}
+      NEBIUS_EVIDENCE_BUCKET: ${{ vars.NEBIUS_EVIDENCE_BUCKET }}
+      NEBIUS_SA_ID: ${{ secrets.NEBIUS_SA_ID }}
+      NEBIUS_PUBLIC_KEY_ID: ${{ secrets.NEBIUS_PUBLIC_KEY_ID }}
+      NEBIUS_PROJECT_ID: ${{ secrets.NEBIUS_PROJECT_ID }}
+      NEBIUS_SECRET_NEBIUS_API_KEY: ${{ secrets.NEBIUS_SECRET_NEBIUS_API_KEY }}
+      NEBIUS_SECRET_TAVILY_API_KEY: ${{ secrets.NEBIUS_SECRET_TAVILY_API_KEY }}
+      NEBIUS_SECRET_ADMIN_TOKEN: ${{ secrets.NEBIUS_SECRET_ADMIN_TOKEN }}
     steps:
-      - name: Install the Nebius CLI
+      - name: Install the pinned Nebius CLI
         run: |
-          curl -sSL https://artifacts.nebius.cloud/cli/install.sh | bash
-          echo "$HOME/.nebius/bin" >> "$GITHUB_PATH"
-
+          curl -fsSL https://artifacts.nebius.cloud/cli/install.sh -o "$RUNNER_TEMP/install-nebius.sh"
+          NEBIUS_CLI_VERSION=0.12.289 NEBIUS_INSTALL_FOLDER="$RUNNER_TEMP/nebius-bin" SHELL=/bin/sh bash "$RUNNER_TEMP/install-nebius.sh"
+          echo "$RUNNER_TEMP/nebius-bin" >> "$GITHUB_PATH"
       - name: Sign in as the service account
+        env:
+          NEBIUS_PRIVATE_KEY: ${{ secrets.NEBIUS_PRIVATE_KEY }}
         run: |
           umask 077
-          printf '%s\n' "${{ secrets.NEBIUS_PRIVATE_KEY }}" > "$RUNNER_TEMP/sa.pem"
-          nebius profile create \
-            --endpoint api.nebius.cloud \
-            --service-account-id "${{ secrets.NEBIUS_SA_ID }}" \
-            --public-key-id "${{ secrets.NEBIUS_PUBLIC_KEY_ID }}" \
-            --private-key-file "$RUNNER_TEMP/sa.pem" \
-            --parent-id "${{ secrets.NEBIUS_PROJECT_ID }}" \
-            --profile ci --no-browser
-
+          printf '%s\n' "$NEBIUS_PRIVATE_KEY" > "$RUNNER_TEMP/sa.pem"
+          nebius profile create --endpoint api.nebius.cloud --service-account-id "$NEBIUS_SA_ID" \
+            --public-key-id "$NEBIUS_PUBLIC_KEY_ID" --private-key-file "$RUNNER_TEMP/sa.pem" \
+            --parent-id "$NEBIUS_PROJECT_ID" --profile ci --no-browser
       - name: Create the Serverless Job
         id: job
         run: |
-          NAME="speccheck-recheck-$(date -u +%Y%m%d-%H%M)"
-          nebius ai job create \
-            --profile ci \
-            --name "$NAME" \
-            --image "$IMAGE" \
-            --container-command python \
-            --args "scripts/recheck.py --post ${{ vars.SPECCHECK_URL }}" \
-            --platform cpu-d3 \
-            --preset 2vcpu-8gb \
-            --disk-size 32Gi \
-            --timeout 1h \
-            --restart-policy never \
-            --on-demand \
-            --env SPECCHECK_MODE=live \
-            --env THINKING=off \
-            --env RECHECK_RUNNER="Nebius Serverless Job" \
-            --env NEBIUS_API_KEY="${{ secrets.NEBIUS_API_KEY }}" \
-            --env TAVILY_API_KEY="${{ secrets.TAVILY_API_KEY }}" \
-            --env ADMIN_TOKEN="${{ secrets.SPECCHECK_ADMIN_TOKEN }}" \
-            --async --no-progress
+          : "${SPECCHECK_URL:?Set SPECCHECK_URL}"
+          : "${NEBIUS_EVIDENCE_BUCKET:?Set NEBIUS_EVIDENCE_BUCKET}"
+          : "${NEBIUS_SECRET_NEBIUS_API_KEY:?Set the MysteryBox selector}"
+          : "${NEBIUS_SECRET_TAVILY_API_KEY:?Set the MysteryBox selector}"
+          : "${NEBIUS_SECRET_ADMIN_TOKEN:?Set the MysteryBox selector}"
+          NAME="speccheck-recheck-$(date -u +%Y%m%d-%H%M%S)"
+          nebius ai job create --profile ci --name "$NAME" --image "$IMAGE" \
+            --container-command python --args "scripts/recheck.py --post $SPECCHECK_URL" \
+            --platform cpu-d3 --preset 2vcpu-8gb --disk-size 32Gi --timeout 1h --restart-policy never --on-demand \
+            --volume "s3://$NEBIUS_EVIDENCE_BUCKET:/app/evidence:rw" \
+            --env EVIDENCE_DIR=/app/evidence --env EVIDENCE_LABEL="Nebius Object Storage" \
+            --env SPECCHECK_MODE=live --env THINKING=off --env RECHECK_RUNNER="Nebius Serverless Job" --env JOB_NAME="$NAME" \
+            --env BUDGET_USD_PER_RUN=3 --env BUDGET_USD_PER_DAY=8 \
+            --env BUDGET_TAVILY_CREDITS_PER_ITEM=60 --env BUDGET_TAVILY_CREDITS_PER_DAY=600 --env MAX_CONCURRENCY=2 \
+            --env-secret "NEBIUS_API_KEY=$NEBIUS_SECRET_NEBIUS_API_KEY" \
+            --env-secret "TAVILY_API_KEY=$NEBIUS_SECRET_TAVILY_API_KEY" \
+            --env-secret "ADMIN_TOKEN=$NEBIUS_SECRET_ADMIN_TOKEN" --async --format json > "$RUNNER_TEMP/job-operation.json"
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
-
-      - name: Wait for it and print the log
+          # --async returns an Operation: resource_id is the job; id is the operation.
+          echo "id=$(jq -r '.resource_id // empty' "$RUNNER_TEMP/job-operation.json")" >> "$GITHUB_OUTPUT"
+      - name: Record real states and wait for completion
+        env:
+          JOB_ID: ${{ steps.job.outputs.id }}
+          JOB_NAME: ${{ steps.job.outputs.name }}
         run: |
-          JOB_ID=""
           for i in $(seq 1 30); do
-            JOB_ID=$(nebius ai job get-by-name --profile ci --name "${{ steps.job.outputs.name }}" --format jsonpath='{.metadata.id}' 2>/dev/null || true)
             [ -n "$JOB_ID" ] && break
+            JOB_ID=$(nebius ai job get-by-name --profile ci --name "$JOB_NAME" --format 'jsonpath={.metadata.id}' 2>/dev/null || true)
             sleep 10
           done
-          echo "job id: $JOB_ID"
-          for i in $(seq 1 60); do
-            STATE=$(nebius ai job get --profile ci "$JOB_ID" --format jsonpath='{.status.state}' 2>/dev/null || echo unknown)
-            echo "state: $STATE"
-            case "$STATE" in *SUCCEEDED*|*COMPLETED*|*FAILED*|*ERROR*|*CANCEL*) break ;; esac
+          test -n "$JOB_ID"
+          for i in $(seq 1 240); do
+            STATE=$(nebius ai job get --profile ci "$JOB_ID" --format 'jsonpath={.status.state}' 2>/dev/null || echo unavailable)
+            printf 'Observed CLI state: %s\n' "$STATE"
+            if [ "$STATE" = COMPLETED ]; then
+              nebius ai job logs --profile ci "$JOB_ID"
+              # Completion alone does not establish that the report succeeded.
+              curl --fail --silent --show-error "$SPECCHECK_URL/api/watch" | jq -e --arg name "$JOB_NAME" '.job_name == $name'
+              exit 0
+            fi
             sleep 15
           done
-          nebius ai job logs --profile ci "$JOB_ID" || true
-          case "$STATE" in *FAILED*|*ERROR*) exit 1 ;; esac
+          echo 'No documented completion observed. Inspect the job in Nebius; do not infer success.'
+          exit 1
+      - name: Remove the temporary private key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/sa.pem"

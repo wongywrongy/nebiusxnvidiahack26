@@ -11,7 +11,11 @@ RUN npm run build
 
 FROM python:3.12-slim
 WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr curl ca-certificates && rm -rf /var/lib/apt/lists/*
+# Public installer stable resolved to 0.12.289 on 2026-10-13; pin instead of following stable on rebuild.
+RUN curl -fsSL https://artifacts.nebius.cloud/cli/install.sh -o /tmp/install-nebius.sh \
+    && NEBIUS_CLI_VERSION=0.12.289 NEBIUS_INSTALL_FOLDER=/usr/local/bin SHELL=/bin/sh bash /tmp/install-nebius.sh \
+    && rm /tmp/install-nebius.sh
 COPY api/requirements.txt api/requirements.txt
 RUN pip install --no-cache-dir -r api/requirements.txt
 COPY api/ api/

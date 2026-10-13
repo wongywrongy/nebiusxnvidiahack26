@@ -17,12 +17,13 @@ from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
 from ..config import FORCE_MOCK, redact, settings
+from .. import archive
 from ..providers import ProviderError, budget, failure_reason
 from ..providers.budget import BudgetExceeded
 from ..schemas import Event, Investigation, ReportOut, Requirement, Result, Usage
 from . import decide, extract, fix, spec_check, verify
 from .cases import all_specs, get_case
-from .ingest import load_spec_text, load_submittal_pages
+from .ingest import load_spec_text, load_submittal_pages, submittal_pdfs
 from .render import attach_highlights
 
 
@@ -171,6 +172,16 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 outcomes = {inv.outcome for inv in investigations}
                 investigation = Investigation(steps=steps, outcome=("capped" if "capped" in outcomes else
                                                                     "found" if "found" in outcomes else "not_found"))
+            archived_submittals = []
+            if settings.evidence_dir and (decision in ("approve", "approve_with_note") or case.get("watch")):
+                for path in submittal_pdfs(case):
+                    try:
+                        saved = archive.save(case_id, path.read_bytes(), "pdf")
+                        if saved:
+                            archived_submittals.append(saved)
+                    except OSError:
+                        warnings.append("Could not archive the submittal PDF.")
+            archived = archived_submittals or any(e.archived_path for f in findings for e in f.evidence)
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
                 comparison=rows, claims=claims.claims, document_revision=claims.document_revision,
@@ -179,6 +190,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 investigation=investigation,
                 mode="live" if settings.live else "mock", warnings=warnings,
                 ocr_pages=len(ocr_pages),
+                archived_submittals=archived_submittals, evidence_label=settings.evidence_label if archived else None,
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result

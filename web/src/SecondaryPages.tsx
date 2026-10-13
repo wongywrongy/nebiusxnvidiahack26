@@ -123,6 +123,7 @@ export function ScoreboardPage({ back }: { back: string }) {
       {!scores && !error && <p className="text-muted" role="status">Loading scores…</p>}
       {scores && <>
         <p className="-mt-3 text-muted">{scores.mode === 'live' ? `Live run recorded ${date(scores.generated_at)}` : `Mock · ${date(scores.generated_at)} · fixture answers, estimated token counts and cost`}</p>
+        {scores.job_name && <p className="text-muted">Evaluated on {scores.runner || 'Nebius Serverless Job'} {scores.job_name}, {date(scores.generated_at)}.</p>}
         <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {([
             ['Right call', scores.right_call], ['Planted problems caught', scores.caught],

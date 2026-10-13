@@ -34,15 +34,19 @@ import hmac
 import json
 import logging
 import time
+import re
 from collections import defaultdict, deque
-from typing import Optional
+from contextlib import asynccontextmanager
+from datetime import datetime
+from typing import Literal, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import Response, StreamingResponse
+from fastapi.responses import FileResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .config import settings
+from . import cloud_jobs
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
@@ -55,7 +59,16 @@ from .providers import ProviderError, budget, failure_reason
 from .schemas import Event, ReviewedChecklist
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
-app = FastAPI(title="SpecCheck")
+@asynccontextmanager
+async def lifespan(app):
+    await cloud_jobs.setup_profile()
+    try:
+        yield
+    finally:
+        cloud_jobs.cleanup_profile()
+
+
+app = FastAPI(title="SpecCheck", lifespan=lifespan)
 RUNS: dict[str, Run] = {}
 _tasks: set[asyncio.Task] = set()
 
@@ -108,7 +121,8 @@ def _rate_limit(request: Request) -> None:
 def health():
     rec = recorded_runs()
     return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today(),
-            "budget": budget.remaining(), "recorded": rec[0] if rec else None}
+            "budget": budget.remaining(), "recorded": rec[0] if rec else None,
+            "jobs_available": cloud_jobs.available()}
 
 
 @app.get("/api/project")
@@ -125,6 +139,7 @@ def project():
         "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
         "mode": settings.mode,
         "recheck": latest_recheck(),
+        "jobs_available": cloud_jobs.available(),
     }
 
 
@@ -286,10 +301,12 @@ async def run_scores(request: Request):
 
 class WatchReport(BaseModel):
     """What scripts/recheck.py posts after a nightly run (the Serverless Job has no disk the app can read)."""
-    checked_at: str
+    checked_at: datetime
     runner: str
-    mode: str
+    mode: Literal["mock", "live"]
     run_id: Optional[str] = None
+    job_name: Optional[str] = Field(default=None, pattern=r"^[A-Za-z0-9_-]{1,160}$")
+    duration_ms: Optional[int] = Field(default=None, ge=0)
     items: list[dict]
 
 
@@ -302,22 +319,49 @@ def watch():
 
 
 @app.post("/api/watch/report")
-def watch_report(body: WatchReport, request: Request):
+async def watch_report(body: WatchReport, request: Request):
     """The nightly job reports here with the admin token; the app shows the latest report on the Outcome step."""
     if not _is_admin(request):
         raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
     folder = settings.runs_dir / "watch"
     folder.mkdir(parents=True, exist_ok=True)
-    text = json.dumps(body.model_dump(), indent=2)
+    report = body.model_dump(mode="json")
+    text = json.dumps(report, indent=2)
     (folder / "latest.json").write_text(text)
-    (folder / f"{body.checked_at[:10]}.json").write_text(text)
+    (folder / f"{report['checked_at'][:10]}.json").write_text(text)
+    await cloud_jobs.attach_report(report)
     return {"ok": True, "items": len(body.items)}
+
+
+@app.post("/api/watch/run")
+async def run_watch(request: Request):
+    if not _is_admin(request):
+        _rate_limit(request)
+    return await cloud_jobs.start()
+
+
+@app.get("/api/watch/jobs")
+async def watch_jobs():
+    return await cloud_jobs.list_jobs()
+
+
+@app.get("/api/evidence/{path:path}")
+def archived_evidence(path: str):
+    if not settings.evidence_dir or not re.fullmatch(r"[A-Za-z0-9_-]+/[0-9TZ+_-]+/[0-9a-f]{64}\.(txt|pdf)", path):
+        raise HTTPException(404, "No archived copy")
+    local = (settings.evidence_dir / path).resolve()
+    if not local.is_relative_to(settings.evidence_dir.resolve()) or not local.is_file():
+        raise HTTPException(404, "No archived copy")
+    return FileResponse(local, media_type="application/pdf" if local.suffix == ".pdf" else "text/plain; charset=utf-8")
 
 
 @app.get("/api/scores")
 async def scores():
     rec = recorded_runs()
     path = settings.scores_file if settings.scores_file.exists() or not rec else settings.recorded_dir / rec[0] / "scores.json"
+    archived = settings.evidence_dir / "scores.json" if settings.evidence_dir else None
+    if archived and archived.is_file() and (not path.exists() or archived.stat().st_mtime > path.stat().st_mtime):
+        path = archived
     if not path.exists():
         return await run_scoring_set(mock=True)
     return json.loads(path.read_text())

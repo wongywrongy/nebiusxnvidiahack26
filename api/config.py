@@ -8,7 +8,7 @@ from contextvars import ContextVar
 from pathlib import Path
 from typing import Literal
 
-from pydantic import SecretStr
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -34,6 +34,21 @@ class Settings(BaseSettings):
     nebius_base_url: str = "https://api.tokenfactory.nebius.com/v1/"
     tavily_api_key: SecretStr = SecretStr("")
     admin_token: SecretStr = SecretStr("")
+    nebius_sa_id: str = ""
+    nebius_public_key_id: str = ""
+    nebius_private_key: SecretStr = SecretStr("")
+    nebius_project_id: str = ""
+    nebius_secret_nebius_api_key: str = ""
+    nebius_secret_tavily_api_key: str = ""
+    nebius_secret_admin_token: str = ""
+    speccheck_image: str = ""
+    speccheck_url: str = ""
+    evidence_dir: Path | None = None
+    evidence_label: str = "disk"
+    nebius_evidence_bucket: str = ""
+    # Populate only with state strings observed by the owner; COMPLETED is documented.
+    nebius_job_state_map: dict[str, Literal["queued", "starting", "running", "done", "failed"]] = {"COMPLETED": "done"}
+    watch_run_interval_s: int = Field(default=3600, ge=0)
 
     model_triage: str = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
     model_extract: str = "nvidia/nemotron-3-super-120b-a12b"
@@ -123,10 +138,11 @@ _PATTERNS = re.compile(r"(Bearer\s+)\S+|\b(sk-|tvly-|lsv2_)[A-Za-z0-9_\-]{8,}")
 
 
 def redact(text: str) -> str:
-    for k in KEYS:
+    for k in (*KEYS, "nebius_private_key"):
         v = settings.secret(k)
         if len(v) >= 4:
             text = text.replace(v, "***")
+    text = re.sub(r"-----BEGIN [^-]*PRIVATE KEY-----.*?-----END [^-]*PRIVATE KEY-----", "***", text, flags=re.S)
     return _PATTERNS.sub(lambda m: (m.group(1) or m.group(2)) + "***", text)
 
 

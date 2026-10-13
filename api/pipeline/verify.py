@@ -115,7 +115,9 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
             confirmed = gate(out, pages)
 
     evidence = [
-        Evidence(tier=classify(p["url"], domains), title=titles.get(p["url"], p["url"]), **snapshot(p["url"], p["raw_content"]))
+        Evidence(tier=classify(p["url"], domains), title=titles.get(p["url"], p["url"]),
+                 **{**snapshot(p["url"], p["raw_content"]),
+                    **{k: p[k] for k in ("retrieved_at", "sha256", "archived_path") if k in p}})
         for p in pages
     ]
     findings, rows = compare(submitted, out, confirmed, evidence, pages)
