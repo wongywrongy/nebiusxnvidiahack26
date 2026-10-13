@@ -60,6 +60,14 @@ class Settings(BaseSettings):
     # think (reasoning_effort none + chat_template_kwargs.enable_thinking false; a server that rejects either field is
     # retried without it). "on" leaves the model's default.
     thinking: Literal["off", "on"] = "off"
+    thinking_tasks: str = ""
+    max_page_chars: int = Field(default=6000, ge=1)
+    web_source_chars: int = Field(default=12000, ge=1)
+    search_depth: Literal["basic", "advanced"] = "basic"
+    extract_depth: Literal["basic", "advanced"] = "basic"
+    search_max_results: int = Field(default=5, ge=1, le=20)
+    investigate_credit_cap: float = Field(default=8, ge=0)
+    investigate_max_steps: int = Field(default=6, ge=1)
 
     budget_usd_per_run: float = 1.0
     budget_usd_per_day: float = 2.0
@@ -115,6 +123,9 @@ class Settings(BaseSettings):
 
     def secret(self, name: str) -> str:
         return getattr(self, name).get_secret_value()
+
+    def thinking_for(self, task: str) -> str:
+        return "on" if task in {name.strip() for name in self.thinking_tasks.split(",")} else self.thinking
 
 
 class MissingKey(RuntimeError):

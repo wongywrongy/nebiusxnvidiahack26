@@ -55,6 +55,11 @@ async def main(case_ids: list[str], out: Path | None = None) -> int:
     print(f"  fixes that pass the spec        {fx['n']} of {fx['of']}")
     print(f"  average time per submittal      {s['time_ms_per_item'] / 1000:.1f} s")
     print(f"  cost per submittal (model+web)  ${s['cost_usd_per_item']:.4f}" + ("   (mock: estimated token counts)" if not settings.live else ""))
+    gate = s["quote_gate"]
+    def rate(key):
+        return "n/a" if gate[key] is None else f"{gate[key]:.1%}"
+    print(f"Quote gate: claims {gate['claims_kept']}/{gate['claims_extracted']} kept ({rate('claims_drop_rate')} dropped); "
+          f"web values {gate['web_values_kept']}/{gate['web_values_read']} kept ({rate('web_values_drop_rate')} dropped)")
 
     if out is not None or sorted(case_ids) == sorted(all_cases()):
         path = out or settings.scores_file

@@ -28,8 +28,8 @@ document pipelines for a general contractor and has watched this problem cost re
 | Watch approved items | the same pipeline as a **Nebius Serverless Job**, nightly | re-checks approved submittals against the manufacturer's live documents; raises a discontinuation with the maker's own quote and a replacement that passes | the part a human never gets around to |
 
 Structured reads ask for JSON against a Pydantic schema (`response_format: json_schema`, with the `json_object`
-fallback); Investigator turns use native tools without `response_format`. Both use temperature 0 and thinking off (Nemotron 3 reasons by default; these are extraction calls,
-so thinking would only spend output tokens). Replies are cached on disk so a document is paid for once. Spend is
+fallback); Investigator turns use native tools without `response_format`. Both use temperature 0 and default to thinking off. `THINKING_TASKS` opts selected tasks into model-default
+thinking; any quality improvement needs measurement, not an assumption. Replies are cached on disk so a document is paid for once. Spend is
 capped per run and per day before each call is made. Each result carries its trace: every model call with tokens,
 latency and cost, and the Tavily credits, shown in the app under "Checked by".
 
@@ -38,7 +38,7 @@ value, revision or status without a quote on a fetched page is dropped. What not
 "couldn't confirm", never as a failure.
 
 When the scripted check has no quoted answer, the **Investigator** lets Nemotron 3 Super choose Tavily search,
-map and extract calls, then finish with exact quotes. It stops after six tool calls, including finish, and shares
+map and extract calls, then finish with exact quotes. By default it stops after six tool calls, including finish, and shares
 an eight-credit investigation allowance across each item's checks and fix candidates. Extracted pages stay whole
 for quote verification; the model sees at most 6,000 characters per tool result. Accepted documents go through the
 same value comparison as the scripted check. The Review trace lists each step; the Scan row says "Investigating".
@@ -176,6 +176,40 @@ jq '.draft' /tmp/checklist-response.json > /tmp/reviewed-checklist.json
 curl --fail-with-body -X POST 'http://localhost:8000/api/specs/07%2084%2000' \
   -H "X-Admin-Token: $ADMIN_TOKEN" -H 'Content-Type: application/json' --data-binary @/tmp/reviewed-checklist.json
 ```
+
+## Tuning
+
+Change one setting at a time; defaults preserve the fixture evaluation. `THINKING_TASKS` is a comma list of
+router task names (`triage`, `extract_requirements`, `extract_claims`, `verify`, `investigate`, `report`) that
+use model-default thinking. Other tasks follow `THINKING=off` unless the global setting is changed. Structured
+and tool-call caches key the effective per-task setting.
+
+| Knob | Default | What it bounds |
+| --- | --- | --- |
+| `THINKING_TASKS` | empty | Tasks opting into model-default reasoning |
+| `MAX_PAGE_CHARS` / `WEB_SOURCE_CHARS` | 6000 / 12000 | Text shown to claims extraction / web value reading |
+| `SEARCH_DEPTH` / `EXTRACT_DEPTH` | basic / basic | Tavily depth; `advanced` doubles the corresponding credit rate |
+| `SEARCH_MAX_RESULTS` | 5 | Search results, including Investigator tools |
+| `INVESTIGATE_CREDIT_CAP` / `INVESTIGATE_MAX_STEPS` | 8 / 6 | Shared item investigation credits / calls per loop |
+| `MAP_LIMIT` | 20 | Maximum mapped links (recovery also caps at 20) |
+
+```bash
+SPECCHECK_MODE=mock python scripts/eval.py --out /tmp/baseline.json
+SPECCHECK_MODE=mock WEB_SOURCE_CHARS=18000 python scripts/eval.py --out /tmp/longer-sources.json
+python - <<'PYCOMPARE'
+import json
+for path in ('/tmp/baseline.json', '/tmp/longer-sources.json'):
+    score = json.load(open(path))
+    print(path, score['tuning'], score['right_call'], score['quote_gate'], score['cost_usd_per_item'])
+PYCOMPARE
+```
+
+Compare right calls, missed problems, false alarms, cost and quote-gate drop rates before accepting a knob.
+Result/Scoreboard counters include candidate and investigated value reads; repeated gating of the same read
+is not counted twice. A zero denominator is “no values read”, not a claimed 0% failure rate. Full text remains
+available to the quote gate and archive even when the model sees a shorter excerpt. Mock mode measures wiring
+and fixture behavior; it cannot establish a live quality gain. `--write` is an alias of `--out`. Live comparisons
+are owner-only and require an explicit paid run later; none was performed here.
 
 ## AI Cloud in the workflow
 

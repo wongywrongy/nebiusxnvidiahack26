@@ -99,6 +99,7 @@ export interface Result {
   ocr_pages?: number
   evidence_label?: string | null
   archived_submittals?: string[]
+  claims_extracted?: number; claims_kept?: number; web_values_read?: number; web_values_kept?: number
 }
 
 export interface Health { mode: 'mock' | 'live'; budget: { usd_left: number; credits_left: number } }
@@ -127,6 +128,8 @@ export async function draftSpec(file: File, section: string, title: string): Pro
 interface Score { n: number; of: number }
 export interface Scores {
   runner?: string; job_name?: string | null
+  quote_gate?: { claims_extracted: number; claims_kept: number; web_values_read: number; web_values_kept: number
+    claims_drop_rate: number | null; web_values_drop_rate: number | null }
   mode: Project['mode']; generated_at: string; run_id: string; models: Record<string, string>
   right_call: Score; caught: Score; false_alarms: Score; fixes_passing: Score
   rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]

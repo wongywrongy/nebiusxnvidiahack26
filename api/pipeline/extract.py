@@ -10,7 +10,7 @@ from ..config import settings
 from ..llm import router
 from ..schemas import ClaimsOut, PageLabel, RequirementsOut, TriageOut, Usage
 
-MAX_PAGE_CHARS = 6000
+from . import metrics
 
 
 async def triage(case_id: Optional[str], pages: list[dict]) -> tuple[TriageOut, Usage]:
@@ -60,7 +60,7 @@ async def extract_requirements(section: str, spec_text: str, title: str = "") ->
 
 async def extract_claims(case_id: Optional[str], pages: list[dict], labels: TriageOut, properties: list[str]) -> tuple[ClaimsOut, Usage]:
     useful = {l.page for l in labels.pages if l.kind != "other"}
-    text = [{"page": p["page"], "text": p["text"][:MAX_PAGE_CHARS]} for p in pages if p["page"] in useful]
+    text = [{"page": p["page"], "text": p["text"][:settings.max_page_chars]} for p in pages if p["page"] in useful]
     messages = [
         {
             "role": "user",
@@ -75,7 +75,9 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     out, usage = await router.call("extract_claims", ClaimsOut, messages, {"case_id": case_id})
     # Evidence or nothing: a claim whose quote isn't on the page it cites (any page, if none) is dropped.
     texts = {p["page"]: p["text"] for p in pages}
+    extracted = len(out.claims)
     out.claims = [c for c in out.claims if quoted(c.quote, texts[c.page] if c.page in texts else " ".join(texts.values()))]
+    metrics.count("claims_extracted", "claims_kept", extracted, len(out.claims))
     return out, usage
 
 

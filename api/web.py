@@ -35,19 +35,23 @@ class WebClient:
         budget.charge_credits(n, real=False)
         self.credits += n
 
-    async def search(self, query: str, include_domains: Optional[list[str]] = None, depth: str = "basic",
+    async def search(self, query: str, include_domains: Optional[list[str]] = None, depth: Optional[str] = None,
                      topic: str = "general", include_published_date: bool = False, exact_match: bool = False,
-                     include_domains_mode: Optional[str] = None) -> list[dict]:
+                     include_domains_mode: Optional[str] = None, max_results: Optional[int] = None) -> list[dict]:
+        depth = depth or settings.search_depth
+        max_results = max_results if max_results is not None else settings.search_max_results
         if not settings.live:
             self._mock_charge(tavily.search_credits(depth))
-            return self._investigation_result() if self.investigation_step is not None else self._fixture().get("search", [])
-        results, spent = await tavily.search(query, include_domains, depth, topic=topic,
+            results = self._investigation_result() if self.investigation_step is not None else self._fixture().get("search", [])
+            return results[:max_results]
+        results, spent = await tavily.search(query, include_domains, depth, max_results=max_results, topic=topic,
                                             include_published_date=include_published_date, exact_match=exact_match,
                                             include_domains_mode=include_domains_mode)
         self.credits += spent
         return results
 
-    async def extract(self, urls: list[str], depth: str = "basic") -> list[dict]:
+    async def extract(self, urls: list[str], depth: Optional[str] = None) -> list[dict]:
+        depth = depth or settings.extract_depth
         if not urls:
             return []
         if not settings.live:

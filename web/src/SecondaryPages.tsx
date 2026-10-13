@@ -135,6 +135,12 @@ export function ScoreboardPage({ back }: { back: string }) {
           ))}
         </dl>
         <p className="text-muted">Models: {[...new Set(Object.values(scores.models))].map(modelName).join(' · ')} on Nebius Token Factory.</p>
+        {scores.quote_gate ? <p className="text-muted">Quote gate: {scores.quote_gate.claims_kept} of {scores.quote_gate.claims_extracted} extracted claims kept
+          {' '}({scores.quote_gate.claims_drop_rate == null ? 'no claims read' : `${(scores.quote_gate.claims_drop_rate * 100).toFixed(1)}% dropped`});
+          {' '}{scores.quote_gate.web_values_kept} of {scores.quote_gate.web_values_read} web values kept
+          {' '}({scores.quote_gate.web_values_drop_rate == null ? 'no values read' : `${(scores.quote_gate.web_values_drop_rate * 100).toFixed(1)}% dropped`}).
+          Includes replacement candidates and investigated value reads.</p>
+          : <p className="text-muted">Quote-gate counts were not recorded in this score file.</p>}
         <p className="max-w-3xl leading-6 text-muted">The answer key is the hand-authored expected decision and problem types for each bundled case. It includes clean packages, outdated documents, a discontinued product and spec mismatches. Scores compare the pipeline's computed findings with that fixed key; they measure this small demonstration set, not performance on unseen submittals.</p>
         <div className="overflow-x-auto rounded-xl border border-line" role="region" aria-label="Per-case scores" tabIndex={0}>
           <table className="w-full min-w-[880px] text-xs">
