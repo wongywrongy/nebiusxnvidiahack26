@@ -68,16 +68,22 @@ async def _cached(ns: str, key: dict, estimate: int, call, credits_of) -> tuple[
 
 
 async def search(query: str, include_domains: Optional[list[str]] = None, depth: str = "basic",
-                 max_results: int = 5, topic: str = "general") -> tuple[list[dict], int]:
-    async def call():
-        body = {"query": query, "search_depth": depth, "max_results": max_results, "topic": topic}
-        if include_domains:
-            body["include_domains"] = include_domains
-        resp = await _post("/search", body)
-        return [{"url": r["url"], "title": r.get("title", ""), "content": r.get("content", "")} for r in resp.get("results", [])]
+                 max_results: int = 5, topic: str = "general", include_published_date: bool = False,
+                 exact_match: bool = False, include_domains_mode: Optional[str] = None) -> tuple[list[dict], int]:
+    body = {"query": query, "search_depth": depth, "max_results": max_results, "topic": topic,
+            "include_published_date": include_published_date, "exact_match": exact_match}
+    if include_domains:
+        body["include_domains"] = include_domains
+        if include_domains_mode:
+            body["include_domains_mode"] = include_domains_mode  # without domains the API returns 400
 
-    key = {"q": query, "d": include_domains, "depth": depth, "n": max_results, "topic": topic}
-    return await _cached("tavily_search", key, search_credits(depth), call, lambda _: search_credits(depth))
+    async def call():
+        resp = await _post("/search", body)
+        return [{"url": r["url"], "title": r.get("title", ""), "content": r.get("content", ""),
+                 **({"published_date": r["published_date"]} if "published_date" in r else {})}
+                for r in resp.get("results", [])]
+
+    return await _cached("tavily_search", body, search_credits(depth), call, lambda _: search_credits(depth))
 
 
 async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], int]:
@@ -123,6 +129,6 @@ async def fetch_pdf(url: str) -> Optional[list[dict]]:
     if r.is_error or not r.content.startswith(b"%PDF"):
         return None
     try:
-        return pdf_pages(r.content)
+        return await pdf_pages(r.content)
     except Exception:  # truncated or broken PDF
         return None

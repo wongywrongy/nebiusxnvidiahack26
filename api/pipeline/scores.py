@@ -69,15 +69,17 @@ def scores(run, case_ids: list[str]) -> dict:
     }
 
 
-async def run_scoring_set() -> dict:
+async def run_scoring_set(*, mock: bool = False) -> dict:
     """Run every case, score it against the key, and write runs/scores.json."""
     import json
 
     from .runner import Run, execute
 
     ids = sorted(all_cases())
-    run = await execute(Run(ids, delay_ms=0))
+    run = await execute(Run(ids, delay_ms=0, mock=ids if mock else []))
     s = scores(run, ids)
+    if mock:
+        s["mode"] = "mock"
     settings.scores_file.parent.mkdir(parents=True, exist_ok=True)
     settings.scores_file.write_text(json.dumps(s, indent=2))
     return s

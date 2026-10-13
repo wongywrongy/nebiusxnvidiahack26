@@ -94,6 +94,7 @@ export interface Result {
   mode?: 'mock' | 'live' | null
   replayed_from?: string | null
   warnings?: string[]
+  ocr_pages?: number
 }
 
 export interface Health { mode: 'mock' | 'live'; budget: { usd_left: number; credits_left: number } }

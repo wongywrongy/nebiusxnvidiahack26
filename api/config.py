@@ -132,7 +132,12 @@ def redact(text: str) -> str:
 
 class RedactFilter(logging.Filter):
     def filter(self, record: logging.LogRecord) -> bool:
-        record.msg, record.args = redact(record.getMessage()), None
+        if record.name == "uvicorn.access" and isinstance(record.args, tuple):
+            # Uvicorn unpacks the access fields; keep their types while scrubbing strings.
+            record.msg = redact(str(record.msg))
+            record.args = tuple(redact(v) if isinstance(v, str) else v for v in record.args)
+        else:
+            record.msg, record.args = redact(record.getMessage()), None
         return True
 
 

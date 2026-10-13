@@ -17,6 +17,30 @@ type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null
 type Act = 'return' | 'approve'
 type Call = { act: Act; message: string }
 
+type Session = {
+  version: 1; step: Step; reached: Step; inbox: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>
+  calls: Record<string, Call>; current: string | null; checks: Record<string, Row>; checked: Record<string, Result>
+  requested: Record<string, boolean>; drafts: Record<string, string>; scanNote: string | null; checkNote: string | null
+}
+const SESSION_KEY = 'speccheck.session.v1'
+function readSession(): Partial<Session> {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SESSION_KEY) ?? 'null')
+    const maps = ['rows', 'loaded', 'calls', 'checks', 'checked', 'requested', 'drafts']
+    if (saved?.version !== 1 || ![1, 2, 3, 4].includes(saved.step) || ![1, 2, 3, 4].includes(saved.reached)
+      || !Array.isArray(saved.inbox) || !saved.inbox.every((c: Case) => typeof c.id === 'string' && Array.isArray(c.submittal))
+      || maps.some((key) => !saved[key] || typeof saved[key] !== 'object' || Array.isArray(saved[key]))) return {}
+    // shortcut: completed work survives reload; interrupted scans need Retry until SSE resumption is added.
+    for (const [id, row] of Object.entries(saved.rows) as [string, Row][]) {
+      if (!saved.loaded[id] && row.stage !== 'error') saved.rows[id] = { stage: 'error', model: null, reason: 'Scan interrupted by reload. Retry this item.' }
+    }
+    for (const [id, row] of Object.entries(saved.checks) as [string, Row][]) {
+      if (!saved.checked[id] && row.stage !== 'error') saved.checks[id] = { stage: 'error', model: null, reason: 'Re-check interrupted by reload. Check approved now to try again.' }
+    }
+    return saved
+  } catch { return {} }
+}
+
 const STAGE: Partial<Record<Stage, [string, number]>> = {
   queued: ['Queued', 0.04], ingest: ['Reading pages', 0.12], triage: ['Reading pages', 0.22],
   extract: ['Checking the spec', 0.36], spec_check: ['Checking the spec', 0.5],
@@ -77,23 +101,34 @@ const totals = (usage: Usage[]) => ({
 })
 
 export default function App() {
+  const [saved] = useState(readSession)
+  const streams = useRef(new Set<() => void>())
+  const generation = useRef(0)
   const [secondary, setSecondary] = useState(window.location.hash)
   const [project, setProject] = useState<Project | null>(null)
   const [health, setHealth] = useState<Health | null>(null)
-  const [scanNote, setScanNote] = useState<string | null>(null)
-  const [checkNote, setCheckNote] = useState<string | null>(null)
+  const [scanNote, setScanNote] = useState<string | null>(saved.scanNote ?? null)
+  const [checkNote, setCheckNote] = useState<string | null>(saved.checkNote ?? null)
   const [failed, setFailed] = useState(false)
-  const [step, setStep] = useState<Step>(1)
-  const [reached, setReached] = useState<Step>(1)
-  const [inbox, setInbox] = useState<Case[]>([])
+  const [step, setStep] = useState<Step>(saved.step ?? 1)
+  const [reached, setReached] = useState<Step>(saved.reached ?? 1)
+  const [inbox, setInbox] = useState<Case[]>(saved.inbox ?? [])
   const [error, setError] = useState<string | null>(null)
-  const [rows, setRows] = useState<Record<string, Row>>({}) // the scan
-  const [loaded, setLoaded] = useState<Record<string, Loaded>>({})
-  const [calls, setCalls] = useState<Record<string, Call>>({}) // the reviewer's decisions, client-side only
-  const [current, setCurrent] = useState<string | null>(null)
-  const [checks, setChecks] = useState<Record<string, Row>>({}) // "Check approved now"
-  const [checked, setChecked] = useState<Record<string, Result>>({})
-  const [requested, setRequested] = useState<Record<string, boolean>>({}) // substitutions requested
+  const [rows, setRows] = useState<Record<string, Row>>(saved.rows ?? {}) // the scan
+  const [loaded, setLoaded] = useState<Record<string, Loaded>>(saved.loaded ?? {})
+  const [calls, setCalls] = useState<Record<string, Call>>(saved.calls ?? {}) // the reviewer's decisions, client-side only
+  const [drafts, setDrafts] = useState<Record<string, string>>(saved.drafts ?? {})
+  const [current, setCurrent] = useState<string | null>(saved.current ?? null)
+  const [checks, setChecks] = useState<Record<string, Row>>(saved.checks ?? {}) // "Check approved now"
+  const [checked, setChecked] = useState<Record<string, Result>>(saved.checked ?? {})
+  const [requested, setRequested] = useState<Record<string, boolean>>(saved.requested ?? {}) // substitutions requested
+
+  useEffect(() => {
+    const session: Session = { version: 1, step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote }
+    try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)) }
+    catch { try { localStorage.removeItem(SESSION_KEY) } catch { /* storage may be disabled */ } }
+  }, [step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote])
+  useEffect(() => () => { generation.current++; streams.current.forEach((close) => close()); streams.current.clear() }, [])
 
   useEffect(() => { getProject().then(setProject, () => setFailed(true)) }, [])
   useEffect(() => { getHealth().then(setHealth).catch(() => {}) }, [])
@@ -112,39 +147,60 @@ export default function App() {
 
   // Stream a run into a row map; onDone gets each item's result.
   function follow(run: string, set: typeof setRows, onDone: (id: string, r: Result) => void) {
-    streamEvents(run, (e) => {
+    const active = generation.current
+    const close = streamEvents(run, (e) => {
+      if (active !== generation.current) return
       const id = e.case_id
       if (!id) return
-      if (e.stage === 'done') getResult(run, id).then((r) => { set((m) => ({ ...m, [id]: { ...m[id], at: now() } })); return onDone(id, r) })
-        .catch((error: Error) => set((m) => ({ ...m, [id]: { stage: 'error', model: null, reason: error.message } })))
+      if (e.stage === 'done') getResult(run, id).then((r) => {
+        if (active !== generation.current) return
+        set((m) => ({ ...m, [id]: { ...m[id], at: now() } })); return onDone(id, r)
+      }).catch((error: Error) => { if (active === generation.current) set((m) => ({ ...m, [id]: { stage: 'error', model: null, reason: error.message } })) })
       set((m) => ({ ...m, [id]: { ...m[id], stage: e.stage, reason: e.stage === 'error' ? e.message : undefined,
         model: e.model ?? (e.stage === 'done' ? null : m[id]?.model ?? null) } }))
-    }, () => { getHealth().then(setHealth).catch(() => {}) })
+    }, () => { streams.current.delete(close); getHealth().then(setHealth).catch(() => {}) })
+    streams.current.add(close)
+  }
+
+  function startOver() {
+    generation.current++
+    streams.current.forEach((close) => close()); streams.current.clear()
+    setInbox([]); setRows({}); setLoaded({}); setCalls({}); setDrafts({}); setCurrent(null)
+    setChecks({}); setChecked({}); setRequested({}); setScanNote(null); setCheckNote(null); setError(null)
+    setReached(1); go(1)
+    try { localStorage.removeItem(SESSION_KEY) } catch { /* storage may be disabled */ }
   }
 
   async function add(id: string) {
+    const active = generation.current
     setError(null)
     try {
       const c = await addToInbox(id)
+      if (active !== generation.current) return
       setInbox((i) => (i.some((x) => x.id === c.id) ? i : [...i, c]))
-    } catch (e) { setError((e as Error).message) }
+    } catch (e) { if (active === generation.current) setError((e as Error).message) }
   }
 
   async function upload(files: File[]) {
+    const active = generation.current
     setError(null)
     for (const f of files) {
+      if (active !== generation.current) return
       try {
         const c = await uploadToInbox(f)
+        if (active !== generation.current) return
         setInbox((i) => [...i, { ...c, received: now() }])
-      } catch (e) { setError(`${f.name}: ${(e as Error).message}`) }
+      } catch (e) { if (active === generation.current) setError(`${f.name}: ${(e as Error).message}`) }
     }
   }
 
   async function startScan(retryId?: string) {
+    const active = generation.current
     const fresh = inbox.filter((c) => retryId ? c.id === retryId : !rows[c.id])
     setError(null)
     try {
       const run = await scan(fresh.map((c) => c.id))
+      if (active !== generation.current) return
       setScanNote(run.note ?? null)
       setRows((m) => ({ ...m, ...Object.fromEntries(fresh.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
       follow(run.run_id, setRows, async (id, result) => {
@@ -152,10 +208,11 @@ export default function App() {
         const found = await Promise.all(c.submittal.map((d) => getDocPages(id, d.file)))
         const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
         const text = docs ? null : await getCaseText(id)
+        if (active !== generation.current) return
         setLoaded((m) => ({ ...m, [id]: { result, docs, text } }))
       })
       go(2)
-    } catch (e) { setError((e as Error).message) }
+    } catch (e) { if (active === generation.current) setError((e as Error).message) }
   }
 
   const scanned = inbox.filter((c) => rows[c.id])
@@ -177,14 +234,16 @@ export default function App() {
   const watchList = [...queue.filter((c) => calls[c.id]?.act === 'approve'), ...(project?.watched ?? [])]
 
   async function checkApproved() {
+    const active = generation.current
     setError(null)
     try {
       const run = await scan(watchList.map((c) => c.id))
+      if (active !== generation.current) return
       setCheckNote(run.note ?? null)
       setChecked({})
       setChecks((m) => ({ ...m, ...Object.fromEntries(watchList.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
       follow(run.run_id, setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
-    } catch (e) { setError((e as Error).message) }
+    } catch (e) { if (active === generation.current) setError((e as Error).message) }
   }
 
   const sections = project?.specs.map((s) => s.section) ?? []
@@ -199,6 +258,7 @@ export default function App() {
           <nav aria-label="Project reference" className="ml-auto flex shrink-0 gap-4 font-mono text-xs text-muted">
             <a href="#specs" className="py-2 hover:text-ink">Specs<span className="hidden md:inline"> {sections.join(' · ')}</span></a>
             <a href="#scoreboard" className="py-2 hover:text-ink">Scoreboard</a>
+            {inbox.length > 0 && <a href="#" className="py-2 hover:text-ink" onClick={(e) => { e.preventDefault(); startOver() }}>Start over</a>}
           </nav>
         </div>
       </header>
@@ -216,7 +276,8 @@ export default function App() {
         {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error}
           onRetry={startScan} onReview={startReview} />}
         {step === 3 && (
-          <ReviewStep queue={queue} loaded={loaded} calls={calls} current={current} mode={mode} onPick={setCurrent} onDecide={decide} />
+          <ReviewStep queue={queue} loaded={loaded} calls={calls} drafts={drafts} current={current} mode={mode} onPick={setCurrent} onDecide={decide}
+            onDraft={(id, message) => setDrafts((m) => ({ ...m, [id]: message }))} />
         )}
         {step === 4 && (
           <>
@@ -325,6 +386,7 @@ function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRem
       <Heading title="Inbox" count={project ? count : NBSP}>
         <button className={PRIMARY} onClick={onScan} disabled={!fresh.length}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
       </Heading>
+      {!inbox.length && <p className="-mt-3 max-w-3xl leading-6 text-muted">SpecCheck checks each submittal against the project spec and the manufacturer's current documents, then writes what to send back and what to forward.</p>}
       {health?.mode === 'live' && (health.budget.usd_left <= 0 || health.budget.credits_left <= 0) && (
         <p className="-mt-3 text-muted" role="status">Today's live budget is spent. Recorded samples can replay; uploads can be checked tomorrow (UTC).</p>
       )}
@@ -509,9 +571,10 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
 
 // ---------- 3 · Review ----------
 
-function ReviewStep({ queue, loaded, calls, current, mode, onPick, onDecide }: {
+function ReviewStep({ queue, loaded, calls, drafts, current, mode, onPick, onDecide, onDraft }: {
   queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; current: string | null; mode: Project['mode']
-  onPick: (id: string) => void; onDecide: (id: string, call: Call) => void
+  drafts: Record<string, string>; onPick: (id: string) => void; onDecide: (id: string, call: Call) => void
+  onDraft: (id: string, message: string) => void
 }) {
   const c = queue.find((q) => q.id === current) ?? queue[0]
   if (!c) return <Heading title="Review" count="Nothing to review" />
@@ -529,7 +592,7 @@ function ReviewStep({ queue, loaded, calls, current, mode, onPick, onDecide }: {
         ))}
       </div>
       <Reviewing key={c.id} c={c} at={i + 1} of={queue.length} l={loaded[c.id]} call={calls[c.id]} mode={mode}
-        onDecide={(call) => onDecide(c.id, call)} />
+        messageDraft={drafts[c.id]} onDraft={(message) => onDraft(c.id, message)} onDecide={(call) => onDecide(c.id, call)} />
     </>
   )
 }
@@ -572,8 +635,9 @@ function webRows(f: Finding): CheckRow[] {
   return [[f, 'Data sheet version', current, f.compare?.left_value]]
 }
 
-function Reviewing({ c, at, of, l, call, mode, onDecide }: {
+function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }: {
   c: Case; at: number; of: number; l: Loaded; call?: Call; mode: Project['mode']; onDecide: (call: Call) => void
+  messageDraft?: string; onDraft: (message: string) => void
 }) {
   const { result, docs, text } = l
   // Worst first: must fix, then out of date, then notes and couldn't-confirm.
@@ -590,7 +654,7 @@ function Reviewing({ c, at, of, l, call, mode, onDecide }: {
   const draft = (a: Act) => a === 'return'
     ? returnNote(c, result, best)
     : `No exceptions taken. Forwarding ${c.number ?? c.title} for approval.${result.decision === 'approve_with_note' && result.note_to_subcontractor ? `\n\n${result.note_to_subcontractor}` : ''}`
-  const [message, setMessage] = useState(call?.act === rec ? call.message : draft(rec))
+  const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
   const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
   const web = result.findings.filter((f) => WEB.has(f.check))
   const source = web.flatMap((f) => f.evidence)[0]
@@ -636,7 +700,7 @@ function Reviewing({ c, at, of, l, call, mode, onDecide }: {
             <label htmlFor="message" className={CAPS}>{rec === 'return' ? `Return to ${who}` : 'Forward to architect'}</label>
             {rec === 'return' && c.email && <span className="font-mono text-xs text-muted">{c.email}</span>}
           </span>
-          <textarea id="message" rows={9} value={message} onChange={(e) => setMessage(e.target.value)}
+          <textarea id="message" rows={9} value={message} onChange={(e) => { setMessage(e.target.value); onDraft(e.target.value) }}
             className="resize-y rounded-lg border border-line bg-well p-3 leading-relaxed text-ink" />
           <div className="flex flex-wrap gap-2">
             {rec === 'return' ? (
@@ -681,6 +745,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         <span className="text-faint"> on Nebius Token Factory</span>
         {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span> fetched {plural(sources, 'source')}</>}
         {' · verdicts by code'}
+        {!!result.ocr_pages && ` · ${plural(result.ocr_pages, 'page')} scanned → OCR (Tesseract), ${mode === 'mock' ? 'mock reading by' : 'read by'} Nemotron 3 Super`}
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
         {result.replayed_from && ' · replayed'}
         <span className="text-faint"> · {kTokens(tokens)} tokens · {money(cost)} · {seconds(result.duration_ms)}</span>
