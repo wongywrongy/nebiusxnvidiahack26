@@ -226,6 +226,24 @@ Deployment commands, MysteryBox selectors, bucket mounts and the Oct 16–17 / O
 _TODO(owner): add a real Nebius console screenshot showing the endpoint, a completed re-check job and its report.
 Do not substitute the fake CLI screenshots or a mock score for live evidence._
 
+## Deployment smoke check
+
+```bash
+# Owner-only, paid: point at the deployed live endpoint. ADMIN_TOKEN in the environment is optional.
+python scripts/smoke.py "$SPECCHECK_URL"
+# Or: python scripts/smoke.py "$SPECCHECK_URL" --admin-token "$ADMIN_TOKEN"
+```
+
+The manual **smoke** GitHub workflow accepts the URL too. Read-only preflight checks live health/project mode,
+key-presence booleans, positive caps at or below production limits, Specs, Scoreboard and a report/clear Watch
+404. If preflight fails, it starts no scan. Then c01 and the smallest synthetic one-page PDF in `tests/data/`
+share **one scan**: one run's model USD cap and one item's total Tavily allowance, processed sequentially.
+`shared_item_budget=true` can only tighten limits. The script makes no retries and refuses an older deployment
+without this budget capability. It requires a fresh Nemotron call (or an explicit replay) for c01 and a live
+upload result with a quoted claim or an honest couldn't-confirm finding. A fully cached c01 is reported as
+insufficient proof, not quietly rerun at extra cost. Exit status is nonzero with a readable failure list.
+This script was tested against HTTP doubles; no deployed endpoint was smoke-tested during development.
+
 ## Layout
 
 ```

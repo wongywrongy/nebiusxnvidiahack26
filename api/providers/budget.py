@@ -58,6 +58,12 @@ def remaining() -> dict:
             "credits_left": max(0, settings.budget_tavily_credits_per_day - spent["credits"])}
 
 
+def caps() -> dict:
+    return {key: getattr(settings, key) for key in (
+        "budget_usd_per_run", "budget_usd_per_day", "budget_tavily_credits_per_item",
+        "budget_tavily_credits_per_day", "max_concurrency")}
+
+
 def day_spent() -> bool:
     return any(left <= 0 for left in remaining().values())
 

@@ -13,6 +13,7 @@ import json
 import re
 import time
 import uuid
+from contextlib import nullcontext
 from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
@@ -28,10 +29,12 @@ from .render import attach_highlights
 
 
 class Run:
-    def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None, mock: Iterable[str] = ()):
+    def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None, mock: Iterable[str] = (),
+                 shared_item_budget: bool = False):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
         self.mock = set(mock)  # items forced to mock mode even when the server is live (public uploads)
+        self.shared_item_budget = shared_item_budget
         self.ledger = budget.Ledger()
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms
         self.events: list[Event] = []
@@ -211,7 +214,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
 
 async def execute(run: Run) -> Run:
     budget.LEDGER.set(run.ledger)  # inherited by every item task below
-    sem = asyncio.Semaphore(settings.max_concurrency)
+    sem = asyncio.Semaphore(1 if run.shared_item_budget else settings.max_concurrency)
     for cid in run.case_ids:
         run.emit("queued", "Waiting", cid)
     async def staggered(i: int, cid: str):
@@ -219,7 +222,9 @@ async def execute(run: Run) -> Run:
             await asyncio.sleep(i * run.delay_ms / 1000 * 0.6)
         return await run_case(run, cid, sem)
 
-    await asyncio.gather(*(staggered(i, cid) for i, cid in enumerate(run.case_ids)), return_exceptions=True)
+    # A smoke scan checks two inputs under one run's USD cap and one item's total web allowance.
+    with budget.credit_scope(settings.budget_tavily_credits_per_item) if run.shared_item_budget else nullcontext():
+        await asyncio.gather(*(staggered(i, cid) for i, cid in enumerate(run.case_ids)), return_exceptions=True)
     run.done.set()
     return run
 
