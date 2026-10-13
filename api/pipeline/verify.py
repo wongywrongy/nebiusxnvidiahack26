@@ -17,6 +17,7 @@ from ..web import WebClient, snapshot
 from .extract import quoted
 from .investigate import investigate
 from .spec_check import _fmt, _label, to_number
+from . import metrics
 
 LISTING_BODIES = ("ul.com", "intertek.com", "icc-es.org", "designlights.org", "energystar.gov")
 TIER_RANK = {"manufacturer": 0, "listing_body": 1, "distributor": 2, "agency": 3, "archive": 4, "other": 5}
@@ -66,7 +67,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
         try:
             with budget.credit_scope(5):  # at most 4 for an instructed map + 1 for extracting three URLs
                 links = await web.map(f"https://{domains[0]}", instructions=f"Find the current PDF data sheet for {name}",
-                                      limit=20, max_depth=1)
+                                      limit=min(20, settings.map_limit), max_depth=1)
                 links = sorted(dict.fromkeys(links), key=lambda url: not urlparse(url).path.lower().endswith(".pdf"))[:3]
                 mapped = await web.extract(links)
         except (budget.BudgetExceeded, ProviderError):
@@ -112,7 +113,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
             out = newer
             pages += investigation._pages
             titles[investigation._document_url] = investigation._document_title
-            confirmed = gate(out, pages)
+            confirmed = gate(out, pages, measure=False)
 
     evidence = [
         Evidence(tier=classify(p["url"], domains), title=titles.get(p["url"], p["url"]),
@@ -132,7 +133,7 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
         "document_revision": submitted.document_revision,
         "claims": [{"property": c.property, "value": c.value, "unit": c.unit} for c in submitted.claims],
     }
-    sources = [{"url": p["url"], "text": p["raw_content"][:12000]} for p in pages]
+    sources = [{"url": p["url"], "text": p["raw_content"][:settings.web_source_chars]} for p in pages]
     return await router.call(
         "verify",
         VerifyOut,
@@ -152,7 +153,7 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
     )
 
 
-def gate(out: VerifyOut, pages: list[dict]) -> dict[str, str]:
+def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str, str]:
     """Keep only what a fetched page actually quotes, for both scripted and investigated sources."""
     def source_of(quote):
         return next((p["url"] for p in pages if quoted(quote, p["raw_content"])), None)
@@ -162,7 +163,10 @@ def gate(out: VerifyOut, pages: list[dict]) -> dict[str, str]:
     if out.status != "unknown" and not source_of(out.status_quote):
         out.status = "unknown"
         out.status_quote = None
+    read = len(out.current_values)
     out.current_values = [pv for pv in out.current_values if source_of(pv.quote)]
+    if measure:
+        metrics.count("web_values_read", "web_values_kept", read, len(out.current_values))
     confirmed = {pv.property: source_of(pv.quote) for pv in out.current_values}
     return confirmed
 

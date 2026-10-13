@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from ..config import settings
 from .cases import all_cases, all_samples
 from .decide import FLAGGED
+from .metrics import FIELDS
 
 
 
@@ -51,13 +52,21 @@ def scores(run, case_ids: list[str]) -> dict:
                 "candidates": len(fix.candidates) if fix else 0},
             "time_ms": res.duration_ms, "model_cost_usd": round(res.cost_usd, 6), "web_credits": res.web_credits,
             "cost_usd": round(item_cost(res), 6),
+            **{key: getattr(res, key) for key in FIELDS},
         })
     ok = [r for r in rows if not r.get("error")]
     n = max(len(ok), 1)
     fixes = [r["fix"] for r in ok if r.get("fix")]
+    gates = {key: sum(r[key] for r in ok) for key in FIELDS}
+    for prefix, read in (("claims", "claims_extracted"), ("web_values", "web_values_read")):
+        gates[f"{prefix}_drop_rate"] = (1 - gates[f"{prefix}_kept"] / gates[read]) if gates[read] else None
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "mode": settings.mode, "run_id": run.id, "models": settings.models,
+        "quote_gate": gates,
+        "tuning": {key: getattr(settings, key) for key in (
+            "thinking", "thinking_tasks", "max_page_chars", "web_source_chars", "search_depth", "extract_depth",
+            "search_max_results", "investigate_credit_cap", "investigate_max_steps", "map_limit")},
         "right_call": {"n": sum(r["right_call"] for r in ok), "of": len(case_ids)},
         "caught": {"n": sum(r["caught"] for r in ok), "of": sum(len(cases[c]["expected"]["problems"]) for c in case_ids)},
         "false_alarms": {"n": sum(r["false_alarm"] for r in ok),

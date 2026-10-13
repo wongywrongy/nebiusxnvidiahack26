@@ -275,6 +275,10 @@ class Result(BaseModel):
     ocr_pages: int = 0
     archived_submittals: list[str] = []
     evidence_label: Optional[str] = None
+    claims_extracted: int = 0
+    claims_kept: int = 0
+    web_values_read: int = 0
+    web_values_kept: int = 0
 
     @property
     def cost_usd(self) -> float:
