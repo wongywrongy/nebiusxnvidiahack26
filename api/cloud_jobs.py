@@ -14,6 +14,7 @@ from urllib.parse import urlparse
 from fastapi import HTTPException
 
 from .config import redact, settings
+from . import watch_store
 
 log = logging.getLogger("speccheck.jobs")
 lock = asyncio.Lock()
@@ -79,16 +80,11 @@ def available() -> bool:
 
 
 def read_jobs() -> list[dict]:
-    path = settings.runs_dir / "watch" / "jobs.json"
-    return json.loads(path.read_text()) if path.exists() else []
+    return watch_store.read("jobs.json", [])
 
 
 def write_jobs(jobs: list[dict]) -> None:
-    path = settings.runs_dir / "watch" / "jobs.json"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_suffix(".tmp")
-    temp.write_text(json.dumps(jobs[:5], indent=2))
-    temp.replace(path)
+    watch_store.write("jobs.json", jobs[:5])
 
 
 def apply_status(job: dict, payload: dict) -> None:

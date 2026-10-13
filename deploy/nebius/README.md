@@ -183,8 +183,10 @@ nebius ai job create --profile speccheck --name "$JOB_NAME" --image "$SPECCHECK_
 ```
 
 `GET /api/scores` uses the bucket's `scores.json` when newer than the local score file. Scoreboard shows the
-recorded runner, job name and date, and still says **mock** for fixture scores. The bucket survives endpoint
-replacement. Provider caches are not shared by this mount; do not assume that tomorrow's re-check is free.
+recorded runner, job name and date, and still says **mock** for fixture scores. The bucket also holds `watch/latest.json`, dated reports and `watch/jobs.json`; reads prefer the bucket,
+then the image fallback. It survives endpoint replacement. After the first **real** report, save and review
+`curl --fail --silent --show-error "$SPECCHECK_URL/api/watch" > runs/watch/latest.json` and commit that real
+report as the image fallback. Do not commit mock reports or job metadata containing invented cloud runs. Provider caches are not shared by this mount; do not assume that tomorrow's re-check is free.
 
 For local, free verification: `SPECCHECK_MODE=mock python -m pytest -q` and
 `SPECCHECK_MODE=mock python scripts/eval.py --out /tmp/speccheck-baseline.json`. The tests install
