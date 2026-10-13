@@ -15,6 +15,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -26,10 +27,11 @@ from api.pipeline.cases import all_cases, all_samples, mock_ready  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.pipeline.scores import scores  # noqa: E402
 
-async def main(case_ids: list[str]) -> int:
+async def main(case_ids: list[str], out: Path | None = None) -> int:
     run = Run(case_ids, delay_ms=0)
     await execute(run)
     s = scores(run, case_ids)
+    s.update(runner=os.environ.get("RECHECK_RUNNER", "local"), job_name=os.environ.get("JOB_NAME"))
 
     print(f"\nmode={settings.mode}  run={run.id}\n")
     zero = sorted({m for m in settings.models.values() if m and not all(PRICES.get(m, (0, 0)))})
@@ -54,10 +56,13 @@ async def main(case_ids: list[str]) -> int:
     print(f"  average time per submittal      {s['time_ms_per_item'] / 1000:.1f} s")
     print(f"  cost per submittal (model+web)  ${s['cost_usd_per_item']:.4f}" + ("   (mock: estimated token counts)" if not settings.live else ""))
 
-    if sorted(case_ids) == sorted(all_cases()):
-        settings.scores_file.parent.mkdir(parents=True, exist_ok=True)
-        settings.scores_file.write_text(json.dumps(s, indent=2))
-        print(f"\nwrote {settings.scores_file.relative_to(ROOT)}")
+    if out is not None or sorted(case_ids) == sorted(all_cases()):
+        path = out or settings.scores_file
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temp = path.with_suffix(".tmp")
+        temp.write_text(json.dumps(s, indent=2))
+        temp.replace(path)
+        print(f"\nwrote {path}")
     # Fails on: a wrong call, a missed problem, a false alarm, or a fix marked "Passes" with any check not passed.
     bad_fix = [c for r in run.results.values() for f in r.findings if f.fix for c in f.fix.candidates
                if c.passes and not all(k.ok is True for k in c.checks)]
@@ -68,9 +73,10 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--case", action="append", help="case id, repeatable (default: all)")
     p.add_argument("--samples", action="store_true", help="score the sample inbox instead of the test cases")
+    p.add_argument("--out", "--write", type=Path, help="scoreboard output path (default: runs/scores.json for all cases)")
     args = p.parse_args()
     if args.samples:
         ids = sorted(i for i, s in all_samples().items() if settings.live or mock_ready(s))
     else:
         ids = args.case or sorted(all_cases())
-    sys.exit(asyncio.run(main(ids)))
+    sys.exit(asyncio.run(main(ids, args.out)))

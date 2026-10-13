@@ -177,6 +177,21 @@ curl --fail-with-body -X POST 'http://localhost:8000/api/specs/07%2084%2000' \
   -H "X-Admin-Token: $ADMIN_TOKEN" -H 'Content-Type: application/json' --data-binary @/tmp/reviewed-checklist.json
 ```
 
+## AI Cloud in the workflow
+
+Outcome can launch a re-check as a Nebius Serverless Job, show its raw/normalized state, and link the returned
+report by job name. The action is hidden in mock mode or without a configured CLI profile. The primary
+**Check approved now** button still checks browser-approved items in-process; cloud jobs use the bundled watch list.
+`EVIDENCE_DIR` archives full source text and available approved/watched PDFs; Review links archived source copies.
+An evaluation job can write scores into the same bucket and Scoreboard shows its job name and date.
+
+These paths are tested with a fake CLI, fixtures and local disk. No live deployment or provider result is claimed.
+Deployment commands, MysteryBox selectors, bucket mounts and the Oct 16–17 / Oct 22 sequence are in
+[the Nebius guide](deploy/nebius/README.md). Scheduled jobs stay disabled until the owner enables them.
+
+_TODO(owner): add a real Nebius console screenshot showing the endpoint, a completed re-check job and its report.
+Do not substitute the fake CLI screenshots or a mock score for live evidence._
+
 ## Layout
 
 ```

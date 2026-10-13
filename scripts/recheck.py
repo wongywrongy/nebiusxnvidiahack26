@@ -24,6 +24,7 @@ import asyncio
 import json
 import os
 import sys
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -71,6 +72,7 @@ async def main(ids: list[str], post: str | None) -> int:
         sys.exit(f"Unknown items: {unknown}")
     if not settings.live:
         ids = [i for i in ids if mock_ready(cases[i])]
+    started = time.perf_counter()
     run = Run(ids, delay_ms=0)
     await execute(run)
     items = [summarize(cases[i], run.results.get(i)) for i in ids]
@@ -79,6 +81,7 @@ async def main(ids: list[str], post: str | None) -> int:
         "checked_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "runner": os.environ.get("RECHECK_RUNNER", "local"),
         "mode": settings.mode, "run_id": run.id,
+        "job_name": os.environ.get("JOB_NAME"), "duration_ms": int((time.perf_counter() - started) * 1000),
         "models": settings.models,
         "items": items,
     }

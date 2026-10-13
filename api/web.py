@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from typing import Any, Optional
 
 from .config import settings
+from . import archive
 from .llm import load_fixture
 from .providers import budget, tavily
 
@@ -52,12 +53,20 @@ class WebClient:
         if not settings.live:
             self._mock_charge(tavily.extract_credits(len(urls), depth))
             if self.investigation_step is not None:
-                return self._investigation_result()
-            pages = self._fixture().get("extract", {})
-            return [{"url": u, "raw_content": pages[u]} for u in urls if u in pages]
-        results, spent = await tavily.extract(urls, depth)
-        self.credits += spent
-        return results
+                results = self._investigation_result()
+            else:
+                pages = self._fixture().get("extract", {})
+                results = [{"url": u, "raw_content": pages[u]} for u in urls if u in pages]
+        else:
+            results, spent = await tavily.extract(urls, depth)
+            self.credits += spent
+        sources = []
+        for page in results:
+            meta = snapshot(page["url"], page.get("raw_content", ""))
+            meta["archived_path"] = archive.save(budget.ITEM.get() or self.case_id or "unknown",
+                                                page.get("raw_content", "").encode(), "txt", meta["retrieved_at"])
+            sources.append({**page, **meta})
+        return sources
 
     async def map(self, url: str, instructions: Optional[str] = None,
                   limit: Optional[int] = None, max_depth: Optional[int] = None) -> list[str]:

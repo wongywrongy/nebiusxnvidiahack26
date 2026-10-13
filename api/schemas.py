@@ -92,6 +92,7 @@ class Evidence(BaseModel):
     retrieved_at: Optional[str] = None
     sha256: Optional[str] = None
     excerpt: Optional[str] = None
+    archived_path: Optional[str] = None
 
 
 class PropertyValue(BaseModel):
@@ -272,6 +273,8 @@ class Result(BaseModel):
     replayed_from: Optional[str] = None
     warnings: list[str] = []
     ocr_pages: int = 0
+    archived_submittals: list[str] = []
+    evidence_label: Optional[str] = None
 
     @property
     def cost_usd(self) -> float:
