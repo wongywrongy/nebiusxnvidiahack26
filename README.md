@@ -109,10 +109,28 @@ python scripts/recheck.py           # the nightly re-check, by hand
 Deploying the demo as a Nebius Serverless Endpoint and the nightly job as a Nebius Serverless Job:
 [deploy/nebius/README.md](deploy/nebius/README.md). One container (`Dockerfile`) serves both.
 
-Live, the sample tray and the watched item run without a token: they are fixed public documents, cached after
-their first run, and the caps hold. Your own uploaded PDF runs live with `ADMIN_TOKEN` (header `X-Admin-Token`),
-else in mock mode with a note. `GET /api/health` reports the mode, which keys are set (true/false only), the model
-ids and today's spend. Secret scan: `pip install pre-commit && pre-commit install` (gitleaks on every commit).
+Live, tray items, watched items and uploaded PDFs run without an admin token, under the per-IP rate limit,
+upload size limit and spend caps. Set `PUBLIC_UPLOADS_LIVE=false` to force public uploads to mock mode;
+`X-Admin-Token` still permits live uploads and bypasses the rate limit. At either daily cap, a scan can replay
+only its requested tray/watched items from the newest recording, provided it contains every requested item;
+uploads receive a clear 429.
+The Scan note and result trace label a replay and retain the original usage/time. `/api/health` reports key
+presence (true/false only), models, today's spend and `budget: {usd_left, credits_left}`.
+An early model failure shows its reason and a Retry action for that item. Later web, fix or summary failures
+keep the checked findings and explain what couldn't be confirmed. These paths are tested with fixtures/respx;
+live provider behavior remains for the owner to verify.
+
+Owner check (uses paid APIs; not run during development):
+
+```bash
+SPECCHECK_MODE=live PUBLIC_UPLOADS_LIVE=true uvicorn api.main:app
+# In the browser: upload one PDF, Scan without an admin header, then inspect its trace.
+# Replay check after creating a real recording with scripts/record_live.py:
+SPECCHECK_MODE=live BUDGET_USD_PER_DAY=0 uvicorn api.main:app
+# Add a recorded tray item and Scan: the dated replay note must appear. An upload must return 429.
+```
+
+Secret scan: `pip install pre-commit && pre-commit install` (gitleaks on every commit).
 
 ## Layout
 

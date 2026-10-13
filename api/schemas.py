@@ -251,6 +251,9 @@ class Result(BaseModel):
     web_credits: float = 0.0
     duration_ms: int = 0
     investigation: Optional[Investigation] = None
+    mode: Optional[Literal["mock", "live"]] = None
+    replayed_from: Optional[str] = None
+    warnings: list[str] = []
 
     @property
     def cost_usd(self) -> float:

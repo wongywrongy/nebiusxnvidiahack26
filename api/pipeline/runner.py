@@ -11,14 +11,13 @@ from __future__ import annotations
 import asyncio
 import json
 import re
-import shutil
 import time
 import uuid
 from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
 from ..config import FORCE_MOCK, redact, settings
-from ..providers import budget
+from ..providers import ProviderError, budget, failure_reason
 from ..providers.budget import BudgetExceeded
 from ..schemas import Event, Investigation, ReportOut, Requirement, Result, Usage
 from . import decide, extract, fix, spec_check, verify
@@ -80,6 +79,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     case = get_case(case_id)
     usage: list[Usage] = []
     investigations: list[Investigation] = []
+    warnings: list[str] = []
 
     async def investigating(tool: str):
         run.emit("investigate", f"Investigating: {tool} …", case_id, settings.models["verify"])
@@ -126,8 +126,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 usage += u
                 if inv is not None:
                     investigations.append(inv)
-            except BudgetExceeded as e:  # this step can't confirm; the rest of the item and the run go on
-                vf, rows, credits = [verify.unconfirmed(str(e))], [], run.ledger.credits.get(case_id, 0.0)
+            except (BudgetExceeded, ProviderError) as e:
+                vf, rows, credits = [verify.unconfirmed(failure_reason(e))], [], run.ledger.credits.get(case_id, 0.0)
             findings += vf
             await run.pause()
 
@@ -143,8 +143,9 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                                                           investigations=investigations, on_step=investigating)
                     usage += u
                     credits += fix_credits
-                except BudgetExceeded as e:
-                    run.emit("fix", f"Couldn't confirm a fix: {e}", case_id)
+                except (BudgetExceeded, ProviderError) as e:
+                    warnings.append(f"Couldn't confirm a fix: {failure_reason(e)}")
+                    run.emit("fix", warnings[-1], case_id)
                     credits = run.ledger.credits.get(case_id, credits)
                 await run.pause()
 
@@ -154,8 +155,9 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             try:
                 rep, u = await decide.report(fx, case["title"], decision, findings)
                 usage += u
-            except BudgetExceeded as e:
-                rep = ReportOut(summary=f"Couldn't write the summary: {e}. The decision and findings above stand.",
+            except (BudgetExceeded, ProviderError) as e:
+                warnings.append(f"Couldn't write the summary: {failure_reason(e)}")
+                rep = ReportOut(summary=f"{warnings[-1]}. The decision and findings above stand.",
                                 note_to_subcontractor="")
             attach_highlights(case, claims.claims, findings)
             await run.pause()
@@ -173,6 +175,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 note_to_subcontractor=rep.note_to_subcontractor, usage=usage, web_credits=credits,
                 duration_ms=int((time.perf_counter() - t0) * 1000),
                 investigation=investigation,
+                mode="live" if settings.live else "mock", warnings=warnings,
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result
@@ -181,7 +184,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                                                       "usage": [u.model_dump() for u in usage], "web_credits": credits})
             return result
         except Exception as e:  # keep the other cases running
-            run.emit("error", f"{type(e).__name__}: {e}", case_id)
+            reason = failure_reason(e)
+            run.emit("error", reason, case_id, data={"reason": reason})
             raise
 
 
@@ -200,15 +204,20 @@ async def execute(run: Run) -> Run:
     return run
 
 
-async def replay(run: Run, source_run_id: str, speed: float = 1.0) -> Run:
+async def replay(run: Run, source_run_id: str, speed: float = 1.0, ids: Optional[list[str]] = None) -> Run:
     """Re-emit a recorded run's events with their original timing."""
     src = run_dir(source_run_id)
     events = [Event.model_validate_json(line) for line in (src / "events.jsonl").read_text().splitlines() if line]
+    if ids is not None:
+        events = [ev for ev in events if ev.case_id in ids]
     # Results first: the app fetches each one as soon as its "done" event arrives.
     for p in (src / "results").glob("*.json"):
         res = Result.model_validate_json(p.read_text())
+        if ids is not None and res.case_id not in ids:
+            continue
+        res.replayed_from = source_run_id
         run.results[res.case_id] = res
-        shutil.copy(p, run.dir / "results" / p.name)
+        (run.dir / "results" / p.name).write_text(res.model_dump_json(indent=2))
     start = time.perf_counter()
     for ev in events:
         wait = ev.t_ms / 1000 / speed - (time.perf_counter() - start)

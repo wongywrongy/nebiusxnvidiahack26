@@ -41,8 +41,11 @@ def map_credits(pages: int, instructions: Optional[str] = None) -> int:
 
 
 async def _post(path: str, body: dict) -> dict:
-    async with httpx.AsyncClient(timeout=60) as c:
-        r = await c.post(API + path, json=body, headers={"Authorization": f"Bearer {settings.secret('tavily_api_key')}"})
+    try:
+        async with httpx.AsyncClient(timeout=60) as c:
+            r = await c.post(API + path, json=body, headers={"Authorization": f"Bearer {settings.secret('tavily_api_key')}"})
+    except httpx.HTTPError as e:
+        raise ProviderError("Tavily connection failed") from e
     if r.status_code in (401, 403):
         raise AuthError(f"Tavily refused the key ({r.status_code}): check TAVILY_API_KEY")
     if r.status_code in (429, 432, 433):

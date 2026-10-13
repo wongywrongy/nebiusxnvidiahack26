@@ -1,16 +1,16 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getProject, getResult, modelName, pageUrl, scan,
+  DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
   streamEvents, uploadToInbox,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
-  type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
+  type Health, type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
 
 // Four steps, in order: what came in, what the scan found, the reviewer's call on each, what happened after.
 type Step = 1 | 2 | 3 | 4
 const STEPS: [Step, string][] = [[1, 'Inbox'], [2, 'Scan'], [3, 'Review'], [4, 'Outcome']]
 // One item's progress through a run. at: when its result arrived.
-type Row = { stage: Stage; model: string | null; at?: string }
+type Row = { stage: Stage; model: string | null; at?: string; reason?: string }
 // docs: page sizes of each downloaded PDF; null when one is missing, then text holds the recorded page text.
 type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null }
 type Act = 'return' | 'approve'
@@ -77,6 +77,9 @@ const totals = (usage: Usage[]) => ({
 
 export default function App() {
   const [project, setProject] = useState<Project | null>(null)
+  const [health, setHealth] = useState<Health | null>(null)
+  const [scanNote, setScanNote] = useState<string | null>(null)
+  const [checkNote, setCheckNote] = useState<string | null>(null)
   const [failed, setFailed] = useState(false)
   const [step, setStep] = useState<Step>(1)
   const [reached, setReached] = useState<Step>(1)
@@ -91,6 +94,7 @@ export default function App() {
   const [requested, setRequested] = useState<Record<string, boolean>>({}) // substitutions requested
 
   useEffect(() => { getProject().then(setProject, () => setFailed(true)) }, [])
+  useEffect(() => { getHealth().then(setHealth).catch(() => {}) }, [])
 
   function go(s: Step) {
     setStep(s)
@@ -103,9 +107,11 @@ export default function App() {
     streamEvents(run, (e) => {
       const id = e.case_id
       if (!id) return
-      if (e.stage === 'done') getResult(run, id).then((r) => { set((m) => ({ ...m, [id]: { ...m[id], at: now() } })); onDone(id, r) })
-      set((m) => ({ ...m, [id]: { ...m[id], stage: e.stage, model: e.model ?? (e.stage === 'done' ? null : m[id]?.model ?? null) } }))
-    }, () => {})
+      if (e.stage === 'done') getResult(run, id).then((r) => { set((m) => ({ ...m, [id]: { ...m[id], at: now() } })); return onDone(id, r) })
+        .catch((error: Error) => set((m) => ({ ...m, [id]: { stage: 'error', model: null, reason: error.message } })))
+      set((m) => ({ ...m, [id]: { ...m[id], stage: e.stage, reason: e.stage === 'error' ? e.message : undefined,
+        model: e.model ?? (e.stage === 'done' ? null : m[id]?.model ?? null) } }))
+    }, () => { getHealth().then(setHealth).catch(() => {}) })
   }
 
   async function add(id: string) {
@@ -126,13 +132,14 @@ export default function App() {
     }
   }
 
-  async function startScan() {
-    const fresh = inbox.filter((c) => !rows[c.id])
+  async function startScan(retryId?: string) {
+    const fresh = inbox.filter((c) => retryId ? c.id === retryId : !rows[c.id])
     setError(null)
     try {
       const run = await scan(fresh.map((c) => c.id))
+      setScanNote(run.note ?? null)
       setRows((m) => ({ ...m, ...Object.fromEntries(fresh.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
-      follow(run, setRows, async (id, result) => {
+      follow(run.run_id, setRows, async (id, result) => {
         const c = fresh.find((x) => x.id === id)!
         const found = await Promise.all(c.submittal.map((d) => getDocPages(id, d.file)))
         const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
@@ -165,9 +172,10 @@ export default function App() {
     setError(null)
     try {
       const run = await scan(watchList.map((c) => c.id))
+      setCheckNote(run.note ?? null)
       setChecked({})
       setChecks((m) => ({ ...m, ...Object.fromEntries(watchList.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
-      follow(run, setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
+      follow(run.run_id, setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
     } catch (e) { setError((e as Error).message) }
   }
 
@@ -187,17 +195,21 @@ export default function App() {
       <main className="mx-auto flex max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
         {failed && <p className="text-muted">Couldn't load the project. Check that the API is running, then reload.</p>}
         {!failed && step === 1 && (
-          <InboxStep project={project} inbox={inbox} rows={rows} error={error} onAdd={add} onUpload={upload}
-            onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={startScan} />
+          <InboxStep project={project} health={health} inbox={inbox} rows={rows} error={error} onAdd={add} onUpload={upload}
+            onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={() => startScan()} />
         )}
-        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} onReview={startReview} />}
+        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error}
+          onRetry={startScan} onReview={startReview} />}
         {step === 3 && (
           <ReviewStep queue={queue} loaded={loaded} calls={calls} current={current} mode={mode} onPick={setCurrent} onDecide={decide} />
         )}
         {step === 4 && (
+          <>
+          {checkNote && <p className="text-muted" role="status">{checkNote}</p>}
           <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks}
             checked={checked} requested={requested} error={error} recheck={project?.recheck} onCheck={checkApproved}
             onRequest={(id) => setRequested((m) => ({ ...m, [id]: true }))} />
+          </>
         )}
       </main>
     </div>
@@ -268,8 +280,8 @@ function TableRow({ cols, children }: { cols: string; children: ReactNode }) {
 
 // ---------- 1 · Inbox ----------
 
-function InboxStep({ project, inbox, rows, error, onAdd, onUpload, onRemove, onScan }: {
-  project: Project | null; inbox: Case[]; rows: Record<string, Row>; error: string | null
+function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRemove, onScan }: {
+  project: Project | null; health: Health | null; inbox: Case[]; rows: Record<string, Row>; error: string | null
   onAdd: (id: string) => void; onUpload: (f: File[]) => void; onRemove: (id: string) => void; onScan: () => void
 }) {
   const [over, setOver] = useState(false)
@@ -297,7 +309,9 @@ function InboxStep({ project, inbox, rows, error, onAdd, onUpload, onRemove, onS
       <Heading title="Inbox" count={project ? count : NBSP}>
         <button className={PRIMARY} onClick={onScan} disabled={!fresh.length}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
       </Heading>
-
+      {health?.mode === 'live' && (health.budget.usd_left <= 0 || health.budget.credits_left <= 0) && (
+        <p className="-mt-3 text-muted" role="status">Today's live budget is spent. Recorded samples can replay; uploads can be checked tomorrow (UTC).</p>
+      )}
       <section onDragOver={(e) => { e.preventDefault(); setOver(true) }} onDrop={drop}
         onDragLeave={(e) => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setOver(false) }}
         className={`overflow-hidden rounded-xl border border-dashed transition-colors ${over ? 'border-flare bg-flare/5' : 'border-edge'}`}>
@@ -397,8 +411,9 @@ function Icon({ kind }: { kind: 'x' | 'check' }) {
 
 // ---------- 2 · Scan ----------
 
-function ScanStep({ items, rows, loaded, mode, onReview }: {
-  items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; onReview: () => void
+function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }: {
+  items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; note: string | null; error: string | null
+  onRetry: (id: string) => void; onReview: () => void
 }) {
   const failed = items.filter((c) => rows[c.id]?.stage === 'error').length
   const done = items.filter((c) => loaded[c.id]).length + failed
@@ -420,12 +435,16 @@ function ScanStep({ items, rows, loaded, mode, onReview }: {
       <Heading title={complete ? 'Scan complete' : 'Scanning'} count={mode === 'mock' ? `${count} · mock` : count}>
         {complete && <button className={PRIMARY} onClick={onReview} disabled={!items.some((c) => loaded[c.id])}>Start review</button>}
       </Heading>
+      {note && <p className="-mt-3 text-muted" role="status">{note}</p>}
+      {error && <p className="text-bad" role="alert">{error}</p>}
       {complete && results.length > 0 && (
         <p className="-mt-3 text-xs leading-5 text-muted">
           {models.join(' and ')} on Nebius Token Factory read {plural(results.length, 'submittal')}
           {credits > 0 ? `; Tavily checked the manufacturers' sites (${credits} credits)` : ''}.
           {' '}{kTokens(tokens)} tokens · {money(cost)} · {seconds(longest)} for the longest item
           {mode === 'mock' ? ' · mock mode: recorded answers, estimated counts' : ''}
+          {results.some((r) => r.mode === 'mock') && mode !== 'mock' ? ' · includes mock answers and estimated counts' : ''}
+          {results.some((r) => r.replayed_from) ? ' · replayed items show their original usage and time' : ''}
         </p>
       )}
       <section className="rounded-xl border border-line">
@@ -441,7 +460,11 @@ function ScanStep({ items, rows, loaded, mode, onReview }: {
                   <span className="truncate">{c.title}</span>
                   <span className="truncate text-xs text-muted">{[c.product, c.from ?? 'You'].filter(Boolean).join(' · ')}</span>
                 </span>
-                {r.stage === 'error' ? <span className="text-bad">Couldn't scan this one</span>
+                {r.stage === 'error' ? <span className="flex flex-col items-start gap-1">
+                    <span className="text-bad" role="alert">{r.reason ?? "Couldn't scan this one"}</span>
+                    <button className="min-h-8 rounded px-2 text-soft underline underline-offset-4 hover:text-ink"
+                      onClick={() => onRetry(c.id)} aria-label={`Retry ${c.title}`}>Retry</button>
+                  </span>
                   : l ? (
                     <span className="flex min-w-0 flex-col items-start gap-1">
                       <Pill d={l.result.decision} />
@@ -622,6 +645,7 @@ type CheckRow = [Finding, string, Value | undefined, Value | undefined]
 // How this item was checked: each Nemotron model and what it did, Tavily's part, and that code made every call.
 // One muted line; the per-call table is behind a disclosure. All of it is the usage the result already carries.
 function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
+  mode = result.mode ?? mode
   const groups = byModel(result.usage)
   const sources = new Set(result.findings.flatMap((f) => f.evidence.map((e) => e.url))).size
   const { tokens, cost } = totals(result.usage)
@@ -641,10 +665,12 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span> fetched {plural(sources, 'source')}</>}
         {' · verdicts by code'}
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
+        {result.replayed_from && ' · replayed'}
         <span className="text-faint"> · {kTokens(tokens)} tokens · {money(cost)} · {seconds(result.duration_ms)}</span>
         <span className="ml-1 text-faint underline decoration-edge underline-offset-2 group-open:hidden">every call</span>
       </summary>
       <div className="mt-2 overflow-hidden rounded-lg border border-line">
+        {result.warnings?.map((warning) => <p key={warning} className="border-b border-line px-3 py-2">{warning}</p>)}
         {result.investigation && (
           <div className="border-b border-line px-3 py-2">
             <p className="text-soft">Investigation · {result.investigation.outcome === 'found' ? 'quotes confirmed'
@@ -668,7 +694,9 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
           </div>
         ))}
         <p className="border-t border-line px-3 py-1.5 text-faint">
-          {mode === 'live'
+          {result.replayed_from
+            ? `Replayed from ${result.replayed_from.slice(0, 4)}-${result.replayed_from.slice(4, 6)}-${result.replayed_from.slice(6, 8)}; usage and time belong to the original ${mode} run. No new provider calls.`
+            : mode === 'live'
             ? cached ? 'Live mode: every call here was answered from the cache of an earlier live run, so it cost nothing this time.'
               : 'Live mode: real calls to NVIDIA Nemotron 3 on Nebius Token Factory and to Tavily. Repeats are cached.'
             : 'Mock mode: fixture answers, no API calls; token counts are estimated from text length.'}
@@ -956,7 +984,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
 }) {
   const returned = queue.filter((c) => calls[c.id]?.act === 'return')
   const approved = [...queue.filter((c) => calls[c.id]?.act === 'approve'), ...watched]
-  const checking = approved.some((c) => checks[c.id] && !checked[c.id])
+  const checking = approved.some((c) => checks[c.id] && checks[c.id].stage !== 'error' && !checked[c.id])
   const ran = approved.some((c) => checked[c.id])
   const alerts = approved.filter((c) => discontinued(checked[c.id]))
   const back = 'minmax(0,0.8fr) minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1.4fr)'
@@ -1008,9 +1036,16 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
             {approved.map((c) => {
               const w = checks[c.id]
               const res = checked[c.id]
+              const latest = res ?? loaded[c.id]?.result
+              const unconfirmed = latest?.findings.find((f) => ['currency', 'status'].includes(f.check) && f.verdict === 'unverified')
+              const currency = latest?.findings.find((f) => f.check === 'currency' && ['outdated', 'fail', 'note'].includes(f.verdict))
               const scannedAt = c.watch ? undefined : rows[c.id]?.at
-              const status = w && !res ? <span className="flex items-center gap-2 text-soft"><span className="blink h-2 w-2 rounded-full bg-flare" />Checking</span>
-                : res ? (discontinued(res) ? <span className="font-medium text-bad">Discontinued</span> : <span className="text-good">No change</span>)
+              const status = w?.stage === 'error' ? <span className="text-bad">{w.reason ?? "Couldn't check"}</span>
+                : w && !res ? <span className="flex items-center gap-2 text-soft"><span className="blink h-2 w-2 rounded-full bg-flare" />Checking</span>
+                : unconfirmed ? <span className="text-muted" title={unconfirmed.detail}>Couldn't confirm · {unconfirmed.detail}</span>
+                : discontinued(latest) ? <span className="font-medium text-bad">Discontinued</span>
+                : currency ? <span className="text-muted" title={currency.detail}>{currency.title}</span>
+                : res ? <span className="text-good">No change</span>
                 : scannedAt ? <span className="text-good">No change</span> : <span className="text-muted">Watching</span>
               return (
                 <TableRow key={c.id} cols={fwd}>

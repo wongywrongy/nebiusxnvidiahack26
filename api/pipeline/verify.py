@@ -219,10 +219,10 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
 
 
 def unconfirmed(reason: str) -> Finding:
-    """The web check could not run (budget cap): say so instead of failing the item."""
+    """A cap or provider failure leaves the web check unconfirmed."""
     return Finding(
         id="currency-unverified", check="currency", verdict="unverified", severity="minor",
         title="Couldn't confirm the current documents", detail=f"Web check skipped: {reason}. Check manually.",
-        decided_by="budget",
+        decided_by="code",
         compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="fail"),
     )
