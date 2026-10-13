@@ -17,8 +17,10 @@ export interface Project {
   mode: 'mock' | 'live'
   // Nightly re-check of approved items (scripts/recheck.py, run as a Nebius Serverless Job): when it last ran, if ever.
   recheck?: Recheck | null
+  jobs_available?: boolean
 }
 export interface Recheck {
+  mode: 'mock' | 'live'; job_name?: string | null; duration_ms?: number | null
   checked_at: string; runner: string; items: { id: string; status: 'no_change' | 'changed' | 'discontinued' | 'unverified'; detail: string }[]
 }
 
@@ -32,7 +34,7 @@ export interface Event {
   data: Record<string, unknown> | null
 }
 
-interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string }
+interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string; archived_path?: string | null }
 export interface Finding {
   id: string
   check: string
@@ -95,6 +97,8 @@ export interface Result {
   replayed_from?: string | null
   warnings?: string[]
   ocr_pages?: number
+  evidence_label?: string | null
+  archived_submittals?: string[]
 }
 
 export interface Health { mode: 'mock' | 'live'; budget: { usd_left: number; credits_left: number } }
@@ -122,6 +126,7 @@ export async function draftSpec(file: File, section: string, title: string): Pro
 
 interface Score { n: number; of: number }
 export interface Scores {
+  runner?: string; job_name?: string | null
   mode: Project['mode']; generated_at: string; run_id: string; models: Record<string, string>
   right_call: Score; caught: Score; false_alarms: Score; fixes_passing: Score
   rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]
@@ -130,6 +135,18 @@ export interface Scores {
     time_ms?: number; cost_usd?: number }[]
 }
 export async function getScores(): Promise<Scores> { return ok(await fetch('/api/scores')) }
+
+export interface CloudJob {
+  name: string; id?: string | null; created_at: string; state: 'queued' | 'starting' | 'running' | 'done' | 'failed'
+  raw_state?: string | null; state_known?: boolean; poll_error?: string
+}
+export async function getJobs(): Promise<{ available: boolean; jobs: CloudJob[] }> { return ok(await fetch('/api/watch/jobs')) }
+export async function runJob(): Promise<CloudJob> { return ok(await fetch('/api/watch/run', { method: 'POST' })) }
+export async function getWatch(): Promise<Recheck | null> {
+  const r = await fetch('/api/watch')
+  return r.status === 404 ? null : ok(r)
+}
+export const archiveUrl = (path: string) => `/api/evidence/${path.split('/').map(encodeURIComponent).join('/')}`
 
 export async function getProject(): Promise<Project> {
   return (await fetch('/api/project')).json()
