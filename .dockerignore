@@ -4,7 +4,10 @@
 .cache
 runs/*
 !runs/recorded
-data/raw
+!runs/watch
+# data/raw is NOT ignored: when the build machine has the downloaded PDFs they are baked in (see Dockerfile).
+data/raw/uploads
 web/node_modules
 web/dist
 **/__pycache__
+**/.pytest_cache

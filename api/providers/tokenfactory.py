@@ -4,6 +4,13 @@ chat(task, messages, schema) picks the model for the task from config, asks for 
 (json_schema, or json_object when the server rejects json_schema), validates it with Pydantic
 and retries once. 401/403/429 raise AuthError/RateLimited: no format fallback, no retry around them
 (429 gets a short backoff first). Temperature 0, disk cache, budget charged, one log line per call.
+
+Nemotron 3 is a reasoning model: it thinks before it answers unless asked not to. With THINKING=off (the
+default) every call carries `reasoning_effort: none` and `chat_template_kwargs: {enable_thinking: false}`;
+a server that rejects either field (400 naming it) is retried without that field. Whatever the server does,
+the reply is read defensively: a `<think>...</think>` block or text around the JSON object is stripped, and
+`reasoning_content` is never parsed as the answer. A reply cut off at MAX_OUTPUT_TOKENS while thinking was on
+is retried once with thinking off instead of failing the step.
 """
 
 from __future__ import annotations
@@ -63,10 +70,49 @@ def _rejects_format(e: Exception) -> bool:
     return isinstance(e, ProviderError) and " 400:" in msg and any(w in msg for w in ("response_format", "json_schema", "schema"))
 
 
+# The two ways an OpenAI-compatible server is told not to think: the OpenAI-style field, and vLLM's template flag.
+NO_THINK: dict[str, Any] = {"reasoning_effort": "none", "chat_template_kwargs": {"enable_thinking": False}}
+
+
+def _rejected_field(e: Exception) -> Optional[str]:
+    """The NO_THINK field a 400 complained about, if any: it is dropped and the call is retried."""
+    msg = str(e).lower()
+    if not (isinstance(e, ProviderError) and " 400:" in msg):
+        return None
+    return next((f for f in NO_THINK if f in msg or f.replace("_", " ") in msg), None)
+
+
+THINK_BLOCK = re.compile(r"<think>.*?</think>\s*", re.S)
+
+
 def _strip_fences(text: str) -> str:
     text = text.strip()
     m = re.match(r"^```(?:json)?\s*(.*?)\s*```$", text, re.S)
     return m.group(1) if m else text
+
+
+def extract_json(text: Optional[str]) -> str:
+    """The JSON object in a reply: thinking blocks, code fences and any prose around the object are dropped.
+
+    A model that was asked not to think usually returns bare JSON; one that thought anyway may return
+    `<think>...</think>{...}`, or `Here is the JSON:\\n{...}`. Everything from the first `{` to the last `}` is kept.
+    """
+    text = THINK_BLOCK.sub("", text or "").strip()
+    text = _strip_fences(text)
+    if text.startswith("{") or text.startswith("["):
+        return text
+    start, end = text.find("{"), text.rfind("}")
+    return text[start:end + 1] if 0 <= start < end else text
+
+
+def _reply_text(choice: dict) -> Optional[str]:
+    """The answer field only: `reasoning_content` (vLLM's parsed thinking) is never read as the answer."""
+    return (choice.get("message") or {}).get("content")
+
+
+def _reasoning_tokens(resp: dict) -> int:
+    details = ((resp.get("usage") or {}).get("completion_tokens_details") or {})
+    return int(details.get("reasoning_tokens") or 0)
 
 
 async def _create(**body) -> dict:
@@ -79,6 +125,20 @@ async def _create(**body) -> dict:
             await asyncio.sleep(2**attempt)
 
 
+async def _create_no_think(no_think: dict[str, Any], **body) -> tuple[dict, dict[str, Any]]:
+    """One completion with the no-think fields, dropping any field the server rejects. Returns (response, fields kept)."""
+    fields = dict(no_think)
+    while True:
+        try:
+            return await _create(**body, **fields), fields
+        except ProviderError as e:
+            bad = _rejected_field(e)
+            if bad is None or bad not in fields:
+                raise
+            log.info("server rejected %s; retrying without it", bad)
+            del fields[bad]
+
+
 async def chat(task: str, messages: list[dict[str, Any]], schema: type[T]) -> tuple[T, Usage]:
     last: Optional[Exception] = None
     for attempt in range(2):  # one retry on invalid JSON, then the step fails
@@ -89,9 +149,10 @@ async def chat(task: str, messages: list[dict[str, Any]], schema: type[T]) -> tu
     raise ProviderError(f"{task}: no valid JSON after one retry: {last}")
 
 
-async def _once(task, messages, schema, retry_note=None) -> tuple[Any, Usage]:
+async def _once(task, messages, schema, retry_note=None, thinking: Optional[str] = None) -> tuple[Any, Usage]:
     role = TASK_MODEL[task]
     model = settings.models[role]
+    thinking = thinking or settings.thinking
     schema_json = schema.model_json_schema()
     msgs = [
         {"role": "system", "content": "Reply with JSON only. It must match this JSON schema:\n" + json.dumps(schema_json)},
@@ -100,7 +161,7 @@ async def _once(task, messages, schema, retry_note=None) -> tuple[Any, Usage]:
     if retry_note:
         msgs.append({"role": "user", "content": f"Your last reply was invalid: {retry_note}. Return corrected JSON only."})
 
-    key = {"model": model, "messages": msgs, "schema": schema_json}
+    key = {"model": model, "messages": msgs, "schema": schema_json, "thinking": thinking}
     if hit := cache.get("llm", key):
         return schema.model_validate(hit["obj"]), Usage(**{**hit["usage"], "cached": True})
 
@@ -110,26 +171,33 @@ async def _once(task, messages, schema, retry_note=None) -> tuple[Any, Usage]:
     # ponytail: input estimated at 2 chars per token (real is ~4), so the worst case is over, never under.
     budget.check_usd((len(json.dumps(msgs)) / 2 * pin + settings.max_output_tokens * pout) / 1e6, real=True)
     t0 = time.perf_counter()
+    no_think = NO_THINK if thinking == "off" else {}
+    body = dict(model=model, messages=msgs, temperature=0, max_tokens=settings.max_output_tokens)
     fmt = "json_schema"
     try:
-        resp = await _create(model=model, messages=msgs, temperature=0, max_tokens=settings.max_output_tokens, response_format={
+        resp, kept = await _create_no_think(no_think, **body, response_format={
             "type": "json_schema", "json_schema": {"name": schema.__name__, "schema": schema_json}})
     except Exception as e:
         if not _rejects_format(e):  # auth, rate limit, network, a 400 about something else: real errors
             raise
         fmt = "json_object"
-        resp = await _create(model=model, messages=msgs, temperature=0, max_tokens=settings.max_output_tokens,
-                             response_format={"type": "json_object"})
+        resp, kept = await _create_no_think(no_think, **body, response_format={"type": "json_object"})
     tin = (resp.get("usage") or {}).get("prompt_tokens", 0)
     tout = (resp.get("usage") or {}).get("completion_tokens", 0)
     usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout, cost_usd=cost(model, tin, tout),
-                  latency_ms=int((time.perf_counter() - t0) * 1000), format=fmt)
+                  latency_ms=int((time.perf_counter() - t0) * 1000), format=fmt, reasoning_tokens=_reasoning_tokens(resp),
+                  thinking="off" if kept else ("on" if thinking == "on" else "server-default"))
     budget.charge_usd(usage.cost_usd, real=True)  # paid even if the reply is invalid
-    log.info("%s model=%s in=%d out=%d ms=%d cost=$%.6f format=%s", task, model, tin, tout, usage.latency_ms, usage.cost_usd, fmt)
+    log.info("%s model=%s in=%d out=%d reasoning=%d ms=%d cost=$%.6f format=%s thinking=%s", task, model, tin, tout,
+             usage.reasoning_tokens, usage.latency_ms, usage.cost_usd, fmt, usage.thinking)
     choice = resp["choices"][0]
-    if choice.get("finish_reason") == "length":  # cut off: a retry would pay for the same cut-off again
-        raise ProviderError(f"{task}: reply hit MAX_OUTPUT_TOKENS ({settings.max_output_tokens})")
-    obj = schema.model_validate(json.loads(_strip_fences(choice["message"].get("content") or "")))
+    if choice.get("finish_reason") == "length":
+        if thinking != "off":  # the budget went on thinking: once more, asking for no thinking
+            log.info("%s hit MAX_OUTPUT_TOKENS with thinking on; retrying with thinking off", task)
+            return await _once(task, messages, schema, retry_note, thinking="off")
+        raise ProviderError(f"{task}: reply hit MAX_OUTPUT_TOKENS ({settings.max_output_tokens}); "
+                            f"{usage.reasoning_tokens} of {tout} output tokens were reasoning")
+    obj = schema.model_validate(json.loads(extract_json(_reply_text(choice))))
     cache.put("llm", key, {"obj": obj.model_dump(), "usage": usage.model_dump()})
     return obj, usage
 

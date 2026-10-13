@@ -117,7 +117,18 @@ def project():
         "specs": list(all_specs().values()),
         "tray": [{"from": name, **senders().get(name, {}), "items": items} for name, items in groups.items()],
         "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
+        "mode": settings.mode,
+        "recheck": latest_recheck(),
     }
+
+
+def latest_recheck() -> Optional[dict]:
+    """The newest nightly re-check report (scripts/recheck.py writes runs/watch/latest.json), or None."""
+    p = settings.runs_dir / "watch" / "latest.json"
+    try:
+        return json.loads(p.read_text()) if p.exists() else None
+    except (OSError, ValueError):
+        return None
 
 
 @app.post("/api/runs")
@@ -194,6 +205,36 @@ async def scan(body: Scan, request: Request):
 async def run_scores(request: Request):
     _live_needs_admin(request)
     return await run_scoring_set()
+
+
+class WatchReport(BaseModel):
+    """What scripts/recheck.py posts after a nightly run (the Serverless Job has no disk the app can read)."""
+    checked_at: str
+    runner: str
+    mode: str
+    run_id: Optional[str] = None
+    items: list[dict]
+
+
+@app.get("/api/watch")
+def watch():
+    rep = latest_recheck()
+    if rep is None:
+        raise HTTPException(404, "No nightly re-check has reported yet (scripts/recheck.py)")
+    return rep
+
+
+@app.post("/api/watch/report")
+def watch_report(body: WatchReport, request: Request):
+    """The nightly job reports here with the admin token; the app shows the latest report on the Outcome step."""
+    if not _is_admin(request):
+        raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
+    folder = settings.runs_dir / "watch"
+    folder.mkdir(parents=True, exist_ok=True)
+    text = json.dumps(body.model_dump(), indent=2)
+    (folder / "latest.json").write_text(text)
+    (folder / f"{body.checked_at[:10]}.json").write_text(text)
+    return {"ok": True, "items": len(body.items)}
 
 
 @app.get("/api/scores")
