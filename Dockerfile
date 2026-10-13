@@ -11,6 +11,7 @@ RUN npm run build
 
 FROM python:3.12-slim
 WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr && rm -rf /var/lib/apt/lists/*
 COPY api/requirements.txt api/requirements.txt
 RUN pip install --no-cache-dir -r api/requirements.txt
 COPY api/ api/

@@ -52,8 +52,23 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
     name = " ".join(x for x in [submitted.manufacturer, submitted.product, submitted.model or ""] if x)
 
     # 1. Search: current document, and product status.
-    results = await web.search(f"{name} data sheet", include_domains=domains or None)
-    results += await web.search(f"{name} discontinued OR replaced")
+    results = await web.search(f"{name} data sheet", include_domains=domains or None, include_domains_mode="prefer")
+    model = (submitted.model or "").replace('"', '').strip()
+    status_name = " ".join(x for x in [submitted.manufacturer, submitted.product, f'"{model}"' if model else ""] if x)
+    results += await web.search(f"{status_name} discontinued OR replaced", topic="news",
+                                include_published_date=True, exact_match=bool(model))
+    # One bounded map attempt can find a PDF missed by search before escalating to the investigator.
+    if domains and not any(classify(r["url"], domains) == "manufacturer" for r in results):
+        try:
+            with budget.credit_scope(5):  # at most 4 for an instructed map + 1 for extracting three URLs
+                links = await web.map(f"https://{domains[0]}", instructions=f"Find the current PDF data sheet for {name}",
+                                      limit=20, max_depth=1)
+                links = sorted(dict.fromkeys(links), key=lambda url: not urlparse(url).path.lower().endswith(".pdf"))[:3]
+                mapped = await web.extract(links)
+        except (budget.BudgetExceeded, ProviderError):
+            mapped = []  # keep the search evidence; an unsuccessful optional lookup cannot erase it
+    else:
+        mapped = []
     seen, ranked = set(), []
     for r in sorted(results, key=lambda r: TIER_RANK[classify(r["url"], domains)]):
         if r["url"] not in seen:
@@ -62,6 +77,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
 
     # 2. Extract the best few pages.
     pages = await web.extract([r["url"] for r in ranked[:3]])
+    pages += [p for p in mapped if p["url"] not in {p["url"] for p in pages}]
     titles = {r["url"]: r.get("title", "") for r in ranked}
 
     # 3. Super reads the sources; the quote gate runs before the investigator trigger.

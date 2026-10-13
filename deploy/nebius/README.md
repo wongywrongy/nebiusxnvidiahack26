@@ -8,6 +8,7 @@ Two Serverless AI deployments from one image:
 | The nightly re-check (`scripts/recheck.py`) | **Job**: a container that runs to completion and exits | background work that should not share the web app's process; the track encourages Serverless Jobs for exactly this |
 
 Both run on a CPU platform (`cpu-d3`); the models run on Token Factory, not in the container.
+The image includes Tesseract for local OCR of scanned PDF pages; it needs no model API or GPU.
 
 ## 0. Once: image, keys, CLI
 

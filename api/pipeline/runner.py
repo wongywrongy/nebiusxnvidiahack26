@@ -92,9 +92,10 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
         fx = case.get("fixture", case_id)  # which recorded answers mock mode uses; None for an unknown upload
         try:
             run.emit("ingest", "Reading the pages", case_id)
-            pages = load_submittal_pages(case)
+            pages = await load_submittal_pages(case)
+            ocr_pages = {p["page"] for p in pages if p.get("ocr")}
             if settings.live and not any(p["text"].strip() for p in pages):
-                raise RuntimeError("No text in the submittal: the PDF is missing from data/raw/ or is a scan")
+                raise RuntimeError("No readable text in the submittal: the PDF is missing or OCR could not read its pages")
             await run.pause()
 
             run.emit("triage", "Sorting pages", case_id, settings.models["triage"])
@@ -103,7 +104,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             await run.pause()
 
             run.emit("extract", "Comparing to the spec", case_id, settings.models["extract"])
-            reqs, u = await extract.requirements_for(case["section"], load_spec_text(case["section"], spec))
+            spec_text = await load_spec_text(case["section"], spec)
+            reqs, u = await extract.requirements_for(case["section"], spec_text)
             if u:
                 usage.append(u)
             # Project-specific conditions (e.g. "penetrant is steel pipe") come from the case cover sheet.
@@ -159,7 +161,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 warnings.append(f"Couldn't write the summary: {failure_reason(e)}")
                 rep = ReportOut(summary=f"{warnings[-1]}. The decision and findings above stand.",
                                 note_to_subcontractor="")
-            attach_highlights(case, claims.claims, findings)
+            attach_highlights(case, claims.claims, findings, ocr_pages=ocr_pages)
             await run.pause()
 
             investigation = None
@@ -176,6 +178,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 duration_ms=int((time.perf_counter() - t0) * 1000),
                 investigation=investigation,
                 mode="live" if settings.live else "mock", warnings=warnings,
+                ocr_pages=len(ocr_pages),
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result

@@ -9,7 +9,7 @@
                                        items and uploads run live by default, within public rate and day caps
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
-  GET  /api/scores                     the answer-key scores written by scripts/eval.py (else the newest recording's)
+  GET  /api/scores                     saved answer-key scores, else compute the mock set without provider calls
   GET  /api/specs                      project spec sources, checklists and recorded provenance
   POST /api/specs/draft                raw PDF -> a public draft, never saved as a checklist    [live only]
   POST /api/specs/{section}            save a checklist with a review date                     [admin]
@@ -166,7 +166,8 @@ async def _read_pdf(request: Request) -> tuple[bytes, str]:
     if not pdf.startswith(b"%PDF"):
         raise HTTPException(400, "Not a PDF")
     try:
-        return pdf, "\n".join(p["text"] for p in pdf_pages(pdf))
+        pages = await pdf_pages(pdf)
+        return pdf, "\n".join(p["text"] for p in pages)
     except Exception:
         raise HTTPException(400, "Could not read this PDF")
 
@@ -312,11 +313,11 @@ def watch_report(body: WatchReport, request: Request):
 
 
 @app.get("/api/scores")
-def scores():
+async def scores():
     rec = recorded_runs()
     path = settings.scores_file if settings.scores_file.exists() or not rec else settings.recorded_dir / rec[0] / "scores.json"
     if not path.exists():
-        raise HTTPException(404, "No scores yet: run python scripts/eval.py")
+        return await run_scoring_set(mock=True)
     return json.loads(path.read_text())
 
 
