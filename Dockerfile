@@ -20,6 +20,7 @@ COPY api/requirements.txt api/requirements.txt
 RUN pip install --no-cache-dir -r api/requirements.txt
 COPY api/ api/
 COPY scripts/ scripts/
+COPY tests/data/ tests/data/
 # data/cases (the test set and answer key), data/fixtures (mock answers), data/requirements (reviewed checklists),
 # and data/raw when it exists on the build machine: the public manufacturer and agency PDFs are not committed, so
 # building from a checkout that ran scripts/fetch_docs.py bakes them in. Otherwise they are fetched at build time;
