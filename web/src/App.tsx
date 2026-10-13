@@ -252,7 +252,9 @@ export default function App() {
     <div className="min-h-screen font-sans text-sm">
       <header className="border-b border-line">
         <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 sm:px-6 md:flex-nowrap">
-          <span className="flex h-10 shrink-0 items-center gap-2 font-semibold"><span className="h-3 w-3 rounded-sm bg-flare" />SpecCheck</span>
+          <span className="flex h-10 shrink-0 items-center gap-2 font-semibold"><span className="h-3 w-3 rounded-sm bg-flare" />SpecCheck
+            {project && <span className="font-normal text-xs text-muted">{mode === 'mock' ? 'Mock' : 'Live'}</span>}
+          </span>
           <span className="hidden min-w-0 flex-1 truncate text-muted xl:inline">{project?.name}</span>
           <StepBar step={step} reached={reached} onGo={go} />
           <nav aria-label="Project reference" className="ml-auto flex shrink-0 gap-4 font-mono text-xs text-muted">
@@ -388,6 +390,7 @@ function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRem
         <button className={PRIMARY} onClick={onScan} disabled={!fresh.length}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
       </Heading>
       {!inbox.length && <p className="-mt-3 max-w-3xl leading-6 text-muted">SpecCheck checks each submittal against the project spec and the manufacturer's current documents, then writes what to send back and what to forward.</p>}
+      {project?.mode === 'mock' && <p className="-mt-3 text-xs text-muted">Mock mode uses fixture answers. No model calls, live web checks or credits spent.</p>}
       {health?.mode === 'live' && (health.budget.usd_left <= 0 || health.budget.credits_left <= 0) && (
         <p className="-mt-3 text-muted" role="status">Today's live budget is spent. Recorded samples can replay; uploads can be checked tomorrow (UTC).</p>
       )}
@@ -509,6 +512,8 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
   const { tokens, cost } = totals(usage)
   const credits = results.reduce((s, r) => s + r.web_credits, 0)
   const longest = Math.max(0, ...results.map((r) => r.duration_ms))
+  const allMock = results.every((r) => r.mode === 'mock')
+  const anyMock = results.some((r) => r.mode === 'mock')
   return (
     <>
       <Heading title={complete ? 'Scan complete' : 'Scanning'} count={mode === 'mock' ? `${count} · mock` : count}>
@@ -518,11 +523,13 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
       {error && <p className="text-bad" role="alert">{error}</p>}
       {complete && results.length > 0 && (
         <p className="-mt-3 text-xs leading-5 text-muted">
-          {models.join(' and ')} on Nebius Token Factory read {plural(results.length, 'submittal')}
-          {credits > 0 ? `; Tavily checked the manufacturers' sites (${credits} credits)` : ''}.
-          {' '}{kTokens(tokens)} tokens · {money(cost)} · {seconds(longest)} for the longest item
-          {mode === 'mock' ? ' · mock mode: recorded answers, estimated counts' : ''}
-          {results.some((r) => r.mode === 'mock') && mode !== 'mock' ? ' · includes mock answers and estimated counts' : ''}
+          {allMock ? `Fixture answers for ${models.join(' and ')} cover ${plural(results.length, 'submittal')}`
+            : anyMock ? `${plural(results.length, 'submittal')} checked with live and fixture answers for ${models.join(' and ')}`
+            : `${models.join(' and ')} on Nebius Token Factory read ${plural(results.length, 'submittal')}`}
+          {credits > 0 ? allMock ? `; Tavily fixtures account for ${credits} estimated credits`
+            : anyMock ? `; ${credits} Tavily credits include mock estimates` : `; Tavily checked the manufacturers' sites (${credits} credits)` : ''}.
+          {' '}{kTokens(tokens)} tokens · {money(cost)} model cost · {seconds(longest)} for the longest item
+          {allMock ? ' · estimated counts and cost; no provider calls' : anyMock ? ' · includes estimated counts and cost' : ''}
           {results.some((r) => r.replayed_from) ? ' · replayed items show their original usage and time' : ''}
           {' · '}<a href="#scoreboard" className="underline underline-offset-4 hover:text-ink">Scoreboard</a>
         </p>
@@ -629,6 +636,7 @@ function returnNote(c: Case, r: Result, best?: { name: string }): string {
 // Web checks as rows of the one check table: Required is what the maker publishes today.
 const WEB_LABEL: Record<string, string> = { 'status-discontinued': 'Product status' }
 function webRows(f: Finding): CheckRow[] {
+  if (f.verdict === 'unverified') return [[f, `Couldn't confirm ${f.check === 'status' ? 'product status' : 'current sheet'}`, f.compare?.right_value, f.compare?.left_value]]
   if (f.compare?.rows.length) return f.compare.rows.map((r: CompareRow): CheckRow => [f, r.label, `Current: ${r.current ?? '—'}`, r.submitted])
   if (f.id === 'status-discontinued') return [[f, WEB_LABEL[f.id], 'In production', f.compare?.right_value]]
   const now = f.compare?.right_value
@@ -654,7 +662,9 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
   const who = c.from ?? 'sender'
   const draft = (a: Act) => a === 'return'
     ? returnNote(c, result, best)
-    : `No exceptions taken. Forwarding ${c.number ?? c.title} for approval.${result.decision === 'approve_with_note' && result.note_to_subcontractor ? `\n\n${result.note_to_subcontractor}` : ''}`
+    : result.decision === 'approve'
+      ? `No exceptions taken. Forwarding ${c.number ?? c.title} for approval.`
+      : `Please review ${c.number ?? c.title} for approval with the following note.\n\n${result.note_to_subcontractor || result.summary}`
   const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
   const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
   const web = result.findings.filter((f) => WEB.has(f.check))
@@ -673,7 +683,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
         <div className="flex flex-col gap-2">
           <span className="text-xs text-muted"><span className="font-mono">{c.number ?? 'Upload'}</span> · {at} of {of} · from {c.from ?? 'you'}</span>
           <h2 className="text-lg font-semibold leading-tight">{c.title}</h2>
-          <span className="flex items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Decided: {call.act === 'return' ? 'sent back' : 'approved'}</span>}</span>
+          <span className="flex items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Saved: {call.act === 'return' ? 'return decision' : 'approval decision'}</span>}</span>
           <p className="text-base text-soft">{result.summary}</p>
         </div>
 
@@ -699,21 +709,22 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
 
         <div className="flex flex-col gap-3 rounded-xl border border-line bg-panel p-4">
           <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-            <label htmlFor="message" className={CAPS}>{rec === 'return' ? `Return to ${who}` : 'Forward to architect'}</label>
+            <label htmlFor="message" className={CAPS}>{rec === 'return' ? `Draft for ${who}` : 'Draft for architect'}</label>
             {rec === 'return' && c.email && <span className="font-mono text-xs text-muted">{c.email}</span>}
           </span>
           <textarea id="message" rows={9} value={message} onChange={(e) => { setMessage(e.target.value); onDraft(e.target.value) }}
             className="resize-y rounded-lg border border-line bg-well p-3 leading-relaxed text-ink" />
+          <p className="text-xs text-muted">Decisions and drafts stay in this browser. No email is sent.</p>
           <div className="flex flex-wrap gap-2">
             {rec === 'return' ? (
               <>
-                <button className={PRIMARY} onClick={() => onDecide({ act: 'return', message })}>Send back to {who}</button>
-                <button className="btn" onClick={() => onDecide({ act: 'approve', message: draft('approve') })}>Approve</button>
+                <button className={PRIMARY} onClick={() => onDecide({ act: 'return', message })}>Save return decision</button>
+                <button className="btn" onClick={() => onDecide({ act: 'approve', message: draft('approve') })}>Save approval</button>
               </>
             ) : (
               <>
-                <button className={PRIMARY} onClick={() => onDecide({ act: 'approve', message })}>Approve and forward</button>
-                <button className="btn" onClick={() => onDecide({ act: 'return', message: draft('return') })}>Send back</button>
+                <button className={PRIMARY} onClick={() => onDecide({ act: 'approve', message })}>Save approval decision</button>
+                <button className="btn" onClick={() => onDecide({ act: 'return', message: draft('return') })}>Save return</button>
               </>
             )}
           </div>
@@ -737,21 +748,21 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
   return (
     <details className="group text-xs leading-5 text-muted">
       <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-        <span className="text-faint">{mode === 'mock' ? 'Mock check by ' : 'Checked by '}</span>
+        <span className="text-faint">{mode === 'mock' ? 'Mock fixtures for ' : 'Checked by '}</span>
         {groups.map((g, i) => (
           <Fragment key={g.model}>
             {i > 0 && (i === groups.length - 1 ? ' and ' : ', ')}
             <span className="text-soft">{modelName(g.model)}</span> ({g.tasks.join(', ')})
           </Fragment>
         ))}
-        <span className="text-faint"> on Nebius Token Factory</span>
-        {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span> fetched {plural(sources, 'source')}</>}
+        {mode === 'live' && <span className="text-faint"> on Nebius Token Factory</span>}
+        {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span>{mode === 'mock' ? ' fixture evidence cites ' : ' evidence cites '}{plural(sources, 'source')}</>}
         {' · verdicts by code'}
         {!!result.ocr_pages && ` · ${plural(result.ocr_pages, 'page')} scanned → OCR (Tesseract), ${mode === 'mock' ? 'mock reading by' : 'read by'} Nemotron 3 Super`}
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
         {result.replayed_from && ' · replayed'}
         {result.evidence_label && ` · archived to ${result.evidence_label}`}
-        <span className="text-faint"> · {kTokens(tokens)} tokens · {money(cost)} · {seconds(result.duration_ms)}</span>
+        <span className="text-faint"> · {mode === 'mock' ? 'estimated ' : ''}{kTokens(tokens)} tokens · {money(cost)} model cost · {seconds(result.duration_ms)}</span>
         <span className="ml-1 text-faint underline decoration-edge underline-offset-2 group-open:hidden">every call</span>
       </summary>
       <div className="mt-2 overflow-hidden rounded-lg border border-line">
@@ -782,7 +793,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
           {result.replayed_from
             ? `Replayed from ${result.replayed_from.slice(0, 4)}-${result.replayed_from.slice(4, 6)}-${result.replayed_from.slice(6, 8)}; usage and time belong to the original ${mode} run. No new provider calls.`
             : mode === 'live'
-            ? cached ? 'Live mode: every call here was answered from the cache of an earlier live run, so it cost nothing this time.'
+            ? cached ? `Live mode: model calls used cached answers from an earlier live run. Tavily used ${result.web_credits} credits this time.`
               : 'Live mode: real calls to NVIDIA Nemotron 3 on Nebius Token Factory and to Tavily. Repeats are cached.'
             : 'Mock mode: fixture answers, no API calls; token counts are estimated from text length.'}
           {' '}Models read and quote; every pass/fail is computed in code from the quoted values.
@@ -1112,18 +1123,19 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
   const fwd = '112px minmax(0,1.4fr) 112px 140px 128px'
   return (
     <>
-      <Heading title="Outcome" count={`${returned.length} returned · ${approved.length - watched.length} approved`}>
+      <Heading title="Outcome" count={`${returned.length} to return · ${approved.length - watched.length} approved`}>
         <button className={PRIMARY} onClick={onCheck} disabled={checking || !approved.length}>
           {checking ? 'Checking…' : 'Check approved now'}
         </button>
       </Heading>
+      <p className="-mt-3 text-xs text-muted">Decisions and drafts are saved in this browser. No messages have been sent. The watch list includes a sample approval from 2024.</p>
       {error && <p className="text-bad" role="alert">{error}</p>}
 
       <section className="flex flex-col gap-3">
-        <h2 className="font-semibold">Returned to subcontractors</h2>
+        <h2 className="font-semibold">Marked for return to subcontractors</h2>
         <div className="rounded-xl border border-line">
           {returned.length ? (
-            <Table cols={back} head={['Number', 'Sent to', 'Requested', 'Suggested replacement']}>
+            <Table cols={back} head={['Number', 'Recipient', 'Requested', 'Suggested replacement']}>
               {returned.map((c) => {
                 const r = loaded[c.id].result
                 const asked = asks(r, c.section)
@@ -1143,13 +1155,13 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
                 )
               })}
             </Table>
-          ) : <p className="px-4 py-6 text-muted">None returned.</p>}
+          ) : <p className="px-4 py-6 text-muted">None marked for return.</p>}
         </div>
       </section>
 
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <h2 className="font-semibold">Approved and forwarded to the architect</h2>
+          <h2 className="font-semibold">Approved for forwarding to the architect</h2>
         </div>
         <CloudWatch enabled={jobsAvailable} initial={recheck} />
         <div className="rounded-xl border border-line">
@@ -1233,8 +1245,8 @@ function Alert({ c, result, sent, onRequest }: { c: Case; result: Result; sent: 
           <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes all checks</span>
         </div>
       )}
-      <button className="btn self-start" onClick={onRequest} disabled={sent}>
-        {sent ? `Sent to ${who}` : `Request substitution from ${who}`}
+      <button className="btn h-auto max-w-full self-start whitespace-normal py-2 text-left" onClick={onRequest} disabled={sent}>
+        {sent ? `Request saved for ${who}` : `Save substitution request for ${who}`}
       </button>
     </section>
   )

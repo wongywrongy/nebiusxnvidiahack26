@@ -134,7 +134,7 @@ export function ScoreboardPage({ back }: { back: string }) {
             </div>
           ))}
         </dl>
-        <p className="text-muted">Models: {[...new Set(Object.values(scores.models))].map(modelName).join(' · ')} on Nebius Token Factory.</p>
+        <p className="text-muted">{scores.mode === 'mock' ? 'Fixture answers for: ' : 'Models on Nebius Token Factory: '}{[...new Set(Object.values(scores.models))].map(modelName).join(' · ')}.</p>
         {scores.quote_gate ? <p className="text-muted">Quote gate: {scores.quote_gate.claims_kept} of {scores.quote_gate.claims_extracted} extracted claims kept
           {' '}({scores.quote_gate.claims_drop_rate == null ? 'no claims read' : `${(scores.quote_gate.claims_drop_rate * 100).toFixed(1)}% dropped`});
           {' '}{scores.quote_gate.web_values_kept} of {scores.quote_gate.web_values_read} web values kept
