@@ -44,8 +44,8 @@ for quote verification; the model sees at most 6,000 characters per tool result.
 same value comparison as the scripted check. The Review trace lists each step; the Scan row says "Investigating".
 The s4 Hilti sample demonstrates this offline with an explicitly labelled, hand-written mock fixture.
 
-The scripted status search uses Tavily news results, publication dates and an exact quoted model number;
-the manufacturer search prefers its domains. With no manufacturer-tier hit, one Map call (20 pages, depth 1)
+The scripted status search combines general and news results, publication dates and an exact quoted model number.
+A separate discontinuation-notice query prefers manufacturer domains when known; results are deduplicated by URL. With no manufacturer-tier hit, one Map call (20 pages, depth 1)
 and one Extract call (up to three links, PDFs first) share a five-credit cap before the Investigator is considered.
 All recovered text passes the same quote checks. These request options follow the Tavily docs and have mocked
 400-response coverage; their live behavior has not been checked.

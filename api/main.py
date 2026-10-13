@@ -37,7 +37,7 @@ import time
 from collections import defaultdict, deque
 from typing import Optional
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -198,11 +198,13 @@ def specs():
 
 
 @app.post("/api/specs/draft")
-async def draft_spec(request: Request, section: str, name: str = "spec.pdf"):
+async def draft_spec(request: Request, section: str = Query(pattern=r"^\d{2} \d{2} \d{2}$"),
+                     title: str = Query(default="", max_length=160), name: str = "spec.pdf"):
     if not settings.live:
         raise HTTPException(409, "Live only: checklist drafting uses Nemotron 3 Super on Token Factory.")
-    if section not in all_specs():
-        raise HTTPException(404, "Unknown spec section")
+    title = title.strip() or all_specs().get(section, {}).get("title", "")
+    if not title or any(ord(c) < 32 for c in title):
+        raise HTTPException(422, "A new section needs a title (1–160 characters, no control characters).")
     if not _is_admin(request):
         _rate_limit(request)
     if budget.day_spent():
@@ -213,7 +215,7 @@ async def draft_spec(request: Request, section: str, name: str = "spec.pdf"):
     token = budget.LEDGER.set(budget.Ledger())
     try:
         draft, usage = await checklists.draft(section, text, name.rsplit("/", 1)[-1][:160],
-                                              source_sha256=hashlib.sha256(pdf).hexdigest())
+                                              source_sha256=hashlib.sha256(pdf).hexdigest(), title=title)
         return {"draft": draft, "usage": usage}
     except budget.BudgetExceeded as e:
         raise HTTPException(429, failure_reason(e)) from e

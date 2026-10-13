@@ -47,6 +47,8 @@ class RequirementsOut(BaseModel):
 
 class Checklist(RequirementsOut):
     """Draft provenance stays beside the requirements; only an admin-reviewed file is used live."""
+    section: str = ""
+    title: str = ""
     drafted_by: Optional[str] = None
     source_name: str = ""
     source_url: Optional[str] = None
