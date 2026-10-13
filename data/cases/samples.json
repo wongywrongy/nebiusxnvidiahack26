@@ -60,6 +60,7 @@
     },
     {
       "id": "s4",
+      "tray": true,
       "number": "07 84 00-05",
       "title": "Firestop sealant, alternate product",
       "product": "Hilti FS-ONE MAX",

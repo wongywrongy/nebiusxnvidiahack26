@@ -27,7 +27,7 @@ from pydantic import BaseModel, ValidationError
 
 from .. import cache
 from ..config import PRICES, settings
-from ..schemas import Usage
+from ..schemas import ToolMessage, Usage
 from . import AuthError, ProviderError, RateLimited, budget
 
 T = TypeVar("T", bound=BaseModel)
@@ -39,6 +39,7 @@ TASK_MODEL: dict[str, str] = {
     "extract_requirements": "extract",
     "extract_claims": "extract",
     "verify": "verify",
+    "investigate": "verify",
     "report": "write",
 }
 RATE_LIMIT_RETRIES = 3  # on 429, back off 1s, 2s, 4s, then RateLimited
@@ -161,7 +162,8 @@ async def _once(task, messages, schema, retry_note=None, thinking: Optional[str]
     if retry_note:
         msgs.append({"role": "user", "content": f"Your last reply was invalid: {retry_note}. Return corrected JSON only."})
 
-    key = {"model": model, "messages": msgs, "schema": schema_json, "thinking": thinking}
+    key = {"base_url": settings.nebius_base_url, "model": model, "messages": msgs, "schema": schema_json,
+           "thinking": thinking, "max_tokens": settings.max_output_tokens}
     if hit := cache.get("llm", key):
         return schema.model_validate(hit["obj"]), Usage(**{**hit["usage"], "cached": True})
 
@@ -204,3 +206,37 @@ async def _once(task, messages, schema, retry_note=None, thinking: Optional[str]
 
 async def list_models() -> list[str]:
     return sorted(m["id"] for m in (await _request("GET", "/models"))["data"])
+
+
+async def chat_tools(task: str, messages: list[dict[str, Any]], tools: list[dict]) -> tuple[ToolMessage, Usage]:
+    """Native tool calls, deliberately separate from structured response_format requests."""
+    role = TASK_MODEL[task]
+    model = settings.models[role]
+    body = dict(model=model, messages=messages, tools=tools, tool_choice="auto", temperature=0,
+                max_tokens=settings.max_output_tokens)
+    key = {"base_url": settings.nebius_base_url, **body, **NO_THINK}
+    if hit := cache.get("llm_tools", key):
+        return ToolMessage.model_validate(hit["message"]), Usage(**{**hit["usage"], "cached": True})
+    if model not in PRICES:
+        raise ProviderError(f"No price for {model} in api/config.py PRICES: refusing the live call")
+    pin, pout = PRICES[model]
+    budget.check_usd((len(json.dumps(body)) / 2 * pin + settings.max_output_tokens * pout) / 1e6, real=True)
+    t0 = time.perf_counter()
+    resp, kept = await _create_no_think(NO_THINK, **body)
+    tin = (resp.get("usage") or {}).get("prompt_tokens", 0)
+    tout = (resp.get("usage") or {}).get("completion_tokens", 0)
+    usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout,
+                  cost_usd=cost(model, tin, tout), latency_ms=int((time.perf_counter() - t0) * 1000),
+                  format="tools", thinking="off" if kept else "server-default", reasoning_tokens=_reasoning_tokens(resp))
+    budget.charge_usd(usage.cost_usd, real=True)
+    log.info("%s model=%s in=%d out=%d ms=%d cost=$%.6f format=tools", task, model, tin, tout,
+             usage.latency_ms, usage.cost_usd)
+    try:
+        choice = resp["choices"][0]
+        if choice.get("finish_reason") == "length":
+            raise ProviderError(f"{task}: reply hit MAX_OUTPUT_TOKENS ({settings.max_output_tokens})")
+        message = ToolMessage.model_validate({**choice["message"], "tool_calls": choice["message"].get("tool_calls") or []})
+    except (KeyError, IndexError, ValidationError) as e:
+        raise ProviderError(f"{task}: invalid tool reply") from e
+    cache.put("llm_tools", key, {"message": message.model_dump(), "usage": usage.model_dump()})
+    return message, usage

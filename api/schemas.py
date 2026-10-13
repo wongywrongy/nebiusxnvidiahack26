@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, PrivateAttr
 
 Value = Union[float, str, list[str], None]
 
@@ -200,6 +200,43 @@ class Usage(BaseModel):
     thinking: Optional[str] = None  # live: "off" (asked for no thinking), "on", or "server-default"
 
 
+class ToolFunction(BaseModel):
+    name: str
+    arguments: str
+
+
+class ToolCall(BaseModel):
+    id: str
+    type: Literal["function"] = "function"
+    function: ToolFunction
+
+
+class ToolMessage(BaseModel):
+    role: Literal["assistant"] = "assistant"
+    content: Optional[str] = None
+    tool_calls: list[ToolCall] = []
+
+
+class InvestigationStep(BaseModel):
+    n: int
+    tool: str
+    args: dict
+    summary: str
+    credits: float = 0
+    ms: int = 0
+
+
+class Investigation(BaseModel):
+    steps: list[InvestigationStep] = []
+    outcome: Literal["found", "not_found", "capped"] = "not_found"
+    # Whole extracted pages stay internal; the public trace contains only short, redacted summaries.
+    _pages: list[dict] = PrivateAttr(default_factory=list)
+    _usage: list[Usage] = PrivateAttr(default_factory=list)
+    _verified: VerifyOut = PrivateAttr(default_factory=lambda: VerifyOut(status="unknown"))
+    _document_url: Optional[str] = PrivateAttr(default=None)
+    _document_title: str = PrivateAttr(default="")
+
+
 class Result(BaseModel):
     case_id: str
     title: str
@@ -213,6 +250,7 @@ class Result(BaseModel):
     usage: list[Usage] = []
     web_credits: float = 0.0
     duration_ms: int = 0
+    investigation: Optional[Investigation] = None
 
     @property
     def cost_usd(self) -> float:
@@ -221,7 +259,7 @@ class Result(BaseModel):
 
 # ---------- streaming ----------
 
-Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "fix", "report", "done", "error"]
+Stage = Literal["queued", "ingest", "triage", "extract", "spec_check", "verify", "investigate", "fix", "report", "done", "error"]
 
 
 class Event(BaseModel):

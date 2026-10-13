@@ -10,8 +10,9 @@ document pipelines for a general contractor and has watched this problem cost re
 
 - **Live demo:** _URL on the Devpost page_ · **Video:** _YouTube link_ · **License:** MIT
 - **Models:** NVIDIA **Nemotron 3 Nano** and **Nemotron 3 Super**, served by **Nebius Token Factory**
-- **Web:** **Tavily** Search and Extract for the manufacturer's current documents (Map is in the provider, bounded, not yet in the pipeline)
-- **Cloud:** the demo runs as a **Nebius Serverless Endpoint**; the nightly re-check runs as a **Nebius Serverless Job**
+- **Web:** **Tavily** Search, Extract and bounded Map for the manufacturer's current documents
+- **Cloud:** deployment configuration for a **Nebius Serverless Endpoint** and a nightly **Nebius Serverless Job**;
+  deployment and live provider results have not been verified in this checkout
 
 ## Where Nemotron and Token Factory do the work
 
@@ -26,8 +27,8 @@ document pipelines for a general contractor and has watched this problem cost re
 | Write the result | **Nemotron 3 Super** | the plain-language summary, the note to the sub, a title and "why it matters" per issue | words only; the findings already stand |
 | Watch approved items | the same pipeline as a **Nebius Serverless Job**, nightly | re-checks approved submittals against the manufacturer's live documents; raises a discontinuation with the maker's own quote and a replacement that passes | the part a human never gets around to |
 
-Every call asks for JSON against a Pydantic schema (`response_format: json_schema`, with the `json_object`
-fallback), at temperature 0, with thinking turned off (Nemotron 3 reasons by default; these are extraction calls,
+Structured reads ask for JSON against a Pydantic schema (`response_format: json_schema`, with the `json_object`
+fallback); Investigator turns use native tools without `response_format`. Both use temperature 0 and thinking off (Nemotron 3 reasons by default; these are extraction calls,
 so thinking would only spend output tokens). Replies are cached on disk so a document is paid for once. Spend is
 capped per run and per day before each call is made. Each result carries its trace: every model call with tokens,
 latency and cost, and the Tavily credits, shown in the app under "Checked by".
@@ -35,6 +36,27 @@ latency and cost, and the Tavily credits, shown in the app under "Checked by".
 **Models read and quote; code decides.** A claim whose quote is not found on the page it cites is dropped. A web
 value, revision or status without a quote on a fetched page is dropped. What nothing confirms is reported as
 "couldn't confirm", never as a failure.
+
+When the scripted check has no quoted answer, the **Investigator** lets Nemotron 3 Super choose Tavily search,
+map and extract calls, then finish with exact quotes. It stops after six tool calls, including finish, and shares
+an eight-credit investigation allowance across each item's checks and fix candidates. Extracted pages stay whole
+for quote verification; the model sees at most 6,000 characters per tool result. Accepted documents go through the
+same value comparison as the scripted check. The Review trace lists each step; the Scan row says "Investigating".
+The s4 Hilti sample demonstrates this offline with an explicitly labelled, hand-written mock fixture.
+
+Owner-only live validation (not run for this change; these commands spend tokens and credits):
+
+```bash
+python scripts/fetch_docs.py
+SPECCHECK_MODE=live python scripts/eval.py --samples
+SPECCHECK_MODE=live python scripts/eval.py --case s4
+SPECCHECK_MODE=live uvicorn api.main:app
+```
+
+Add Hilti FS-ONE MAX from the tray and Scan. An investigation is expected only if the scripted sources do not
+confirm a revision or values; a successful scripted check skips it. Look for at most six steps per investigation,
+quoted evidence behind any accepted revision/status, `task="investigate"` usage, and an honest capped/unconfirmed
+result if no source can be verified. Live recovery rate and provider compatibility remain unverified.
 
 ## What the reviewer sees
 
