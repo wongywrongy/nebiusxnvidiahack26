@@ -244,6 +244,20 @@ upload result with a quoted claim or an honest couldn't-confirm finding. A fully
 insufficient proof, not quietly rerun at extra cost. Exit status is nonzero with a readable failure list.
 This script was tested against HTTP doubles; no deployed endpoint was smoke-tested during development.
 
+## Runtime retention
+
+Rendered page images use a 2 GiB disk LRU cache; a viewed page becomes recent. Generated run directories are
+limited to 500 and the HTTP server keeps at most 200 run objects in memory. Active scans and replay sources
+are protected; a full active queue returns a clear 503. Completed runs evicted from memory remain readable
+from disk until disk retention removes them. Retention never deletes `runs/recorded/`, `runs/watch/` or uploads.
+These boundaries have offline regression tests; an eight-week live soak has not been performed.
+
+With `EVIDENCE_DIR` set, `watch/latest.json`, dated reports and `watch/jobs.json` are mirrored into that directory
+and read there first, with the image's `runs/watch/` as fallback. The owner should commit the **first real report**
+under `runs/watch/` as an image fallback; never commit a fake-CLI or mock report as live evidence. Startup logs
+show today's recorded spend and the configured caps. `.cache/budget/<UTC-date>.json` is local and may reset on
+container replacement. `/api/health` includes `uptime_s`, `disk_free_gb` and caps as well as key-presence booleans.
+
 ## Layout
 
 ```

@@ -34,6 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from api.config import settings  # noqa: E402
+from api import watch_store  # noqa: E402
 from api.pipeline.cases import all_cases, mock_ready  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.schemas import Result  # noqa: E402
@@ -86,10 +87,7 @@ async def main(ids: list[str], post: str | None) -> int:
         "items": items,
     }
     folder = settings.runs_dir / "watch"
-    folder.mkdir(parents=True, exist_ok=True)
-    text = json.dumps(report, indent=2)
-    (folder / "latest.json").write_text(text)
-    (folder / f"{report['checked_at'][:10]}.json").write_text(text)
+    watch_store.report(report)
 
     print(f"\nmode={settings.mode}  run={run.id}  runner={report['runner']}\n")
     for i in items:
