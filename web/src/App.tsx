@@ -251,12 +251,12 @@ export default function App() {
   return (
     <div className="min-h-screen font-sans text-sm">
       <header className="border-b border-line">
-        <div className="mx-auto flex max-w-[1120px] flex-wrap items-center gap-x-6 gap-y-1 px-4 py-2 sm:px-6">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 sm:px-6 md:flex-nowrap">
           <span className="flex h-10 shrink-0 items-center gap-2 font-semibold"><span className="h-3 w-3 rounded-sm bg-flare" />SpecCheck</span>
-          <span className="hidden truncate text-muted lg:inline">{project?.name}</span>
+          <span className="hidden min-w-0 flex-1 truncate text-muted xl:inline">{project?.name}</span>
           <StepBar step={step} reached={reached} onGo={go} />
           <nav aria-label="Project reference" className="ml-auto flex shrink-0 gap-4 font-mono text-xs text-muted">
-            <a href="#specs" className="py-2 hover:text-ink">Specs<span className="hidden md:inline"> {sections.join(' · ')}</span></a>
+            <a href="#specs" className="py-2 hover:text-ink">Specs<span className="hidden xl:inline"> {sections.join(' · ')}</span></a>
             <a href="#scoreboard" className="py-2 hover:text-ink">Scoreboard</a>
             {inbox.length > 0 && <a href="#" className="py-2 hover:text-ink" onClick={(e) => { e.preventDefault(); startOver() }}>Start over</a>}
           </nav>
@@ -295,7 +295,7 @@ export default function App() {
 
 function StepBar({ step, reached, onGo }: { step: Step; reached: Step; onGo: (s: Step) => void }) {
   return (
-    <nav aria-label="Steps" className="order-last -ml-2 flex w-full items-center gap-1 overflow-x-auto sm:order-none sm:w-auto">
+    <nav aria-label="Steps" className="order-last -ml-2 flex w-full shrink-0 items-center gap-1 overflow-x-auto md:order-none md:w-auto">
       {STEPS.map(([n, label], i) => {
         const on = n === step, done = n < step
         return (
@@ -306,7 +306,7 @@ function StepBar({ step, reached, onGo }: { step: Step; reached: Step; onGo: (s:
               <span className={`flex h-5 w-5 items-center justify-center rounded-full font-mono text-xs ${on ? 'bg-flare text-on-accent' : done ? 'bg-good/15 text-good' : 'bg-line text-faint'}`}>
                 {done ? <Icon kind="check" /> : n}
               </span>
-              <span className={on ? '' : 'hidden sm:inline'}>{label}</span>
+              <span className={on ? '' : 'hidden lg:inline'}>{label}</span>
             </button>
           </Fragment>
         )

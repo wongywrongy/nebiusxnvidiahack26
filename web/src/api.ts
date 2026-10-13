@@ -114,8 +114,8 @@ export interface SpecSection {
 }
 export interface Specs { mode: Project['mode']; sections: SpecSection[] }
 export async function getSpecs(): Promise<Specs> { return ok(await fetch('/api/specs')) }
-export async function draftSpec(file: File, section: string): Promise<{ draft: Checklist; usage: Usage }> {
-  return ok(await fetch(`/api/specs/draft?section=${encodeURIComponent(section)}&name=${encodeURIComponent(file.name)}`, {
+export async function draftSpec(file: File, section: string, title: string): Promise<{ draft: Checklist; usage: Usage }> {
+  return ok(await fetch(`/api/specs/draft?section=${encodeURIComponent(section)}&title=${encodeURIComponent(title)}&name=${encodeURIComponent(file.name)}`, {
     method: 'POST', headers: { 'content-type': 'application/pdf' }, body: file,
   }))
 }

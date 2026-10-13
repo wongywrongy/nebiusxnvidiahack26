@@ -55,8 +55,32 @@ def test_map_once_before_investigator_and_same_quote_comparison(live):
     findings, _, _, credits, inv = asyncio.run(verify.verify({"id": "map-test", "manufacturer_domains": ["maker.test"]},
         ClaimsOut(product="Product", manufacturer="Maker", model="X-1", document_revision="Rev A", claims=[])))
     assert inv is None and any(f.verdict == "note" for f in findings)
-    assert len(mapped.calls) == len(extract.calls) == len(model.calls) == 1 and credits == 5
+    assert len(mapped.calls) == len(extract.calls) == len(model.calls) == 1 and credits == 7
+    assert len(search.calls) == 4
     args = json.loads(mapped.calls[0].request.content)
     assert args["limit"] == 20 and args["max_depth"] == 1
-    query = json.loads(search.calls[1].request.content)
+    query = json.loads(search.calls[2].request.content)
     assert query["topic"] == "news" and query["exact_match"] and '"X-1"' in query["query"]
+
+
+def test_general_only_discontinuation_is_found_and_urls_deduplicated(live):
+    url = "https://maker.test/notice.pdf"
+    def search_reply(request):
+        body = json.loads(request.content)
+        hits = [{"url": url}] * 2 if body["topic"] == "general" and " OR " in body["query"] else []
+        return httpx.Response(200, json={"results": hits})
+    search = live.post(tavily.API + "/search").mock(side_effect=search_reply)
+    extracted = live.post(tavily.API + "/extract").respond(200, json={"results": [
+        {"url": url, "raw_content": "Maker X-1 is discontinued."}]})
+    live.post(settings.nebius_base_url + "chat/completions").respond(200, json={"choices": [{"message": {
+        "content": json.dumps({"status": "discontinued", "status_quote": "X-1 is discontinued."})}}]})
+    findings, _, _, credits, _ = asyncio.run(verify.verify({"id": "general-test", "manufacturer_domains": ["maker.test"]},
+        ClaimsOut(product="Product", manufacturer="Maker", model="X-1", claims=[])))
+    assert any(f.id == "status-discontinued" for f in findings)
+    bodies = [json.loads(c.request.content) for c in search.calls]
+    assert len(bodies) == 4 and [b["topic"] for b in bodies[1:3]] == ["general", "news"]
+    assert all(b["include_published_date"] and b["exact_match"] for b in bodies[1:3])
+    assert bodies[3]["query"] == "Maker Product discontinuation notice"
+    assert bodies[3]["include_domains"] == ["maker.test"] and bodies[3]["include_domains_mode"] == "prefer"
+    assert json.loads(extracted.calls[0].request.content)["urls"] == [url]
+    assert credits == budget.today()["credits"] == 5
