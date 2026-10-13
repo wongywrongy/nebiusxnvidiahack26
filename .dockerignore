@@ -2,6 +2,7 @@
 .env
 .env.*
 .cache
+evidence
 runs/*
 !runs/recorded
 !runs/watch

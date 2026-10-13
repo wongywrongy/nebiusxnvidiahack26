@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+import threading
 from functools import lru_cache
 from pathlib import Path
 from typing import Optional
@@ -17,6 +18,8 @@ import pymupdf
 from ..config import settings
 
 Box = dict[str, float]
+PAGE_CACHE_MAX_BYTES = 2 * 1024**3
+_cache_lock = threading.Lock()
 
 _DASHES = dict.fromkeys(map(ord, "‐‑‒–—−"), "-")
 
@@ -39,13 +42,35 @@ def page_sizes(pdf_path: Path) -> list[dict[str, float]]:
 def render_page(pdf_path: Path, page_no: int, dpi: int = 144) -> bytes:
     """PNG of one page (1-based), cached on disk by file hash, page and dpi."""
     cached = settings.cache_dir / "pages" / f"{_sha256(str(pdf_path), pdf_path.stat().st_mtime)}_{page_no}_{dpi}.png"
-    if cached.exists():
-        return cached.read_bytes()
+    with _cache_lock:
+        if cached.exists():
+            png = cached.read_bytes()
+            cached.touch()  # LRU access time; do not depend on filesystem atime policy.
+            return png
     with pymupdf.open(pdf_path) as doc:
         png = doc[page_no - 1].get_pixmap(dpi=dpi).tobytes("png")
-    cached.parent.mkdir(parents=True, exist_ok=True)
-    cached.write_bytes(png)
+    with _cache_lock:
+        cached.parent.mkdir(parents=True, exist_ok=True)
+        if len(png) <= PAGE_CACHE_MAX_BYTES:
+            cached.write_bytes(png)
+        _prune_pages()
     return png
+
+
+def _prune_pages() -> None:
+    files = sorted(((p.stat().st_mtime_ns, p.stat().st_size, p) for p in (settings.cache_dir / "pages").glob("*.png")),
+                   key=lambda item: item[0])
+    total = sum(size for _, size, _ in files)
+    for _, size, path in files:
+        if total <= PAGE_CACHE_MAX_BYTES:
+            break
+        path.unlink(missing_ok=True)
+        total -= size
+
+
+def prune_page_cache() -> None:
+    with _cache_lock:
+        _prune_pages()
 
 
 def _norm(s: str) -> str:

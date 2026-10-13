@@ -35,6 +35,7 @@ import json
 import logging
 import time
 import re
+import shutil
 from collections import defaultdict, deque
 from contextlib import asynccontextmanager
 from datetime import datetime
@@ -46,21 +47,30 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from .config import settings
-from . import cloud_jobs
+from . import cloud_jobs, watch_store
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
 from .pipeline import checklists
 from .pipeline.extract import checklist_path
-from .pipeline.render import page_count, page_sizes, render_page
-from .pipeline.runner import Run, execute, list_runs, load_result, recorded_runs, replay, run_dir
+from .pipeline.render import page_count, page_sizes, prune_page_cache, render_page
+from .pipeline.runner import Run, execute, list_runs, load_result, prune_runs, recorded_runs, replay, run_dir
 from .pipeline.scores import run_scoring_set
 from .providers import ProviderError, budget, failure_reason
 from .schemas import Event, ReviewedChecklist
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
+STARTED = time.monotonic()
+MAX_MEMORY_RUNS = 200
 @asynccontextmanager
 async def lifespan(app):
+    global STARTED
+    STARTED = time.monotonic()
+    settings.runs_dir.mkdir(parents=True, exist_ok=True)
+    prune_page_cache()
+    prune_runs()
+    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (local ledger may reset on container replacement)",
+                                               budget.today(), budget.caps())
     await cloud_jobs.setup_profile()
     try:
         yield
@@ -95,6 +105,17 @@ def _spawn(coro) -> None:
     task.add_done_callback(_tasks.discard)
 
 
+def _new_run(*args, **kwargs) -> Run:
+    while len(RUNS) >= MAX_MEMORY_RUNS:
+        oldest = next((key for key, run in RUNS.items() if run.done.is_set()), None)
+        if oldest is None:
+            raise HTTPException(503, "The scan queue is full. Try again when a scan finishes.")
+        del RUNS[oldest]
+    run = Run(*args, **kwargs)
+    RUNS[run.id] = run
+    return run
+
+
 def _is_admin(request: Request) -> bool:
     token = settings.secret("admin_token")
     return bool(token) and hmac.compare_digest(request.headers.get("x-admin-token", "").encode(), token.encode())
@@ -121,9 +142,12 @@ def _rate_limit(request: Request) -> None:
 @app.get("/api/health")
 def health():
     rec = recorded_runs()
+    disk_path = next(p for p in (settings.runs_dir, *settings.runs_dir.parents) if p.exists())
     return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today(),
             "budget": budget.remaining(), "recorded": rec[0] if rec else None,
-            "jobs_available": cloud_jobs.available(), "caps": budget.caps(), "scan_shared_item_budget": True}
+            "jobs_available": cloud_jobs.available(), "caps": budget.caps(), "scan_shared_item_budget": True,
+            "uptime_s": round(time.monotonic() - STARTED, 1),
+            "disk_free_gb": round(shutil.disk_usage(disk_path).free / 1024**3, 2)}
 
 
 @app.get("/api/project")
@@ -146,11 +170,7 @@ def project():
 
 def latest_recheck() -> Optional[dict]:
     """The newest nightly re-check report (scripts/recheck.py writes runs/watch/latest.json), or None."""
-    p = settings.runs_dir / "watch" / "latest.json"
-    try:
-        return json.loads(p.read_text()) if p.exists() else None
-    except (OSError, ValueError):
-        return None
+    return watch_store.read("latest.json")
 
 
 @app.post("/api/runs")
@@ -160,8 +180,7 @@ async def start_run(body: StartRun, request: Request):
     unknown = [i for i in ids if i not in all_cases()]
     if unknown:
         raise HTTPException(400, f"Unknown cases: {unknown}")
-    run = Run(ids, delay_ms=body.delay_ms)
-    RUNS[run.id] = run
+    run = _new_run(ids, delay_ms=body.delay_ms)
     _spawn(execute(run))
     return {"run_id": run.id, "mode": settings.mode, "case_ids": ids}
 
@@ -279,16 +298,14 @@ async def scan(body: Scan, request: Request):
             not (settings.recorded_dir / source / "results" / f"{i}.json").is_file() for i in ids
         ):
             raise HTTPException(429, "Today's live budget is spent and these items have no complete recording. Try again tomorrow (UTC).")
-        run = Run(ids, delay_ms=0)
-        RUNS[run.id] = run
+        run = _new_run(ids, delay_ms=0, replay_of=source)
         _spawn(replay(run, source, ids=ids))
         date = f"{source[:4]}-{source[4:6]}-{source[6:8]}"
         return {"run_id": run.id, "mode": "live", "mock": [], "replay_of": source,
                 "note": f"Replayed from the live run recorded on {date}: today's live budget is spent."}
     mock = ([i for i, c in cases.items() if c.get("upload")]
             if settings.live and not admin and not settings.public_uploads_live else [])
-    run = Run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget)
-    RUNS[run.id] = run
+    run = _new_run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget)
     _spawn(execute(run))
     note = "Uploads ran in mock mode: public live uploads are disabled; live checks need the admin token." if mock else None
     return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note,
@@ -325,12 +342,8 @@ async def watch_report(body: WatchReport, request: Request):
     """The nightly job reports here with the admin token; the app shows the latest report on the Outcome step."""
     if not _is_admin(request):
         raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
-    folder = settings.runs_dir / "watch"
-    folder.mkdir(parents=True, exist_ok=True)
     report = body.model_dump(mode="json")
-    text = json.dumps(report, indent=2)
-    (folder / "latest.json").write_text(text)
-    (folder / f"{report['checked_at'][:10]}.json").write_text(text)
+    watch_store.report(report)
     await cloud_jobs.attach_report(report)
     return {"ok": True, "items": len(body.items)}
 
@@ -390,8 +403,7 @@ def _pages(case: dict) -> int:
 async def start_replay(body: StartReplay):
     if not run_dir(body.source_run_id):
         raise HTTPException(404, "No such recorded run")
-    run = Run([])
-    RUNS[run.id] = run
+    run = _new_run([], replay_of=body.source_run_id)
     _spawn(replay(run, body.source_run_id, body.speed))
     return {"run_id": run.id, "replay_of": body.source_run_id}
 

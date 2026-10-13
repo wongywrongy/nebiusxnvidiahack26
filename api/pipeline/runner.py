@@ -13,7 +13,10 @@ import json
 import re
 import time
 import uuid
+import shutil
+import logging
 from contextlib import nullcontext
+from collections import Counter
 from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
@@ -27,14 +30,20 @@ from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages, submittal_pdfs
 from .render import attach_highlights
 
+MAX_DISK_RUNS = 500
+ACTIVE_RUNS: set[str] = set()
+REPLAY_READERS: Counter[str] = Counter()
+log = logging.getLogger("speccheck.runs")
+
 
 class Run:
     def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None, mock: Iterable[str] = (),
-                 shared_item_budget: bool = False):
+                 shared_item_budget: bool = False, replay_of: str | None = None):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
         self.mock = set(mock)  # items forced to mock mode even when the server is live (public uploads)
         self.shared_item_budget = shared_item_budget
+        self.replay_of = replay_of
         self.ledger = budget.Ledger()
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms
         self.events: list[Event] = []
@@ -44,6 +53,10 @@ class Run:
         self._t0 = time.perf_counter()
         self.dir = settings.runs_dir / self.id
         (self.dir / "results").mkdir(parents=True, exist_ok=True)
+        ACTIVE_RUNS.add(self.id)
+        if replay_of:
+            REPLAY_READERS[replay_of] += 1
+        prune_runs()
 
     def emit(self, stage: str, message: str, case_id: Optional[str] = None, model: Optional[str] = None,
              data: Optional[dict] = None, t_ms: Optional[int] = None) -> Event:
@@ -223,37 +236,68 @@ async def execute(run: Run) -> Run:
         return await run_case(run, cid, sem)
 
     # A smoke scan checks two inputs under one run's USD cap and one item's total web allowance.
-    with budget.credit_scope(settings.budget_tavily_credits_per_item) if run.shared_item_budget else nullcontext():
-        await asyncio.gather(*(staggered(i, cid) for i, cid in enumerate(run.case_ids)), return_exceptions=True)
-    run.done.set()
+    try:
+        with budget.credit_scope(settings.budget_tavily_credits_per_item) if run.shared_item_budget else nullcontext():
+            await asyncio.gather(*(staggered(i, cid) for i, cid in enumerate(run.case_ids)), return_exceptions=True)
+    finally:
+        finish_run(run)
     return run
 
 
 async def replay(run: Run, source_run_id: str, speed: float = 1.0, ids: Optional[list[str]] = None) -> Run:
     """Re-emit a recorded run's events with their original timing."""
-    src = run_dir(source_run_id)
-    events = [Event.model_validate_json(line) for line in (src / "events.jsonl").read_text().splitlines() if line]
-    if ids is not None:
-        events = [ev for ev in events if ev.case_id in ids]
-    # Results first: the app fetches each one as soon as its "done" event arrives.
-    for p in (src / "results").glob("*.json"):
-        res = Result.model_validate_json(p.read_text())
-        if ids is not None and res.case_id not in ids:
-            continue
-        res.replayed_from = source_run_id
-        run.results[res.case_id] = res
-        (run.dir / "results" / p.name).write_text(res.model_dump_json(indent=2))
-    start = time.perf_counter()
-    for ev in events:
-        wait = ev.t_ms / 1000 / speed - (time.perf_counter() - start)
-        if wait > 0:
-            await asyncio.sleep(wait)
-        run.emit(ev.stage, ev.message, ev.case_id, ev.model, ev.data)
-    run.done.set()
-    return run
+    try:
+        src = run_dir(source_run_id)
+        events = [Event.model_validate_json(line) for line in (src / "events.jsonl").read_text().splitlines() if line]
+        if ids is not None:
+            events = [ev for ev in events if ev.case_id in ids]
+        # Results first: the app fetches each one as soon as its "done" event arrives.
+        for p in (src / "results").glob("*.json"):
+            res = Result.model_validate_json(p.read_text())
+            if ids is not None and res.case_id not in ids:
+                continue
+            res.replayed_from = source_run_id
+            run.results[res.case_id] = res
+            (run.dir / "results" / p.name).write_text(res.model_dump_json(indent=2))
+        start = time.perf_counter()
+        for ev in events:
+            wait = ev.t_ms / 1000 / speed - (time.perf_counter() - start)
+            if wait > 0:
+                await asyncio.sleep(wait)
+            run.emit(ev.stage, ev.message, ev.case_id, ev.model, ev.data)
+        return run
+    finally:
+        finish_run(run)
 
 
 RUN_ID = re.compile(r"\d{8}-\d{6}-[0-9a-f]{6}")
+
+
+def prune_runs() -> None:
+    """Only generated run directories; never recordings, watch state, uploads or active work."""
+    if not settings.runs_dir.exists():
+        return
+    try:
+        folders = sorted((p for p in settings.runs_dir.iterdir()
+                          if RUN_ID.fullmatch(p.name) and p.is_dir() and not p.is_symlink()),
+                         key=lambda p: (p.name[:15], p.stat().st_mtime_ns), reverse=True)
+        active = {p.name for p in folders if p.name in ACTIVE_RUNS or REPLAY_READERS[p.name]}
+        keep = active | {p.name for p in [p for p in folders if p.name not in active][:max(0, MAX_DISK_RUNS - len(active))]}
+        for path in folders:
+            if path.name not in keep:
+                shutil.rmtree(path)
+    except OSError:
+        log.warning("Run retention cleanup could not finish; check available disk space and permissions")
+
+
+def finish_run(run: Run) -> None:
+    run.done.set()
+    ACTIVE_RUNS.discard(run.id)
+    if run.replay_of:
+        REPLAY_READERS[run.replay_of] -= 1
+        if REPLAY_READERS[run.replay_of] <= 0:
+            del REPLAY_READERS[run.replay_of]
+    prune_runs()
 
 
 def run_dir(run_id: str) -> Optional[Path]:
@@ -267,7 +311,10 @@ def run_dir(run_id: str) -> Optional[Path]:
 def load_result(run_id: str, case_id: str) -> Optional[Result]:
     d = run_dir(run_id)
     p = d / "results" / f"{case_id}.json" if d else None
-    return Result.model_validate_json(p.read_text()) if p and p.exists() else None
+    try:
+        return Result.model_validate_json(p.read_text()) if p and p.exists() else None
+    except FileNotFoundError:  # retention may remove an old run between lookup and read
+        return None
 
 
 def _runs_in(folder: Path) -> list[str]:
