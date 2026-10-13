@@ -15,7 +15,7 @@ from pydantic import BaseModel
 
 from .config import settings
 from .providers import budget, tokenfactory
-from .schemas import Usage
+from .schemas import ToolMessage, Usage
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -46,6 +46,10 @@ class Router:
         messages: list[dict[str, Any]],
         ctx: Optional[dict[str, Any]] = None,
     ) -> tuple[T, Usage]:
+        if task == "investigate":
+            if settings.live:
+                return await tokenfactory.chat_tools(task, messages, ctx["tools"])
+            return self._mock_tools(messages, ctx or {})
         if settings.live:
             return await tokenfactory.chat(task, messages, schema)
         return self._mock(task, schema, messages, ctx or {})
@@ -56,7 +60,7 @@ class Router:
             payload = load_spec_fixture(ctx["section"])
         else:
             fixture = load_fixture(ctx["case_id"])
-            payload = fixture.get("claims" if task == "extract_claims" else task)
+            payload = fixture.get("claims" if task == "extract_claims" else ctx.get("fixture_key", task))
             if payload is None:
                 payload = _default_payload(task, ctx)
         obj = schema.model_validate(payload)
@@ -69,6 +73,22 @@ class Router:
         budget.check_usd()
         budget.charge_usd(usage.cost_usd, real=False)
         return obj, usage
+
+    def _mock_tools(self, messages: list[dict], ctx: dict) -> tuple[ToolMessage, Usage]:
+        fixture = load_fixture(ctx.get("case_id")).get("investigate", {})
+        index = sum(m.get("role") == "tool" for m in messages)
+        steps = fixture.get("steps", [])
+        step = steps[index] if index < len(steps) else {
+            "tool": "finish", "args": fixture.get("final", {"found": False, "status": "unknown", "note": "No mock investigation recorded."})}
+        message = ToolMessage.model_validate({"tool_calls": [{"id": f"mock-{index}", "function": {
+            "name": step["tool"], "arguments": json.dumps(step["args"])}}]})
+        model = settings.models["verify"]
+        tin, tout = len(json.dumps(messages)) // 4, len(message.model_dump_json()) // 4
+        usage = Usage(task="investigate", tier="verify", model=model, input_tokens=tin, output_tokens=tout,
+                      cost_usd=tokenfactory.cost(model, tin, tout), cached=True, format="tools", thinking="off")
+        budget.check_usd()
+        budget.charge_usd(usage.cost_usd, real=False)
+        return message, usage
 
 
 def _default_payload(task: str, ctx: dict) -> dict:

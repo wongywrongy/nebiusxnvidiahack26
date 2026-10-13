@@ -2,7 +2,7 @@
 
 export type Decision = 'approve' | 'approve_with_note' | 'send_back'
 export type Stage =
-  | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'fix' | 'report' | 'done' | 'error'
+  | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'investigate' | 'fix' | 'report' | 'done' | 'error'
 
 // An item as /api/project, /api/inbox return it (api/main.py _public).
 export interface Case {
@@ -73,6 +73,10 @@ export const modelName = (id: string) => {
   return m ? `Nemotron ${m[1].replace('_', '.')} ${m[2][0].toUpperCase()}${m[2].slice(1).toLowerCase()}` : id.replace(/^.*\//, '')
 }
 interface Claim { id: string; property: string; value: unknown; unit?: string | null; page?: number | null; quote?: string | null }
+export interface Investigation {
+  steps: { n: number; tool: string; args: Record<string, unknown>; summary: string; credits: number; ms: number }[]
+  outcome: 'found' | 'not_found' | 'capped'
+}
 export interface Result {
   case_id: string
   title: string
@@ -86,6 +90,7 @@ export interface Result {
   usage: Usage[]
   web_credits: number
   duration_ms: number
+  investigation?: Investigation | null
 }
 
 export async function getProject(): Promise<Project> {

@@ -1,0 +1,21 @@
+{
+  "_note": "Hand-written MOCK STAND-IN, not a live Token Factory or Tavily recording. The tool plan and web responses are illustrative. Product text uses the s4 document notes; no claim that 12/16 DBS is the current live revision or that the product is still made.",
+  "pages": [{"page": 1, "text": "Hilti FS-ONE MAX\n12/16 DBS\nIndustry-leading VOC results\nASTM E84 flame 0 / smoke 10\nUL 1479, ASTM E814, CAN/ULC-S115\nCSFM 4485-1200:0108"}],
+  "triage": {"pages": [{"page": 1, "kind": "product_data"}]},
+  "claims": {
+    "product": "FS-ONE MAX", "manufacturer": "Hilti", "model": "FS-ONE MAX", "document_revision": "12/16 DBS",
+    "claims": [{"id": "s4-standards", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "standards", "value": ["ul 1479", "astm e814", "can/ulc-s115"], "page": 1, "quote": "UL 1479, ASTM E814, CAN/ULC-S115"}]
+  },
+  "web": {"search": [], "extract": {}},
+  "verify": {"status": "unknown", "current_values": []},
+  "investigate": {
+    "steps": [
+      {"tool": "search", "args": {"query": "Hilti FS-ONE MAX data sheet", "include_domains": ["hilti.com"]}, "result": [{"url": "https://www.hilti.com/firestop", "title": "Hilti firestop documents (mock)", "content": "FS-ONE MAX documents"}]},
+      {"tool": "map", "args": {"url": "https://www.hilti.com/firestop", "instructions": "FS-ONE MAX data sheet PDF"}, "result": ["https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf"]},
+      {"tool": "extract", "args": {"url": "https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf"}, "result": [{"url": "https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf", "raw_content": "Hilti FS-ONE MAX\n12/16 DBS\nIndustry-leading VOC results\nUL 1479, ASTM E814, CAN/ULC-S115"}]}
+    ],
+    "final": {"found": true, "document_url": "https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf", "document_title": "Hilti FS-ONE MAX data sheet (mock stand-in)", "revision_quote": "12/16 DBS", "status": "unknown", "note": "Mock demonstration: the revision is quoted; product status and a numeric VOC value remain unconfirmed."}
+  },
+  "investigate_verify": {"status": "unknown", "current_revision": "12/16 DBS", "current_values": [{"property": "standards", "value": ["ul 1479", "astm e814", "can/ulc-s115"], "quote": "UL 1479, ASTM E814, CAN/ULC-S115"}]},
+  "report": {"summary": "Mock demonstration: the Investigator found the quoted sheet revision. A numeric VOC value is not stated.", "note_to_subcontractor": "Please supply the numeric VOC value; that check could not be confirmed.", "finding_titles": {}, "why_it_matters": {}}
+}

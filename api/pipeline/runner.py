@@ -20,7 +20,7 @@ from typing import AsyncIterator, Iterable, Optional
 from ..config import FORCE_MOCK, redact, settings
 from ..providers import budget
 from ..providers.budget import BudgetExceeded
-from ..schemas import Event, ReportOut, Requirement, Result, Usage
+from ..schemas import Event, Investigation, ReportOut, Requirement, Result, Usage
 from . import decide, extract, fix, spec_check, verify
 from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages
@@ -79,6 +79,11 @@ class Run:
 async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     case = get_case(case_id)
     usage: list[Usage] = []
+    investigations: list[Investigation] = []
+
+    async def investigating(tool: str):
+        run.emit("investigate", f"Investigating: {tool} …", case_id, settings.models["verify"])
+        await run.pause()
     budget.ITEM.set(case_id)  # this task's own context: credit caps are per item
     FORCE_MOCK.set(case_id in run.mock)
     async with sem:
@@ -117,8 +122,10 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
                      data={"spec": tally})
             try:
-                vf, rows, u, credits = await verify.verify(case, claims)
+                vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating)
                 usage += u
+                if inv is not None:
+                    investigations.append(inv)
             except BudgetExceeded as e:  # this step can't confirm; the rest of the item and the run go on
                 vf, rows, credits = [verify.unconfirmed(str(e))], [], run.ledger.credits.get(case_id, 0.0)
             findings += vf
@@ -132,7 +139,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['verify']}", data={"web": web})
                 try:
                     u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
-                                                          settings.fix_max_candidates, settings.fix_credit_cap)
+                                                          settings.fix_max_candidates, settings.fix_credit_cap,
+                                                          investigations=investigations, on_step=investigating)
                     usage += u
                     credits += fix_credits
                 except BudgetExceeded as e:
@@ -152,11 +160,19 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             attach_highlights(case, claims.claims, findings)
             await run.pause()
 
+            investigation = None
+            if investigations:
+                steps = [s.model_copy(update={"n": n}) for n, s in enumerate(
+                    (s for inv in investigations for s in inv.steps), start=1)]
+                outcomes = {inv.outcome for inv in investigations}
+                investigation = Investigation(steps=steps, outcome=("capped" if "capped" in outcomes else
+                                                                    "found" if "found" in outcomes else "not_found"))
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
                 comparison=rows, claims=claims.claims, document_revision=claims.document_revision,
                 note_to_subcontractor=rep.note_to_subcontractor, usage=usage, web_credits=credits,
                 duration_ms=int((time.perf_counter() - t0) * 1000),
+                investigation=investigation,
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result

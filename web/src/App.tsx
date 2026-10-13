@@ -3,7 +3,7 @@ import {
   DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getProject, getResult, modelName, pageUrl, scan,
   streamEvents, uploadToInbox,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
-  type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
+  type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
 
 // Four steps, in order: what came in, what the scan found, the reviewer's call on each, what happened after.
@@ -20,6 +20,7 @@ const STAGE: Partial<Record<Stage, [string, number]>> = {
   queued: ['Queued', 0.04], ingest: ['Reading pages', 0.12], triage: ['Reading pages', 0.22],
   extract: ['Checking the spec', 0.36], spec_check: ['Checking the spec', 0.5],
   verify: ['Checking manufacturer documents', 0.64], fix: ['Looking for a replacement', 0.8], report: ['Writing summary', 0.92],
+  investigate: ['Investigating', 0.72],
   done: ['Writing summary', 0.98],
 }
 const KIND: Record<string, string> = { product_data: 'Product data', system_drawing: 'System drawing' }
@@ -53,7 +54,7 @@ const seconds = (ms: number) => (ms >= 1000 ? `${(ms / 1000).toFixed(ms >= 10000
 // What each call did, in the reviewer's words. Fix-step calls come prefixed "fix: ".
 const TASK_LABEL: Record<string, string> = {
   triage: 'sorted the pages', extract_requirements: 'read the spec', extract_claims: 'read the data sheet',
-  verify: 'read the web sources', report: 'wrote the result',
+  verify: 'read the web sources', investigate: 'investigated missing documents', report: 'wrote the result',
   'fix: extract_claims': 'read a replacement', 'fix: verify': 'checked a replacement online',
 }
 const taskLabel = (t: string) => TASK_LABEL[t] ?? t
@@ -416,7 +417,7 @@ function ScanStep({ items, rows, loaded, mode, onReview }: {
   const longest = Math.max(0, ...results.map((r) => r.duration_ms))
   return (
     <>
-      <Heading title={complete ? 'Scan complete' : 'Scanning'} count={count}>
+      <Heading title={complete ? 'Scan complete' : 'Scanning'} count={mode === 'mock' ? `${count} · mock` : count}>
         {complete && <button className={PRIMARY} onClick={onReview} disabled={!items.some((c) => loaded[c.id])}>Start review</button>}
       </Heading>
       {complete && results.length > 0 && (
@@ -629,7 +630,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
   return (
     <details className="group text-xs leading-5 text-muted">
       <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-        <span className="text-faint">Checked by </span>
+        <span className="text-faint">{mode === 'mock' ? 'Mock check by ' : 'Checked by '}</span>
         {groups.map((g, i) => (
           <Fragment key={g.model}>
             {i > 0 && (i === groups.length - 1 ? ' and ' : ', ')}
@@ -639,10 +640,20 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         <span className="text-faint"> on Nebius Token Factory</span>
         {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span> fetched {plural(sources, 'source')}</>}
         {' · verdicts by code'}
+        {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
         <span className="text-faint"> · {kTokens(tokens)} tokens · {money(cost)} · {seconds(result.duration_ms)}</span>
         <span className="ml-1 text-faint underline decoration-edge underline-offset-2 group-open:hidden">every call</span>
       </summary>
       <div className="mt-2 overflow-hidden rounded-lg border border-line">
+        {result.investigation && (
+          <div className="border-b border-line px-3 py-2">
+            <p className="text-soft">Investigation · {result.investigation.outcome === 'found' ? 'quotes confirmed'
+              : result.investigation.outcome === 'capped' ? "limit reached; couldn't confirm" : "couldn't confirm"}</p>
+            <ol className="mt-1 space-y-1 break-words">
+              {result.investigation.steps.map((s) => <li key={s.n}>{investigationLine(s)}</li>)}
+            </ol>
+          </div>
+        )}
         <div className={`grid h-8 items-center gap-3 border-b border-line bg-well px-3 ${CAPS}`} style={{ gridTemplateColumns: '1.1fr 1.5fr 0.5fr 0.5fr 0.55fr 0.65fr' }}>
           <span>Call</span><span>Model</span><span className="text-right">In</span><span className="text-right">Out</span><span className="text-right">Time</span><span className="text-right">Cost</span>
         </div>
@@ -660,12 +671,20 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
           {mode === 'live'
             ? cached ? 'Live mode: every call here was answered from the cache of an earlier live run, so it cost nothing this time.'
               : 'Live mode: real calls to NVIDIA Nemotron 3 on Nebius Token Factory and to Tavily. Repeats are cached.'
-            : 'Mock mode: recorded answers, no API calls; token counts are estimated from text length. The hosted demo runs live.'}
+            : 'Mock mode: fixture answers, no API calls; token counts are estimated from text length.'}
           {' '}Models read and quote; every pass/fail is computed in code from the quoted values.
         </p>
       </div>
     </details>
   )
+}
+
+function investigationLine(s: Investigation['steps'][number]) {
+  if (s.tool === 'finish') return `finish: ${s.summary}`
+  const domains = Array.isArray(s.args.include_domains) ? ` (${s.args.include_domains.join(', ')})` : ''
+  const target = s.tool === 'search' ? `"${String(s.args.query ?? '')}"${domains}`
+    : String(s.args.url ?? '').replace(/^https?:\/\/(www\.)?/, '')
+  return `${s.tool} ${target} → ${s.summary}`
 }
 
 function Checks({ head, rows }: { head: string[]; rows: CheckRow[] }) {
@@ -924,7 +943,7 @@ function replacement(fix: Fix | null): [string, boolean] {
 
 // When the nightly re-check (scripts/recheck.py as a Nebius Serverless Job) last ran, in one line.
 const recheckLine = (r: Recheck | null | undefined) => {
-  if (!r) return 'Re-checked against manufacturer documents nightly'
+  if (!r) return 'No nightly re-check has reported yet'
   const flagged = r.items.filter((i) => i.status !== 'no_change').length
   const when = new Date(r.checked_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
   return `Nightly re-check last ran ${when} (${r.runner}): ${plural(r.items.length, 'item')}, ${flagged ? `${flagged} flagged` : 'no change'}`
