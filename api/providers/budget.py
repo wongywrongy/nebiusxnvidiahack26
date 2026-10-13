@@ -52,6 +52,16 @@ def today() -> dict:
     return json.loads(p.read_text()) if p.exists() else {"usd": 0.0, "credits": 0.0}
 
 
+def remaining() -> dict:
+    spent = today()
+    return {"usd_left": max(0, settings.budget_usd_per_day - spent["usd"]),
+            "credits_left": max(0, settings.budget_tavily_credits_per_day - spent["credits"])}
+
+
+def day_spent() -> bool:
+    return any(left <= 0 for left in remaining().values())
+
+
 def _add_today(usd: float = 0.0, credits: float = 0.0) -> None:
     # ponytail: read-modify-write with no lock, fine for one worker; use a DB row if we run several.
     t = today()

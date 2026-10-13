@@ -13,7 +13,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# A run can be forced to mock while the server is live (public uploads without the admin token).
+# A run can be forced to mock while the server is live (PUBLIC_UPLOADS_LIVE=false).
 FORCE_MOCK: ContextVar[bool] = ContextVar("force_mock", default=False)
 
 # Model ID -> USD per 1M tokens (input, output), from the Token Factory pricing page.
@@ -54,6 +54,7 @@ class Settings(BaseSettings):
     budget_tavily_credits_per_day: float = 150
     max_upload_mb: int = 15
     uploads_per_ip_per_hour: int = 10
+    public_uploads_live: bool = True
 
     # USD per Tavily credit (pay-as-you-go list price).
     tavily_credit_usd: float = 0.008

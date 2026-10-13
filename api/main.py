@@ -6,7 +6,7 @@
   POST /api/inbox                      add one item, no run: {"id": "c03"} for a tray item, or a raw PDF body
                                        with ?name=x.pdf for an upload
   POST /api/scan                       one run over inbox items {"ids": [...], "delay_ms": 600}. Tray and watched
-                                       items run as the server is; live uploads need the admin token, else mock
+                                       items and uploads run live by default, within public rate and day caps
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
   GET  /api/scores                     the answer-key scores written by scripts/eval.py (else the newest recording's)
@@ -36,7 +36,7 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .config import settings
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
@@ -66,7 +66,7 @@ class Scan(BaseModel):
 
 class StartReplay(BaseModel):
     source_run_id: str
-    speed: float = 1.0
+    speed: float = Field(default=1.0, gt=0, le=1000)
 
 
 def _spawn(coro) -> None:
@@ -102,7 +102,7 @@ def _rate_limit(request: Request) -> None:
 def health():
     rec = recorded_runs()
     return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today(),
-            "recorded": rec[0] if rec else None}
+            "budget": budget.remaining(), "recorded": rec[0] if rec else None}
 
 
 @app.get("/api/project")
@@ -162,6 +162,8 @@ async def inbox(request: Request, name: str = "upload.pdf"):
             raise HTTPException(409, "Available in live mode")
         return _public(case)
 
+    if settings.live and budget.day_spent():
+        raise HTTPException(429, "Today's live budget is spent. Uploads can be checked again tomorrow (UTC).")
     limit = settings.max_upload_mb * 1024 * 1024
     if int(request.headers.get("content-length") or 0) > limit:
         raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
@@ -181,8 +183,7 @@ async def inbox(request: Request, name: str = "upload.pdf"):
 
 @app.post("/api/scan")
 async def scan(body: Scan, request: Request):
-    """One run over inbox items. Tray and watched items are fixed public documents: live, their calls are cached after
-    the first run and the run/day caps hold, so no admin token. Uploads run live only with the admin token."""
+    """Public scans share the rate and day caps; an exhausted day can replay recorded tray items."""
     ids = list(dict.fromkeys(body.ids))
     cases = {i: _scannable(i) for i in ids}
     unknown = [i for i, c in cases.items() if c is None]
@@ -193,11 +194,25 @@ async def scan(body: Scan, request: Request):
     admin = _is_admin(request)
     if settings.live and not admin:  # only live runs spend; a mock scan is free
         _rate_limit(request)
-    mock = [i for i, c in cases.items() if c.get("upload")] if settings.live and not admin else []
+    if settings.live and budget.day_spent():
+        rec = recorded_runs()
+        source = rec[0] if rec else None
+        if any(c.get("upload") for c in cases.values()) or not source or any(
+            not (settings.recorded_dir / source / "results" / f"{i}.json").is_file() for i in ids
+        ):
+            raise HTTPException(429, "Today's live budget is spent and these items have no complete recording. Try again tomorrow (UTC).")
+        run = Run(ids, delay_ms=0)
+        RUNS[run.id] = run
+        _spawn(replay(run, source, ids=ids))
+        date = f"{source[:4]}-{source[4:6]}-{source[6:8]}"
+        return {"run_id": run.id, "mode": "live", "mock": [], "replay_of": source,
+                "note": f"Replayed from the live run recorded on {date}: today's live budget is spent."}
+    mock = ([i for i, c in cases.items() if c.get("upload")]
+            if settings.live and not admin and not settings.public_uploads_live else [])
     run = Run(ids, delay_ms=body.delay_ms, mock=mock)
     RUNS[run.id] = run
     _spawn(execute(run))
-    note = "Uploads ran in mock mode: live checks need the admin token." if mock else None
+    note = "Uploads ran in mock mode: public live uploads are disabled; live checks need the admin token." if mock else None
     return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note}
 
 

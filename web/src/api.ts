@@ -91,7 +91,13 @@ export interface Result {
   web_credits: number
   duration_ms: number
   investigation?: Investigation | null
+  mode?: 'mock' | 'live' | null
+  replayed_from?: string | null
+  warnings?: string[]
 }
+
+export interface Health { mode: 'mock' | 'live'; budget: { usd_left: number; credits_left: number } }
+export async function getHealth(): Promise<Health> { return ok(await fetch('/api/health')) }
 
 export async function getProject(): Promise<Project> {
   return (await fetch('/api/project')).json()
@@ -115,10 +121,10 @@ export async function uploadToInbox(file: File): Promise<Case> {
 }
 
 /** One run over inbox items. delayMs paces mock mode so the stages are visible. */
-export async function scan(ids: string[], delayMs = 700): Promise<string> {
-  return (await ok<{ run_id: string }>(await fetch('/api/scan', {
+export async function scan(ids: string[], delayMs = 700): Promise<{ run_id: string; note?: string | null }> {
+  return ok(await fetch('/api/scan', {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids, delay_ms: delayMs }),
-  }))).run_id
+  }))
 }
 
 export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: () => void): () => void {
@@ -129,7 +135,7 @@ export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: 
 }
 
 export async function getResult(runId: string, caseId: string): Promise<Result> {
-  return (await fetch(`/api/runs/${runId}/results/${caseId}`)).json()
+  return ok(await fetch(`/api/runs/${runId}/results/${caseId}`))
 }
 
 export type Tone = 'red' | 'amber' | 'blue' | 'green'
