@@ -156,7 +156,7 @@ async def chat(task: str, messages: list[dict[str, Any]], schema: type[T]) -> tu
 async def _once(task, messages, schema, retry_note=None, thinking: Optional[str] = None) -> tuple[Any, Usage]:
     role = TASK_MODEL[task]
     model = settings.models[role]
-    thinking = thinking or settings.thinking
+    thinking = thinking or settings.thinking_for(task)
     schema_json = schema.model_json_schema()
     msgs = [
         {"role": "system", "content": "Reply with JSON only. It must match this JSON schema:\n" + json.dumps(schema_json)},
@@ -217,7 +217,9 @@ async def chat_tools(task: str, messages: list[dict[str, Any]], tools: list[dict
     model = settings.models[role]
     body = dict(model=model, messages=messages, tools=tools, tool_choice="auto", temperature=0,
                 max_tokens=settings.max_output_tokens)
-    key = {"base_url": settings.nebius_base_url, **body, **NO_THINK}
+    thinking = settings.thinking_for(task)
+    no_think = NO_THINK if thinking == "off" else {}
+    key = {"base_url": settings.nebius_base_url, **body, "thinking": thinking}
     if hit := cache.get("llm_tools", key):
         return ToolMessage.model_validate(hit["message"]), Usage(**{**hit["usage"], "cached": True})
     if model not in PRICES:
@@ -225,12 +227,13 @@ async def chat_tools(task: str, messages: list[dict[str, Any]], tools: list[dict
     pin, pout = PRICES[model]
     budget.check_usd((len(json.dumps(body)) / 2 * pin + settings.max_output_tokens * pout) / 1e6, real=True)
     t0 = time.perf_counter()
-    resp, kept = await _create_no_think(NO_THINK, **body)
+    resp, kept = await _create_no_think(no_think, **body)
     tin = (resp.get("usage") or {}).get("prompt_tokens", 0)
     tout = (resp.get("usage") or {}).get("completion_tokens", 0)
     usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout,
                   cost_usd=cost(model, tin, tout), latency_ms=int((time.perf_counter() - t0) * 1000),
-                  format="tools", thinking="off" if kept else "server-default", reasoning_tokens=_reasoning_tokens(resp))
+                  format="tools", thinking="off" if kept else ("on" if thinking == "on" else "server-default"),
+                  reasoning_tokens=_reasoning_tokens(resp))
     budget.charge_usd(usage.cost_usd, real=True)
     log.info("%s model=%s in=%d out=%d ms=%d cost=$%.6f format=tools", task, model, tin, tout,
              usage.latency_ms, usage.cost_usd)

@@ -16,7 +16,7 @@ from typing import Optional
 
 from ..config import settings
 from ..llm import load_fixture
-from ..providers import budget
+from ..providers import budget, tavily
 from ..schemas import ClaimsOut, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
 from ..web import WebClient
 from . import extract, spec_check, verify
@@ -24,7 +24,6 @@ from .decide import FLAGGED
 from .investigate import investigate
 
 GROUPS = {"currency": ("status", "currency"), "spec": ("spec", "validity")}
-VERIFY_CREDITS = 5  # four basic searches and one extract; optional recovery has its own cap
 MAX_CANDIDATE_CHARS = 20000
 
 
@@ -144,7 +143,9 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                 continue
             text = page["raw_content"]
             r = {"url": page["url"], "title": inv._document_title}
-        if web.credits + verify_credits + VERIFY_CREDITS > cap:
+        scripted_cost = (4 if case.get("manufacturer_domains") else 3) * tavily.search_credits(settings.search_depth)
+        scripted_cost += tavily.extract_credits(3, settings.extract_depth)
+        if web.credits + verify_credits + scripted_cost > cap:
             break  # credit cap for this item
         pages = [{"page": 1, "text": text[:MAX_CANDIDATE_CHARS]}]
         cl, u = await extract.extract_claims(cfx, pages, extract.all_product_data(pages), props)

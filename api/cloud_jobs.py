@@ -131,7 +131,8 @@ def command(name: str) -> list[str]:
             "--restart-policy", "never", "--on-demand", "--async", "--format", "json"]
     env = {"SPECCHECK_MODE": "live", "THINKING": settings.thinking, "RECHECK_RUNNER": "Nebius Serverless Job", "JOB_NAME": name}
     for key in ("budget_usd_per_run", "budget_usd_per_day", "budget_tavily_credits_per_item",
-                "budget_tavily_credits_per_day", "max_concurrency"):
+                "budget_tavily_credits_per_day", "max_concurrency", "thinking_tasks", "max_page_chars", "web_source_chars",
+                "search_depth", "extract_depth", "search_max_results", "investigate_credit_cap", "investigate_max_steps", "map_limit"):
         env[key.upper()] = str(getattr(settings, key))
     if settings.nebius_evidence_bucket:
         args += ["--volume", f"s3://{settings.nebius_evidence_bucket}:/app/evidence:rw"]

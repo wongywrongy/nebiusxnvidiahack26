@@ -21,7 +21,7 @@ from .. import archive
 from ..providers import ProviderError, budget, failure_reason
 from ..providers.budget import BudgetExceeded
 from ..schemas import Event, Investigation, ReportOut, Requirement, Result, Usage
-from . import decide, extract, fix, spec_check, verify
+from . import decide, extract, fix, metrics, spec_check, verify
 from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages, submittal_pdfs
 from .render import attach_highlights
@@ -81,6 +81,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     usage: list[Usage] = []
     investigations: list[Investigation] = []
     warnings: list[str] = []
+    counts = dict.fromkeys(metrics.FIELDS, 0)
+    count_token = metrics.COUNTS.set(counts)
 
     async def investigating(tool: str):
         run.emit("investigate", f"Investigating: {tool} …", case_id, settings.models["verify"])
@@ -191,6 +193,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 mode="live" if settings.live else "mock", warnings=warnings,
                 ocr_pages=len(ocr_pages),
                 archived_submittals=archived_submittals, evidence_label=settings.evidence_label if archived else None,
+                **counts,
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result
@@ -202,6 +205,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             reason = failure_reason(e)
             run.emit("error", reason, case_id, data={"reason": reason})
             raise
+        finally:
+            metrics.COUNTS.reset(count_token)
 
 
 async def execute(run: Run) -> Run:

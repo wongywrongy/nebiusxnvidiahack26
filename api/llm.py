@@ -69,7 +69,8 @@ class Router:
         tin = sum(len(json.dumps(m.get("content", ""))) for m in messages) // 4
         tout = len(obj.model_dump_json()) // 4
         usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout,
-                      cost_usd=tokenfactory.cost(model, tin, tout), latency_ms=int((time.perf_counter() - t0) * 1000), cached=True)
+                      cost_usd=tokenfactory.cost(model, tin, tout), latency_ms=int((time.perf_counter() - t0) * 1000),
+                      cached=True, thinking=settings.thinking_for(task))
         budget.check_usd()
         budget.charge_usd(usage.cost_usd, real=False)
         return obj, usage
@@ -85,7 +86,7 @@ class Router:
         model = settings.models["verify"]
         tin, tout = len(json.dumps(messages)) // 4, len(message.model_dump_json()) // 4
         usage = Usage(task="investigate", tier="verify", model=model, input_tokens=tin, output_tokens=tout,
-                      cost_usd=tokenfactory.cost(model, tin, tout), cached=True, format="tools", thinking="off")
+                      cost_usd=tokenfactory.cost(model, tin, tout), cached=True, format="tools", thinking=settings.thinking_for("investigate"))
         budget.check_usd()
         budget.charge_usd(usage.cost_usd, real=False)
         return message, usage
