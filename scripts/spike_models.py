@@ -1,10 +1,15 @@
 """Live spike: list the Token Factory models, then one tiny call per configured model. Costs real tokens.
 
-    python scripts/spike_models.py
+    python scripts/spike_models.py            # asks before spending
+    python scripts/spike_models.py --yes      # no prompt (CI, a fresh key)
 
-Reports per model: whether it is in the account's model list, which response_format worked
-(json_schema or the json_object fallback), latency and token counts. Responses are cached in
-.cache/llm, so a re-run is free and shows cached=True.
+Reports per model: whether it is in the account's model list, which response_format worked (json_schema or the
+json_object fallback), whether the server honoured the no-thinking fields (THINKING=off), reasoning tokens, latency,
+token counts and cost. Also lists every Nemotron model the account can see, so a newer one (Ultra, 3.5) is noticed.
+Responses are cached in .cache/llm, so a re-run is free and shows cached=True.
+
+Write anything surprising (a rejected field, reasoning tokens with thinking off, a missing model) in FEEDBACK.md:
+that is the hackathon's feedback section.
 """
 
 from __future__ import annotations
@@ -21,7 +26,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from api.config import PRICES, settings  # noqa: E402
-from api.providers import tokenfactory  # noqa: E402
+from api.providers import budget, tokenfactory  # noqa: E402
 
 # One task per distinct configured model.
 TASKS = {"triage": "triage", "extract_claims": "extract"}
@@ -36,9 +41,12 @@ class Rating(BaseModel):
 
 
 async def main() -> None:
-    print(f"Endpoint: {settings.nebius_base_url}")
+    budget.LEDGER.set(budget.Ledger())
+    print(f"Endpoint: {settings.nebius_base_url}   THINKING={settings.thinking}")
     available = await tokenfactory.list_models()  # free
     print(f"{len(available)} models on this account")
+    nemotron = [m for m in available if "nemotron" in m.lower()]
+    print("Nemotron models visible:\n  " + "\n  ".join(nemotron))
     total = 0.0
     for task, role in TASKS.items():
         model = settings.models[role]
@@ -46,7 +54,7 @@ async def main() -> None:
         total += (EST_IN * pin + EST_OUT * pout) / 1e6
         print(f"  {role:9} {model:45} {'listed' if model in available else 'NOT LISTED'}")
     print(f"Estimated cost: ~${total:.5f}")
-    if input("Run live? [y/N] ").strip().lower() != "y":
+    if "--yes" not in sys.argv and input("Run live? [y/N] ").strip().lower() != "y":
         sys.exit("aborted")
 
     for task, role in TASKS.items():
@@ -57,8 +65,13 @@ async def main() -> None:
             print(f"   ERROR {type(e).__name__}: {str(e)[:300]}")
             continue
         print(f"   result: {obj.model_dump()}")
-        print(f"   format={usage.format}  latency={usage.latency_ms} ms  in={usage.input_tokens}  out={usage.output_tokens}"
+        print(f"   format={usage.format}  thinking={usage.thinking}  reasoning_tokens={usage.reasoning_tokens}"
+              f"  latency={usage.latency_ms} ms  in={usage.input_tokens}  out={usage.output_tokens}"
               f"  cost=${usage.cost_usd:.6f}  cached={usage.cached}")
+        if usage.thinking == "server-default":
+            print("   NOTE the server rejected both no-think fields; thinking is whatever the model defaults to")
+        if usage.thinking == "off" and usage.reasoning_tokens:
+            print("   NOTE reasoning tokens were billed although thinking was off: worth a FEEDBACK.md line")
 
 
 if __name__ == "__main__":

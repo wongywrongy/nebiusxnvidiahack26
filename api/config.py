@@ -40,6 +40,12 @@ class Settings(BaseSettings):
     model_verify: str = "nvidia/nemotron-3-super-120b-a12b"
     model_write: str = "nvidia/nemotron-3-super-120b-a12b"
 
+    # Nemotron 3 models think before answering unless told not to. Every call here is extraction into a fixed JSON
+    # schema, so thinking only spends output tokens (and can run into max_output_tokens). "off" asks the server not to
+    # think (reasoning_effort none + chat_template_kwargs.enable_thinking false; a server that rejects either field is
+    # retried without it). "on" leaves the model's default.
+    thinking: Literal["off", "on"] = "off"
+
     budget_usd_per_run: float = 1.0
     budget_usd_per_day: float = 2.0
     # Hard ceiling on each model reply; the worst case (this many output tokens) is checked against the caps first.

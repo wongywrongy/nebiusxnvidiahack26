@@ -11,7 +11,16 @@ export interface Case {
   pages: number; upload: boolean; ready: boolean
 }
 export interface Sender { from: string; trade?: string; email?: string; items: Case[] }
-export interface Project { name: string; specs: { section: string; owner: string }[]; tray: Sender[]; watched: Case[] }
+export interface Project {
+  name: string; specs: { section: string; owner: string }[]; tray: Sender[]; watched: Case[]
+  // mock: recorded answers, no API calls (token counts estimated). live: Token Factory and Tavily, cached after the first run.
+  mode: 'mock' | 'live'
+  // Nightly re-check of approved items (scripts/recheck.py, run as a Nebius Serverless Job): when it last ran, if ever.
+  recheck?: Recheck | null
+}
+export interface Recheck {
+  checked_at: string; runner: string; items: { id: string; status: 'no_change' | 'changed' | 'discontinued' | 'unverified'; detail: string }[]
+}
 
 export interface Event {
   run_id: string
@@ -53,8 +62,15 @@ export interface Compare {
   verdict: 'fail' | 'pass' | 'changed'; rows: CompareRow[]
 }
 export interface CompareRow { property: string; label: string; submitted: string | null; current: string | null; changed: boolean }
-interface Usage {
+// One model call (api/schemas.py Usage). thinking: live only, whether the server was asked not to think.
+export interface Usage {
   task: string; tier: string; model: string; input_tokens: number; output_tokens: number; cost_usd: number; latency_ms: number
+  cached?: boolean; format?: string | null; reasoning_tokens?: number; thinking?: string | null
+}
+// "nvidia/nemotron-3-super-120b-a12b" -> "Nemotron 3 Super"; anything else keeps its id.
+export const modelName = (id: string) => {
+  const m = /nemotron[-_ ]?(\d(?:[._]\d)?)[-_ ]?(nano|super|ultra|lightning)/i.exec(id)
+  return m ? `Nemotron ${m[1].replace('_', '.')} ${m[2][0].toUpperCase()}${m[2].slice(1).toLowerCase()}` : id.replace(/^.*\//, '')
 }
 interface Claim { id: string; property: string; value: unknown; unit?: string | null; page?: number | null; quote?: string | null }
 export interface Result {
