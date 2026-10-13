@@ -116,7 +116,7 @@ do not assume such a command exists. `--auth none` exposes the managed HTTP port
 ```bash
 nebius ai endpoint restart --profile speccheck "$ENDPOINT_ID"
 curl --fail --silent --show-error "$SPECCHECK_URL/api/health"
-# Once Package D is installed: exits nonzero with readable failures; spends at most one run's caps.
+# Read-only preflight, then c01 + a tiny PDF share one run/item budget; no retries.
 python scripts/smoke.py "$SPECCHECK_URL"
 # Finish the Oct 16–17 test, even if a check failed:
 nebius ai endpoint delete --profile speccheck "$ENDPOINT_ID"

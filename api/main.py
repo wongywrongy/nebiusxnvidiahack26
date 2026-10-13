@@ -81,6 +81,7 @@ class StartRun(BaseModel):
 class Scan(BaseModel):
     ids: list[str]
     delay_ms: Optional[int] = None
+    shared_item_budget: bool = False
 
 
 class StartReplay(BaseModel):
@@ -122,7 +123,7 @@ def health():
     rec = recorded_runs()
     return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today(),
             "budget": budget.remaining(), "recorded": rec[0] if rec else None,
-            "jobs_available": cloud_jobs.available()}
+            "jobs_available": cloud_jobs.available(), "caps": budget.caps(), "scan_shared_item_budget": True}
 
 
 @app.get("/api/project")
@@ -286,11 +287,12 @@ async def scan(body: Scan, request: Request):
                 "note": f"Replayed from the live run recorded on {date}: today's live budget is spent."}
     mock = ([i for i, c in cases.items() if c.get("upload")]
             if settings.live and not admin and not settings.public_uploads_live else [])
-    run = Run(ids, delay_ms=body.delay_ms, mock=mock)
+    run = Run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget)
     RUNS[run.id] = run
     _spawn(execute(run))
     note = "Uploads ran in mock mode: public live uploads are disabled; live checks need the admin token." if mock else None
-    return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note}
+    return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note,
+            "shared_item_budget": body.shared_item_budget}
 
 
 @app.post("/api/scores/run")
@@ -426,7 +428,8 @@ def results(run_id: str):
     folder = run_dir(run_id)
     if not folder:
         raise HTTPException(404, "No such run")
-    return {"results": [json.loads(p.read_text()) for p in sorted((folder / "results").glob("*.json"))]}
+    return {"results": [json.loads(p.read_text()) for p in sorted((folder / "results").glob("*.json"))],
+            "done": RUNS[run_id].done.is_set() if run_id in RUNS else True}
 
 
 @app.get("/api/runs/{run_id}/results/{case_id}")

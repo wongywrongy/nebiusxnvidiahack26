@@ -1,0 +1,25 @@
+name: smoke
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Deployment base URL (live check; at most one run's USD and one item's web caps)"
+        required: true
+        type: string
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install httpx
+      - name: Check the deployment
+        env:
+          SPECCHECK_URL: ${{ inputs.url }}
+          ADMIN_TOKEN: ${{ secrets.SPECCHECK_ADMIN_TOKEN }}
+        run: python scripts/smoke.py "$SPECCHECK_URL"
