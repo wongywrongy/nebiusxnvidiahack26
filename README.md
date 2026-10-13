@@ -1,6 +1,6 @@
 # SpecCheck
 
-**A rejected submittal costs a construction project two weeks.** SpecCheck reads a subcontractor's product
+**A rejected submittal can delay a construction project for weeks.** SpecCheck reads a subcontractor's product
 submittal, checks it against the project spec, checks the product against the manufacturer's *current* documents on
 the live web, finds a replacement that passes when it doesn't, and keeps watching approved items for the day the
 manufacturer discontinues one. Every finding carries the quote it rests on.
@@ -13,6 +13,12 @@ document pipelines for a general contractor and has watched this problem cost re
 - **Web:** **Tavily** Search, Extract and bounded Map for the manufacturer's current documents
 - **Cloud:** deployment configuration for a **Nebius Serverless Endpoint** and a nightly **Nebius Serverless Job**;
   deployment and live provider results have not been verified in this checkout
+
+**What is implemented:** quoted extraction, deterministic checks, bounded web investigation, checked replacement
+candidates, message drafts, browser-saved review decisions, and the cloud job/archive integrations below.
+Mock mode uses fixtures and makes no provider calls. Messages are drafts: SpecCheck sends no email. Cloud jobs
+check the bundled watch list; browser approvals are re-checked in-process. No live accuracy, cost saving or
+deployment uptime is claimed. [Submission notes and demo script](SUBMISSION.md) collect the evidence and owner TODOs.
 
 ## Where Nemotron and Token Factory do the work
 
@@ -72,10 +78,10 @@ result if no source can be verified. Live recovery rate and provider compatibili
    looking for a replacement, writing the summary.
 3. **Review.** One submittal at a time: the PDF with the quoted lines highlighted, the check table (required vs
    submitted, and current vs submitted), the suggested replacement if one passed, and an editable message
-   addressed to the sub or forwarded to the architect.
-4. **Outcome.** What went back to whom with what request; what was approved and forwarded. "Check approved now"
-   re-runs the approved items; the troffer approved in March 2024 comes back discontinued, with Acuity's notice
-   quoted and a replacement that passes every check.
+   draft addressed to the sub or architect. Save a return or approval decision; no message is sent.
+4. **Outcome.** Saved return requests and approvals ready for forwarding. "Check approved now" re-runs approved
+   items, including a sample troffer approval dated March 2024. In fixtures it comes back discontinued, with
+   Acuity's notice quoted and a replacement that passes every check; live results depend on fetched evidence.
 
 The browser saves the inbox, completed results, edited messages and decisions in localStorage when available.
 An interrupted scan needs Retry after reload; it never starts another paid run automatically. **Start over**
@@ -96,14 +102,14 @@ product, and one newer sheet with unchanged values (a note, not a send-back).
 | clean packages wrongly flagged | 0 of 2 |
 | replacements found that pass the spec | 2 of 5 |
 
-_Mock replay, 2026-10-13. `python scripts/record_live.py` runs all eight live and saves them under
+_Mock fixtures, 2026-10-13. `python scripts/record_live.py` runs all eight live and saves them under
 `runs/recorded/`._ `scripts/eval.py` writes `runs/scores.json`; `GET /api/scores` serves it. The table above is
 maintained manually and is not a live result.
 
 ## Run it
 
 ```bash
-# Mock mode: recorded answers, no keys, no API calls.
+# Mock mode: fixture answers, no keys, no provider calls.
 pip install -r api/requirements.txt
 sudo apt-get update && sudo apt-get install -y tesseract-ocr  # local OCR on Debian/Ubuntu; included in Docker
 SPECCHECK_MODE=mock python scripts/eval.py       # the scoreboard from fixtures
@@ -156,7 +162,9 @@ are labelled mock stand-ins; missing draft/review dates are never invented. In l
 drafts a checklist with Nemotron 3 Super, under the same public rate/size and model-budget limits. The response
 includes its model, source name/hash and draft date. It is not saved as a project checklist or used by scans;
 normal model response caching still applies. Only an admin can save it after reviewing the requirements and
-setting `reviewed_at`. `scripts/draft_requirements.py` writes the same provenance fields.
+setting `reviewed_at`, and admin saves stay limited to the two known project sections. Public drafts accept any
+section formatted `00 00 00` plus a title; the two known sections are suggestions. `scripts/draft_requirements.py`
+writes the same provenance fields.
 
 **Scoreboard**, linked from the header and Scan totals, displays `/api/scores`: four computed panel values,
 per-case expected/actual calls, problems, fixes, time and cost. Its label comes from the score file's mode/date.
@@ -270,6 +278,9 @@ api/
                    tavily.py (search / extract / map, credits, fetch_pdf), budget.py (run/item/day caps)
   pipeline/        ingest, extract (triage, requirements, claims), spec_check, verify, fix, decide, render, runner, scores
   main.py          FastAPI: project, inbox, scan, SSE events, results, scores, watch report, static web app
+  cloud_jobs.py    bounded CLI job creation/polling; private temporary service-account profile
+  archive.py       optional full-text/PDF evidence archive
+  watch_store.py   bucket-first watch reports and job metadata, with local fallback
 data/
   cases/           cases.json (8 test submittals + answer key), samples.json (the tray), specs.json, documents.json
   fixtures/        recorded answers per case for mock mode; fixtures/fix/ for the fix step
@@ -281,8 +292,9 @@ scripts/
   eval.py          the scoreboard against the answer key
   record_live.py   a live run of all cases, recorded for the public demo
   recheck.py       the nightly re-check (runs as a Nebius Serverless Job)
+  smoke.py         owner-only deployment validation within one live item/run budget
 deploy/nebius/     endpoint + job commands
-.github/workflows/ image.yml (build + push to GHCR), nightly-recheck.yml (schedule → Serverless Job)
+.github/workflows/ image.yml, nightly-recheck.yml (opt-in), smoke.yml (manual)
 web/               React + Vite + Tailwind app
 tests/             pytest (providers mocked with respx; no network)
 ```
@@ -296,7 +308,7 @@ sha256, so an uploaded copy of a known document is recognised.
 
 ## Feedback on the tools
 
-[FEEDBACK.md](FEEDBACK.md): dated, reproducible notes on Token Factory, Nemotron 3 and Tavily as they came up.
+[FEEDBACK.md](FEEDBACK.md): dated documentation observations and offline behavior. No row claims a live provider result.
 
 ## License
 
