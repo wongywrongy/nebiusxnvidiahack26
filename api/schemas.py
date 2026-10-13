@@ -269,6 +269,7 @@ class Result(BaseModel):
     mode: Optional[Literal["mock", "live"]] = None
     replayed_from: Optional[str] = None
     warnings: list[str] = []
+    ocr_pages: int = 0
 
     @property
     def cost_usd(self) -> float:

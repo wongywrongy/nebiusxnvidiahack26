@@ -315,6 +315,15 @@ def test_live_without_keys_fails_at_startup_naming_the_variable():
     assert "TAVILY_API_KEY" in str(e.value) and "NEBIUS_API_KEY" not in str(e.value) and NEBIUS_KEY not in str(e.value)
 
 
+def test_access_logs_keep_formatter_fields_and_redact_keys(live):
+    from uvicorn.logging import AccessFormatter
+
+    record = logging.getLogger("uvicorn.access").makeRecord("uvicorn.access", logging.INFO, __file__, 1,
+        '%s - "%s %s HTTP/%s" %d', ("127.0.0.1:8000", "GET", f"/api/test?key={NEBIUS_KEY}", "1.1", 200), None)
+    text = AccessFormatter('%(client_addr)s - "%(request_line)s" %(status_code)s', use_colors=False).format(record)
+    assert NEBIUS_KEY not in text and "/api/test?key=***" in text and "200 OK" in text
+
+
 def test_logs_are_redacted(live, caplog):
     with caplog.at_level(logging.INFO):
         logging.getLogger("anything").info("key=%s header=Bearer %s admin=%s", NEBIUS_KEY, "tvly-otherkey123456", ADMIN)  # gitleaks:allow (fake key)
@@ -325,6 +334,12 @@ def test_logs_are_redacted(live, caplog):
 # ---------- API ----------
 
 client = TestClient(main.app)
+
+
+@pytest.fixture(scope="module", autouse=True)
+def client_lifespan():
+    with client:
+        yield
 
 
 def test_health_never_leaks_a_key(live):

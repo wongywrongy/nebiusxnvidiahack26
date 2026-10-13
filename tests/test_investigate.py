@@ -45,6 +45,7 @@ def http(monkeypatch, tmp_path):
     item = budget.ITEM.set("test")
     mock = FORCE_MOCK.set(False)
     with respx.mock(assert_all_called=False) as http:
+        http.post(tavily.API + "/map").respond(200, json={"results": []})
         yield http
     FORCE_MOCK.reset(mock)
     budget.ITEM.reset(item)

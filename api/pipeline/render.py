@@ -113,7 +113,7 @@ def locate(pdf_path: Path, page_no: Optional[int], quote: Optional[str]) -> tupl
     return page_no, []
 
 
-def attach_highlights(case: dict, claims: list, findings: list) -> None:
+def attach_highlights(case: dict, claims: list, findings: list, *, ocr_pages: Optional[set[int]] = None) -> None:
     """Give each finding the boxes of its claims on the real PDF pages (mock mode too, so replays have them).
 
     Claim pages count across the whole package; each highlight records which file and page it is on.
@@ -142,5 +142,6 @@ def attach_highlights(case: dict, claims: list, findings: list) -> None:
                 f.highlights.append(Highlight(claim_id=cid, page=c.page, quote=c.quote, kind=kind))
                 continue
             start, file, path = doc
-            page, boxes = locate(path, c.page - start + 1, c.quote)
+            # OCR words have no trustworthy native PDF coordinates.
+            page, boxes = (c.page - start + 1, []) if c.page in (ocr_pages or set()) else locate(path, c.page - start + 1, c.quote)
             f.highlights.append(Highlight(claim_id=cid, doc_file=file, page=page, quote=c.quote, boxes=boxes, kind=kind))

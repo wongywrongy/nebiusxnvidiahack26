@@ -22,6 +22,15 @@ from api.pipeline.cases import all_cases  # noqa: E402
 from api.pipeline.runner import Run, execute, replay  # noqa: E402
 
 client = TestClient(main.app)
+
+
+@pytest.fixture(scope="module", autouse=True)
+def client_lifespan():
+    # Background scans outlive the POST request, including threaded PDF/OCR work.
+    with client:
+        yield
+
+
 SEND_BACK = sorted(c for c, v in all_cases().items() if v["expected"]["decision"] == "send_back")
 
 
@@ -142,10 +151,16 @@ def test_upload_rejects_non_pdf_and_unknown_pdf_runs_on_defaults(cleanup):
     assert "Mock mode" in res["summary"]
 
 
-def test_scores_endpoint(tmp_path, monkeypatch):
+@pytest.mark.parametrize("mode", ["mock", "live"])
+def test_scores_endpoint_computes_mock_on_clean_install(tmp_path, monkeypatch, mode):
+    monkeypatch.setattr(settings, "speccheck_mode", mode)
+    monkeypatch.setattr(settings, "runs_dir", tmp_path / "runs")
     monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
     monkeypatch.setattr(settings, "recorded_dir", tmp_path / "recorded")
-    assert client.get("/api/scores").status_code == 404
+    scores = client.get("/api/scores").json()
+    assert scores["mode"] == "mock" and scores["right_call"] == {"n": 8, "of": 8}
+    assert len(scores["rows"]) == 8
+    assert client.get("/api/scores").json()["run_id"] == scores["run_id"]
     settings.scores_file.write_text(json.dumps({"right_call": {"n": 8, "of": 8}}))
     assert client.get("/api/scores").json()["right_call"]["n"] == 8
 

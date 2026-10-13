@@ -44,6 +44,12 @@ for quote verification; the model sees at most 6,000 characters per tool result.
 same value comparison as the scripted check. The Review trace lists each step; the Scan row says "Investigating".
 The s4 Hilti sample demonstrates this offline with an explicitly labelled, hand-written mock fixture.
 
+The scripted status search uses Tavily news results, publication dates and an exact quoted model number;
+the manufacturer search prefers its domains. With no manufacturer-tier hit, one Map call (20 pages, depth 1)
+and one Extract call (up to three links, PDFs first) share a five-credit cap before the Investigator is considered.
+All recovered text passes the same quote checks. These request options follow the Tavily docs and have mocked
+400-response coverage; their live behavior has not been checked.
+
 Owner-only live validation (not run for this change; these commands spend tokens and credits):
 
 ```bash
@@ -71,6 +77,11 @@ result if no source can be verified. Live recovery rate and provider compatibili
    re-runs the approved items; the troffer approved in March 2024 comes back discontinued, with Acuity's notice
    quoted and a replacement that passes every check.
 
+The browser saves the inbox, completed results, edited messages and decisions in localStorage when available.
+An interrupted scan needs Retry after reload; it never starts another paid run automatically. **Start over**
+clears this browser's session, including message drafts. It does not delete server uploads or cancel work already
+running on the server.
+
 ## Scoreboard
 
 Eight submittals against two Chicago Public Schools spec sections (07 84 00 Firestopping, 26 51 00 Interior
@@ -85,16 +96,18 @@ product, and one newer sheet with unchanged values (a note, not a send-back).
 | clean packages wrongly flagged | 0 of 2 |
 | replacements found that pass the spec | 2 of 5 |
 
-_Mock replay, 2026-10-13. `python scripts/record_live.py` runs all eight live and rewrites this table and
-`runs/recorded/`._ `scripts/eval.py` prints it; `GET /api/scores` serves it.
+_Mock replay, 2026-10-13. `python scripts/record_live.py` runs all eight live and saves them under
+`runs/recorded/`._ `scripts/eval.py` writes `runs/scores.json`; `GET /api/scores` serves it. The table above is
+maintained manually and is not a live result.
 
 ## Run it
 
 ```bash
 # Mock mode: recorded answers, no keys, no API calls.
 pip install -r api/requirements.txt
-python scripts/eval.py              # the scoreboard from fixtures
-uvicorn api.main:app --reload       # http://localhost:8000 (after: cd web && npm install && npm run build)
+sudo apt-get update && sudo apt-get install -y tesseract-ocr  # local OCR on Debian/Ubuntu; included in Docker
+SPECCHECK_MODE=mock python scripts/eval.py       # the scoreboard from fixtures
+SPECCHECK_MODE=mock uvicorn api.main:app --reload # http://localhost:8000 (after: cd web && npm install && npm run build)
 
 # Live mode: Nemotron on Token Factory and Tavily, cached in .cache/ after the first run.
 cp .env.example .env                # SPECCHECK_MODE=live, NEBIUS_API_KEY, TAVILY_API_KEY, ADMIN_TOKEN
@@ -105,6 +118,12 @@ SPECCHECK_MODE=live python scripts/eval.py --case c03
 python scripts/record_live.py       # all eight live, recorded to runs/recorded/ (commit it)
 python scripts/recheck.py           # the nightly re-check, by hand
 ```
+
+Pages with fewer than 40 text characters are rendered at 200 dpi for local Tesseract OCR. Nemotron reads that
+text through the existing router; no vision model is claimed. Work is bounded to 20 OCR attempts per PDF,
+40 megapixels per rendered page and 15 seconds per Tesseract call. If OCR is missing or fails, native text is
+retained and absent evidence stays unconfirmed. OCR pages have no invented highlight boxes. The Review trace
+shows the OCR page count and explicitly labels mock model reads.
 
 Deploying the demo as a Nebius Serverless Endpoint and the nightly job as a Nebius Serverless Job:
 [deploy/nebius/README.md](deploy/nebius/README.md). One container (`Dockerfile`) serves both.
@@ -141,6 +160,8 @@ setting `reviewed_at`. `scripts/draft_requirements.py` writes the same provenanc
 
 **Scoreboard**, linked from the header and Scan totals, displays `/api/scores`: four computed panel values,
 per-case expected/actual calls, problems, fixes, time and cost. Its label comes from the score file's mode/date.
+On a clean install with no saved scores or recording, the API computes and saves the mock set without any
+provider calls, even on a live server. It stays labelled mock until the owner records a live evaluation.
 The answer key is a small hand-authored demonstration set, not an unseen validation set.
 
 Owner checklist workflow (the draft call below spends real model tokens):

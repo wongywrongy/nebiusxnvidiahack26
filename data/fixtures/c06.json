@@ -1,5 +1,5 @@
 {
-  "_note": "Mock fixture. Pages are verbatim PyMuPDF text of the Lithonia LDN6 spec sheet (Rev. 10/25/17). Dublin extract is verbatim text of the LDN6 Rev. 05/03/22 pages in the city's lighting submittal. The Albuquerque copy (Rev. 04/11/25) in documents.json returned 404 on 2026-10-05.",
+  "_note": "Mock fixture. Pages are verbatim PyMuPDF text of the Lithonia LDN6 spec sheet (Rev. 10/25/17). Dublin extract is verbatim text of the LDN6 Rev. 05/03/22 pages in the city's lighting submittal. The Albuquerque copy (Rev. 04/11/25) in documents.json returned 404 on 2026-10-05. Map is a mock stand-in returning no links; this is not an observed Tavily response.",
   "pages": [
     {
       "page": 1,
@@ -114,6 +114,9 @@
     ],
     "extract": {
       "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf": "LDN6 6” OPEN and WALLWASH LED. OPTICS — LEDs are binned to a 3-step SDCM; 80 CRI minimum. 90 CRI optional. 70% lumen maintenance at 60,000 hours. WARRANTY — 5-year limited warranty. Rev. 05/03/22 • CRI: 80 typical. LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4 2000 2006 22.5 89.1"
+    },
+    "map": {
+      "https://acuitybrands.com": []
     }
   },
   "verify": {

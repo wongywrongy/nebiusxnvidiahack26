@@ -7,6 +7,8 @@ import sys
 import time
 from pathlib import Path
 
+import pytest
+
 os.environ.setdefault("SPECCHECK_MODE", "mock")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -17,6 +19,12 @@ from api.pipeline.cases import all_cases, all_samples, get_case, mock_ready  # n
 from api.pipeline.runner import Run, execute  # noqa: E402
 
 client = TestClient(main.app)
+
+
+@pytest.fixture(scope="module", autouse=True)
+def client_lifespan():
+    with client:
+        yield
 
 
 def test_samples_are_separate_from_the_answer_key_set():
