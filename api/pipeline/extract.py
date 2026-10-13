@@ -39,7 +39,7 @@ async def requirements_for(section: str, spec_text: str) -> tuple[RequirementsOu
     return await extract_requirements(section, spec_text)
 
 
-async def extract_requirements(section: str, spec_text: str) -> tuple[RequirementsOut, Usage]:
+async def extract_requirements(section: str, spec_text: str, title: str = "") -> tuple[RequirementsOut, Usage]:
     messages = [
         {
             "role": "user",
@@ -51,7 +51,7 @@ async def extract_requirements(section: str, spec_text: str) -> tuple[Requiremen
                 "Use snake_case property names with the unit in the name (t_rating_hr, voc_g_per_l, cri, warranty_years). "
                 "Use operator eq_ref when one property must equal another (value = the other property name). "
                 "Set applies_to to product_data or system_drawing when a requirement only makes sense for one.\n\n"
-                + spec_text[:60000]
+                + (f"Section title: {title}\n" if title else "") + spec_text[:60000]
             ),
         }
     ]

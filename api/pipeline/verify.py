@@ -55,8 +55,12 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
     results = await web.search(f"{name} data sheet", include_domains=domains or None, include_domains_mode="prefer")
     model = (submitted.model or "").replace('"', '').strip()
     status_name = " ".join(x for x in [submitted.manufacturer, submitted.product, f'"{model}"' if model else ""] if x)
-    results += await web.search(f"{status_name} discontinued OR replaced", topic="news",
-                                include_published_date=True, exact_match=bool(model))
+    for topic in ("general", "news"):
+        results += await web.search(f"{status_name} discontinued OR replaced", topic=topic,
+                                    include_published_date=True, exact_match=bool(model))
+    if domains:
+        results += await web.search(f"{submitted.manufacturer} {submitted.product} discontinuation notice",
+                                    include_domains=domains, include_domains_mode="prefer")
     # One bounded map attempt can find a PDF missed by search before escalating to the investigator.
     if domains and not any(classify(r["url"], domains) == "manufacturer" for r in results):
         try:

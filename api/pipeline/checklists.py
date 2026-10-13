@@ -10,9 +10,9 @@ from .extract import checklist_path, extract_requirements
 
 
 async def draft(section: str, text: str, source_name: str, source_url: str | None = None,
-                source_sha256: str | None = None):
-    out, usage = await extract_requirements(section, text)
-    return Checklist(**out.model_dump(), drafted_by=usage.model, source_name=source_name, source_url=source_url,
+                source_sha256: str | None = None, title: str = ""):
+    out, usage = await extract_requirements(section, text, title=title)
+    return Checklist(**out.model_dump(), section=section, title=title, drafted_by=usage.model, source_name=source_name, source_url=source_url,
                      source_sha256=source_sha256, drafted_at=datetime.now(timezone.utc)), usage
 
 

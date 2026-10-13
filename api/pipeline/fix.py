@@ -24,7 +24,7 @@ from .decide import FLAGGED
 from .investigate import investigate
 
 GROUPS = {"currency": ("status", "currency"), "spec": ("spec", "validity")}
-VERIFY_CREDITS = 3  # verify's worst case: two basic searches and one extract
+VERIFY_CREDITS = 5  # four basic searches and one extract; optional recovery has its own cap
 MAX_CANDIDATE_CHARS = 20000
 
 

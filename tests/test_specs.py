@@ -128,3 +128,23 @@ def test_only_admin_reviewed_checklists_are_saved_and_used_live(client, monkeypa
     monkeypatch.setattr(settings, "speccheck_mode", "live")
     out, usage = asyncio.run(requirements_for(SECTION, ""))
     assert usage is None and out.requirements[0].id == "voc"
+
+
+@respx.mock
+def test_new_section_draft_is_transient_but_admin_cannot_save_it(client, monkeypatch):
+    monkeypatch.setattr(settings, "speccheck_mode", "live")
+    route = respx.post(settings.nebius_base_url + "chat/completions").mock(return_value=model_reply())
+    response = client.post("/api/specs/draft", params={"section": "09 91 00", "title": "Painting"}, content=pdf())
+    assert response.status_code == 200
+    assert response.json()["draft"]["title"] == "Painting"
+    assert "Painting" in str(json.loads(route.calls[0].request.content)["messages"])
+    assert not settings.data_dir.exists()
+    body = {**response.json()["draft"], "reviewed_at": "2026-10-13"}
+    assert client.post("/api/specs/09 91 00", json=body, headers={"X-Admin-Token": "reviewer-test-token"}).status_code == 404
+
+
+@pytest.mark.parametrize("section,title", [("../bad", "Title"), ("9 91 00", "Title"), ("09 91 00", ""),
+                                           ("09 91 00", "  "), ("09 91 00", "x" * 161)])
+def test_new_section_validation(client, monkeypatch, section, title):
+    monkeypatch.setattr(settings, "speccheck_mode", "live")
+    assert client.post("/api/specs/draft", params={"section": section, "title": title}, content=pdf()).status_code == 422

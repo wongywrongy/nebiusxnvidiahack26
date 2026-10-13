@@ -38,6 +38,7 @@ export function SpecsPage({ back }: { back: string }) {
   const [specs, setSpecs] = useState<Specs | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [section, setSection] = useState('07 84 00')
+  const [title, setTitle] = useState('Firestopping')
   const [draft, setDraft] = useState<Checklist | null>(null)
   const [busy, setBusy] = useState(false)
   const [over, setOver] = useState(false)
@@ -47,7 +48,10 @@ export function SpecsPage({ back }: { back: string }) {
   async function upload(file?: File) {
     if (!file || !live || busy) return
     setBusy(true); setError(null); setDraft(null)
-    try { setDraft((await draftSpec(file, section)).draft) }
+    if (!/^\d{2} \d{2} \d{2}$/.test(section) || !title.trim()) {
+      setError('Enter a section in 00 00 00 format and a title.'); setBusy(false); return
+    }
+    try { setDraft((await draftSpec(file, section, title.trim())).draft) }
     catch (e) { setError((e as Error).message) }
     finally { setBusy(false) }
   }
@@ -75,10 +79,19 @@ export function SpecsPage({ back }: { back: string }) {
         <h2 className="text-lg font-semibold">Draft a checklist from a spec PDF</h2>
         <p className="text-muted">{live ? 'The draft stays in this browser view until you leave. It is not saved as a project checklist or used by scans.' : 'Live only. Drafting uses Nemotron 3 Super on Token Factory.'}</p>
         <label className="flex items-center gap-3 text-muted">Spec section
-          <select value={section} onChange={(e) => setSection(e.target.value)} disabled={!live || busy}
-            className="min-w-0 rounded-lg border border-edge bg-well px-3 py-2 text-ink disabled:opacity-50">
-            {specs?.sections.map((spec) => <option key={spec.section} value={spec.section}>{spec.section} · {spec.title}</option>)}
-          </select>
+          <input list="spec-sections" value={section} onChange={(e) => {
+            setSection(e.target.value)
+            const known = specs?.sections.find((s) => s.section === e.target.value)
+            if (known) setTitle(known.title)
+          }} disabled={!live || busy} pattern="\d{2} \d{2} \d{2}" maxLength={8} placeholder="00 00 00"
+            className="min-w-0 rounded-lg border border-edge bg-well px-3 py-2 text-ink disabled:opacity-50" />
+          <datalist id="spec-sections">
+            {specs?.sections.map((spec) => <option key={spec.section} value={spec.section}>{spec.title}</option>)}
+          </datalist>
+        </label>
+        <label className="flex items-center gap-3 text-muted">Section title
+          <input value={title} onChange={(e) => setTitle(e.target.value)} disabled={!live || busy} maxLength={160} required
+            className="min-w-0 rounded-lg border border-edge bg-well px-3 py-2 text-ink disabled:opacity-50" />
         </label>
         <label onDragOver={(e) => { e.preventDefault(); if (live && !busy) setOver(true) }} onDragLeave={() => setOver(false)} onDrop={drop}
           className={`flex min-h-32 flex-col items-center justify-center gap-1 rounded-xl border border-dashed px-4 text-center ${over ? 'border-flare bg-flare/5' : 'border-edge'} ${live && !busy ? 'cursor-pointer' : 'text-muted'}`}>
