@@ -65,15 +65,15 @@ async def _cached(ns: str, key: dict, estimate: int, call, credits_of) -> tuple[
 
 
 async def search(query: str, include_domains: Optional[list[str]] = None, depth: str = "basic",
-                 max_results: int = 5) -> tuple[list[dict], int]:
+                 max_results: int = 5, topic: str = "general") -> tuple[list[dict], int]:
     async def call():
-        body = {"query": query, "search_depth": depth, "max_results": max_results}
+        body = {"query": query, "search_depth": depth, "max_results": max_results, "topic": topic}
         if include_domains:
             body["include_domains"] = include_domains
         resp = await _post("/search", body)
         return [{"url": r["url"], "title": r.get("title", ""), "content": r.get("content", "")} for r in resp.get("results", [])]
 
-    key = {"q": query, "d": include_domains, "depth": depth, "n": max_results}
+    key = {"q": query, "d": include_domains, "depth": depth, "n": max_results, "topic": topic}
     return await _cached("tavily_search", key, search_credits(depth), call, lambda _: search_credits(depth))
 
 

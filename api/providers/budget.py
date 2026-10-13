@@ -9,6 +9,7 @@ Today's totals (live, uncached calls only) are kept in .cache/budget/<date>.json
 from __future__ import annotations
 
 import json
+from contextlib import contextmanager
 from contextvars import ContextVar
 from datetime import datetime, timezone
 from typing import Optional
@@ -24,10 +25,22 @@ class Ledger:
     def __init__(self) -> None:
         self.usd = 0.0
         self.credits: dict[str, float] = {}  # item id -> Tavily credits
+        self.investigation_credits: dict[str, float] = {}
 
 
 LEDGER: ContextVar[Optional[Ledger]] = ContextVar("ledger", default=None)
 ITEM: ContextVar[str] = ContextVar("item", default="")
+_CREDIT_SCOPES: ContextVar[tuple] = ContextVar("credit_scopes", default=())
+
+
+@contextmanager
+def credit_scope(cap: float):
+    """Nested loop caps, checked by every web call, including candidate verification."""
+    token = _CREDIT_SCOPES.set((*_CREDIT_SCOPES.get(), {"spent": 0.0, "cap": max(0, cap)}))
+    try:
+        yield
+    finally:
+        _CREDIT_SCOPES.reset(token)
 
 
 def _day_file():
@@ -68,6 +81,8 @@ def charge_usd(usd: float, real: bool) -> None:
 def reserve_credits(n: float, real: bool) -> None:
     """Before a Tavily call: raise if n more credits would cross the item or the day cap."""
     led = LEDGER.get()
+    if any(s["spent"] + n > s["cap"] for s in _CREDIT_SCOPES.get()):
+        raise BudgetExceeded("Tavily credit cap for this step reached")
     spent = led.credits.get(ITEM.get(), 0.0) if led else 0.0
     if spent + n > settings.budget_tavily_credits_per_item:
         raise BudgetExceeded(f"Tavily cap of {settings.budget_tavily_credits_per_item:g} credits for this item reached")
@@ -76,6 +91,8 @@ def reserve_credits(n: float, real: bool) -> None:
 
 
 def charge_credits(n: float, real: bool) -> None:
+    for scope in _CREDIT_SCOPES.get():
+        scope["spent"] += n
     if led := LEDGER.get():
         item = ITEM.get()
         led.credits[item] = led.credits.get(item, 0.0) + n

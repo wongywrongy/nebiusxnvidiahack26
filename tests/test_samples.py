@@ -28,7 +28,7 @@ def test_samples_are_separate_from_the_answer_key_set():
 def test_project_tray_is_grouped_by_sender():
     p = client.get("/api/project").json()
     tray = {g["from"]: g for g in p["tray"]}
-    assert [i["id"] for i in tray["Coastline Firestop"]["items"]] == ["c01", "c02", "c03", "c04"]
+    assert [i["id"] for i in tray["Coastline Firestop"]["items"]] == ["c01", "c02", "c03", "c04", "s4"]
     assert [i["id"] for i in tray["Northgate Electric"]["items"]] == ["c06", "s3"]
     assert tray["Coastline Firestop"]["trade"] and tray["Northgate Electric"]["email"]
     items = {i["id"]: i for g in p["tray"] for i in g["items"]}

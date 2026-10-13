@@ -14,9 +14,17 @@ from .providers import budget, tavily
 class WebClient:
     """Mock answers from the case fixture; live goes to providers.tavily. Both charge the run's budget."""
 
-    def __init__(self, case_id: Optional[str]) -> None:  # case_id: which fixture answers in mock mode
+    def __init__(self, case_id: Optional[str], on_step=None) -> None:  # which fixture answers in mock mode
         self.case_id = case_id
         self.credits = 0.0
+        self.on_step = on_step
+        self.investigation_step: Optional[int] = None
+
+    def _investigation_result(self):
+        if self.investigation_step is None:
+            return None
+        steps = load_fixture(self.case_id).get("investigate", {}).get("steps", [])
+        return steps[self.investigation_step].get("result", []) if self.investigation_step < len(steps) else []
 
     def _fixture(self) -> dict:
         return load_fixture(self.case_id).get("web", {})
@@ -26,11 +34,12 @@ class WebClient:
         budget.charge_credits(n, real=False)
         self.credits += n
 
-    async def search(self, query: str, include_domains: Optional[list[str]] = None, depth: str = "basic") -> list[dict]:
+    async def search(self, query: str, include_domains: Optional[list[str]] = None, depth: str = "basic",
+                     topic: str = "general") -> list[dict]:
         if not settings.live:
             self._mock_charge(tavily.search_credits(depth))
-            return self._fixture().get("search", [])
-        results, spent = await tavily.search(query, include_domains, depth)
+            return self._investigation_result() if self.investigation_step is not None else self._fixture().get("search", [])
+        results, spent = await tavily.search(query, include_domains, depth, topic=topic)
         self.credits += spent
         return results
 
@@ -39,6 +48,8 @@ class WebClient:
             return []
         if not settings.live:
             self._mock_charge(tavily.extract_credits(len(urls), depth))
+            if self.investigation_step is not None:
+                return self._investigation_result()
             pages = self._fixture().get("extract", {})
             return [{"url": u, "raw_content": pages[u]} for u in urls if u in pages]
         results, spent = await tavily.extract(urls, depth)
@@ -48,8 +59,10 @@ class WebClient:
     async def map(self, url: str, instructions: Optional[str] = None,
                   limit: Optional[int] = None, max_depth: Optional[int] = None) -> list[str]:
         if not settings.live:
-            self._mock_charge(1)
-            return self._fixture().get("map", {}).get(url, [])[:limit or settings.map_limit]
+            results = (self._investigation_result() if self.investigation_step is not None
+                       else self._fixture().get("map", {}).get(url, []))[:limit or settings.map_limit]
+            self._mock_charge(tavily.map_credits(len(results), instructions))
+            return results
         links, spent = await tavily.map(url, instructions, limit, max_depth)
         self.credits += spent
         return links

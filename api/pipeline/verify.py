@@ -9,10 +9,13 @@ from __future__ import annotations
 import json
 from urllib.parse import urlparse
 
-from ..llm import router
-from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Usage, VerifyOut
+from ..config import settings
+from ..llm import load_fixture, router
+from ..providers import ProviderError, budget
+from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Investigation, Usage, VerifyOut
 from ..web import WebClient, snapshot
 from .extract import quoted
+from .investigate import investigate
 from .spec_check import _fmt, _label, to_number
 
 LISTING_BODIES = ("ul.com", "intertek.com", "icc-es.org", "designlights.org", "energystar.gov")
@@ -20,12 +23,12 @@ TIER_RANK = {"manufacturer": 0, "listing_body": 1, "distributor": 2, "agency": 3
 
 
 def classify(url: str, manufacturer_domains: list[str]) -> str:
-    host = urlparse(url).netloc.lower()
-    if any(host.endswith(d) for d in manufacturer_domains):
+    host = (urlparse(url).hostname or "").lower()
+    if any(host == d or host.endswith("." + d) for d in manufacturer_domains):
         return "manufacturer"
     if "web.archive.org" in host:
         return "archive"
-    if any(host.endswith(d) for d in LISTING_BODIES):
+    if any(host == d or host.endswith("." + d) for d in LISTING_BODIES):
         return "listing_body"
     if host.endswith(".gov") or host.endswith(".edu"):
         return "agency"
@@ -41,9 +44,10 @@ def _same(a, b) -> bool:
     return str(a).strip().lower() == str(b).strip().lower()
 
 
-async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[CompareRow], list[Usage], float]:
+async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
+                 ) -> tuple[list[Finding], list[CompareRow], list[Usage], float, Investigation | None]:
     fx = case.get("fixture", case["id"])  # uploads: the matching case's fixture, or None
-    web = WebClient(fx)
+    web = WebClient(fx, on_step)
     domains = case.get("manufacturer_domains", [])
     name = " ".join(x for x in [submitted.manufacturer, submitted.product, submitted.model or ""] if x)
 
@@ -60,7 +64,45 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
     pages = await web.extract([r["url"] for r in ranked[:3]])
     titles = {r["url"]: r.get("title", "") for r in ranked}
 
-    # 3. Super reads the sources against the submitted claims.
+    # 3. Super reads the sources; the quote gate runs before the investigator trigger.
+    out, u = await read_sources(fx, submitted, pages)
+    usage = [u]
+    confirmed = gate(out, pages)
+    investigation = None
+    # A quoted revision or discontinuation already answered the scripted check.
+    if (settings.live or load_fixture(fx).get("investigate")) and out.current_revision is None and out.status != "discontinued" and (
+        not out.current_values or (out.status == "unknown" and
+                                  not any(classify(r["url"], domains) == "manufacturer" for r in ranked))
+    ):
+        investigation = await investigate(case, submitted, web)
+        usage += investigation._usage
+        if investigation.outcome == "found":
+            accepted = [p for p in investigation._pages if p["url"] == investigation._document_url]
+            newer = investigation._verified.model_copy(deep=True)
+            try:
+                newer, u = await read_sources(fx, submitted, accepted, investigated=True)
+                usage.append(u)
+            except (budget.BudgetExceeded, ProviderError):
+                pass  # the loop's verified quotes still stand if the value read cannot run
+            gate(newer, accepted)
+            newer.current_revision = newer.current_revision or investigation._verified.current_revision
+            if investigation._verified.status != "unknown":
+                newer.status = investigation._verified.status
+                newer.status_quote = investigation._verified.status_quote
+            out = newer
+            pages += investigation._pages
+            titles[investigation._document_url] = investigation._document_title
+            confirmed = gate(out, pages)
+
+    evidence = [
+        Evidence(tier=classify(p["url"], domains), title=titles.get(p["url"], p["url"]), **snapshot(p["url"], p["raw_content"]))
+        for p in pages
+    ]
+    findings, rows = compare(submitted, out, confirmed, evidence, pages)
+    return findings, rows, usage, web.credits, investigation
+
+
+async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated=False) -> tuple[VerifyOut, Usage]:
     submitted_view = {
         "product": submitted.product,
         "manufacturer": submitted.manufacturer,
@@ -69,7 +111,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
         "claims": [{"property": c.property, "value": c.value, "unit": c.unit} for c in submitted.claims],
     }
     sources = [{"url": p["url"], "text": p["raw_content"][:12000]} for p in pages]
-    out, usage = await router.call(
+    return await router.call(
         "verify",
         VerifyOut,
         [
@@ -84,26 +126,28 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
                 ),
             }
         ],
-        {"case_id": fx},
+        {"case_id": fx, "fixture_key": "investigate_verify" if investigated else "verify"},
     )
 
-    evidence = [
-        Evidence(tier=classify(p["url"], domains), title=titles.get(p["url"], p["url"]), **snapshot(p["url"], p["raw_content"]))
-        for p in pages
-    ]
 
-    # 4. Keep only what the sources actually say: every value, revision and status needs a quote found on a fetched page.
+def gate(out: VerifyOut, pages: list[dict]) -> dict[str, str]:
+    """Keep only what a fetched page actually quotes, for both scripted and investigated sources."""
     def source_of(quote):
         return next((p["url"] for p in pages if quoted(quote, p["raw_content"])), None)
 
     if out.current_revision and not source_of(out.current_revision):
         out.current_revision = None
-    if out.status == "discontinued" and not source_of(out.status_quote):
+    if out.status != "unknown" and not source_of(out.status_quote):
         out.status = "unknown"
-    confirmed = {pv.property: url for pv in out.current_values if (url := source_of(pv.quote))}
-    out.current_values = [pv for pv in out.current_values if pv.property in confirmed]
+        out.status_quote = None
+    out.current_values = [pv for pv in out.current_values if source_of(pv.quote)]
+    confirmed = {pv.property: source_of(pv.quote) for pv in out.current_values}
+    return confirmed
 
-    # 5. Diff in code.
+
+def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: list[Evidence], pages: list[dict]
+            ) -> tuple[list[Finding], list[CompareRow]]:
+    """One comparison path for every accepted document; models supply quoted values only."""
     claims = {c.property: c for c in submitted.claims}
     rows: list[CompareRow] = []
     changed: list[CompareRow] = []
@@ -131,7 +175,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
     sent, now = submitted.document_revision or "undated", out.current_revision or "unknown"
     findings: list[Finding] = []
     if out.status == "discontinued":
-        on = source_of(out.status_quote)
+        on = next((p["url"] for p in pages if quoted(out.status_quote, p["raw_content"])), None)
         findings.append(Finding(
             id="status-discontinued", check="status", verdict="fail", severity="major",
             title="Product is no longer made",
@@ -171,7 +215,7 @@ async def verify(case: dict, submitted: ClaimsOut) -> tuple[list[Finding], list[
             title="Data sheet matches the manufacturer's current version", evidence=evidence, decided_by="tavily + super",
             compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value=now, verdict="pass"),
         ))
-    return findings, rows, [usage], web.credits
+    return findings, rows
 
 
 def unconfirmed(reason: str) -> Finding:
