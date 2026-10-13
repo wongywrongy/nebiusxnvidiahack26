@@ -99,6 +99,37 @@ export interface Result {
 export interface Health { mode: 'mock' | 'live'; budget: { usd_left: number; credits_left: number } }
 export async function getHealth(): Promise<Health> { return ok(await fetch('/api/health')) }
 
+export interface Requirement {
+  id: string; section: string; paragraph: string; property: string; operator: string; value: Value
+  unit?: string | null; severity: string; applies_to: string[]; text: string
+}
+export interface Checklist {
+  requirements: Requirement[]; drafted_by?: string | null; source_name: string; source_url?: string | null
+  source_sha256?: string | null; drafted_at?: string | null; reviewed_at?: string | null
+}
+export interface SpecSection {
+  section: string; title: string; owner: string; control_version: string; source_url: string
+  checklist: Checklist; status: 'reviewed' | 'saved' | 'fixture'; note: string; used_by_scans: 'mock' | 'live'
+}
+export interface Specs { mode: Project['mode']; sections: SpecSection[] }
+export async function getSpecs(): Promise<Specs> { return ok(await fetch('/api/specs')) }
+export async function draftSpec(file: File, section: string): Promise<{ draft: Checklist; usage: Usage }> {
+  return ok(await fetch(`/api/specs/draft?section=${encodeURIComponent(section)}&name=${encodeURIComponent(file.name)}`, {
+    method: 'POST', headers: { 'content-type': 'application/pdf' }, body: file,
+  }))
+}
+
+interface Score { n: number; of: number }
+export interface Scores {
+  mode: Project['mode']; generated_at: string; run_id: string; models: Record<string, string>
+  right_call: Score; caught: Score; false_alarms: Score; fixes_passing: Score
+  rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]
+    decision?: Decision; found_problems?: string[]; error?: boolean; right_call?: boolean
+    fix?: { suggest: string | null; passes: boolean; candidates: number } | null
+    time_ms?: number; cost_usd?: number }[]
+}
+export async function getScores(): Promise<Scores> { return ok(await fetch('/api/scores')) }
+
 export async function getProject(): Promise<Project> {
   return (await fetch('/api/project')).json()
 }
