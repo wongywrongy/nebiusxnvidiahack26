@@ -4,6 +4,7 @@
 .cache/
 runs/*
 !runs/recorded/
+!runs/watch/
 data/raw/
 __pycache__/
 *.pyc

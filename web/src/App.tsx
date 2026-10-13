@@ -1,9 +1,9 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getProject, getResult, pageUrl, scan, streamEvents,
-  uploadToInbox,
+  DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getProject, getResult, modelName, pageUrl, scan,
+  streamEvents, uploadToInbox,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
-  type Stage, type TextPage, type Tone, type Value,
+  type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
 
 // Four steps, in order: what came in, what the scan found, the reviewer's call on each, what happened after.
@@ -41,9 +41,38 @@ const show = (v: Value | undefined) => (v === null || v === undefined || v === '
   : (Array.isArray(v) ? v.join(', ') : String(v)).replace(ACRONYM, (m) => m.toUpperCase()).replace(/\b([a-z])(\d{3,})\b/g, (_, a: string, n: string) => a.toUpperCase() + n))
 const hostOf = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, '') } catch { return url } }
 const discontinued = (r?: Result) => r?.findings.find((f) => f.check === 'status' && f.verdict === 'fail')
-// "tavily + nvidia/nemotron-3-super-120b-a12b" -> "Tavily + Super"
+// "tavily + nvidia/nemotron-3-super-120b-a12b" -> "Tavily + Nemotron 3 Super"
 const modelTag = (m: string | null) => !m || m === 'code' ? ''
-  : m.replace(/\S+\/(\S+)/g, (_, id: string) => (/nano/i.test(id) ? 'Nano' : /super/i.test(id) ? 'Super' : id)).replace(/^tavily/i, 'Tavily')
+  : m.replace(/\S+\/\S+/g, (id: string) => modelName(id)).replace(/^tavily/i, 'Tavily')
+
+// ---------- the trace: which model did what, from the usage every result carries ----------
+
+const money = (usd: number) => `$${usd.toFixed(usd < 0.001 ? 4 : usd < 0.01 ? 3 : 2)}`
+const kTokens = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 : 1)}k` : String(n))
+const seconds = (ms: number) => (ms >= 1000 ? `${(ms / 1000).toFixed(ms >= 10000 ? 0 : 1)} s` : `${ms} ms`)
+// What each call did, in the reviewer's words. Fix-step calls come prefixed "fix: ".
+const TASK_LABEL: Record<string, string> = {
+  triage: 'sorted the pages', extract_requirements: 'read the spec', extract_claims: 'read the data sheet',
+  verify: 'read the web sources', report: 'wrote the result',
+  'fix: extract_claims': 'read a replacement', 'fix: verify': 'checked a replacement online',
+}
+const taskLabel = (t: string) => TASK_LABEL[t] ?? t
+// Calls grouped by model, in order of first use, each with its distinct tasks.
+function byModel(usage: Usage[]): { model: string; tasks: string[]; calls: Usage[] }[] {
+  const out: { model: string; tasks: string[]; calls: Usage[] }[] = []
+  for (const u of usage) {
+    let g = out.find((x) => x.model === u.model)
+    if (!g) out.push((g = { model: u.model, tasks: [], calls: [] }))
+    g.calls.push(u)
+    const t = taskLabel(u.task)
+    if (!g.tasks.includes(t)) g.tasks.push(t)
+  }
+  return out
+}
+const totals = (usage: Usage[]) => ({
+  tokens: usage.reduce((n, u) => n + u.input_tokens + u.output_tokens, 0),
+  cost: usage.reduce((n, u) => n + u.cost_usd, 0),
+})
 
 export default function App() {
   const [project, setProject] = useState<Project | null>(null)
@@ -142,6 +171,7 @@ export default function App() {
   }
 
   const sections = project?.specs.map((s) => s.section) ?? []
+  const mode = project?.mode ?? 'mock'
   return (
     <div className="min-h-screen font-sans text-sm">
       <header className="border-b border-line">
@@ -159,13 +189,13 @@ export default function App() {
           <InboxStep project={project} inbox={inbox} rows={rows} error={error} onAdd={add} onUpload={upload}
             onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={startScan} />
         )}
-        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} onReview={startReview} />}
+        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} onReview={startReview} />}
         {step === 3 && (
-          <ReviewStep queue={queue} loaded={loaded} calls={calls} current={current} onPick={setCurrent} onDecide={decide} />
+          <ReviewStep queue={queue} loaded={loaded} calls={calls} current={current} mode={mode} onPick={setCurrent} onDecide={decide} />
         )}
         {step === 4 && (
           <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks}
-            checked={checked} requested={requested} error={error} onCheck={checkApproved}
+            checked={checked} requested={requested} error={error} recheck={project?.recheck} onCheck={checkApproved}
             onRequest={(id) => setRequested((m) => ({ ...m, [id]: true }))} />
         )}
       </main>
@@ -366,8 +396,8 @@ function Icon({ kind }: { kind: 'x' | 'check' }) {
 
 // ---------- 2 · Scan ----------
 
-function ScanStep({ items, rows, loaded, onReview }: {
-  items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; onReview: () => void
+function ScanStep({ items, rows, loaded, mode, onReview }: {
+  items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; onReview: () => void
 }) {
   const failed = items.filter((c) => rows[c.id]?.stage === 'error').length
   const done = items.filter((c) => loaded[c.id]).length + failed
@@ -377,11 +407,26 @@ function ScanStep({ items, rows, loaded, onReview }: {
     ? [`${n('send_back')} to send back`, `${n('approve', 'approve_with_note')} to approve`, ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
     : `${done} of ${items.length} done`
   const cols = '112px minmax(0,1fr) minmax(0,1.2fr)'
+  // What the scan spent, summed over the results so far: the models by name, tokens, Tavily credits, cost, wall time.
+  const results = items.map((c) => loaded[c.id]?.result).filter((r): r is Result => Boolean(r))
+  const usage = results.flatMap((r) => r.usage)
+  const models = byModel(usage).map((g) => modelName(g.model))
+  const { tokens, cost } = totals(usage)
+  const credits = results.reduce((s, r) => s + r.web_credits, 0)
+  const longest = Math.max(0, ...results.map((r) => r.duration_ms))
   return (
     <>
       <Heading title={complete ? 'Scan complete' : 'Scanning'} count={count}>
         {complete && <button className={PRIMARY} onClick={onReview} disabled={!items.some((c) => loaded[c.id])}>Start review</button>}
       </Heading>
+      {complete && results.length > 0 && (
+        <p className="-mt-3 text-xs leading-5 text-muted">
+          {models.join(' and ')} on Nebius Token Factory read {plural(results.length, 'submittal')}
+          {credits > 0 ? `; Tavily checked the manufacturers' sites (${credits} credits)` : ''}.
+          {' '}{kTokens(tokens)} tokens · {money(cost)} · {seconds(longest)} for the longest item
+          {mode === 'mock' ? ' · mock mode: recorded answers, estimated counts' : ''}
+        </p>
+      )}
       <section className="rounded-xl border border-line">
         <Table cols={cols} head={['Number', 'Submittal', 'Result']}>
           {items.map((c) => {
@@ -423,8 +468,8 @@ function ScanStep({ items, rows, loaded, onReview }: {
 
 // ---------- 3 · Review ----------
 
-function ReviewStep({ queue, loaded, calls, current, onPick, onDecide }: {
-  queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; current: string | null
+function ReviewStep({ queue, loaded, calls, current, mode, onPick, onDecide }: {
+  queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; current: string | null; mode: Project['mode']
   onPick: (id: string) => void; onDecide: (id: string, call: Call) => void
 }) {
   const c = queue.find((q) => q.id === current) ?? queue[0]
@@ -442,7 +487,7 @@ function ReviewStep({ queue, loaded, calls, current, onPick, onDecide }: {
           </button>
         ))}
       </div>
-      <Reviewing key={c.id} c={c} at={i + 1} of={queue.length} l={loaded[c.id]} call={calls[c.id]}
+      <Reviewing key={c.id} c={c} at={i + 1} of={queue.length} l={loaded[c.id]} call={calls[c.id]} mode={mode}
         onDecide={(call) => onDecide(c.id, call)} />
     </>
   )
@@ -486,8 +531,8 @@ function webRows(f: Finding): CheckRow[] {
   return [[f, 'Data sheet version', current, f.compare?.left_value]]
 }
 
-function Reviewing({ c, at, of, l, call, onDecide }: {
-  c: Case; at: number; of: number; l: Loaded; call?: Call; onDecide: (call: Call) => void
+function Reviewing({ c, at, of, l, call, mode, onDecide }: {
+  c: Case; at: number; of: number; l: Loaded; call?: Call; mode: Project['mode']; onDecide: (call: Call) => void
 }) {
   const { result, docs, text } = l
   // Worst first: must fix, then out of date, then notes and couldn't-confirm.
@@ -534,6 +579,7 @@ function Reviewing({ c, at, of, l, call, onDecide }: {
             Sources: spec {c.section}{result.document_revision ? ` · submitted sheet ${result.document_revision}` : ''}
             {source && <> · <a href={source.url} target="_blank" rel="noreferrer" className="underline decoration-edge underline-offset-2 hover:text-ink">{source.title || hostOf(source.url)} ↗</a></>}
           </span>
+          <Trace result={result} mode={mode} />
         </div>
 
         {best && (
@@ -571,6 +617,56 @@ function Reviewing({ c, at, of, l, call, onDecide }: {
 }
 
 type CheckRow = [Finding, string, Value | undefined, Value | undefined]
+
+// How this item was checked: each Nemotron model and what it did, Tavily's part, and that code made every call.
+// One muted line; the per-call table is behind a disclosure. All of it is the usage the result already carries.
+function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
+  const groups = byModel(result.usage)
+  const sources = new Set(result.findings.flatMap((f) => f.evidence.map((e) => e.url))).size
+  const { tokens, cost } = totals(result.usage)
+  const cached = result.usage.length > 0 && result.usage.every((u) => u.cached)
+  if (!groups.length) return null
+  return (
+    <details className="group text-xs leading-5 text-muted">
+      <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+        <span className="text-faint">Checked by </span>
+        {groups.map((g, i) => (
+          <Fragment key={g.model}>
+            {i > 0 && (i === groups.length - 1 ? ' and ' : ', ')}
+            <span className="text-soft">{modelName(g.model)}</span> ({g.tasks.join(', ')})
+          </Fragment>
+        ))}
+        <span className="text-faint"> on Nebius Token Factory</span>
+        {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span> fetched {plural(sources, 'source')}</>}
+        {' · verdicts by code'}
+        <span className="text-faint"> · {kTokens(tokens)} tokens · {money(cost)} · {seconds(result.duration_ms)}</span>
+        <span className="ml-1 text-faint underline decoration-edge underline-offset-2 group-open:hidden">every call</span>
+      </summary>
+      <div className="mt-2 overflow-hidden rounded-lg border border-line">
+        <div className={`grid h-8 items-center gap-3 border-b border-line bg-well px-3 ${CAPS}`} style={{ gridTemplateColumns: '1.1fr 1.5fr 0.5fr 0.5fr 0.55fr 0.65fr' }}>
+          <span>Call</span><span>Model</span><span className="text-right">In</span><span className="text-right">Out</span><span className="text-right">Time</span><span className="text-right">Cost</span>
+        </div>
+        {result.usage.map((u, i) => (
+          <div key={i} className="grid items-center gap-3 border-b border-line px-3 py-1.5 last:border-b-0" style={{ gridTemplateColumns: '1.1fr 1.5fr 0.5fr 0.5fr 0.55fr 0.65fr' }}>
+            <span className="truncate text-soft">{taskLabel(u.task)}</span>
+            <span className="truncate font-mono" title={u.model}>{modelName(u.model)}{u.thinking === 'off' ? '' : u.thinking ? ` · thinking ${u.thinking}` : ''}</span>
+            <span className="text-right font-mono">{kTokens(u.input_tokens)}</span>
+            <span className="text-right font-mono">{kTokens(u.output_tokens)}</span>
+            <span className="text-right font-mono">{u.cached && mode === 'live' ? 'cached' : seconds(u.latency_ms)}</span>
+            <span className="text-right font-mono">{money(u.cost_usd)}</span>
+          </div>
+        ))}
+        <p className="border-t border-line px-3 py-1.5 text-faint">
+          {mode === 'live'
+            ? cached ? 'Live mode: every call here was answered from the cache of an earlier live run, so it cost nothing this time.'
+              : 'Live mode: real calls to NVIDIA Nemotron 3 on Nebius Token Factory and to Tavily. Repeats are cached.'
+            : 'Mock mode: recorded answers, no API calls; token counts are estimated from text length. The hosted demo runs live.'}
+          {' '}Models read and quote; every pass/fail is computed in code from the quoted values.
+        </p>
+      </div>
+    </details>
+  )
+}
 
 function Checks({ head, rows }: { head: string[]; rows: CheckRow[] }) {
   const cols = 'minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr)'
@@ -826,10 +922,18 @@ function replacement(fix: Fix | null): [string, boolean] {
   return [`None passed · ${name}${why ? ` fails on ${why}` : ''}`, false]
 }
 
-function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, onCheck, onRequest }: {
+// When the nightly re-check (scripts/recheck.py as a Nebius Serverless Job) last ran, in one line.
+const recheckLine = (r: Recheck | null | undefined) => {
+  if (!r) return 'Re-checked against manufacturer documents nightly'
+  const flagged = r.items.filter((i) => i.status !== 'no_change').length
+  const when = new Date(r.checked_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
+  return `Nightly re-check last ran ${when} (${r.runner}): ${plural(r.items.length, 'item')}, ${flagged ? `${flagged} flagged` : 'no change'}`
+}
+
+function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, onCheck, onRequest }: {
   queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; rows: Record<string, Row>; watched: Case[]
   checks: Record<string, Row>; checked: Record<string, Result>; requested: Record<string, boolean>; error: string | null
-  onCheck: () => void; onRequest: (id: string) => void
+  recheck?: Recheck | null; onCheck: () => void; onRequest: (id: string) => void
 }) {
   const returned = queue.filter((c) => calls[c.id]?.act === 'return')
   const approved = [...queue.filter((c) => calls[c.id]?.act === 'approve'), ...watched]
@@ -878,7 +982,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <h2 className="font-semibold">Approved and forwarded to the architect</h2>
-          <span className="text-xs text-muted">Re-checked against manufacturer documents nightly</span>
+          <span className="text-xs text-muted">{recheckLine(recheck)}</span>
         </div>
         <div className="rounded-xl border border-line">
           <Table cols={fwd} head={['Number', 'Product', 'Approved', 'Last checked', 'Status']}>

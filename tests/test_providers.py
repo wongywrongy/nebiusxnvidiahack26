@@ -123,6 +123,84 @@ def test_invalid_json_retried_once(live):
     assert chat()[0].ok and len(route.calls) == 2
 
 
+# ---------- Nemotron 3 thinks by default ----------
+
+def sent(route, i=0):
+    return json.loads(route.calls[i].request.content)
+
+
+def test_asks_for_no_thinking_by_default(live):
+    route = live[0].post(CHAT).mock(return_value=reply())
+    _, usage = chat()
+    body = sent(route)
+    assert body["reasoning_effort"] == "none" and body["chat_template_kwargs"] == {"enable_thinking": False}
+    assert usage.thinking == "off" and usage.reasoning_tokens == 0
+
+
+def test_thinking_on_sends_no_flags(live, monkeypatch):
+    monkeypatch.setattr(settings, "thinking", "on")
+    route = live[0].post(CHAT).mock(return_value=reply())
+    _, usage = chat()
+    assert "reasoning_effort" not in sent(route) and "chat_template_kwargs" not in sent(route) and usage.thinking == "on"
+
+
+def test_rejected_no_think_field_is_dropped_and_retried(live):
+    route = live[0].post(CHAT).mock(side_effect=[err(400, "Unrecognized request argument: chat_template_kwargs"), reply()])
+    _, usage = chat()
+    assert len(route.calls) == 2
+    assert "chat_template_kwargs" in sent(route, 0) and "chat_template_kwargs" not in sent(route, 1)
+    assert sent(route, 1)["reasoning_effort"] == "none" and formats(route) == ["json_schema", "json_schema"]
+    assert usage.thinking == "off"
+
+
+def test_both_no_think_fields_rejected_means_server_default(live):
+    route = live[0].post(CHAT).mock(side_effect=[
+        err(400, "reasoning_effort is not supported"), err(400, "chat_template_kwargs is not supported"), reply()])
+    _, usage = chat()
+    assert len(route.calls) == 3 and usage.thinking == "server-default"
+    assert not ({"reasoning_effort", "chat_template_kwargs"} & set(sent(route, 2)))
+
+
+@pytest.mark.parametrize("text", [
+    '<think>\nis it ok? yes\n</think>\n{"ok": true}',
+    'Here is the JSON you asked for:\n{"ok": true}\nLet me know if you need anything else.',
+    '```json\n{"ok": true}\n```',
+    '<think>reasoning</think>```json\n{"ok": true}\n```',
+])
+def test_json_is_read_around_thinking_and_prose(live, text):
+    live[0].post(CHAT).mock(return_value=reply(text))
+    assert chat()[0].ok
+
+
+def test_reasoning_content_is_never_the_answer(live):
+    body = reply('{"ok": true}').json()
+    body["choices"][0]["message"]["reasoning_content"] = '{"ok": false}'
+    body["usage"]["completion_tokens_details"] = {"reasoning_tokens": 57}
+    live[0].post(CHAT).mock(return_value=httpx.Response(200, json=body))
+    obj, usage = chat()
+    assert obj.ok and usage.reasoning_tokens == 57
+
+
+def test_cut_off_while_thinking_retries_with_thinking_off(live, monkeypatch):
+    monkeypatch.setattr(settings, "thinking", "on")
+    cut = reply('').json()
+    cut["choices"][0]["finish_reason"] = "length"
+    cut["usage"]["completion_tokens_details"] = {"reasoning_tokens": 8192}
+    route = live[0].post(CHAT).mock(side_effect=[httpx.Response(200, json=cut), reply()])
+    obj, usage = chat()
+    assert obj.ok and len(route.calls) == 2 and usage.thinking == "off"
+    assert "reasoning_effort" not in sent(route, 0) and sent(route, 1)["reasoning_effort"] == "none"
+
+
+def test_cut_off_with_thinking_already_off_fails_once(live):
+    cut = reply('{"ok": tr').json()
+    cut["choices"][0]["finish_reason"] = "length"
+    route = live[0].post(CHAT).mock(return_value=httpx.Response(200, json=cut))
+    with pytest.raises(ProviderError, match="MAX_OUTPUT_TOKENS"):
+        chat()
+    assert len(route.calls) == 1
+
+
 def test_list_models(live):
     live[0].get(settings.nebius_base_url + "models").mock(
         return_value=httpx.Response(200, json={"data": [{"id": "b"}, {"id": "a"}]}))
