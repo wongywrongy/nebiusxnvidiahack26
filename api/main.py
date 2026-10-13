@@ -10,6 +10,9 @@
   POST /api/runs                       start a run       {"case_ids": [...], "delay_ms": 600}   [admin when live]
   POST /api/runs/replay                replay a recording {"source_run_id": "...", "speed": 1.0}
   GET  /api/scores                     the answer-key scores written by scripts/eval.py (else the newest recording's)
+  GET  /api/specs                      project spec sources, checklists and recorded provenance
+  POST /api/specs/draft                raw PDF -> a public draft, never saved as a checklist    [live only]
+  POST /api/specs/{section}            save a checklist with a review date                     [admin]
   POST /api/scores/run                 run all cases now and rewrite the scores               [admin when live]
   GET  /api/runs                       recorded runs, newest first
   GET  /api/runs/{id}/events           server-sent events: history, then live
@@ -26,6 +29,7 @@ The built web app (web/dist) is served at / from the same container.
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import hmac
 import json
 import logging
@@ -42,11 +46,13 @@ from .config import settings
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
+from .pipeline import checklists
+from .pipeline.extract import checklist_path
 from .pipeline.render import page_count, page_sizes, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, recorded_runs, replay, run_dir
 from .pipeline.scores import run_scoring_set
-from .providers import budget
-from .schemas import Event
+from .providers import ProviderError, budget, failure_reason
+from .schemas import Event, ReviewedChecklist
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
 app = FastAPI(title="SpecCheck")
@@ -150,6 +156,21 @@ def _scannable(case_id: str) -> Optional[dict]:
     return case if case and (case.get("tray") or case.get("watch")) else get_upload(case_id)
 
 
+async def _read_pdf(request: Request) -> tuple[bytes, str]:
+    limit = settings.max_upload_mb * 1024 * 1024
+    if int(request.headers.get("content-length") or 0) > limit:
+        raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
+    pdf = await request.body()
+    if len(pdf) > limit:
+        raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
+    if not pdf.startswith(b"%PDF"):
+        raise HTTPException(400, "Not a PDF")
+    try:
+        return pdf, "\n".join(p["text"] for p in pdf_pages(pdf))
+    except Exception:
+        raise HTTPException(400, "Could not read this PDF")
+
+
 @app.post("/api/inbox")
 async def inbox(request: Request, name: str = "upload.pdf"):
     """Add one item to the inbox. Nothing runs until /api/scan."""
@@ -164,21 +185,59 @@ async def inbox(request: Request, name: str = "upload.pdf"):
 
     if settings.live and budget.day_spent():
         raise HTTPException(429, "Today's live budget is spent. Uploads can be checked again tomorrow (UTC).")
-    limit = settings.max_upload_mb * 1024 * 1024
-    if int(request.headers.get("content-length") or 0) > limit:
-        raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
     if not _is_admin(request):
         _rate_limit(request)
-    pdf = await request.body()
-    if len(pdf) > limit:
-        raise HTTPException(413, f"PDF is larger than {settings.max_upload_mb} MB")
-    if not pdf.startswith(b"%PDF"):
-        raise HTTPException(400, "Not a PDF")
-    try:
-        text = "\n".join(p["text"] for p in pdf_pages(pdf))
-    except Exception:
-        raise HTTPException(400, "Could not read this PDF")
+    pdf, text = await _read_pdf(request)
     return _public(add_upload(name, pdf, text))
+
+
+@app.get("/api/specs")
+def specs():
+    return {"mode": settings.mode, "sections": checklists.sections()}
+
+
+@app.post("/api/specs/draft")
+async def draft_spec(request: Request, section: str, name: str = "spec.pdf"):
+    if not settings.live:
+        raise HTTPException(409, "Live only: checklist drafting uses Nemotron 3 Super on Token Factory.")
+    if section not in all_specs():
+        raise HTTPException(404, "Unknown spec section")
+    if not _is_admin(request):
+        _rate_limit(request)
+    if budget.day_spent():
+        raise HTTPException(429, "Today's live budget is spent. Try again tomorrow (UTC).")
+    pdf, text = await _read_pdf(request)
+    if not text.strip():
+        raise HTTPException(400, "No readable text in this spec PDF")
+    token = budget.LEDGER.set(budget.Ledger())
+    try:
+        draft, usage = await checklists.draft(section, text, name.rsplit("/", 1)[-1][:160],
+                                              source_sha256=hashlib.sha256(pdf).hexdigest())
+        return {"draft": draft, "usage": usage}
+    except budget.BudgetExceeded as e:
+        raise HTTPException(429, failure_reason(e)) from e
+    except ProviderError as e:
+        raise HTTPException(503, failure_reason(e)) from e
+    finally:
+        budget.LEDGER.reset(token)
+
+
+@app.post("/api/specs/{section}")
+def save_spec(section: str, body: ReviewedChecklist, request: Request):
+    if not _is_admin(request):
+        raise HTTPException(403, "Saving a reviewed checklist needs the admin token (X-Admin-Token header).")
+    if section not in all_specs():
+        raise HTTPException(404, "Unknown spec section")
+    if not body.requirements or any(r.section != section for r in body.requirements):
+        raise HTTPException(422, "Every requirement must belong to this section, and the checklist cannot be empty.")
+    if len({r.id for r in body.requirements}) != len(body.requirements):
+        raise HTTPException(422, "Requirement IDs must be unique within the checklist.")
+    path = checklist_path(section)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temp = path.with_suffix(".tmp")
+    temp.write_text(body.model_dump_json(indent=2))
+    temp.replace(path)
+    return {"section": section, "checklist": body, "status": "reviewed"}
 
 
 @app.post("/api/scan")

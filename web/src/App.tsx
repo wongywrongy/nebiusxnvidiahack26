@@ -5,6 +5,7 @@ import {
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
   type Health, type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
+import { ScoreboardPage, SpecsPage } from './SecondaryPages'
 
 // Four steps, in order: what came in, what the scan found, the reviewer's call on each, what happened after.
 type Step = 1 | 2 | 3 | 4
@@ -76,6 +77,7 @@ const totals = (usage: Usage[]) => ({
 })
 
 export default function App() {
+  const [secondary, setSecondary] = useState(window.location.hash)
   const [project, setProject] = useState<Project | null>(null)
   const [health, setHealth] = useState<Health | null>(null)
   const [scanNote, setScanNote] = useState<string | null>(null)
@@ -95,8 +97,14 @@ export default function App() {
 
   useEffect(() => { getProject().then(setProject, () => setFailed(true)) }, [])
   useEffect(() => { getHealth().then(setHealth).catch(() => {}) }, [])
+  useEffect(() => {
+    const change = () => { setSecondary(window.location.hash); window.scrollTo({ top: 0 }) }
+    window.addEventListener('hashchange', change)
+    return () => window.removeEventListener('hashchange', change)
+  }, [])
 
   function go(s: Step) {
+    if (window.location.hash) window.location.hash = ''
     setStep(s)
     setReached((r) => (s > r ? s : r))
     window.scrollTo({ top: 0 })
@@ -188,11 +196,18 @@ export default function App() {
           <span className="flex h-10 shrink-0 items-center gap-2 font-semibold"><span className="h-3 w-3 rounded-sm bg-flare" />SpecCheck</span>
           <span className="hidden truncate text-muted lg:inline">{project?.name}</span>
           <StepBar step={step} reached={reached} onGo={go} />
-          <span className="ml-auto hidden shrink-0 font-mono text-xs text-muted md:inline">Specs {sections.join(' · ')}</span>
+          <nav aria-label="Project reference" className="ml-auto flex shrink-0 gap-4 font-mono text-xs text-muted">
+            <a href="#specs" className="py-2 hover:text-ink">Specs<span className="hidden md:inline"> {sections.join(' · ')}</span></a>
+            <a href="#scoreboard" className="py-2 hover:text-ink">Scoreboard</a>
+          </nav>
         </div>
       </header>
 
       <main className="mx-auto flex max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
+        {secondary === '#specs' ? <SpecsPage back={STEPS[step - 1][1]} />
+          : secondary === '#scoreboard' ? <ScoreboardPage back={STEPS[step - 1][1]} /> : null}
+        <div hidden={secondary === '#specs' || secondary === '#scoreboard'}
+          className={secondary === '#specs' || secondary === '#scoreboard' ? undefined : 'contents'}>
         {failed && <p className="text-muted">Couldn't load the project. Check that the API is running, then reload.</p>}
         {!failed && step === 1 && (
           <InboxStep project={project} health={health} inbox={inbox} rows={rows} error={error} onAdd={add} onUpload={upload}
@@ -211,6 +226,7 @@ export default function App() {
             onRequest={(id) => setRequested((m) => ({ ...m, [id]: true }))} />
           </>
         )}
+        </div>
       </main>
     </div>
   )
@@ -445,6 +461,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
           {mode === 'mock' ? ' · mock mode: recorded answers, estimated counts' : ''}
           {results.some((r) => r.mode === 'mock') && mode !== 'mock' ? ' · includes mock answers and estimated counts' : ''}
           {results.some((r) => r.replayed_from) ? ' · replayed items show their original usage and time' : ''}
+          {' · '}<a href="#scoreboard" className="underline underline-offset-4 hover:text-ink">Scoreboard</a>
         </p>
       )}
       <section className="rounded-xl border border-line">
