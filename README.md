@@ -10,7 +10,7 @@ document pipelines for a general contractor and has watched this problem cost re
 
 - **Live demo:** _URL on the Devpost page_ · **Video:** _YouTube link_ · **License:** MIT
 - **Models:** NVIDIA **Nemotron 3 Nano** and **Nemotron 3 Super**, served by **Nebius Token Factory**
-- **Web:** **Tavily** (Search, Extract, Map) for the manufacturer's current documents
+- **Web:** **Tavily** Search and Extract for the manufacturer's current documents (Map is in the provider, bounded, not yet in the pipeline)
 - **Cloud:** the demo runs as a **Nebius Serverless Endpoint**; the nightly re-check runs as a **Nebius Serverless Job**
 
 ## Where Nemotron and Token Factory do the work
