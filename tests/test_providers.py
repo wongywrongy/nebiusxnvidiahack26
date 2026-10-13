@@ -343,7 +343,8 @@ def _pdf_bytes():
     return doc.tobytes()
 
 
-def test_live_without_token_runs_are_refused_and_uploads_go_to_mock(live):
+def test_live_without_token_runs_are_refused_and_uploads_can_opt_out(live, monkeypatch):
+    monkeypatch.setattr(settings, "public_uploads_live", False)
     assert client.post("/api/runs", json={"case_ids": ["c01"]}).status_code == 403
     assert client.post("/api/scores/run").status_code == 403
     assert client.post("/api/runs", json={"case_ids": ["nope"]}, headers={"x-admin-token": "wrong"}).status_code == 403

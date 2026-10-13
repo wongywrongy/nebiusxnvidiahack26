@@ -52,14 +52,16 @@ Notes
 - The `2vcpu-8gb` preset is about $0.07/h plus disk; with `--disk-size 32Gi` a month is roughly $55. If the
   preset name is refused, `nebius ai endpoint create --help` lists the presets for `cpu-d3`
   (the Nebius quickstart uses `4vcpu-16gb`).
-- Caps: live tray items and re-checks are cached after their first run, so a day of judges costs cents; a judge's
-  own PDF runs live only with the admin token. `BUDGET_USD_PER_DAY` and `BUDGET_TAVILY_CREDITS_PER_DAY` are the
-  hard ceilings; past them a step reads "couldn't confirm" instead of failing.
+- Public scans: tray items, re-checks and uploaded PDFs run live under the rate, size and budget limits.
+  Set `PUBLIC_UPLOADS_LIVE=false` to require the admin token for live uploads. Repeats use the disk cache.
+  At either daily cap, requested tray/watched items replay from the newest recording if it contains them all,
+  with a dated note; uploads receive 429. A cap during verification leaves an unconfirmed finding. Early model failures
+  show their reason and an item-level Retry action.
 - Redeploy: push a new image, then delete and re-create the endpoint (`nebius ai endpoint delete $ENDPOINT_ID`;
   the managed URL changes, so update `SPECCHECK_URL` and the Devpost form), or `nebius ai endpoint update` if
   your CLI version has it (`nebius ai endpoint --help`).
 - `/api/health` is the judge's proof: it reports `mode`, which keys are set (true/false only), the model ids and
-  today's spend.
+  today's spend and the remaining USD/Tavily daily budgets.
 
 ## 2. The nightly job
 

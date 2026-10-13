@@ -48,9 +48,12 @@ RATE_LIMIT_RETRIES = 3  # on 429, back off 1s, 2s, 4s, then RateLimited
 
 async def _request(method: str, path: str, body: Optional[dict] = None) -> dict:
     """One HTTP call. 401/403 -> AuthError, 429 -> RateLimited, other errors -> ProviderError with the server's message."""
-    async with httpx.AsyncClient(timeout=180) as c:
-        r = await c.request(method, settings.nebius_base_url.rstrip("/") + path, json=body,
-                            headers={"Authorization": f"Bearer {settings.secret('nebius_api_key')}"})
+    try:
+        async with httpx.AsyncClient(timeout=180) as c:
+            r = await c.request(method, settings.nebius_base_url.rstrip("/") + path, json=body,
+                                headers={"Authorization": f"Bearer {settings.secret('nebius_api_key')}"})
+    except httpx.HTTPError as e:
+        raise ProviderError("Token Factory connection failed") from e
     if r.status_code in (401, 403):
         raise AuthError(f"Token Factory refused the key ({r.status_code}): check NEBIUS_API_KEY")
     if r.status_code == 429:
