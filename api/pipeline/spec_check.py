@@ -35,6 +35,8 @@ def to_number(value) -> Optional[float]:
 
 
 def normalize(value, unit: Optional[str]) -> Optional[float]:
+    if isinstance(value, str) and re.search(r"\b(or|to)\b", value, re.I):
+        return None  # a range or alternatives cannot be treated as the first number
     n = to_number(value)
     if n is None:
         return None
@@ -50,13 +52,15 @@ def _text(value) -> str:
 def _as_list(value) -> list[str]:
     if value is None:
         return []
-    out = []
-    for item in value if isinstance(value, list) else [value]:
-        out.append(_text(item))
-        # Parentheses can group a second identifier with the first.
-        if "(" in str(item):
-            out.extend(_text(part) for part in re.split(r"[()]", str(item)))
-    return out
+    return [str(v) for v in value] if isinstance(value, list) else [str(value)]
+
+
+def _mentions(value: str, wanted: str) -> bool:
+    wanted = _text(wanted)
+    if not wanted:
+        return False
+    pattern = r"(?<![\w.])" + r"[\W_]*".join(map(re.escape, wanted)) + r"(?!\w|[.,]\d)"
+    return re.search(pattern, unicodedata.normalize("NFKC", value).casefold()) is not None
 
 
 OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}
@@ -83,6 +87,12 @@ LABELS = {
     "penetrant_types": "Pipe types covered",
     "document_revision": "Data sheet version",
 }
+
+
+def properties_for(requirements: list[Requirement]) -> list[str]:
+    """Spec dependencies plus known performance properties used to compare revisions."""
+    return sorted(set(LABELS) | {r.property for r in requirements} |
+                  {str(r.value) for r in requirements if r.operator == "eq_ref"})
 
 
 def _label(prop: str) -> str:
@@ -122,15 +132,20 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
 
     findings: list[Finding] = []
     for r in requirements:
-        found = by_prop.get(r.property, [])
+        scoped = by_prop.get(r.property, [])
+        variants = [c.variant for c in scoped if c.variant]
+        found = [c for c in scoped if not c.variant]
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
         related: list[str] = []  # other claims the comparison used (eq_ref)
+        alternatives = None
         left_label, right_label = ("Job needs", "Listing covers") if r.check == "validity" else ("Spec requires", "Submitted")
 
         def make(verdict: str, title: str, detail: str = "", severity: Optional[str] = None,
                  left=None, right=None) -> Finding:
-            shown = right if right is not None else (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not stated"
+            shown = right if right is not None else alternatives
+            if shown is None:
+                shown = (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not stated"
             return Finding(
                 id=f"{r.check}-{r.id}",
                 check=r.check,
@@ -155,23 +170,33 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             continue
 
         if r.operator == "eq_ref" and (claim is None or not by_prop.get(str(r.value))):
-            continue  # rule only applies when both values are present (e.g. T = F applies to systems, not sealant sheets)
+            continue  # conditional comparison requires both values; pending checklist applicability review
 
         if claim is None:
-            findings.append(make("unverified", f"Not stated: {_label(r.property)}", r.text, severity="minor"))
+            if variants:
+                findings.append(make("unverified", f"Option not confirmed: {_label(r.property)}",
+                                     f"Quoted values apply only to {', '.join(dict.fromkeys(variants))}. Confirm the submitted configuration.",
+                                     severity="minor", right="Option dependent"))
+            else:
+                findings.append(make("unverified", f"Not stated: {_label(r.property)}", r.text, severity="minor"))
             continue
 
         ok: Optional[bool] = None
         detail = ""
         left = None
         if r.operator in ("gte", "lte", "eq"):
-            a, b = normalize(claim.value, claim.unit), normalize(r.value, r.unit)
-            if a is not None and b is not None:
-                ok = {"gte": a >= b, "lte": a <= b, "eq": abs(a - b) < 1e-9}[r.operator]
-                detail = f"Package states {_fmt(claim.value, claim.unit)}; spec requires {OPERATOR_WORDS[r.operator]} {_fmt(r.value, r.unit)}."
+            numbers, b = [normalize(c.value, c.unit) for c in found], normalize(r.value, r.unit)
+            if all(a is not None for a in numbers) and b is not None:
+                outcomes = [{"gte": a >= b, "lte": a <= b, "eq": abs(a - b) < 1e-9}[r.operator] for a in numbers]
+                ok = outcomes[0] if len(set(outcomes)) == 1 else None
+                if len(found) > 1:
+                    alternatives = [_fmt(c.value, c.unit) for c in found]
+                    related = [c.id for c in found[1:]]
+                detail = ("Stated alternatives give different outcomes; confirm the submitted configuration." if ok is None else
+                          f"Package states {alternatives or _fmt(claim.value, claim.unit)}; spec requires {OPERATOR_WORDS[r.operator]} {_fmt(r.value, r.unit)}.")
         elif r.operator == "eq_ref":
-            other = by_prop.get(str(r.value), [])
-            if other:
+            other = [c for c in by_prop.get(str(r.value), []) if not c.variant]
+            if len(found) == len(other) == 1:
                 related = [other[0].id]
                 a, b = normalize(claim.value, claim.unit), normalize(other[0].value, other[0].unit)
                 if a is not None and b is not None:
@@ -181,16 +206,16 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                               f"{_label(str(r.value))} is {_fmt(other[0].value, other[0].unit)}.")
         elif r.operator == "contains":
             have = _as_list(claim.value)
-            want = _text(r.value) if r.value is not None else ""
-            ok = bool(want) and any(want in h for h in have)
+            ok = r.value is not None and any(_mentions(h, str(r.value)) for h in have)
             detail = f"Package lists {_fmt(claim.value, None)}; needs {r.value}."
         elif r.operator == "any_of":
             allowed = _as_list(r.value)
-            ok = any(h and h in allowed for h in _as_list(claim.value))
+            ok = any(_mentions(h, a) or (_mentions(a, h) and _mentions(c.quote or "", a))
+                     for c in found for h in _as_list(c.value) for a in allowed)
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:
-            findings.append(make("unverified", f"Couldn't compare: {_label(r.property)}", "Values were not comparable.", severity="minor", left=left))
+            findings.append(make("unverified", f"Couldn't compare: {_label(r.property)}", detail or "Values were not comparable.", severity="minor", left=left))
         elif ok:
             findings.append(make("pass", _label(r.property), detail, left=left))
         else:

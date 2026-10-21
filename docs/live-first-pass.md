@@ -1,7 +1,13 @@
 # First live pass — 2026-10-21
 
-Status: Gate 3 was approved, saved and pushed as `d8eb713`. Phase 4 is diagnosing the first c03 live run.
-No full eight-case live evaluation or demo recording has been made yet.
+Status: Gates 1–3 were accepted; Gate 3 is saved and pushed as `d8eb713`. The first full live baseline
+was **3/8**; the second full run reached **5/8**. Demo recording and Phases 5–7 have not begun.
+The latest completed-run ledger is **$0.721930 / 230 Tavily credits**, before the family-reader retry.
+The original mock baseline remains 8/8; current verification is **237 passed, 2 skipped**, and mock eval 8/8.
+
+Pending Kyle decisions/readings: a 12,000-character input excerpt versus the current 6,000 default;
+missing-reference applicability for F04; updated Tavily dashboard usage/scope. No answer-key or approved
+checklist rows have been changed. Detailed dated evidence and measurements follow.
 
 ## Setup and baseline
 
@@ -80,7 +86,7 @@ Table detection has low fill rates on the old 3M sheet (9/389 cells, 2%) and the
 | First c03 live pass | 0.018874 | 11 |
 
 Before the first provider call `.cache/budget/2026-10-21.json` did not exist.
-After the first c03 live pass it records `{"usd": 0.018874, "credits": 11.0}`.
+At the first c03 checkpoint it recorded `{"usd": 0.018874, "credits": 11.0}`.
 This is the local ledger, not console billing verification.
 Pass ceilings remain $20 and 2,000 credits across the entire pass.
 
@@ -518,3 +524,261 @@ provider/cap failure: 1/1 call and status problem, 0/1 passing fix, 69.404 s, cl
 Ledger: **$0.161701 / 67 credits**. The first full eight-case baseline then started with
 `investigate_max_steps=6`, `search_depth=basic`, `thinking=off`, concurrency 2 and the unchanged reviewed
 checklists. No full-run result is claimed until that run finishes.
+
+
+### First full live baseline — 20261021-082858-431567
+
+All quality defaults were unchanged. This is full eight-case live run **1 of at most 4**.
+
+| Panel | Mock baseline | First full live baseline |
+| --- | ---: | ---: |
+| Right calls | 8/8 | **3/8** |
+| Planted problems caught | 6/6 | **3/6** |
+| Clean items falsely flagged | 0/2 | **1/2** |
+| Passing fixes | 2/5 | **0/5** |
+| Mean time per item | 0.1 s (mock) | **36.770 s**, mixed cache |
+| Reported model + web equivalent per item | $0.085867 (mock estimate) | **$0.063096** |
+| Claims kept | 48/48 | **24/36** (33.3% dropped) |
+| Web values kept | 19/20 | **15/24** (37.5% dropped) |
+
+Use [full-baseline-scores.json](live-first-pass/full-baseline-scores.json) for the exact panel/row values;
+[full-baseline-diagnosis.json](live-first-pass/full-baseline-diagnosis.json) preserves claims, comparisons,
+investigations and warnings. The baseline used cached c03/c07 calls; c07 took only 113 ms. Its latency is
+not a fresh-service benchmark. Fresh ledger delta for this run: **$0.087380 and 47 credits**, bringing the
+pass to **$0.249081 and 114 credits**. Item model costs include cached token estimates. No captured provider
+request raised an error; no 429 or monetary/day/item-cap warning appeared. Investigators for c05, c06 and
+c07 were capped; their affected web/fix assessments are invalid until an uncapped retry.
+
+| Case | Baseline outcome | Stage and evidence for each miss |
+| --- | --- | --- |
+| c01 | approve_with_note, expected approve | Verify/report: all spec rows passed; revision codes `ZSFOD5062 25171` and `ZSFOD5062 22326` differed. Code treated any difference as “newer” without establishing chronology. No G21 answer-key exception is involved. |
+| c02 | approve_with_note, expected spec send_back | Extract: only T=0 was requested/read; the extraction property set omitted the F reference after the reviewed checklist removed the standalone F requirement. The local drawing explicitly states `F Rating — 2 Hr` and `T Rating — 0 Hr`. Search identity also omitted the listed system number and found a generic product certificate. Claims 1/1, web 0/2. |
+| c03 | correct currency send_back, no passing fix | Fix: candidates lack complete quoted checklist evidence, including G21. Claims 9/15 and web 9/9 include candidates. No cap or provider error. |
+| c04 | approve_with_note, expected validity send_back | Extract: the model omitted the penetrating-item list despite receiving its notes page. The PDF's heading says `PLASTIC PIPE THROUGH GYPSUM WALL ASSEMBLY`; page 2 enumerates PVC, CPVC, ABS, FRPP, PVDF and PEX. With no kept coverage claim, code correctly returned unverified rather than a failure. Claims 1/2, web 1/1. |
+| c05 | false spec send_back | Spec check: full phrase `DesignLights Consortium® (DLC) Premium qualified product` failed exact categorical comparison. Extract also selected 10% non-configurable dimming while the same sheet has 1% driver options. It mislabeled L80/60,000 as L70. Warranty is at character 6,748 on an 8,650-character page and was cut by the 6,000-character excerpt. Verify investigator capped; its no-web-confirmation assessment is invalid. Claims 4/4, web 0/4. |
+| c06 | approve_with_note, expected currency send_back | Extract/verify: only L70 and warranty survived; narrowing extraction to checklist properties left out performance values needed for revision comparison. Both attempted web values were dropped. The Investigator then capped. Claims 2/3, web 0/2. |
+| c07 | correct status send_back, no passing fix | Main status has the exact manufacturer notice. The default six-step candidate loops replayed capped results; use the separately recorded 12-step uncapped retry for fix diagnosis, not an unsupported passing-fix claim. Claims 1/5, web 0/0. |
+| c08 | correct approve_with_note | Warranty matched and document revisions differ. L70/MacAdam are additionally unverified, but they are not the sole cause of this note, so Kyle's special answer-key question is not triggered. Claims 1/1, web 1/1. |
+
+The baseline's main scripted checks failed to confirm quoted current evidence on c02, c04, c05 and c06
+and invoked the Investigator: **4 items**. It resolved a quoted document/revision on **2** (c02, c04),
+while c05/c06 capped. Across main and candidate investigations, **3 items** had a capped combined outcome
+(c05, c06, c07). A found document is not a correct substantive call: c02 still missed T versus F, and
+c04 still missed pipe compatibility. No passing replacement was produced on any of the five send-backs.
+
+### General baseline corrections under verification
+
+Extraction now includes referenced properties (not merely the requirement's left operand), and the
+existing vocabulary of performance properties used for currency comparisons. Both the runner and fix
+candidate path use the same property set. Property labels explain meanings without supplying expected
+values. Prompt changes require reading notes/tables, preserving system identity and distinguishing test
+metrics, and retaining separate configuration alternatives. Triage now explicitly recognizes continuation
+pages. No case IDs, answer-key values or manufacturer-specific branches were added.
+
+Categorical checks now match a complete identifier/category phrase inside descriptive text, normalizing
+case and separators while enforcing boundaries. `DLC Premium` can match the longer qualified-product
+phrase; `UL 1479` cannot match `UL 14790` or `UL 1479.1`. Conflicting numeric alternatives are unverified,
+not arbitrarily selected as pass/fail; all-pass and all-fail alternatives retain those outcomes. Range/
+“or” strings are not reduced to their first number. F/T equality cannot compare unpaired alternatives.
+
+The claim gate additionally requires the requested lumen-maintenance label/percentage to occur in its
+quote and requires an explicit F/T rating label for those claims. This prevents an L80 claim becoming
+L70, or a generic fire-resistance duration becoming T. Metric numbers are read from property names;
+there are no case-specific values. Quote matching itself is unchanged. The mock claim gate consequently
+keeps 47/48 rather than 48/48; calls and passing fixes stay 8/8 and 2/5.
+
+Revision-only wording now states that labels differ and their age order is unconfirmed. The report
+receives each coded verdict/severity and is instructed to distinguish missing evidence from a failed
+requirement and documentation differences from proven safety/code violations. It still cannot change
+the decision. Verification: **206 passed, 2 skipped in 11.42 s**, mock eval `20261021-084624-89afb8`.
+
+Kyle has been asked whether the first-page excerpt may increase from 6,000 to 12,000 characters after
+the saved default-quality baseline. Pending his answer, quality settings remain unchanged. Targeted
+c02/c04 retries run first. Approved checklists and all answer-key expectations remain untouched.
+
+
+### Listing and retrieval corrections: measured outcomes
+
+`20261021-084706-627716` reran c02/c04: **2/2 calls and 2/2 planted problems**, no passing fixes.
+c02 now quotes F=2 hr and T=0 hr and correctly fails their equality. c04 quotes the permitted plastic-pipe
+list and correctly fails steel-pipe coverage. c04's web investigation still capped, so its web assessment
+was invalid pending a longer retry. Claims 20/20 and web values 14/14 include candidate checks.
+Ledger after this run: **$0.283279 / 138 credits**.
+
+Raw PDF syntax from Tavily is now rejected as text. The free direct-PDF fallback is attempted; cached
+corrupt responses are repaired individually without paid refetches or clearing `.cache/`. A single bounded
+backfill batch tries other search results when the first sources are unreadable. Direct probes returned
+403/text-html for the current LDN6 and WRTL PDFs: see
+[acuity-direct-pdf-probe.json](live-first-pass/acuity-direct-pdf-probe.json). The Investigator's redundant
+pre-cache credit reservation was removed: provider/WebClient caps still guard paid calls, while cached
+reads work at zero remaining credit allowance. A test proves an extract+finish can succeed entirely from
+cache under a zero-credit investigation scope.
+
+The 12-step c04/c05/c06 retry `20261021-090608-c1f902` completed c04/c06 but c05 hit the 8,192-output-token
+limit. Its error event and charged usage are preserved. The printed c04/c06 calls matched the key, but
+manual review found **unreliable currency evidence**: c04 compared different partial standards claims under
+the same property, and c06 compared the last of several submitted efficacy values with a 75–80 LPW launch
+article. The same LPW quote was even labeled CRI=80. These are not valid grounds for declaring those
+currency problems caught. Ledger after: **$0.355057 / 148 credits**.
+
+Currency comparison now groups values by property and only compares an unambiguous value/unit on both
+sides; it does not overwrite earlier claims or select one of conflicting alternatives. Conditional options
+are excluded from general comparisons. CRI requires a CRI/color-rendering label, including compact `82CRI`
+typography; an LPW quote cannot prove CRI. Only comparable submitted properties are sent to the web reader,
+and having quoted but uncomparable values no longer suppresses the Investigator.
+
+### Linked documents and c01
+
+The legacy STI PDF is genuinely still available and prints `ZSFOD5062 22326` (direct HTTP 200), while
+the manufacturer's live product page links a different CDN data sheet. This is a coexistence/discovery
+issue, not evidence of a post-key revision. See the
+[direct PDF probe](live-first-pass/sti-direct-pdf-probe.json) and
+[HTML link probe](live-first-pass/sti-document-discovery-probe.json).
+
+The shared free downloader now follows one data-sheet/PDF link, including extensionless PDS asset URLs,
+from a public product page. Relative links resolve against that page and private/literal-local targets are
+rejected using the existing public-URL validator. Successful resolution preserves the actual document URL
+and the requested page URL; the fix path follows the resolved URL instead of attributing PDF quotes to the
+HTML page. Resolved results are cached. No manufacturer/case-specific URL or filename was added to code.
+The web reader receives this provenance and prefers the sheet linked by the current product page over a
+standalone search hit.
+
+Retry `20261021-093028-7e0c4b` correctly approved c01 after following that live link. c05 again exceeded
+8,192 output tokens. Ledger: **$0.381328 / 151 credits**. The retry uses the normal 6,000-character input
+excerpt; no pending input-quality decision was assumed.
+
+### c05 output limits, evidence and remaining miss
+
+| Run | Limits for this command | Result | Ledger after |
+| --- | --- | --- | --- |
+| `20261021-093410-e942f4` | 16,384 output tokens; 12 investigation steps | Complete but false spec send-back; partial DLC category and a driver option were treated as general facts | $0.423434 / 160 credits |
+| `20261021-094619-39bd46` | 16,384 output tokens; 12 steps; option field added | Reply reached 16,384 tokens and was cut off; **invalid item**, not a quality miss | $0.443879 / 160 credits |
+| `20261021-095653-618929` | 32,768 output tokens; 12 steps | Complete reply used 3,220 tokens; still false spec send-back; a candidate investigation capped | $0.490957 / 172 credits |
+| `20261021-101307-dd95fb` | 32,768 output tokens; 12 steps; stronger claim gates | approve_with_note; **no spec failure, no cap/provider warning**, still a wrong call versus approve | $0.494373 / 172 credits |
+
+The output-cap changes are disclosed retry settings, not the saved default-quality baseline. `max_output_tokens`
+is now included in score tuning metadata. Error-only scoreboards show zero item cost/time because no complete
+Result exists; **those zeros are not actual spend or latency**. The ledger includes the charged truncated replies,
+and their wire usage/latency and error events remain in the redacted evidence.
+
+A category value such as `Premium` can now be grounded by a full allowed identifier in its exact supporting
+quote; unrelated “Premium” language cannot match another classification. The new optional `variant` field
+preserves exact quoted model/driver qualifiers. Its phrase must itself occur in the supporting quote. Explicit
+leading labels such as “Optional …:” or “Non-Configurable …:” are preserved even if the model omits the
+field. Requirements with only option-specific values remain unverified until the configuration is confirmed.
+This prevents a non-configurable 10% dimming option from becoming a failure for the entire family.
+
+The numeric value/bound gate now also validates submitted claims, including numeric list entries. In one
+actual c05 reply, the model attached a five-year warranty value to a copyright quote; that claim is now dropped.
+The quote still has to appear on its own page, and the metric label checks remain in place. No source word,
+number or requirement is fuzzed to get a pass.
+
+The final c05 targeted run keeps 20/25 claims and 0/3 web values; the Investigator returns found, with no cap.
+Its remaining notes are: no kept L70, warranty or DLC claim; dimming only confirmed for Non-Configurable BLT;
+and a catalog asset date differing from the submitted revision. The catalog row says `Updated` 9/21/2026 for
+BLT.pdf. This proves a catalog asset date, **not the printed PDF revision**; the linked PDF is blocked. It is
+not evidence of a post-October-7 world change, and the key remains untouched. The missing L70 row is retained;
+it is not the sole cause of this note, so Kyle's special G21/L70/MacAdam-only question is not automatically met.
+
+### F04 applicability conflict — decision pending
+
+An attempted change made missing F/T references unverified instead of skipping the conditional comparison.
+It changed the mock eval to **7/8** and passing fixes to **1/5**, with **8 failed, 218 passed, 2 skipped** in
+12.03 s. That conflicts with the instruction to keep the mock baseline green. The change was reverted;
+the existing conditional behavior is retained pending Kyle's explicit decision. Both reviewed checklists and
+all answer-key expectations remain unchanged. The open question is whether F04's “all” means all document
+roles when both ratings are stated, or a missing-pair note for every applicable document. This is an unresolved
+policy issue, not permission to silently remove the approved row or alter the key.
+
+Current verification: **226 passed, 2 skipped in 12.01 s**; mock eval `20261021-101232-2b4a80` remains **8/8**,
+6/6 problems, 0/2 false alarms, 2/5 passing fixes, claims 46/48 and web 19/20. The stricter numeric/metric gates
+explain the changed mock retention count. No web files were changed. The second full run uses the disclosed
+32,768-output/12-step retry settings; input excerpts, search depths, thinking and approved rows are unchanged.
+
+
+### Full live run 2 — 2026-10-21
+
+Run `20261021-101810-01e6fb`; scoreboard and per-item diagnosis are in
+`docs/live-first-pass/full-after-fixes-{scores,diagnosis}.json` and `.txt`.
+Reproduce: `MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=12 .venv/bin/python scripts/eval.py --out /tmp/speccheck-live-full-after-fixes.json`.
+
+| Panel | Full run 1 (defaults) | Full run 2 (disclosed output/step limits) |
+| --- | ---: | ---: |
+| Right calls | 3/8 | 5/8 |
+| Problems caught | 3/6 | 4/6 |
+| Major false alarms on clean items | 1/2 | 0/2 |
+| Passing fixes | 0/5 | 0/5 |
+| Average time/item | 36.770 s | 126.255 s |
+| Equivalent model + web cost/item | $0.063096 | $0.065856 |
+| Claims retained | 24/36 | 144/173 (16.8% dropped) |
+| Web values retained | 15/24 | 17/34 (50.0% dropped) |
+
+The clean-item false-alarm metric counts major failures; c05's unnecessary note remains a wrong call.
+Ledger after the full run: **$0.658762 / 213 credits**, a fresh charge of **$0.164389 / 41 credits**.
+Per-item displayed costs include cached usage equivalents and are not fresh charges.
+
+| Item | Call and diagnosis |
+| --- | --- |
+| c01 | Correct approve; following the product page's linked current data sheet removed the legacy-PDF revision note. |
+| c02 | Correct send-back: quoted F=2 and T=0. The Investigator did not establish a current exact-system document; a generic certificate's revision is not exact-system evidence. |
+| c03 | Correct currency send-back, no passing fix. The current read compared old 120°F continuous temperature with a current 180°F service range. Category code 90G9 was incorrectly read as a revision; metadata remains unreliable. Long latency came mainly from repeated direct HTTP timeouts, not paid model time. |
+| c04 | Correct penetrant validity failure; plastic-pipe values were now kept. No passing fix. |
+| c05 | Wrong approve_with_note instead of approve; L70/warranty/DLC extraction and driver selection remain unresolved. No major false failure. Missing L70 is not the sole note. |
+| c06 | Wrong approve_with_note: current manufacturer PDF unreadable through basic Tavily (raw PDF syntax) and direct fetch (403). Multiple old wattage/efficacy options cannot be compared as one selected value. Investigator not_found. |
+| c07 | Wrong approve_with_note: extracted dimensions/SKU made exact queries too narrow; the family discontinuation notice was missed. Investigator capped at 12 calls. This item is invalid for quality assessment until retried without that cap failure. |
+| c08 | Correct approve_with_note; missing performance evidence and revision differences remain notes. |
+
+No 429 or captured provider error occurred in this run. Existing swallowed-error paths did not all produce
+warning events; they are being fixed with stage/reason-only warnings before the next live retry.
+Follow-up changes under validation: a 15-second total direct-lookup timeout; cache failed linked-PDF probes;
+use the supplied inbox label for a separate family-status query; constrain the web reader's property-name
+schema to the submitted properties without forcing a single variant; give the Investigator a valid JSON
+excerpt containing document body and tail, and explicit separate status-search instructions.
+
+The advanced extraction probe (`advanced-pdf-probe.json`) cost **1 reported credit**, versus the old estimate
+of 2. LDN6 remained unreadable; BLT-2x4.pdf returned readable text with L80, MacAdam and warranty statements.
+That static file has not been established as the current linked BLT.pdf revision. Ledger after probe:
+**$0.658762 / 214 credits**. Default extraction depth was not changed.
+
+Tavily dashboard reconciliation is still pending. Kyle's **15/9000** reading is retained as the dashboard
+observation; its timestamp and account/key scope are unknown. The local ledger is now 214, after subsequent
+runs, so subtracting 15 would not establish a reconciled delta. No dashboard confirmation is claimed.
+
+
+### Status/fetch retry — 2026-10-21
+
+Run `20261021-110250-710e60`, `status-fetch-retry-{scores,diagnosis}.json`:
+**2/3 calls**, 2/3 problems, 0/3 passing fixes. c03 retained the currency send-back in **79.454 s**;
+c02 retained the F/T failure in **64.009 s**. These are mixed-cache retries, not a controlled cold latency comparison.
+c07 remained approve_with_note in **57.428 s**, with an explicit 12-call-cap warning in both the result and events.
+Claims 81/90; web values 8/17. Ledger after: **$0.721930 / 230 credits**; fresh charge **$0.063168 / 16 credits**.
+
+The supplied inbox-label search found the correct TL manufacturer notice. An initial diagnosis blamed
+source selection. Inspecting the complete captured model request disproved that: the notice was included,
+with the discontinuation sentence at character 5,912 of its 12,000-character excerpt. The reader ignored
+the family-wide notice and returned an unrelated CPX product’s values, which were dropped by the gates.
+A selector-priority experiment produced an identical cached result (`20261021-110621-4740c2`), charged
+zero dollars/credits, and was reverted. The next general prompt change supplies the inbox label to the
+reader and asks it to establish family membership when applying a family-wide notice, while excluding
+unrelated products. No source URL, case ID or expected status is embedded in code or prompts.
+Candidate-verification cap skips also now emit stage/reason warnings. This retry's c02 fix discovery wandered into irrelevant scientific results; quote gating
+prevented them from becoming a passing fix, but retrieval quality remains an open problem.
+
+
+### Prompt and matcher changes: before / after
+
+| General change | Before (live evidence) | After (live evidence) |
+| --- | --- | --- |
+| Normalize escaped whitespace and typography on both quote sides | c03 baseline kept 0/4 claims; a literal escaped newline lost a real VOC quote | c03 `20261021-081115-f416b6` kept 8/16 claims and caught currency; unsupported claims still dropped |
+| Ground complete standard identifiers in supporting quotes | Parenthetical test aliases caused a false spec failure in `20261021-075808-b7f23e` | `20261021-080506-f3e537` caught currency without that false standards failure |
+| Require the same numeric value and bound in quote; one feedback retry | `<2` paired with `<250` was wrongly accepted; enforcing the gate initially lost currency | `20261021-081115-f416b6` used the exact `<2` quote; no relaxation of the gate |
+| Read all product/system pages and request equality dependencies plus known performance fields | Full baseline c02 omitted F, c04 omitted the plastic-pipe list, c06 omitted performance options | c02/c04 targeted `20261021-084706-627716` caught both failures with 20/20 claims; c06 variants remain unresolved |
+| Prevent metric relabelling and arbitrary variant selection | L80 became L70, LPW became CRI, a non-configurable driver value became product-wide; duplicate values overwrote one another | c05 `20261021-101307-dd95fb` became a note rather than a false major failure; ambiguous measurements remain unverified |
+| Read the product page's linked document, retain actual PDF URL, reject raw PDF syntax | c01 legacy standalone PDF produced a wrong revision note; raw PDF bytes entered the reader | Full run 2 c01 approved; raw syntax is dropped, unresolved LDN6 is still unknown |
+| Bound direct HTTP time and cache failed document probes | Full run 2 c03 took 467.503 s, largely repeated free HTTP waits | Targeted c03 took 79.454 s with mixed warm caches; no controlled cold speedup claim |
+| Limit web-reader property names in its schema | Replies wandered into unrelated properties, large responses, and cutoffs | Targeted reader replies fit the named properties; multiple variant values remain allowed |
+| Supply input label and ask about family-wide status separately | c07 notice reached the reader but was ignored; unrelated CPX values were dropped | Family-reader retry is pending; not claimed fixed yet |
+| Preserve coded uncertainty in report instructions | A document difference could be described as a safety/code violation | Reports receive verdict/severity and explicit uncertainty guidance; no separate report-quality score is claimed |
+
+Latest mock suite: **237 passed, 2 skipped in 12.60 s**; mock eval `20261021-110847-af1c53`:
+8/8 calls, 6/6 problems, 0/2 major false alarms, 2/5 passing fixes; claims 46/48 and web 19/20.

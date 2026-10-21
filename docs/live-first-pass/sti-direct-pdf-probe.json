@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-21",
+  "method": "Direct httpx GET with browser headers; no API key",
+  "url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf",
+  "status": 200,
+  "pdf": true,
+  "text_chars": 9352,
+  "revision_quotes": [
+    {
+      "page": 1,
+      "quote": "ZSFOD5062 22326"
+    },
+    {
+      "page": 2,
+      "quote": "ZSFOD5062 22326"
+    },
+    {
+      "page": 3,
+      "quote": "ZSFOD5062 22326"
+    }
+  ],
+  "ledger": {
+    "usd": 0.355057,
+    "credits": 148.0
+  }
+}

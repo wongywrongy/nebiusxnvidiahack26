@@ -5,6 +5,7 @@ import os
 import sys
 from pathlib import Path
 
+import pytest
 os.environ.setdefault("SPECCHECK_MODE", "mock")
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
@@ -49,3 +50,46 @@ def test_quote_normalization_keeps_words_numbers_and_page_evidence_exact():
     assert not quoted("rated 120 volts", "rated 120 watts")
     assert not quoted(r"\n\t", "anything")
     assert not quoted("\u2122\u00ae", "anything")
+
+
+@pytest.mark.parametrize("property,quote,value,kept", [
+    ("l70_hours", "80% lumen maintenance at 60,000 hours (L80/60,000)", 60000, False),
+    ("l70_hours", "70% lumen maintenance at 50,000 hours", 50000, True),
+    ("l80_hours", "L80 at 60,000 hours", 60000, True),
+    ("t_rating_hr", "Provides up to a four-hour fire rating", 4, False),
+    ("t_rating_hr", "T-RATING = 0-HR.", 0, True),
+    ("f_rating_hr", "F Rating — 2 Hr", 2, True),
+    ("f_rating_hr", "F Ratings — 1 and 2 Hr", 2, True),
+    ("cri", "75 – 80 typical LPW", 80, False),
+    ("cri", "80 CRI", 80, True),
+    ("cri", "82CRI, 3500 K", 82, True),
+    ("warranty_years", "© 2016-2024 Maker. All rights reserved.", 5, False),
+])
+def test_related_metrics_cannot_be_relabelled(property, quote, value, kept, monkeypatch):
+    from api.pipeline import extract
+    from api.schemas import ClaimsOut, Usage
+    async def call(*args, **kwargs):
+        return ClaimsOut(product="X", manufacturer="Maker", claims=[{
+            "id": "measurement", "product": "X", "manufacturer": "Maker", "property": property,
+            "value": value, "page": 1, "quote": quote}]), Usage(task="extract_claims", tier="extract", model="test")
+    monkeypatch.setattr(extract.router, "call", call)
+    pages = [{"page": 1, "text": quote}]
+    result, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), [property]))
+    assert bool(result.claims) is kept
+
+
+@pytest.mark.parametrize("variant,kept", [("Optional driver", True), ("Different driver", False), (None, True)])
+def test_option_scope_must_be_in_the_supporting_quote(variant, kept, monkeypatch):
+    from api.pipeline import extract
+    from api.schemas import ClaimsOut, Usage
+    quote = "Optional driver: measurement 10"
+    async def call(*args, **kwargs):
+        return ClaimsOut(product="X", manufacturer="Maker", claims=[{
+            "id": "measurement", "product": "X", "manufacturer": "Maker", "property": "measurement",
+            "value": 10, "page": 1, "quote": quote, "variant": variant}]), Usage(task="extract_claims", tier="extract", model="test")
+    monkeypatch.setattr(extract.router, "call", call)
+    pages = [{"page": 1, "text": quote}]
+    result, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), ["measurement"]))
+    assert bool(result.claims) is kept
+    if kept:
+        assert result.claims[0].variant == "Optional driver"

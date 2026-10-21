@@ -72,6 +72,7 @@ class Claim(BaseModel):
     page: Optional[int] = None
     bbox: Optional[list[float]] = None
     quote: Optional[str] = Field(default=None, description="Short text from the page supporting the claim")
+    variant: Optional[str] = Field(default=None, description="Exact phrase in the quote naming the optional model/driver/configuration limiting this value; null for a product-wide statement")
 
 
 class ClaimsOut(BaseModel):

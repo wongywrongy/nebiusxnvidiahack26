@@ -344,6 +344,67 @@ def test_fetch_pdf_keeps_only_pdfs(live):
     assert live[0].calls[0].request.headers["user-agent"].startswith("Mozilla/5.0")
 
 
+def test_document_discovery_uses_public_links_and_resolves_relative_urls():
+    html = '<a href="http://127.0.0.1/private.pdf">Bad</a><a href="/docs/current.pdf">Spec</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
+    assert tavily._document_link('"https://cdn.test/PDS_Product_English"', "https://maker.test") == "https://cdn.test/PDS_Product_English"
+
+
+def test_product_page_extract_resolves_linked_pdf_and_keeps_its_url(live):
+    page, document = "https://maker.test/product", "https://cdn.test/PDS_Product_English"
+    route = live[0].post(f"{tavily.API}/extract").respond(200, json={
+        "results": [{"url": page, "raw_content": "Product Data Sheet"}], "usage": {"credits": 1}})
+    html = live[0].get(page).respond(200, text=f'<a href="{document}">Product Data Sheet</a>')
+    doc = pymupdf.open()
+    doc.new_page().insert_text((72, 72), "Manufacturer product data sheet, Revision C")
+    pdf = live[0].get(document).respond(200, content=doc.tobytes())
+    pages, spent = asyncio.run(tavily.extract([page]))
+    assert pages[0]["url"] == document and pages[0]["requested_url"] == page
+    assert "Revision C" in pages[0]["raw_content"] and spent == 1
+    assert asyncio.run(tavily.extract([page])) == (pages, 0)
+    assert len(route.calls) == len(html.calls) == len(pdf.calls) == 1
+
+
+def test_failed_linked_pdf_probe_is_not_repeated_on_cache_hit(live):
+    page = "https://maker.test/product"
+    post = live[0].post(tavily.API + "/extract").respond(200, json={
+        "results": [{"url": page, "raw_content": "Product data sheet"}]})
+    direct = live[0].get(page).respond(403)
+    first, _ = asyncio.run(tavily.extract([page]))
+    second, spent = asyncio.run(tavily.extract([page]))
+    assert second == first and first[0]["raw_content"] == "Product data sheet"
+    assert spent == 0 and len(post.calls) == len(direct.calls) == 1
+
+
+def test_direct_pdf_lookup_has_total_timeout(live, monkeypatch):
+    real_timeout = asyncio.timeout
+    monkeypatch.setattr(tavily.asyncio, "timeout", lambda _: real_timeout(0))
+    async def delayed(request):
+        await asyncio.sleep(0.01)
+        return httpx.Response(200, content=b"%PDF-invalid")
+    live[0].get(URL := "https://maker.test/slow.pdf").mock(side_effect=delayed)
+    assert asyncio.run(tavily.fetch_pdf(URL)) is None
+
+
+@pytest.mark.parametrize("cached", [False, True])
+def test_raw_pdf_syntax_is_replaced_with_direct_text_or_dropped(live, cached):
+    from api import cache
+    urls = ["https://m.test/good.pdf", "https://m.test/blocked.pdf"]
+    raw = [{"url": u, "raw_content": "%PDF-1.7 1 0 obj xref gibberish"} for u in urls]
+    route = live[0].post(f"{tavily.API}/extract").respond(200, json={"results": raw, "usage": {"credits": 1}})
+    if cached:
+        cache.put("tavily_extract", {"urls": sorted(urls), "depth": "basic"}, raw)
+    doc = pymupdf.open()
+    doc.new_page().insert_text((72, 72), "Readable current product data, Rev C")
+    live[0].get(urls[0]).respond(200, content=doc.tobytes())
+    live[0].get(urls[1]).respond(403)
+    pages, spent = asyncio.run(tavily.extract(urls))
+    assert [p["url"] for p in pages] == [urls[0]] and "Rev C" in pages[0]["raw_content"]
+    assert spent == (0 if cached else 1) and len(route.calls) == (0 if cached else 1)
+    assert asyncio.run(tavily.extract(urls))[0] == pages
+    assert tavily._pdf_syntax("binary fragment\nstartxref\n116\n%%EOF")
+
+
 # ---------- budget in the pipeline (mock mode) ----------
 
 def test_budget_exceeded_marks_step_couldnt_confirm(monkeypatch):
@@ -353,6 +414,8 @@ def test_budget_exceeded_marks_step_couldnt_confirm(monkeypatch):
     for cid in ("c01", "c03"):
         f = next(f for f in run.results[cid].findings if f.check == "currency")
         assert f.verdict == "unverified" and f.title == "Couldn't confirm the current documents" and "Tavily cap" in f.detail
+        assert any("verify:" in warning and "Tavily cap" in warning for warning in run.results[cid].warnings)
+        assert any(e.case_id == cid and e.stage == "verify" and (e.data or {}).get("warning") for e in run.events)
     shutil.rmtree(run.dir, ignore_errors=True)
 
 

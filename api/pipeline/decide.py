@@ -34,9 +34,12 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
                 "content": (
                     "Write the result of a submittal review for a busy project engineer. Plain language, no jargon, no model names. "
                     "Give a one or two sentence summary, a short note to send to the subcontractor, a plain title for each issue, "
-                    "and one sentence on why each issue matters on site. Where an issue has a suggested_fix, name it in the note.\n\n"
+                    "and one sentence on why each issue matters on site. Where an issue has a suggested_fix, name it in the note. "
+                    "Respect each coded verdict: unverified or not stated means missing evidence, not a failed requirement. "
+                    "Different revision labels alone do not establish which document is newer. "
+                    "Do not infer safety or code violations from a documentation difference.\n\n"
                     + json.dumps({"submittal": title, "decision": decision,
-                                  "issues": [{**f.model_dump(include={"id", "title", "detail", "spec_ref"}),
+                                  "issues": [{**f.model_dump(include={"id", "title", "detail", "spec_ref", "verdict", "severity"}),
                                               "suggested_fix": f.fix.suggest if f.fix else None} for f in issues]})
                 ),
             }

@@ -1,0 +1,727 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-101307-dd95fb",
+  "reproduction": "MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=12 .venv/bin/python scripts/eval.py --case c05 --out /tmp/speccheck-c05-grounded-retry.json",
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_output_tokens": 32768,
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 12,
+    "map_limit": 20
+  },
+  "ledger_after": {
+    "usd": 0.494373,
+    "credits": 172.0
+  },
+  "items": {
+    "c05": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "cl-2",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "cri",
+          "value": 90.0,
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "LP930\n90CRI, 3000K",
+          "variant": "LP930"
+        },
+        {
+          "id": "cl-3",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "cri",
+          "value": 90.0,
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "LP935\n90CRI, 3500K",
+          "variant": "LP935"
+        },
+        {
+          "id": "cl-4",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "cri",
+          "value": 90.0,
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "LP940\n90CRI, 4000K",
+          "variant": "LP940"
+        },
+        {
+          "id": "cl-5",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "cri",
+          "value": 90.0,
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "LP950\n90CRI, 5000K",
+          "variant": "LP950"
+        },
+        {
+          "id": "cl-6",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "dim_min_percent",
+          "value": 10.0,
+          "unit": "%",
+          "page": 1,
+          "bbox": null,
+          "quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+          "variant": "Non-Configurable BLT"
+        },
+        {
+          "id": "cl-9",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "efficacy_lm_per_w",
+          "value": ">100",
+          "unit": "LPW",
+          "page": 2,
+          "bbox": null,
+          "quote": "Standard efficiency\n(>100 LPW)",
+          "variant": "Standard efficiency"
+        },
+        {
+          "id": "cl-10",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_120v",
+          "value": 31.69,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 40L ADP LP835\n00190887470789\n4000\n31.69\n126.22\n3500K/82 CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-11",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_120v",
+          "value": 31.69,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 40L ADP LP840\n00190887470765\n4063\n31.69\n128.23\n4000K/82CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-12",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_120v",
+          "value": 38.0,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 46L ADP LP835\n00190887468656\n4960\n38\n130.5\n3500K/82 CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-13",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_120v",
+          "value": 38.0,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 46L ADP LP840\n00190887468649\n5039.18\n38\n132.58\n4000K/82CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-14",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_277v",
+          "value": 31.69,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 40L ADP LP835\n00190887470789\n4000\n31.69\n126.22\n3500K/82 CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-15",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_277v",
+          "value": 31.69,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 40L ADP LP840\n00190887470765\n4063\n31.69\n128.23\n4000K/82CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-16",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_277v",
+          "value": 38.0,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 46L ADP LP835\n00190887468656\n4960\n38\n130.5\n3500K/82 CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-17",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "input_watts_277v",
+          "value": 38.0,
+          "unit": "W",
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 46L ADP LP840\n00190887468649\n5039.18\n38\n132.58\n4000K/82CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-19",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "lumens",
+          "value": 4000.0,
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 40L ADP LP835\n00190887470789\n4000\n31.69\n126.22\n3500K/82 CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-20",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "lumens",
+          "value": 4063.0,
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 40L ADP LP840\n00190887470765\n4063\n31.69\n128.23\n4000K/82CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-21",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "lumens",
+          "value": 4960.0,
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 46L ADP LP835\n00190887468656\n4960\n38\n130.5\n3500K/82 CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-22",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "lumens",
+          "value": 5039.18,
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "2BLT4 46L ADP LP840\n00190887468649\n5039.18\n38\n132.58\n4000K/82CRI\n120-277\n28",
+          "variant": null
+        },
+        {
+          "id": "cl-23",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "macadam_steps",
+          "value": 3.0,
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+          "variant": null
+        },
+        {
+          "id": "cl-24",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "standards",
+          "value": [
+            "ISO 14644-1"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "Tested in accordance with ISO 14644-1; suitable for use in ISO 5-9 positive and negative pressure clean rooms.",
+          "variant": null
+        }
+      ],
+      "comparison": [
+        {
+          "property": "document_revision",
+          "label": "Data sheet version",
+          "submitted": "Rev. 07/18/24",
+          "current": "9/21/2026",
+          "changed": true,
+          "source_url": null,
+          "quote": null
+        }
+      ],
+      "warnings": [],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "BLT-2X4 2BLT4 specification sheet datasheet acuitybrands.com",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 2,
+            "tool": "search",
+            "args": {
+              "query": "\"2BLT4\" spec sheet pdf acuitybrands.com",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 4,
+            "tool": "search",
+            "args": {
+              "query": "BLT-2X4 2BLT4 specifications revised date acuitybrands.com",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 5,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt.pdf?abl_version=10/30/2025+09:14:03&DOC_Type=SPEC_SHEET"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 6,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/456337/lithonia-lighting/blt-series/low-profile-recessed-led-luminaire"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 66
+          },
+          {
+            "n": 7,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt.pdf?abl_version=09/21/2026+14:25:11&DOC_Type=SPEC_SHEET"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 8,
+            "tool": "search",
+            "args": {
+              "query": "\"2BLT4\" \"spec sheet\" \"revised\" site:acuitybrands.com",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 9,
+            "tool": "finish",
+            "args": {
+              "found": true,
+              "document_url": "https://www.acuitybrands.com/products/detail/456337/lithonia-lighting/blt-series/low-profile-recessed-led-luminaire",
+              "document_title": "BLT.pdf",
+              "revision_quote": "9/21/2026",
+              "status": "active",
+              "status_quote": "9/21/2026",
+              "note": "Found the manufacturer's spec sheet for BLT Series which includes the 2BLT4 model. The document title is \"BLT.pdf\" with revision/update date of \"9/21/2026\" as shown in the product page's spec sheet table. The future update date indicates the product is still actively maintained and supported."
+            },
+            "summary": "9/21/2026, active",
+            "credits": 0.0,
+            "ms": 4
+          }
+        ],
+        "outcome": "found"
+      },
+      "document_revision": "Rev. 07/18/24",
+      "claims_extracted": 25,
+      "claims_kept": 20,
+      "web_values_read": 3,
+      "web_values_kept": 0,
+      "findings": [
+        {
+          "id": "spec-req_t_rating_hr_led",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2265 50000 hr",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-req_warranty_years_led",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "Warranty Period for LED Luminaires, including LED modules, LED boards, chips, and drivers: Five (5) years from date of Preliminary Acceptance.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2265 5 yr",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-lt-dlc",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "Listed as a qualified DLC product, where applicable.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": [
+              "dlc standard",
+              "dlc premium"
+            ],
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-req_macadam_ellipse",
+          "check": "spec",
+          "verdict": "pass",
+          "severity": "info",
+          "detail": "Package states 3; spec requires at most 3.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 3",
+            "right_label": "Submitted",
+            "right_value": "3",
+            "verdict": "pass",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-lt-dim",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "Quoted values apply only to Non-Configurable BLT. Confirm the submitted configuration.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 5 %",
+            "right_label": "Submitted",
+            "right_value": "Option dependent",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "currency-newer",
+          "check": "currency",
+          "verdict": "note",
+          "severity": "minor",
+          "detail": "Submitted Rev. 07/18/24, web source 9/21/2026. The revision labels differ; their age order is not confirmed.",
+          "compare": {
+            "left_label": "Submitted",
+            "left_value": "Rev. 07/18/24",
+            "right_label": "Current",
+            "right_value": "9/21/2026",
+            "verdict": "changed",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": [
+            {
+              "url": "https://www.acuitybrands.com/-/media/abl/acuitybrands/files/who-we-are/sustainability-company/fluorescent-to-led-crossover-guide.pdf",
+              "tier": "manufacturer",
+              "title": "https://www.acuitybrands.com/-/media/abl/acuitybrands/files/who-we-are/sustainability-company/fluorescent-to-led-crossover-guide.pdf",
+              "retrieved_at": "2026-10-21T10:13:07+00:00",
+              "sha256": "bcb9864ff56a22126743879f86be5c8206f703e07d1ba3887bdac3d447ee7f4b",
+              "excerpt": " \n \n \n \n \nCategory\nFamily\nLED Alternate\nLB\nLBL\nNarrow Wraps\nFMLWL\nSB\nSBL\nCPD\nFMLWL\nRB\nFMLWL\nL7XF, L7XFR\nQC6, QC6R\nLP6F, LP8F\nLBR6, LBR8\nSaturn Flush - Semi-Flush\nLED Saturn Flush - Semi-Flush \nGlobe Flush - Semi-Flush\nLED Globe Flush - Simi-Flush\nFerros Sconce\nN/A\nLinon Half Round Sconce\nN/A\n2UC\nUCES\nUC\nUCES\nUC8\nUCES\nUC5D\nUPLD\nGT\nGTL\nSP\nGTL\nParamax\nESL\nC\nCSS\nMNS\nCSS\nRR\nUFIT\nUN\nCSS\nZ\nZLED\nMS\nUFIT\nL",
+              "archived_path": null
+            },
+            {
+              "url": "https://www.acuitybrands.com/products/detail/456337/lithonia-lighting/blt-series/low-profile-recessed-led-luminaire",
+              "tier": "manufacturer",
+              "title": "BLT.pdf",
+              "retrieved_at": "2026-10-21T10:13:08+00:00",
+              "sha256": "2c7ef6c6ad0834d372acfa62f7ee50ce012d1505153400075d85684c57677cf3",
+              "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+              "archived_path": null
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "error_events": [],
+  "requests_responses": [
+    {
+      "provider": "api.providers.tokenfactory",
+      "item_id": "c05",
+      "started_at": "2026-10-21T10:13:07.410523+00:00",
+      "latency_ms": 1233,
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "max_tokens": 32768,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "format": "json_schema",
+        "has_tools": false,
+        "messages": [
+          {
+            "role": "system",
+            "instruction_excerpt": "Reply with JSON only. It must match this JSON schema:\n{\"$defs\": {\"PropertyValue\": {\"properties\": {\"property\": {\"title\": \"Property\", \"type\": \"string\"}, \"value\": {\"anyOf\": [{\"type\": \"number\"}, {\"type\": \"string\"}, {\"items\": {\"type\": \"string\"}, \"type\": \"array\"}, {\"type\": \"null\"}], \"title\": \"Value\"}, \"unit\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Unit\"}, \"quote\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Exact text from the source stating this value\", \"title\": \"Quote\"}}, \"required\": [\"property\", \"value\"], \"title\": \"PropertyValue\", \"type\": \"object\"}}, \"description\": \"What the model concluded after reading the web sources for one product.\", \"properties\": {\"status\": {\"enum\": [\"active\", \"discontinued\", \"unknown\"], \"title\": \"Status\", \"type\": \"string\"}, \"replacement\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Replacement\"}, \"current_revision\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Revision or date exactly as printed on the source\", \"title\": \"Current Revision\"}, \"status_date\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Date it was discontinued or replaced, as stated\", \"title\": \"Status Date\"}, \"status_quote\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Exact text from the source stating the status\", \"title\": \"Status Quote\"}, \"current_values\": {\"default\": [], \"items\": {\"$ref\": \"#/$defs/PropertyValue\"}, \"title\": \"Current Values\", \"type\": \"array\"}, \"source_urls\": {\"default\": [], \"items\": {\"type\": \"string\"}, \"title\": \"Source Urls\", \"type\": \"array\"}, \"notes\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Notes\"}}, \"required\": [\"status\"], \"title\": \"VerifyOut\", \"type\": \"object\"}",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          },
+          {
+            "role": "user",
+            "instruction_excerpt": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote.",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          }
+        ]
+      },
+      "response": {
+        "finish_reason": "stop",
+        "message": {
+          "content": "{\"status\": \"unknown\", \"current_revision\": null, \"status_date\": null, \"status_quote\": null, \"current_values\": [], \"source_urls\": []}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 39,
+          "prompt_tokens": 1896,
+          "total_tokens": 1935,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1896
+        }
+      }
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "item_id": "c05",
+      "started_at": "2026-10-21T10:13:08.725390+00:00",
+      "latency_ms": 2489,
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "max_tokens": 32768,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "format": "json_schema",
+        "has_tools": false,
+        "messages": [
+          {
+            "role": "system",
+            "instruction_excerpt": "Reply with JSON only. It must match this JSON schema:\n{\"$defs\": {\"PropertyValue\": {\"properties\": {\"property\": {\"title\": \"Property\", \"type\": \"string\"}, \"value\": {\"anyOf\": [{\"type\": \"number\"}, {\"type\": \"string\"}, {\"items\": {\"type\": \"string\"}, \"type\": \"array\"}, {\"type\": \"null\"}], \"title\": \"Value\"}, \"unit\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Unit\"}, \"quote\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Exact text from the source stating this value\", \"title\": \"Quote\"}}, \"required\": [\"property\", \"value\"], \"title\": \"PropertyValue\", \"type\": \"object\"}}, \"description\": \"What the model concluded after reading the web sources for one product.\", \"properties\": {\"status\": {\"enum\": [\"active\", \"discontinued\", \"unknown\"], \"title\": \"Status\", \"type\": \"string\"}, \"replacement\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Replacement\"}, \"current_revision\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Revision or date exactly as printed on the source\", \"title\": \"Current Revision\"}, \"status_date\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Date it was discontinued or replaced, as stated\", \"title\": \"Status Date\"}, \"status_quote\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Exact text from the source stating the status\", \"title\": \"Status Quote\"}, \"current_values\": {\"default\": [], \"items\": {\"$ref\": \"#/$defs/PropertyValue\"}, \"title\": \"Current Values\", \"type\": \"array\"}, \"source_urls\": {\"default\": [], \"items\": {\"type\": \"string\"}, \"title\": \"Source Urls\", \"type\": \"array\"}, \"notes\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Notes\"}}, \"required\": [\"status\"], \"title\": \"VerifyOut\", \"type\": \"object\"}",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          },
+          {
+            "role": "user",
+            "instruction_excerpt": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote.",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          }
+        ]
+      },
+      "response": {
+        "finish_reason": "stop",
+        "message": {
+          "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"Rev. 07/18/24\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"macadam_steps\", \"value\": 3.0, \"unit\": null, \"quote\": \"| Size | 1x2, 1x4, 2x2, 2x4 |\"}, {\"property\": \"standards\", \"value\": [\"ISO 14644-1], unit: null, quote: \"]}, {\"property\": \"standards\", \"value\": [\"ISO 14644-1\"], \"unit\": null, \"quote\": \"\"}], \"source_urls\": [\"https://www.acuitybrands.com/products/detail/456337/lithonia-lighting/blt-series/low-profile-recessed-led-luminaire\"], \"notes\": null}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 208,
+          "prompt_tokens": 6829,
+          "total_tokens": 7037,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 6829
+        }
+      }
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "item_id": "c05",
+      "started_at": "2026-10-21T10:13:11.227333+00:00",
+      "latency_ms": 2755,
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "max_tokens": 32768,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "format": "json_schema",
+        "has_tools": false,
+        "messages": [
+          {
+            "role": "system",
+            "instruction_excerpt": "Reply with JSON only. It must match this JSON schema:\n{\"properties\": {\"summary\": {\"description\": \"One or two plain-language sentences\", \"title\": \"Summary\", \"type\": \"string\"}, \"note_to_subcontractor\": {\"title\": \"Note To Subcontractor\", \"type\": \"string\"}, \"finding_titles\": {\"additionalProperties\": {\"type\": \"string\"}, \"default\": {}, \"description\": \"Plain-language title per finding id\", \"title\": \"Finding Titles\", \"type\": \"object\"}, \"why_it_matters\": {\"additionalProperties\": {\"type\": \"string\"}, \"default\": {}, \"title\": \"Why It Matters\", \"type\": \"object\"}}, \"required\": [\"summary\", \"note_to_subcontractor\"], \"title\": \"ReportOut\", \"type\": \"object\"}",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          },
+          {
+            "role": "user",
+            "instruction_excerpt": "Write the result of a submittal review for a busy project engineer. Plain language, no jargon, no model names. Give a one or two sentence summary, a short note to send to the subcontractor, a plain title for each issue, and one sentence on why each issue matters on site. Where an issue has a suggested_fix, name it in the note. Respect each coded verdict: unverified or not stated means missing evidence, not a failed requirement. Different revision labels alone do not establish which document is newer. Do not infer safety or code violations from a documentation difference.",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          }
+        ]
+      },
+      "response": {
+        "finish_reason": "stop",
+        "message": {
+          "content": "{\"summary\": \"The LED troffer submittal lacks key performance details like rated life, warranty, DLC listing, and dimming confirmation\u2014none are verified in the submission. Please provide the missing information so we can confirm compliance before installation.\", \"note_to_subcontractor\": \"Please submit documentation confirming the LED troffer\u2019s rated life (L70 at 50,000 hours), 5-year warranty, DLC qualification, and dimming capability for the specific configuration submitted. No changes were found in the revised document that affect performance values.\", \"finding_titles\": {\"spec-req_t_rating_hr_led\": \"Rated life (L70) not stated\", \"spec-req_warranty_years_led\": \"Warranty period not stated\", \"spec-lt-dlc\": \"DLC listing not confirmed\", \"spec-lt-dim\": \"Dimming performance not confirmed for submitted configuration\", \"currency-newer\": \"Revision label differs but no value changes confirmed\"}, \"why_it_matters\": {\"spec-req_t_rating_hr_led\": \"Without verified rated life, we can\u2019t ensure the lights will last as expected in classrooms, risking early replacements.\", \"spec-req_warranty_years_led\": \"Missing warranty info leaves us unprotected if fixtures fail prematurely after installation.\", \"spec-lt-dlc\": \"DLC listing may be required for energy rebates or compliance\u2014we need proof to qualify for incentives.\", \"spec-lt-dim\": \"If the lights don\u2019t dim as specified, teachers won\u2019t be able to adjust lighting for different classroom activities.\", \"currency-newer\": \"A different revision number doesn\u2019t mean the content is newer or better\u2014we need actual data, not just a date label.\"}}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 368,
+          "prompt_tokens": 817,
+          "total_tokens": 1185,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 817
+        }
+      }
+    }
+  ]
+}

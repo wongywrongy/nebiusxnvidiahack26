@@ -10,7 +10,11 @@ from __future__ import annotations
 
 import logging
 import math
+import re
+import asyncio
+from html import unescape
 from typing import Any, Optional
+from urllib.parse import urljoin, urlparse
 
 import httpx
 
@@ -43,6 +47,32 @@ def map_credits(pages: int, instructions: Optional[str] = None) -> int:
 def _credits(response: dict, estimate: int) -> int:
     n = (response.get("usage") or {}).get("credits")
     return n if type(n) is int and n >= 0 else estimate
+
+
+def _pdf_syntax(text: str) -> bool:
+    return text.lstrip().startswith("%PDF-") or ("startxref" in text[-1000:] and "%%EOF" in text[-1000:])
+
+
+def _document_link(text: str, base: str) -> Optional[str]:
+    from ..pipeline.investigate import Extract
+
+    links = re.finditer(r'''href\s*=\s*["']([^"']+)["']|(https?://[^\s"'<>()[\]]+)''', text, re.I)
+    candidates = [m[1] or m[2] for m in links]
+    candidates += re.findall(r"\(([^\s)]+\.pdf(?:\?[^\s)]*)?)\)", text, re.I)
+    for link in candidates:
+        link = urljoin(base, unescape(link))
+        if not re.search(r"\.pdf(?:[?#]|$)|/(?:PDS[_-]|[^/?#]*spec[_-]sheet)", link, re.I):
+            continue
+        try:
+            return Extract(url=link).url
+        except ValueError:
+            continue
+    return None
+
+
+def _pdf_result(requested: str, pages: list[dict]) -> dict:
+    return {"url": pages[0].get("source_url", requested), "requested_url": requested,
+            "raw_content": "\n".join(p["text"] for p in pages)}
 
 
 async def _post(path: str, body: dict) -> dict:
@@ -99,16 +129,39 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
 
     async def call():
         resp = await _post("/extract", {"urls": urls, "extract_depth": depth, "include_usage": True})
-        got = [{"url": r["url"], "raw_content": r.get("raw_content", "")} for r in resp.get("results", [])]
-        paid.append(_credits(resp, extract_credits(len(got), depth)))
+        returned = resp.get("results", [])
+        paid.append(_credits(resp, extract_credits(len(returned), depth)))
+        got = [{"url": r["url"], "raw_content": r.get("raw_content") or ""} for r in returned
+               if r.get("raw_content") and not _pdf_syntax(r["raw_content"])]
+        if len(got) < len(returned):
+            log.warning("Tavily extract returned empty text or raw PDF syntax; trying direct PDF download")
         for u in set(urls) - {g["url"] for g in got}:
             if pages := await fetch_pdf(u):
-                got.append({"url": u, "raw_content": "\n".join(p["text"] for p in pages)})
+                got.append(_pdf_result(u, pages))
         return got
 
     key = {"urls": sorted(urls), "depth": depth}
-    return await _cached("tavily_extract", key, extract_credits(len(urls), depth), call,
-                         lambda _: paid[0])
+    results, spent = await _cached("tavily_extract", key, extract_credits(len(urls), depth), call, lambda _: paid[0])
+    # Old cache entries may predate the raw-PDF check. Repair only those entries, without paid refetches.
+    resolved = []
+    for r in results:
+        text = r.get("raw_content") or ""
+        corrupt = _pdf_syntax(text)
+        linked = (not r.get("document_checked") and not r.get("requested_url") and not urlparse(r["url"]).path.lower().endswith(".pdf") and
+                  (_document_link(text, r["url"]) or re.search(r"\b(?:product data|spec(?:ification)?)\s+sheet", text, re.I)))
+        if corrupt or linked:
+            if corrupt:
+                log.warning("Tavily extract cache contains raw PDF syntax; trying direct PDF download")
+            if pages := await fetch_pdf(r["url"]):
+                resolved.append(_pdf_result(r["url"], pages))
+                continue
+            if linked:
+                r = {**r, "document_checked": True}
+        if not corrupt:
+            resolved.append(r)
+    if resolved != results:
+        cache.put("tavily_extract", key, resolved)
+    return resolved, spent
 
 
 async def map(url: str, instructions: Optional[str] = None, limit: Optional[int] = None,
@@ -129,17 +182,21 @@ async def map(url: str, instructions: Optional[str] = None, limit: Optional[int]
 
 
 async def fetch_pdf(url: str) -> Optional[list[dict]]:
-    """Direct download with browser headers. Pages of text if the body is a real PDF, else None."""
+    """Read a PDF or one linked data sheet, with a bounded total lookup time."""
     from ..pipeline.ingest import pdf_pages
 
     try:
-        async with httpx.AsyncClient(headers=BROWSER_HEADERS, follow_redirects=True, timeout=60) as c:
-            r = await c.get(url)
-    except httpx.HTTPError:
+        async with asyncio.timeout(15):
+            async with httpx.AsyncClient(headers=BROWSER_HEADERS, follow_redirects=True, max_redirects=3, timeout=10) as c:
+                r = await c.get(url)
+                if r.is_success and not r.content.startswith(b"%PDF"):
+                    if link := _document_link(r.text, str(r.url)):
+                        r = await c.get(link)
+    except (httpx.HTTPError, TimeoutError):
         return None
     if r.is_error or not r.content.startswith(b"%PDF"):
         return None
     try:
-        return await pdf_pages(r.content)
+        return [{**p, "source_url": str(r.url)} for p in await pdf_pages(r.content)]
     except Exception:  # truncated or broken PDF
         return None

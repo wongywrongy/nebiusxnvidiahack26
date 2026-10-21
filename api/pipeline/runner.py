@@ -103,6 +103,10 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     async def investigating(tool: str):
         run.emit("investigate", f"Investigating: {tool} …", case_id, settings.models["verify"])
         await run.pause()
+    async def warn(stage: str, reason: str):
+        message = f"{stage}: {reason}; couldn't confirm"
+        warnings.append(message)
+        run.emit(stage.split(".")[0], message, case_id, data={"warning": True, "stage": stage})
     budget.ITEM.set(case_id)  # this task's own context: credit caps are per item
     FORCE_MOCK.set(case_id in run.mock)
     async with sem:
@@ -131,7 +135,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             requirements = reqs.requirements + [Requirement(**c) for c in case.get("conditions", [])]
             skip = set(case.get("not_applicable", []))
             requirements = [r for r in requirements if r.property not in skip]
-            props = sorted({r.property for r in requirements})
+            props = spec_check.properties_for(requirements)
             claims, u = await extract.extract_claims(fx, pages, labels, props)
             usage.append(u)
 
@@ -143,11 +147,12 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
                      data={"spec": tally})
             try:
-                vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating)
+                vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating, on_warning=warn)
                 usage += u
                 if inv is not None:
                     investigations.append(inv)
             except (BudgetExceeded, ProviderError) as e:
+                await warn("verify", failure_reason(e))
                 vf, rows, credits = [verify.unconfirmed(failure_reason(e))], [], run.ledger.credits.get(case_id, 0.0)
             findings += vf
             await run.pause()
@@ -161,12 +166,11 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 try:
                     u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
                                                           settings.fix_max_candidates, settings.fix_credit_cap,
-                                                          investigations=investigations, on_step=investigating)
+                                                          investigations=investigations, on_step=investigating, on_warning=warn)
                     usage += u
                     credits += fix_credits
                 except (BudgetExceeded, ProviderError) as e:
-                    warnings.append(f"Couldn't confirm a fix: {failure_reason(e)}")
-                    run.emit("fix", warnings[-1], case_id)
+                    await warn("fix", failure_reason(e))
                     credits = run.ledger.credits.get(case_id, credits)
                 await run.pause()
 
@@ -177,7 +181,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 rep, u = await decide.report(fx, case["title"], decision, findings)
                 usage += u
             except (BudgetExceeded, ProviderError) as e:
-                warnings.append(f"Couldn't write the summary: {failure_reason(e)}")
+                await warn("report", failure_reason(e))
                 rep = ReportOut(summary=f"{warnings[-1]}. The decision and findings above stand.",
                                 note_to_subcontractor="")
             attach_highlights(case, claims.claims, findings, ocr_pages=ocr_pages)

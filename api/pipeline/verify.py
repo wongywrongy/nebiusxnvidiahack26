@@ -15,7 +15,7 @@ from ..llm import load_fixture, router
 from ..providers import ProviderError, budget
 from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Investigation, Usage, VerifyOut
 from ..web import WebClient, snapshot
-from .extract import quoted
+from .extract import metric_quoted, numeric_quote, quoted
 from .investigate import investigate
 from .spec_check import _fmt, _label, to_number
 from . import metrics
@@ -51,17 +51,31 @@ def source_urls(results: list[dict], domains: list[str]) -> list[str]:
 
 def _same(a, b) -> bool:
     if isinstance(a, list) or isinstance(b, list):
-        return sorted(map(str, a or [])) == sorted(map(str, b or []))
+        left = a if isinstance(a, list) else [a]
+        right = b if isinstance(b, list) else [b]
+        if len(left) == len(right) == 1:
+            return _same(left[0], right[0])
+        return sorted(map(str, left)) == sorted(map(str, right))
     na, nb = to_number(a), to_number(b)
     if na is not None and nb is not None and str(a).strip()[:1] not in "<>" and str(b).strip()[:1] not in "<>":
         return abs(na - nb) < 1e-9
     return str(a).strip().lower() == str(b).strip().lower()
 
 
-async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
+def _unambiguous(values) -> dict:
+    grouped = {}
+    for value in values:
+        if getattr(value, "variant", None):
+            continue
+        grouped.setdefault(value.property, []).append(value)
+    return {prop: group[0] for prop, group in grouped.items()
+            if all(_same(group[0].value, v.value) and group[0].unit == v.unit for v in group)}
+
+
+async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=None
                  ) -> tuple[list[Finding], list[CompareRow], list[Usage], float, Investigation | None]:
     fx = case.get("fixture", case["id"])  # uploads: the matching case's fixture, or None
-    web = WebClient(fx, on_step)
+    web = WebClient(fx, on_step, on_warning)
     domains = case.get("manufacturer_domains", [])
     name = " ".join(x for x in [submitted.manufacturer, submitted.product, submitted.model or ""] if x)
 
@@ -73,7 +87,8 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
         results += await web.search(f"{status_name} discontinued OR replaced", topic=topic,
                                     include_published_date=True, exact_match=bool(model))
     if domains:
-        results += await web.search(f"{submitted.manufacturer} {submitted.product} discontinuation notice",
+        label = case.get("product") or f"{submitted.manufacturer} {submitted.product}"
+        results += await web.search(f"{label} discontinuation notice",
                                     include_domains=domains, include_domains_mode="prefer")
     # One bounded map attempt can find a PDF missed by search before escalating to the investigator.
     if domains and not any(classify(r["url"], domains) == "manufacturer" for r in results):
@@ -83,26 +98,32 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
                                       limit=min(20, settings.map_limit), max_depth=1)
                 links = sorted(dict.fromkeys(links), key=lambda url: not urlparse(url).path.lower().endswith(".pdf"))[:3]
                 mapped = await web.extract(links)
-        except (budget.BudgetExceeded, ProviderError):
+        except (budget.BudgetExceeded, ProviderError) as error:
+            await web.warn("verify.map", error)
             mapped = []  # keep the search evidence; an unsuccessful optional lookup cannot erase it
     else:
         mapped = []
     # 2. Extract the best few pages.
-    pages = await web.extract(source_urls(results, domains))
+    selected = source_urls(results, domains)
+    pages = await web.extract(selected)
+    if len(pages) < len(selected):
+        backfill = source_urls([r for r in results if r["url"] not in selected], domains)[:len(selected) - len(pages)]
+        pages += await web.extract(backfill)
     pages += [p for p in mapped if p["url"] not in {p["url"] for p in pages}]
     titles = {r["url"]: r.get("title", "") for r in results}
 
     # 3. Super reads the sources; the quote gate runs before the investigator trigger.
-    out, u = await read_sources(fx, submitted, pages)
+    out, u = await read_sources(fx, submitted, pages, submitted_label=case.get("product"))
     usage = [u]
     if any(not numeric_quote(pv.value, pv.quote) for pv in out.current_values):
-        out, u = await read_sources(fx, submitted, pages, correction=out)
+        out, u = await read_sources(fx, submitted, pages, correction=out, submitted_label=case.get("product"))
         usage.append(u)
     confirmed = gate(out, pages)
     investigation = None
+    comparable = bool(set(_unambiguous(submitted.claims)) & set(_unambiguous(out.current_values)))
     # A quoted revision or discontinuation already answered the scripted check.
     if (settings.live or load_fixture(fx).get("investigate")) and out.current_revision is None and out.status != "discontinued" and (
-        not out.current_values or (out.status == "unknown" and
+        not comparable or (out.status == "unknown" and
                                   not any(classify(r["url"], domains) == "manufacturer" for r in results))
     ):
         investigation = await investigate(case, submitted, web)
@@ -111,10 +132,10 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
             accepted = [p for p in investigation._pages if p["url"] == investigation._document_url]
             newer = investigation._verified.model_copy(deep=True)
             try:
-                newer, u = await read_sources(fx, submitted, accepted, investigated=True)
+                newer, u = await read_sources(fx, submitted, accepted, investigated=True, submitted_label=case.get("product"))
                 usage.append(u)
-            except (budget.BudgetExceeded, ProviderError):
-                pass  # the loop's verified quotes still stand if the value read cannot run
+            except (budget.BudgetExceeded, ProviderError) as error:
+                await web.warn("verify.read", error)
             gate(newer, accepted)
             newer.current_revision = newer.current_revision or investigation._verified.current_revision
             if investigation._verified.status != "unknown":
@@ -136,15 +157,18 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
 
 
 async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated=False,
-                       correction: VerifyOut | None = None) -> tuple[VerifyOut, Usage]:
+                       correction: VerifyOut | None = None, *, submitted_label=None) -> tuple[VerifyOut, Usage]:
     submitted_view = {
         "product": submitted.product,
         "manufacturer": submitted.manufacturer,
         "model": submitted.model,
+        "submitted_label": submitted_label,
         "document_revision": submitted.document_revision,
-        "claims": [{"property": c.property, "value": c.value, "unit": c.unit} for c in submitted.claims],
+        "claims": [{"property": c.property, "value": c.value, "unit": c.unit}
+                   for c in _unambiguous(submitted.claims).values()],
     }
-    sources = [{"url": p["url"], "text": p["raw_content"][:settings.web_source_chars]} for p in pages]
+    sources = [{"url": p["url"], "linked_from": p.get("requested_url") if p.get("requested_url") != p["url"] else None,
+                "text": p["raw_content"][:settings.web_source_chars]} for p in pages]
     feedback = ""
     if correction is not None:
         rejected = [pv.property for pv in correction.current_values if not numeric_quote(pv.value, pv.quote)]
@@ -152,9 +176,19 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
                     f"Numeric quote validation rejected these properties: {json.dumps(rejected)}. "
                     "Read their source passages again and correct the quotes or omit the values. "
                     "Each numeric quote must contain the same number and bound as its value.")
+    properties = sorted({c["property"] for c in submitted_view["claims"]})
+    class SourceRead(VerifyOut):
+        @classmethod
+        def model_json_schema(cls, **kwargs):
+            schema = super().model_json_schema(**kwargs)
+            if properties:
+                schema["$defs"]["PropertyValue"]["properties"]["property"]["enum"] = properties
+            else:
+                schema["properties"]["current_values"]["maxItems"] = 0
+            return schema
     return await router.call(
         "verify",
-        VerifyOut,
+        SourceRead,
         [
             {
                 "role": "user",
@@ -163,6 +197,13 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
                     "Report product status, the current document revision exactly as printed, and the CURRENT value for each "
                     "submitted property you can find, each with the exact quote from the source that states it. "
                     "Return only properties in SUBMITTED.claims, copying their property names exactly. "
+                    "Use documents for the exact submitted product/model or listed system, not a generic certificate. "
+                    "Read status notices independently of data sheet values. A manufacturer's family-wide status notice "
+                    "can apply to a member model without printing its full order code; establish that family relationship "
+                    "using the submitted label and product/model names. An unrelated product's values or active status "
+                    "cannot establish this product's status. Quote the family notice when it applies. "
+                    "Do not use certification/category codes or a catalog's Updated timestamp as a document revision. "
+                    "Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. "
                     "For each property, first locate a short verbatim quote stating its current value. "
                     "Copy the value from that quote, preserving any numeric bound. Never take the value from "
                     "a different passage than its quote. A related limit is not evidence for a different number. "
@@ -173,20 +214,6 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
         ],
         {"case_id": fx, "fixture_key": "investigate_verify" if investigated else "verify"},
     )
-
-
-def numeric_quote(value, quote: str | None) -> bool:
-    """A quoted related limit cannot support a different numeric value or bound."""
-    number = to_number(value)
-    if number is None or isinstance(value, bool):
-        return True
-    bounds = {"≤": "<=", "≥": ">="}
-    bound = re.match(r"[<>]=?|[≤≥~]", str(value).strip())
-    wanted = bounds.get(bound[0], bound[0]) if bound else ""
-    for match in re.finditer(r"(?<![\w.])([<>]=?|[≤≥~])?\s*(-?\d[\d,]*(?:\.\d+)?(?:[- ]\d+/\d+|/\d+)?)(?![\d.])", quote or ""):
-        if to_number(match[2]) == number and bounds.get(match[1], match[1] or "") == wanted:
-            return True
-    return False
 
 
 def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str, str]:
@@ -200,7 +227,8 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str
         out.status = "unknown"
         out.status_quote = None
     read = len(out.current_values)
-    out.current_values = [pv for pv in out.current_values if source_of(pv.quote) and numeric_quote(pv.value, pv.quote)]
+    out.current_values = [pv for pv in out.current_values if source_of(pv.quote) and numeric_quote(pv.value, pv.quote)
+                          and metric_quoted(pv.property, pv.quote)]
     if measure:
         metrics.count("web_values_read", "web_values_kept", read, len(out.current_values))
     confirmed = {pv.property: source_of(pv.quote) for pv in out.current_values}
@@ -210,10 +238,10 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str
 def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: list[Evidence], pages: list[dict]
             ) -> tuple[list[Finding], list[CompareRow]]:
     """One comparison path for every accepted document; models supply quoted values only."""
-    claims = {c.property: c for c in submitted.claims}
+    claims = _unambiguous(submitted.claims)
     rows: list[CompareRow] = []
     changed: list[CompareRow] = []
-    for pv in out.current_values:
+    for pv in _unambiguous(out.current_values).values():
         c = claims.get(pv.property)
         if c is None:
             continue
@@ -259,8 +287,8 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
     elif newer:
         findings.append(Finding(
             id="currency-newer", check="currency", verdict="note", severity="minor",
-            title="A newer data sheet exists; no values changed",
-            detail=f"Submitted {submitted.document_revision}, current {out.current_revision}. Ask for the current sheet for the record.",
+            title="Different revision found; no quoted values changed",
+            detail=f"Submitted {submitted.document_revision}, web source {out.current_revision}. The revision labels differ; their age order is not confirmed.",
             compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value=now, verdict="changed"),
             evidence=evidence, decided_by="tavily + super",
         ))

@@ -29,7 +29,7 @@ MAX_CANDIDATE_CHARS = 20000
 
 async def find_fixes(case: dict, requirements: list[Requirement], claims: ClaimsOut, findings: list[Finding],
                      max_candidates: int, credit_cap: float, *, investigations: list[Investigation] | None = None,
-                     on_step=None) -> tuple[list[Usage], float]:
+                     on_step=None, on_warning=None) -> tuple[list[Usage], float]:
     """Attach a Fix to the worst flagged finding of each problem group. Returns usage and Tavily credits spent."""
     usage: list[Usage] = []
     credits = 0.0
@@ -40,7 +40,7 @@ async def find_fixes(case: dict, requirements: list[Requirement], claims: Claims
         flagged.sort(key=lambda f: ("critical", "major").index(f.severity))
         with budget.credit_scope(credit_cap - credits):
             fix, u, c = await _fix(case, group, flagged, requirements, claims, max_candidates, credit_cap - credits,
-                                  investigations, on_step)
+                                  investigations, on_step, on_warning)
         flagged[0].fix = fix
         usage += u
         credits += c
@@ -59,11 +59,13 @@ def _penetrant(case: dict, claims: ClaimsOut) -> str:
     return (have[0] if isinstance(have, list) and have else str(have or "")).split(" (")[0]
 
 
-def _query(group: str, case: dict, claims: ClaimsOut, flagged: list[Finding]) -> str:
+def _query(group: str, case: dict, claims: ClaimsOut, flagged: list[Finding], requirements: list[Requirement]) -> str:
     maker = claims.manufacturer
     if group == "spec":
         where = case["title"].split(",", 1)[-1].strip()  # "steel pipe through gypsum wall"
-        tail = " T rating equals F rating" if any(f.requirement_id == "fs-t-eq-f" for f in flagged) else ""
+        ids = {f.requirement_id for f in flagged}
+        tail = "".join(f" {spec_check._label(r.property)} equals {spec_check._label(str(r.value))}"
+                       for r in requirements if r.id in ids and r.operator == "eq_ref")
         return f"UL listed firestop system {_penetrant(case, claims)} {where}{tail}"
     if any(f.check == "status" for f in flagged):
         return f"{maker} current {_category(case)} data sheet"
@@ -109,31 +111,34 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
 
 
 async def _fix(case: dict, group: str, flagged: list[Finding], requirements: list[Requirement], claims: ClaimsOut,
-               max_candidates: int, cap: float, investigations=None, on_step=None) -> tuple[Fix, list[Usage], float]:
+               max_candidates: int, cap: float, investigations=None, on_step=None, on_warning=None) -> tuple[Fix, list[Usage], float]:
     fx = case.get("fixture", case["id"])
     fix_fx = f"fix/{fx}" if fx else None
-    web = WebClient(fix_fx, on_step)
+    web = WebClient(fix_fx, on_step, on_warning)
     own = {d.get("url") for d in case.get("submittal", [])}
-    query = _query(group, case, claims, flagged)
+    query = _query(group, case, claims, flagged, requirements)
     domains = case.get("manufacturer_domains", []) if group == "currency" else []
     results = [r for r in await web.search(query, include_domains=domains or None) if r["url"] not in own][:max_candidates]
-    found = {p["url"]: p["raw_content"] for p in await web.extract([r["url"] for r in results])}
+    found = {p.get("requested_url", p["url"]): p for p in await web.extract([r["url"] for r in results])}
 
     roles = {d["role"] for d in case["submittal"]}
-    props = sorted({r.property for r in requirements})
+    props = spec_check.properties_for(requirements)
     reqs = {r.id: r for r in requirements}
     usage: list[Usage] = []
     verify_credits = 0.0
     cands: list[FixCandidate] = []
     for n, r in enumerate(results, start=1):
-        text = found.get(r["url"])
+        page = found.get(r["url"])
+        text = page["raw_content"] if page else None
+        if page:
+            r = {**r, "url": page["url"]}
         cfx = f"{fix_fx}-{n}" if fix_fx else None
         if not text:
             if not settings.live and (not cfx or not (settings.fixtures_dir / f"{cfx}.json").exists()
                                       or not load_fixture(cfx).get("investigate")):
                 continue
             candidate = ClaimsOut(product=r.get("title") or claims.product, manufacturer=claims.manufacturer, claims=[])
-            candidate_web = WebClient(cfx, on_step)
+            candidate_web = WebClient(cfx, on_step, on_warning)
             inv = await investigate({**case, "candidate_url": r["url"]}, candidate, candidate_web)
             usage += inv._usage
             verify_credits += candidate_web.credits
@@ -147,6 +152,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         scripted_cost = (4 if case.get("manufacturer_domains") else 3) * tavily.search_credits(settings.search_depth)
         scripted_cost += tavily.extract_credits(3, settings.extract_depth)
         if web.credits + verify_credits + scripted_cost > cap:
+            await web.warn("fix", budget.BudgetExceeded("Fix credit cap reached before candidate verification"))
             break  # credit cap for this item
         pages = [{"page": 1, "text": text[:MAX_CANDIDATE_CHARS]}]
         cl, u = await extract.extract_claims(cfx, pages, extract.all_product_data(pages), props)
@@ -156,7 +162,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         found_f = spec_check.check(requirements, cl.claims, roles)
         vf, _, vu, vc, inv = await verify.verify(
             {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": case.get("manufacturer_domains", [])}, cl,
-            on_step=on_step)
+            on_step=on_step, on_warning=on_warning)
         if inv is not None and investigations is not None:
             investigations.append(inv)
         found_f += vf

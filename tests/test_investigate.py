@@ -11,10 +11,10 @@ from pydantic import SecretStr
 from api.config import FORCE_MOCK, settings
 from api.pipeline import fix, verify
 from api.pipeline.cases import all_cases, get_case
-from api.pipeline.investigate import TOOLS, investigate
+from api.pipeline.investigate import TOOLS, investigate, tool_content
 from api.pipeline.runner import Run, execute
 from api.providers import budget, tavily, tokenfactory
-from api.schemas import Claim, ClaimsOut, Finding, Requirement, VerifyOut
+from api.schemas import Claim, ClaimsOut, Finding, Investigation, Requirement, VerifyOut
 from api.web import WebClient
 
 CHAT = settings.nebius_base_url + "chat/completions"
@@ -121,6 +121,58 @@ def test_results_are_truncated_for_model_but_quotes_use_whole_pages(http):
     assert len(body["messages"][-1]["content"]) <= 6000 and len(inv._pages[0]["raw_content"]) > 12000
 
 
+def test_extract_tool_excerpt_keeps_document_body_tail_and_valid_json(http):
+    text = "navigation " * 1500 + "\n# Product X\nStatus: Discontinued.\n" + "body\t\n" * 3000 + "Revision C"
+    encoded = tool_content("extract", [{"url": URL, "raw_content": text}])
+    assert len(encoded) <= 6000
+    page = json.loads(encoded)
+    assert page["url"] == URL and "Status: Discontinued." in page["text"] and "Revision C" in page["text"]
+    secret = settings.secret("nebius_api_key")
+    assert secret not in tool_content("extract", [{"url": URL, "raw_content": "# Product X\n" + secret}])
+
+
+@pytest.mark.parametrize("candidate,label", [(False, "Inbox family label"), (True, None)])
+def test_investigator_gets_input_label_only_for_submitted_product(http, candidate, label):
+    route = http.post(CHAT).mock(return_value=reply(text="No source found"))
+    case = {**CASE, "product": "Inbox family label", **({"candidate_url": URL} if candidate else {})}
+    asyncio.run(investigate(case, CLAIMS, WebClient("test")))
+    user = json.loads(json.loads(route.calls[0].request.content)["messages"][1]["content"])
+    assert user["submitted_label"] == label
+
+
+def test_source_schema_limits_properties_without_limiting_alternatives(http):
+    route = http.post(CHAT).mock(return_value=reply(text='{"status":"unknown"}'))
+    claim = Claim(id="measurement", product="X", manufacturer="Maker", property="measurement", value=10)
+    asyncio.run(verify.read_sources("test", CLAIMS.model_copy(update={"claims": [claim]}), [], submitted_label="Inbox family label"))
+    assert "Inbox family label" in json.loads(route.calls[-1].request.content)["messages"][-1]["content"]
+    schema = json.loads(route.calls[-1].request.content)["response_format"]["json_schema"]["schema"]
+    assert schema["$defs"]["PropertyValue"]["properties"]["property"]["enum"] == ["measurement"]
+    assert "maxItems" not in schema["properties"]["current_values"]
+    asyncio.run(verify.read_sources("test", CLAIMS, []))
+    schema = json.loads(route.calls[-1].request.content)["response_format"]["json_schema"]["schema"]
+    assert schema["properties"]["current_values"]["maxItems"] == 0
+
+
+@pytest.mark.parametrize("left,right,same", [(10, ["10"], True), (["10", "20"], 10, False), (None, [], False)])
+def test_currency_compares_scalar_and_list_without_crashing(left, right, same):
+    assert verify._same(left, right) is same
+
+
+def test_investigator_records_provider_failure_and_cap_reason(http, monkeypatch):
+    warnings = []
+    async def warn(stage, reason):
+        warnings.append((stage, reason))
+    http.post(CHAT).respond(401, json={"error": {"message": "private provider response"}})
+    inv = asyncio.run(investigate(CASE, CLAIMS, WebClient("test", on_warning=warn)))
+    assert inv.outcome == "not_found" and warnings[0][0] == "investigate"
+    assert "authenticate" in warnings[0][1] and "private provider response" not in warnings[0][1]
+    monkeypatch.setattr(settings, "investigate_max_steps", 1)
+    happy(http)
+    warnings.clear()
+    inv = asyncio.run(investigate(CASE, CLAIMS, WebClient("test", on_warning=warn)))
+    assert inv.outcome == "capped" and "tool-call cap" in warnings[0][1]
+
+
 def test_no_tool_call_stops_and_secret_arguments_never_reach_trace(http):
     secret = settings.secret("nebius_api_key")
     sources(http)
@@ -213,6 +265,72 @@ def test_unquoted_duplicate_property_is_dropped():
     assert [v.value for v in out.current_values] == [10]
 
 
+@pytest.mark.parametrize("submitted_values,current_values", [([10, 20], [15]), ([10], [15, 25])])
+def test_currency_does_not_choose_between_unqualified_alternatives(submitted_values, current_values):
+    submitted = ClaimsOut(product="X", manufacturer="Maker", claims=[
+        {"id": str(i), "product": "X", "manufacturer": "Maker", "property": "measurement", "value": v}
+        for i, v in enumerate(submitted_values)])
+    out = VerifyOut(status="unknown", current_values=[
+        {"property": "measurement", "value": v, "quote": f"Measurement {v}"} for v in current_values])
+    pages = [{"url": URL, "raw_content": " ".join(v.quote for v in out.current_values)}]
+    confirmed = verify.gate(out, pages)
+    findings, rows = verify.compare(submitted, out, confirmed, [], pages)
+    assert not rows and findings[0].verdict == "unverified"
+
+
+def test_web_cri_requires_a_cri_quote():
+    out = VerifyOut(status="unknown", current_values=[{"property": "cri", "value": 80, "quote": "75 – 80 typical LPW"}])
+    verify.gate(out, [{"url": URL, "raw_content": "75 – 80 typical LPW"}])
+    assert not out.current_values
+
+
+def test_uncomparable_web_values_still_trigger_investigation(http, monkeypatch):
+    async def search(*args, **kwargs):
+        return [{"url": URL}]
+    async def extract(*args, **kwargs):
+        return [{"url": URL, "raw_content": "Measurement 15 or 25"}]
+    calls = []
+    async def investigate_missing(*args, **kwargs):
+        calls.append(True)
+        return Investigation()
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    monkeypatch.setattr(verify, "investigate", investigate_missing)
+    content = json.dumps({"status": "unknown", "current_values": [
+        {"property": "measurement", "value": 15, "quote": "Measurement 15 or 25"}]})
+    http.post(CHAT).mock(return_value=reply(text=content))
+    submitted = ClaimsOut(product="X", manufacturer="Maker", claims=[
+        {"id": str(v), "product": "X", "manufacturer": "Maker", "property": "measurement", "value": v}
+        for v in (10, 20)])
+    findings, rows, _, _, inv = asyncio.run(verify.verify(CASE, submitted))
+    assert calls == [True] and inv is not None
+    assert not rows and findings[0].verdict == "unverified"
+
+
+def test_fix_query_uses_reviewed_requirement_semantics():
+    req = Requirement(id="reviewed-row-123", section="07 84 00", paragraph="", property="t_rating_hr",
+                      operator="eq_ref", value="f_rating_hr", text="Equal ratings")
+    finding = Finding(id="failed-row", requirement_id=req.id, check="spec", verdict="fail", severity="critical", title="Unequal")
+    query = fix._query("spec", {**CASE, "title": "Sealant, pipe through wall"}, CLAIMS, [finding], [req])
+    assert "Temperature rating (T) equals Fire rating (F)" in query
+
+
+def test_fix_warns_when_candidate_verification_does_not_fit_cap(monkeypatch):
+    async def search(*args, **kwargs):
+        return [{"url": URL, "title": "Product X"}]
+    async def extract(*args, **kwargs):
+        return [{"url": URL, "raw_content": "Product X data"}]
+    warnings = []
+    async def warn(stage, reason):
+        warnings.append((stage, reason))
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    case = {**CASE, "title": "Sealant, wall", "submittal": []}
+    finding = Finding(id="old", check="currency", verdict="outdated", severity="major", title="Old data")
+    result, _, _ = asyncio.run(fix._fix(case, "currency", [finding], [], CLAIMS, 1, 0, on_warning=warn))
+    assert not result.candidates and warnings == [("fix", "Fix credit cap reached before candidate verification")]
+
+
 def test_source_selection_keeps_manufacturer_status_notice():
     docs = [{"url": f"https://maker.test/{n}.pdf"} for n in range(4)]
     notice = {"url": "https://news.maker.test/update", "title": "Product discontinuation notice"}
@@ -220,6 +338,34 @@ def test_source_selection_keeps_manufacturer_status_notice():
     selected = verify.source_urls([unrelated, *docs, notice, notice], ["maker.test"])
     assert selected == [docs[0]["url"], docs[1]["url"], notice["url"]]
     assert verify.source_urls([], ["maker.test"]) == []
+
+
+def test_investigator_can_read_cached_source_with_zero_web_allowance(http, monkeypatch):
+    from api import cache
+    monkeypatch.setattr(settings, "investigate_credit_cap", 0)
+    cache.put("tavily_extract", {"urls": [URL], "depth": "basic"}, [
+        {"url": URL, "raw_content": "Rev B. Product X is still made."}])
+    http.post(CHAT).mock(side_effect=[reply("extract", {"url": URL}), reply("finish", FINAL)])
+    web = WebClient("test")
+    inv = asyncio.run(investigate(CASE, CLAIMS, web))
+    assert inv.outcome == "found" and web.credits == 0
+    assert [s.tool for s in inv.steps] == ["extract", "finish"]
+
+
+def test_verify_backfills_unreadable_sources_once(http, monkeypatch):
+    urls = [f"https://maker.test/{n}.pdf" for n in range(4)]
+    extracts = []
+    async def search(*args, **kwargs):
+        return [{"url": u} for u in urls]
+    async def extract(self, requested):
+        extracts.append(requested)
+        return [{"url": urls[-1], "raw_content": "Product X Rev B"}] if urls[-1] in requested else []
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    http.post(CHAT).mock(return_value=reply(text='{"status":"unknown","current_revision":"Rev B"}'))
+    findings, _, _, _, inv = asyncio.run(verify.verify(CASE, CLAIMS))
+    assert extracts == [urls[:3], urls[3:]]
+    assert findings[0].evidence[0].url == urls[-1] and inv is None
 
 
 def test_current_product_fixes_skip_candidates_without_quoted_properties(monkeypatch):

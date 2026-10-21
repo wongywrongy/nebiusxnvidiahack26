@@ -1,0 +1,1128 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-110621-4740c2",
+  "reproduction": "MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=12 .venv/bin/python scripts/eval.py --case c07 --out /tmp/speccheck-family-notice-retry.json",
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_output_tokens": 32768,
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 12,
+    "map_limit": 20
+  },
+  "ledger_after": {
+    "usd": 0.72193,
+    "credits": 230.0
+  },
+  "items": {
+    "c07": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "cl-1",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "WARRANTY \u2014 5-year limited warranty.",
+          "variant": null
+        },
+        {
+          "id": "cl-2",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3010.9,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP830\n 3,010.9 \n25\n120.4",
+          "variant": null
+        },
+        {
+          "id": "cl-3",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 25.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP830\n 3,010.9 \n25\n120.4",
+          "variant": null
+        },
+        {
+          "id": "cl-4",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 120.4,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP830\n 3,010.9 \n25\n120.4",
+          "variant": null
+        },
+        {
+          "id": "cl-5",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3075.5,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP835\n 3,075.5 \n25\n123.0",
+          "variant": null
+        },
+        {
+          "id": "cl-6",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 25.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP835\n 3,075.5 \n25\n123.0",
+          "variant": null
+        },
+        {
+          "id": "cl-7",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 123.0,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP835\n 3,075.5 \n25\n123.0",
+          "variant": null
+        },
+        {
+          "id": "cl-8",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3097.0,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP840\n 3,097.0 \n25\n123.9",
+          "variant": null
+        },
+        {
+          "id": "cl-9",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 25.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP840\n 3,097.0 \n25\n123.9",
+          "variant": null
+        },
+        {
+          "id": "cl-10",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 123.9,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP840\n 3,097.0 \n25\n123.9",
+          "variant": null
+        },
+        {
+          "id": "cl-11",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3204.7,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP850\n 3,204.7 \n25\n128.2",
+          "variant": null
+        },
+        {
+          "id": "cl-12",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 25.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP850\n 3,204.7 \n25\n128.2",
+          "variant": null
+        },
+        {
+          "id": "cl-13",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 128.2,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "30L\nLP850\n 3,204.7 \n25\n128.2",
+          "variant": null
+        },
+        {
+          "id": "cl-14",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3835.1,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP830\n 3,835.1 \n32\n119.8",
+          "variant": null
+        },
+        {
+          "id": "cl-15",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 32.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP830\n 3,835.1 \n32\n119.8",
+          "variant": null
+        },
+        {
+          "id": "cl-16",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 119.8,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP830\n 3,835.1 \n32\n119.8",
+          "variant": null
+        },
+        {
+          "id": "cl-17",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3918.2,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP835\n 3,918.2 \n32\n122.4",
+          "variant": null
+        },
+        {
+          "id": "cl-18",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 32.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP835\n 3,918.2 \n32\n122.4",
+          "variant": null
+        },
+        {
+          "id": "cl-19",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 122.4,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP835\n 3,918.2 \n32\n122.4",
+          "variant": null
+        },
+        {
+          "id": "cl-20",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 3945.8,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP840\n 3,945.8 \n32\n123.3",
+          "variant": null
+        },
+        {
+          "id": "cl-21",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 32.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP840\n 3,945.8 \n32\n123.3",
+          "variant": null
+        },
+        {
+          "id": "cl-22",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 123.3,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP840\n 3,945.8 \n32\n123.3",
+          "variant": null
+        },
+        {
+          "id": "cl-23",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 4084.2,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP850\n 4,084.2 \n32\n127.6",
+          "variant": null
+        },
+        {
+          "id": "cl-24",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 32.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP850\n 4,084.2 \n32\n127.6",
+          "variant": null
+        },
+        {
+          "id": "cl-25",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 127.6,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "40L\nLP850\n 4,084.2 \n32\n127.6",
+          "variant": null
+        },
+        {
+          "id": "cl-26",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 4730.1,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP830\n 4,730.1 \n40\n118.3",
+          "variant": null
+        },
+        {
+          "id": "cl-27",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 40.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP830\n 4,730.1 \n40\n118.3",
+          "variant": null
+        },
+        {
+          "id": "cl-28",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 118.3,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP830\n 4,730.1 \n40\n118.3",
+          "variant": null
+        },
+        {
+          "id": "cl-29",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 4831.6,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP835\n 4,831.6 \n40\n120.8",
+          "variant": null
+        },
+        {
+          "id": "cl-30",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 40.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP835\n 4,831.6 \n40\n120.8",
+          "variant": null
+        },
+        {
+          "id": "cl-31",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 120.8,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP835\n 4,831.6 \n40\n120.8",
+          "variant": null
+        },
+        {
+          "id": "cl-32",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 4865.4,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP840\n 4,865.4 \n40\n121.6",
+          "variant": null
+        },
+        {
+          "id": "cl-33",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 40.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP840\n 4,865.4 \n40\n121.6",
+          "variant": null
+        },
+        {
+          "id": "cl-34",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 121.6,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP840\n 4,865.4 \n40\n121.6",
+          "variant": null
+        },
+        {
+          "id": "cl-35",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 5034.6,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP850\n 5,034.6 \n40\n125.9",
+          "variant": null
+        },
+        {
+          "id": "cl-36",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 40.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP850\n 5,034.6 \n40\n125.9",
+          "variant": null
+        },
+        {
+          "id": "cl-37",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 125.9,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "48L\nLP850\n 5,034.6 \n40\n125.9",
+          "variant": null
+        },
+        {
+          "id": "cl-38",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 5431.3,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP830\n 5,431.3 \n47\n115.6",
+          "variant": null
+        },
+        {
+          "id": "cl-39",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 47.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP830\n 5,431.3 \n47\n115.6",
+          "variant": null
+        },
+        {
+          "id": "cl-40",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 115.6,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP830\n 5,431.3 \n47\n115.6",
+          "variant": null
+        },
+        {
+          "id": "cl-41",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 5548.2,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP835\n 5,548.2 \n47\n118.0",
+          "variant": null
+        },
+        {
+          "id": "cl-42",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 47.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP835\n 5,548.2 \n47\n118.0",
+          "variant": null
+        },
+        {
+          "id": "cl-43",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 118.0,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP835\n 5,548.2 \n47\n118.0",
+          "variant": null
+        },
+        {
+          "id": "cl-44",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 5588.2,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP840\n 5,588.2 \n47\n118.9",
+          "variant": null
+        },
+        {
+          "id": "cl-45",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 47.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP840\n 5,588.2 \n47\n118.9",
+          "variant": null
+        },
+        {
+          "id": "cl-46",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 118.9,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP840\n 5,588.2 \n47\n118.9",
+          "variant": null
+        },
+        {
+          "id": "cl-47",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 5785.0,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP850\n 5,785.0 \n47\n123.1",
+          "variant": null
+        },
+        {
+          "id": "cl-48",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 47.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP850\n 5,785.0 \n47\n123.1",
+          "variant": null
+        },
+        {
+          "id": "cl-49",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 123.1,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "60L\nLP850\n 5,785.0 \n47\n123.1",
+          "variant": null
+        },
+        {
+          "id": "cl-50",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 7513.4,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP830\n 7,513.4 \n67\n112.1",
+          "variant": null
+        },
+        {
+          "id": "cl-51",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 67.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP830\n 7,513.4 \n67\n112.1",
+          "variant": null
+        },
+        {
+          "id": "cl-52",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 112.1,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP830\n 7,513.4 \n67\n112.1",
+          "variant": null
+        },
+        {
+          "id": "cl-53",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 7673.3,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP835\n 7,673.3 \n67\n114.5",
+          "variant": null
+        },
+        {
+          "id": "cl-54",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 67.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP835\n 7,673.3 \n67\n114.5",
+          "variant": null
+        },
+        {
+          "id": "cl-55",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 114.5,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP835\n 7,673.3 \n67\n114.5",
+          "variant": null
+        },
+        {
+          "id": "cl-56",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 7728.7,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP840\n 7,728.7 \n67\n115.4",
+          "variant": null
+        },
+        {
+          "id": "cl-57",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 67.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP840\n 7,728.7 \n67\n115.4",
+          "variant": null
+        },
+        {
+          "id": "cl-58",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 115.4,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP840\n 7,728.7 \n67\n115.4",
+          "variant": null
+        },
+        {
+          "id": "cl-59",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "lumens",
+          "value": 7999.3,
+          "unit": "lm",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP850\n 7,999.3 \n67\n119.4",
+          "variant": null
+        },
+        {
+          "id": "cl-60",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "input_watts_120v",
+          "value": 67.0,
+          "unit": "W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP850\n 7,999.3 \n67\n119.4",
+          "variant": null
+        },
+        {
+          "id": "cl-61",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "efficacy_lm_per_w",
+          "value": 119.4,
+          "unit": "lm/W",
+          "page": 2,
+          "bbox": null,
+          "quote": "72L\nLP850\n 7,999.3 \n67\n119.4",
+          "variant": null
+        },
+        {
+          "id": "cl-64",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "dim_min_percent",
+          "value": 0.1,
+          "unit": "%",
+          "page": 2,
+          "bbox": null,
+          "quote": "EZB\neldoLED dims to  0.1% (0-10 volt \ndimming)",
+          "variant": null
+        },
+        {
+          "id": "cl-65",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "standards",
+          "value": [
+            "CSA",
+            "ICES",
+            "IESNA LM-79"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "LISTINGS \u2014 CSA certified to U.S. and Canadian standards. IC rated.",
+          "variant": null
+        },
+        {
+          "id": "cl-66",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "standards",
+          "value": [
+            "IESNA LM-79"
+          ],
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "tested in accordance to IESNA LM-79.",
+          "variant": null
+        }
+      ],
+      "comparison": [],
+      "warnings": [
+        "investigate: Investigator tool-call cap reached; couldn't confirm"
+      ],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "2TL-2X4 Lithonia 2TL4 datasheet specification sheet",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 2,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf?abl_version=07%2F01%2F2021+12%3A16%3A34&DOC_Type=SPEC_SHEET"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/46989/2rtl-2x4.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 4,
+            "tool": "search",
+            "args": {
+              "query": "\"2TL-2X4\" Lithonia T Series LED datasheet",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "2 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 5,
+            "tool": "search",
+            "args": {
+              "query": "\"2TL\" \"2X4\" Lithonia T Series LED specification sheet",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "1 result",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 6,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 7,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 8,
+            "tool": "search",
+            "args": {
+              "query": "2TL series T LED recessed 2x4 Lithonia Lighting",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "1 result",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 9,
+            "tool": "map",
+            "args": {
+              "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers"
+            },
+            "summary": "0 pages",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 10,
+            "tool": "search",
+            "args": {
+              "query": "\"2TL4\" Lithonia",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 11,
+            "tool": "search",
+            "args": {
+              "query": "\"T Series LED\" 2TL Lithonia",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "3 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 12,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          }
+        ],
+        "outcome": "capped"
+      },
+      "document_revision": "Rev. 11/18/22",
+      "claims_extracted": 66,
+      "claims_kept": 64,
+      "web_values_read": 2,
+      "web_values_kept": 0,
+      "findings": [
+        {
+          "id": "spec-req_t_rating_hr_led",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2265 50000 hr",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-req_warranty_years_led",
+          "check": "spec",
+          "verdict": "pass",
+          "severity": "info",
+          "detail": "Package states 5 years; spec requires at least 5 yr.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2265 5 yr",
+            "right_label": "Submitted",
+            "right_value": "5 years",
+            "verdict": "pass",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-lt-dlc",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "Listed as a qualified DLC product, where applicable.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": [
+              "dlc standard",
+              "dlc premium"
+            ],
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-req_macadam_ellipse",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 3",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "spec-lt-dim",
+          "check": "spec",
+          "verdict": "pass",
+          "severity": "info",
+          "detail": "Package states 0.1 %; spec requires at most 5 %.",
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 5 %",
+            "right_label": "Submitted",
+            "right_value": "0.1 %",
+            "verdict": "pass",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        },
+        {
+          "id": "currency-unverified",
+          "check": "currency",
+          "verdict": "unverified",
+          "severity": "minor",
+          "detail": "No source quoted a revision or a value; check manually.",
+          "compare": {
+            "left_label": "Submitted",
+            "left_value": "Rev. 11/18/22",
+            "right_label": "Current",
+            "right_value": "Not found",
+            "verdict": "fail",
+            "rows": []
+          },
+          "fix": null,
+          "evidence": []
+        }
+      ]
+    }
+  },
+  "error_events": [],
+  "requests_responses": []
+}

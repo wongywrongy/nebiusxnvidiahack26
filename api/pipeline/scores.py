@@ -65,7 +65,7 @@ def scores(run, case_ids: list[str]) -> dict:
         "mode": settings.mode, "run_id": run.id, "models": settings.models,
         "quote_gate": gates,
         "tuning": {key: getattr(settings, key) for key in (
-            "thinking", "thinking_tasks", "max_page_chars", "web_source_chars", "search_depth", "extract_depth",
+            "thinking", "thinking_tasks", "max_output_tokens", "max_page_chars", "web_source_chars", "search_depth", "extract_depth",
             "search_max_results", "investigate_credit_cap", "investigate_max_steps", "map_limit")},
         "right_call": {"n": sum(r["right_call"] for r in ok), "of": len(case_ids)},
         "caught": {"n": sum(r["caught"] for r in ok), "of": sum(len(cases[c]["expected"]["problems"]) for c in case_ids)},

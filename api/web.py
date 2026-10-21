@@ -9,17 +9,22 @@ from typing import Any, Optional
 from .config import settings
 from . import archive
 from .llm import load_fixture
-from .providers import budget, tavily
+from .providers import budget, tavily, failure_reason
 
 
 class WebClient:
     """Mock answers from the case fixture; live goes to providers.tavily. Both charge the run's budget."""
 
-    def __init__(self, case_id: Optional[str], on_step=None) -> None:  # which fixture answers in mock mode
+    def __init__(self, case_id: Optional[str], on_step=None, on_warning=None) -> None:  # which fixture answers in mock mode
         self.case_id = case_id
         self.credits = 0.0
         self.on_step = on_step
+        self.on_warning = on_warning
         self.investigation_step: Optional[int] = None
+
+    async def warn(self, stage: str, error: Exception) -> None:
+        if self.on_warning:
+            await self.on_warning(stage, failure_reason(error))
 
     def _investigation_result(self):
         if self.investigation_step is None:
