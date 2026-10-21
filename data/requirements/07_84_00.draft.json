@@ -1,0 +1,110 @@
+{
+  "_note": "Draft from nvidia/nemotron-3-super-120b-a12b. Review, then save as 07_84_00.json.",
+  "requirements": [
+    {
+      "id": "req_voc_content",
+      "section": "07 84 00",
+      "paragraph": "2.02.B",
+      "property": "voc_g_per_l",
+      "operator": "lte",
+      "value": 250.0,
+      "unit": "g/L",
+      "text": "Products shall have VOC content lower than that required by SCAQMD 1168.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_mold_resistance",
+      "section": "07 84 00",
+      "paragraph": "2.02.C",
+      "property": "astm_g21_rating",
+      "operator": "eq",
+      "value": 0.0,
+      "unit": null,
+      "text": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_f_rating_through_penetration",
+      "section": "07 84 00",
+      "paragraph": "2.03.D",
+      "property": "f_rating_hr",
+      "operator": "gte",
+      "value": null,
+      "unit": "hr",
+      "text": "Through penetration firestopping systems shall have fire resistance F Rating equal to required fire rating of penetrated assembly.",
+      "severity": "critical",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_t_rating_min_equal_f",
+      "section": "07 84 00",
+      "paragraph": "2.04.A.1",
+      "property": "t_rating_hr",
+      "operator": "gte",
+      "value": null,
+      "unit": "hr",
+      "text": "Minimum T Rating shall be equal to F Rating.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_listing_required",
+      "section": "07 84 00",
+      "paragraph": "1.04.A.1",
+      "property": "listing_agency",
+      "operator": "any_of",
+      "value": [
+        "UL (FRD)",
+        "FM (AG)",
+        "ITS (DIR)"
+      ],
+      "unit": null,
+      "text": "Listing in UL (FRD), FM (AG), or ITS (DIR) will be considered as constituting an acceptable test report.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_warranty_period",
+      "section": "07 84 00",
+      "paragraph": "1.03.C",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 1.0,
+      "unit": "yr",
+      "text": "Provide data on product characteristics, performance ratings, and limitations.",
+      "severity": "major",
+      "check": "completeness",
+      "applies_to": [
+        "product_data"
+      ]
+    }
+  ],
+  "section": "07 84 00",
+  "title": "",
+  "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+  "source_name": "Firestopping",
+  "source_url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/firestopping-new/07-84-00-firestopping.pdf",
+  "source_sha256": "9f303a2c52b1121f7e1b372f0e6f15fd5834e42a06989c3a9f9519ea013c231f",
+  "drafted_at": "2026-10-21T07:26:33.095562Z",
+  "reviewed_at": null
+}

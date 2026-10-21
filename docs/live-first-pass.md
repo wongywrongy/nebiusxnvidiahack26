@@ -1,6 +1,7 @@
 # First live pass — 2026-10-21
 
-Status: Gate 2 provider checks passed; stopped for Kyle's review. No case has been run live.
+Status: Kyle accepted Gate 2. Both Phase 3 drafts and their comparison tables await his row decisions at Gate 3.
+No case has been run live.
 
 ## Setup and baseline
 
@@ -75,9 +76,10 @@ Table detection has low fill rates on the old 3M sheet (9/389 cells, 2%) and the
 | Native tool spike | 0.000226 | 0 |
 | Tavily baseline (three fresh searches; Extract/Map cached) | 0.000226 | 3 |
 | Fresh host extraction and bounded Map | 0.000226 | 6 |
+| Both checklist drafts | 0.013187 | 6 |
 
 Before the first provider call `.cache/budget/2026-10-21.json` did not exist.
-After the provider spikes it records `{"usd": 0.000226, "credits": 6.0}`.
+After checklist drafting it records `{"usd": 0.013187, "credits": 6.0}`.
 This is the local ledger, not console billing verification.
 Pass ceilings remain $20 and 2,000 credits across the entire pass.
 
@@ -203,6 +205,61 @@ URLs in `host-report.json` to `api.providers.tavily.extract`, and call `tavily.m
 Both wrappers enforce the configured spend caps. The direct comparison used `BROWSER_HEADERS`, redirects
 enabled, and a 30-second httpx timeout.
 
-Gate 2: Super schema-valid JSON, native tools and fresh manufacturer extraction all work. Billing counter
-reconciliation and the stated account allowance remain open. Phase 3 requires Kyle's go-ahead, followed by
-his explicit checklist review at Gate 3; no checklist has been self-approved.
+Gate 2: Super schema-valid JSON, native tools and fresh manufacturer extraction all work. Kyle accepted it
+and authorized Phase 3. Billing counter reconciliation and the stated account allowance remain open.
+
+## Phase 3: checklist review, not approved
+
+At Kyle's request, `git push -u origin live/first-pass` succeeded before drafting, publishing commits through
+`00fcab4` and configuring the upstream. Push this branch after every subsequent gate. Existing untracked
+planning files remain untouched and outside every commit.
+
+`scripts/draft_requirements.py` made two fresh Super calls, both schema-valid with thinking off and zero
+reasoning tokens. It wrote only `data/requirements/07_84_00.draft.json` and
+`data/requirements/26_51_00.draft.json`. Both have `reviewed_at: null`; neither reviewed filename exists.
+The source PDF hashes match the provenance in both drafts.
+
+| Section | Draft rows | Added vs fixture | Changed | Missing | Rows needing external/paperwork/site evidence |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 07 84 00 | 6 | 4 | 2 | 1 | 1 |
+| 26 51 00 | 50 | 47 | 3 | 1 | 12 |
+
+“Changed” includes filled paragraph references, role restrictions and literal unit changes; it does not mean
+every original threshold changed. Matching uses property names, assigning the first luminaire warranty to
+the fixture warranty and leaving the additional scoped warranty rows as additions. Renamed dimming appears
+as added L25 plus missing L51 so the naming change is visible.
+
+The [review tables](live-first-pass/checklist-review.md) contain every draft row plus missing fixture rows,
+with paragraph, property, operator, value, unit, severity, applicability, source checks and a blank decision
+column. F01–F06 and L01–L50 preserve draft order; F07/L51 are the missing fixture rows. Kyle will mark
+keep/edit/delete. No row has been silently corrected or removed to match the answer key.
+
+Observed draft errors include a firestopping warranty not required by its cited paragraph, null numeric
+comparison targets, loss of the T=F relationship, a numeric VOC limit not stated in the PDF, an L70 life
+misnamed `t_rating_hr`, incorrect lighting paragraph references, subtype requirements assigned to all
+product-data sheets, installation requirements and separate test/warranty paperwork. The comparison also
+flags string `eq` values that the current numeric comparator cannot evaluate and `exists` rows whose
+missing-claim failures conflict with the unconfirmed-evidence rule. These require resolution before use.
+
+| Draft | Input/output tokens | Latency | Computed USD |
+| --- | --- | ---: | ---: |
+| Firestopping | 4,955 / 688 | 13,765 ms | 0.002106 |
+| Lighting | 17,996 / 6,062 | 30,504 ms | 0.010855 |
+
+Lighting supplied 61,820 text characters; the existing 60,000-character prompt bound applied. Defaults were
+not changed. Source control dates still match the project metadata, so these draft problems do not establish
+a changed specification. No fixture or expected result has been edited.
+
+Console evidence: [checklist-drafts.txt](live-first-pass/checklist-drafts.txt). Credential-free request and
+response summaries: [checklist-drafts-http.json](live-first-pass/checklist-drafts-http.json); prompt text is
+represented by length/hash so the full source PDFs are not copied into Git.
+
+Kyle specifically requested reconciliation of the local Tavily ledger against the **Tavily dashboard after
+c03 and c07** in Phase 4. Record each run's local checkpoint, obtain the dashboard's observed total and
+timestamp, subtract the prior account usage, and document any remaining difference here. The API `/usage`
+observations above do not substitute for that dashboard check. Neither case has run live yet.
+
+Post-draft mock check `20261021-073404-ea001f` remains 8/8, with 6/6 problems, 0/2 false alarms,
+2/5 passing fixes, 48/48 claims and 19/20 web values retained. Output is saved outside `runs/` at
+`/tmp/speccheck-first-pass-mock-drafts.json`. No production code changed in Phase 3; the last full suite
+remains 158 passed / 2 skipped. Draft schema/provenance and absence of reviewed filenames were checked.
