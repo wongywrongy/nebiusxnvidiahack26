@@ -1,6 +1,6 @@
 # First live pass — 2026-10-21
 
-Status: Kyle approved Gate 1; Phase 2 is in progress. No case has been run live.
+Status: Gate 2 provider checks passed; stopped for Kyle's review. No case has been run live.
 
 ## Setup and baseline
 
@@ -72,9 +72,12 @@ Table detection has low fill rates on the old 3M sheet (9/389 cells, 2%) and the
 | After mock baseline and document checks | 0 | 0 |
 | After test correction and mock re-eval | 0 | 0 |
 | Model spike baseline | 0.000087 | 0 |
+| Native tool spike | 0.000226 | 0 |
+| Tavily baseline (three fresh searches; Extract/Map cached) | 0.000226 | 3 |
+| Fresh host extraction and bounded Map | 0.000226 | 6 |
 
 Before the first provider call `.cache/budget/2026-10-21.json` did not exist.
-After the model spike it records `{"usd": 0.000087, "credits": 0.0}`.
+After the provider spikes it records `{"usd": 0.000226, "credits": 6.0}`.
 This is the local ledger, not console billing verification.
 Pass ceilings remain $20 and 2,000 credits across the entire pass.
 
@@ -128,3 +131,78 @@ remain readable and report no finish reason rather than an invented one.
 
 Validation: 158 passed, 2 skipped in 15.91 s; mock run `20261021-071239-431799` remains 8/8 with
 48/48 claims and 19/20 web values retained. Its comparison output is `/tmp/speccheck-first-pass-mock-tools.json`.
+
+### Native tool result
+
+The live `--yes --tools` run reused the two structured reads and made one fresh Super tool call:
+
+```text
+tool_calls=True  count=1  finish_reason=tool_calls  arguments_json=True  multiple_calls=False  reasoning_tokens=0  thinking=off  latency=1116 ms  cost=$0.000139  cached=False
+```
+
+The function was `lookup` and its arguments parsed as `{"model_number":"SPK-100"}`.
+The request contained native tools and no `response_format`. Both no-think fields were accepted without retries.
+Actual input/output usage was 372/30 tokens. See [model-tools.txt](live-first-pass/model-tools.txt) and
+[model-tools-http.jsonl](live-first-pass/model-tools-http.jsonl).
+
+### Tavily and direct HTTP
+
+The first `spike_tavily.py` execution made three fresh basic Search requests, all HTTP 200, costing three
+locally counted credits. Its original three-target Extract and Map responses were already cached before
+this session, so they are not presented as fresh provider proof. Console: [tavily-baseline.txt](live-first-pass/tavily-baseline.txt).
+
+A fresh five-URL basic extraction then returned four readable sources in 1,751 ms end to end (including the
+failed URL's direct fallback). The HTTP API response reported `usage.credits=1`, matching the wrapper's count.
+A fresh Map of `https://insights.acuitybrands.com/product-updates-blog`, limit 20/depth 1, returned 20 links;
+`usage.credits=2` also matched the code. `include_usage=true` was requested for these two session probes;
+the production provider and its quality settings were not changed.
+
+| URL / host target | Fresh Tavily text | Direct httpx |
+| --- | ---: | --- |
+| `hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW` | Failed: 404 | Redirect then 404 HTML |
+| `files-ask.hilti.com/original/vm/vm8lukxnls.pdf` | 2,315 chars; FS-ONE, ASTM | 200 PDF |
+| `insights.acuitybrands.com/.../discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2` | 19,301 chars; TL notice | 200 HTML |
+| `hdsupplysolutions.com/.../324751_Specification-PDF.pdf` | 4,389 chars; LQM, 0.62 | 200 PDF |
+| `img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf` | 4,836 chars; LQM, 0.62 | 403 Cloudflare challenge |
+
+The old Hilti asset is a dead URL; the actual sample's Hilti PDF works through both retrieval paths.
+The fresh TL notice still states: “As of **June 30th, 2024**, the TL family will be discontinued.”
+No observed evidence here contradicts that answer-key status. The literal keyword `June 30, 2024` did not
+match because the source includes `30th` and Markdown emphasis; its date has not changed.
+
+Exact URLs, response lengths/hashes, HTTP outcomes and that status quote are in
+[host-report.json](live-first-pass/host-report.json). Redacted requests, provider response summaries,
+credit usage and request IDs are in [tavily-http-summary.json](live-first-pass/tavily-http-summary.json).
+Full third-party pages are kept in the ignored cache/session files, not copied into these notes.
+
+### Billing limits of this evidence
+
+Tavily `/usage` reported five pre-existing credits used before this pass's Tavily requests. It still reported
+five immediately afterwards and on a later no-cache read at 07:19:32 UTC, despite fresh responses reporting
+credits. Its account fields report Researcher / 1,000-credit plan, unlike the owner-provided 9,000-credit
+balance. The cause of the unchanged counter is unknown; do not call this a zero-credit live run.
+See the three `tavily-usage-*.json` records in this evidence folder. Use the conservative six-credit local
+ledger for the pass ceiling while reconciliation is pending. No account plan or billing setting was changed.
+
+Token Factory spend is computed from returned token usage, not yet compared with Kyle's console.
+Configured Nano/Super rates match the [current Nebius model page](https://nebius.com/services/token-factory/models/nvidia-nemotron-models-inference).
+Neither provider produced a 429 in these spikes; no load or concurrency stress test is claimed.
+
+### Reproduce Gate 2
+
+```bash
+.venv/bin/python scripts/spike_models.py --yes
+.venv/bin/python scripts/spike_models.py --yes --tools
+printf 'y\n' | .venv/bin/python scripts/spike_tavily.py
+```
+
+The session recorder captured the wire requests without authorization headers and redacted any known key
+before saving or printing output. Re-runs can hit cache; inspect per-call `cached` fields and fresh HTTP
+records before calling them new provider evidence. To repeat the additional host probe, pass the five exact
+URLs in `host-report.json` to `api.providers.tavily.extract`, and call `tavily.map` on the blog URL above.
+Both wrappers enforce the configured spend caps. The direct comparison used `BROWSER_HEADERS`, redirects
+enabled, and a 30-second httpx timeout.
+
+Gate 2: Super schema-valid JSON, native tools and fresh manufacturer extraction all work. Billing counter
+reconciliation and the stated account allowance remain open. Phase 3 requires Kyle's go-ahead, followed by
+his explicit checklist review at Gate 3; no checklist has been self-approved.
