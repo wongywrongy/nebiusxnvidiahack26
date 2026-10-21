@@ -238,8 +238,9 @@ Observed draft errors include a firestopping warranty not required by its cited 
 comparison targets, loss of the T=F relationship, a numeric VOC limit not stated in the PDF, an L70 life
 misnamed `t_rating_hr`, incorrect lighting paragraph references, subtype requirements assigned to all
 product-data sheets, installation requirements and separate test/warranty paperwork. The comparison also
-flags string `eq` values that the current numeric comparator cannot evaluate and `exists` rows whose
-missing-claim failures conflict with the unconfirmed-evidence rule. These require resolution before use.
+flags string `eq` values that the current numeric comparator cannot evaluate and found `exists` rows whose
+missing-claim failures conflicted with the unconfirmed-evidence rule. The latter is fixed below; the other
+draft issues still require Kyle's row decisions before use.
 
 | Draft | Input/output tokens | Latency | Computed USD |
 | --- | --- | ---: | ---: |
@@ -261,5 +262,26 @@ observations above do not substitute for that dashboard check. Neither case has 
 
 Post-draft mock check `20261021-073404-ea001f` remains 8/8, with 6/6 problems, 0/2 false alarms,
 2/5 passing fixes, 48/48 claims and 19/20 web values retained. Output is saved outside `runs/` at
-`/tmp/speccheck-first-pass-mock-drafts.json`. No production code changed in Phase 3; the last full suite
-remains 158 passed / 2 skipped. Draft schema/provenance and absence of reviewed filenames were checked.
+`/tmp/speccheck-first-pass-mock-drafts.json`. Draft generation itself changed no production code; the suite
+at that checkpoint was 158 passed / 2 skipped. Draft schema/provenance and absence of reviewed filenames
+were checked.
+
+### Missing presence claims stay unconfirmed
+
+While Gate 3 awaits Kyle's decisions, fixed the general `exists` branch in `spec_check.check`, shared by
+normal submittals and fix candidates. Previously it treated the absence of an extracted claim as proof
+the package was missing that information. It now reuses the existing missing-claim path; no quote gate,
+prompt, fixture, expected result or draft row was changed.
+
+Reproduction: one synthetic `input_watts` requirement, `operator=exists`, no claims:
+
+| Behavior | Before | After |
+| --- | --- | --- |
+| Finding | `fail`, major | `unverified`, minor |
+| Decision | `send_back` | `approve_with_note` |
+
+A present claim still passes the presence check. The new regression also checks that even a critical
+requirement cannot trigger a send-back from absent evidence. Full suite: **159 passed, 2 skipped in
+12.87 s**. Mock eval `20261021-073852-503024` remains 8/8 with the same panel and quote-gate counts;
+saved at `/tmp/speccheck-first-pass-mock-exists.json`. Ledger remains $0.013187 and 6 credits.
+Neither reviewed checklist exists, and c03/c07 have not run live.

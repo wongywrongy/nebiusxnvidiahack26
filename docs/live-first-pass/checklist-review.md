@@ -4,7 +4,7 @@ Compare against the fixture files without modifying them. All arrows show fixtur
 
 Mark keep/edit/delete by row ID. No reviewed checklist exists and no reviewed_at date has been set. “Added” means absent from the fixture, not validated or approved. Notes are source checks, not automatic edits.
 
-Numeric eq/gte/lte cannot compare the draft’s string yes/available/provided values. The existing exists operator reports a failure when a claim is absent; keeping those rows requires resolving the conflict with the pass rule that unconfirmed evidence is not a failure. Generic PD/SD roles do not distinguish screw-in lamps, batteries, drivers and whole luminaires.
+Numeric eq/gte/lte cannot compare the draft’s string yes/available/provided values. The exists operator has now been corrected: an absent claim is unverified, while a present claim passes the presence check. The scope and duplicate-row issues below still require review. Generic PD/SD roles do not distinguish screw-in lamps, batteries, drivers and whole luminaires. Neither draft was changed by this code fix.
 
 ## 07 84 00
 
@@ -61,7 +61,7 @@ Draft: `data/requirements/26_51_00.draft.json`. Fixture: `data/fixtures/specs/26
 | L31 | 2.05.C.9.c | remote_driver_enclosure_chicago_plenum_rated | eq | yes | — | major | SD | added; Remote-enclosure product rating, not a generic luminaire rating; role SD is unsuitable for proving a product rating. |  |
 | L32 | 2.05.C.9.d | remote_driver_distance_limit | eq_ref | manufacturer_specified_limit | — | major | SD | added; data sheet can't show this: compare actual installed distance with the manufacturer's limit; equality is not the stated rule. |  |
 | L33 | 2.05.C.9.b | remote_driver_ventilated_metal_enclosure | eq | yes | — | major | SD | added; data sheet can't show this: provision of a separate ventilated enclosure in the installation. |  |
-| L34 | 1.04.D.3 | input_watts | exists | — | watts | major | PD | added; Data-sheet field can show input watts; exists treats an absent claim as a failure, not unconfirmed. |  |
+| L34 | 1.04.D.3 | input_watts | exists | — | watts | major | PD | added; Data-sheet field can show input watts; a missing claim now stays unverified. |  |
 | L35 | 1.04.D.3 | remote_driver_mount_dist_limit | exists | — | — | major | PD | added; Remote-driver data-sheet field; duplicates L44; review absence handling. |  |
 | L36 | 1.04.D.3 | remote_driver_wire_size | exists | — | awg | major | PD | added; Remote-driver data-sheet field; duplicates L45; review absence handling. |  |
 | L37 | 1.04.D.3 | driver_dimming_type_range | exists | — | — | major | PD | added; Data-sheet field; overlaps numeric dimming row L25; review absence handling. |  |

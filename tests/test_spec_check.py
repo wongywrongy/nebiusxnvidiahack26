@@ -4,6 +4,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from api.pipeline.spec_check import check, to_number  # noqa: E402
+from api.pipeline.decide import decide  # noqa: E402
 from api.schemas import Claim, Requirement  # noqa: E402
 
 
@@ -51,6 +52,14 @@ def test_missing_claim_is_unverified_minor():
     r = req(property="warranty_years", operator="gte", value=5)
     f = check([r], [])[0]
     assert f.verdict == "unverified" and f.severity == "minor"
+
+
+def test_exists_without_a_claim_cannot_send_back_the_submittal():
+    r = req(property="input_watts", operator="exists", severity="critical")
+    findings = check([r], [])
+    assert findings[0].verdict == "unverified" and findings[0].severity == "minor"
+    assert decide(findings) == "approve_with_note"
+    assert check([r], [claim("input_watts", 30)])[0].verdict == "pass"
 
 
 def test_unit_conversion_mm_to_in():

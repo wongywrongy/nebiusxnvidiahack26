@@ -141,9 +141,8 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             findings.append(make("not_applicable", _label(r.property), f"Applies to {', '.join(r.applies_to)} only."))
             continue
 
-        if r.operator == "exists":
-            findings.append(make("pass", _label(r.property), right="Included") if found
-                            else make("fail", f"Missing: {_label(r.property)}", "Not found in the package.", right="Not found"))
+        if r.operator == "exists" and found:
+            findings.append(make("pass", _label(r.property), right="Included"))
             continue
 
         if r.operator == "eq_ref" and (claim is None or not by_prop.get(str(r.value))):
