@@ -124,5 +124,8 @@ def test_replay_rejects_zero_speed(isolated):
 
 
 def test_remaining_budget_clamps_overage(isolated, monkeypatch):
-    monkeypatch.setattr(budget, "today", lambda: {"usd": 999, "credits": 999})
+    monkeypatch.setattr(budget, "today", lambda: {
+        "usd": settings.budget_usd_per_day + 1,
+        "credits": settings.budget_tavily_credits_per_day + 1,
+    })
     assert budget.remaining() == {"usd_left": 0, "credits_left": 0}
