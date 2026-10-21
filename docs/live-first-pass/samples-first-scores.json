@@ -1,0 +1,151 @@
+{
+  "generated_at": "2026-10-21T11:26:42+00:00",
+  "mode": "live",
+  "run_id": "20261021-112328-21358e",
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "quote_gate": {
+    "claims_extracted": 185,
+    "claims_kept": 170,
+    "web_values_read": 11,
+    "web_values_kept": 11,
+    "claims_drop_rate": 0.08108108108108103,
+    "web_values_drop_rate": 0.0
+  },
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_output_tokens": 32768,
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 30.0,
+    "investigate_max_steps": 24,
+    "map_limit": 20
+  },
+  "right_call": {
+    "n": 1,
+    "of": 4
+  },
+  "caught": {
+    "n": 0,
+    "of": 2
+  },
+  "false_alarms": {
+    "n": 0,
+    "of": 3
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 1
+  },
+  "time_ms_per_item": 62568,
+  "cost_usd_per_item": 0.035761,
+  "rows": [
+    {
+      "id": "s1",
+      "title": "Firestop sealant, cable penetrations",
+      "product": "3M IC 15WB+ Rev B",
+      "expected": "approve",
+      "expected_problems": [],
+      "decision": "approve_with_note",
+      "found_problems": [],
+      "right_call": false,
+      "caught": 0,
+      "false_alarm": false,
+      "fix": null,
+      "time_ms": 31388,
+      "model_cost_usd": 0.005313,
+      "web_credits": 2.0,
+      "cost_usd": 0.021313,
+      "claims_extracted": 6,
+      "claims_kept": 3,
+      "web_values_read": 3,
+      "web_values_kept": 3
+    },
+    {
+      "id": "s2",
+      "title": "LED troffer, offices",
+      "product": "Lithonia BLT 2x4",
+      "expected": "approve",
+      "expected_problems": [],
+      "decision": "approve_with_note",
+      "found_problems": [
+        "currency_note"
+      ],
+      "right_call": false,
+      "caught": 0,
+      "false_alarm": false,
+      "fix": null,
+      "time_ms": 3477,
+      "model_cost_usd": 0.012673,
+      "web_credits": 0.0,
+      "cost_usd": 0.012673,
+      "claims_extracted": 25,
+      "claims_kept": 20,
+      "web_values_read": 2,
+      "web_values_kept": 2
+    },
+    {
+      "id": "s3",
+      "title": "LED troffer, stock version",
+      "product": "Lithonia 2BLT4 ADP",
+      "expected": "send_back",
+      "expected_problems": [
+        "currency",
+        "spec"
+      ],
+      "decision": "approve_with_note",
+      "found_problems": [
+        "currency_note"
+      ],
+      "right_call": false,
+      "caught": 0,
+      "false_alarm": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 0
+      },
+      "time_ms": 190356,
+      "model_cost_usd": 0.033045,
+      "web_credits": 4.0,
+      "cost_usd": 0.065045,
+      "claims_extracted": 152,
+      "claims_kept": 145,
+      "web_values_read": 4,
+      "web_values_kept": 4
+    },
+    {
+      "id": "s4",
+      "title": "Firestop sealant, alternate product",
+      "product": "Hilti FS-ONE MAX",
+      "expected": "approve_with_note",
+      "expected_problems": [],
+      "decision": "approve_with_note",
+      "found_problems": [
+        "currency_note"
+      ],
+      "right_call": true,
+      "caught": 0,
+      "false_alarm": false,
+      "fix": null,
+      "time_ms": 25052,
+      "model_cost_usd": 0.004014,
+      "web_credits": 5.0,
+      "cost_usd": 0.044014,
+      "claims_extracted": 2,
+      "claims_kept": 2,
+      "web_values_read": 2,
+      "web_values_kept": 2
+    }
+  ],
+  "runner": "local",
+  "job_name": null
+}

@@ -1,13 +1,13 @@
 # First live pass — 2026-10-21
 
-Status: Gates 1–3 were accepted; Gate 3 is saved and pushed as `d8eb713`. The first full live baseline
-was **3/8**; the second full run reached **5/8**. Demo recording and Phases 5–7 have not begun.
-The latest completed-run ledger is **$0.721930 / 230 Tavily credits**, before the family-reader retry.
-The original mock baseline remains 8/8; current verification is **237 passed, 2 skipped**, and mock eval 8/8.
+Status: Gates 1–3 accepted and pushed. Gate 4 awaits Kyle’s review of the remaining root causes.
+All **four** permitted full live evals are complete: final cases **6/8**, samples **1/4**. No cap/provider
+warnings occurred in either final run. No more full eight-case runs are allowed in this pass.
 
-Pending Kyle decisions/readings: a 12,000-character input excerpt versus the current 6,000 default;
-missing-reference applicability for F04; updated Tavily dashboard usage/scope. No answer-key or approved
-checklist rows have been changed. Detailed dated evidence and measurements follow.
+**[Compact Gate 4 review and remaining decisions](live-first-pass/gate4-review.md).**
+Latest local ledger: **$1.048778 / 291 Tavily credits**. Console reconciliation is unverified.
+Mock checks: **244 passed, 2 skipped**, eval **8/8**. Reviewed checklists/answer-key expectations unchanged.
+Phases 5–7 and deployment have not begun. Detailed dated evidence follows.
 
 ## Setup and baseline
 
@@ -782,3 +782,76 @@ prevented them from becoming a passing fix, but retrieval quality remains an ope
 
 Latest mock suite: **237 passed, 2 skipped in 12.60 s**; mock eval `20261021-110847-af1c53`:
 8/8 calls, 6/6 problems, 0/2 major false alarms, 2/5 passing fixes; claims 46/48 and web 19/20.
+
+
+### Family status and cap retries — 2026-10-21
+
+`20261021-110848-b21afe` correctly caught c07's discontinued status. The original scripted check now read
+`As of **June 30th, 2024**, the TL family will be discontinued.` from the manufacturer notice. The fix search
+still hit shared investigation and candidate-verification credit caps: its no-fix result was invalid until retried.
+Ledger after: **$0.759579 / 238 credits**.
+
+`20261021-111033-3966a9` repeated c07 with 24 calls/investigation, 30 shared investigation credits and a
+40-credit fix allowance, all inside the unchanged 60/item and pass ceilings. It correctly caught status and
+finished with **no cap/provider warnings**, 30 combined candidate-investigation steps, outcome not_found,
+no passing fix, **112.921 s**. Ledger: **$0.826367 / 250 credits**. These are disclosed cap retries, not
+improvements attributed to default settings. Both retries have redacted request/response and repro artifacts.
+
+### Full live run 3 — 2026-10-21
+
+Run `20261021-111241-b49a08`; output 32,768, investigation steps 24, investigation credits 30, fix credits 40.
+Other quality settings and checklist rows are unchanged. Raw scorer: **6/8 calls**, **5/6 problems**,
+**0/2 major false alarms**, **1/5 coded passing fixes**; **46.159 s/item**, **$0.063565 equivalent/item**.
+Claims **153/185** (17.3% dropped), web **31/43** (27.9% dropped). No cap/provider warnings on any item.
+Ledger: **$0.981441 / 280 credits**; fresh run charge **$0.155074 / 30 credits**.
+
+The coded passing fix is **not accepted as a valid fix**: c02's proposed FIP 1-Step product data sheet had only
+one check, “Current document”, without any evidence that T equalled F. This is a general fix-verification hole:
+conditional requirements absent from candidate findings were silently omitted. A replacement must now
+include a check for every originally failed requirement; missing evidence is unknown and prevents “Passes”.
+The main F04 applicability policy remains unchanged and pending Kyle; this closes the independent fix hole.
+
+Remaining wrong calls: c05 approve_with_note rather than approve (L70, warranty, DLC, driver configuration,
+and a different 2025 revision); c06 approve_with_note rather than currency send-back. The c06 Investigator
+found a readable **LDN6 SWW** sheet with `Rev. 05/12/22`, not the original exact configuration. Quoted CRI
+and warranty match; old/current wattage and efficacy options remain ambiguous. Its “found” is a document
+retrieval outcome, **not a resolved currency problem**. It also copied submitted standard identifiers onto
+`Certified to US and Canadian safety standards.`; that quote does not state those identifiers.
+
+The shared value gate now requires each categorical identifier to occur in its quote (case/spacing/punctuation
+normalization retained), as well as the existing exact page quote, numeric bound and metric-label checks.
+Null/empty claims cannot supply a value. The one validation-feedback retry now covers categorical values too.
+No unconfirmed value is converted into a failure. Tests cover copied standards, partial numeric identifiers,
+missing failed-requirement evidence and a genuinely corrected requirement.
+
+That stricter gate exposed two old mock-fixture defects: c01's standards quote omitted ASTM E814, even though
+the full contiguous statement was already in its stored page; c04's pipe-type list included paraphrased size
+qualifiers and quoted only the first pipe. Repaired those **fixture responses** using their existing source text:
+c01's quote now starts at ASTM E814; c04 uses the six literal pipe identifiers and the complete contiguous
+penetrant list for both extracted and web claims. No source text, expected decision/problem, or reviewed row
+was changed. Before repair the suite had 10 failures and mock eval 6/8; after repair: **244 passed, 2 skipped
+in 12.13 s**, mock `20261021-112113-2b5f8f` **8/8**, 6/6 problems, 0/2 major false alarms, 2/5 passing fixes,
+claims 45/48, web 19/20. The fourth (last allowed) full live evaluation is in progress.
+
+
+### Final full eval and samples — 2026-10-21
+
+Final cases `20261021-112213-cb4555`: **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**;
+3.365 s/item with warm caches, $0.033602 equivalent/item. Claims 149/185 (19.5% dropped), web 27/40
+(32.5% dropped). No caps/provider warnings/errors. Fresh charge $0.024414 / 0 credits; ledger after
+**$1.005855 / 280 credits**. C02’s previously false passing fix is now blocked by missing F/T evidence.
+
+Samples `20261021-112328-21358e`: **1/4 calls, 0/2 problems, 0/3 major false alarms, 0/1 passing fixes**;
+62.568 s/item, $0.035761 equivalent/item. Claims 170/185 (8.1% dropped), web 11/11 (0% dropped).
+No caps/provider warnings/errors. Fresh charge $0.042923 / 11 credits; ledger **$1.048778 / 291 credits**.
+Detailed stage diagnoses, counters and Investigator outcomes are in `live-first-pass/gate4-review.md`;
+redacted request/response and repro artifacts are `full-fourth-*` and `samples-first-*` beside it.
+
+The final cases triggered 2 primary investigations; one found a quoted revision for an uncertain SWW
+configuration, neither resolved the missing planted problem, and none capped. Four replacement investigations
+also ran, none capped and none produced a passing fix. This distinguishes “found a document” from resolving
+the review task. No sample required the Investigator.
+
+Gate 4 remains open: Kyle must accept the written remaining misses or request targeted work. Four full evals
+have been used. A synchronized Tavily dashboard reading/scope was requested against the 280-credit local
+checkpoint; no new reading has arrived. Earlier 15/9000 cannot be reconciled without observation time/scope.

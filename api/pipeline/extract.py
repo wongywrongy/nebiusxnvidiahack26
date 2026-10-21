@@ -12,7 +12,7 @@ from ..llm import router
 from ..schemas import ClaimsOut, PageLabel, RequirementsOut, TriageOut, Usage
 
 from . import metrics
-from .spec_check import _label, to_number
+from .spec_check import _label, _mentions, to_number
 
 
 async def triage(case_id: Optional[str], pages: list[dict]) -> tuple[TriageOut, Usage]:
@@ -94,7 +94,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     texts = {p["page"]: p["text"] for p in pages}
     extracted = len(out.claims)
     out.claims = [c for c in out.claims if quoted(c.quote, texts[c.page] if c.page in texts else " ".join(texts.values()))
-                  and numeric_quote(c.value, c.quote) and metric_quoted(c.property, c.quote)
+                  and value_quoted(c.value, c.quote) and metric_quoted(c.property, c.quote)
                   and (not c.variant or quoted(c.variant, c.quote or ""))]
     metrics.count("claims_extracted", "claims_kept", extracted, len(out.claims))
     return out, usage
@@ -129,13 +129,15 @@ def metric_quoted(property: str, quote: Optional[str]) -> bool:
     return True
 
 
-def numeric_quote(value, quote: Optional[str]) -> bool:
-    """A quoted related limit cannot support a different numeric value or bound."""
+def value_quoted(value, quote: Optional[str]) -> bool:
+    """Require the stated value, including numeric bounds or categorical identifiers, in its quote."""
     if isinstance(value, list):
-        return all(numeric_quote(v, quote) for v in value)
+        return bool(value) and all(value_quoted(v, quote) for v in value)
+    if value is None or isinstance(value, bool):
+        return False
     number = to_number(value)
-    if number is None or isinstance(value, bool):
-        return True
+    if number is None:
+        return _mentions(_plain(quote or ""), str(value))
     bounds = {"≤": "<=", "≥": ">="}
     bound = re.match(r"[<>]=?|[≤≥~]", str(value).strip())
     wanted = bounds.get(bound[0], bound[0]) if bound else ""

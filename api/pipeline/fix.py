@@ -169,6 +169,12 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         usage += vu
         verify_credits += vc
         checks = [_row(f, reqs) for f in found_f if f.verdict != "not_applicable"]
+        checked = {f.requirement_id for f in found_f if f.verdict != "not_applicable"}
+        for original in flagged:
+            if original.requirement_id in reqs and original.requirement_id not in checked:
+                req = reqs[original.requirement_id]
+                checks.append(FixCheck(label=spec_check._label(req.property), ok=None,
+                                       note="No quoted evidence that this corrects the failed requirement"))
         cands.append(FixCandidate(
             name=r.get("title") or cl.product, source_url=r["url"], checks=checks, passes=bool(checks) and all(k.ok is True for k in checks),
         ))

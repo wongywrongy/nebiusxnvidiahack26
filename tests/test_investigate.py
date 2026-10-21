@@ -331,6 +331,34 @@ def test_fix_warns_when_candidate_verification_does_not_fit_cap(monkeypatch):
     assert not result.candidates and warnings == [("fix", "Fix credit cap reached before candidate verification")]
 
 
+@pytest.mark.parametrize("reference_present,passes", [(False, False), (True, True)])
+def test_fix_must_demonstrate_original_failed_requirement(monkeypatch, reference_present, passes):
+    from api.schemas import Usage
+    async def search(*args, **kwargs):
+        return [{"url": URL, "title": "Product X"}]
+    async def extract(*args, **kwargs):
+        return [{"url": URL, "raw_content": "Product X measurement 10"}]
+    async def claims(*args, **kwargs):
+        values = [Claim(id="m", product="X", manufacturer="Maker", property="measurement", value=10)]
+        if reference_present:
+            values.append(values[0].model_copy(update={"id": "r", "property": "reference"}))
+        return CLAIMS.model_copy(update={"claims": values}), Usage(task="extract_claims", tier="extract", model="test")
+    async def current(*args, **kwargs):
+        return [Finding(id="currency-current", check="currency", verdict="pass", severity="info", title="Current")], [], [], 0, None
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    monkeypatch.setattr(fix.extract, "extract_claims", claims)
+    monkeypatch.setattr(fix.verify, "verify", current)
+    case = {**CASE, "title": "Sealant, wall", "submittal": []}
+    req = Requirement(id="failed-requirement", section="07 84 00", paragraph="", property="measurement",
+                      operator="eq_ref", value="reference", text="Equal measurements")
+    finding = Finding(id="failed", requirement_id=req.id, check="spec", verdict="fail", severity="critical", title="Unequal")
+    result, _, _ = asyncio.run(fix._fix(case, "spec", [finding], [req], CLAIMS, 1, 10))
+    assert result.candidates[0].passes is passes
+    if not passes:
+        assert any(c.ok is None and "failed requirement" in c.note for c in result.candidates[0].checks)
+
+
 def test_source_selection_keeps_manufacturer_status_notice():
     docs = [{"url": f"https://maker.test/{n}.pdf"} for n in range(4)]
     notice = {"url": "https://news.maker.test/update", "title": "Product discontinuation notice"}
@@ -399,6 +427,11 @@ def test_current_product_fixes_skip_candidates_without_quoted_properties(monkeyp
     (50000, "Life 50,000 hours", True),
     (0.75, "Thickness 3/4 in", True),
     (1.125, "Thickness 1-1/8 in", True),
+    (["IESNA LM-79-08", "NEMA"], "Certified to US and Canadian safety standards.", False),
+    (["astm e814", "ul1479"], "Tested to ASTM E 814 and UL-1479.", True),
+    ("UL 1479", "Tested to UL 14790.", False),
+    (None, "Not stated", False),
+    ([], "Standards", False),
 ])
 def test_web_value_must_match_numeric_quote(value, quote, kept):
     out = VerifyOut(status="unknown", current_values=[{"property": "measurement", "value": value, "quote": quote}])
@@ -424,7 +457,7 @@ def test_verify_retries_numeric_quote_mismatch_once(http, monkeypatch):
     findings, rows, usage, _, _ = asyncio.run(verify.verify(CASE, submitted))
     assert len(route.calls) == len(usage) == 2
     sent = json.loads(route.calls[1].request.content)
-    assert "Numeric quote validation rejected" in sent["messages"][-1]["content"]
+    assert "Value quote validation rejected" in sent["messages"][-1]["content"]
     assert rows[0].current == "<5" and findings[0].verdict == "outdated"
 
 

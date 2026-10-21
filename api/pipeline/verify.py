@@ -15,7 +15,7 @@ from ..llm import load_fixture, router
 from ..providers import ProviderError, budget
 from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Investigation, Usage, VerifyOut
 from ..web import WebClient, snapshot
-from .extract import metric_quoted, numeric_quote, quoted
+from .extract import metric_quoted, value_quoted, quoted
 from .investigate import investigate
 from .spec_check import _fmt, _label, to_number
 from . import metrics
@@ -115,7 +115,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
     # 3. Super reads the sources; the quote gate runs before the investigator trigger.
     out, u = await read_sources(fx, submitted, pages, submitted_label=case.get("product"))
     usage = [u]
-    if any(not numeric_quote(pv.value, pv.quote) for pv in out.current_values):
+    if any(not value_quoted(pv.value, pv.quote) for pv in out.current_values):
         out, u = await read_sources(fx, submitted, pages, correction=out, submitted_label=case.get("product"))
         usage.append(u)
     confirmed = gate(out, pages)
@@ -171,11 +171,11 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
                 "text": p["raw_content"][:settings.web_source_chars]} for p in pages]
     feedback = ""
     if correction is not None:
-        rejected = [pv.property for pv in correction.current_values if not numeric_quote(pv.value, pv.quote)]
+        rejected = [pv.property for pv in correction.current_values if not value_quoted(pv.value, pv.quote)]
         feedback = (f"\n\nPREVIOUS OUTPUT:\n{correction.model_dump_json()}\n"
-                    f"Numeric quote validation rejected these properties: {json.dumps(rejected)}. "
+                    f"Value quote validation rejected these properties: {json.dumps(rejected)}. "
                     "Read their source passages again and correct the quotes or omit the values. "
-                    "Each numeric quote must contain the same number and bound as its value.")
+                    "Each quote must contain the stated value, including numeric bounds and each categorical identifier.")
     properties = sorted({c["property"] for c in submitted_view["claims"]})
     class SourceRead(VerifyOut):
         @classmethod
@@ -227,7 +227,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str
         out.status = "unknown"
         out.status_quote = None
     read = len(out.current_values)
-    out.current_values = [pv for pv in out.current_values if source_of(pv.quote) and numeric_quote(pv.value, pv.quote)
+    out.current_values = [pv for pv in out.current_values if source_of(pv.quote) and value_quoted(pv.value, pv.quote)
                           and metric_quoted(pv.property, pv.quote)]
     if measure:
         metrics.count("web_values_read", "web_values_kept", read, len(out.current_values))
