@@ -239,6 +239,7 @@ async def chat_tools(task: str, messages: list[dict[str, Any]], tools: list[dict
              usage.latency_ms, usage.cost_usd)
     try:
         choice = resp["choices"][0]
+        usage.finish_reason = choice.get("finish_reason")
         if choice.get("finish_reason") == "length":
             raise ProviderError(f"{task}: reply hit MAX_OUTPUT_TOKENS ({settings.max_output_tokens})")
         message = ToolMessage.model_validate({**choice["message"], "tool_calls": choice["message"].get("tool_calls") or []})

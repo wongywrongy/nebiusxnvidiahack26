@@ -216,6 +216,7 @@ class Usage(BaseModel):
     format: Optional[str] = None  # live: "json_schema" or "json_object" (fallback)
     reasoning_tokens: int = 0  # live: thinking tokens the server reported (Nemotron 3 thinks by default)
     thinking: Optional[str] = None  # live: "off" (asked for no thinking), "on", or "server-default"
+    finish_reason: Optional[str] = None
 
 
 class ToolFunction(BaseModel):

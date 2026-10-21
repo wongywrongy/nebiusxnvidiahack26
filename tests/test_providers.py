@@ -207,6 +207,44 @@ def test_list_models(live):
     assert asyncio.run(tokenfactory.list_models()) == ["a", "b"]
 
 
+@pytest.mark.parametrize("enabled,count,arguments", [
+    (False, 0, '{}'), (True, 1, '{"model_number":"SPK-100"}'),
+    (True, 2, '{"model_number":"SPK-100"}'), (True, 1, 'invalid'), (True, 0, '{}'),
+])
+def test_spike_models_tools_flag(live, monkeypatch, capsys, enabled, count, arguments):
+    monkeypatch.setenv("SPECCHECK_MODE", "mock")
+    from scripts import spike_models
+
+    monkeypatch.setattr(sys, "argv", ["spike_models.py", "--yes", *(["--tools"] if enabled else [])])
+    live[0].get(settings.nebius_base_url + "models").respond(200, json={
+        "data": [{"id": m} for m in set(settings.models.values())]})
+
+    def respond(request):
+        body = json.loads(request.content)
+        if "tools" not in body:
+            return reply('{"product":"sealant","f_rating_hours":2,"standard":"ASTM E814"}')
+        assert "response_format" not in body and body["model"] == settings.model_verify
+        assert body["tools"][0]["function"]["name"] == "lookup"
+        assert body["tools"][0]["function"]["parameters"]["required"] == ["model_number"]
+        return httpx.Response(200, json={"choices": [{"finish_reason": "tool_calls" if count else "stop", "message": {
+            "role": "assistant", "tool_calls": [{"id": f"call-{i}", "type": "function", "function": {
+                "name": "lookup", "arguments": arguments}} for i in range(count)]}}],
+            "usage": {"prompt_tokens": 100, "completion_tokens": 20,
+                      "completion_tokens_details": {"reasoning_tokens": 7}}})
+
+    route = live[0].post(CHAT).mock(side_effect=respond)
+    asyncio.run(spike_models.main())
+    output = capsys.readouterr().out
+    assert len(route.calls) == (3 if enabled else 2)
+    if enabled:
+        assert f"tool_calls={bool(count)}  count={count}" in output
+        assert f"finish_reason={'tool_calls' if count else 'stop'}" in output
+        assert f"arguments_json={bool(count) and arguments != 'invalid'}" in output
+        assert f"multiple_calls={count > 1}" in output and "reasoning_tokens=7" in output
+    else:
+        assert "== tools:" not in output
+
+
 def test_cache_hit_makes_no_call(live):
     route = live[0].post(CHAT).mock(return_value=reply())
     _, first = chat()

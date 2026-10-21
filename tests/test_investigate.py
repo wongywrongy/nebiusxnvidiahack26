@@ -137,7 +137,7 @@ def test_tool_cache_budget_and_429_backoff(http, monkeypatch):
     route = http.post(CHAT).mock(side_effect=[httpx.Response(429), reply("finish", FINAL)])
     asyncio.run(tokenfactory.chat_tools("investigate", [], TOOLS))
     _, u = asyncio.run(tokenfactory.chat_tools("investigate", [], TOOLS))
-    assert u.cached and len(route.calls) == 2 and sleeps == [1]
+    assert u.cached and u.finish_reason == "tool_calls" and len(route.calls) == 2 and sleeps == [1]
     monkeypatch.setattr(settings, "budget_usd_per_day", 0)
     with pytest.raises(budget.BudgetExceeded):
         asyncio.run(tokenfactory.chat_tools("investigate", [{"role": "user", "content": "new request"}], TOOLS))

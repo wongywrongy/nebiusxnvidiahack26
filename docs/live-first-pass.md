@@ -1,6 +1,6 @@
 # First live pass — 2026-10-21
 
-Status: phases 0–1 complete; stopped at Gate 1 for Kyle's review. No paid provider call has been made.
+Status: Kyle approved Gate 1; Phase 2 is in progress. No case has been run live.
 
 ## Setup and baseline
 
@@ -71,9 +71,11 @@ Table detection has low fill rates on the old 3M sheet (9/389 cells, 2%) and the
 | Before setup | 0 | 0 |
 | After mock baseline and document checks | 0 | 0 |
 | After test correction and mock re-eval | 0 | 0 |
+| Model spike baseline | 0.000087 | 0 |
 
-At the last checkpoint `.cache/budget/2026-10-21.json` does not exist;
-`budget.today()` returns `{"usd": 0.0, "credits": 0.0}`. This is the local ledger, not console billing verification.
+Before the first provider call `.cache/budget/2026-10-21.json` did not exist.
+After the model spike it records `{"usd": 0.000087, "credits": 0.0}`.
+This is the local ledger, not console billing verification.
 Pass ceilings remain $20 and 2,000 credits across the entire pass.
 
 ## Reproduce phases 0–1
@@ -88,4 +90,41 @@ SPECCHECK_MODE=mock .venv/bin/python scripts/eval.py --out /tmp/speccheck-first-
 ```
 
 Use an unrestricted local shell for pytest in this environment. Tesseract is not installed here.
-Phase 2 starts only after Kyle reviews Gate 1. Deployment, cloud resources and paid providers remain untouched.
+Deployment and cloud resources remain untouched.
+
+## Phase 2: provider spikes
+
+The first real model spike ran on 2026-10-21. The account listed both configured model IDs exactly as configured.
+Its five visible Nemotron IDs, verbatim:
+
+```text
+nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+nvidia/Nemotron-3-Ultra-550b-a55b
+nvidia/Nemotron-3.5-Super-VL
+nvidia/Nemotron-3_5-Lightning
+nvidia/nemotron-3-super-120b-a12b
+```
+
+Both reads returned schema-valid `{"product":"Firestop sealant","f_rating_hours":2.0,"standard":"ASTM E814"}`.
+Both accepted `reasoning_effort="none"` and `chat_template_kwargs={"enable_thinking":false}` together,
+without a rejected-field retry, and reported zero reasoning tokens. Acceptance does not isolate which field
+caused the behavior. `json_schema` worked directly; `json_object` has not been tested live.
+
+| Model | Input/output tokens | Format | Latency | Computed USD |
+| --- | --- | --- | ---: | ---: |
+| Nano | 136 / 37 | `json_schema` | 779 ms | 0.000017 |
+| Super | 136 / 32 | `json_schema` | 1,053 ms | 0.000070 |
+
+The complete console output and credential-free request/response records are in
+[model-baseline.txt](live-first-pass/model-baseline.txt) and
+[model-baseline-http.jsonl](live-first-pass/model-baseline-http.jsonl).
+No 429 was observed in this spike. Model defaults and quality settings remain unchanged.
+
+Added `spike_models.py --tools`: one native `chat_tools("investigate", ...)` call with a synthetic
+`lookup(model_number: string)` tool, reporting presence/count, actual finish reason, JSON parsing,
+multiple calls, reasoning tokens, latency and cost. Usage now retains the provider's tool-call finish reason,
+including on cache hits; it is not added to assistant messages. Existing cache entries without the new field
+remain readable and report no finish reason rather than an invented one.
+
+Validation: 158 passed, 2 skipped in 15.91 s; mock run `20261021-071239-431799` remains 8/8 with
+48/48 claims and 19/20 web values retained. Its comparison output is `/tmp/speccheck-first-pass-mock-tools.json`.
