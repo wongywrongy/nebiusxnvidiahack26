@@ -1,7 +1,7 @@
 # First live pass — 2026-10-21
 
-Status: Kyle accepted Gate 2. Both Phase 3 drafts and their comparison tables await his row decisions at Gate 3.
-No case has been run live.
+Status: Kyle approved Gate 3 rows; both reviewed checklists are saved. Phase 4 starts after the requested
+normalization changes and mock validation below. No case has been run live yet.
 
 ## Setup and baseline
 
@@ -285,3 +285,41 @@ requirement cannot trigger a send-back from absent evidence. Full suite: **159 p
 12.87 s**. Mock eval `20261021-073852-503024` remains 8/8 with the same panel and quote-gate counts;
 saved at `/tmp/speccheck-first-pass-mock-exists.json`. Ledger remains $0.013187 and 6 credits.
 Neither reviewed checklist exists, and c03/c07 have not run live.
+
+### Gate 3 signed off by Kyle
+
+On 2026-10-21 Kyle supplied explicit keep/edit/delete decisions checked against the CPS text. Saved
+`data/requirements/07_84_00.json` and `data/requirements/26_51_00.json` with `reviewed_at=2026-10-21`.
+Only these approved properties are used live:
+
+| Section | Approved rows | Properties |
+| --- | --- | --- |
+| 07 84 00 | F01, F02, F04, F07 | VOC ≤250 g/L; ASTM G21 rating 0; T=F; ASTM E814/E119 or UL 1479 |
+| 26 51 00 | L01, L03, L14, L18, L51 | L70 ≥50,000 h; warranty ≥5 yr; DLC Standard/Premium; MacAdam ≤3 steps; dimming ≤5% |
+
+All other proposed rows are excluded from the reviewed checklists. The original `.draft.json` files remain
+unchanged as drafting evidence; the review table's Decision column records Kyle's choices. VOC text explicitly
+attributes 250 g/L to the Rule 1168 architectural-sealant limit supplied by Kyle, rather than claiming that
+the CPS PDF prints the number. CRI is excluded because the cited requirement is scoped to screw-in lamps.
+Source title/name metadata was completed without changing source URLs, hashes or draft timestamps.
+
+Before Phase 4, at Kyle's request, `any_of` and `contains` now normalize case, Unicode forms, whitespace,
+hyphens and punctuation on both operands. Empty punctuation-only strings cannot pass. This comparison
+normalization does not change the quote gate or the approved rows.
+
+| Synthetic comparison | Previous lowercase-only check | Normalized check |
+| --- | --- | --- |
+| `ASTM E 814` vs `astm e814` | false | true |
+| `UL-1479` vs `ul 1479` | false | true |
+
+Tests include formatting variants in both operands, different standard numbers that must still fail,
+punctuation-only values, and missing G21/L70/MacAdam properties remaining unverified notes. Full suite:
+**173 passed, 2 skipped in 11.48 s**. Mock eval `20261021-074851-a10d76` remains 8/8 with 48/48 claims
+and 19/20 web values kept; saved at `/tmp/speccheck-first-pass-mock-reviewed.json`. Ledger is unchanged
+at $0.013187 and 6 credits. README now lists product-type scoping under “What's next.”
+
+Kyle's additional answer-key instruction: if c01, c05 or c08 receives `approve_with_note` solely because
+G21, L70 or MacAdam is not stated, report it as an **answer-key question** and retain the approved row.
+Do not change expectations or drop a requirement to improve the panel. Dashboard reconciliation after
+c03/c07 remains required; the available browser profile has no Tavily sign-in, so dashboard figures will
+need Kyle's reading or his explicit browser sign-in choice.

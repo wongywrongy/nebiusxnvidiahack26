@@ -310,6 +310,11 @@ sha256, so an uploaded copy of a known document is recognised.
 
 [FEEDBACK.md](FEEDBACK.md): dated documentation observations and offline behavior. No row claims a live provider result.
 
+## What's next
+
+Add product-type scoping for requirements so emergency units, exit signs, screw-in lamps and remote drivers
+can have their own checks without applying them to every luminaire.
+
 ## License
 
 MIT

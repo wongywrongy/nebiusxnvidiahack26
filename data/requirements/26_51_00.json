@@ -1,0 +1,91 @@
+{
+  "_note": "Reviewed by Kyle on 2026-10-21; only the explicitly approved Gate 3 rows are included.",
+  "requirements": [
+    {
+      "id": "req_t_rating_hr_led",
+      "section": "26 51 00",
+      "paragraph": "2.02.S.3",
+      "property": "l70_hours",
+      "operator": "gte",
+      "value": 50000.0,
+      "unit": "hr",
+      "text": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_warranty_years_led",
+      "section": "26 51 00",
+      "paragraph": "1.10.B.1",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 5.0,
+      "unit": "yr",
+      "text": "Warranty Period for LED Luminaires, including LED modules, LED boards, chips, and drivers: Five (5) years from date of Preliminary Acceptance.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "lt-dlc",
+      "section": "26 51 00",
+      "paragraph": "2.02.H",
+      "property": "dlc_listed",
+      "operator": "any_of",
+      "value": [
+        "dlc standard",
+        "dlc premium"
+      ],
+      "unit": null,
+      "text": "Listed as a qualified DLC product, where applicable.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_macadam_ellipse",
+      "section": "26 51 00",
+      "paragraph": "2.02.S.6",
+      "property": "macadam_steps",
+      "operator": "lte",
+      "value": 3.0,
+      "unit": null,
+      "text": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "lt-dim",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.1",
+      "property": "dim_min_percent",
+      "operator": "lte",
+      "value": 5.0,
+      "unit": "%",
+      "text": "Continuous dimming from 100 to 5 percent without flicker.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    }
+  ],
+  "section": "26 51 00",
+  "title": "Interior Lighting",
+  "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+  "source_name": "cps_26_51_00.pdf",
+  "source_url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/electrical-new/26-51-00-interior-lighting.pdf",
+  "source_sha256": "a6f49d7e4371591954e283295bb45fac5f1ff39a87a85a30fb1b16a554a4b6ce",
+  "drafted_at": "2026-10-21T07:27:03.659556Z",
+  "reviewed_at": "2026-10-21"
+}

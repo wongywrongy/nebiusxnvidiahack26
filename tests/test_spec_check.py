@@ -1,6 +1,8 @@
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from api.pipeline.spec_check import check, to_number  # noqa: E402
@@ -48,10 +50,38 @@ def test_contains_listing_coverage():
     assert f.verdict == "fail" and f.check == "validity"
 
 
+@pytest.mark.parametrize("operator,submitted,wanted,verdict", [
+    ("any_of", ["ASTM E 814"], ["astm e814"], "pass"),
+    ("any_of", "UL-1479", ["ul 1479"], "pass"),
+    ("any_of", "ul 1479", ["UL\u20111479."], "pass"),
+    ("any_of", "DLC-PREMIUM", ["DLC Premium"], "pass"),
+    ("any_of", "ASTM E 814", ["ASTM E119"], "fail"),
+    ("any_of", "UL 14790", ["UL 1479"], "fail"),
+    ("any_of", "---", ["..."], "fail"),
+    ("contains", ["ASTM E 814 (UL-1479)"], "ul 1479", "pass"),
+    ("contains", ["steel-pipe"], " Steel pipe. ", "pass"),
+    ("contains", ["PVC pipe"], "steel-pipe", "fail"),
+    ("contains", "steel pipe", "---", "fail"),
+])
+def test_text_comparisons_ignore_formatting_without_equating_different_values(operator, submitted, wanted, verdict):
+    r = req(property="test_value", operator=operator, value=wanted)
+    assert check([r], [claim("test_value", submitted)])[0].verdict == verdict
+
+
 def test_missing_claim_is_unverified_minor():
     r = req(property="warranty_years", operator="gte", value=5)
     f = check([r], [])[0]
     assert f.verdict == "unverified" and f.severity == "minor"
+
+
+@pytest.mark.parametrize("property,operator,value", [
+    ("astm_g21_rating", "eq", 0), ("l70_hours", "gte", 50000), ("macadam_steps", "lte", 3),
+])
+def test_missing_reviewed_property_is_a_note_not_a_spec_failure(property, operator, value):
+    findings = check([req(property=property, operator=operator, value=value)], [])
+    assert len(findings) == 1 and findings[0].verdict == "unverified"
+    assert findings[0].title.startswith("Not stated:")
+    assert decide(findings) == "approve_with_note"
 
 
 def test_exists_without_a_claim_cannot_send_back_the_submittal():

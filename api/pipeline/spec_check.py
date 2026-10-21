@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 from typing import Optional
 
 from ..schemas import Claim, Compare, Finding, Requirement
@@ -42,12 +43,16 @@ def normalize(value, unit: Optional[str]) -> Optional[float]:
     return n
 
 
+def _text(value) -> str:
+    return re.sub(r"[\W_]+", "", unicodedata.normalize("NFKC", str(value)).casefold())
+
+
 def _as_list(value) -> list[str]:
     if value is None:
         return []
     if isinstance(value, list):
-        return [str(v).lower() for v in value]
-    return [str(value).lower()]
+        return [_text(v) for v in value]
+    return [_text(value)]
 
 
 OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}
@@ -172,12 +177,12 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                               f"{_label(str(r.value))} is {_fmt(other[0].value, other[0].unit)}.")
         elif r.operator == "contains":
             have = _as_list(claim.value)
-            want = str(r.value).lower()
-            ok = any(want in h for h in have)
+            want = _text(r.value) if r.value is not None else ""
+            ok = bool(want) and any(want in h for h in have)
             detail = f"Package lists {_fmt(claim.value, None)}; needs {r.value}."
         elif r.operator == "any_of":
             allowed = _as_list(r.value)
-            ok = any(h in allowed for h in _as_list(claim.value))
+            ok = any(h and h in allowed for h in _as_list(claim.value))
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:
