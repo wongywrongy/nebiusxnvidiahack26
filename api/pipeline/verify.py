@@ -7,6 +7,7 @@ let Nemotron Super read what came back, then diff the values in plain code.
 from __future__ import annotations
 
 import json
+import re
 from urllib.parse import urlparse
 
 from ..config import settings
@@ -34,6 +35,18 @@ def classify(url: str, manufacturer_domains: list[str]) -> str:
     if host.endswith(".gov") or host.endswith(".edu"):
         return "agency"
     return "distributor"
+
+
+def source_urls(results: list[dict], domains: list[str]) -> list[str]:
+    ranked = sorted(results, key=lambda r: TIER_RANK[classify(r["url"], domains)])
+    urls = list(dict.fromkeys(r["url"] for r in ranked))
+    # Reserve a source slot for a status notice as well as product documentation.
+    notice = next((r["url"] for r in ranked if classify(r["url"], domains) == "manufacturer" and
+                   re.search(r"discontinu|end[-\s]+of[-\s]+life|obsolete|retire", r.get("title", "") + " " + r["url"], re.I)), None)
+    selected = urls[:3]
+    if notice and notice not in selected:
+        selected[-1] = notice
+    return selected
 
 
 def _same(a, b) -> bool:
@@ -74,26 +87,23 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
             mapped = []  # keep the search evidence; an unsuccessful optional lookup cannot erase it
     else:
         mapped = []
-    seen, ranked = set(), []
-    for r in sorted(results, key=lambda r: TIER_RANK[classify(r["url"], domains)]):
-        if r["url"] not in seen:
-            seen.add(r["url"])
-            ranked.append(r)
-
     # 2. Extract the best few pages.
-    pages = await web.extract([r["url"] for r in ranked[:3]])
+    pages = await web.extract(source_urls(results, domains))
     pages += [p for p in mapped if p["url"] not in {p["url"] for p in pages}]
-    titles = {r["url"]: r.get("title", "") for r in ranked}
+    titles = {r["url"]: r.get("title", "") for r in results}
 
     # 3. Super reads the sources; the quote gate runs before the investigator trigger.
     out, u = await read_sources(fx, submitted, pages)
     usage = [u]
+    if any(not numeric_quote(pv.value, pv.quote) for pv in out.current_values):
+        out, u = await read_sources(fx, submitted, pages, correction=out)
+        usage.append(u)
     confirmed = gate(out, pages)
     investigation = None
     # A quoted revision or discontinuation already answered the scripted check.
     if (settings.live or load_fixture(fx).get("investigate")) and out.current_revision is None and out.status != "discontinued" and (
         not out.current_values or (out.status == "unknown" and
-                                  not any(classify(r["url"], domains) == "manufacturer" for r in ranked))
+                                  not any(classify(r["url"], domains) == "manufacturer" for r in results))
     ):
         investigation = await investigate(case, submitted, web)
         usage += investigation._usage
@@ -125,7 +135,8 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None
     return findings, rows, usage, web.credits, investigation
 
 
-async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated=False) -> tuple[VerifyOut, Usage]:
+async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated=False,
+                       correction: VerifyOut | None = None) -> tuple[VerifyOut, Usage]:
     submitted_view = {
         "product": submitted.product,
         "manufacturer": submitted.manufacturer,
@@ -134,6 +145,13 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
         "claims": [{"property": c.property, "value": c.value, "unit": c.unit} for c in submitted.claims],
     }
     sources = [{"url": p["url"], "text": p["raw_content"][:settings.web_source_chars]} for p in pages]
+    feedback = ""
+    if correction is not None:
+        rejected = [pv.property for pv in correction.current_values if not numeric_quote(pv.value, pv.quote)]
+        feedback = (f"\n\nPREVIOUS OUTPUT:\n{correction.model_dump_json()}\n"
+                    f"Numeric quote validation rejected these properties: {json.dumps(rejected)}. "
+                    "Read their source passages again and correct the quotes or omit the values. "
+                    "Each numeric quote must contain the same number and bound as its value.")
     return await router.call(
         "verify",
         VerifyOut,
@@ -144,13 +162,31 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
                     "Compare the submitted product data with these current web sources. "
                     "Report product status, the current document revision exactly as printed, and the CURRENT value for each "
                     "submitted property you can find, each with the exact quote from the source that states it. "
-                    "Use the same property names. Only use values stated in the sources.\n\n"
-                    f"SUBMITTED:\n{json.dumps(submitted_view)}\n\nSOURCES:\n{json.dumps(sources)}"
+                    "Return only properties in SUBMITTED.claims, copying their property names exactly. "
+                    "For each property, first locate a short verbatim quote stating its current value. "
+                    "Copy the value from that quote, preserving any numeric bound. Never take the value from "
+                    "a different passage than its quote. A related limit is not evidence for a different number. "
+                    "Omit values you cannot support with that exact quote.\n\n"
+                    f"SUBMITTED:\n{json.dumps(submitted_view)}\n\nSOURCES:\n{json.dumps(sources)}{feedback}"
                 ),
             }
         ],
         {"case_id": fx, "fixture_key": "investigate_verify" if investigated else "verify"},
     )
+
+
+def numeric_quote(value, quote: str | None) -> bool:
+    """A quoted related limit cannot support a different numeric value or bound."""
+    number = to_number(value)
+    if number is None or isinstance(value, bool):
+        return True
+    bounds = {"≤": "<=", "≥": ">="}
+    bound = re.match(r"[<>]=?|[≤≥~]", str(value).strip())
+    wanted = bounds.get(bound[0], bound[0]) if bound else ""
+    for match in re.finditer(r"(?<![\w.])([<>]=?|[≤≥~])?\s*(-?\d[\d,]*(?:\.\d+)?(?:[- ]\d+/\d+|/\d+)?)(?![\d.])", quote or ""):
+        if to_number(match[2]) == number and bounds.get(match[1], match[1] or "") == wanted:
+            return True
+    return False
 
 
 def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str, str]:
@@ -164,7 +200,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True) -> dict[str
         out.status = "unknown"
         out.status_quote = None
     read = len(out.current_values)
-    out.current_values = [pv for pv in out.current_values if source_of(pv.quote)]
+    out.current_values = [pv for pv in out.current_values if source_of(pv.quote) and numeric_quote(pv.value, pv.quote)]
     if measure:
         metrics.count("web_values_read", "web_values_kept", read, len(out.current_values))
     confirmed = {pv.property: source_of(pv.quote) for pv in out.current_values}

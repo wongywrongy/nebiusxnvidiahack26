@@ -115,7 +115,8 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     web = WebClient(fix_fx, on_step)
     own = {d.get("url") for d in case.get("submittal", [])}
     query = _query(group, case, claims, flagged)
-    results = [r for r in await web.search(query) if r["url"] not in own][:max_candidates]
+    domains = case.get("manufacturer_domains", []) if group == "currency" else []
+    results = [r for r in await web.search(query, include_domains=domains or None) if r["url"] not in own][:max_candidates]
     found = {p["url"]: p["raw_content"] for p in await web.extract([r["url"] for r in results])}
 
     roles = {d["role"] for d in case["submittal"]}
@@ -150,6 +151,8 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         pages = [{"page": 1, "text": text[:MAX_CANDIDATE_CHARS]}]
         cl, u = await extract.extract_claims(cfx, pages, extract.all_product_data(pages), props)
         usage.append(u)
+        if not cl.claims:
+            continue  # no quoted product properties: cannot establish a passing replacement
         found_f = spec_check.check(requirements, cl.claims, roles)
         vf, _, vu, vc, inv = await verify.verify(
             {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": case.get("manufacturer_domains", [])}, cl,

@@ -1,0 +1,27 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=10018 out=254 reasoning=0 ms=2301 cost=$0.003234 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=8002 out=387 reasoning=0 ms=2485 cost=$0.002749 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=7913 out=180 reasoning=0 ms=2549 cost=$0.002536 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=8127 out=137 reasoning=0 ms=1480 cost=$0.002561 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11360 out=328 reasoning=0 ms=2890 cost=$0.003703 format=json_schema thinking=off
+
+mode=live  run=20261021-081115-f416b6
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c03   send_back          send_back          currency               currency                   none   11835   0.0236       0 ✓
+
+Answer-key panel
+  right call                      1 of 1
+  planted problems caught         1 of 1
+  clean packages wrongly flagged  0 of 0
+  fixes that pass the spec        0 of 1
+  average time per submittal      11.8 s
+  cost per submittal (model+web)  $0.0236
+Quote gate: claims 8/16 kept (50.0% dropped); web values 7/8 kept (12.5% dropped)
+
+wrote /tmp/speccheck-c03-validated-retry.json
+POST-RUN LEDGER: {"usd": 0.067518, "credits": 23.0}

@@ -14,7 +14,7 @@ from api.pipeline.cases import all_cases, get_case
 from api.pipeline.investigate import TOOLS, investigate
 from api.pipeline.runner import Run, execute
 from api.providers import budget, tavily, tokenfactory
-from api.schemas import ClaimsOut, Finding, Requirement, VerifyOut
+from api.schemas import Claim, ClaimsOut, Finding, Requirement, VerifyOut
 from api.web import WebClient
 
 CHAT = settings.nebius_base_url + "chat/completions"
@@ -211,3 +211,90 @@ def test_unquoted_duplicate_property_is_dropped():
         {"property": "voc", "value": 900, "quote": "invented"}])
     verify.gate(out, [{"url": URL, "raw_content": "VOC 10"}])
     assert [v.value for v in out.current_values] == [10]
+
+
+def test_source_selection_keeps_manufacturer_status_notice():
+    docs = [{"url": f"https://maker.test/{n}.pdf"} for n in range(4)]
+    notice = {"url": "https://news.maker.test/update", "title": "Product discontinuation notice"}
+    unrelated = {"url": "https://other.test/discontinued", "title": "Discontinued"}
+    selected = verify.source_urls([unrelated, *docs, notice, notice], ["maker.test"])
+    assert selected == [docs[0]["url"], docs[1]["url"], notice["url"]]
+    assert verify.source_urls([], ["maker.test"]) == []
+
+
+def test_current_product_fixes_skip_candidates_without_quoted_properties(monkeypatch):
+    async def search(self, query, **kwargs):
+        assert kwargs["include_domains"] == ["maker.test"]
+        return [{"url": "https://unrelated.test/sensor.pdf"}]
+    async def extract(self, urls):
+        return [{"url": urls[0], "raw_content": "An unrelated sensor data sheet"}]
+    async def claims(*args, **kwargs):
+        from api.schemas import Usage
+        return ClaimsOut(product="Sensor", manufacturer="Other", claims=[]), Usage(task="extract_claims", tier="extract", model="test")
+    async def verify_candidate(*args, **kwargs):
+        pytest.fail("A candidate without quoted properties must not consume verification or investigation calls")
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    monkeypatch.setattr(fix.extract, "extract_claims", claims)
+    monkeypatch.setattr(fix.verify, "verify", verify_candidate)
+    findings = [Finding(id="old", check="currency", verdict="outdated", severity="major", title="Old sheet")]
+    case = {**CASE, "title": "Fixture", "submittal": [{"role": "product_data"}]}
+    asyncio.run(fix.find_fixes(case, [], CLAIMS, findings, 3, 12))
+    assert findings[0].fix.candidates == []
+
+
+@pytest.mark.parametrize("value,quote,kept", [
+    ("<2", "contains <250 g/L VOC", False),
+    ("<2", "VOC <2 g/L", True),
+    ("<2", "VOC 2 g/L", False),
+    ("<=2", "VOC ≤2 g/L", True),
+    (2, "VOC <2 g/L", False),
+    (2, "VOC 20 g/L", False),
+    (50000, "Life 50,000 hours", True),
+    (0.75, "Thickness 3/4 in", True),
+    (1.125, "Thickness 1-1/8 in", True),
+])
+def test_web_value_must_match_numeric_quote(value, quote, kept):
+    out = VerifyOut(status="unknown", current_values=[{"property": "measurement", "value": value, "quote": quote}])
+    verify.gate(out, [{"url": URL, "raw_content": quote}])
+    assert bool(out.current_values) is kept
+
+
+def test_verify_retries_numeric_quote_mismatch_once(http, monkeypatch):
+    source = "VOC limit <100 g/L. Measured VOC <5 g/L."
+    async def search(*args, **kwargs):
+        return [{"url": URL}]
+    async def extract(*args, **kwargs):
+        return [{"url": URL, "raw_content": source}]
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    def content(quote):
+        return json.dumps({"status": "unknown", "current_values": [
+            {"property": "voc", "value": "<5", "quote": quote}]})
+    route = http.post(CHAT).mock(side_effect=[
+        reply(text=content("VOC limit <100 g/L.")), reply(text=content("Measured VOC <5 g/L."))])
+    submitted = CLAIMS.model_copy(update={"claims": [Claim(id="voc", product="Product X", manufacturer="Maker",
+        property="voc", value=10, page=1, quote="VOC 10")]})
+    findings, rows, usage, _, _ = asyncio.run(verify.verify(CASE, submitted))
+    assert len(route.calls) == len(usage) == 2
+    sent = json.loads(route.calls[1].request.content)
+    assert "Numeric quote validation rejected" in sent["messages"][-1]["content"]
+    assert rows[0].current == "<5" and findings[0].verdict == "outdated"
+
+
+def test_verify_numeric_retry_still_drops_unsupported_value(http, monkeypatch):
+    source = "Rev B. VOC limit <100 g/L."
+    async def search(*args, **kwargs):
+        return [{"url": URL}]
+    async def extract(*args, **kwargs):
+        return [{"url": URL, "raw_content": source}]
+    monkeypatch.setattr(WebClient, "search", search)
+    monkeypatch.setattr(WebClient, "extract", extract)
+    content = json.dumps({"status": "unknown", "current_revision": "Rev B", "current_values": [
+        {"property": "voc", "value": "<5", "quote": source}]})
+    route = http.post(CHAT).mock(side_effect=[reply(text=content), reply(text=content)])
+    submitted = CLAIMS.model_copy(update={"claims": [Claim(id="voc", product="Product X", manufacturer="Maker",
+        property="voc", value=10, page=1, quote="VOC 10")]})
+    findings, rows, usage, _, _ = asyncio.run(verify.verify(CASE, submitted))
+    assert len(route.calls) == len(usage) == 2
+    assert not any(r.property == "voc" for r in rows) and findings[0].verdict == "note"

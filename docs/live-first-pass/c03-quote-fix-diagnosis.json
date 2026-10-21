@@ -1,0 +1,433 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-075808-b7f23e",
+  "reproduction": ".venv/bin/python scripts/eval.py --case c03 --out /tmp/speccheck-c03-quote-fix.json",
+  "decision": "send_back",
+  "warnings": [
+    "Couldn't confirm a fix: Tavily credit cap for this step reached"
+  ],
+  "counts": {
+    "claims_extracted": 16,
+    "claims_kept": 8,
+    "web_values_read": 8,
+    "web_values_kept": 7
+  },
+  "comparison": [
+    {
+      "property": "document_revision",
+      "label": "Data sheet version",
+      "submitted": "98-0400-5077-9 \u00a9 3M 2005",
+      "current": "\u00a9 3M 2018",
+      "changed": true,
+      "source_url": null,
+      "quote": null
+    },
+    {
+      "property": "standards",
+      "label": "Test standards",
+      "submitted": "ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079)",
+      "current": "ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079), CAN/ULC-S115",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115"
+    },
+    {
+      "property": "voc_g_per_l",
+      "label": "VOC (air quality)",
+      "submitted": "0 g/L",
+      "current": "<2 g/L",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)."
+    }
+  ],
+  "fixes": [
+    {
+      "head": "No passing replacement found",
+      "query": "3M 3M Fire Barrier IC 15WB+ Sealant current data sheet",
+      "candidates": [
+        {
+          "name": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+          "source_url": "https://pdf.lowes.com/productdocuments/5f24e7e8-f91c-4417-b3c8-c97b686db8fc/61418040.pdf",
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": true,
+              "note": "<250 g/L"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": false,
+              "note": "not listed"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "\u00a9 3M 2018"
+            }
+          ],
+          "passes": false
+        },
+        {
+          "name": "Fire Protection Products",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": true,
+              "note": "<2 g/L"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "Printed in USA. \u00a9 3M 2018. All rights reserved."
+            }
+          ],
+          "passes": false
+        },
+        {
+          "name": "3M\u2122 Fire Barrier Sealant IC 15WB+, #7000059404",
+          "source_url": "https://www.jamindustrialsupply.com/product/3m-fire-barrier-sealant-ic-15wb-yellow-4-5-gallon-pail",
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": false,
+              "note": "not listed"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "\u00a9 3M 2018. All rights reserved."
+            }
+          ],
+          "passes": false
+        }
+      ],
+      "suggest": ""
+    }
+  ],
+  "fresh_model_requests_responses": [
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"product\": \"3M Fire Barrier IC 15WB+ Sealant\", \"manufacturer\": \"3M\", \"model\": null, \"document_revision\": \"98-0400-5077-9 \u00a9 3M 2005\", \"claims\": [{\"id\": \"astm-g21-rating-1\", \"product\": \"3M Fire Barrier IC 15WB+ Sealant\", \"manufacturer\": \"3M\", \"property\": \"astm_g21_rating\", \"value\": null, \"unit\": null, \"page\": null, \"bbox\": null, \"quote\": null}, {\"id\": \"standards-1\", \"product\": \"3M Fire Barrier IC 15WB+ Sealant\", \"manufacturer\": \"3M\", \"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"page\": 2, \"bbox\": null, \"quote\": \"Meets the criteria of ASTM E 814  (UL 1479) standard test method for fire tests of through-penetration fire stops tested\\nunder positive pressure, and ASTM E 1966 (UL 2079) standard test for fire-resistive joint systems.\"}, {\"id\": \"t-rating-hr-1\", \"product\": \"3M Fire Barrier IC 15WB+ Sealant\", \"manufacturer\": \"3M\", \"property\": \"t_rating_hr\", \"value\": null, \"unit\": null, \"page\": null, \"bbox\": null, \"quote\": null}, {\"id\": \"voc-g-per-l-1\", \"product\": \"3M Fire Barrier IC 15WB+ Sealant\", \"manufacturer\": \"3M\", \"property\": \"voc_g_per_l\", \"value\": 0, \"unit\": \"g/L\", \"page\": 2, \"bbox\": null, \"quote\": \"VOC:\\n0\"}]}",
+        "usage": {
+          "completion_tokens": 463,
+          "prompt_tokens": 3371,
+          "total_tokens": 3834,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 3371
+        }
+      },
+      "latency_ms": 3313
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"\\u00a9 3M 2018\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"ASTM E 1966 (UL 2079)\", \"CAN/ULC-S115\"], \"unit\": null, \"quote\": \"Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115\"}, {\"property\": \"voc_g_per_l\", \"value\": \"<2\", \"unit\": \"g/L\", \"quote\": \"Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf\", \"https://www.3m.com/3M/en_US/p/d/b40065443/\"], \"notes\": \"The submitted document revision '98-0400-5077-9 \u00a9 3M 2005' appears outdated; current sources show copyright 2018. VOC value updated from 0.0 g/L to <2 g/L based on technical data sheet.\"}",
+        "usage": {
+          "completion_tokens": 402,
+          "prompt_tokens": 9658,
+          "total_tokens": 10060,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 9658
+        }
+      },
+      "latency_ms": 3316
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"document_revision\": \"Not explicitly stated in provided text\", \"claims\": [{\"id\": \"t-rating-hr-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"t_rating_hr\", \"value\": 3, \"unit\": \"hours\", \"page\": 1, \"quote\": \"the unique intumescent property of this material allows 3M \\u2122 Fire Barrier Sealant IC 15WB+ to expand and help maintain a firestop penetration seal for up to 3 hours as penetrants are exposed to fire.\"}, {\"id\": \"voc-g-per-l-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"voc_g_per_l\", \"value\": \"<250\", \"unit\": \"g/L\", \"page\": 1, \"quote\": \"Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).\"}, {\"id\": \"standards-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"ASTM E 1966 (UL 2079)\", \"CAN/ULC-S115\"], \"page\": 1, \"quote\": \"Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079) & CAN/ULC-S115\"}, {\"id\": \"astm-g21-rating-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"astm_g21_rating\", \"value\": \"Not stated\", \"page\": 1, \"quote\": \"\"}]}",
+        "usage": {
+          "completion_tokens": 517,
+          "prompt_tokens": 2754,
+          "total_tokens": 3271,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2754
+        }
+      },
+      "latency_ms": 7269
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"\u00a9 3M 2018\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"t_rating_hr\", \"value\": 3.0, \"unit\": \"hours\", \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\"}, {\"property\": \"voc_g_per_l\", \"value\": \"<250\", \"unit\": \"g/L\", \"quote\": \"Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).\"}, {\"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"ASTM E 1966 (UL 2079)\", \"CAN/ULC-S115\"], \"unit\": null, \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\\n\\nFire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf\", \"https://www.3m.com/3M/en_US/p/d/b40065443/\"], \"notes\": \"The product is active based on the 2026 copyright on the 3M website and availability for purchase. The document revision is '\u00a9 3M 2018' as stated in the technical data sheet.\"}",
+        "usage": {
+          "completion_tokens": 468,
+          "prompt_tokens": 7936,
+          "total_tokens": 8404,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 7936
+        }
+      },
+      "latency_ms": 3964
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"document_revision\": \"\", \"claims\": [{\"id\": \"t-rating-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"t_rating_hr\", \"value\": 3, \"unit\": \"hours\", \"page\": 1, \"quote\": \"expand and help maintain a firestop penetration seal for up to 3 hours as penetrants are exposed to fire.\"}, {\"id\": \"standards-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"ASTM E 1966 (UL 2079)\", \"CAN/ULC-S115\"], \"page\": 1, \"quote\": \"Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079) & CAN/ULC-S115\"}, {\"id\": \"voc-g-per-l-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"voc_g_per_l\", \"value\": \"<2\", \"unit\": \"g/L\", \"page\": 1, \"quote\": \"VOC Less H2O and Exempt Solvents: <2 g/L\"}, {\"id\": \"astm-g21-rating-1\", \"product\": \"Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"astm_g21_rating\", \"value\": \"Not stated\", \"page\": 1, \"quote\": \"\"}]}",
+        "usage": {
+          "completion_tokens": 429,
+          "prompt_tokens": 2833,
+          "total_tokens": 3262,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2833
+        }
+      },
+      "latency_ms": 3490
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"Printed in USA. \u00a9 3M 2018. All rights reserved.\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"voc_g_per_l\", \"value\": \"<2\", \"unit\": \"g/L\", \"quote\": \"Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf\"], \"notes\": null}",
+        "usage": {
+          "completion_tokens": 198,
+          "prompt_tokens": 7847,
+          "total_tokens": 8045,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 7847
+        }
+      },
+      "latency_ms": 5017
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+, Yellow, 4.5 Gallon (Pail), 1 Each/Drum\", \"manufacturer\": \"3M\", \"model\": \"IC 15WB+\", \"document_revision\": null, \"claims\": [{\"id\": \"clm-1\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+, Yellow, 4.5 Gallon (Pail), 1 Each/Drum\", \"manufacturer\": \"3M\", \"model\": \"IC 15WB+\", \"property\": \"astm_g21_rating\", \"value\": null, \"unit\": null, \"page\": 1, \"quote\": null}, {\"id\": \"clm-2\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+, Yellow, 4.5 Gallon (Pail), 1 Each/Drum\", \"manufacturer\": \"3M\", \"model\": \"IC 15WB+\", \"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"CAN/ULC S115\", \"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"page\": 1, \"quote\": \"This firestop sealant provides up to 3-hour fire protection in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115. In addition, this product is fire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079).\"}, {\"id\": \"clm-3\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+, Yellow, 4.5 Gallon (Pail), 1 Each/Drum\", \"manufacturer\": \"3M\", \"model\": \"IC 15WB+\", \"property\": \"t_rating_hr\", \"value\": 3, \"unit\": \"hr\", \"page\": 1, \"quote\": \"provides up to 3-hour fire protection in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115.\"}, {\"id\": \"clm-4\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+, Yellow, 4.5 Gallon (Pail), 1 Each/Drum\", \"manufacturer\": \"3M\", \"model\": \"IC 15WB+\", \"property\": \"voc_g_per_l\", \"value\": null, \"unit\": null, \"page\": 1, \"quote\": null}]}",
+        "usage": {
+          "completion_tokens": 601,
+          "prompt_tokens": 2525,
+          "total_tokens": 3126,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2525
+        }
+      },
+      "latency_ms": 3628
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"\\u00a9 3M 2018. All rights reserved.\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"CAN/ULC S115\", \"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"quote\": \"Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115\"}, {\"property\": \"t_rating_hr\", \"value\": 3.0, \"unit\": \"hr\", \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf\", \"https://www.3m.com/3M/en_US/p/d/b40065443/\"], \"notes\": null}",
+        "usage": {
+          "completion_tokens": 324,
+          "prompt_tokens": 11294,
+          "total_tokens": 11618,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 11294
+        }
+      },
+      "latency_ms": 4249
+    },
+    {
+      "provider": "api.providers.tokenfactory",
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        }
+      },
+      "response": {
+        "content": "{\"summary\": \"The firestop sealant submission needs updates because key details are missing or outdated, including mold resistance ratings, test standards, and using an old data sheet.\", \"note_to_subcontractor\": \"Please resubmit with updated information showing the product\u2019s mold resistance rating per ASTM G21, correct test standards (ASTM E814/UL 1479 or ASTM E119), and use the current 2018 data sheet instead of the 2005 version.\", \"finding_titles\": {\"spec-req_mold_resistance\": \"Missing mold resistance rating\", \"spec-fs-std\": \"Incorrect test standards listed\", \"currency-outdated\": \"Outdated product data sheet\"}, \"why_it_matters\": {\"spec-req_mold_resistance\": \"Without confirmed mold resistance, the sealant could degrade over time and fail during a fire.\", \"spec-fs-std\": \"Using unapproved test methods means we can\u2019t verify the product will actually stop fire and smoke as required.\", \"currency-outdated\": \"Old data sheets may not reflect current performance, especially regarding emissions and test compliance, which could lead to rework or safety risks.\"}}",
+        "usage": {
+          "completion_tokens": 254,
+          "prompt_tokens": 596,
+          "total_tokens": 850,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 596
+        }
+      },
+      "latency_ms": 2339
+    }
+  ]
+}

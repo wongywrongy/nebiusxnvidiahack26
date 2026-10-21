@@ -1,0 +1,35 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=2022 out=86 reasoning=0 ms=1094 cost=$0.000142 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=3321 out=465 reasoning=0 ms=4262 cost=$0.001415 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=1 results=3
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=9584 out=906 reasoning=0 ms=4574 cost=$0.003691 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=664 out=266 reasoning=0 ms=2261 cost=$0.000439 format=json_schema thinking=off
+
+mode=live  run=20261021-075141-f8c59e
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c03   send_back          approve_with_note  currency               currency_note              none   23838   0.0457       5 ✗
+
+Answer-key panel
+  right call                      0 of 1
+  planted problems caught         0 of 1
+  clean packages wrongly flagged  0 of 0
+  fixes that pass the spec        0 of 1
+  average time per submittal      23.8 s
+  cost per submittal (model+web)  $0.0457
+Quote gate: claims 0/4 kept (100.0% dropped); web values 13/13 kept (0.0% dropped)
+
+wrote /tmp/speccheck-c03-baseline.json
+POST-RUN LEDGER: {"usd": 0.018874, "credits": 11.0}

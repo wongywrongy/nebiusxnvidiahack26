@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import unicodedata
 from typing import Optional
 
@@ -67,7 +68,10 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
             "content": (
                 "Extract the product's stated properties from this submittal. "
                 f"Use these property names where they apply: {', '.join(properties)}. "
-                "Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet.\n\n"
+                "Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. "
+                "Copy each quote verbatim as one contiguous substring from that page; never paraphrase or join separate passages. "
+                "Omit properties that are not stated instead of returning null claims. "
+                "For lists, put each distinct standard or certification identifier in its own array entry.\n\n"
                 + json.dumps(text)
             ),
         }
@@ -87,12 +91,14 @@ _TYPO = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2012": "-", "\u2013": "-
 
 
 def _plain(text: str) -> str:
-    return " ".join(unicodedata.normalize("NFKC", text).translate(_TYPO).split())
+    text = re.sub(r"\\[nrt]", " ", text.translate(_TYPO))
+    return " ".join(unicodedata.normalize("NFKC", text).split())
 
 
 def quoted(quote: Optional[str], text: str) -> bool:
-    """True when quote appears in text, ignoring whitespace runs and typography (ligatures, dashes, curly quotes)."""
-    return bool(quote and quote.strip()) and _plain(quote) in _plain(text)
+    """Exact text after whitespace/escaped whitespace and typographic normalization."""
+    quote = _plain(quote or "")
+    return bool(quote) and quote in _plain(text)
 
 
 def all_product_data(pages: list[dict]) -> TriageOut:

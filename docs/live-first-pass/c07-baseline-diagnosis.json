@@ -1,0 +1,537 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-081226-6aa7c0",
+  "reproduction": ".venv/bin/python scripts/eval.py --case c07 --out /tmp/speccheck-c07-baseline.json",
+  "decision": "approve_with_note",
+  "warnings": [],
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "2TL-2X4 site:acuitybrands.com",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "3 results",
+        "credits": 1.0,
+        "ms": 2020
+      },
+      {
+        "n": 2,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 709
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 661
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "\"2TL-2X4\" OR \"2TLX4\" site:lithonia.acuitybrands.com",
+          "include_domains": [
+            "lithonia.acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 1814
+      },
+      {
+        "n": 5,
+        "tool": "search",
+        "args": {
+          "query": "\"2TL\" site:acuitybrands.com",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "3 results",
+        "credits": 1.0,
+        "ms": 1750
+      },
+      {
+        "n": 6,
+        "tool": "search",
+        "args": {
+          "query": "\"2TL\" \"2x4\" site:acuitybrands.com",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "2 results",
+        "credits": 1.0,
+        "ms": 1688
+      }
+    ],
+    "outcome": "capped"
+  },
+  "quote_counts": {
+    "claims_extracted": 5,
+    "claims_kept": 1,
+    "web_values_read": 0,
+    "web_values_kept": 0
+  },
+  "requests_responses": [
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Acuity Brands Lighting, Inc. 2TL-2X4 data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.ibisworld.com/united-states/company/acuity-brands-inc/10177",
+            "title": "Acuity Brands, Inc. - Company Profile Report | IBISWorld",
+            "chars": 0
+          },
+          {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "title": "2TLX4",
+            "chars": 0
+          },
+          {
+            "url": "https://ledt8bulb.com/acuity-lithonia-lighting-2blt4-48lhe-adp-gz10-el7l-lp850-blt-2x4-led-troffer-4800lumen-5000k-emergency-backup.html",
+            "title": "Acuity Lithonia Lighting 2BLT4-48LHE-ADP-GZ10-EL7L-LP850 2x4 Troffer",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "title": "Troffers | Commercial Indoor - Lithonia Lighting - Acuity Brands",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "title": "Technical Downloads",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Acuity Brands Lighting, Inc. 2TL-2X4 discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://lithonia.acuitybrands.com",
+            "title": "Lithonia Lighting\u00ae | Best Value in Lighting - Acuity Brands",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+            "title": "Discontinuation Notice: Lithonia Lighting\u00ae TL Recessed Luminaire",
+            "chars": 0
+          },
+          {
+            "url": "https://www.investors.acuitybrands.com/news-releases/news-release-details/acuity-brands-inc-lithonia-lighting-launches-d-series-size-1-led",
+            "title": "Acuity Brands, Inc : Lithonia Lighting Launches D-Series Size 1 LED Area Luminaire | Acuity Inc.",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ledlightingsupply.com/alternatives/led-lighting-supply-vs-acuity-brands",
+            "title": "Compare LED Lighting Supply Vs. Acuity Brands Alternative",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/youtube-all-videos/gtlr-led-installation",
+            "title": "GTLR LED Installation",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Acuity Brands Lighting, Inc. 2TL-2X4 discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "news",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.tradingview.com/news/tradingview:b51df227ade8a:0-acuity-inc-de-sec-10-k-report/",
+            "title": "ACUITY INC. (DE) SEC 10-K Report - TradingView",
+            "chars": 0
+          },
+          {
+            "url": "https://www.cnet.com/deals/i-found-the-secret-to-perfect-ambient-lighting-now-its-discounted-for-cyber-monday/",
+            "title": "I Found the Secret to Perfect Ambient Lighting. Now It's Discounted for Cyber Monday. - CNET",
+            "chars": 0
+          },
+          {
+            "url": "https://www.cnet.com/deals/govee-floor-lamps-at-amazon-heavily-discounted-this-black-friday/",
+            "title": "My Love Affair With Govee Floor Lamps Hasn\u2019t Slowed Down, and Amazon Has Them Heavily Discounted This Black Friday - CNET",
+            "chars": 0
+          },
+          {
+            "url": "https://gizmodo.com/forget-generic-bulbs-the-philips-hue-essential-color-4-pack-just-dropped-to-its-near-record-low-2000757440",
+            "title": "Forget Generic Bulbs, the Philips Hue Essential Color 4-Pack Just Dropped to Its Near Record Low - Gizmodo",
+            "chars": 0
+          },
+          {
+            "url": "https://www.macrumors.com/2025/12/24/apple-discontinued-25-products-this-year/",
+            "title": "Apple Discontinued These 25 Products This Year - MacRumors",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Acuity Brands Lighting, Inc. 2TL-2X4 discontinuation notice",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/lithonia-lighting-commercial-outdoor-discontinuations-2",
+            "title": "Lithonia Lighting\u00ae Commercial Outdoor Discontinuations",
+            "chars": 0
+          },
+          {
+            "url": "https://product.agileblogs.flywheelsites.com/category/acuity-brands",
+            "title": "Acuity Brands (ABL) \u2013 Product News",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/time-to-say-goodbye-ww-products-to-be-discontinued-2",
+            "title": "Acuity Brands\u00ae Announces the Discontinuation of the Lithonia Lighting\u00ae WW Wall Wash.",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+            "title": "Discontinuation Notice: Lithonia Lighting\u00ae TL Recessed Luminaire",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-breeze-bzl-2",
+            "title": "Discontinuation Notice: Lithonia Lighting\u00ae Breeze (BZL)",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "https://lithonia.acuitybrands.com/resources/technical-downloads"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 0
+        },
+        "results": [
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "title": "Technical Downloads",
+            "chars": 2984
+          }
+        ],
+        "failed_results": [
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "error": "Failed to fetch url"
+          },
+          {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "error": "Failed to fetch url"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "2TL-2X4 site:acuitybrands.com",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "title": "2TLX4",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "title": "Troffers | Commercial Indoor - Lithonia Lighting - Acuity Brands",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "title": "Technical Downloads",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [],
+        "failed_results": [
+          {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "error": "Failed to fetch url"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [],
+        "failed_results": [
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "error": "Failed to fetch url"
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "\"2TL-2X4\" OR \"2TLX4\" site:lithonia.acuitybrands.com",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "lithonia.acuitybrands.com"
+          ],
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://lithonia.acuitybrands.com/products/detail/855690/lithonia-lighting/contractor-select-cpx-led-flat-panel/most-popular-and-readily-available-configurations-for-your-everyday-lighting-needs",
+            "title": "CPX - LED Panel",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/detail/1302205/lithonia-lighting/bltr-relight-series/troffer-relight-kit---2x4-2x2-1x4?nocache=10",
+            "title": "BLTR Relight Series - Troffer Relight Kit - 2x4, 2x2, 1x4",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/panels",
+            "title": "LED Panels | Commercial Indoor | Lithonia Lighting",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/retrofit-led/troffers",
+            "title": "Troffers | Retrofit LED | Lithonia Lighting",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/family/demanding-troffers",
+            "title": "Demanding Troffers | Lithonia Lighting",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "\"2TL\" site:acuitybrands.com",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x2.pdf",
+            "title": "2tled-2x2.pdf",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "title": "Technical Downloads",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "title": "Troffers | Commercial Indoor - Lithonia Lighting - Acuity Brands",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "\"2TL\" \"2x4\" site:acuitybrands.com",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "title": "Troffers | Commercial Indoor - Lithonia Lighting - Acuity Brands",
+            "chars": 0
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "title": "Technical Downloads",
+            "chars": 0
+          }
+        ],
+        "failed_results": []
+      }
+    }
+  ]
+}

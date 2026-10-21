@@ -312,6 +312,27 @@ def test_tavily_401_is_typed(live):
         asyncio.run(tavily.search("q"))
 
 
+def test_tavily_reported_usage_overrides_credit_estimates(live):
+    mock = live[0]
+    search = mock.post(f"{tavily.API}/search").respond(200, json={"results": [], "usage": {"credits": 3}})
+    extract = mock.post(f"{tavily.API}/extract").respond(200, json={"results": [], "usage": {"credits": 1}})
+    mp = mock.post(f"{tavily.API}/map").respond(200, json={"results": ["https://a.test/1"], "usage": {"credits": 0}})
+    mock.get("https://a.test/1").respond(403)
+    led_token = budget.LEDGER.set(budget.Ledger())
+    item_token = budget.ITEM.set("test")
+    try:
+        assert asyncio.run(tavily.search("usage"))[1] == 3
+        assert asyncio.run(tavily.extract(["https://a.test/1"]))[1] == 1  # failed URL can still be billed
+        assert asyncio.run(tavily.map("https://a.test"))[1] == 0  # reported zero must remain zero
+        assert budget.today()["credits"] == 4
+        assert asyncio.run(tavily.extract(["https://a.test/1"]))[1] == 0
+        assert len(extract.calls) == 1
+        assert all(json.loads(r.calls[0].request.content)["include_usage"] for r in (search, extract, mp))
+    finally:
+        budget.LEDGER.reset(led_token)
+        budget.ITEM.reset(item_token)
+
+
 def test_fetch_pdf_keeps_only_pdfs(live):
     doc = pymupdf.open()
     doc.new_page().insert_text((72, 72), "FS-ONE MAX data sheet")

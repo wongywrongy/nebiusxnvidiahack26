@@ -1,7 +1,7 @@
 # First live pass — 2026-10-21
 
-Status: Kyle approved Gate 3 rows; both reviewed checklists are saved. Phase 4 starts after the requested
-normalization changes and mock validation below. No case has been run live yet.
+Status: Gate 3 was approved, saved and pushed as `d8eb713`. Phase 4 is diagnosing the first c03 live run.
+No full eight-case live evaluation or demo recording has been made yet.
 
 ## Setup and baseline
 
@@ -77,9 +77,10 @@ Table detection has low fill rates on the old 3M sheet (9/389 cells, 2%) and the
 | Tavily baseline (three fresh searches; Extract/Map cached) | 0.000226 | 3 |
 | Fresh host extraction and bounded Map | 0.000226 | 6 |
 | Both checklist drafts | 0.013187 | 6 |
+| First c03 live pass | 0.018874 | 11 |
 
 Before the first provider call `.cache/budget/2026-10-21.json` did not exist.
-After checklist drafting it records `{"usd": 0.013187, "credits": 6.0}`.
+After the first c03 live pass it records `{"usd": 0.018874, "credits": 11.0}`.
 This is the local ledger, not console billing verification.
 Pass ceilings remain $20 and 2,000 credits across the entire pass.
 
@@ -323,3 +324,197 @@ G21, L70 or MacAdam is not stated, report it as an **answer-key question** and r
 Do not change expectations or drop a requirement to improve the panel. Dashboard reconciliation after
 c03/c07 remains required; the available browser profile has no Tavily sign-in, so dashboard figures will
 need Kyle's reading or his explicit browser sign-in choice.
+
+## Phase 4: live cases, smallest first
+
+### c03 baseline — 20261021-075141-f8c59e
+
+The first actual case ran after Gate 3 and its push. No reviewed criterion or answer-key expectation was
+changed afterwards.
+
+| Expected | Actual | Problems caught | Passing fixes | Time | Model USD | Tavily credits | Model + web equivalent |
+| --- | --- | --- | --- | ---: | ---: | ---: | ---: |
+| send_back / currency | approve_with_note / currency_note | 0/1 | 0/1 | 23.838 s | 0.005687 | 5 | 0.045687 |
+
+Quote counters: **0/4 claims kept; 13/13 web values kept**. No warnings, cap hits, provider errors or 429s
+were observed in the item's result, event trace or recorded wire calls. Investigation did not run. The
+result therefore exposes an extraction miss rather than a swallowed provider/budget failure.
+
+Of the four extracted claims, G21 and T rating were null without quotes and were correctly dropped.
+The standard-list quote changed the source's words and was correctly dropped. The valid VOC quote was
+returned as the literal characters `VOC:\\n0`; the PDF contains `VOC:` followed by a real newline and `0`.
+Dropping that last claim removed the submitted side of the currency comparison. The later verify call
+returned quoted values using its own property labels against an empty submitted-claims list; no submitted
+value could be compared. Because no send-back was produced, fix discovery did not run.
+
+The retrieved manufacturer document is
+[3M's current IC 15WB+ sheet](https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf).
+Its footer says “© 3M 2018” and its VOC value is “<2 g/L.” That date predates the October 2026 answer key;
+the expected old/current value difference is supported. This does not establish a revision since the key
+was written. No expected value or manufacturer URL was added to a prompt.
+
+Baseline console and panel: [c03-baseline.txt](live-first-pass/c03-baseline.txt) and
+[c03-baseline-scores.json](live-first-pass/c03-baseline-scores.json). Full item/trace remain in the ignored
+`runs/20261021-075141-f8c59e/`.
+
+### General extraction corrections
+
+The claims prompt now explicitly requires one short contiguous, verbatim quote, omits unstated/null claims,
+and asks for one array entry per distinct standard/certification identifier. Previously it requested only
+“a short supporting quote.” No checklist, expected result or task quality setting changed.
+
+The shared quote normalizer now treats literal escaped newline/tab/carriage-return sequences as whitespace
+on both operands. It removes ™/® before Unicode normalization, so ™ cannot expand into an unintended
+`TM` token. Quotes that normalize to empty are rejected. Words and numbers must still occur contiguously
+on the cited page: a paraphrased opening and changed numeric values remain rejected.
+
+The tests cover both directions of escaped whitespace, trademarks/ligatures, changed values, paraphrased
+words and empty normalized quotes. Full suite: **174 passed, 2 skipped in 11.41 s**; mock eval
+`20261021-075757-cd9964` remains 8/8, claims 48/48, web values 19/20. Its comparison score is saved at
+`/tmp/speccheck-first-pass-mock-quote-final.json`. Only c03 is being rerun live to measure the correction.
+
+### Tavily dashboard checkpoint supplied by Kyle
+
+Kyle reported **15 / 9,000** used/available-plan credits during the c03 diagnosis. This is recorded in
+[tavily-dashboard-c03.json](live-first-pass/tavily-dashboard-c03.json); exact dashboard observation time
+and account/per-key scope were not supplied. At that checkpoint the local pass ledger was **11 credits**.
+The earlier API `/usage` baseline was 5 on a different reported plan, so it is not a confirmed dashboard
+baseline. If compared arithmetically, 15 minus 5 is 10, one below the local 11, but that is not yet a
+reconciled billing result. Request the updated dashboard reading after c03/c07 and preserve this discrepancy
+rather than treating the stale API counter as authoritative.
+
+
+### c03 correction measurements (before → after)
+
+| Run | Change measured | Call / problem | Passing fix | Time | Fresh pass ledger after run |
+| --- | --- | --- | --- | ---: | --- |
+| `20261021-075808-b7f23e` | Verbatim/omit-null/list prompt + escaped-whitespace quote matcher | send_back / currency **plus false spec failure** | invalid: second fix group hit step credit cap | 68.086 s | $0.036807 / 23 credits |
+| `20261021-080506-f3e537` | Recognize parenthesized categorical identifiers; explicit value/quote prompt | send_back / currency only, but wrong numeric quote still accepted | 0/1 | 22.679 s | $0.049276 / 23 credits |
+| `20261021-080829-94b9d6` | Numeric quote gate + source-first prompt | approve_with_note / currency_note: **miss**, bad value correctly dropped | 0/1 | 4.044 s | $0.052735 / 23 credits |
+| `20261021-081115-f416b6` | One validation-feedback retry | send_back / currency only, exact numeric quote accepted | 0/1 | 11.835 s | $0.067518 / 23 credits |
+
+The first quote-corrected run's extra major finding was caused by `ASTM E 814 (UL 1479)` remaining one
+array item despite the prompt requesting separate identifiers. `any_of` now recognizes the outside and
+inside of parentheses as identifiers while retaining the full item. It matches either identifier and
+still rejects different standard numbers; no case ID or expected result controls this logic. The extra
+spec group consumed the shared fix allowance and produced a recorded warning: `Tavily credit cap for
+this step reached`. That run is **invalid for fix assessment**. Later runs have no warnings, provider
+errors, cap hits or 429s; all web calls were cached, so they charged zero additional Tavily credits.
+
+The verify prompt originally said “Use the same property names. Only use values stated in the sources.”
+The first revision required the quote to contain the same value/bound; Super nevertheless paired value
+`<2` with quote `contains <250 g/L VOC contents ...`. The next source-first wording also returned that
+pair. The numeric gate now rejects numeric values unless the quote includes the same number and bound
+(with comma/decimal/fraction formatting supported). It supplements the unchanged requirement that the
+quote occur on a fetched page. It does not prove units or the semantic meaning of every property.
+The source-first run honestly lost the currency call when the bad pair was dropped.
+
+The final general correction makes **at most one** additional read when numeric quote validation fails.
+Its feedback identifies rejected property names, includes the model's previous output and the same fetched
+sources, and requests a corrected quote or omission. It contains no answer-key values. Every retry is
+charged and recorded separately; the same quote and numeric gates validate its output. The final main
+comparison quotes `VOC Less H2O and Exempt Solvents: <2 g/L` from the manufacturer PDF. A fix-candidate
+read also corrected its mismatched quote on retry. Tests cover both correction and a retry that remains
+unsupported and is still dropped.
+
+Final c03 quote counters (including fix candidates): **8/16 claims kept, 7/8 web values kept**. The main
+submission kept 2/4 claims. Neither scripted verification nor its candidates invoked the Investigator.
+No candidate passes: all three lack quoted ASTM G21 evidence, and the manufacturer candidate also lost
+its standards claim at the quote gate. No requirement was removed. One candidate reader also interpreted
+a generic three-hour firestop statement as T rating; this does not establish a T rating and remains an
+extraction-semantic limitation, not a reason to approve that candidate.
+
+Final verification: **188 passed, 2 skipped in 11.21 s**, mock eval `20261021-081053-cc0784` remains **8/8**,
+6/6 planted problems, 0/2 clean false alarms, 2/5 passing fixes, claims 48/48 and web values 19/20. No web
+files changed. Full eight-case live runs used so far: **0**. Per-item model costs include cached token-cost
+estimates; only the daily ledger is the actual fresh spend for the pass. Prompt/matcher before/after
+measurements above must not be presented as a fresh, independent all-eight baseline.
+
+
+### c07 baseline and source-selection correction
+
+Baseline `20261021-081226-6aa7c0`: **0/1 right call, 0/1 status problem, 0/1 passing fix**, 39.699 s,
+claims 1/5, web values 0/0. The result had no provider/budget warning, but the Investigator outcome was
+`capped` after six tool calls. Treat it as invalid for an uncapped status assessment. The extracted
+identity was `Acuity Brands Lighting, Inc. / 2TL-2X4`; the four dropped claims were unstated/empty,
+not real claims lost to typography. Triage's second/third-page labels were inaccurate, but all pages
+were included because only `other` pages are excluded. Triage did not cause the status miss.
+
+The status search actually returned the correct manufacturer discontinuation notice. Manufacturer-first
+ranking then took the first three sources, all from the earlier document search, leaving the notice out.
+The Investigator received no useful fetched status evidence and spent its six calls repeating searches
+and Cloudflare-blocked extracts. No key, case-specific URL or expected status was injected into a prompt.
+Source selection now reserves one of the three slots for a manufacturer status notice when search found
+one. It retains the normal source-tier order and deduplicates URLs; a third-party notice cannot claim
+that manufacturer slot. Test covers duplicates, empty input and a notice beyond the first three results.
+
+Retry `20261021-081707-7f718a`: **1/1 right call, 1/1 status problem, 0/1 passing fix**, 54.134 s,
+claims 1/5, web values 0/0. Scripted verify quoted “As of **June 30th, 2024**, the TL family will be
+discontinued.” from the manufacturer notice. This predates the key; no changed-world exception applies.
+The main check needed no Investigator. However, this run is **invalid for fix assessment**: Tavily's
+replacement search returned CP2102N, LM35, RP2040, BME280 and UniFi data sheets for the actual query
+`Acuity Brands Lighting, Inc. current LED troffer data sheet`. Verifying unrelated candidates exhausted
+the shared fix credit scope; the candidate Investigator trace records the cap. The source-selection
+correction fixed status retrieval, not replacement relevance.
+
+Current-product replacement searches now pass the known manufacturer domains to Tavily. Spec/listing
+replacement searches retain their broader scope. Candidates with no quoted product properties stop
+before web verification or investigation, since they cannot establish a passing replacement. An attempted
+host-only filter was rejected by the mock checks because valid manufacturer sheets are also hosted by
+distributors; it is absent from the final implementation. It made the mock fix panel 0/5 temporarily.
+The retained implementation restores the mock panel to 8/8 calls, 6/6 problems, 0/2 false alarms and 2/5
+passing fixes. Verification: **191 passed, 2 skipped in 12.16 s**, mock eval `20261021-082105-0b7d62`.
+
+### Tavily usage reconciliation: captured responses vs ledger
+
+Captured `include_usage` responses disagree with result-count credit estimates:
+
+| Run | Original local debit | API-reported credits | Difference |
+| --- | ---: | ---: | ---: |
+| c03 baseline | 5 | 4 | -1 |
+| c03 quote correction | 12 | 11 | -1 |
+| c07 baseline | 9 | 10 | +1 |
+| Total adjustment | 26 | 25 | -1 |
+
+An extract with usable text reported zero; two failed extracts each reported one. Therefore “failed
+extract URLs are free” was not a safe accounting assumption in these observed responses. Provider wrappers
+now request `include_usage=true` and charge a nonnegative integer `usage.credits` when present, including
+zero. Missing/invalid usage falls back to the existing documented credit estimates. Cache keys stay the
+same and cached calls stay free. Tests cover reported zero, charged failure, reported search cost, cache
+hits and fallback estimates.
+
+[Historical correction audit](live-first-pass/tavily-credit-correction.json) preserves the per-request
+reported charges and the original ledger. The correction was applied once: 32 → **31 credits** at unchanged
+$0.076209 model spend. Original run results and score files were not rewritten. The subsequent c07 source
+retry charged 13 credits under returned usage, bringing the ledger to **$0.091991 / 44 credits**. Kyle's
+updated dashboard reading has been requested; **dashboard reconciliation remains pending**. The earlier
+15/9,000 reading and the API's stale 5/1,000 counter are not sufficient to assert an account reconciliation.
+
+
+### Scoped-fix reruns
+
+* c03 `20261021-082125-1f89d8`: 1/1 call and currency problem, 0/1 passing fix, 44.742 s, 10 fresh web
+  credits; claims 7/12, web 7/7. No warnings or Investigator run. Two candidates had some quoted data;
+  both still lacked G21, and other candidate values/currency could not all be confirmed. Ledger after:
+  **$0.101116 / 54 credits**.
+* c07 `20261021-082231-46f08f`: 1/1 call and status problem, 0/1 passing fix, 60.070 s, 6 fresh web
+  credits; claims 1/5, web 0/0. The replacement search returned lighting products. Two candidate
+  investigators each used six tool calls and the combined outcome was capped, making fix assessment
+  invalid. Captured extracts include mangled binary content for `wrtl.pdf` and raw PDF syntax for
+  `vtl-1x4.pdf`; other Acuity URLs returned no text and direct 403s. No quoted properties were extracted
+  from the remaining CPX product page, so it correctly stopped before verification. Ledger after:
+  **$0.121112 / 60 credits**.
+
+Following the invalid-run rule, a c07-only retry uses `INVESTIGATE_MAX_STEPS=12` in the process environment.
+The `.env` defaults remain unchanged; this override must not be described as the default-quality baseline.
+Full eight-case live runs used so far remain **0**.
+
+
+c07 allowance retry `20261021-082700-29a000` used 12 steps per investigation for that command only.
+It finished **uncapped**, combined outcome `not_found`, 17 steps across two candidate investigations.
+Both called `finish(found=true)`, but code rejected one fabricated revision explanation and one finish
+that cited a product URL never successfully extracted. This is a valid no-fix result, not a swallowed
+provider/cap failure: 1/1 call and status problem, 0/1 passing fix, 69.404 s, claims 1/5, web 0/0.
+Ledger: **$0.161701 / 67 credits**. The first full eight-case baseline then started with
+`investigate_max_steps=6`, `search_depth=basic`, `thinking=off`, concurrency 2 and the unchanged reviewed
+checklists. No full-run result is claimed until that run finishes.

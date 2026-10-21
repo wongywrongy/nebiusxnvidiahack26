@@ -36,3 +36,16 @@ def test_claims_without_their_quote_on_the_page_are_dropped():
     assert quoted("not  to exceed\n120°F", "Continuous operating temperature not to exceed 120°F (48°C).")
     assert not quoted("not to exceed 150°F", "not to exceed 120°F")
     assert not quoted(None, "anything") and not quoted("  ", "anything")
+
+
+def test_quote_normalization_keeps_words_numbers_and_page_evidence_exact():
+    from api.pipeline.extract import quoted
+
+    assert quoted(r"Voltage:\n120", "Voltage:\n120")
+    assert quoted("Voltage:\n120", r"Voltage:\n120")
+    assert quoted("Maker fine sealant", "Maker\u2122 \ufb01ne sealant\u00ae")
+    assert not quoted(r"Voltage:\n240", "Voltage:\n120")
+    assert not quoted("Meets the test criteria", "Passes the test criteria")
+    assert not quoted("rated 120 volts", "rated 120 watts")
+    assert not quoted(r"\n\t", "anything")
+    assert not quoted("\u2122\u00ae", "anything")

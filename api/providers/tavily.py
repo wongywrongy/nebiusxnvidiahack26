@@ -1,7 +1,7 @@
 """Tavily search, extract and map over its REST API. Live calls only.
 
 Credits (Tavily docs): search basic 1 / advanced 2, extract 1 per 5 URLs (advanced 2),
-map 1 per 10 pages (2 with instructions). Failed extract URLs are free.
+map 1 per 10 pages (2 with instructions). Reported API usage overrides these estimates.
 Every call: disk cache, then the item/day credit caps, then the call, then the charge.
 Each wrapper returns (results, credits spent); a cache hit costs 0.
 """
@@ -38,6 +38,11 @@ def extract_credits(urls: int, depth: str = "basic") -> int:
 def map_credits(pages: int, instructions: Optional[str] = None) -> int:
     """With pages=limit it is the worst case."""
     return max(1, math.ceil(pages / 10)) * (2 if instructions else 1)
+
+
+def _credits(response: dict, estimate: int) -> int:
+    n = (response.get("usage") or {}).get("credits")
+    return n if type(n) is int and n >= 0 else estimate
 
 
 async def _post(path: str, body: dict) -> dict:
@@ -77,13 +82,15 @@ async def search(query: str, include_domains: Optional[list[str]] = None, depth:
         if include_domains_mode:
             body["include_domains_mode"] = include_domains_mode  # without domains the API returns 400
 
+    paid = []
     async def call():
-        resp = await _post("/search", body)
+        resp = await _post("/search", {**body, "include_usage": True})
+        paid.append(_credits(resp, search_credits(depth)))
         return [{"url": r["url"], "title": r.get("title", ""), "content": r.get("content", ""),
                  **({"published_date": r["published_date"]} if "published_date" in r else {})}
                 for r in resp.get("results", [])]
 
-    return await _cached("tavily_search", body, search_credits(depth), call, lambda _: search_credits(depth))
+    return await _cached("tavily_search", body, search_credits(depth), call, lambda _: paid[0])
 
 
 async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], int]:
@@ -91,9 +98,9 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
     paid: list[int] = []
 
     async def call():
-        resp = await _post("/extract", {"urls": urls, "extract_depth": depth})
+        resp = await _post("/extract", {"urls": urls, "extract_depth": depth, "include_usage": True})
         got = [{"url": r["url"], "raw_content": r.get("raw_content", "")} for r in resp.get("results", [])]
-        paid.append(len(got))
+        paid.append(_credits(resp, extract_credits(len(got), depth)))
         for u in set(urls) - {g["url"] for g in got}:
             if pages := await fetch_pdf(u):
                 got.append({"url": u, "raw_content": "\n".join(p["text"] for p in pages)})
@@ -101,7 +108,7 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
 
     key = {"urls": sorted(urls), "depth": depth}
     return await _cached("tavily_extract", key, extract_credits(len(urls), depth), call,
-                         lambda _: extract_credits(paid[0], depth) if paid[0] else 0)
+                         lambda _: paid[0])
 
 
 async def map(url: str, instructions: Optional[str] = None, limit: Optional[int] = None,
@@ -109,12 +116,16 @@ async def map(url: str, instructions: Optional[str] = None, limit: Optional[int]
     limit = limit or settings.map_limit
     max_depth = max_depth or settings.map_max_depth
 
+    paid = []
     async def call():
-        body = {"url": url, "limit": limit, "max_depth": max_depth, **({"instructions": instructions} if instructions else {})}
-        return (await _post("/map", body)).get("results", [])[:limit]  # cap even if the server ignores limit
+        body = {"url": url, "limit": limit, "max_depth": max_depth, "include_usage": True,
+                **({"instructions": instructions} if instructions else {})}
+        resp = await _post("/map", body)
+        paid.append(_credits(resp, map_credits(min(limit, len(resp.get("results", []))), instructions)))
+        return resp.get("results", [])[:limit]  # cap even if the server ignores limit
 
     key = {"url": url, "i": instructions, "limit": limit, "depth": max_depth}
-    return await _cached("tavily_map", key, map_credits(limit, instructions), call, lambda r: map_credits(len(r), instructions))
+    return await _cached("tavily_map", key, map_credits(limit, instructions), call, lambda _: paid[0])
 
 
 async def fetch_pdf(url: str) -> Optional[list[dict]]:

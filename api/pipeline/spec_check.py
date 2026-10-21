@@ -50,9 +50,13 @@ def _text(value) -> str:
 def _as_list(value) -> list[str]:
     if value is None:
         return []
-    if isinstance(value, list):
-        return [_text(v) for v in value]
-    return [_text(value)]
+    out = []
+    for item in value if isinstance(value, list) else [value]:
+        out.append(_text(item))
+        # Parentheses can group a second identifier with the first.
+        if "(" in str(item):
+            out.extend(_text(part) for part in re.split(r"[()]", str(item)))
+    return out
 
 
 OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}

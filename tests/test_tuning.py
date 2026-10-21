@@ -78,13 +78,13 @@ def test_text_limits_do_not_truncate_quote_gate_and_counts_drop_unquoted_values(
         if task == "extract_claims":
             return ClaimsOut(product="test", manufacturer="maker", claims=[
                 {"id": str(i), "product": "test", "manufacturer": "maker", "property": "voc", "value": 1, "page": 1, "quote": quote}
-                for i, quote in enumerate(("a quote past the excerpt", "invented quote"))]), usage
+                for i, quote in enumerate(("a quote past the excerpt: 1", "invented quote"))]), usage
         return VerifyOut(status="unknown", current_values=[
-            {"property": "voc", "value": 1, "quote": quote} for quote in ("a quote past the excerpt", "invented quote")]), usage
+            {"property": "voc", "value": 1, "quote": quote} for quote in ("a quote past the excerpt: 1", "invented quote")]), usage
     monkeypatch.setattr(router, "call", call)
     counts = dict.fromkeys(metrics.FIELDS, 0)
     token = metrics.COUNTS.set(counts)
-    pages = [{"page": 1, "text": "prefix a quote past the excerpt"}]
+    pages = [{"page": 1, "text": "prefix a quote past the excerpt: 1"}]
     sources = [{"url": "https://maker.test", "raw_content": pages[0]["text"]}]
     try:
         claims, _ = asyncio.run(extract.extract_claims("test", pages, extract.all_product_data(pages), ["voc"]))
