@@ -21,7 +21,7 @@ from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
 from ..config import FORCE_MOCK, redact, settings
-from .. import archive, readiness
+from .. import archive, cache, readiness
 from ..providers import ProviderError, budget, failure_reason
 from ..providers.budget import BudgetExceeded
 from ..schemas import Diagnostic, Event, Investigation, ReportOut, Requirement, Result, Usage
@@ -38,18 +38,20 @@ log = logging.getLogger("speccheck.runs")
 
 class Run:
     def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None, mock: Iterable[str] = (),
-                 shared_item_budget: bool = False, replay_of: str | None = None):
+                 shared_item_budget: bool = False, replay_of: str | None = None, refresh_web: bool = False):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
         self.mock = set(mock)  # items forced to mock mode even when the server is live (public uploads)
         self.shared_item_budget = shared_item_budget
         self.replay_of = replay_of
-        self.ledger = budget.Ledger()
+        self.refresh_web = refresh_web
+        self.ledger = budget.Ledger(self.id)
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms
         self.events: list[Event] = []
         self.results: dict[str, Result] = {}
         self.attempts: dict[str, dict] = {}
         self.manifest = readiness.manifest()
+        self.manifest["refresh_web"] = refresh_web
         self.done = asyncio.Event()
         self._subscribers: list[asyncio.Queue] = []
         self._t0 = time.perf_counter()
@@ -147,7 +149,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             requirements = [r for r in requirements if r.property not in skip]
             props = spec_check.properties_for(requirements)
             claims, u = await extract.extract_claims(fx, pages, labels, props)
-            usage.append(u)
+            usage += u
 
             run.emit("spec_check", "Checking each requirement", case_id, "code")
             stage = "spec_check"
@@ -223,10 +225,10 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 diagnostics.append(Diagnostic(stage="accounting", kind="provider", message=reason))
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
-                comparison=rows, claims=claims.claims, document_revision=claims.document_revision,
+                comparison=rows, claims=claims.claims, selection=claims.selection, document_revision=claims.document_revision,
                 note_to_subcontractor=rep.note_to_subcontractor, usage=usage, web_credits=credits,
                 duration_ms=int((time.perf_counter() - t0) * 1000),
-                investigation=investigation,
+                investigation=investigation, investigations=investigations,
                 mode="live" if settings.live else "mock", warnings=warnings,
                 diagnostics=diagnostics, validity="invalid" if diagnostics else "valid", queue_ms=queue_ms,
                 config_hash=run.manifest["config_hash"],
@@ -262,6 +264,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
 
 
 async def execute(run: Run) -> Run:
+    refresh_token = cache.REFRESH_WEB.set(run.refresh_web)
     budget.LEDGER.set(run.ledger)  # inherited by every item task below
     sem = asyncio.Semaphore(1 if run.shared_item_budget else settings.max_concurrency)
     for cid in run.case_ids:
@@ -277,6 +280,7 @@ async def execute(run: Run) -> Run:
             await asyncio.gather(*(staggered(i, cid) for i, cid in enumerate(run.case_ids)), return_exceptions=True)
     finally:
         finish_run(run)
+        cache.REFRESH_WEB.reset(refresh_token)
     return run
 
 

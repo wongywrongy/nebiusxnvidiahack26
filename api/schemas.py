@@ -73,12 +73,24 @@ class Claim(BaseModel):
     bbox: Optional[list[float]] = None
     quote: Optional[str] = Field(default=None, description="Short text from the page supporting the claim")
     variant: Optional[str] = Field(default=None, description="Exact phrase in the quote naming the optional model/driver/configuration limiting this value; null for a product-wide statement")
+    scope: Literal["product_wide", "option", "unknown"] = "unknown"
+    scope_quote: Optional[str] = Field(default=None, description="Exact passage establishing whether this value covers the product or only an option")
+    selection_quote: Optional[str] = None
+
+
+class Selection(BaseModel):
+    model: str
+    page: int
+    quote: str = Field(description="Exact submitted passage marking the selected/submitted/specified configuration; never an ordering example")
 
 
 class ClaimsOut(BaseModel):
     product: str
     manufacturer: str
     model: Optional[str] = None
+    selection: Optional[Selection] = None
+    family: Optional[str] = Field(default=None, description="Product family identifier printed on the submitted pages, excluding order-code options")
+    family_quote: Optional[str] = Field(default=None, description="Exact submitted passage identifying this family")
     document_revision: Optional[str] = Field(default=None, description="Revision or date printed on the sheet")
     claims: list[Claim]
 
@@ -94,6 +106,7 @@ class Evidence(BaseModel):
     sha256: Optional[str] = None
     excerpt: Optional[str] = None
     archived_path: Optional[str] = None
+    cache_hit: Optional[bool] = None
 
 
 class PropertyValue(BaseModel):
@@ -101,6 +114,13 @@ class PropertyValue(BaseModel):
     value: Value
     unit: Optional[str] = None
     quote: Optional[str] = Field(default=None, description="Exact text from the source stating this value")
+    source_url: Optional[str] = None
+    model: Optional[str] = Field(default=None, description="Exact product/model printed on this source; never copy SUBMITTED without source evidence")
+    identity_quote: Optional[str] = Field(default=None, description="Exact source passage naming this product/model")
+    variant: Optional[str] = Field(default=None, description="Exact quoted configuration limiting this value; null only for product-wide values")
+    scope: Literal["product_wide", "option", "unknown"] = "unknown"
+    scope_quote: Optional[str] = None
+    selection_quote: Optional[str] = None
 
 
 class VerifyOut(BaseModel):
@@ -111,6 +131,7 @@ class VerifyOut(BaseModel):
     current_revision: Optional[str] = Field(default=None, description="Revision or date exactly as printed on the source")
     status_date: Optional[str] = Field(default=None, description="Date it was discontinued or replaced, as stated")
     status_quote: Optional[str] = Field(default=None, description="Exact text from the source stating the status")
+    status_family: Optional[str] = Field(default=None, description="Exact family name in the status quote, also named by the submitted product; status only")
     current_values: list[PropertyValue] = []
     source_urls: list[str] = []
     notes: Optional[str] = None
@@ -167,6 +188,7 @@ class FixCheck(BaseModel):
 class FixCandidate(BaseModel):
     name: str
     source_url: str
+    documents: list[Evidence] = Field(default=[], max_length=3)
     checks: list[FixCheck] = []
     passes: bool
 
@@ -251,6 +273,8 @@ class InvestigationStep(BaseModel):
 class Investigation(BaseModel):
     steps: list[InvestigationStep] = []
     outcome: Literal["found", "not_found", "capped"] = "not_found"
+    purpose: Literal["primary", "replacement"] = "primary"
+    resolution: Literal["not_resolved", "revision_only", "values_confirmed", "problem_found"] = "not_resolved"
     # Whole extracted pages stay internal; the public trace contains only short, redacted summaries.
     _pages: list[dict] = PrivateAttr(default_factory=list)
     _usage: list[Usage] = PrivateAttr(default_factory=list)
@@ -273,12 +297,14 @@ class Result(BaseModel):
     findings: list[Finding]
     comparison: list[CompareRow] = []
     claims: list[Claim] = []
+    selection: Optional[Selection] = None
     document_revision: Optional[str] = None
     note_to_subcontractor: str = ""
     usage: list[Usage] = []
     web_credits: float = 0.0
     duration_ms: int = 0
     investigation: Optional[Investigation] = None
+    investigations: list[Investigation] = []
     mode: Optional[Literal["mock", "live"]] = None
     replayed_from: Optional[str] = None
     warnings: list[str] = []

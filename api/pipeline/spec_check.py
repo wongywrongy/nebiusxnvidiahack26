@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import math
 import unicodedata
 from typing import Optional
 
@@ -20,16 +21,19 @@ UNIT_TO_BASE = {
 def to_number(value) -> Optional[float]:
     """Parse 2, '2', '3/4', '1-1/8', '<2', '1/2 hr' into a float. None if not numeric."""
     if isinstance(value, (int, float)):
-        return float(value)
+        return float(value) if math.isfinite(value) else None
     if not isinstance(value, str):
         return None
     s = value.strip().lower().lstrip("<>~≤≥= ")
+    ordinal = re.fullmatch(r"(?:class|rating|grade)\s*:?\s*(-?\d+(?:\.\d+)?)", s)
+    if ordinal:
+        return float(ordinal[1])
     m = re.match(r"^(\d+)[-\s](\d+)/(\d+)", s)
     if m:
-        return int(m.group(1)) + int(m.group(2)) / int(m.group(3))
+        return int(m.group(1)) + int(m.group(2)) / int(m.group(3)) if int(m.group(3)) else None
     m = re.match(r"^(\d+)/(\d+)", s)
     if m:
-        return int(m.group(1)) / int(m.group(2))
+        return int(m.group(1)) / int(m.group(2)) if int(m.group(2)) else None
     m = re.match(r"^-?\d+(\.\d+)?", s.replace(",", ""))
     return float(m.group(0)) if m else None
 
@@ -43,6 +47,22 @@ def normalize(value, unit: Optional[str]) -> Optional[float]:
     if unit and unit.lower() in UNIT_TO_BASE:
         return n * UNIT_TO_BASE[unit.lower()][1]
     return n
+
+
+def numeric_compare(value, unit, target, target_unit, operator):
+    if unit and target_unit and UNIT_TO_BASE.get(unit.lower(), (unit.lower(),))[0] != UNIT_TO_BASE.get(target_unit.lower(), (target_unit.lower(),))[0]:
+        return None
+    a, b = normalize(value, unit or target_unit), normalize(target, target_unit)
+    if a is None or b is None or str(value).strip().startswith("~"):
+        return None
+    bound = re.match(r"[<>]=?|[≤≥]", str(value).strip())
+    symbol = {"≤": "<=", "≥": ">="}.get(bound[0], bound[0]) if bound else ""
+    lower, upper = (float("-inf"), a) if symbol.startswith("<") else (a, float("inf")) if symbol.startswith(">") else (a, a)
+    if operator == "gte":
+        return True if lower >= b else False if upper < b or upper == b and symbol == "<" else None
+    if operator == "lte":
+        return True if upper <= b else False if lower > b or lower == b and symbol == ">" else None
+    return True if lower == upper == b else False if b < lower or b > upper or b == lower and symbol == ">" or b == upper and symbol == "<" else None
 
 
 def _text(value) -> str:
@@ -134,7 +154,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
     for r in requirements:
         scoped = by_prop.get(r.property, [])
         variants = [c.variant for c in scoped if c.variant]
-        found = [c for c in scoped if not c.variant]
+        found = [c for c in scoped if not c.variant or c.selection_quote]
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
         related: list[str] = []  # other claims the comparison used (eq_ref)
@@ -194,9 +214,8 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
         detail = ""
         left = None
         if r.operator in ("gte", "lte", "eq"):
-            numbers, b = [normalize(c.value, c.unit) for c in found], normalize(r.value, r.unit)
-            if all(a is not None for a in numbers) and b is not None:
-                outcomes = [{"gte": a >= b, "lte": a <= b, "eq": abs(a - b) < 1e-9}[r.operator] for a in numbers]
+            outcomes = [numeric_compare(c.value, c.unit, r.value, r.unit, r.operator) for c in found]
+            if all(o is not None for o in outcomes):
                 ok = outcomes[0] if len(set(outcomes)) == 1 else None
                 if len(found) > 1:
                     alternatives = [_fmt(c.value, c.unit) for c in found]
@@ -204,11 +223,11 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                 detail = ("Stated alternatives give different outcomes; confirm the submitted configuration." if ok is None else
                           f"Package states {alternatives or _fmt(claim.value, claim.unit)}; spec requires {OPERATOR_WORDS[r.operator]} {_fmt(r.value, r.unit)}.")
         elif r.operator == "eq_ref":
-            other = [c for c in by_prop.get(str(r.value), []) if not c.variant]
+            other = [c for c in by_prop.get(str(r.value), []) if not c.variant or c.selection_quote]
             if len(found) == len(other) == 1:
                 related = [other[0].id]
                 a, b = normalize(claim.value, claim.unit), normalize(other[0].value, other[0].unit)
-                if a is not None and b is not None:
+                if a is not None and b is not None and not any(re.match(r"[<>~≤≥]", str(c.value).strip()) for c in (claim, other[0])):
                     ok = abs(a - b) < 1e-9
                     left = f"{_wanted(r)} ({_fmt(other[0].value, other[0].unit)})"  # "T = F (2 hr)"
                     detail = (f"{_label(r.property)} is {_fmt(claim.value, claim.unit)} but "

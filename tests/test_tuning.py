@@ -68,8 +68,8 @@ def test_depth_and_result_count_reach_web_provider_and_mock_cost(monkeypatch, tm
 
 
 def test_text_limits_do_not_truncate_quote_gate_and_counts_drop_unquoted_values(monkeypatch):
-    monkeypatch.setattr(settings, "max_page_chars", 5)
-    monkeypatch.setattr(settings, "web_source_chars", 6)
+    monkeypatch.setattr(settings, "max_page_chars", 40)
+    monkeypatch.setattr(settings, "web_source_chars", 50)
     prompts = {}
     async def call(task, schema, messages, ctx):
         from api.schemas import Usage
@@ -84,7 +84,7 @@ def test_text_limits_do_not_truncate_quote_gate_and_counts_drop_unquoted_values(
     monkeypatch.setattr(router, "call", call)
     counts = dict.fromkeys(metrics.FIELDS, 0)
     token = metrics.COUNTS.set(counts)
-    pages = [{"page": 1, "text": "prefix a quote past the excerpt: 1"}]
+    pages = [{"page": 1, "text": "prefix " * 20 + "a quote past the excerpt: 1"}]
     sources = [{"url": "https://maker.test", "raw_content": pages[0]["text"]}]
     try:
         claims, _ = asyncio.run(extract.extract_claims("test", pages, extract.all_product_data(pages), ["voc"]))
@@ -95,8 +95,10 @@ def test_text_limits_do_not_truncate_quote_gate_and_counts_drop_unquoted_values(
         metrics.COUNTS.reset(token)
     assert counts == dict(claims_extracted=2, claims_kept=1, web_values_read=2, web_values_kept=1)
     assert len(claims.claims) == len(out.current_values) == 1
-    assert '"text": "prefi"' in prompts["extract_claims"]
-    assert '"text": "prefix"' in prompts["verify"]
+    assert 'a quote' in prompts["extract_claims"]
+    assert 'excerpt:' in prompts["extract_claims"]
+    assert 'a quote' in prompts["verify"]
+    assert 'excerpt:' in prompts["verify"]
 
 
 def test_investigation_knobs_cap_tool_calls_and_credits(monkeypatch, tmp_path):

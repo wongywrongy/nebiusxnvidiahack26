@@ -79,7 +79,7 @@ result if no source can be verified. Provider compatibility was exercised live; 
    draft addressed to the sub or architect. Save a return or approval decision; no message is sent.
 4. **Outcome.** Saved return requests and approvals ready for forwarding. "Check approved now" re-runs approved
    items, including a sample troffer approval dated March 2024. In fixtures it comes back discontinued, with
-   Acuity's notice quoted and a replacement that passes every check; live results depend on fetched evidence.
+   Acuity's notice quoted; replacements remain unconfirmed until every check has supporting evidence.
 
 The browser saves the inbox, completed results, edited messages and decisions in localStorage when available.
 An interrupted scan needs Retry after reload; it never starts another paid run automatically. **Start over**
@@ -93,16 +93,25 @@ Lighting), each with a hand-built answer key from the real documents: two clean 
 (T rating below F), one listing that does not cover the penetrant, two out-of-date sheets, one discontinued
 product, and one newer sheet with unchanged values (a note, not a send-back).
 
-| Panel | Mock baseline | Recorded live run |
+| Panel | Original mock baseline | Recorded first live run |
 | --- | ---: | ---: |
 | Right calls | 8/8 | **6/8** |
 | Planted problems caught | 6/6 | **5/6** |
 | Major false alarms on clean packages | 0/2 | **0/2** |
 | Passing fixes | 2/5 | **0/5** |
 
-The table preserves the dated first-pass baseline. The 2026-10-22 readiness regressions still make 8/8 mock
-decisions, with **1/5 passing fixes**: pending assembly proof now blocks an unsupported replacement pass.
-See the [readiness implementation ledger](docs/judge-readiness.md) for current gates and validation.
+The table preserves the dated first-pass baseline. The current G2 policy checkpoint scores **6/8 mock
+decisions, 5/6 problems, 0/2 major false alarms and 0/5 passing fixes** against the unchanged key. Missing
+configuration selections now stay unconfirmed; a replacement also needs cited availability and assembly proof.
+Kyle authorized the disclosed selection-policy exceptions and live validation on October 22. Regression
+checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
+[readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
+
+The October 22 refinement check now gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
+replacements**. This targeted, cached-live confirmation is not an eight-case score or fresh latency
+benchmark. The current test suite passes **382 tests, 2 skipped**. Additional engineering spend is
+**$0.4281318 / 60 credits**, cumulative **$1.4867368 / 358**. G2 remains open for a fully evidenced replacement;
+see the [before/after evidence and commands](docs/judge-readiness/g2/live-validation.md).
 
 Live run **`20261022-181611-a9d0b5`**, recorded **2026-10-22**, is committed under
 [runs/recorded/](runs/recorded/20261022-181611-a9d0b5/scores.json). It contains c01–c08 and public samples
@@ -150,12 +159,18 @@ SPECCHECK_MODE=mock uvicorn api.main:app --reload # http://localhost:8000 (after
 # Live mode: Nemotron on Token Factory and Tavily, cached in .cache/ after the first run.
 cp .env.example .env                # SPECCHECK_MODE=live, NEBIUS_API_KEY, TAVILY_API_KEY, ADMIN_TOKEN
 python scripts/fetch_docs.py        # the public PDFs into data/raw/ (not committed)
+python scripts/campaign_budget.py status  # requires the owner's initialized local spending ledger
 python scripts/spike_models.py      # one tiny call per model: ids, json_schema, thinking off
 python scripts/draft_requirements.py   # Super drafts each spec's checklist; review, save as data/requirements/<section>.json
 SPECCHECK_MODE=live python scripts/eval.py --case c03
 python scripts/record_live.py       # all eight live, recorded to runs/recorded/ (commit it)
 python scripts/recheck.py           # the nightly re-check, by hand
 ```
+
+Paid HTTP attempts require the local campaign ledger, including outstanding reservations and retry charges.
+Missing, corrupt or unresolved accounting blocks spending. Initialize it once from verified historical day
+ledgers as described in the [readiness ledger](docs/judge-readiness.md); cached files never initialize a zero
+balance automatically. Hosted persistence remains unverified.
 
 Pages with fewer than 40 text characters are rendered at 200 dpi for local Tesseract OCR. Nemotron reads that
 text through the existing router; no vision model is claimed. Work is bounded to 20 OCR attempts per PDF,
@@ -219,7 +234,7 @@ curl --fail-with-body -X POST 'http://localhost:8000/api/specs/07%2084%2000' \
 
 ## Tuning
 
-Change one setting at a time; defaults preserve the fixture evaluation. `THINKING_TASKS` is a comma list of
+Change one setting at a time and compare against the recorded checkpoint. `THINKING_TASKS` is a comma list of
 router task names (`triage`, `extract_requirements`, `extract_claims`, `verify`, `investigate`, `report`) that
 use model-default thinking. Other tasks follow `THINKING=off` unless the global setting is changed. Structured
 and tool-call caches key the effective per-task setting.
@@ -227,7 +242,7 @@ and tool-call caches key the effective per-task setting.
 | Knob | Default | What it bounds |
 | --- | --- | --- |
 | `THINKING_TASKS` | empty | Tasks opting into model-default reasoning |
-| `MAX_PAGE_CHARS` / `WEB_SOURCE_CHARS` | 6000 / 12000 | Text shown to claims extraction / web value reading |
+| `MAX_PAGE_CHARS` / `WEB_SOURCE_CHARS` | 6000 / 12000 | Characters per extraction / web batch; long pages continue in overlapping batches |
 | `SEARCH_DEPTH` / `EXTRACT_DEPTH` | basic / basic | Tavily depth; `advanced` doubles the corresponding credit rate |
 | `SEARCH_MAX_RESULTS` | 5 | Search results, including Investigator tools |
 | `INVESTIGATE_CREDIT_CAP` / `INVESTIGATE_MAX_STEPS` | 8 / 6 | Shared item investigation credits / calls per loop |
@@ -295,8 +310,9 @@ These boundaries have offline regression tests; an eight-week live soak has not 
 With `EVIDENCE_DIR` set, `watch/latest.json`, dated reports and `watch/jobs.json` are mirrored into that directory
 and read there first, with the image's `runs/watch/` as fallback. The owner should commit the **first real report**
 under `runs/watch/` as an image fallback; never commit a fake-CLI or mock report as live evidence. Startup logs
-show today's recorded spend and the configured caps. `.cache/budget/<UTC-date>.json` is local and may reset on
-container replacement. `/api/health` includes `uptime_s`, `disk_free_gb` and caps as well as key-presence booleans.
+show today's recorded spend and the configured caps. `.cache/budget/<UTC-date>.json` mirrors the authoritative
+campaign ledger; missing or corrupt campaign state blocks paid work. Its hosted persistence remains unverified.
+`/api/health` includes `uptime_s`, `disk_free_gb` and caps as well as key-presence booleans.
 
 ## Layout
 

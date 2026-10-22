@@ -98,6 +98,7 @@ class Settings(BaseSettings):
     fixtures_dir: Path = ROOT / "data" / "fixtures"
     raw_dir: Path = ROOT / "data" / "raw"
     cache_dir: Path = ROOT / ".cache"
+    campaign_budget_file: Path = ROOT / "evidence" / "budget" / "campaign.sqlite3"
     runs_dir: Path = ROOT / "runs"
     recorded_dir: Path = ROOT / "runs" / "recorded"
     uploads_dir: Path = ROOT / "data" / "raw" / "uploads"

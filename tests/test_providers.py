@@ -6,6 +6,7 @@ import logging
 import shutil
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
@@ -361,7 +362,8 @@ def test_product_page_extract_resolves_linked_pdf_and_keeps_its_url(live):
     pages, spent = asyncio.run(tavily.extract([page]))
     assert pages[0]["url"] == document and pages[0]["requested_url"] == page
     assert "Revision C" in pages[0]["raw_content"] and spent == 1
-    assert asyncio.run(tavily.extract([page])) == (pages, 0)
+    cached, charged = asyncio.run(tavily.extract([page]))
+    assert charged == 0 and cached == [{**p, "cache_hit": True} for p in pages]
     assert len(route.calls) == len(html.calls) == len(pdf.calls) == 1
 
 
@@ -372,7 +374,7 @@ def test_failed_linked_pdf_probe_is_not_repeated_on_cache_hit(live):
     direct = live[0].get(page).respond(403)
     first, _ = asyncio.run(tavily.extract([page]))
     second, spent = asyncio.run(tavily.extract([page]))
-    assert second == first and first[0]["raw_content"] == "Product data sheet"
+    assert second == [{**p, "cache_hit": True} for p in first] and first[0]["raw_content"] == "Product data sheet"
     assert spent == 0 and len(post.calls) == len(direct.calls) == 1
 
 
@@ -393,7 +395,8 @@ def test_raw_pdf_syntax_is_replaced_with_direct_text_or_dropped(live, cached):
     raw = [{"url": u, "raw_content": "%PDF-1.7 1 0 obj xref gibberish"} for u in urls]
     route = live[0].post(f"{tavily.API}/extract").respond(200, json={"results": raw, "usage": {"credits": 1}})
     if cached:
-        cache.put("tavily_extract", {"urls": sorted(urls), "depth": "basic"}, raw)
+        cache.put("tavily_extract", {"urls": sorted(urls), "depth": "basic"}, {
+            "version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(), "results": raw})
     doc = pymupdf.open()
     doc.new_page().insert_text((72, 72), "Readable current product data, Rev C")
     live[0].get(urls[0]).respond(200, content=doc.tobytes())
@@ -401,7 +404,7 @@ def test_raw_pdf_syntax_is_replaced_with_direct_text_or_dropped(live, cached):
     pages, spent = asyncio.run(tavily.extract(urls))
     assert [p["url"] for p in pages] == [urls[0]] and "Rev C" in pages[0]["raw_content"]
     assert spent == (0 if cached else 1) and len(route.calls) == (0 if cached else 1)
-    assert asyncio.run(tavily.extract(urls))[0] == pages
+    assert asyncio.run(tavily.extract(urls))[0] == [{**p, "cache_hit": True} for p in pages]
     assert tavily._pdf_syntax("binary fragment\nstartxref\n116\n%%EOF")
 
 

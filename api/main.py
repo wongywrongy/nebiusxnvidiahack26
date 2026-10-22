@@ -69,7 +69,7 @@ async def lifespan(app):
     settings.runs_dir.mkdir(parents=True, exist_ok=True)
     prune_page_cache()
     prune_runs()
-    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (local ledger may reset on container replacement)",
+    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on local disk; hosted persistence unverified)",
                                                budget.today(), budget.caps())
     await cloud_jobs.setup_profile()
     try:
@@ -92,6 +92,7 @@ class Scan(BaseModel):
     ids: list[str]
     delay_ms: Optional[int] = None
     shared_item_budget: bool = False
+    refresh_web: bool = False
 
 
 class StartReplay(BaseModel):
@@ -220,7 +221,7 @@ async def inbox(request: Request, name: str = "upload.pdf"):
         return _public(case)
 
     if settings.live and budget.day_spent():
-        raise HTTPException(429, "Today's live budget is spent. Uploads can be checked again tomorrow (UTC).")
+        raise HTTPException(429, budget.unavailable_reason())
     if not _is_admin(request):
         _rate_limit(request)
     pdf, text = await _read_pdf(request)
@@ -243,11 +244,12 @@ async def draft_spec(request: Request, section: str = Query(pattern=r"^\d{2} \d{
     if not _is_admin(request):
         _rate_limit(request)
     if budget.day_spent():
-        raise HTTPException(429, "Today's live budget is spent. Try again tomorrow (UTC).")
+        raise HTTPException(429, budget.unavailable_reason())
     pdf, text = await _read_pdf(request)
     if not text.strip():
         raise HTTPException(400, "No readable text in this spec PDF")
     token = budget.LEDGER.set(budget.Ledger())
+    item_token = budget.ITEM.set(f"spec-draft-{section}")
     try:
         draft, usage = await checklists.draft(section, text, name.rsplit("/", 1)[-1][:160],
                                               source_sha256=hashlib.sha256(pdf).hexdigest(), title=title)
@@ -258,6 +260,7 @@ async def draft_spec(request: Request, section: str = Query(pattern=r"^\d{2} \d{
         raise HTTPException(503, failure_reason(e)) from e
     finally:
         budget.LEDGER.reset(token)
+        budget.ITEM.reset(item_token)
 
 
 @app.post("/api/specs/{section}")
@@ -292,20 +295,24 @@ async def scan(body: Scan, request: Request):
     if settings.live and not admin:  # only live runs spend; a mock scan is free
         _rate_limit(request)
     if settings.live and budget.day_spent():
+        reason = budget.unavailable_reason()
+        if body.refresh_web:
+            raise HTTPException(429, reason + " A fresh re-check cannot use replay.")
         rec = recorded_runs()
         source = rec[0] if rec else None
         if any(c.get("upload") for c in cases.values()) or not source or any(
             not (settings.recorded_dir / source / "results" / f"{i}.json").is_file() for i in ids
         ):
-            raise HTTPException(429, "Today's live budget is spent and these items have no complete recording. Try again tomorrow (UTC).")
+            raise HTTPException(429, reason + " These items have no complete recording.")
         run = _new_run(ids, delay_ms=0, replay_of=source)
         _spawn(replay(run, source, ids=ids))
         date = f"{source[:4]}-{source[4:6]}-{source[6:8]}"
         return {"run_id": run.id, "mode": "live", "mock": [], "replay_of": source,
-                "note": f"Replayed from the live run recorded on {date}: today's live budget is spent."}
+                "note": f"Replayed from the live run recorded on {date}: {reason.lower()}"}
     mock = ([i for i, c in cases.items() if c.get("upload")]
             if settings.live and not admin and not settings.public_uploads_live else [])
-    run = _new_run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget)
+    run = _new_run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget,
+                   refresh_web=body.refresh_web)
     _spawn(execute(run))
     note = "Uploads ran in mock mode: public live uploads are disabled; live checks need the admin token." if mock else None
     return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note,

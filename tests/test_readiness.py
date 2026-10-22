@@ -131,6 +131,7 @@ def test_malformed_reasoning_metadata_does_not_erase_known_spend(monkeypatch, tm
         budget.ITEM.reset(it)
 
 
+@pytest.mark.unreported_usage
 def test_missing_usage_is_incomplete_not_confirmed_zero(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "cache_dir", tmp_path)
     ledger = budget.Ledger()
@@ -174,7 +175,7 @@ def test_runner_uses_observed_assembly_kind_for_uploaded_product_data(monkeypatc
         return RequirementsOut(requirements=[Requirement(id="a", section="07 84 00", paragraph="x", property="t_rating_hr",
             operator="eq_ref", value="f_rating_hr", text="T equals F")]), None
     async def claims(*_):
-        return ClaimsOut(product="assembly", manufacturer="maker", claims=[]), Usage(task="extract_claims", tier="extract", model="test")
+        return ClaimsOut(product="assembly", manufacturer="maker", claims=[]), [Usage(task="extract_claims", tier="extract", model="test")]
     monkeypatch.setattr(runner, "load_submittal_pages", pages)
     monkeypatch.setattr(runner.extract, "triage", triage)
     monkeypatch.setattr(runner.extract, "requirements_for", requirements)

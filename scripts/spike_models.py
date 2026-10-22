@@ -44,6 +44,7 @@ class Rating(BaseModel):
 
 async def main() -> None:
     budget.LEDGER.set(budget.Ledger())
+    budget.ITEM.set("spike-models")
     print(f"Endpoint: {settings.nebius_base_url}   THINKING={settings.thinking}")
     available = await tokenfactory.list_models()  # free
     print(f"{len(available)} models on this account")

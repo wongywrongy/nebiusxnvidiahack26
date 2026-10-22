@@ -17,14 +17,13 @@ from typing import Optional
 from ..config import settings
 from ..llm import load_fixture
 from ..providers import budget, tavily
-from ..schemas import ClaimsOut, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
-from ..web import WebClient
+from ..schemas import ClaimsOut, Evidence, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
+from ..web import WebClient, snapshot
 from . import extract, spec_check, verify
 from .decide import FLAGGED
 from .investigate import investigate
 
 GROUPS = {"currency": ("status", "currency"), "spec": ("spec", "validity")}
-MAX_CANDIDATE_CHARS = 20000
 
 
 async def find_fixes(case: dict, requirements: list[Requirement], claims: ClaimsOut, findings: list[Finding],
@@ -93,7 +92,7 @@ VERIFY_LABEL = {
 
 
 def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
-    ok: Optional[bool] = {"pass": True, "note": True, "unverified": None, "pending": None}.get(f.verdict, False)
+    ok: Optional[bool] = {"pass": True, "note": None, "unverified": None, "pending": None}.get(f.verdict, False)
     r = reqs.get(f.requirement_id or "")
     right = f.compare.right_value if f.compare else None
     if f.verdict in ("unverified", "pending"):
@@ -118,7 +117,15 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     own = {d.get("url") for d in case.get("submittal", [])}
     query = _query(group, case, claims, flagged, requirements)
     domains = case.get("manufacturer_domains", []) if group == "currency" else []
-    results = [r for r in await web.search(query, include_domains=domains or None) if r["url"] not in own][:max_candidates]
+    results = await web.search(query, include_domains=domains or None)
+    known = [{"url": row.source_url, "title": next((e.title for e in f.evidence if e.url == row.source_url), row.source_url)}
+             for f in flagged if f.check == "currency" and f.compare for row in f.compare.rows
+             if row.changed and row.source_url and row.quote]
+    by_url = {}
+    for result in [*known, *results]:
+        if result["url"] not in own:
+            by_url.setdefault(result["url"], result)
+    results = list(by_url.values())[:max_candidates]
     found = {p.get("requested_url", p["url"]): p for p in await web.extract([r["url"] for r in results])}
 
     roles = {d["role"] for d in case["submittal"]}
@@ -140,6 +147,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
             candidate = ClaimsOut(product=r.get("title") or claims.product, manufacturer=claims.manufacturer, claims=[])
             candidate_web = WebClient(cfx, on_step, on_warning)
             inv = await investigate({**case, "candidate_url": r["url"]}, candidate, candidate_web)
+            inv.purpose = "replacement"
             usage += inv._usage
             verify_credits += candidate_web.credits
             if investigations is not None:
@@ -154,24 +162,64 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         if web.credits + verify_credits + scripted_cost > cap:
             await web.warn("fix", budget.BudgetExceeded("Fix credit cap reached before candidate verification"))
             break  # credit cap for this item
-        pages = [{"page": 1, "text": text[:MAX_CANDIDATE_CHARS]}]
+        pages = page.get("pages") or [{"page": 1, "text": text}]
         cl, u = await extract.extract_claims(cfx, pages, extract.all_product_data(pages), props)
-        usage.append(u)
-        if not cl.claims:
+        usage += u
+        if not verify._unambiguous(cl.claims):
             continue  # no quoted product properties: cannot establish a passing replacement
-        found_f = spec_check.check(requirements, cl.claims, roles)
+        sources = []
         vf, _, vu, vc, inv = await verify.verify(
             {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": case.get("manufacturer_domains", [])}, cl,
-            on_step=on_step, on_warning=on_warning)
+            on_step=on_step, on_warning=on_warning, on_sources=sources.extend)
         if inv is not None and investigations is not None:
+            inv.purpose = "replacement"
             investigations.append(inv)
-        found_f += vf
         usage += vu
         verify_credits += vc
+        bundle = [page]
+        proof_urls = {e.url for f in vf for e in f.evidence}
+        for source in sorted(sources, key=lambda p: p["url"] not in proof_urls):
+            if source["url"] not in {p["url"] for p in bundle} and len(bundle) < 3 and extract.model_quoted(
+                    cl.model or cl.product, source["raw_content"]):
+                bundle.append(source)
+        documents, bundle_pages, page_sources = [], [], {}
+        for source in bundle:
+            document = Evidence(tier=verify.classify(source["url"], case.get("manufacturer_domains", [])),
+                                title=source["url"], **snapshot(source["url"], source["raw_content"], source.get("retrieved_at")))
+            documents.append(document)
+            for p in source.get("pages") or [{"page": 1, "text": source["raw_content"]}]:
+                number = len(bundle_pages) + 1
+                bundle_pages.append({**p, "page": number})
+                page_sources[number] = document
+        if len(bundle) > 1:
+            more, u = await extract.extract_claims(cfx, bundle_pages, extract.all_product_data(bundle_pages), props)
+            identifier, other = cl.model or cl.family or cl.product, more.model or more.family or more.product
+            selection_agrees = (not cl.selection or more.selection and
+                                extract.model_quoted(cl.selection.model, more.selection.model) and
+                                extract.model_quoted(more.selection.model, cl.selection.model))
+            if selection_agrees and extract.model_quoted(identifier, other) and extract.model_quoted(other, identifier):
+                for claim in more.claims:
+                    claim.selection_quote = (cl.selection.quote if claim.variant and cl.selection and
+                                             extract.model_quoted(claim.variant, cl.selection.model) else None)
+                cl = cl.model_copy(update={"claims": more.claims})
+            usage += u
+        else:
+            page_sources = {p["page"]: documents[0] for p in pages}
+        found_f = spec_check.check(requirements, cl.claims, roles)
+        by_id = {c.id: c for c in cl.claims}
+        for finding in found_f:
+            finding.evidence = [page_sources[c.page].model_copy(update={"excerpt": c.quote})
+                                for cid in finding.claim_ids if (c := by_id.get(cid)) and c.page in page_sources]
+        by_url = {d.url: d for d in documents}
+        for finding in vf:
+            finding.evidence = [e for e in finding.evidence if e.url in by_url]
+        found_f += vf
         checks = [_row(f, reqs) for f in found_f if f.verdict != "not_applicable"]
         checked = {f.requirement_id for f in found_f if f.verdict != "not_applicable"}
         for original in flagged:
-            if original.requirement_id in reqs and original.requirement_id not in checked:
+            if original.check == "status" and not any(f.id == "status-active" and f.evidence for f in vf):
+                checks.append(FixCheck(label="Still made", ok=None, note="No quoted confirmation that this replacement is available"))
+            elif original.requirement_id in reqs and original.requirement_id not in checked:
                 req = reqs[original.requirement_id]
                 checks.append(FixCheck(label=spec_check._label(req.property), ok=None,
                                        requirement_id=req.id,
@@ -181,7 +229,8 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                     if check.requirement_id == original.requirement_id and check.ok is None:
                         check.note = "No quoted evidence that this corrects the failed requirement"
         cands.append(FixCandidate(
-            name=r.get("title") or cl.product, source_url=r["url"], checks=checks, passes=bool(checks) and all(k.ok is True for k in checks),
+            name=r.get("title") or cl.product, source_url=r["url"], documents=documents, checks=checks,
+            passes=bool(checks) and all(k.ok is True and k.evidence for k in checks),
         ))
     for u in usage:
         if u.task != "investigate":

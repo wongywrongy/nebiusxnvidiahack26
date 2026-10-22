@@ -941,3 +941,9 @@ The [completion audit](live-first-pass/completion.md) ranks the open issues and 
 
 PR: [#12 — first live pass](https://github.com/wongywrongy/nebiusxnvidiahack26/pull/12), `live/first-pass` → `master`; pushed and open for review.
 No merge or deployment was performed.
+
+## Readiness follow-up billing checkpoint — 2026-10-22
+
+The original first pass above remains historical. Kyle subsequently authorized the readiness refinement plan and targeted live validation. [Readiness evidence](judge-readiness/g2/live-validation.md) records c03/c07 before and after general fixes. The two-item final guarded confirmation is **2/2 calls, 2/2 problems, 0/2 passing fixes**, not a new full evaluation or release pass. No follow-up full eight-case eval has run.
+
+After these targeted runs, the actual local day report is **$0.4379588 / 67 credits** for October 22; adding October 21 **$1.048778 / 291** gives cumulative **$1.4867368 / 358**. The follow-up added **$0.4281318 / 60** beyond the prior cumulative baseline. The local durable wallet has no outstanding holds. Kyle replied “that is correct” to the reported cumulative $1.4867368 / 358 totals on 2026-10-22. This is owner confirmation of the reported totals; a separate dashboard readout, its timestamp and account/key scope were not supplied. The earlier three-credit gap is still unexplained, and no ledger was adjusted.

@@ -1,0 +1,176 @@
+{
+  "generated_at": "2026-10-22T22:47:53+00:00",
+  "mode": "live",
+  "run_id": "20261022-224517-45ecb8",
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "quote_gate": {
+    "claims_extracted": 66,
+    "claims_kept": 13,
+    "web_values_read": 38,
+    "web_values_kept": 14,
+    "claims_drop_rate": 0.803030303030303,
+    "web_values_drop_rate": 0.631578947368421
+  },
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_output_tokens": 32768,
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 30.0,
+    "investigate_max_steps": 24,
+    "map_limit": 20
+  },
+  "right_call": {
+    "n": 1,
+    "of": 1
+  },
+  "caught": {
+    "n": 1,
+    "of": 1
+  },
+  "false_alarms": {
+    "n": 0,
+    "of": 0
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 1
+  },
+  "unnecessary_notes": {
+    "n": 0,
+    "of": 0
+  },
+  "validity": {
+    "invalid_items": 0,
+    "requested_items": 1
+  },
+  "fresh_model_cost_usd": 0.076272,
+  "fresh_web_credits": 9.0,
+  "run_fresh_spend": {
+    "usd": 0.076272,
+    "credits": 9.0
+  },
+  "investigations": {
+    "scripted_unconfirmed_items": 1,
+    "primary_runs": 1,
+    "resolved": 1,
+    "revision_only": 0,
+    "capped": 0,
+    "replacement_runs": 1,
+    "replacement_capped": 0
+  },
+  "manifest": {
+    "version": 1,
+    "commit": null,
+    "config": {
+      "thinking": "off",
+      "thinking_tasks": "",
+      "max_output_tokens": 32768,
+      "max_page_chars": 6000,
+      "web_source_chars": 12000,
+      "search_depth": "basic",
+      "extract_depth": "basic",
+      "search_max_results": 5,
+      "investigate_credit_cap": 30.0,
+      "investigate_max_steps": 24,
+      "map_limit": 20,
+      "map_max_depth": 1,
+      "fix_credit_cap": 40.0,
+      "fix_max_candidates": 3,
+      "budget_usd_per_run": 3.0,
+      "budget_usd_per_day": 8.0,
+      "budget_tavily_credits_per_item": 60.0,
+      "budget_tavily_credits_per_day": 600.0,
+      "max_concurrency": 2,
+      "public_uploads_live": true,
+      "nebius_base_url": "https://api.tokenfactory.nebius.com/v1/",
+      "tavily_credit_usd": 0.008,
+      "models": {
+        "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "extract": "nvidia/nemotron-3-super-120b-a12b",
+        "verify": "nvidia/nemotron-3-super-120b-a12b",
+        "write": "nvidia/nemotron-3-super-120b-a12b"
+      },
+      "prices": {
+        "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": [
+          0.06,
+          0.24
+        ],
+        "nvidia/nemotron-3-super-120b-a12b": [
+          0.3,
+          0.9
+        ]
+      }
+    },
+    "config_hash": "c47ba9b52da74783835330083785d7b72f71a148a7690bb24ad7a0af276289e9",
+    "code_hash": "52766835887736df57243593acbfd985d357247725c01e31638f13450fd0c49f",
+    "checklists": {
+      "07_84_00.json": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+      "26_51_00.json": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1"
+    },
+    "inputs": {
+      "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+      "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+      "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+      "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661"
+    },
+    "refresh_web": false
+  },
+  "time_ms_per_item": 156218,
+  "cost_usd_per_item": 0.195508,
+  "rows": [
+    {
+      "id": "c03",
+      "title": "Firestop sealant, cable penetrations",
+      "product": "3M IC 15WB+",
+      "expected": "send_back",
+      "expected_problems": [
+        "currency"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 6,
+      "fresh_model_cost_usd": 0.0762723,
+      "fresh_web_credits": 9.0,
+      "decision": "send_back",
+      "found_problems": [
+        "currency"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 1
+      },
+      "time_ms": 156218,
+      "model_cost_usd": 0.123508,
+      "web_credits": 9.0,
+      "cost_usd": 0.195508,
+      "claims_extracted": 66,
+      "claims_kept": 13,
+      "web_values_read": 38,
+      "web_values_kept": 14
+    }
+  ],
+  "release_gate": {
+    "passed": false,
+    "issues": [
+      "No evidenced passing replacement"
+    ]
+  },
+  "runner": "local",
+  "job_name": null
+}

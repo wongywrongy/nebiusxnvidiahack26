@@ -239,7 +239,7 @@ export default function App() {
     const active = generation.current
     setError(null)
     try {
-      const run = await scan(watchList.map((c) => c.id))
+      const run = await scan(watchList.map((c) => c.id), 700, true)
       if (active !== generation.current) return
       setCheckNote(run.note ?? null)
       setChecked({})
@@ -652,6 +652,7 @@ function webRows(f: Finding): CheckRow[] {
   if (f.verdict === 'unverified') return [[f, `Couldn't confirm ${f.check === 'status' ? 'product status' : 'current sheet'}`, f.compare?.right_value, f.compare?.left_value]]
   if (f.compare?.rows.length) return f.compare.rows.map((r: CompareRow): CheckRow => [f, r.label, `Current: ${r.current ?? '—'}`, r.submitted])
   if (f.id === 'status-discontinued') return [[f, WEB_LABEL[f.id], 'In production', f.compare?.right_value]]
+  if (f.id === 'status-active') return [[f, 'Product status', 'In production', f.compare?.right_value]]
   const now = f.compare?.right_value
   const current = f.verdict === 'pass' && (now === 'unknown' || !now) ? 'Same values as current' : `Current: ${show(now)}`
   return [[f, 'Data sheet version', current, f.compare?.left_value]]
@@ -714,7 +715,19 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
           <div className="flex flex-col gap-1 rounded-xl border border-good/40 p-4">
             <span className={CAPS}>Suggested replacement</span>
             <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
-            <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes all checks</span>
+            <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes the listed checks</span>
+            <details className="mt-2 text-sm">
+              <summary className="cursor-pointer text-soft">Replacement evidence</summary>
+              <ul className="mt-2 flex flex-col gap-3">
+                {best.checks.map((check, n) => <li key={n}>
+                  <span className="font-medium">{check.label}</span>
+                  {check.evidence?.map((e, i) => <blockquote key={i} className="mt-1 border-l-2 border-edge pl-3 text-muted">
+                    {e.excerpt && <p>“{e.excerpt}”</p>}
+                    <a href={e.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(e.url)} ↗</a>
+                  </blockquote>)}
+                </li>)}
+              </ul>
+            </details>
           </div>
         )}
 

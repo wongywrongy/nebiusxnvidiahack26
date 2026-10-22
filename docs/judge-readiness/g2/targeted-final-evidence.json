@@ -1,0 +1,2781 @@
+{
+  "run_id": "20261022-230145-fc12db",
+  "note": "Warm live-mode confirmation using prior live provider responses; not a fresh-call benchmark.",
+  "items": {
+    "c03": {
+      "case_id": "c03",
+      "decision": "send_back",
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "claims": [
+        {
+          "id": "cl-4",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": "IC 15WB+",
+          "property": "document_revision",
+          "value": "98-0400-5077-9",
+          "unit": null,
+          "page": 4,
+          "bbox": null,
+          "quote": "\u00a9 3M  2005     98-0400-5077-9",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "\u00a9 3M  2005     98-0400-5077-9",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-12",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": "IC 15WB+",
+          "property": "penetrant_types",
+          "value": [
+            "Metallic pipes",
+            "Non-metallic pipes",
+            "Cables",
+            "Cable trays",
+            "Insulated pipes",
+            "Busways",
+            "HVAC vents and ducts",
+            "Combinations",
+            "Bottom of wall construction joints"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "\u2022\nBlank openings\n\u2022\nMetallic pipes\n\u2022\nNon-metallic pipes\n\u2022\nCables\n\u2022\nCable trays\n\u2022\nInsulated pipes\n\u2022\nBusways\n\u2022\nHVAC vents and ducts\n\u2022\nCombinations\n\u2022\nBottom of wall construction joints",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "\u2022\nBlank openings\n\u2022\nMetallic pipes\n\u2022\nNon-metallic pipes\n\u2022\nCables\n\u2022\nCable trays\n\u2022\nInsulated pipes\n\u2022\nBusways\n\u2022\nHVAC vents and ducts\n\u2022\nCombinations\n\u2022\nBottom of wall construction joints",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-13",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": "IC 15WB+",
+          "property": "service_temp_max_f",
+          "value": 120.0,
+          "unit": "\u00b0F",
+          "page": 1,
+          "bbox": null,
+          "quote": "Continuous operating temperature\nnot to exceed 120\u00b0F (48\u00b0C). ",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Continuous operating temperature\nnot to exceed 120\u00b0F (48\u00b0C). ",
+          "selection_quote": null
+        }
+      ],
+      "findings": [
+        {
+          "id": "spec-req_voc_content",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Missing VOC Content Info",
+          "detail": "VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).",
+          "why_it_matters": "Without confirmed low VOC levels, we can\u2019t ensure indoor air quality meets health standards during occupancy.",
+          "requirement_id": "req_voc_content",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 250 g/L",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "07 84 00 2.02.B",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-req_mold_resistance",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Missing Mold Resistance Rating",
+          "detail": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+          "why_it_matters": "Lack of mold resistance proof risks long-term performance in damp areas where sealants are exposed.",
+          "requirement_id": "req_mold_resistance",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "= 0",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "07 84 00 2.02.C",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-req_t_rating_min_equal_f",
+          "check": "spec",
+          "verdict": "pending",
+          "severity": "info",
+          "title": "Assembly Rating Needs Verification",
+          "detail": "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.",
+          "why_it_matters": "We must verify the actual fire and temperature rating of the installed assembly to confirm it will protect life safety in a fire event.",
+          "requirement_id": "req_t_rating_min_equal_f",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "T = F",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "07 84 00 2.04.A.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-fs-std",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Missing Test Standard Proof",
+          "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+          "why_it_matters": "If the product wasn\u2019t tested to the right standard, we can\u2019t trust it will stop fire spread through penetrations as required.",
+          "requirement_id": "fs-std",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": [
+              "astm e814",
+              "astm e119",
+              "ul 1479"
+            ],
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "07 84 00 2.04.A.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "currency-outdated",
+          "check": "currency",
+          "verdict": "outdated",
+          "severity": "major",
+          "title": "Outdated Product Data Sheet",
+          "detail": "The submitted sheet (None) differs from the current one (None) on: Pipe types covered, Highest service temperature.",
+          "why_it_matters": "An outdated data sheet may not reflect current capabilities\u2014using it could mean installing a product that doesn\u2019t meet today\u2019s project needs.",
+          "requirement_id": null,
+          "claim_id": null,
+          "claim_ids": [
+            "cl-12",
+            "cl-13"
+          ],
+          "highlights": [
+            {
+              "claim_id": "cl-12",
+              "doc_file": "c03/3m_ic15wb_2005.pdf",
+              "page": 1,
+              "quote": "\u2022\nBlank openings\n\u2022\nMetallic pipes\n\u2022\nNon-metallic pipes\n\u2022\nCables\n\u2022\nCable trays\n\u2022\nInsulated pipes\n\u2022\nBusways\n\u2022\nHVAC vents and ducts\n\u2022\nCombinations\n\u2022\nBottom of wall construction joints",
+              "boxes": [
+                {
+                  "x0": 0.6661,
+                  "y0": 0.4469,
+                  "x1": 0.6748,
+                  "y1": 0.4589
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.447,
+                  "x1": 0.7941,
+                  "y1": 0.459
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.4614,
+                  "x1": 0.6748,
+                  "y1": 0.4734
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.4616,
+                  "x1": 0.782,
+                  "y1": 0.4736
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.476,
+                  "x1": 0.6748,
+                  "y1": 0.488
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.4762,
+                  "x1": 0.8156,
+                  "y1": 0.4882
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.4906,
+                  "x1": 0.6748,
+                  "y1": 0.5026
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.4907,
+                  "x1": 0.7359,
+                  "y1": 0.5027
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.5051,
+                  "x1": 0.6748,
+                  "y1": 0.5171
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.5053,
+                  "x1": 0.7665,
+                  "y1": 0.5173
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.5197,
+                  "x1": 0.6748,
+                  "y1": 0.5317
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.5199,
+                  "x1": 0.7924,
+                  "y1": 0.5319
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.5343,
+                  "x1": 0.6748,
+                  "y1": 0.5463
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.5344,
+                  "x1": 0.7497,
+                  "y1": 0.5464
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.5488,
+                  "x1": 0.6748,
+                  "y1": 0.5608
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.549,
+                  "x1": 0.8439,
+                  "y1": 0.561
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.5634,
+                  "x1": 0.6748,
+                  "y1": 0.5754
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.5636,
+                  "x1": 0.7825,
+                  "y1": 0.5756
+                },
+                {
+                  "x0": 0.6661,
+                  "y0": 0.578,
+                  "x1": 0.6748,
+                  "y1": 0.59
+                },
+                {
+                  "x0": 0.6876,
+                  "y0": 0.5781,
+                  "x1": 0.9153,
+                  "y1": 0.5901
+                }
+              ],
+              "kind": "problem"
+            },
+            {
+              "claim_id": "cl-13",
+              "doc_file": "c03/3m_ic15wb_2005.pdf",
+              "page": 1,
+              "quote": "Continuous operating temperature\nnot to exceed 120\u00b0F (48\u00b0C). ",
+              "boxes": [
+                {
+                  "x0": 0.394,
+                  "y0": 0.6942,
+                  "x1": 0.6303,
+                  "y1": 0.7062
+                },
+                {
+                  "x0": 0.394,
+                  "y0": 0.7081,
+                  "x1": 0.5927,
+                  "y1": 0.7201
+                }
+              ],
+              "kind": "problem"
+            }
+          ],
+          "compare": {
+            "left_label": "Submitted (undated)",
+            "left_value": null,
+            "right_label": "Current (unknown)",
+            "right_value": null,
+            "verdict": "changed",
+            "rows": [
+              {
+                "property": "penetrant_types",
+                "label": "Pipe types covered",
+                "submitted": "Metallic pipes, Non-metallic pipes, Cables, Cable trays, Insulated pipes, Busways, HVAC vents and ducts, Combinations, Bottom of wall construction joints",
+                "current": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe, HVAC duct penetrations, blank openings, static construction joints",
+                "changed": true,
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "quote": "is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations. 3M\u2122 Fire Barrier Sealant IC 15WB+ is also used to firestop blank openings and static construction joints."
+              },
+              {
+                "property": "service_temp_max_f",
+                "label": "Highest service temperature",
+                "submitted": "120 \u00b0F",
+                "current": "180 \u00b0F",
+                "changed": true,
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "quote": "Service Temperature Range: -20\u00b0 to 180\u00b0F (-28\u00b0 to 82\u00b0C)"
+              }
+            ]
+          },
+          "spec_ref": null,
+          "evidence": [
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer",
+              "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+              "retrieved_at": "2026-10-22T22:33:10+00:00",
+              "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+              "excerpt": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M \u2122 Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/1276869O/fire-barrier-ic-15wb-plus.pdf?fn=Fire+Barrier+IC+15WB+plus.pdf",
+              "tier": "manufacturer",
+              "title": "LISTING SERVICE",
+              "retrieved_at": "2026-10-22T22:33:10+00:00",
+              "sha256": "71333f2f8bdc15080ce9fa07df9891018115da5997d7df9415813f94d78afbf9",
+              "excerpt": "CALIFORNIA DEPARTMENT OF FORESTRY & FIRE PROTECTION OFFICE OF THE STATE FIRE MARSHAL FIRE ENGINEERING - BUILDING MATERIALS LISTING PROGRAM LISTING SERVICE LISTING No.\n4485-0941:0115 Page 1 of 1 CATEGORY: 4485 -- OPENING PROTECTION (FIRESTOPPING) LISTEE: 3M CompanyBldg 223-2N-20, St. Paul, MN 55144 Contact: Mark Lund (651) 733-0973 Fax (651) 737-2263 Email: mwlund@mmm.com DESIGN: Fire Barrier Seala",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "tier": "manufacturer",
+              "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+              "retrieved_at": "2026-10-22T22:33:10+00:00",
+              "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+              "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer",
+              "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+              "retrieved_at": "2026-10-22T22:33:57+00:00",
+              "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+              "excerpt": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M \u2122 Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "tier": "manufacturer",
+              "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+              "retrieved_at": "2026-10-22T22:33:59+00:00",
+              "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+              "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer",
+              "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+              "retrieved_at": "2026-10-22T22:33:57+00:00",
+              "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+              "excerpt": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M \u2122 Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+              "archived_path": null,
+              "cache_hit": true
+            }
+          ],
+          "quote": null,
+          "decided_by": "tavily + super",
+          "fix": {
+            "head": "No passing replacement found",
+            "query": "3M 3M Fire Barrier IC 15WB+ Sealant IC 15WB+ current data sheet",
+            "candidates": [
+              {
+                "name": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "documents": [
+                  {
+                    "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "tier": "manufacturer",
+                    "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "retrieved_at": "2026-10-22T22:45:18+00:00",
+                    "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                    "excerpt": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M \u2122 Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+                    "archived_path": null,
+                    "cache_hit": null
+                  },
+                  {
+                    "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                    "tier": "manufacturer",
+                    "title": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                    "retrieved_at": "2026-10-22T22:45:18+00:00",
+                    "sha256": "870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1",
+                    "excerpt": "3M FireBarrier\u2122 Sealant IC 15 WB+ 02/06/24 __________________________________________________________________________________________ Page 1 of 12 Safety Data Sheet Copyright,2024, 3M Company.\nAll rights reserved. Copying and/or downloading of this information for the purpose of properly utilizing 3M products is allowed provided that: (1) the information is copied in full with no changes unless pr",
+                    "archived_path": null,
+                    "cache_hit": null
+                  },
+                  {
+                    "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                    "tier": "manufacturer",
+                    "title": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                    "retrieved_at": "2026-10-22T22:45:18+00:00",
+                    "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+                    "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+                    "archived_path": null,
+                    "cache_hit": null
+                  }
+                ],
+                "checks": [
+                  {
+                    "label": "VOC (air quality)",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "req_voc_content",
+                    "evidence": []
+                  },
+                  {
+                    "label": "astm g21 rating",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "req_mold_resistance",
+                    "evidence": []
+                  },
+                  {
+                    "label": "Temperature rating (T)",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "req_t_rating_min_equal_f",
+                    "evidence": []
+                  },
+                  {
+                    "label": "Test standards",
+                    "ok": true,
+                    "note": "",
+                    "requirement_id": "fs-std",
+                    "evidence": [
+                      {
+                        "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                        "tier": "manufacturer",
+                        "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                        "retrieved_at": "2026-10-22T22:45:18+00:00",
+                        "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                        "excerpt": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                        "archived_path": null,
+                        "cache_hit": null
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Current document",
+                    "ok": true,
+                    "note": "",
+                    "requirement_id": null,
+                    "evidence": [
+                      {
+                        "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                        "tier": "manufacturer",
+                        "title": "Fire Protection Products 3MTM Fire Barrier Sealant IC 15WB+",
+                        "retrieved_at": "2026-10-22T22:45:18+00:00",
+                        "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                        "excerpt": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                        "archived_path": null,
+                        "cache_hit": true
+                      }
+                    ]
+                  }
+                ],
+                "passes": false
+              }
+            ],
+            "suggest": ""
+          }
+        }
+      ],
+      "investigations": [
+        {
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "3M Fire Barrier IC 15WB+ Sealant datasheet technical data sheet",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 2,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 3,
+              "tool": "extract",
+              "args": {
+                "url": "https://www.3m.com/3M/en_US/p/d/b40065443"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 4,
+              "tool": "search",
+              "args": {
+                "query": "3M IC 15WB+ discontinued end of life EOL obsolescence",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 5,
+              "tool": "search",
+              "args": {
+                "query": "\"IC 15WB+\" discontinuation notice 3M",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 6,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 7,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "document_title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                "revision_quote": "\u00a9 3M 2018. All rights reserved.",
+                "status": "active",
+                "status_quote": "Current product 3M(TM) Fire Barrier Sealant IC 15WB+ family",
+                "evidence_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, gun-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. [...] 3M\u2122 Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor, floor/ceiling or wall assemblies, as well as other fire-rated interior building partitions and assemblies (e.g. static construction joints or blank openings).",
+                "note": "The product is currently active based on active listing on 3M.com, availability of current technical documentation (\u00a9 3M 2018), and no discontinuation notices found. Penetrant types include metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe, HVAC duct penetrations, blank openings, and static construction joints."
+              },
+              "summary": "\u00a9 3M 2018. All rights reserved., unknown",
+              "credits": 0.0,
+              "ms": 11
+            }
+          ],
+          "outcome": "found",
+          "purpose": "primary",
+          "resolution": "problem_found"
+        },
+        {
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "3M Fire Barrier Sealant IC 15WB+",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 2,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 3,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 1
+            },
+            {
+              "n": 4,
+              "tool": "extract",
+              "args": {
+                "url": "https://www.3m.com/3M/en_US/p/d/b40065443"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 5,
+              "tool": "search",
+              "args": {
+                "query": "3M Fire Barrier Sealant IC 15WB+ discontinued",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "1 result",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 6,
+              "tool": "search",
+              "args": {
+                "query": "\"IC 15WB+\" discontinued 3M",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "1 result",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 7,
+              "tool": "search",
+              "args": {
+                "query": "3M Fire Barrier Sealant IC 15WB+ \"obsolete\" or \"end of life\"",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "1 result",
+              "credits": 0.0,
+              "ms": 0
+            },
+            {
+              "n": 8,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "document_title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                "revision_quote": "Document Group: 19-9776-6 Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22",
+                "evidence_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+ shall be a one component, ready-to-use, gun-grade, latex-based, intumescent firestop sealant capable of expanding a minimum of 3 times at 1000\u00b0F. 3M\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "status": "active",
+                "status_quote": "Current product 3M(TM) Fire Barrier Sealant IC 15WBplus family",
+                "note": "Found current manufacturer documents: Technical Data Sheet shows performance specs including expansion at 1000\u00b0F and compliance with ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079), CAN/ULC S115, IBC, IRC, NBCC, IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70), and NFPA 101. Safety Data Sheet shows Document Group: 19-9776-6, Version Number: 9.00, Issue Date: 02/06/24. Product remains active with no discontinuation notices found; current SDS issued February 2024 confirms ongoing production."
+              },
+              "summary": "couldn't confirm the quotes",
+              "credits": 0.0,
+              "ms": 10
+            }
+          ],
+          "outcome": "not_found",
+          "purpose": "replacement",
+          "resolution": "not_resolved"
+        }
+      ],
+      "duration_ms": 481,
+      "fresh_model_cost_usd": 0.0,
+      "fresh_web_credits": 0.0
+    },
+    "c07": {
+      "case_id": "c07",
+      "decision": "send_back",
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "claims": [
+        {
+          "id": "cl-2",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "dim_min_percent",
+          "value": 0.1,
+          "unit": "%",
+          "page": 2,
+          "bbox": null,
+          "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "variant": "EZB",
+          "scope": "option",
+          "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-11",
+          "product": "2TL 2X4 Recessed LED Lighting",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL-2X4",
+          "property": "standards",
+          "value": [
+            "IESNA LM-79"
+          ],
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "tested in accordance to IESNA LM-79.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "tested in accordance to IESNA LM-79.",
+          "selection_quote": null
+        }
+      ],
+      "findings": [
+        {
+          "id": "spec-req_t_rating_hr_led",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Rated life (L70) not provided",
+          "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+          "why_it_matters": "Without knowing how long the light will maintain brightness, we risk early replacements and higher long-term costs.",
+          "requirement_id": "req_t_rating_hr_led",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2265 50000 hr",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.S.3",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-req_warranty_years_led",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Warranty period not confirmed",
+          "detail": "Warranty Period for LED Luminaires, including LED modules, LED boards, chips, and drivers: Five (5) years from date of Preliminary Acceptance.",
+          "why_it_matters": "A clear warranty protects us if the lights fail prematurely after installation.",
+          "requirement_id": "req_warranty_years_led",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2265 5 yr",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 1.10.B.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-lt-dlc",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "DLC listing not verified",
+          "detail": "Listed as a qualified DLC product, where applicable.",
+          "why_it_matters": "DLC qualification may affect energy rebates and confirms the product meets efficiency standards.",
+          "requirement_id": "lt-dlc",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": [
+              "dlc standard",
+              "dlc premium"
+            ],
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.H",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-req_macadam_ellipse",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Color consistency (MacAdam steps) not specified",
+          "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+          "why_it_matters": "Consistent color across fixtures avoids noticeable differences in light appearance that could disturb occupants.",
+          "requirement_id": "req_macadam_ellipse",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 3",
+            "right_label": "Submitted",
+            "right_value": "Not stated",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.S.6",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "spec-lt-dim",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Dimming range needs confirmation for submitted setup",
+          "detail": "Quoted values apply only to EZB. Confirm the submitted configuration.",
+          "why_it_matters": "We need to verify the dimming works as expected with your actual setup to ensure lighting control functions properly.",
+          "requirement_id": "lt-dim",
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "\u2264 5 %",
+            "right_label": "Submitted",
+            "right_value": "Option dependent",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.05.C.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null
+        },
+        {
+          "id": "status-discontinued",
+          "check": "status",
+          "verdict": "fail",
+          "severity": "major",
+          "title": "Product is discontinued by manufacturer",
+          "detail": "The manufacturer lists it as discontinued.",
+          "why_it_matters": "If we can't buy the product, we can't install it \u2014 using an unavailable item causes delays and requires redesign.",
+          "requirement_id": null,
+          "claim_id": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Status",
+            "left_value": null,
+            "right_label": "Manufacturer",
+            "right_value": "Discontinued June 30th, 2024",
+            "verdict": "fail",
+            "rows": []
+          },
+          "spec_ref": null,
+          "evidence": [
+            {
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "tier": "manufacturer",
+              "title": "Discontinuation Notice: Lithonia Lighting\u00ae TL Recessed Luminaire",
+              "retrieved_at": "2026-10-22T22:57:05+00:00",
+              "sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7",
+              "excerpt": "* [English](javascript:void(0))\n  + English\n  + Espa\u00f1ol\n  + Fran\u00e7ais\n\n* [Fran\u00e7ais](javascript:void(0))\n  + English\n  + Espa\u00f1ol\n  + Fran\u00e7ais\n\n* [Espa\u00f1ol](javascript:void(0))\n  + English\n  + Espa\u00f1ol\n  + Fran\u00e7ais\n\n## Welcome to Acuity Brands Insights\n\n* [Home](http://insights.acuitybrands.com)\n* [Industry](javascript:void(0)) \n  + Industry\n  + [Commercial Office](https://insights.acuitybrands.com/com",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://www.acuitybrands.com/products/detail/2115630/lithonia-lighting/lithoniar-frame/led-lay-in-by-lithonia-lightingr",
+              "tier": "manufacturer",
+              "title": "Lithonia\u00ae FRAME - LED Lay-in by Lithonia Lighting\u00ae",
+              "retrieved_at": "2026-10-22T22:57:05+00:00",
+              "sha256": "e2b252bad4ae01a8f00b1101537bb1c9dbd0c8eb0b7f8ea5ac1da89934c093f0",
+              "excerpt": "[Skip to Navigation Content](#nav-content) [Skip to Main Content](#main-content) [Skip to Footer Content](#footer-content)\n\n* [How to Buy](/support/how-to-buy)\n* [Our Newsroom](https://www.acuityinc.com/resources/our-newsroom)\n* [Join Our Team](https://www.acuityinc.com/careers)\n* [Login](/login)\n* United States - English\n\n  + [United States - English](/en/products/detail/2115630/lithonia-lighting",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://www.acuitybrands.com",
+              "tier": "manufacturer",
+              "title": "Acuity Brands Lighting",
+              "retrieved_at": "2026-10-22T22:57:05+00:00",
+              "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+              "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+              "archived_path": null,
+              "cache_hit": true
+            }
+          ],
+          "quote": "As of\u00a0**June 30th, 2024**, the TL family will be discontinued.",
+          "decided_by": "tavily + super",
+          "fix": {
+            "head": "No passing replacement found",
+            "query": "Acuity Brands Lighting, Inc. current LED troffer data sheet",
+            "candidates": [
+              {
+                "name": "CPX - LED Panel",
+                "source_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "documents": [
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "retrieved_at": "2026-10-22T22:57:34+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+                    "archived_path": null,
+                    "cache_hit": null
+                  }
+                ],
+                "checks": [
+                  {
+                    "label": "Rated life (L70)",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "req_t_rating_hr_led",
+                    "evidence": []
+                  },
+                  {
+                    "label": "Warranty",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "req_warranty_years_led",
+                    "evidence": []
+                  },
+                  {
+                    "label": "DLC listing",
+                    "ok": true,
+                    "note": "",
+                    "requirement_id": "lt-dlc",
+                    "evidence": [
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "manufacturer",
+                        "title": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "retrieved_at": "2026-10-22T22:57:34+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "![DLC Standard](/-/media/abl/shared-content/images/labels/dlc-qpl_black.png \"DLC Standard\")",
+                        "archived_path": null,
+                        "cache_hit": null
+                      }
+                    ]
+                  },
+                  {
+                    "label": "macadam steps",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "req_macadam_ellipse",
+                    "evidence": []
+                  },
+                  {
+                    "label": "Dims down to",
+                    "ok": null,
+                    "note": "not stated",
+                    "requirement_id": "lt-dim",
+                    "evidence": []
+                  },
+                  {
+                    "label": "Current document",
+                    "ok": true,
+                    "note": "7/23/2026",
+                    "requirement_id": null,
+                    "evidence": [
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "manufacturer",
+                        "title": "CPX - LED Panel",
+                        "retrieved_at": "2026-10-22T22:58:05+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "CRI | 80, 90 |",
+                        "archived_path": null,
+                        "cache_hit": true
+                      },
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "manufacturer",
+                        "title": "CPX - LED Panel",
+                        "retrieved_at": "2026-10-22T22:58:05+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "Lumens | 2500 LM, 3200 LM, 3400 LM, 4000 LM, 4300 LM, 5000 LM, 6000 LM, Switchable |",
+                        "archived_path": null,
+                        "cache_hit": true
+                      },
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "manufacturer",
+                        "title": "CPX - LED Panel",
+                        "retrieved_at": "2026-10-22T22:58:05+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "Fixture Wattage | 27.6, 28.3, 29.3, 30.1, 32.5, 33.5, 34.1, 34.5, 34.9, 35.5, 35.7, 36.3, 36.7, 37.5, 42, 47.9, 48, 51 |",
+                        "archived_path": null,
+                        "cache_hit": true
+                      },
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "manufacturer",
+                        "title": "CPX - LED Panel",
+                        "retrieved_at": "2026-10-22T22:58:05+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "![DLC Standard](/-/media/abl/shared-content/images/labels/dlc-qpl_black.png \"DLC Standard\")",
+                        "archived_path": null,
+                        "cache_hit": true
+                      },
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "manufacturer",
+                        "title": "CPX - LED Panel",
+                        "retrieved_at": "2026-10-22T22:58:05+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "7/23/2026",
+                        "archived_path": null,
+                        "cache_hit": true
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Still made",
+                    "ok": null,
+                    "note": "No quoted confirmation that this replacement is available",
+                    "requirement_id": null,
+                    "evidence": []
+                  }
+                ],
+                "passes": false
+              }
+            ],
+            "suggest": ""
+          }
+        }
+      ],
+      "investigations": [],
+      "duration_ms": 1299,
+      "fresh_model_cost_usd": 0.0,
+      "fresh_web_credits": 0.0
+    }
+  },
+  "trace": [
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 12,
+      "stage": "queued",
+      "message": "Waiting",
+      "model": null,
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 12,
+      "stage": "queued",
+      "message": "Waiting",
+      "model": null,
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 13,
+      "stage": "ingest",
+      "message": "Reading the pages",
+      "model": null,
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 53,
+      "stage": "triage",
+      "message": "Sorting pages",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 53,
+      "stage": "extract",
+      "message": "Comparing to the spec",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 77,
+      "stage": "spec_check",
+      "message": "Checking each requirement",
+      "model": "code",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 77,
+      "stage": "verify",
+      "message": "Checking the manufacturer online",
+      "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+      "data": {
+        "spec": {
+          "pass": 0,
+          "fail": 0,
+          "unverified": 3
+        }
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 136,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 137,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 138,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 138,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 139,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 140,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 141,
+      "stage": "investigate",
+      "message": "Investigating: finish \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 234,
+      "stage": "fix",
+      "message": "Finding a fix",
+      "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+      "data": {
+        "web": {
+          "sheet": "Data sheet is out of date",
+          "verdict": "outdated",
+          "sources": [
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/1276869O/fire-barrier-ic-15wb-plus.pdf?fn=Fire+Barrier+IC+15WB+plus.pdf",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 414,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 414,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 415,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 417,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 418,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 418,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 419,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 419,
+      "stage": "investigate",
+      "message": "Investigating: finish \u2026",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 486,
+      "stage": "report",
+      "message": "Writing the result",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": {
+        "web": {
+          "sheet": "Data sheet is out of date",
+          "verdict": "outdated",
+          "sources": [
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/1276869O/fire-barrier-ic-15wb-plus.pdf?fn=Fire+Barrier+IC+15WB+plus.pdf",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "tier": "manufacturer"
+            }
+          ]
+        },
+        "fix": "No passing replacement found"
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c03",
+      "t_ms": 495,
+      "stage": "done",
+      "message": "send_back",
+      "model": null,
+      "data": {
+        "decision": "send_back",
+        "summary": "Revise and resubmit to address the findings below. Assembly proof remains pending; confirm the listed assembly separately.",
+        "usage": [
+          {
+            "task": "triage",
+            "tier": "triage",
+            "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "input_tokens": 2054,
+            "output_tokens": 85,
+            "cost_usd": 0.000144,
+            "latency_ms": 1200,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4438,
+            "output_tokens": 3505,
+            "cost_usd": 0.0044859,
+            "latency_ms": 12907,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5005,
+            "output_tokens": 952,
+            "cost_usd": 0.0023583,
+            "latency_ms": 4902,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5192,
+            "output_tokens": 554,
+            "cost_usd": 0.0020562,
+            "latency_ms": 6661,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6394,
+            "output_tokens": 984,
+            "cost_usd": 0.0028038,
+            "latency_ms": 4932,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6581,
+            "output_tokens": 955,
+            "cost_usd": 0.0028338,
+            "latency_ms": 4706,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 1448,
+            "output_tokens": 113,
+            "cost_usd": 0.0005361,
+            "latency_ms": 1269,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3757,
+            "output_tokens": 95,
+            "cost_usd": 0.0012126,
+            "latency_ms": 1388,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5632,
+            "output_tokens": 127,
+            "cost_usd": 0.0018039,
+            "latency_ms": 1818,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6711,
+            "output_tokens": 78,
+            "cost_usd": 0.0020835,
+            "latency_ms": 1642,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 8776,
+            "output_tokens": 75,
+            "cost_usd": 0.0027003,
+            "latency_ms": 1721,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 10831,
+            "output_tokens": 105,
+            "cost_usd": 0.0033438,
+            "latency_ms": 1682,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 12716,
+            "output_tokens": 708,
+            "cost_usd": 0.004452,
+            "latency_ms": 4009,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5005,
+            "output_tokens": 952,
+            "cost_usd": 0.0023583,
+            "latency_ms": 4902,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5005,
+            "output_tokens": 952,
+            "cost_usd": 0.0023583,
+            "latency_ms": 4902,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 2013,
+            "output_tokens": 386,
+            "cost_usd": 0.0009513,
+            "latency_ms": 2264,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5244,
+            "output_tokens": 2968,
+            "cost_usd": 0.0042444,
+            "latency_ms": 12466,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5102,
+            "output_tokens": 1897,
+            "cost_usd": 0.0032379,
+            "latency_ms": 10542,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4831,
+            "output_tokens": 1543,
+            "cost_usd": 0.002838,
+            "latency_ms": 6633,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4650,
+            "output_tokens": 1413,
+            "cost_usd": 0.0026667,
+            "latency_ms": 6441,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 2406,
+            "output_tokens": 713,
+            "cost_usd": 0.0013635,
+            "latency_ms": 3867,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4786,
+            "output_tokens": 6288,
+            "cost_usd": 0.007095,
+            "latency_ms": 24855,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 16010,
+            "output_tokens": 1723,
+            "cost_usd": 0.0063537,
+            "latency_ms": 7773,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 15739,
+            "output_tokens": 1583,
+            "cost_usd": 0.0061464,
+            "latency_ms": 8641,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 15558,
+            "output_tokens": 1656,
+            "cost_usd": 0.0061578,
+            "latency_ms": 7530,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 13313,
+            "output_tokens": 1652,
+            "cost_usd": 0.0054807,
+            "latency_ms": 6284,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 15694,
+            "output_tokens": 1660,
+            "cost_usd": 0.0062022,
+            "latency_ms": 7237,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 1455,
+            "output_tokens": 123,
+            "cost_usd": 0.0005472,
+            "latency_ms": 1576,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3500,
+            "output_tokens": 89,
+            "cost_usd": 0.0011301,
+            "latency_ms": 1144,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5369,
+            "output_tokens": 95,
+            "cost_usd": 0.0016962,
+            "latency_ms": 1461,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7285,
+            "output_tokens": 96,
+            "cost_usd": 0.0022719,
+            "latency_ms": 1609,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 8333,
+            "output_tokens": 75,
+            "cost_usd": 0.0025674,
+            "latency_ms": 1756,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 8925,
+            "output_tokens": 59,
+            "cost_usd": 0.0027306,
+            "latency_ms": 1871,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 9401,
+            "output_tokens": 861,
+            "cost_usd": 0.0035952,
+            "latency_ms": 4871,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "investigate",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 10779,
+            "output_tokens": 684,
+            "cost_usd": 0.0038493,
+            "latency_ms": 3217,
+            "cached": true,
+            "format": "tools",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": "tool_calls"
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5244,
+            "output_tokens": 2968,
+            "cost_usd": 0.0042444,
+            "latency_ms": 12466,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4869,
+            "output_tokens": 83,
+            "cost_usd": 0.0015354,
+            "latency_ms": 1939,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4716,
+            "output_tokens": 228,
+            "cost_usd": 0.00162,
+            "latency_ms": 1752,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4417,
+            "output_tokens": 691,
+            "cost_usd": 0.001947,
+            "latency_ms": 3315,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3169,
+            "output_tokens": 50,
+            "cost_usd": 0.0009957,
+            "latency_ms": 1574,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4869,
+            "output_tokens": 78,
+            "cost_usd": 0.0015309,
+            "latency_ms": 1356,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4716,
+            "output_tokens": 71,
+            "cost_usd": 0.0014787,
+            "latency_ms": 1859,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 2591,
+            "output_tokens": 96,
+            "cost_usd": 0.0008637,
+            "latency_ms": 1582,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4996,
+            "output_tokens": 635,
+            "cost_usd": 0.0020703,
+            "latency_ms": 3118,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "report",
+            "tier": "write",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 820,
+            "output_tokens": 355,
+            "cost_usd": 0.0005655,
+            "latency_ms": 2733,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          }
+        ],
+        "web_credits": 0.0
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 495,
+      "stage": "ingest",
+      "message": "Reading the pages",
+      "model": null,
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 508,
+      "stage": "triage",
+      "message": "Sorting pages",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 508,
+      "stage": "extract",
+      "message": "Comparing to the spec",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 555,
+      "stage": "spec_check",
+      "message": "Checking each requirement",
+      "model": "code",
+      "data": null
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 555,
+      "stage": "verify",
+      "message": "Checking the manufacturer online",
+      "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+      "data": {
+        "spec": {
+          "pass": 0,
+          "fail": 0,
+          "unverified": 5
+        }
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 609,
+      "stage": "fix",
+      "message": "Finding a fix",
+      "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+      "data": {
+        "web": {
+          "sheet": "Product is no longer made",
+          "verdict": "fail",
+          "sources": [
+            {
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.acuitybrands.com/products/detail/2115630/lithonia-lighting/lithoniar-frame/led-lay-in-by-lithonia-lightingr",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.acuitybrands.com",
+              "tier": "manufacturer"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 1793,
+      "stage": "report",
+      "message": "Writing the result",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "data": {
+        "web": {
+          "sheet": "Product is no longer made",
+          "verdict": "fail",
+          "sources": [
+            {
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.acuitybrands.com/products/detail/2115630/lithonia-lighting/lithoniar-frame/led-lay-in-by-lithonia-lightingr",
+              "tier": "manufacturer"
+            },
+            {
+              "url": "https://www.acuitybrands.com",
+              "tier": "manufacturer"
+            }
+          ]
+        },
+        "fix": "No passing replacement found"
+      }
+    },
+    {
+      "run_id": "20261022-230145-fc12db",
+      "case_id": "c07",
+      "t_ms": 1795,
+      "stage": "done",
+      "message": "send_back",
+      "model": null,
+      "data": {
+        "decision": "send_back",
+        "summary": "Revise and resubmit to address the findings below.",
+        "usage": [
+          {
+            "task": "triage",
+            "tier": "triage",
+            "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+            "input_tokens": 2585,
+            "output_tokens": 68,
+            "cost_usd": 0.000171,
+            "latency_ms": 1009,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5814,
+            "output_tokens": 2571,
+            "cost_usd": 0.0040581,
+            "latency_ms": 10531,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7091,
+            "output_tokens": 248,
+            "cost_usd": 0.0023505,
+            "latency_ms": 2392,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6205,
+            "output_tokens": 714,
+            "cost_usd": 0.0025041,
+            "latency_ms": 4442,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3061,
+            "output_tokens": 101,
+            "cost_usd": 0.0010092,
+            "latency_ms": 2093,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5468,
+            "output_tokens": 274,
+            "cost_usd": 0.001887,
+            "latency_ms": 2828,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4970,
+            "output_tokens": 13,
+            "cost_usd": 0.0015027,
+            "latency_ms": 1143,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 8125,
+            "output_tokens": 74,
+            "cost_usd": 0.0025041,
+            "latency_ms": 1779,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7239,
+            "output_tokens": 714,
+            "cost_usd": 0.0028143,
+            "latency_ms": 3497,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4094,
+            "output_tokens": 258,
+            "cost_usd": 0.0014604,
+            "latency_ms": 2391,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6502,
+            "output_tokens": 308,
+            "cost_usd": 0.0022278,
+            "latency_ms": 2183,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6004,
+            "output_tokens": 253,
+            "cost_usd": 0.0020289,
+            "latency_ms": 2143,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5125,
+            "output_tokens": 67,
+            "cost_usd": 0.0015978,
+            "latency_ms": 1274,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5486,
+            "output_tokens": 55,
+            "cost_usd": 0.0016953,
+            "latency_ms": 1476,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5541,
+            "output_tokens": 58,
+            "cost_usd": 0.0017145,
+            "latency_ms": 1451,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5117,
+            "output_tokens": 83,
+            "cost_usd": 0.0016098,
+            "latency_ms": 1371,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 2886,
+            "output_tokens": 17,
+            "cost_usd": 0.0008811,
+            "latency_ms": 1147,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7087,
+            "output_tokens": 944,
+            "cost_usd": 0.0029757,
+            "latency_ms": 4121,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7663,
+            "output_tokens": 58,
+            "cost_usd": 0.0023511,
+            "latency_ms": 1483,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6970,
+            "output_tokens": 57,
+            "cost_usd": 0.0021423,
+            "latency_ms": 1512,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3565,
+            "output_tokens": 88,
+            "cost_usd": 0.0011487,
+            "latency_ms": 1595,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3029,
+            "output_tokens": 26,
+            "cost_usd": 0.0009321,
+            "latency_ms": 1383,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 5959,
+            "output_tokens": 30,
+            "cost_usd": 0.0018147,
+            "latency_ms": 1239,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6198,
+            "output_tokens": 107,
+            "cost_usd": 0.0019557,
+            "latency_ms": 1494,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6766,
+            "output_tokens": 49,
+            "cost_usd": 0.0020739,
+            "latency_ms": 1431,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4589,
+            "output_tokens": 41,
+            "cost_usd": 0.0014136,
+            "latency_ms": 1466,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6990,
+            "output_tokens": 2396,
+            "cost_usd": 0.0042534,
+            "latency_ms": 10875,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7520,
+            "output_tokens": 1186,
+            "cost_usd": 0.0033234,
+            "latency_ms": 5045,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6823,
+            "output_tokens": 611,
+            "cost_usd": 0.0025968,
+            "latency_ms": 3621,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 3143,
+            "output_tokens": 13,
+            "cost_usd": 0.0009546,
+            "latency_ms": 1341,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6984,
+            "output_tokens": 2385,
+            "cost_usd": 0.0042417,
+            "latency_ms": 7353,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 9915,
+            "output_tokens": 2390,
+            "cost_usd": 0.0051255,
+            "latency_ms": 8531,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 10154,
+            "output_tokens": 2780,
+            "cost_usd": 0.0055482,
+            "latency_ms": 9824,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 10722,
+            "output_tokens": 2399,
+            "cost_usd": 0.0053757,
+            "latency_ms": 10549,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 8545,
+            "output_tokens": 2347,
+            "cost_usd": 0.0046758,
+            "latency_ms": 9485,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 10946,
+            "output_tokens": 2437,
+            "cost_usd": 0.0054771,
+            "latency_ms": 11083,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 11476,
+            "output_tokens": 2363,
+            "cost_usd": 0.0055695,
+            "latency_ms": 10264,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 10779,
+            "output_tokens": 2356,
+            "cost_usd": 0.0053541,
+            "latency_ms": 9249,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: verify",
+            "tier": "verify",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 7098,
+            "output_tokens": 2826,
+            "cost_usd": 0.0046728,
+            "latency_ms": 10267,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6505,
+            "output_tokens": 58,
+            "cost_usd": 0.0020037,
+            "latency_ms": 1507,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 6642,
+            "output_tokens": 77,
+            "cost_usd": 0.0020619,
+            "latency_ms": 1294,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "fix: extract_claims",
+            "tier": "extract",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 4993,
+            "output_tokens": 45,
+            "cost_usd": 0.0015384,
+            "latency_ms": 1411,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          },
+          {
+            "task": "report",
+            "tier": "write",
+            "model": "nvidia/nemotron-3-super-120b-a12b",
+            "input_tokens": 869,
+            "output_tokens": 405,
+            "cost_usd": 0.0006252,
+            "latency_ms": 3046,
+            "cached": true,
+            "format": "json_schema",
+            "reasoning_tokens": 0,
+            "thinking": "off",
+            "finish_reason": null
+          }
+        ],
+        "web_credits": 0.0
+      }
+    }
+  ]
+}

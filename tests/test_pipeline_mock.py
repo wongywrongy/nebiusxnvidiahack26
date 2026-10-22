@@ -1,4 +1,4 @@
-"""End-to-end in mock mode: all 8 cases must match the answer key."""
+"""End-to-end mocks preserve the key and Kyle's documented selection-policy disagreements."""
 
 import asyncio
 import os
@@ -13,12 +13,20 @@ from api.pipeline.cases import all_cases  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 
 
-def test_all_cases_match_answer_key():
+def test_case_disagreements_are_exactly_the_reviewed_selection_policy():
     ids = sorted(all_cases())
     run = asyncio.run(execute(Run(ids, delay_ms=0)))
-    for cid in ids:
-        res = run.results[cid]
-        assert res.decision == all_cases()[cid]["expected"]["decision"], cid
+    disagreements = {cid: (all_cases()[cid]["expected"]["decision"], run.results[cid].decision)
+                     for cid in ids if run.results[cid].decision != all_cases()[cid]["expected"]["decision"]}
+    # Kyle accepted unselected configurations as unconfirmed on 2026-10-22; the raw key stays unchanged.
+    assert disagreements == {"c05": ("approve", "approve_with_note"),
+                             "c06": ("send_back", "approve_with_note")}
+    from api.pipeline.scores import scores
+    panel = scores(run, ids)
+    assert panel["right_call"] == {"n": 6, "of": 8}
+    assert panel["caught"] == {"n": 5, "of": 6}
+    assert panel["validity"]["invalid_items"] == 0
+    assert not panel["release_gate"]["passed"]
     stages = {e.stage for e in run.events}
     assert {"queued", "ingest", "triage", "extract", "spec_check", "verify", "report", "done"} <= stages
 
@@ -50,6 +58,12 @@ def test_quote_normalization_keeps_words_numbers_and_page_evidence_exact():
     assert not quoted("rated 120 volts", "rated 120 watts")
     assert not quoted(r"\n\t", "anything")
     assert not quoted("\u2122\u00ae", "anything")
+    assert quoted("As of June 30th, 2024, the LX family is discontinued.",
+                  "As of **June 30th, 2024**, the LX family is discontinued.")
+    assert not quoted("As of June 30th, 2025, the LX family is discontinued.",
+                      "As of **June 30th, 2024**, the LX family is discontinued.")
+    assert quoted("VOC Content** 26 g/L", "VOC Content**\n26 g/L\n**VOC uses a stated test method.\nVOC Content**")
+    assert not quoted("VOC Content 26 g/L", "VOC Content**\n26 g/L")
 
 
 @pytest.mark.parametrize("property,quote,value,kept", [

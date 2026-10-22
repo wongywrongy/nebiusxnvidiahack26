@@ -12,6 +12,7 @@ import logging
 import math
 import re
 import asyncio
+from datetime import datetime, timezone
 from html import unescape
 from typing import Any, Optional
 from urllib.parse import urljoin, urlparse
@@ -74,32 +75,68 @@ def _document_link(text: str, base: str) -> Optional[str]:
 
 def _pdf_result(requested: str, pages: list[dict]) -> dict:
     return {"url": pages[0].get("source_url", requested), "requested_url": requested,
-            "raw_content": "\n".join(p["text"] for p in pages)}
+            "raw_content": "\n".join(p["text"] for p in pages), "pages": pages,
+            "retrieved_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
 
 async def _post(path: str, body: dict) -> dict:
+    bound = (search_credits(body.get("search_depth", "basic")) if path == "/search" else
+             extract_credits(len(body["urls"]), body.get("extract_depth", "basic")) if path == "/extract" else
+             map_credits(body["limit"], body.get("instructions")))
+    ticket = budget.reserve_payment(credits=bound)
     try:
         async with httpx.AsyncClient(timeout=60) as c:
             r = await c.post(API + path, json=body, headers={"Authorization": f"Bearer {settings.secret('tavily_api_key')}"})
     except httpx.HTTPError as e:
+        budget.settle_payment(ticket)
         raise ProviderError("Tavily connection failed") from e
+    except BaseException:
+        budget.settle_payment(ticket)
+        raise
+    if r.is_error:
+        # Tavily documents failed map/extract requests as free; failed search billing remains unknown.
+        budget.settle_payment(ticket, **({"credits": 0} if path in ("/map", "/extract") else {}))
     if r.status_code in (401, 403):
         raise AuthError(f"Tavily refused the key ({r.status_code}): check TAVILY_API_KEY")
     if r.status_code in (429, 432, 433):
         raise RateLimited(f"Tavily limit ({r.status_code})")
     if r.is_error:
         raise ProviderError(f"Tavily {path} failed ({r.status_code})")
-    return r.json()
+    try:
+        response = r.json()
+    except ValueError as e:
+        budget.settle_payment(ticket)
+        raise ProviderError("Tavily returned invalid JSON") from e
+    usage = response.get("usage") if isinstance(response, dict) else None
+    credits = usage.get("credits") if isinstance(usage, dict) else None
+    budget.settle_payment(ticket, **({"credits": credits} if type(credits) is int and credits >= 0 else {}))
+    return response
 
 
 async def _cached(ns: str, key: dict, estimate: int, call, credits_of) -> tuple[Any, int]:
-    if (hit := cache.get(ns, key)) is not None:
-        return hit, 0
-    budget.reserve_credits(estimate, real=True)
-    results = await call()
-    spent = credits_of(results)
-    log.info("%s credits=%d results=%d", ns, spent, len(results))
-    cache.put(ns, key, results)
+    entry = cache.get(ns, key)
+    hit = False
+    if isinstance(entry, dict) and entry.get("version") == 1 and not cache.REFRESH_WEB.get():
+        try:
+            age = (datetime.now(timezone.utc) - datetime.fromisoformat(entry["retrieved_at"])).total_seconds()
+            hit = 0 <= age < (86400 if entry["results"] else 3600)
+        except (KeyError, ValueError, TypeError):
+            pass
+    if hit:
+        for issue in entry.get("accounting_issues", []):
+            budget.unknown_usage(issue)
+        results, spent = entry["results"], 0
+    else:
+        budget.reserve_credits(estimate, real=True)
+        results = await call()
+        spent = credits_of(results)
+        led = budget.LEDGER.get()
+        entry = {"version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                 "results": results, "accounting_issues": led.accounting_issues.get(budget.ITEM.get(), []) if led else []}
+        cache.put(ns, key, entry)
+        log.info("%s credits=%d results=%d", ns, spent, len(results))
+    if ns == "tavily_extract":
+        results = [{**p, "retrieved_at": p.get("retrieved_at", entry["retrieved_at"]), "cache_hit": hit} for p in results]
     return results, spent
 
 
@@ -117,7 +154,6 @@ async def search(query: str, include_domains: Optional[list[str]] = None, depth:
     async def call():
         resp = await _post("/search", {**body, "include_usage": True})
         paid.append(_credits(resp, search_credits(depth)))
-        budget.charge_credits(paid[-1], real=True)
         return [{"url": r["url"], "title": r.get("title", ""), "content": r.get("content", ""),
                  **({"published_date": r["published_date"]} if "published_date" in r else {})}
                 for r in resp.get("results", [])]
@@ -133,7 +169,6 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
         resp = await _post("/extract", {"urls": urls, "extract_depth": depth, "include_usage": True})
         returned = resp.get("results", [])
         paid.append(_credits(resp, extract_credits(len(returned) if isinstance(returned, list) else len(urls), depth)))
-        budget.charge_credits(paid[-1], real=True)
         got = [{"url": r["url"], "raw_content": r.get("raw_content") or ""} for r in returned
                if r.get("raw_content") and not _pdf_syntax(r["raw_content"])]
         if len(got) < len(returned):
@@ -163,7 +198,8 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
         if not corrupt:
             resolved.append(r)
     if resolved != results:
-        cache.put("tavily_extract", key, resolved)
+        entry = cache.get("tavily_extract", key)
+        cache.put("tavily_extract", key, {**entry, "results": resolved})
     return resolved, spent
 
 
@@ -179,7 +215,6 @@ async def map(url: str, instructions: Optional[str] = None, limit: Optional[int]
         resp = await _post("/map", body)
         returned = resp.get("results")
         paid.append(_credits(resp, map_credits(min(limit, len(returned)) if isinstance(returned, list) else limit, instructions)))
-        budget.charge_credits(paid[-1], real=True)
         return resp.get("results", [])[:limit]  # cap even if the server ignores limit
 
     key = {"url": url, "i": instructions, "limit": limit, "depth": max_depth}

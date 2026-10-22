@@ -41,7 +41,7 @@
   "claims": {
     "product": "LDN6 LED downlight",
     "manufacturer": "Lithonia Lighting (Acuity Brands)",
-    "model": "LDN6 35/15",
+    "model": "LDN6",
     "document_revision": "Rev. 10/25/17",
     "claims": [
       {
@@ -49,9 +49,11 @@
         "product": "LDN6",
         "manufacturer": "Lithonia Lighting (Acuity Brands)",
         "property": "cri",
-        "value": 80,
+        "value": ">=80",
         "page": 1,
-        "quote": "80 CRI minimum"
+        "quote": "80 CRI minimum",
+        "scope": "product_wide",
+        "scope_quote": "80 CRI minimum"
       },
       {
         "id": "k2",
@@ -61,7 +63,10 @@
         "value": 1,
         "unit": "%",
         "page": 1,
-        "quote": "eldoLED 1% 0-10V"
+        "quote": "EZ1\neldoLED 1% 0-10V",
+        "variant": "EZ1",
+        "scope": "option",
+        "scope_quote": "EZ1\neldoLED 1% 0-10V"
       },
       {
         "id": "k3",
@@ -71,7 +76,9 @@
         "value": 5,
         "unit": "yr",
         "page": 1,
-        "quote": "WARRANTY — 5-year limited warranty."
+        "quote": "WARRANTY — 5-year limited warranty.",
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY — 5-year limited warranty."
       },
       {
         "id": "k4",
@@ -81,7 +88,10 @@
         "value": 1606.0,
         "unit": "lm",
         "page": 3,
-        "quote": "1606.0"
+        "quote": "LDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3",
+        "variant": "1500",
+        "scope": "option",
+        "scope_quote": "LDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3"
       },
       {
         "id": "k5",
@@ -91,7 +101,10 @@
         "value": 20.5,
         "unit": "W",
         "page": 3,
-        "quote": "20.5"
+        "quote": "LDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3",
+        "variant": "1500",
+        "scope": "option",
+        "scope_quote": "LDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3"
       },
       {
         "id": "k6",
@@ -101,9 +114,14 @@
         "value": 78.3,
         "unit": "lm/W",
         "page": 3,
-        "quote": "78.3"
+        "quote": "LDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3",
+        "variant": "1500",
+        "scope": "option",
+        "scope_quote": "LDN6\nTarget \n Lumen\nLumens @ \n3500K\nWattage\nLPW\n500\n662.2\n7.6\n87.1\n1000\n1082.0\n12.8\n84.5\n1500\n1606.0\n20.5\n78.3"
       }
-    ]
+    ],
+    "family": "LDN6",
+    "family_quote": "LDN6\n6” OPEN and WALLWASH LED \nNon"
   },
   "web": {
     "search": [
@@ -127,24 +145,47 @@
         "property": "lumens",
         "value": 1514,
         "unit": "lm",
-        "quote": "1500 1514 17.5 86.4"
+        "quote": "LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4",
+        "variant": "1500",
+        "scope": "option",
+        "scope_quote": "LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4",
+        "model": "LDN6",
+        "identity_quote": "LDN6",
+        "source_url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"
       },
       {
         "property": "watts",
         "value": 17.5,
         "unit": "W",
-        "quote": "1500 1514 17.5 86.4"
+        "quote": "LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4",
+        "variant": "1500",
+        "scope": "option",
+        "scope_quote": "LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4",
+        "model": "LDN6",
+        "identity_quote": "LDN6",
+        "source_url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"
       },
       {
         "property": "efficacy_lm_per_w",
         "value": 86.4,
         "unit": "lm/W",
-        "quote": "1500 1514 17.5 86.4"
+        "quote": "LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4",
+        "variant": "1500",
+        "scope": "option",
+        "scope_quote": "LDN6 Nominal Lumens Lumens Wattage Lm/W 500 527.9 5.8 90.5 750 758.1 8.9 85.1 1000 950.1 10.4 91.0 1500 1514 17.5 86.4",
+        "model": "LDN6",
+        "identity_quote": "LDN6",
+        "source_url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"
       },
       {
         "property": "cri",
-        "value": 80,
-        "quote": "80 CRI minimum"
+        "value": ">=80",
+        "quote": "80 CRI minimum",
+        "scope": "product_wide",
+        "scope_quote": "80 CRI minimum",
+        "model": "LDN6",
+        "identity_quote": "LDN6",
+        "source_url": "https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf"
       }
     ],
     "source_urls": [

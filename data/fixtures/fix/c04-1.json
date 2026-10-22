@@ -3,6 +3,7 @@
   "claims": {
     "product": "SpecSeal System W-L-1079",
     "manufacturer": "STI",
+    "model": "W-L-1079",
     "claims": [
       {
         "id": "k1",
@@ -12,7 +13,9 @@
         "value": 2,
         "page": 1,
         "unit": "hr",
-        "quote": "F Ratings — 1 and 2 Hr"
+        "quote": "F Ratings — 1 and 2 Hr",
+        "scope": "product_wide",
+        "scope_quote": "F Ratings — 1 and 2 Hr"
       },
       {
         "id": "k2",
@@ -22,7 +25,9 @@
         "value": 0,
         "page": 1,
         "unit": "hr",
-        "quote": "T Rating — 0 Hr"
+        "quote": "T Rating — 0 Hr",
+        "scope": "product_wide",
+        "scope_quote": "T Rating — 0 Hr"
       },
       {
         "id": "k3",
@@ -33,7 +38,9 @@
           "steel pipe"
         ],
         "page": 1,
-        "quote": "One metallic pipe (steel pipe)"
+        "quote": "One metallic pipe (steel pipe)",
+        "scope": "product_wide",
+        "scope_quote": "One metallic pipe (steel pipe)"
       }
     ]
   },

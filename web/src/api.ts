@@ -34,7 +34,7 @@ export interface Event {
   data: Record<string, unknown> | null
 }
 
-interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string; archived_path?: string | null }
+interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string; archived_path?: string | null; cache_hit?: boolean | null; excerpt?: string | null }
 export interface Finding {
   id: string
   check: string
@@ -55,7 +55,7 @@ export interface Finding {
 }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
 interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
-interface FixCandidate { name: string; source_url: string; checks: FixCheck[]; passes: boolean }
+interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean }
 export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
@@ -181,9 +181,9 @@ export async function uploadToInbox(file: File): Promise<Case> {
 }
 
 /** One run over inbox items. delayMs paces mock mode so the stages are visible. */
-export async function scan(ids: string[], delayMs = 700): Promise<{ run_id: string; note?: string | null }> {
+export async function scan(ids: string[], delayMs = 700, refreshWeb = false): Promise<{ run_id: string; note?: string | null }> {
   return ok(await fetch('/api/scan', {
-    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids, delay_ms: delayMs }),
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids, delay_ms: delayMs, refresh_web: refreshWeb }),
   }))
 }
 

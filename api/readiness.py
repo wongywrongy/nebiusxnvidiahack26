@@ -40,7 +40,7 @@ def invalid_reasons(result) -> list[dict]:
     reasons = [d.model_dump() for d in result.diagnostics]
     if result.warnings:
         reasons.append({"stage": "unknown", "kind": "provider", "message": "; ".join(result.warnings)})
-    if result.investigation and result.investigation.outcome == "capped":
+    if (result.investigation and result.investigation.outcome == "capped") or any(i.outcome == "capped" for i in result.investigations):
         reasons.append({"stage": "investigate", "kind": "budget", "message": "Investigation capped"})
     if result.replayed_from:
         reasons.append({"stage": "replay", "kind": "replay", "message": "Playback is not a new evaluation"})

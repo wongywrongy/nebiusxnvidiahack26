@@ -71,6 +71,8 @@ def scores(run, case_ids: list[str]) -> dict:
     n = max(len(case_ids), 1)
     fixes = [r["fix"] for r in ok if r.get("fix")]
     gates = {key: sum(r[key] for r in ok) for key in FIELDS}
+    investigations = [inv for cid in case_ids if (res := run.results.get(cid)) for inv in res.investigations]
+    primary = [inv for inv in investigations if inv.purpose == "primary"]
     for prefix, read in (("claims", "claims_extracted"), ("web_values", "web_values_read")):
         gates[f"{prefix}_drop_rate"] = (1 - gates[f"{prefix}_kept"] / gates[read]) if gates[read] else None
     result = {
@@ -92,6 +94,14 @@ def scores(run, case_ids: list[str]) -> dict:
         "fresh_web_credits": sum(r["fresh_web_credits"] for r in rows),
         "run_fresh_spend": {"usd": round(sum(run.ledger.fresh_usd.values()), 6),
                             "credits": sum(run.ledger.fresh_credits.values())},
+        "investigations": {"scripted_unconfirmed_items": sum(
+            any(i.purpose == "primary" for i in res.investigations) or any(f.check == "currency" and f.verdict == "unverified" for f in res.findings)
+            for cid in case_ids if (res := run.results.get(cid))),
+            "primary_runs": len(primary), "resolved": sum(i.resolution in ("problem_found", "values_confirmed") for i in primary),
+            "revision_only": sum(i.resolution == "revision_only" for i in primary),
+            "capped": sum(i.outcome == "capped" for i in primary),
+            "replacement_runs": sum(i.purpose == "replacement" for i in investigations),
+            "replacement_capped": sum(i.outcome == "capped" and i.purpose == "replacement" for i in investigations)},
         "manifest": getattr(run, "manifest", None),
         "time_ms_per_item": round(sum(r["time_ms"] for r in rows) / n),
         "cost_usd_per_item": round(sum(r["cost_usd"] for r in rows) / n, 6),

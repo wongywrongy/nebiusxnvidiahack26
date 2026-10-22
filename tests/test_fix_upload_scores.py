@@ -31,9 +31,6 @@ def client_lifespan():
         yield
 
 
-SEND_BACK = sorted(c for c, v in all_cases().items() if v["expected"]["decision"] == "send_back")
-
-
 @pytest.fixture(scope="module")
 def run():
     return asyncio.run(execute(Run(sorted(all_cases()), delay_ms=0)))
@@ -45,16 +42,18 @@ def fixes(result):
 
 def test_fix_only_on_send_backs(run):
     for cid, res in run.results.items():
-        assert bool(fixes(res)) == (cid in SEND_BACK), cid
-        assert ("fix" in {e.stage for e in run.events if e.case_id == cid}) == (cid in SEND_BACK), cid
+        assert bool(fixes(res)) == (res.decision == "send_back"), cid
+        assert ("fix" in {e.stage for e in run.events if e.case_id == cid}) == (res.decision == "send_back"), cid
 
 
 def test_passes_only_with_every_check_passed(run):
-    for cid in SEND_BACK:
-        (f,) = fixes(run.results[cid])
+    for cid, result in run.results.items():
+        if result.decision != "send_back":
+            continue
+        (f,) = fixes(result)
         assert len(f.candidates) <= settings.fix_max_candidates
         for c in f.candidates:
-            assert c.passes == (bool(c.checks) and all(k.ok is True for k in c.checks)), (cid, c.name)
+            assert c.passes == (bool(c.checks) and all(k.ok is True and k.evidence for k in c.checks)), (cid, c.name)
         best = next((c for c in f.candidates if c.passes), None)
         assert f.suggest == (best.name if best else ""), cid
         if not best:
@@ -75,9 +74,11 @@ def test_fix_names_the_current_documents(run):
     assert "Rev B" in current.candidates[0].name
     assert not current.suggest  # Current product data still needs the pending assembly proof.
     assert any(c.ok is None and c.label == "Temperature rating (T)" for c in current.candidates[0].checks)
-    assert "BLT 2x4" in fixes(run.results["c07"])[0].suggest
-    c06 = fixes(run.results["c06"])[0]  # the 2025 sheet doesn't state CRI, dimming, warranty or DLC
-    assert not c06.suggest and "04/11/25" in c06.candidates[0].name
+    troffer = fixes(run.results["c07"])[0]
+    assert not troffer.suggest  # A blank catalog field cannot select the EZ1 driver.
+    assert any(k.label == "Dims down to" and k.ok is None for k in troffer.candidates[0].checks)
+    assert any(k.label == "Still made" and k.ok is None for k in troffer.candidates[0].checks)
+    assert not fixes(run.results["c06"])  # Unselected performance stays unconfirmed, not outdated.
 
 
 def test_fix_respects_the_credit_cap(run):
@@ -161,7 +162,7 @@ def test_scores_endpoint_computes_mock_on_clean_install(tmp_path, monkeypatch, m
     monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
     monkeypatch.setattr(settings, "recorded_dir", tmp_path / "recorded")
     scores = client.get("/api/scores").json()
-    assert scores["mode"] == "mock" and scores["right_call"] == {"n": 8, "of": 8}
+    assert scores["mode"] == "mock" and scores["right_call"] == {"n": 6, "of": 8}
     assert len(scores["rows"]) == 8
     assert client.get("/api/scores").json()["run_id"] == scores["run_id"]
     settings.scores_file.write_text(json.dumps({"right_call": {"n": 8, "of": 8}}))
@@ -171,7 +172,8 @@ def test_scores_endpoint_computes_mock_on_clean_install(tmp_path, monkeypatch, m
 def test_run_scoring_set_endpoint(tmp_path, monkeypatch):
     monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
     s = client.post("/api/scores/run").json()
-    assert s["right_call"] == {"n": 8, "of": 8} and s["false_alarms"]["n"] == 0
+    assert s["right_call"] == {"n": 6, "of": 8} and s["false_alarms"]["n"] == 0
+    assert s["fixes_passing"]["n"] == 0 and not s["release_gate"]["passed"]
     assert json.loads((tmp_path / "scores.json").read_text())["run_id"] == s["run_id"]
 
 

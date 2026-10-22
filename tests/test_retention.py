@@ -115,4 +115,4 @@ def test_startup_logs_spend_caps_and_health_has_resource_metrics(storage, caplog
         health = client.get("/api/health").json()
     assert health["uptime_s"] >= 0 and health["disk_free_gb"] > 0
     assert "Today's recorded spend:" in caplog.text and "budget_usd_per_day" in caplog.text
-    assert "local ledger may reset" in caplog.text
+    assert "campaign ledger on local disk" in caplog.text and "hosted persistence unverified" in caplog.text

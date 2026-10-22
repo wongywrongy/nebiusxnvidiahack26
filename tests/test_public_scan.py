@@ -30,6 +30,13 @@ def defer(monkeypatch):
     return pending
 
 
+def test_explicit_fresh_recheck_cannot_fall_back_to_replay(isolated, monkeypatch):
+    monkeypatch.setattr(settings, "speccheck_mode", "live")
+    monkeypatch.setattr(settings, "budget_usd_per_day", 0)
+    response = isolated.post("/api/scan", json={"ids": ["c01"], "refresh_web": True})
+    assert response.status_code == 429 and "fresh re-check cannot use replay" in response.json()["detail"]
+
+
 @pytest.mark.parametrize("cap", ["budget_usd_per_day", "budget_tavily_credits_per_day"])
 def test_spent_budget_replays_only_requested_recorded_items(isolated, monkeypatch, cap):
     # This temporary recording is made from fixtures; it is never published as a live result.

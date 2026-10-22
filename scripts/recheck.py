@@ -74,7 +74,7 @@ async def main(ids: list[str], post: str | None) -> int:
     if not settings.live:
         ids = [i for i in ids if mock_ready(cases[i])]
     started = time.perf_counter()
-    run = Run(ids, delay_ms=0)
+    run = Run(ids, delay_ms=0, refresh_web=True)
     await execute(run)
     items = [summarize(cases[i], run.results.get(i)) for i in ids]
     items.sort(key=lambda i: STATUS_ORDER.index(i["status"]))
