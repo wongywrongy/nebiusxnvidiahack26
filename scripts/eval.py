@@ -27,8 +27,8 @@ from api.pipeline.cases import all_cases, all_samples, mock_ready  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.pipeline.scores import scores  # noqa: E402
 
-async def main(case_ids: list[str], out: Path | None = None) -> int:
-    run = Run(case_ids, delay_ms=0)
+async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[str] | None = None) -> int:
+    run = Run(list(dict.fromkeys([*case_ids, *(extra_ids or [])])), delay_ms=0)
     await execute(run)
     s = scores(run, case_ids)
     s.update(runner=os.environ.get("RECHECK_RUNNER", "local"), job_name=os.environ.get("JOB_NAME"))

@@ -1,0 +1,660 @@
+{
+  "case_id": "c03",
+  "title": "Firestop sealant, cable penetrations",
+  "decision": "send_back",
+  "summary": "We need more information about the firestop sealant's mold resistance and test standards before we can approve it, and the data sheet provided is outdated.",
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "VOC (air quality)",
+      "detail": "Package states 0 g/L; spec requires at most 250 g/L.",
+      "why_it_matters": null,
+      "requirement_id": "req_voc_content",
+      "claim_id": "cl-8",
+      "claim_ids": [
+        "cl-8"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-8",
+          "doc_file": "c03/3m_ic15wb_2005.pdf",
+          "page": 2,
+          "quote": "VOC: 0",
+          "boxes": [
+            {
+              "x0": 0.0964,
+              "y0": 0.53,
+              "x1": 0.1357,
+              "y1": 0.5427
+            },
+            {
+              "x0": 0.4281,
+              "y0": 0.53,
+              "x1": 0.4372,
+              "y1": 0.5427
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "0 g/L",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Missing mold resistance proof",
+      "detail": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+      "why_it_matters": "Without confirmed mold resistance, the sealant could degrade over time in damp areas, reducing its fire-stopping effectiveness.",
+      "requirement_id": "req_mold_resistance",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Missing test standard confirmation",
+      "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+      "why_it_matters": "We need to know the product was tested to the right fire standards to ensure it will perform as required during a fire event.",
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "currency-outdated",
+      "check": "currency",
+      "verdict": "outdated",
+      "severity": "major",
+      "title": "Outdated product data sheet",
+      "detail": "The submitted sheet (90G9) differs from the current one (90G9) on: continuous operating temperature limit f, astm e84 flame spread, astm e84 smoke development.",
+      "why_it_matters": "Using an outdated data sheet risks relying on incorrect performance values, which could lead to improper installation or failure in service.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [
+        "cl-1",
+        "cl-10",
+        "cl-11"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-1",
+          "doc_file": "c03/3m_ic15wb_2005.pdf",
+          "page": 1,
+          "quote": "Continuous operating temperature not to exceed 120°F (48°C).",
+          "boxes": [
+            {
+              "x0": 0.394,
+              "y0": 0.6942,
+              "x1": 0.6303,
+              "y1": 0.7062
+            },
+            {
+              "x0": 0.394,
+              "y0": 0.7081,
+              "x1": 0.5884,
+              "y1": 0.7201
+            }
+          ],
+          "kind": "problem"
+        },
+        {
+          "claim_id": "cl-10",
+          "doc_file": "c03/3m_ic15wb_2005.pdf",
+          "page": 2,
+          "quote": "ASTM E 84: Flame Spread: 0",
+          "boxes": [
+            {
+              "x0": 0.0964,
+              "y0": 0.5755,
+              "x1": 0.3022,
+              "y1": 0.5881
+            },
+            {
+              "x0": 0.4281,
+              "y0": 0.5755,
+              "x1": 0.4372,
+              "y1": 0.5881
+            }
+          ],
+          "kind": "problem"
+        },
+        {
+          "claim_id": "cl-11",
+          "doc_file": "c03/3m_ic15wb_2005.pdf",
+          "page": 2,
+          "quote": "Smoke Development: 0",
+          "boxes": [
+            {
+              "x0": 0.1963,
+              "y0": 0.5907,
+              "x1": 0.3517,
+              "y1": 0.6033
+            },
+            {
+              "x0": 0.4281,
+              "y0": 0.5907,
+              "x1": 0.4372,
+              "y1": 0.6033
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Submitted (90G9)",
+        "left_value": null,
+        "right_label": "Current (90G9)",
+        "right_value": null,
+        "verdict": "changed",
+        "rows": [
+          {
+            "property": "continuous_operating_temperature_limit_f",
+            "label": "continuous operating temperature limit f",
+            "submitted": "120 °F",
+            "current": "180 °F",
+            "changed": true,
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)"
+          },
+          {
+            "property": "astm_e84_flame_spread",
+            "label": "astm e84 flame spread",
+            "submitted": "0",
+            "current": "5",
+            "changed": true,
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "quote": "Surface Burning (ASTM E 84): Flame Spread 5, Smoke Development 50"
+          },
+          {
+            "property": "astm_e84_smoke_development",
+            "label": "astm e84 smoke development",
+            "submitted": "0",
+            "current": "50",
+            "changed": true,
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "quote": "Surface Burning (ASTM E 84): Flame Spread 5, Smoke Development 50"
+          }
+        ]
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "tier": "manufacturer",
+          "title": "Fire Protection Products",
+          "retrieved_at": "2026-10-22T18:16:11+00:00",
+          "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+          "excerpt": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+          "archived_path": null
+        },
+        {
+          "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+          "tier": "manufacturer",
+          "title": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "retrieved_at": "2026-10-22T18:16:11+00:00",
+          "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+          "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+          "archived_path": null
+        },
+        {
+          "url": "https://multimedia.3m.com/mws/media/1081476O/3m-fire-barrier-sealant-ic-15wb-dop-uk.pdf",
+          "tier": "manufacturer",
+          "title": "Fire Barrier IC 15WB+ - mu ltime dia",
+          "retrieved_at": "2026-10-22T18:16:11+00:00",
+          "sha256": "a63a6d910ab7d2d04571acd0e992f78e8a71064ce7fbd728a553c57c6538eedf",
+          "excerpt": "01. November 2014 Supersedes: 14. April 2014 ~ 1 ~ UK Fire Barrier IC 15WB+ Declaration of Performance N° 3M FB IC 15WB+ 1121-CPR-JA0005 according to Annex III of Regulation (EU) No 305/2011 1. Unique identification code of the product-type: 3M™ Fire Barrier IC 15WB+ Sealant 2. Type, batch or serial number or any other element allowing identification of the construction product as required under A",
+          "archived_path": null
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "3M 3M Fire Barrier IC 15WB+ Sealant current data sheet",
+        "candidates": [
+          {
+            "name": "3M™ Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "source_url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "checks": [
+              {
+                "label": "VOC (air quality)",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "astm g21 rating",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "Test standards",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "Current document",
+                "ok": true,
+                "note": "July / 2025"
+              }
+            ],
+            "passes": false
+          },
+          {
+            "name": "3M™ Fire Barrier Water Tight Sealant 3000 WT | 3M United States",
+            "source_url": "https://www.3m.com/3M/en_US/p/d/b40065442",
+            "checks": [
+              {
+                "label": "VOC (air quality)",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "astm g21 rating",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "Test standards",
+                "ok": true,
+                "note": ""
+              },
+              {
+                "label": "Current document",
+                "ok": true,
+                "note": ""
+              }
+            ],
+            "passes": false
+          }
+        ],
+        "suggest": ""
+      }
+    }
+  ],
+  "comparison": [
+    {
+      "property": "continuous_operating_temperature_limit_f",
+      "label": "continuous operating temperature limit f",
+      "submitted": "120 °F",
+      "current": "180 °F",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)"
+    },
+    {
+      "property": "color",
+      "label": "color",
+      "submitted": "Yellow",
+      "current": "Yellow",
+      "changed": false,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Product Color: Yellow."
+    },
+    {
+      "property": "durometer_hardness_shore_a",
+      "label": "durometer hardness shore a",
+      "submitted": "70 Shore A",
+      "current": "70 Shore A",
+      "changed": false,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Hardness (ASTM D 2240 Shore A): 70"
+    },
+    {
+      "property": "astm_e84_flame_spread",
+      "label": "astm e84 flame spread",
+      "submitted": "0",
+      "current": "5",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Surface Burning (ASTM E 84): Flame Spread 5, Smoke Development 50"
+    },
+    {
+      "property": "astm_e84_smoke_development",
+      "label": "astm e84 smoke development",
+      "submitted": "0",
+      "current": "50",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Surface Burning (ASTM E 84): Flame Spread 5, Smoke Development 50"
+    }
+  ],
+  "claims": [
+    {
+      "id": "cl-1",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "continuous_operating_temperature_limit_f",
+      "value": 120.0,
+      "unit": "°F",
+      "page": 1,
+      "bbox": null,
+      "quote": "Continuous operating temperature not to exceed 120°F (48°C).",
+      "variant": null
+    },
+    {
+      "id": "cl-4",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "color",
+      "value": "Yellow",
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "Color: Yellow",
+      "variant": null
+    },
+    {
+      "id": "cl-5",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "density_lb_per_gal",
+      "value": 12.0,
+      "unit": "lb/gal",
+      "page": 2,
+      "bbox": null,
+      "quote": "Density: 12.0 lb./gal. (1,43 kg/L)",
+      "variant": null
+    },
+    {
+      "id": "cl-6",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "durometer_hardness_shore_a",
+      "value": 70.0,
+      "unit": "Shore A",
+      "page": 2,
+      "bbox": null,
+      "quote": "Durometer Hardness (Shore A): 70",
+      "variant": null
+    },
+    {
+      "id": "cl-7",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "solids_percent_by_weight",
+      "value": 80.0,
+      "unit": "%",
+      "page": 2,
+      "bbox": null,
+      "quote": "Solids: 80% by weight",
+      "variant": null
+    },
+    {
+      "id": "cl-8",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "voc_g_per_l",
+      "value": 0.0,
+      "unit": "g/L",
+      "page": 2,
+      "bbox": null,
+      "quote": "VOC: 0",
+      "variant": null
+    },
+    {
+      "id": "cl-9",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "flow_rate_g_per_min",
+      "value": 2000.0,
+      "unit": "g/min",
+      "page": 2,
+      "bbox": null,
+      "quote": "Flow Rate: 2000 grams/min. from 1/4 in. (6,35 mm) nozzle at 50 psi",
+      "variant": null
+    },
+    {
+      "id": "cl-10",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "astm_e84_flame_spread",
+      "value": 0.0,
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "ASTM E 84: Flame Spread: 0",
+      "variant": null
+    },
+    {
+      "id": "cl-11",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "astm_e84_smoke_development",
+      "value": 0.0,
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "Smoke Development: 0",
+      "variant": null
+    },
+    {
+      "id": "cl-12",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": null,
+      "property": "boeing_flow_sag_characteristics_in",
+      "value": "<2",
+      "unit": "inches",
+      "page": 2,
+      "bbox": null,
+      "quote": "Boeing Flow (Sag Characteristics): <2 in. (5,08 cm) in 5 minutes",
+      "variant": null
+    }
+  ],
+  "document_revision": "90G9",
+  "note_to_subcontractor": "Please provide verification that the sealant meets the required ASTM G21 mold resistance rating and confirm it was tested to ASTM E814, E119, or UL 1479. Also submit the current version of the data sheet (90G9).",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 2054,
+      "output_tokens": 85,
+      "cost_usd": 0.000144,
+      "latency_ms": 1200,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2965,
+      "output_tokens": 1485,
+      "cost_usd": 0.002226,
+      "latency_ms": 11637,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9665,
+      "output_tokens": 561,
+      "cost_usd": 0.003404,
+      "latency_ms": 3934,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 10243,
+      "output_tokens": 473,
+      "cost_usd": 0.003499,
+      "latency_ms": 3299,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2937,
+      "output_tokens": 438,
+      "cost_usd": 0.001275,
+      "latency_ms": 2868,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2838,
+      "output_tokens": 432,
+      "cost_usd": 0.00124,
+      "latency_ms": 4036,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9471,
+      "output_tokens": 154,
+      "cost_usd": 0.00298,
+      "latency_ms": 2189,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3154,
+      "output_tokens": 280,
+      "cost_usd": 0.001198,
+      "latency_ms": 2522,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11478,
+      "output_tokens": 156,
+      "cost_usd": 0.003584,
+      "latency_ms": 2137,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 634,
+      "output_tokens": 253,
+      "cost_usd": 0.000418,
+      "latency_ms": 2077,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 124,
+  "investigation": null,
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 22,
+  "claims_kept": 12,
+  "web_values_read": 12,
+  "web_values_kept": 7
+}

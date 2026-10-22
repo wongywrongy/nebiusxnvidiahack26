@@ -1,0 +1,432 @@
+{
+  "case_id": "c08",
+  "title": "Exit sign",
+  "decision": "approve_with_note",
+  "summary": "The exit sign submittal can proceed but needs clarification on LED performance details before final approval.",
+  "findings": [
+    {
+      "id": "spec-req_t_rating_hr_led",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Rated life (L70) not provided",
+      "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+      "why_it_matters": "Without verified lumen maintenance, we cannot ensure long-term reliability of the exit signs.",
+      "requirement_id": "req_t_rating_hr_led",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 50000 hr",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.3",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_warranty_years_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Warranty",
+      "detail": "Package states 5 years; spec requires at least 5 yr.",
+      "why_it_matters": null,
+      "requirement_id": "req_warranty_years_led",
+      "claim_id": "11",
+      "claim_ids": [
+        "11"
+      ],
+      "highlights": [
+        {
+          "claim_id": "11",
+          "doc_file": "c08/lithonia_lqm_2019-09.pdf",
+          "page": 2,
+          "quote": "WARRANTY:\n5-year limited warranty. Complete warranty terms located at:  \nwww.acuitybrands.com/support/customer-support/terms-and-conditions",
+          "boxes": [
+            {
+              "x0": 0.0882,
+              "y0": 0.7657,
+              "x1": 0.1488,
+              "y1": 0.7826
+            },
+            {
+              "x0": 0.0882,
+              "y0": 0.7793,
+              "x1": 0.3599,
+              "y1": 0.7956
+            },
+            {
+              "x0": 0.0882,
+              "y0": 0.7919,
+              "x1": 0.4086,
+              "y1": 0.8083
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 5 yr",
+        "right_label": "Submitted",
+        "right_value": "5 years",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 1.10.B.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_macadam_ellipse",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "MacAdam ellipse binning not confirmed",
+      "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+      "why_it_matters": "Color consistency across fixtures depends on tight binning; unverified binning risks visible color variation.",
+      "requirement_id": "req_macadam_ellipse",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 3",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.6",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "currency-newer",
+      "check": "currency",
+      "verdict": "note",
+      "severity": "minor",
+      "title": "Revision date mismatch without value changes",
+      "detail": "Submitted Rev. 09/05/19, web source Rev. 08/07/24. The revision labels differ; their age order is not confirmed.",
+      "why_it_matters": "Different revision dates alone don’t indicate which is newer or if content changed—no action needed unless values differ.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "Rev. 09/05/19",
+        "right_label": "Current",
+        "right_value": "Rev. 08/07/24",
+        "verdict": "changed",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+          "tier": "manufacturer",
+          "title": "LQM",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "5a386246e0d84be12ea11e6172409dca07de827fd7ef4caa87af552f6aac0b6d",
+          "excerpt": "Catalog Number Notes Type CONTRACTOR SELECT LQM Page 1 of 2 LQM Quantum ® LED Emergency Exit The Lithonia Lighting® LQM Quantum® LED Exit Signs are suitable for identifying emergency exits. This fully assembled single-face exit with extra faceplate is available in red or green letters. Ideal for applications requiring attractive, quick-installation exit signs and low energy consumption. The emerge",
+          "archived_path": null
+        },
+        {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/999379/contractor-select-lhqm-led.pdf",
+          "tier": "manufacturer",
+          "title": "LHQM LED Quantum® LED",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "e06cdd53809de90448fbdd466a3f0effcc83d1876b0025516f8e9ff16819573f",
+          "excerpt": "Catalog Number Notes Type CONTRACTOR SELECT LHQM LED Page 1 of 2 LHQM LED Quantum ® LED Emergency Light/Exit Combo The Lithonia Ligthing® LHQM LED Quantum® LED Exit-Unit Combo, is a combination of exit and emergency lighting. It's high quality design with high output dual lamp heads makes the LHQM LED ideal for safely illuminating the path of egress above-the-door while providing 90 minutes of eme",
+          "archived_path": null
+        },
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+          "tier": "manufacturer",
+          "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7",
+          "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n* [Español](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n## Welcome to Acuity Brands Insights\n\n* [Home](http://insights.acuitybrands.com)\n* [Industry](javascript:void(0)) \n  + Industry\n  + [Commercial Office](https://insights.acuitybrands.com/com",
+          "archived_path": null
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": null
+    }
+  ],
+  "comparison": [
+    {
+      "property": "document_revision",
+      "label": "Data sheet version",
+      "submitted": "Rev. 09/05/19",
+      "current": "Rev. 08/07/24",
+      "changed": true,
+      "source_url": null,
+      "quote": null
+    },
+    {
+      "property": "lumens",
+      "label": "Light output",
+      "submitted": "less than one watt",
+      "current": "less than one watt",
+      "changed": false,
+      "source_url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+      "quote": "Low energy consumption – less than one watt."
+    },
+    {
+      "property": "warranty_years",
+      "label": "Warranty",
+      "submitted": "5 years",
+      "current": "5 years",
+      "changed": false,
+      "source_url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+      "quote": "WARRANTY: 5-year limited warranty."
+    },
+    {
+      "property": "standards",
+      "label": "Test standards",
+      "submitted": "UL924, NFPA 101, NEC, OSHA, FCC Title 47, Part 15, Subpart B",
+      "current": "UL924, NFPA 101, NEC, OSHA, FCC Title 47, Part 15, Subpart B",
+      "changed": false,
+      "source_url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+      "quote": "Meets UL924, NFPA 101 (current Life Safety Code), NEC and OSHA illumination standards. Meets all applicable FCC Title 47, Part 15, Subpart B requirements."
+    }
+  ],
+  "claims": [
+    {
+      "id": "1",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_120v",
+      "value": 0.62,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 R 120/277 M6\n784231011508\nRed exit, AC only, White\n120/277, 60Hz\n0.62W\n0.69W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "2",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_120v",
+      "value": 0.62,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 G 120/277 M6\n784231011584\nGreen exit, AC only, White\n120/277, 60Hz\n0.62W\n0.74W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "3",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_120v",
+      "value": 0.71,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 R 120/277 EL N M6\n784231011553\nRed exit with backup battery, White\n120/277, 60Hz\n0.71W\n0.92W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "4",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_120v",
+      "value": 0.66,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 G 120/277 EL N M6\n784231011614\nGreen exit with backup battery, White\n120/277, 60Hz\n0.66W\n0.70W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "5",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_277v",
+      "value": 0.69,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 R 120/277 M6\n784231011508\nRed exit, AC only, White\n120/277, 60Hz\n0.62W\n0.69W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "6",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_277v",
+      "value": 0.74,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 G 120/277 M6\n784231011584\nGreen exit, AC only, White\n120/277, 60Hz\n0.62W\n0.74W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "7",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_277v",
+      "value": 0.92,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 R 120/277 EL N M6\n784231011553\nRed exit with backup battery, White\n120/277, 60Hz\n0.71W\n0.92W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "8",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "input_watts_277v",
+      "value": 0.7,
+      "unit": "W",
+      "page": 1,
+      "bbox": null,
+      "quote": "LQM S W 3 G 120/277 EL N M6\n784231011614\nGreen exit with backup battery, White\n120/277, 60Hz\n0.66W\n0.70W\n0.05\n0.06\n270\n6",
+      "variant": null
+    },
+    {
+      "id": "9",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "lumens",
+      "value": "less than one watt",
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "OPTICS:\nLEDs mounted on printed circuit boards. Low energy consumption – less than one watt.",
+      "variant": null
+    },
+    {
+      "id": "11",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "warranty_years",
+      "value": 5.0,
+      "unit": "years",
+      "page": 2,
+      "bbox": null,
+      "quote": "WARRANTY:\n5-year limited warranty. Complete warranty terms located at:  \nwww.acuitybrands.com/support/customer-support/terms-and-conditions",
+      "variant": null
+    },
+    {
+      "id": "12",
+      "product": "LQM Quantum® LED Emergency Exit",
+      "manufacturer": "Lithonia Lighting®",
+      "model": null,
+      "property": "standards",
+      "value": [
+        "UL924",
+        "NFPA 101",
+        "NEC",
+        "OSHA",
+        "FCC Title 47, Part 15, Subpart B"
+      ],
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "Meets \nUL924, NFPA 101 (current Life Safety Code), NEC and OSHA illumination standards. Meets all \napplicable FCC Title 47, Part 15, Subpart B requirements.",
+      "variant": null
+    }
+  ],
+  "document_revision": "Rev. 09/05/19",
+  "note_to_subcontractor": "Please provide the LED rated life (L70) and confirm binning within a 3-step MacAdam Ellipse as required by spec 26 51 00 2.02.S.3 and 2.02.S.6.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 1454,
+      "output_tokens": 48,
+      "cost_usd": 0.000099,
+      "latency_ms": 806,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2815,
+      "output_tokens": 1749,
+      "cost_usd": 0.002419,
+      "latency_ms": 12377,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8526,
+      "output_tokens": 272,
+      "cost_usd": 0.002803,
+      "latency_ms": 4924,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 631,
+      "output_tokens": 243,
+      "cost_usd": 0.000408,
+      "latency_ms": 2571,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 58,
+  "investigation": null,
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 12,
+  "claims_kept": 11,
+  "web_values_read": 3,
+  "web_values_kept": 3
+}

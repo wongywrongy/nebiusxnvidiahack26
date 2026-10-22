@@ -1,6 +1,6 @@
 # First live pass — 2026-10-21
 
-Status: Gates 1–3 accepted and pushed. Gate 4 awaits Kyle’s review of the remaining root causes.
+Status: Gates 1–3 accepted and pushed. On 2026-10-22 Kyle directed “finish all unfinished things”, authorizing continuation past Gate 4 with the recorded limitations disclosed.
 All **four** permitted full live evals are complete: final cases **6/8**, samples **1/4**. No cap/provider
 warnings occurred in either final run. No more full eight-case runs are allowed in this pass.
 
@@ -855,3 +855,28 @@ the review task. No sample required the Investigator.
 Gate 4 remains open: Kyle must accept the written remaining misses or request targeted work. Four full evals
 have been used. A synchronized Tavily dashboard reading/scope was requested against the 280-credit local
 checkpoint; no new reading has arrived. Earlier 15/9000 cannot be reconciled without observation time/scope.
+
+
+## Phase 5 — recording and replay, 2026-10-22
+
+Recording `20261022-181611-a9d0b5` contains c01–c08 and public samples s3/s4, with a cases-only scoreboard.
+The script now runs the union of scoring, tray and watched IDs and refuses to publish an incomplete result set.
+Mock regression checks: **247 passed, 2 skipped in 12.62 s**, eval **8/8**. Web build passed in 5.82 s.
+The live recording preserves the panel **6/8, 5/6, 0/2 major false alarms, 0/5 passing fixes** and quote-gate
+counts 149/185 claims, 27/40 web values. All provider responses were cached: **$0 / 0 fresh credits**.
+The recording is a capture of previously paid live responses, not a new uncached provider benchmark.
+
+`phase5-api.json` proves GET /api/scores serves this run and POST /api/runs/replay returns ten live results.
+`phase5-low-cap.json` proves a zero-day-cap full-tray + watched scan replays all eight public IDs, including
+s3/s4. `phase5-cap-restored.json` proves restoration to the requested Phase 6 caps: $3/run, $8/day, 60/item,
+600 credits/day, concurrency 2. Credentials were neither printed nor changed. Per-file boolean scans for
+both provider keys and the admin token are in `phase5-secret-scan.json`; all were false.
+
+Port 8000 was already occupied by an unrelated ShuttleWorks fixture API (health mode fixture; scores 404).
+That process was left untouched. All local checks use **http://127.0.0.1:8001**. No deployment was made.
+
+Owner dashboard reading received 2026-10-22 during this session: **288 Tavily credits, $1.05 Token Factory**.
+The local pass total at that observation was 291 credits / $1.048778. Token Factory agrees to the dashboard’s
+cent precision. Tavily is three credits lower than the ledger; this equals the three early one-credit estimates
+without reported usage, but causality and account/key scope remain unproven. The ledger was not adjusted.
+The earlier 15/9000 observation lacks a timestamp/scope, so it is not used as a synchronized delta baseline.

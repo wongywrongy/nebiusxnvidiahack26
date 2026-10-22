@@ -1,6 +1,6 @@
 # Gate 4 review — 2026-10-21
 
-**Awaiting Kyle’s acceptance of the remaining root causes.** Four full eight-case live evaluations are complete; no fifth full run will be made. Phases 5–7 have not started.
+**Kyle authorized continuation on 2026-10-22: “finish all unfinished things”.** Proceeding with the documented limitations disclosed; no approval of changed checklists, answer keys or deployment is inferred. Four Phase 4 full evaluations are complete; Phase 5 recording is a separate requested run.
 
 Final cases: `20261021-112213-cb4555`. Samples: `20261021-112328-21358e`.
 
