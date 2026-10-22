@@ -1,13 +1,16 @@
-# First live pass — 2026-10-21
+# First live pass — 2026-10-21–22
 
 Status: Gates 1–3 accepted and pushed. On 2026-10-22 Kyle directed “finish all unfinished things”, authorizing continuation past Gate 4 with the recorded limitations disclosed.
 All **four** permitted full live evals are complete: final cases **6/8**, samples **1/4**. No cap/provider
 warnings occurred in either final run. No more full eight-case runs are allowed in this pass.
 
-**[Compact Gate 4 review and remaining decisions](live-first-pass/gate4-review.md).**
-Latest local ledger: **$1.048778 / 291 Tavily credits**. Console reconciliation is unverified.
-Mock checks: **244 passed, 2 skipped**, eval **8/8**. Reviewed checklists/answer-key expectations unchanged.
-Phases 5–7 and deployment have not begun. Detailed dated evidence follows.
+**[Completion audit](live-first-pass/completion.md)** · **[case roots](live-first-pass/gate4-review.md)** · **[judge screenshots](live-first-pass/judge-walk/README.md)**.
+Final local ledger: **$1.058605 / 298 Tavily credits**. Owner dashboard checkpoint: **$1.05 / 288 credits**,
+versus local **$1.048778 / 291** at that time; cent agreement, unresolved three-credit difference.
+Final mock checks: **247 passed, 2 skipped**, eval **8/8**, presentation checks/build clean.
+Recorded run **20261022-181611-a9d0b5**, full-tray capped replay, public unseen PDF and local smoke verified.
+Reviewed checklists/answer-key expectations unchanged. **Do not deploy on Oct 22:** remaining accuracy and fix limitations are below. No cloud resources were touched.
+Earlier sections are dated checkpoints; the completion audit supersedes their pending-work statements.
 
 ## Setup and baseline
 
@@ -852,9 +855,9 @@ configuration, neither resolved the missing planted problem, and none capped. Fo
 also ran, none capped and none produced a passing fix. This distinguishes “found a document” from resolving
 the review task. No sample required the Investigator.
 
-Gate 4 remains open: Kyle must accept the written remaining misses or request targeted work. Four full evals
-have been used. A synchronized Tavily dashboard reading/scope was requested against the 280-credit local
-checkpoint; no new reading has arrived. Earlier 15/9000 cannot be reconciled without observation time/scope.
+At the end of October 21, Gate 4 awaited review of the written misses. On October 22 Kyle directed
+“finish all unfinished things”; work continued with these limitations disclosed. Four full evals have been used.
+The later owner dashboard reading and its scope/precision limitations are recorded below.
 
 
 ## Phase 5 — recording and replay, 2026-10-22
@@ -880,3 +883,58 @@ The local pass total at that observation was 291 credits / $1.048778. Token Fact
 cent precision. Tavily is three credits lower than the ledger; this equals the three early one-credit estimates
 without reported usage, but causality and account/key scope remain unproven. The ledger was not adjusted.
 The earlier 15/9000 observation lacks a timestamp/scope, so it is not used as a synchronized delta baseline.
+
+
+## Phase 6 — local judge walk, 2026-10-22
+
+The private `.env` now has the requested production spending caps: $3/run, $8/day, 60 Tavily credits/item,
+600/day, concurrency 2; live mode and thinking off. Measured retry quality limits were supplied only to the
+app/recording commands: `MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=24 INVESTIGATE_CREDIT_CAP=30 FIX_CREDIT_CAP=40`.
+No code or `.env` quality defaults were changed. Port 8001 is the documented local substitute for occupied 8000.
+
+A real Chromium walk completed Inbox → Scan → Review → Outcome, saved c01/c03 decisions, pressed
+“Check approved now”, and opened Specs and Scoreboard. Scan `20261022-182245-2b796d` and approved check
+`20261022-182432-6bd04e` were live and fully cached; each left today's ledger at $0 / 0.
+The approved check showed c01 unchanged and the watched TL troffer discontinued, backed by its manufacturer quote.
+No nightly job was run; the page correctly says no nightly re-check has reported.
+
+An official STI SSS Intumescent Sealant PDF, absent from all case/sample inputs, was dropped through the public
+Inbox without an admin header. Upload `u-ccb0ffe5` produced a live approve_with_note with three kept claims,
+no cap/provider warnings and no mock fixture. Source URL, SHA-256, public request/result and screenshots are
+in [the judge walk](live-first-pass/judge-walk/README.md). After the first smoke plus this upload,
+today's ledger was $0.009703 / 7 credits.
+
+The first smoke failed its fresh-provider assertion because c01 was fully cached. One exact Nano triage cache
+entry was preserved outside `.cache/` so the repeat exercised a fresh provider call; no cache directory was
+cleared. Final smoke `20261022-182735-a950f9` passed health/project, bounded live scan, PDF, specs, scores and
+watch checks. The provider repopulated that entry. See `phase6-smoke-initial.txt`,
+`phase6-smoke-cache-preparation.json`, `phase6-smoke.txt` and `phase6-smoke-ledger.json`.
+
+The screenshot audit found and fixed a source-date renderer showing “Invalid Date”, a replacement summary
+calling unknown evidence a failure, and unqualified cached costs/major-only false alarms. Regression checks
+cover source dates and unknown/failed replacement distinction. Before/after screenshots and every remaining
+observed misleading line are listed in the judge walk. No verdict or evidence gate was weakened.
+
+## Final spend and validation — 2026-10-22
+
+| UTC ledger day | Token Factory USD | Tavily credits |
+| --- | ---: | ---: |
+| 2026-10-21 | 1.048778 | 291 |
+| 2026-10-22 | 0.009827 | 7 |
+| **Pass total** | **1.058605** | **298** |
+
+The total remains below $20 / 2,000. Owner console reading was before the final upload/smoke charges, not a
+final invoice check. No ledger adjustment was made for the unexplained three-credit dashboard difference.
+The three earliest search credits remain estimates; subsequent returned provider usage is used when present.
+
+Final regression suite: **247 passed, 2 skipped in 12.42 s**. Final mock eval
+`20261022-183901-964db3`: **8/8 calls, 6/6 problems, 0/2 major false alarms, 2/5 passing fixes**,
+45/48 claims and 19/20 web values kept. `npm run test:presentation` passed; final `npm run build` passed
+in 5.76 s. No fifth Phase 4 eight-case evaluation was run. Phase 5 recording was the separate requested capture.
+
+## Phase 7 — handoff
+
+FEEDBACK contains dated, redacted requests/responses and reproduction steps for observed provider behavior,
+including model casing, JSON mode, no-think fields, tools, latency, host access, credit math and console reading.
+README/SUBMISSION now show the live panel and its limits; no deployment/nightly success is claimed.
+The [completion audit](live-first-pass/completion.md) ranks the open issues and records the final PR.

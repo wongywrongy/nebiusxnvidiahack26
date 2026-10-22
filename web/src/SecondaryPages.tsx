@@ -127,7 +127,7 @@ export function ScoreboardPage({ back }: { back: string }) {
         <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {([
             ['Right call', scores.right_call], ['Planted problems caught', scores.caught],
-            ['Clean packages wrongly flagged', scores.false_alarms], ['Fixes that pass the spec', scores.fixes_passing],
+            ['Major false alarms on clean packages', scores.false_alarms], ['Fixes that pass the spec', scores.fixes_passing],
           ] as const).map(([label, score]) => (
             <div key={label} className="flex flex-col gap-2 border-t border-line py-4">
               <dt className="text-muted">{label}</dt><dd className="font-mono text-2xl">{score.n} <span className="text-sm text-muted">of {score.of}</span></dd>
@@ -157,7 +157,7 @@ export function ScoreboardPage({ back }: { back: string }) {
             </tr>)}</tbody>
           </table>
         </div>
-        <p className="text-xs text-muted">Cost includes model usage and Tavily credits. {scores.mode === 'mock' ? 'Mock values are estimates; no tokens or credits were spent.' : 'Usage and time belong to the recorded run.'}</p>
+        <p className="text-xs text-muted">Cost includes model usage and Tavily credits. {scores.mode === 'mock' ? 'Mock values are estimates; no tokens or credits were spent.' : 'Usage and time belong to the recorded run. Cached cost and credits are usage equivalents, not fresh charges; warm-cache times are not uncached provider latency. Unnecessary notes still count as wrong calls.'}</p>
       </>}
     </>
   )

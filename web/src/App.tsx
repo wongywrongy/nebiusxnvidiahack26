@@ -56,8 +56,10 @@ const NBSP = ' '
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`
 const now = () => `Today ${new Date().toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
-const longDate = (d: string) =>
-  new Date(/^\d{4}-\d\d-\d\d$/.test(d) ? `${d}T00:00` : d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+const longDate = (d: string) => {
+  const parsed = new Date(/^\d{4}-\d\d-\d\d$/.test(d) ? `${d}T00:00` : d)
+  return Number.isNaN(parsed.getTime()) ? d : parsed.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+}
 const ASKS_SEP = ' · '
 const fileName = (c: Case) => c.submittal[0]?.file.split('/').pop() ?? ''
 const fixOf = (r?: Result) => r?.findings.find((f) => f.fix)?.fix ?? null
@@ -530,6 +532,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
             : anyMock ? `; ${credits} Tavily credits include mock estimates` : `; Tavily checked the manufacturers' sites (${credits} credits)` : ''}.
           {' '}{kTokens(tokens)} tokens · {money(cost)} model cost · {seconds(longest)} for the longest item
           {allMock ? ' · estimated counts and cost; no provider calls' : anyMock ? ' · includes estimated counts and cost' : ''}
+          {!anyMock && usage.some((u) => u.cached) && ' · includes cached usage; cached cost and credits are usage equivalents, not fresh charges'}
           {results.some((r) => r.replayed_from) ? ' · replayed items show their original usage and time' : ''}
           {' · '}<a href="#scoreboard" className="underline underline-offset-4 hover:text-ink">Scoreboard</a>
         </p>
@@ -762,7 +765,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
         {result.replayed_from && ' · replayed'}
         {result.evidence_label && ` · archived to ${result.evidence_label}`}
-        <span className="text-faint"> · {mode === 'mock' ? 'estimated ' : ''}{kTokens(tokens)} tokens · {money(cost)} model cost · {seconds(result.duration_ms)}</span>
+        <span className="text-faint"> · {mode === 'mock' ? 'estimated ' : ''}{kTokens(tokens)} tokens · {money(cost)} {mode === 'live' && result.usage.some((u) => u.cached) ? 'equivalent model cost' : 'model cost'} · {seconds(result.duration_ms)}</span>
         <span className="ml-1 text-faint underline decoration-edge underline-offset-2 group-open:hidden">every call</span>
       </summary>
       <div className="mt-2 overflow-hidden rounded-lg border border-line">
@@ -797,6 +800,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
               : 'Live mode: real calls to NVIDIA Nemotron 3 on Nebius Token Factory and to Tavily. Repeats are cached.'
             : 'Mock mode: fixture answers, no API calls; token counts are estimated from text length.'}
           {' '}Models read and quote; every pass/fail is computed in code from the quoted values.
+          {mode === 'live' && result.usage.some((u) => u.cached) && ' Cached rows show original token usage and equivalent cost; they are not billed again.'}
         </p>
       </div>
     </details>
@@ -1062,7 +1066,8 @@ function replacement(fix: Fix | null): [string, boolean] {
   const bad = c.checks.find((k) => k.ok === false) ?? c.checks.find((k) => k.ok === null)
   const name = c.name.split(',')[0].replace(/^(\S+) SpecSeal System No\. /, '$1 ')  // "STI SpecSeal System No. W-L-1079, metallic…" -> "STI W-L-1079"
   const why = bad ? (bad.note || (bad.ok === null ? `${bad.label} not stated` : bad.label)) : ''
-  return [`None passed · ${name}${why ? ` fails on ${why}` : ''}`, false]
+  const reason = !why ? '' : bad?.ok === null ? `; couldn't confirm ${bad.label}` : ` fails on ${why}`
+  return [`None passed · ${name}${reason}`, false]
 }
 
 // When the nightly re-check (scripts/recheck.py as a Nebius Serverless Job) last ran, in one line.

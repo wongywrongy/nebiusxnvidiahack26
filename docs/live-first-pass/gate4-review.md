@@ -17,7 +17,7 @@ The major-false-alarm metric excludes unnecessary notes: c05, s1 and s2 are stil
 Final cases averaged **3.365 s/item** with warm caches and **$0.033602 equivalent/item**. The preceding mixed-cache run averaged **46.159 s/item**, $0.063565 equivalent/item. Samples averaged **62.568 s/item**, $0.035761 equivalent/item. No fully cold eight-case benchmark was performed. Equivalent cost includes cached model usage; it is not fresh billing.
 
 Fresh final-case charge: **$0.024414 / 0 credits**. Fresh sample charge: **$0.042923 / 11 credits**.
-Whole-pass local ledger: **$1.048778 Token Factory / 291 Tavily credits**. Console billing remains unverified. Kyle’s earlier Tavily dashboard observation was **15/9000**, with no timestamp or account/key scope; a synchronized updated reading has been requested.
+October 21 local ledger: **$1.048778 Token Factory / 291 Tavily credits**. On October 22 Kyle read **$1.05 / 288** from the dashboards before new local checks: dollars agree to cents; the three-credit difference remains unexplained. Final pass total after those checks: **$1.058605 / 298**. Exact dashboard time and account/key scope were not supplied; no ledger correction was inferred.
 
 The final cases and samples contain **no cap/provider warnings or error events**. No 429 was observed.
 
@@ -51,12 +51,12 @@ Evidence: [samples-first-diagnosis.json](samples-first-diagnosis.json).
 
 In the final cases, the scripted check triggered **2 primary investigations**: c04 and c06. One returned a quoted document revision (c06’s LDN6 SWW); **0 resolved the missing planted problem**, and exact-configuration identity remains uncertain. The other ended not_found. **0 were capped**. Four additional replacement investigations returned one found document and three not_found; none produced a passing fix, and none was capped. See the separate `investigations` records in the diagnosis JSON. No primary investigation was needed for samples.
 
-## Review decisions still needed
+## Remaining policy and evidence limits
 
-- Accept or reject these case/sample/fix root causes before Phase 5, as required by the Gate 4 rule. This is not an 8/8 result.
+- Kyle authorized continuing through recording and handoff on October 22 with these roots disclosed. This is not an 8/8 result.
 - F04: existing comparison remains conditional on both ratings being present. Making all missing pairs unknown broke the mock panel and was reverted; Kyle’s applicability decision is still pending. Candidate fixes must now demonstrate the original failed requirement independently of that policy.
-- Input excerpt: 6,000 characters remains unchanged. The requested 12,000-character experiment has not been approved or run.
-- Provide synchronized Tavily dashboard usage/scope; Token Factory console billing is still a later owner reading.
+- Input excerpt: 6,000 characters remains unchanged. A larger-excerpt experiment remains future work; no result is claimed.
+- Dashboard precision/scope does not establish an account-wide reconciliation; the three-credit gap remains open.
 
 Reviewed checklists and `data/cases/*.json` expectations are unchanged. No source URL, case-specific branch or expected value was added to live prompts/code. The two corrected mock fixtures use only source text already stored in those fixtures; live routing does not use them.
 
@@ -73,4 +73,4 @@ MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=24 INVESTIGATE_CREDIT_CAP=30 FIX_C
 
 These full-run commands document reproduction; do not execute a fifth full eval in this pass. Retry caps were per-command and are not changed defaults. The local app/recording must use the disclosed limits to reproduce the valid assessment; deployment configuration has not been verified.
 
-Recommendation from this evidence: **do not deploy on Oct 22 yet**. The current app misses c06 and the tray sample s3, adds approval notes to clean items, and has no passing live fixes. Demo replay, judge UI walk, smoke test, new upload, screenshots, FEEDBACK/README final updates and PR are still unverified/uncompleted. No deployment or cloud-resource operation was performed.
+Recommendation from this evidence: **do not deploy on Oct 22 yet**. The current app misses c06 and the tray sample s3, adds approval notes to clean items, and has no passing live fixes. Demo replay, the judge walk, smoke, public upload and screenshots were subsequently verified locally; see the [completion audit](completion.md) for handoff evidence and PR. Those functional checks do not repair the accuracy misses. No deployment or cloud-resource operation was performed.

@@ -2,8 +2,8 @@
 
 **A rejected submittal can delay a construction project for weeks.** SpecCheck reads a subcontractor's product
 submittal, checks it against the project spec, checks the product against the manufacturer's *current* documents on
-the live web, finds a replacement that passes when it doesn't, and keeps watching approved items for the day the
-manufacturer discontinues one. Every finding carries the quote it rests on.
+the live web, searches for checked replacements, and can re-check approved items for manufacturer changes.
+A replacement is suggested only if its checks pass. Every finding carries the quote it rests on.
 
 Built solo for the **Nebius x NVIDIA Global AI Hackathon** (Best Apps and Agents track) by someone who builds
 document pipelines for a general contractor and has watched this problem cost real weeks.
@@ -12,13 +12,12 @@ document pipelines for a general contractor and has watched this problem cost re
 - **Models:** NVIDIA **Nemotron 3 Nano** and **Nemotron 3 Super**, served by **Nebius Token Factory**
 - **Web:** **Tavily** Search, Extract and bounded Map for the manufacturer's current documents
 - **Cloud:** deployment configuration for a **Nebius Serverless Endpoint** and a nightly **Nebius Serverless Job**;
-  deployment and live provider results have not been verified in this checkout
+  deployment remains unverified; the first live provider results are recorded below
 
 **What is implemented:** quoted extraction, deterministic checks, bounded web investigation, checked replacement
 candidates, message drafts, browser-saved review decisions, and the cloud job/archive integrations below.
 Mock mode uses fixtures and makes no provider calls. Messages are drafts: SpecCheck sends no email. Cloud jobs
-check the bundled watch list; browser approvals are re-checked in-process. No live accuracy, cost saving or
-deployment uptime is claimed. [Submission notes and demo script](SUBMISSION.md) collect the evidence and owner TODOs.
+check the bundled watch list; browser approvals are re-checked in-process. The first live results below cover a small known demonstration set. No cost saving or deployment uptime is claimed. [Submission notes and demo script](SUBMISSION.md) collect the evidence and owner TODOs.
 
 ## Where Nemotron and Token Factory do the work
 
@@ -31,7 +30,7 @@ deployment uptime is claimed. [Submission notes and demo script](SUBMISSION.md) 
 | Check reality | **Tavily** + **Nemotron 3 Super** | Tavily finds and fetches the manufacturer's current sheet and any discontinuation notice; Super reads the current values, each with a quote; code diffs them | the web is where the current truth lives |
 | Find a fix | **Tavily** + the same pipeline | for a send-back, searches for the current sheet or a listed system that fits, then runs each candidate through the *same* extract → spec check → web check | nothing is suggested that was not checked |
 | Write the result | **Nemotron 3 Super** | the plain-language summary, the note to the sub, a title and "why it matters" per issue | words only; the findings already stand |
-| Watch approved items | the same pipeline as a **Nebius Serverless Job**, nightly | re-checks approved submittals against the manufacturer's live documents; raises a discontinuation with the maker's own quote and a replacement that passes | the part a human never gets around to |
+| Watch approved items | the same pipeline; local button and optional Serverless Job configuration | re-checks approved submittals and quotes discontinuation evidence; suggests a replacement only if its checks pass | local re-check validated; cloud execution and scheduling unverified |
 
 Structured reads ask for JSON against a Pydantic schema (`response_format: json_schema`, with the `json_object`
 fallback); Investigator turns use native tools without `response_format`. Both use temperature 0 and default to thinking off. `THINKING_TASKS` opts selected tasks into model-default
@@ -48,15 +47,14 @@ map and extract calls, then finish with exact quotes. By default it stops after 
 an eight-credit investigation allowance across each item's checks and fix candidates. Extracted pages stay whole
 for quote verification; the model sees at most 6,000 characters per tool result. Accepted documents go through the
 same value comparison as the scripted check. The Review trace lists each step; the Scan row says "Investigating".
-The s4 Hilti sample demonstrates this offline with an explicitly labelled, hand-written mock fixture.
+The s4 Hilti fixture demonstrates the protocol offline. In the final live eval, two primary investigations ran; one found a quoted revision, neither resolved the missing planted problem, and neither capped. Four replacement investigations also finished without caps; none yielded a passing fix.
 
 The scripted status search combines general and news results, publication dates and an exact quoted model number.
 A separate discontinuation-notice query prefers manufacturer domains when known; results are deduplicated by URL. With no manufacturer-tier hit, one Map call (20 pages, depth 1)
 and one Extract call (up to three links, PDFs first) share a five-credit cap before the Investigator is considered.
-All recovered text passes the same quote checks. These request options follow the Tavily docs and have mocked
-400-response coverage; their live behavior has not been checked.
+All recovered text passes the same quote checks. Live Search, Extract, Map and native model tools were exercised in the [first-pass evidence](docs/live-first-pass.md); blocked hosts and unresolved document identity remain limitations. Mocked 400-response coverage does not imply every error path was observed live.
 
-Owner-only live validation (not run for this change; these commands spend tokens and credits):
+Live validation commands (spend tokens and credits on cache misses; use the disclosed limits below):
 
 ```bash
 python scripts/fetch_docs.py
@@ -68,7 +66,7 @@ SPECCHECK_MODE=live uvicorn api.main:app
 Add Hilti FS-ONE MAX from the tray and Scan. An investigation is expected only if the scripted sources do not
 confirm a revision or values; a successful scripted check skips it. Look for at most six steps per investigation,
 quoted evidence behind any accepted revision/status, `task="investigate"` usage, and an honest capped/unconfirmed
-result if no source can be verified. Live recovery rate and provider compatibility remain unverified.
+result if no source can be verified. Provider compatibility was exercised live; the final primary Investigator resolved 0/2 missing review problems.
 
 ## What the reviewer sees
 
@@ -95,16 +93,46 @@ Lighting), each with a hand-built answer key from the real documents: two clean 
 (T rating below F), one listing that does not cover the penetrant, two out-of-date sheets, one discontinued
 product, and one newer sheet with unchanged values (a note, not a send-back).
 
-| | |
-| --- | --- |
-| right call | 8 of 8 |
-| planted problems caught | 6 of 6 |
-| clean packages wrongly flagged | 0 of 2 |
-| replacements found that pass the spec | 2 of 5 |
+| Panel | Mock baseline | Recorded live run |
+| --- | ---: | ---: |
+| Right calls | 8/8 | **6/8** |
+| Planted problems caught | 6/6 | **5/6** |
+| Major false alarms on clean packages | 0/2 | **0/2** |
+| Passing fixes | 2/5 | **0/5** |
 
-_Mock fixtures, 2026-10-13. `python scripts/record_live.py` runs all eight live and saves them under
-`runs/recorded/`._ `scripts/eval.py` writes `runs/scores.json`; `GET /api/scores` serves it. The table above is
-maintained manually and is not a live result.
+Live run **`20261022-181611-a9d0b5`**, recorded **2026-10-22**, is committed under
+[runs/recorded/](runs/recorded/20261022-181611-a9d0b5/scores.json). It contains c01–c08 and public samples
+s3/s4; the scoreboard is cases-only. All provider responses in this recording were cached from this live pass:
+recording spent **$0 / 0 credits**. Its warm timings and usage-equivalent cost are not fresh-call benchmarks.
+The final evaluation retained 149/185 claims (19.5% dropped) and 27/40 web values (32.5% dropped).
+The separate four-sample live eval scored **1/4**, with 0/2 planted problems caught.
+Unnecessary notes still count as wrong calls even though the major-false-alarm panel is zero.
+
+Local pass spend through the final smoke check: **$1.058605 Token Factory / 298 Tavily credits** across
+October 21–22. At the owner dashboard checkpoint before the final local checks, Token Factory showed **$1.05**
+versus computed $1.048778 (matching to cents); Tavily showed **288** versus ledger **291**, an unresolved
+three-credit difference. Later checks added $0.009827 / 7 credits. This is not an account-wide billing audit.
+[Live notes](docs/live-first-pass.md), [remaining case roots](docs/live-first-pass/gate4-review.md),
+[local judge walk](docs/live-first-pass/judge-walk/README.md), and [provider feedback](FEEDBACK.md).
+
+`GET /api/scores` serves the live scoreboard; `POST /api/runs/replay` plays the recording. A full public tray
+scan was verified to replay when the day cap was zero. The answer key is hand authored and unchanged;
+these results do not establish accuracy on unseen submittals. **The Oct 22 deployment is not recommended:**
+c06 and s3 remain missed, clean items receive unnecessary notes, and no live replacement passed.
+
+Reproduce the validated local configuration (keep API keys in your private `.env`):
+
+```bash
+export MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=24 INVESTIGATE_CREDIT_CAP=30 FIX_CREDIT_CAP=40
+python scripts/record_live.py
+# Port 8000 was occupied by another project during this pass.
+uvicorn api.main:app --host 127.0.0.1 --port 8001
+```
+
+The output/Investigator/fix limits above are measured retry settings, not changed code defaults. The baseline
+used defaults and scored 3/8. Approved checklist rows and every `data/cases/*.json` expectation were preserved.
+Production spending caps in the local `.env` are $3/run, $8/day, 60 credits/item, 600 credits/day, concurrency 2.
+Cloud deployment and nightly execution have not been verified.
 
 ## Run it
 
@@ -143,9 +171,9 @@ The Scan note and result trace label a replay and retain the original usage/time
 presence (true/false only), models, today's spend and `budget: {usd_left, credits_left}`.
 An early model failure shows its reason and a Retry action for that item. Later web, fix or summary failures
 keep the checked findings and explain what couldn't be confirmed. These paths are tested with fixtures/respx;
-live provider behavior remains for the owner to verify.
+live evidence and remaining limitations are in the first-pass notes.
 
-Owner check (uses paid APIs; not run during development):
+Owner check (performed locally in this pass; cache misses spend paid tokens/credits):
 
 ```bash
 SPECCHECK_MODE=live PUBLIC_UPLOADS_LIVE=true uvicorn api.main:app
@@ -308,12 +336,12 @@ sha256, so an uploaded copy of a known document is recognised.
 
 ## Feedback on the tools
 
-[FEEDBACK.md](FEEDBACK.md): dated documentation observations and offline behavior. No row claims a live provider result.
+[FEEDBACK.md](FEEDBACK.md): dated live request/response observations, local reproduction steps, and separately labelled offline evidence.
 
 ## What's next
 
 Add product-type scoping for requirements so emergency units, exit signs, screw-in lamps and remote drivers
-can have their own checks without applying them to every luminaire.
+can have their own checks without applying them to every luminaire. Resolve selected configurations, exact current-document identity, missing F/T applicability, and live replacement retrieval before deployment.
 
 ## License
 

@@ -2,7 +2,7 @@
 
 Prepared for Best Apps and Agents, Nebius x NVIDIA Global AI Hackathon. Owner-provided dates:
 test deployment October 16–17, production October 22, submission Friday October 30, 2026 at 10:00 AM PT;
-judging December 1–15. All implementation validation below is offline. No live provider keys or credits were used.
+judging December 1–15. First live pass completed October 21–22; deployment and nightly cloud execution remain unverified. Live evidence is separate from the offline results below.
 
 ## Submission description
 
@@ -19,14 +19,14 @@ their live deployment is still the owner’s verification step. Review messages 
 
 ## Three-minute demonstration
 
-1. **Inbox:** point out the mode label. Add the six available sample PDFs. In mock mode explain that the
+1. **Inbox:** point out the mode label. Add the seven available tray PDFs. In mock mode explain that the
    product documents are real but the model/web answers are fixtures; no external checks are taking place.
 2. **Scan:** run once. Point out streaming stages and the bounded Investigator on the Hilti sample. Show
    estimated counts in mock mode; quote paid usage only from an actual live trace.
-3. **Review:** show a quoted mismatch, the source PDF and a replacement that passed. Open the trace to show
+3. **Review:** show a quoted mismatch and the source PDF. The live run found no passing replacement; show the unknown candidate checks without claiming success. Open the trace to show
    Nemotron’s reading tasks and code’s verdicts. Edit a message and save the decision; no email is sent.
 4. **Outcome:** show saved return decisions and approvals. Click **Check approved now** to re-check them plus
-   the sample watched troffer. The fixture demonstrates discontinuation evidence and a checked replacement.
+   the sample watched troffer. The live local walk found the watched TL discontinuation. No passing live replacement was found.
 5. **Cloud proof, only after owner validation:** use the secondary job link, then show its real console state,
    matching job-name report and archived source. Do not substitute a fake CLI capture for cloud execution.
 6. Open **Specs** and **Scoreboard** from the header. Explain the two reviewed-section targets, public draft
@@ -42,7 +42,7 @@ cd web && npm run build
 ```
 
 The fixture evaluation yields 8/8 correct calls, 6/6 planted problems caught, 0/2 clean packages falsely flagged
-and 2/5 passing replacements. Quote gates retain 48/48 extracted claims and 19/20 web values: 0% and 5% dropped.
+and 2/5 passing replacements. The current stricter mock quote gates retain 45/48 extracted claims and 19/20 web values: 6.2% and 5% dropped; the original mock baseline retained 48/48.
 These are measured demonstration-set results, not live results or an unseen benchmark. Respx/fake-CLI tests
 cover paid-call boundaries, profile redaction, job create/poll, storage retention and the deployment smoke
 script. Real local Tesseract is exercised when installed. An eight-week soak has not been performed.
@@ -64,4 +64,16 @@ labelled mock and are not a replacement for a real console screenshot.
   per-process budgets are not an account-wide cloud spending limit.
 - Replace the README’s live URL and video placeholders. Check the demo without an admin token, then submit
   the video, repository link, deployment URL and only observed feedback. [FEEDBACK.md](FEEDBACK.md) separates
-  docs review from offline tests. No live accuracy, latency or cost-saving claim is available yet.
+  docs review from offline tests. The known-set live panel is 6/8 calls, 5/6 problems, 0/2 major false alarms and 0/5 passing fixes. No deployment, nightly-execution or cost-saving claim is made.
+
+
+## First live pass — 2026-10-22
+
+Recorded run: `20261022-181611-a9d0b5`, c01–c08 plus all public tray/watched samples, cases-only scoreboard.
+Live cases 6/8; samples 1/4; no passing live fixes. The original mock panel remains 8/8, 6/6, 0/2, 2/5.
+Local walk, public unseen-PDF upload, capped full-tray replay and final smoke passed on port 8001 (8000 was
+occupied by another project). Screenshots and exact commands are in [the judge walk](docs/live-first-pass/judge-walk/README.md).
+The recording reuses cached live provider responses; do not present its warm latency as a cold benchmark.
+Local spend: $1.058605 / 298 Tavily credits. Billing precision/scope limitations and the three-credit dashboard
+difference are documented in [the first-pass notes](docs/live-first-pass.md). Deployment recommendation: **no**
+until the documented currency/configuration misses and replacement limitations are addressed.
