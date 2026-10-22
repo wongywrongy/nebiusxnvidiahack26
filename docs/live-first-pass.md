@@ -938,3 +938,6 @@ FEEDBACK contains dated, redacted requests/responses and reproduction steps for 
 including model casing, JSON mode, no-think fields, tools, latency, host access, credit math and console reading.
 README/SUBMISSION now show the live panel and its limits; no deployment/nightly success is claimed.
 The [completion audit](live-first-pass/completion.md) ranks the open issues and records the final PR.
+
+PR: [#12 — first live pass](https://github.com/wongywrongy/nebiusxnvidiahack26/pull/12), `live/first-pass` → `master`; pushed and open for review.
+No merge or deployment was performed.

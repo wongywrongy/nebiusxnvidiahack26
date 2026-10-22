@@ -92,3 +92,7 @@ for the pass total. Never echo credentials or commit `.env`, `.cache/`, `data/ra
 Final validation: **247 passed, 2 skipped in 12.42 s**; mock eval `20261022-183901-964db3` **8/8**,
 6/6 problems, 0/2 major false alarms, 2/5 fixes; 45/48 claims, 19/20 web values retained.
 Presentation assertions passed and the production web build completed in **5.76 s**.
+
+PR: [#12 — first live pass](https://github.com/wongywrongy/nebiusxnvidiahack26/pull/12), `live/first-pass` → `master`.
+All first-pass code, reviewed checklists, recorded replay, diagnostics and judge captures are committed.
+The PR remains for review; it was not merged or deployed.
