@@ -44,9 +44,13 @@ def test_eq_ref_t_must_equal_f():
     assert f.verdict == "fail" and f.severity == "critical"
 
 
-def test_eq_ref_skipped_when_not_applicable():
+def test_eq_ref_missing_evidence_is_explicit_and_role_scoped():
     r = req(property="t_rating_hr", operator="eq_ref", value="f_rating_hr")
-    assert check([r], [claim("f_rating_hr", 4)]) == []
+    assert check([r], [claim("f_rating_hr", 4)])[0].verdict == "unverified"
+    pending = check([r], [], {"product_data"})
+    assert pending[0].verdict == "pending" and decide(pending) == "approve"
+    missing = check([r], [], {"system_drawing"})
+    assert missing[0].verdict == "unverified" and decide(missing) == "approve_with_note"
     r = req(property="t_rating_hr", operator="eq_ref", value="f_rating_hr", applies_to=["system_drawing"])
     assert check([r], [claim("f_rating_hr", 4)], {"product_data"})[0].verdict == "not_applicable"
 

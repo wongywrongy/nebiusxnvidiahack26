@@ -9,6 +9,7 @@ import json
 from typing import Optional
 
 from ..llm import router
+from ..config import settings
 from ..schemas import Decision, Finding, ReportOut, Usage
 
 FLAGGED = ("fail", "outdated")
@@ -51,4 +52,14 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
             f.title = out.finding_titles[f.id]
         if f.id in out.why_it_matters:
             f.why_it_matters = out.why_it_matters[f.id]
+    # Verdict and coverage statements are templates: generated prose cannot broaden the review.
+    lead = {"approve": "The checked product data can be approved.",
+            "approve_with_note": "The product data can be approved with the clarification notes below.",
+            "send_back": "Revise and resubmit to address the findings below."}[decision]
+    if any(f.verdict == "pending" for f in findings):
+        lead += " Assembly proof remains pending; confirm the listed assembly separately."
+    if settings.live or case_id is not None:
+        out.summary = lead
+        details = [f"{f.title}: {f.detail}" for f in findings if f.verdict not in ("pass", "not_applicable")]
+        out.note_to_subcontractor = lead + ("\n\n" + "\n".join(details) if details else "")
     return out, [usage]

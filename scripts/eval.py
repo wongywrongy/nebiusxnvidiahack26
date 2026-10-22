@@ -27,7 +27,8 @@ from api.pipeline.cases import all_cases, all_samples, mock_ready  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.pipeline.scores import scores  # noqa: E402
 
-async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[str] | None = None) -> int:
+async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[str] | None = None,
+               release_gate: bool = False) -> int:
     run = Run(list(dict.fromkeys([*case_ids, *(extra_ids or [])])), delay_ms=0)
     await execute(run)
     s = scores(run, case_ids)
@@ -53,6 +54,13 @@ async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[
     print(f"  planted problems caught         {ca['n']} of {ca['of']}")
     print(f"  clean packages wrongly flagged  {fa['n']} of {fa['of']}")
     print(f"  fixes that pass the spec        {fx['n']} of {fx['of']}")
+    print(f"  invalid acceptance items        {s['validity']['invalid_items']} of {len(case_ids)}")
+    print(f"  unnecessary notes               {s['unnecessary_notes']['n']}")
+    print(f"  fresh model spend / web credits ${s['run_fresh_spend']['usd']:.6f} / {s['run_fresh_spend']['credits']:g}")
+    print(f"  release gate                    {'passed' if s['release_gate']['passed'] else '; '.join(s['release_gate']['issues'])}")
+    for row in s["rows"]:
+        if not row["valid"]:
+            print(f"  INVALID {row['id']}: " + "; ".join(d["message"] for d in row["diagnostics"]))
     print(f"  average time per submittal      {s['time_ms_per_item'] / 1000:.1f} s")
     print(f"  cost per submittal (model+web)  ${s['cost_usd_per_item']:.4f}" + ("   (mock: estimated token counts)" if not settings.live else ""))
     gate = s["quote_gate"]
@@ -70,7 +78,11 @@ async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[
         print(f"\nwrote {path}")
     # Fails on: a wrong call, a missed problem, a false alarm, or a fix marked "Passes" with any check not passed.
     bad_fix = [c for r in run.results.values() for f in r.findings if f.fix for c in f.fix.candidates
-               if c.passes and not all(k.ok is True for k in c.checks)]
+               if c.passes and (not c.checks or not all(k.ok is True for k in c.checks))]
+    if s["validity"]["invalid_items"]:
+        return 2
+    if release_gate and not s["release_gate"]["passed"]:
+        return 1
     return 0 if rc["n"] == rc["of"] and ca["n"] == ca["of"] and fa["n"] == 0 and not bad_fix else 1
 
 
@@ -78,10 +90,11 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--case", action="append", help="case id, repeatable (default: all)")
     p.add_argument("--samples", action="store_true", help="score the sample inbox instead of the test cases")
+    p.add_argument("--release-gate", action="store_true", help="also require an evidenced replacement and Investigator rescue")
     p.add_argument("--out", "--write", type=Path, help="scoreboard output path (default: runs/scores.json for all cases)")
     args = p.parse_args()
     if args.samples:
         ids = sorted(i for i, s in all_samples().items() if settings.live or mock_ready(s))
     else:
         ids = args.case or sorted(all_cases())
-    sys.exit(asyncio.run(main(ids, args.out)))
+    sys.exit(asyncio.run(main(ids, args.out, release_gate=args.release_gate)))

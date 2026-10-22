@@ -26,6 +26,16 @@ class Ledger:
         self.usd = 0.0
         self.credits: dict[str, float] = {}  # item id -> Tavily credits
         self.investigation_credits: dict[str, float] = {}
+        self.fresh_usd: dict[str, float] = {}
+        self.fresh_credits: dict[str, float] = {}
+        self.accounting_issues: dict[str, list[str]] = {}
+
+
+def unknown_usage(reason: str) -> None:
+    if led := LEDGER.get():
+        issues = led.accounting_issues.setdefault(ITEM.get(), [])
+        if reason not in issues:
+            issues.append(reason)
 
 
 LEDGER: ContextVar[Optional[Ledger]] = ContextVar("ledger", default=None)
@@ -91,6 +101,8 @@ def charge_usd(usd: float, real: bool) -> None:
     if led := LEDGER.get():
         led.usd += usd
     if real:
+        if led := LEDGER.get():
+            led.fresh_usd[ITEM.get()] = round(led.fresh_usd.get(ITEM.get(), 0.0) + usd, 6)
         _add_today(usd=usd)
 
 
@@ -113,4 +125,6 @@ def charge_credits(n: float, real: bool) -> None:
         item = ITEM.get()
         led.credits[item] = led.credits.get(item, 0.0) + n
     if real:
+        if led := LEDGER.get():
+            led.fresh_credits[ITEM.get()] = led.fresh_credits.get(ITEM.get(), 0.0) + n
         _add_today(credits=n)

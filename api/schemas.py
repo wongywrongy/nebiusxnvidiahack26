@@ -140,7 +140,7 @@ class Highlight(BaseModel):
 
 
 Check = Literal["spec", "currency", "validity", "status", "completeness"]
-Verdict = Literal["pass", "fail", "outdated", "unverified", "note", "not_applicable"]
+Verdict = Literal["pass", "fail", "outdated", "unverified", "note", "not_applicable", "pending"]
 Severity = Literal["critical", "major", "minor", "info"]
 Decision = Literal["approve", "approve_with_note", "send_back"]
 
@@ -152,7 +152,7 @@ class Compare(BaseModel):
     left_value: Value = None
     right_label: str
     right_value: Value = None
-    verdict: Literal["fail", "pass", "changed"]
+    verdict: Literal["fail", "pass", "changed", "unverified"]
     rows: list[CompareRow] = []  # currency: only the fields whose values differ
 
 
@@ -160,6 +160,8 @@ class FixCheck(BaseModel):
     label: str
     ok: Optional[bool]  # None: not stated in the candidate's document
     note: str = ""
+    requirement_id: Optional[str] = None
+    evidence: list[Evidence] = []
 
 
 class FixCandidate(BaseModel):
@@ -257,6 +259,12 @@ class Investigation(BaseModel):
     _document_title: str = PrivateAttr(default="")
 
 
+class Diagnostic(BaseModel):
+    stage: str
+    kind: Literal["budget", "provider", "output_limit", "internal"]
+    message: str
+
+
 class Result(BaseModel):
     case_id: str
     title: str
@@ -274,6 +282,12 @@ class Result(BaseModel):
     mode: Optional[Literal["mock", "live"]] = None
     replayed_from: Optional[str] = None
     warnings: list[str] = []
+    diagnostics: list[Diagnostic] = []
+    validity: Literal["valid", "invalid", "legacy"] = "legacy"
+    config_hash: Optional[str] = None
+    fresh_model_cost_usd: float = 0.0
+    fresh_web_credits: float = 0.0
+    queue_ms: int = 0
     ocr_pages: int = 0
     archived_submittals: list[str] = []
     evidence_label: Optional[str] = None

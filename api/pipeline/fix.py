@@ -93,10 +93,10 @@ VERIFY_LABEL = {
 
 
 def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
-    ok: Optional[bool] = {"pass": True, "note": True, "unverified": None}.get(f.verdict, False)
+    ok: Optional[bool] = {"pass": True, "note": True, "unverified": None, "pending": None}.get(f.verdict, False)
     r = reqs.get(f.requirement_id or "")
     right = f.compare.right_value if f.compare else None
-    if f.verdict == "unverified":
+    if f.verdict in ("unverified", "pending"):
         note = "not stated"
     elif f.id == "status-discontinued":
         note = "discontinued"
@@ -107,7 +107,7 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
         if r and r.operator == "eq_ref":
             note = f"{spec_check.SHORT.get(r.property, '')} {note}".strip()  # "T 0 hr"
     label = spec_check._label(r.property) if r else VERIFY_LABEL.get(f.id, f.title)
-    return FixCheck(label=label, ok=ok, note=note)
+    return FixCheck(label=label, ok=ok, note=note, requirement_id=f.requirement_id, evidence=f.evidence)
 
 
 async def _fix(case: dict, group: str, flagged: list[Finding], requirements: list[Requirement], claims: ClaimsOut,
@@ -174,7 +174,12 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
             if original.requirement_id in reqs and original.requirement_id not in checked:
                 req = reqs[original.requirement_id]
                 checks.append(FixCheck(label=spec_check._label(req.property), ok=None,
+                                       requirement_id=req.id,
                                        note="No quoted evidence that this corrects the failed requirement"))
+            elif original.requirement_id:
+                for check in checks:
+                    if check.requirement_id == original.requirement_id and check.ok is None:
+                        check.note = "No quoted evidence that this corrects the failed requirement"
         cands.append(FixCandidate(
             name=r.get("title") or cl.product, source_url=r["url"], checks=checks, passes=bool(checks) and all(k.ok is True for k in checks),
         ))

@@ -71,7 +71,10 @@ def test_c04_sti_fails_on_t_rating(run):
 
 
 def test_fix_names_the_current_documents(run):
-    assert "Rev B" in fixes(run.results["c03"])[0].suggest
+    current = fixes(run.results["c03"])[0]
+    assert "Rev B" in current.candidates[0].name
+    assert not current.suggest  # Current product data still needs the pending assembly proof.
+    assert any(c.ok is None and c.label == "Temperature rating (T)" for c in current.candidates[0].checks)
     assert "BLT 2x4" in fixes(run.results["c07"])[0].suggest
     c06 = fixes(run.results["c06"])[0]  # the 2025 sheet doesn't state CRI, dimming, warranty or DLC
     assert not c06.suggest and "04/11/25" in c06.candidates[0].name

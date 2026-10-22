@@ -119,6 +119,15 @@ def _reasoning_tokens(resp: dict) -> int:
     return int(details.get("reasoning_tokens") or 0)
 
 
+def _token_usage(resp: dict) -> tuple[int, int]:
+    usage = resp.get("usage") or {}
+    values = tuple(usage.get(k) for k in ("prompt_tokens", "completion_tokens"))
+    if not all(type(n) is int and n >= 0 for n in values):
+        budget.unknown_usage("Token Factory did not report valid usage; fresh spend is incomplete")
+        return 0, 0
+    return values
+
+
 async def _create(**body) -> dict:
     for attempt in range(RATE_LIMIT_RETRIES + 1):
         try:
@@ -187,12 +196,11 @@ async def _once(task, messages, schema, retry_note=None, thinking: Optional[str]
             raise
         fmt = "json_object"
         resp, kept = await _create_no_think(no_think, **body, response_format={"type": "json_object"})
-    tin = (resp.get("usage") or {}).get("prompt_tokens", 0)
-    tout = (resp.get("usage") or {}).get("completion_tokens", 0)
+    tin, tout = _token_usage(resp)
+    budget.charge_usd(cost(model, tin, tout), real=True)  # Charge before optional metadata or answer parsing.
     usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout, cost_usd=cost(model, tin, tout),
                   latency_ms=int((time.perf_counter() - t0) * 1000), format=fmt, reasoning_tokens=_reasoning_tokens(resp),
                   thinking="off" if kept else ("on" if thinking == "on" else "server-default"))
-    budget.charge_usd(usage.cost_usd, real=True)  # paid even if the reply is invalid
     log.info("%s model=%s in=%d out=%d reasoning=%d ms=%d cost=$%.6f format=%s thinking=%s", task, model, tin, tout,
              usage.reasoning_tokens, usage.latency_ms, usage.cost_usd, fmt, usage.thinking)
     choice = resp["choices"][0]
@@ -204,6 +212,9 @@ async def _once(task, messages, schema, retry_note=None, thinking: Optional[str]
                             f"{usage.reasoning_tokens} of {tout} output tokens were reasoning")
     obj = schema.model_validate(json.loads(extract_json(_reply_text(choice))))
     cache.put("llm", key, {"obj": obj.model_dump(), "usage": usage.model_dump()})
+    if retry_note:
+        # A successful repair also answers the original request; repeats should not pay to repair it again.
+        cache.put("llm", {**key, "messages": msgs[:-1]}, {"obj": obj.model_dump(), "usage": usage.model_dump()})
     return obj, usage
 
 
@@ -228,13 +239,12 @@ async def chat_tools(task: str, messages: list[dict[str, Any]], tools: list[dict
     budget.check_usd((len(json.dumps(body)) / 2 * pin + settings.max_output_tokens * pout) / 1e6, real=True)
     t0 = time.perf_counter()
     resp, kept = await _create_no_think(no_think, **body)
-    tin = (resp.get("usage") or {}).get("prompt_tokens", 0)
-    tout = (resp.get("usage") or {}).get("completion_tokens", 0)
+    tin, tout = _token_usage(resp)
+    budget.charge_usd(cost(model, tin, tout), real=True)
     usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout,
                   cost_usd=cost(model, tin, tout), latency_ms=int((time.perf_counter() - t0) * 1000),
                   format="tools", thinking="off" if kept else ("on" if thinking == "on" else "server-default"),
                   reasoning_tokens=_reasoning_tokens(resp))
-    budget.charge_usd(usage.cost_usd, real=True)
     log.info("%s model=%s in=%d out=%d ms=%d cost=$%.6f format=tools", task, model, tin, tout,
              usage.latency_ms, usage.cost_usd)
     try:

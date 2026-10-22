@@ -38,7 +38,7 @@ interface Evidence { url: string; tier: string; title: string; retrieved_at?: st
 export interface Finding {
   id: string
   check: string
-  verdict: 'pass' | 'fail' | 'outdated' | 'unverified' | 'note' | 'not_applicable'
+  verdict: 'pass' | 'fail' | 'outdated' | 'unverified' | 'note' | 'not_applicable' | 'pending'
   severity: 'critical' | 'major' | 'minor' | 'info'
   title: string
   detail: string
@@ -54,14 +54,14 @@ export interface Finding {
   fix?: Fix | null
 }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
-interface FixCheck { label: string; ok: boolean | null; note: string }
+interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
 interface FixCandidate { name: string; source_url: string; checks: FixCheck[]; passes: boolean }
 export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
 export interface Compare {
   left_label: string; left_value: Value; right_label: string; right_value: Value
-  verdict: 'fail' | 'pass' | 'changed'; rows: CompareRow[]
+  verdict: 'fail' | 'pass' | 'changed' | 'unverified'; rows: CompareRow[]
 }
 export interface CompareRow { property: string; label: string; submitted: string | null; current: string | null; changed: boolean }
 // One model call (api/schemas.py Usage). thinking: live only, whether the server was asked not to think.
@@ -96,6 +96,9 @@ export interface Result {
   mode?: 'mock' | 'live' | null
   replayed_from?: string | null
   warnings?: string[]
+  diagnostics?: { stage: string; kind: string; message: string }[]
+  validity?: 'valid' | 'invalid' | 'legacy'
+  fresh_model_cost_usd?: number; fresh_web_credits?: number; queue_ms?: number
   ocr_pages?: number
   evidence_label?: string | null
   archived_submittals?: string[]
@@ -132,8 +135,13 @@ export interface Scores {
     claims_drop_rate: number | null; web_values_drop_rate: number | null }
   mode: Project['mode']; generated_at: string; run_id: string; models: Record<string, string>
   right_call: Score; caught: Score; false_alarms: Score; fixes_passing: Score
+  validity?: { invalid_items: number; requested_items: number }
+  unnecessary_notes?: Score
+  fresh_model_cost_usd?: number; fresh_web_credits?: number
+  release_gate?: { passed: boolean; issues: string[] }
   rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]
     decision?: Decision; found_problems?: string[]; error?: boolean; right_call?: boolean
+    valid?: boolean; diagnostics?: { stage: string; message: string }[]
     fix?: { suggest: string | null; passes: boolean; candidates: number } | null
     time_ms?: number; cost_usd?: number }[]
 }

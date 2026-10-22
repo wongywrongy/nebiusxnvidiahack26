@@ -558,7 +558,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
                   : l ? (
                     <span className="flex min-w-0 flex-col items-start gap-1">
                       <Pill d={l.result.decision} />
-                      <span className="w-full truncate text-xs text-muted" title={l.result.summary}>{l.result.summary}</span>
+                      <span className="w-full truncate text-xs text-muted" title={reviewSummary(l.result)}>{reviewSummary(l.result)}</span>
                     </span>
                   ) : (
                     <span className="flex min-w-0 flex-col gap-2">
@@ -630,10 +630,20 @@ function asks(r: Result, section: string): string[] {
 function returnNote(c: Case, r: Result, best?: { name: string }): string {
   return [
     `Revise and resubmit ${c.number ?? c.title}.`,
-    r.summary,
+    reviewSummary(r),
     `Please send:\n${asks(r, c.section).map((a) => `- ${a.charAt(0).toLowerCase()}${a.slice(1)}`).join('\n')}`,
     ...(best ? [`Suggested replacement: ${best.name}.`] : []),
   ].join('\n\n')
+}
+
+function approvalNote(c: Case, r: Result): string {
+  const note = !r.validity || r.validity === 'legacy' ? reviewSummary(r) : r.note_to_subcontractor || r.summary
+  return `Please review ${c.number ?? c.title} for approval.\n\n${note}`
+}
+
+function reviewSummary(r: Result): string {
+  if (r.validity && r.validity !== 'legacy') return r.summary
+  return 'Historical result. Evidence coverage has not been evaluated under the current review rules.'
 }
 
 // Web checks as rows of the one check table: Required is what the maker publishes today.
@@ -665,9 +675,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
   const who = c.from ?? 'sender'
   const draft = (a: Act) => a === 'return'
     ? returnNote(c, result, best)
-    : result.decision === 'approve'
-      ? `No exceptions taken. Forwarding ${c.number ?? c.title} for approval.`
-      : `Please review ${c.number ?? c.title} for approval with the following note.\n\n${result.note_to_subcontractor || result.summary}`
+    : approvalNote(c, result)
   const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
   const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
   const web = result.findings.filter((f) => WEB.has(f.check))
@@ -687,7 +695,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
           <span className="text-xs text-muted"><span className="font-mono">{c.number ?? 'Upload'}</span> · {at} of {of} · from {c.from ?? 'you'}</span>
           <h2 className="text-lg font-semibold leading-tight">{c.title}</h2>
           <span className="flex items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Saved: {call.act === 'return' ? 'return decision' : 'approval decision'}</span>}</span>
-          <p className="text-base text-soft">{result.summary}</p>
+          <p className="text-base text-soft">{reviewSummary(result)}</p>
         </div>
 
         <div className="flex flex-col gap-2">

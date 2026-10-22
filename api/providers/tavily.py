@@ -46,6 +46,8 @@ def map_credits(pages: int, instructions: Optional[str] = None) -> int:
 
 def _credits(response: dict, estimate: int) -> int:
     n = (response.get("usage") or {}).get("credits")
+    if type(n) is not int or n < 0:
+        budget.unknown_usage("Tavily did not report valid usage; credits are estimated")
     return n if type(n) is int and n >= 0 else estimate
 
 
@@ -96,7 +98,6 @@ async def _cached(ns: str, key: dict, estimate: int, call, credits_of) -> tuple[
     budget.reserve_credits(estimate, real=True)
     results = await call()
     spent = credits_of(results)
-    budget.charge_credits(spent, real=True)
     log.info("%s credits=%d results=%d", ns, spent, len(results))
     cache.put(ns, key, results)
     return results, spent
@@ -116,6 +117,7 @@ async def search(query: str, include_domains: Optional[list[str]] = None, depth:
     async def call():
         resp = await _post("/search", {**body, "include_usage": True})
         paid.append(_credits(resp, search_credits(depth)))
+        budget.charge_credits(paid[-1], real=True)
         return [{"url": r["url"], "title": r.get("title", ""), "content": r.get("content", ""),
                  **({"published_date": r["published_date"]} if "published_date" in r else {})}
                 for r in resp.get("results", [])]
@@ -130,7 +132,8 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
     async def call():
         resp = await _post("/extract", {"urls": urls, "extract_depth": depth, "include_usage": True})
         returned = resp.get("results", [])
-        paid.append(_credits(resp, extract_credits(len(returned), depth)))
+        paid.append(_credits(resp, extract_credits(len(returned) if isinstance(returned, list) else len(urls), depth)))
+        budget.charge_credits(paid[-1], real=True)
         got = [{"url": r["url"], "raw_content": r.get("raw_content") or ""} for r in returned
                if r.get("raw_content") and not _pdf_syntax(r["raw_content"])]
         if len(got) < len(returned):
@@ -174,7 +177,9 @@ async def map(url: str, instructions: Optional[str] = None, limit: Optional[int]
         body = {"url": url, "limit": limit, "max_depth": max_depth, "include_usage": True,
                 **({"instructions": instructions} if instructions else {})}
         resp = await _post("/map", body)
-        paid.append(_credits(resp, map_credits(min(limit, len(resp.get("results", []))), instructions)))
+        returned = resp.get("results")
+        paid.append(_credits(resp, map_credits(min(limit, len(returned)) if isinstance(returned, list) else limit, instructions)))
+        budget.charge_credits(paid[-1], real=True)
         return resp.get("results", [])[:limit]  # cap even if the server ignores limit
 
     key = {"url": url, "i": instructions, "limit": limit, "depth": max_depth}

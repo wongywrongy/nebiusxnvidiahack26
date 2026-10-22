@@ -5,6 +5,7 @@ import pytest
 
 from api.config import settings
 from api.pipeline.cases import all_cases, all_samples
+from api.schemas import Result
 
 
 def test_extra_items_run_without_entering_the_scoreboard(monkeypatch, tmp_path):
@@ -39,7 +40,8 @@ def test_record_includes_public_samples_and_rejects_incomplete_runs(monkeypatch,
         folder = settings.runs_dir / "test-recording" / "results"
         folder.mkdir(parents=True)
         for cid in set(case_ids + extra_ids) - ({"s4"} if omit_sample else set()):
-            (folder / f"{cid}.json").write_text("{}")
+            (folder / f"{cid}.json").write_text(Result(case_id=cid, title=cid, decision="approve", summary="",
+                                                     findings=[], validity="valid", mode="live").model_dump_json())
         settings.scores_file.write_text(json.dumps({"run_id": "test-recording", "rows": case_ids}))
         return 1  # Honest wrong calls must not prevent recording a complete live run.
 
@@ -53,3 +55,24 @@ def test_record_includes_public_samples_and_rejects_incomplete_runs(monkeypatch,
         folder = settings.recorded_dir / "test-recording"
         assert {p.stem for p in (folder / "results").glob("*.json")} >= {*all_cases(), "s3", "s4"}
         assert json.loads((folder / "scores.json").read_text())["rows"] == sorted(all_cases())
+
+
+def test_record_rejects_invalid_public_sample(monkeypatch, tmp_path):
+    from scripts import record_live
+    monkeypatch.setenv("SPECCHECK_MODE", "mock")
+    monkeypatch.setattr(settings, "runs_dir", tmp_path / "runs")
+    monkeypatch.setattr(settings, "scores_file", tmp_path / "scores.json")
+    monkeypatch.setattr(settings, "recorded_dir", tmp_path / "recorded")
+    async def scoreboard(case_ids, *, extra_ids):
+        folder = settings.runs_dir / "invalid-sample" / "results"
+        folder.mkdir(parents=True)
+        for cid in set(case_ids + extra_ids):
+            result = Result(case_id=cid, title=cid, decision="approve", summary="", findings=[], mode="live",
+                            validity="invalid" if cid == "s3" else "valid")
+            (folder / f"{cid}.json").write_text(result.model_dump_json())
+        settings.scores_file.write_text(json.dumps({"run_id": "invalid-sample"}))
+        return 0
+    monkeypatch.setattr(record_live, "scoreboard", scoreboard)
+    with pytest.raises(SystemExit, match="invalid acceptance evidence for s3"):
+        record_live.record()
+    assert not settings.recorded_dir.exists()

@@ -150,7 +150,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                 id=f"{r.check}-{r.id}",
                 check=r.check,
                 verdict=verdict,
-                severity="info" if verdict in ("pass", "not_applicable") else (severity or r.severity),
+                severity="info" if verdict in ("pass", "not_applicable", "pending") else (severity or r.severity),
                 title=title,
                 detail=detail,
                 requirement_id=r.id,
@@ -158,7 +158,8 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                 claim_ids=[claim.id, *related] if claim else [],
                 spec_ref=ref,
                 compare=Compare(left_label=left_label, left_value=left if left is not None else _wanted(r),
-                                right_label=right_label, right_value=shown, verdict="pass" if verdict == "pass" else "fail"),
+                                right_label=right_label, right_value=shown,
+                                verdict="unverified" if verdict in ("unverified", "pending") else "pass" if verdict == "pass" else "fail"),
             )
 
         if r.applies_to and roles and not set(r.applies_to) & roles:
@@ -170,7 +171,15 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             continue
 
         if r.operator == "eq_ref" and (claim is None or not by_prop.get(str(r.value))):
-            continue  # conditional comparison requires both values; pending checklist applicability review
+            assembly = {r.property, str(r.value)} == {"t_rating_hr", "f_rating_hr"}
+            product_only = roles and "product_data" in roles and not roles & {"system_drawing", "listing", "test_report"}
+            if assembly and product_only:
+                findings.append(make("pending", "Pending assembly proof",
+                                     "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately."))
+            else:
+                findings.append(make("unverified", f"Not stated: {_label(r.property)}",
+                                     "Both quoted ratings are needed for this comparison.", severity="minor"))
+            continue
 
         if claim is None:
             if variants:

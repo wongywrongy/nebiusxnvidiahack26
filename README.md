@@ -100,6 +100,10 @@ product, and one newer sheet with unchanged values (a note, not a send-back).
 | Major false alarms on clean packages | 0/2 | **0/2** |
 | Passing fixes | 2/5 | **0/5** |
 
+The table preserves the dated first-pass baseline. The 2026-10-22 readiness regressions still make 8/8 mock
+decisions, with **1/5 passing fixes**: pending assembly proof now blocks an unsupported replacement pass.
+See the [readiness implementation ledger](docs/judge-readiness.md) for current gates and validation.
+
 Live run **`20261022-181611-a9d0b5`**, recorded **2026-10-22**, is committed under
 [runs/recorded/](runs/recorded/20261022-181611-a9d0b5/scores.json). It contains c01–c08 and public samples
 s3/s4; the scoreboard is cases-only. All provider responses in this recording were cached from this live pass:

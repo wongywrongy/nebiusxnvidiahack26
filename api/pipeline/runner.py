@@ -21,10 +21,10 @@ from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
 from ..config import FORCE_MOCK, redact, settings
-from .. import archive
+from .. import archive, readiness
 from ..providers import ProviderError, budget, failure_reason
 from ..providers.budget import BudgetExceeded
-from ..schemas import Event, Investigation, ReportOut, Requirement, Result, Usage
+from ..schemas import Diagnostic, Event, Investigation, ReportOut, Requirement, Result, Usage
 from . import decide, extract, fix, metrics, spec_check, verify
 from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages, submittal_pdfs
@@ -48,11 +48,14 @@ class Run:
         self.delay_ms = settings.mock_stage_delay_ms if delay_ms is None else delay_ms
         self.events: list[Event] = []
         self.results: dict[str, Result] = {}
+        self.attempts: dict[str, dict] = {}
+        self.manifest = readiness.manifest()
         self.done = asyncio.Event()
         self._subscribers: list[asyncio.Queue] = []
         self._t0 = time.perf_counter()
         self.dir = settings.runs_dir / self.id
         (self.dir / "results").mkdir(parents=True, exist_ok=True)
+        (self.dir / "manifest.json").write_text(json.dumps(self.manifest, indent=2))
         ACTIVE_RUNS.add(self.id)
         if replay_of:
             REPLAY_READERS[replay_of] += 1
@@ -97,6 +100,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     usage: list[Usage] = []
     investigations: list[Investigation] = []
     warnings: list[str] = []
+    diagnostics: list[Diagnostic] = []
     counts = dict.fromkeys(metrics.FIELDS, 0)
     count_token = metrics.COUNTS.set(counts)
 
@@ -106,11 +110,15 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     async def warn(stage: str, reason: str):
         message = f"{stage}: {reason}; couldn't confirm"
         warnings.append(message)
+        kind = "budget" if re.search(r"budget|cap", reason, re.I) else "output_limit" if "cut off" in reason else "provider"
+        diagnostics.append(Diagnostic(stage=stage, kind=kind, message=redact(reason)))
         run.emit(stage.split(".")[0], message, case_id, data={"warning": True, "stage": stage})
     budget.ITEM.set(case_id)  # this task's own context: credit caps are per item
     FORCE_MOCK.set(case_id in run.mock)
     async with sem:
         t0 = time.perf_counter()
+        queue_ms = int((t0 - run._t0) * 1000)
+        stage = "ingest"
         spec = all_specs()[case["section"]]
         fx = case.get("fixture", case_id)  # which recorded answers mock mode uses; None for an unknown upload
         try:
@@ -122,11 +130,13 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             await run.pause()
 
             run.emit("triage", "Sorting pages", case_id, settings.models["triage"])
+            stage = "triage"
             labels, u = await extract.triage(fx, pages)
             usage.append(u)
             await run.pause()
 
             run.emit("extract", "Comparing to the spec", case_id, settings.models["extract"])
+            stage = "extract"
             spec_text = await load_spec_text(case["section"], spec)
             reqs, u = await extract.requirements_for(case["section"], spec_text)
             if u:
@@ -140,13 +150,16 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             usage.append(u)
 
             run.emit("spec_check", "Checking each requirement", case_id, "code")
-            findings = spec_check.check(requirements, claims.claims, {d["role"] for d in case["submittal"]})
+            stage = "spec_check"
+            roles = {d["role"] for d in case["submittal"]} | {p.kind for p in labels.pages}
+            findings = spec_check.check(requirements, claims.claims, roles)
             await run.pause()
 
             tally = {v: sum(f.verdict == v for f in findings) for v in ("pass", "fail", "unverified")}
             run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
                      data={"spec": tally})
             try:
+                stage = "verify"
                 vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating, on_warning=warn)
                 usage += u
                 if inv is not None:
@@ -164,6 +177,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             if decision == "send_back":
                 run.emit("fix", "Finding a fix", case_id, f"tavily + {settings.models['verify']}", data={"web": web})
                 try:
+                    stage = "fix"
                     u, fix_credits = await fix.find_fixes(case, requirements, claims, findings,
                                                           settings.fix_max_candidates, settings.fix_credit_cap,
                                                           investigations=investigations, on_step=investigating, on_warning=warn)
@@ -178,6 +192,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             run.emit("report", "Writing the result", case_id, settings.models["write"],
                      data={"web": web, **({"fix": fixed.head} if fixed else {})})
             try:
+                stage = "report"
                 rep, u = await decide.report(fx, case["title"], decision, findings)
                 usage += u
             except (BudgetExceeded, ProviderError) as e:
@@ -204,6 +219,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                     except OSError:
                         warnings.append("Could not archive the submittal PDF.")
             archived = archived_submittals or any(e.archived_path for f in findings for e in f.evidence)
+            for reason in run.ledger.accounting_issues.get(case_id, []):
+                diagnostics.append(Diagnostic(stage="accounting", kind="provider", message=reason))
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
                 comparison=rows, claims=claims.claims, document_revision=claims.document_revision,
@@ -211,6 +228,10 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 duration_ms=int((time.perf_counter() - t0) * 1000),
                 investigation=investigation,
                 mode="live" if settings.live else "mock", warnings=warnings,
+                diagnostics=diagnostics, validity="invalid" if diagnostics else "valid", queue_ms=queue_ms,
+                config_hash=run.manifest["config_hash"],
+                fresh_model_cost_usd=run.ledger.fresh_usd.get(case_id, 0.0),
+                fresh_web_credits=run.ledger.fresh_credits.get(case_id, 0.0),
                 ocr_pages=len(ocr_pages),
                 archived_submittals=archived_submittals, evidence_label=settings.evidence_label if archived else None,
                 **counts,
@@ -223,9 +244,20 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             return result
         except Exception as e:  # keep the other cases running
             reason = failure_reason(e)
+            diagnostics.append(Diagnostic(stage=stage, kind="budget" if isinstance(e, BudgetExceeded) else
+                                          "provider" if isinstance(e, ProviderError) else "internal", message=reason))
             run.emit("error", reason, case_id, data={"reason": reason})
             raise
         finally:
+            for reason in run.ledger.accounting_issues.get(case_id, []):
+                diagnostic = Diagnostic(stage="accounting", kind="provider", message=reason)
+                if diagnostic not in diagnostics:
+                    diagnostics.append(diagnostic)
+            run.attempts[case_id] = {"duration_ms": int((time.perf_counter() - t0) * 1000), "queue_ms": queue_ms,
+                                     "fresh_model_cost_usd": run.ledger.fresh_usd.get(case_id, 0.0),
+                                     "fresh_web_credits": run.ledger.fresh_credits.get(case_id, 0.0),
+                                     "diagnostics": [d.model_dump() for d in diagnostics]}
+            (run.dir / "attempts.json").write_text(json.dumps(run.attempts, indent=2))
             metrics.COUNTS.reset(count_token)
 
 
