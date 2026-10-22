@@ -57,6 +57,6 @@ Validation in this session:
 
 Mock evaluation fresh charges: **$0 / 0 credits**. Actual date ledgers remain October 21 **$1.048778 / 291** and October 22 **$0.009827 / 7**; cumulative **$1.058605 / 298**. No fresh provider calls were made for G1.
 
-G1 adds typed invalidity, failed-attempt time/spend, fresh versus usage-equivalent reporting, guarded recording of every public item, manifests hashing runtime settings/code/checklists/input keys, and PR/image regression workflows with pinned dependency constraints. GitHub checks must pass on the pushed commit; local checks do not certify the remote runner.
+G1 adds typed invalidity, failed-attempt time/spend, fresh versus usage-equivalent reporting, guarded recording of every public item, manifests hashing runtime settings/code/checklists/answer-key inputs, and PR/image regression workflows with pinned dependency constraints. [GitHub checks passed for implementation commit `2fcc0d0`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/39842769408), including clean dependency installation, pytest, mock eval, presentation checks and web build on Node 22.
 
 G1 does **not** establish new live accuracy, a passing live replacement, an Investigator rescue, durable campaign reservations, browser journey coverage or deployment readiness. The release gate therefore remains closed. The historical dashboard discrepancy is still unresolved; no billing ledger has been adjusted.
