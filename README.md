@@ -8,7 +8,7 @@ A replacement is suggested only if its checks pass. Every finding carries the qu
 Built solo for the **Nebius x NVIDIA Global AI Hackathon** (Best Apps and Agents track) by someone who builds
 document pipelines for a general contractor and has watched this problem cost real weeks.
 
-- **Live demo:** _URL on the Devpost page_ · **Video:** _YouTube link_ · **License:** MIT
+- **Demo/test-build link:** pending · **Public YouTube link:** pending · **License:** [MIT](LICENSE)
 - **Models:** NVIDIA **Nemotron 3 Nano** and **Nemotron 3 Super**, served by **Nebius Token Factory**
 - **Web:** **Tavily** Search, Extract and bounded Map for the manufacturer's current documents
 - **Cloud:** deployment configuration for a **Nebius Serverless Endpoint** and a nightly **Nebius Serverless Job**;

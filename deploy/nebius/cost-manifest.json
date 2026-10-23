@@ -276,7 +276,8 @@
     "private_filesystem_retention_until_utc": null,
     "maximum_approved_cloud_usd": null,
     "owner_approval": null,
-    "public_ip_egress_tax_price_bound": null
+    "public_ip_egress_tax_price_bound": null,
+    "judge_access_and_funding_plan": null
   },
   "tested_local_candidate_image": {
     "tag": "speccheck:unit-source-local",
@@ -319,5 +320,17 @@
     "published": false,
     "release_approved": false,
     "scope": "13 locked public PDFs retained; unreviewed blind PDFs excluded; predates later runtime corrections"
+  },
+  "submission_delivery": {
+    "official_requirements_checked_on": "2026-10-23",
+    "required_judge_access_until_utc": "2026-12-15T20:00:00+00:00",
+    "initial_trial_establishes_judging_access": false,
+    "demo_or_test_build_url": null,
+    "public_youtube_url": null,
+    "approved_access_and_funding_plan": null,
+    "published_credit_scope": "Official FAQ describes promotional Token Factory credits; private AI Cloud funding remains unverified",
+    "rules_source": "https://nebiusglobalaihackathon.devpost.com/rules",
+    "faq_source": "https://nebiusglobalaihackathon.devpost.com/details/faqs",
+    "evidence": "docs/judge-readiness/submission-requirements-20261023.md"
   }
 }

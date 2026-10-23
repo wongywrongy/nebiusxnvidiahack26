@@ -67,6 +67,15 @@ and must be bounded before final approval. Free Virtual Networks does not establ
 endpoint still leaves the private filesystem billable: 32 GiB costs $2.56 per 730 retained hours at the
 published rate. Deletion protection deliberately prevents accidental wallet deletion.
 
+The official [testing requirement](https://nebiusglobalaihackathon.devpost.com/rules) calls for judge access
+through December 15, 2026, 12:00 PST / 20:00 UTC. This initial trial does not establish that delivery window.
+Before submission, pin a separately approved accessible build/demo route and its funding, provider grant
+expiries, stop/recovery plan and final artifact. Do not extend this trial or enable an indefinite schedule
+by inference. The [official FAQ](https://nebiusglobalaihackathon.devpost.com/details/faqs) identifies the
+published promotional credits as Token Factory credits, with no separate published AI Cloud grant;
+private cloud funding must be verified. The accepted Endpoint + Jobs commissioning scope stays in force.
+[Actual rules/source check](../../docs/judge-readiness/submission-requirements-20261023.md).
+
 The initial trial must have an actual UTC start and stop time. Proposed stop time is the earlier of
 start + 24 hours and verified cloud-grant expiry minus 24 hours; refuse a trial with no positive window.
 Record separate cloud/Token Factory/Tavily balances and expiration terms. The Token Factory grant is not

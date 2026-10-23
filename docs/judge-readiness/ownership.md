@@ -8,6 +8,7 @@ The active readiness goal is **not complete**; the following unfinished implemen
 
 | Work | Evidence |
 | --- | --- |
+| Official submission requirements, public repo/license, UTC dates and explicit delivery gaps | [Official source audit](submission-requirements-20261023.md); demo/video links and funded judge access remain unverified, no submission or owner attestation |
 | First provider spikes and first-pass cases/samples, original recording and local judge walk | [First-pass audit](../live-first-pass/completion.md); original recording unchanged |
 | Reviewed requirements and strict unselected-configuration policy | [Dated policy/gate ledger](../judge-readiness.md); original keys/checklists unchanged |
 | General chunk, identity, quote/value, source freshness, replacement citation and Investigator attribution guards | [G2 before/after evidence](g2/live-validation.md) |
@@ -80,8 +81,7 @@ are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and ap
    is a forecast, not spend or deployment approval. Keep Endpoint + Jobs; do not create resources yet.
 7. **After concrete cloud approval:** execute hosted restart/storage proof, public fresh-upload smoke and real
    manual/scheduled jobs. Capture actual states, timings, reports and screenshots; restore temporary caps.
-8. **Demo/release:** finish the judge walk, video assets, truthful README/SUBMISSION/FEEDBACK, ranked issues,
-   exact reproduction commands and PR. Request final approval only on a concrete reviewable release.
+8. **Demo/release:** finish the judge walk, public YouTube video under three minutes, functioning demo/test-build URL, truthful README/SUBMISSION/FEEDBACK, ranked issues and exact reproduction commands. Prove the approved judge-access route through December 15, 2026, 20:00 UTC; an initial trial is not that proof. The [official-source audit](submission-requirements-20261023.md) records the remaining fields. Request final approval only on a concrete reviewable release.
 
 ## Kyle's parts, later
 
