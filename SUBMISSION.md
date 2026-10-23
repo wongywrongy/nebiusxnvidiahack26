@@ -46,15 +46,23 @@ cd web && npm run build
 
 The original fixture baseline yielded 8/8 calls, 6/6 planted problems, 0/2 major false alarms and 2/5 passing
 replacements. The current selection/evidence policy yields **6/8, 5/6, 0/2 and 0/5** against the unchanged key,
-with 48/65 claims and 8/20 web values retained. Kyle approved the disclosed selection-policy disagreements
-for continued engineering; the strict release gate still fails. The current suite passes 632 tests (2 skipped).
-Eight mock browser journey/failure tests passed at the preceding frontend checkpoint. These are measured demonstration-set results, not live
+with 46/65 claims and 8/20 web values retained. Kyle approved the disclosed selection-policy disagreements
+for continued engineering; the strict release gate still fails. The current suite passes 647 tests (2 skipped).
+Both workflows for tested source `95d5a27` pass Python/mock, presentation/build and mock browser journey/failure checks. These are measured demonstration-set results, not live
 accuracy or an unseen benchmark. Respx/fake-CLI tests
 cover paid-call boundaries, profile redaction, job create/poll, storage retention and the deployment smoke
 script. Real local Tesseract is exercised when installed. An eight-week soak has not been performed.
 
 Browser walkthrough captures are in [docs/mock-walkthrough](docs/mock-walkthrough/README.md). They are all
 labelled mock and are not a replacement for a real console screenshot.
+
+## Latest targeted live checkpoint — 2026-10-23
+
+Run `20261023-084824-7ab49b` checks c03/c07 only: **2/2 calls and problems, 0/2 passing replacements**,
+zero invalid items. It adds **$0.1494426 / 10 credits**; cumulative local accounting is **$2.9516488 / 457**.
+[Actual trace, quote gates, stage diagnosis and reproduction](docs/judge-readiness/quantity-units-20261023/README.md).
+This is partly cached evidence, not a current full-set/blind score or release approval. The latest frozen
+local image predates the unit correction; final packaging and hosted proof remain pending.
 
 ## Owner sign-offs and access
 

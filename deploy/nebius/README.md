@@ -18,7 +18,7 @@ been created in this session. [Ownership and open work](../../docs/judge-readine
 The [frozen revision-source local image](../../docs/judge-readiness/document-revisions-20261023/README.md) includes
 the revision correction and blind-data exclusion, with isolated capped replay/restart proof. It predates the
 unit correction and remains unpublished; the final validated runtime still needs a new image.
-the earlier image evidence below stays historical. No registry or hosted durability proof is claimed.
+The earlier image evidence below stays historical. No registry or hosted durability proof is claimed.
 
 Keep the GitHub repository variable `ENABLE_NEBIUS_JOBS` disabled and the application launcher settings
 unset while these blockers remain. That variable is not an application environment switch.

@@ -26,7 +26,8 @@ the exact measured sources; no historical result is rewritten or promoted.
 Fifteen new regressions cover missing/mismatched quantity units across the trust boundaries,
 dimensionless values, explicit unit conversion and dimming context. Two existing synthetic response
 helpers now supply their quoted units. Integrated full suite: **647 passed, 2 skipped in 32.66 s**;
-[output](pytest.txt). Web files were not changed.
+[output](pytest.txt). Web files were not changed. Both [GitHub workflows for tested source `95d5a27`](ci.json)
+pass Python/mock, presentation/build and mock browser journey/failure checks.
 
 Raw mock run `20261023-084645-ea75cd` is identified authoritatively by [its scoreboard](mock-score.json):
 **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**, zero invalid items and one

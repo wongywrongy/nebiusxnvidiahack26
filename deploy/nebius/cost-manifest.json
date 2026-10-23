@@ -288,9 +288,13 @@
       "scripts/serve.py"
     ],
     "published": false,
+    "repo_digests": [
+      "speccheck@sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28"
+    ],
     "evidence": "docs/judge-readiness/document-revisions-20261023/README.md",
     "registry_reference_verified": false,
-    "release_approved": false
+    "release_approved": false,
+    "scope": "Frozen revision-source checkpoint; predates unit correction a9df48c. Final validated runtime image remains pending."
   },
   "published_free_services": {
     "virtual_networks": {

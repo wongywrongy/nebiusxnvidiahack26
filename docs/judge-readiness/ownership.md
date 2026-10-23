@@ -72,7 +72,7 @@ are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and ap
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
-6. **Deployment preparation:** the current unpublished candidate pins the tested startup/runtime;
+6. **Deployment preparation:** the frozen unpublished candidate predates the current unit runtime;
    finish the final validated image/registry digest, private account/IAM bindings and public-IP/egress/tax bounds.
    The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
    stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
