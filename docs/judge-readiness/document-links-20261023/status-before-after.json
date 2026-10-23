@@ -1,0 +1,59 @@
+{
+  "scope": "Same actual archived source reads replayed through old/new merger; no model or network call",
+  "measured_original_run": "20261023-093441-c0c47f",
+  "source_hashes": [
+    {
+      "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+      "sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7",
+      "archived_path": "c07/2026-10-23T09_35_02+00_00/6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7.txt"
+    },
+    {
+      "url": "https://www.acuitybrands.com/products/detail/2115630/lithonia-lighting/lithoniar-frame/led-lay-in-by-lithonia-lightingr",
+      "sha256": "e2b252bad4ae01a8f00b1101537bb1c9dbd0c8eb0b7f8ea5ac1da89934c093f0",
+      "archived_path": "c07/2026-10-23T09_35_03+00_00/e2b252bad4ae01a8f00b1101537bb1c9dbd0c8eb0b7f8ea5ac1da89934c093f0.txt"
+    },
+    {
+      "url": "https://www.acuitybrands.com",
+      "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+      "archived_path": "c07/2026-10-23T09_35_03+00_00/e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd.txt"
+    }
+  ],
+  "raw_read_statuses": [
+    {
+      "status": "discontinued",
+      "quote_present": true,
+      "family": "TL"
+    },
+    {
+      "status": "unknown",
+      "quote_present": false,
+      "family": null
+    },
+    {
+      "status": "active",
+      "quote_present": false,
+      "family": null
+    },
+    {
+      "status": "active",
+      "quote_present": false,
+      "family": null
+    },
+    {
+      "status": "unknown",
+      "quote_present": false,
+      "family": null
+    }
+  ],
+  "before": {
+    "status": "unknown"
+  },
+  "after": {
+    "status": "discontinued",
+    "family": "TL",
+    "quote": "As of\u00a0**June 30th, 2024**, the TL family will be discontinued."
+  },
+  "web_values_before": 0,
+  "web_values_after": 0,
+  "full_case_score_claimed": false
+}

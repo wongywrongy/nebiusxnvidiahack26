@@ -1,0 +1,86 @@
+diff --git a/api/pipeline/extract.py b/api/pipeline/extract.py
+index 05b22a9..059a4b7 100644
+--- a/api/pipeline/extract.py
++++ b/api/pipeline/extract.py
+@@ -206,6 +206,8 @@ async def _read_claims(case_id, text, properties):
+                 "the value quote, not just a table heading. Use product_wide only for unqualified product properties, not selectable options. "
+                 "Return selection only when submitted evidence explicitly marks a selected/submitted/specified configuration, with its page and exact quote. "
+                 "Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. "
++                "For every physical quantity, include unit explicitly and copy it from the supporting quote, even when the property name encodes a unit. "
++                "Use null units only for dimensionless or categorical values; omit a physical quantity if its unit is not printed. "
+                 "Copy each quote verbatim as one contiguous substring from that page, including its exact punctuation; "
+                 "never paraphrase, add sentence punctuation or join separate passages. "
+                 "Omit properties that are not stated instead of returning null claims. "
+@@ -220,6 +222,8 @@ async def _read_claims(case_id, text, properties):
+         def model_json_schema(cls, **kwargs):
+             schema = super().model_json_schema(**kwargs)
+             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
++            schema["$defs"]["Claim"]["properties"]["unit"]["description"] = (
++                "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values.")
+             schema["$defs"]["Claim"]["properties"]["scope_quote"]["description"] = (
+                 "Shortest exact complete sentence or clause that contains this value quote and all conditions on this metric. "
+                 "Exclude neighboring metrics and their independent conditions; do not copy a multi-metric paragraph.")
+diff --git a/api/providers/tavily.py b/api/providers/tavily.py
+index 5c5f712..4a2cc8d 100644
+--- a/api/providers/tavily.py
++++ b/api/providers/tavily.py
+@@ -67,6 +67,7 @@ def _document_link(text: str, base: str) -> Optional[str]:
+     links = re.finditer(r'''href\s*=\s*["']([^"']+)["']|(https?://[^\s"'<>()[\]]+)''', text, re.I)
+     candidates = [m[1] or m[2] for m in links]
+     candidates += re.findall(r"\(([^\s)]+\.pdf(?:\?[^\s)]*)?)\)", text, re.I)
++    documents = []
+     for link in candidates:
+         link = urljoin(base, unescape(link))
+         if _full_catalog(link):
+@@ -74,10 +75,13 @@ def _document_link(text: str, base: str) -> Optional[str]:
+         if not re.search(r"\.pdf(?:[?#]|$)|/(?:PDS[_-]|[^/?#]*spec[_-]sheet)", link, re.I):
+             continue
+         try:
+-            return Extract(url=link).url
++            documents.append(Extract(url=link).url)
+         except ValueError:
+             continue
+-    return None
++    # shortcut: prefer explicit sheet paths; opaque document IDs retain page order until link labels are needed.
++    sheet = r"/spec(?:sheet|ification)s?\d*(?:/|[-_])|(?:data|spec)[\W_]*sheet|(?:product|technical)[\W_]*data|/PDS[_-]"
++    return next((url for url in documents if re.search(sheet, unquote(urlparse(url).path), re.I)),
++                documents[0] if documents else None)
+ 
+ 
+ def _pdf_result(requested: str, pages: list[dict]) -> dict:
+diff --git a/tests/test_providers.py b/tests/test_providers.py
+index 8f079d6..f95dbb5 100644
+--- a/tests/test_providers.py
++++ b/tests/test_providers.py
+@@ -351,6 +351,31 @@ def test_document_discovery_uses_public_links_and_resolves_relative_urls():
+     assert tavily._document_link('"https://cdn.test/PDS_Product_English"', "https://maker.test") == "https://cdn.test/PDS_Product_English"
+ 
+ 
++@pytest.mark.parametrize("document", ["/specsheet2/product.pdf", "/docs/product-data-sheet.pdf", "/specifications/product.pdf"])
++def test_product_sheet_precedes_general_resource_pdf(document):
++    html = f'<a href="/resources/lighting-guide.pdf">Lighting guide</a><a href="{document}">Spec sheet</a>'
++    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test" + document
++
++
++def test_preferred_sheet_still_requires_a_public_url():
++    html = '<a href="http://127.0.0.1/specsheet2/private.pdf">Spec</a><a href="/docs/current.pdf">Data</a>'
++    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
++
++
++def test_direct_fallback_fetches_product_sheet_instead_of_navigation_guide(live):
++    page = "https://maker.test/product"
++    document = "https://maker.test/specsheet2/product.pdf"
++    live[0].get(page).respond(200, text='<a href="/resources/lighting-guide.pdf">Guide</a>'
++                            '<a href="/specsheet2/product.pdf">Spec sheet</a>')
++    wrong = live[0].get("https://maker.test/resources/lighting-guide.pdf").respond(500)
++    pdf = pymupdf.open()
++    pdf.new_page().insert_text((72, 72), "Product model Z technical data")
++    live[0].get(document).respond(200, content=pdf.tobytes())
++    pages = asyncio.run(tavily.fetch_pdf(page))
++    assert pages[0]["source_url"] == document and "Product model Z" in pages[0]["text"]
++    assert not wrong.called
++
++
+ @pytest.mark.parametrize("name", ["FullCatalog_2026.pdf", "MASTER-catalog.pdf", "Complete%20Catalog.pdf"])
+ def test_product_document_discovery_skips_company_catalogs(name):
+     html = f'<a href="/{name}">Catalog</a>'

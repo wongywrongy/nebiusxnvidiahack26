@@ -1,0 +1,40 @@
+{
+  "scope": "Valid measured miss under 65536-token cap and concurrency 1, before unit prompt clarification",
+  "run_id": "20261023-093441-c0c47f",
+  "identity": {
+    "product": "2TL-2X4",
+    "manufacturer": "Acuity Brands Lighting, Inc.",
+    "model": "2TL-2X4",
+    "selection": null,
+    "family": "T Series LED",
+    "family_quote": "T Series LED",
+    "document_revision": "Rev. 11/18/22"
+  },
+  "diagnostics": [],
+  "warnings": [],
+  "quote_gate": {
+    "claims_extracted": 8,
+    "claims_kept": 0,
+    "web_values_read": 0,
+    "web_values_kept": 0,
+    "claims_drop_rate": 1.0,
+    "web_values_drop_rate": null
+  },
+  "primary_investigation": [
+    {
+      "purpose": "primary",
+      "outcome": "not_found",
+      "resolution": "not_resolved"
+    }
+  ],
+  "cause": "Physical claims were returned with null units; other claims also had metric/value problems. Strict gates dropped all eight. Verification did not establish discontinuation for this extracted identity.",
+  "verification": {
+    "status": "unknown",
+    "status_family": "TL",
+    "urls": [
+      "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+      "https://www.acuitybrands.com/products/detail/2115630/lithonia-lighting/lithoniar-frame/led-lay-in-by-lithonia-lightingr",
+      "https://www.acuitybrands.com"
+    ]
+  }
+}

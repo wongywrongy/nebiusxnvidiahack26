@@ -31,26 +31,25 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Technical-sheet revision attribution and bounded comparison wording | [Actual replay and live prompt/gate check](document-revisions-20261023/README.md); SDS revisions rejected, supported property quotes preserved |
 | Public storage/IAM/cost/expiry/rollback preparation | [Unapproved bounded plan](../../deploy/nebius/rollout.pending.md); private inputs/final image/approval/hosted proof pending |
 | Frozen revision-source local image | [Source `2ac6f89`, blind exclusion, mock/privacy/capped replay/restart and CI](document-revisions-20261023/README.md); predates the unit correction, unpublished, no real authority transfer or hosted proof |
-| Current unit-runtime local image and further primary-source research | [Matching current runtime, unit gate, mock, privacy and synthetic replay/restart](current-runtime-20261023/README.md); unpublished, no passing replacement, provider charge or hosted proof |
+| Unit-runtime local image and further primary-source research | [Unit runtime, mock, privacy and synthetic replay/restart](current-runtime-20261023/README.md); predates latest source corrections, unpublished, no hosted proof |
+| Product-sheet selection, printed-unit instructions and status validation before merging | [Actual diagnostics, intermediate failures and final affected-case check](document-links-20261023/README.md); existing evidence gates preserved |
 | Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **647 passed / 2 skipped**. Both [workflows for tested source `95d5a27`](quantity-units-20261023/ci.json)
-pass Python/mock, presentation/build and mock browser journey/failure checks; no hosted browser proof.
-Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**,
-with 46/65 claims, 8/20 web values and the unchanged selection-policy disagreements.
-Actual cumulative local ledger is **$2.9516488 / 457 credits**, no holds or persistent block.
-The [latest c03/c07 run](quantity-units-20261023/README.md) gets 2/2 calls/problems, 0/2 passing replacements,
-zero invalidity or cap/provider warnings; two-item submitted-page/web/archive/trace consistency passes.
-Four replacement investigations return found, none capped, without complete proof; no primary investigation
-runs. The earlier primary rescue stays historical. The current unit-runtime image matches the tested source;
-its synthetic proof establishes no real wallet transfer, deployment or release approval.
+Current Python verification: **657 passed / 2 skipped**. Both [workflows for tested source `e1a4c2e`](document-links-20261023/ci.json)
+pass Python/mock, presentation/build and mock browser checks; no hosted browser proof. Raw mock remains
+**6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with 46/65 claims and 8/20
+web values. Actual local accounting is **$3.36648982 / 490**, no holds or persistent block.
+The [latest c03/c07 run](document-links-20261023/README.md) gets 2/2 calls/problems, 0/2 passing fixes,
+zero invalidity or warnings; two-item source/trace consistency passes. Four replacement investigations,
+none capped, give no complete fix. No primary investigation occurs; the old primary rescue stays historical.
+An output-limit item and valid intermediate miss remain preserved. The 65,536-token/concurrency-one
+profile and partly cached timing are disclosed; the unit-runtime image predates the newest corrections.
 
-Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. Usage API observations are 415 at 07:10 UTC,
-421 at 07:46 UTC and **437 at 08:53 UTC**. Local credits are 20 higher than the latest API observation;
-none establishes a synchronized invoice match. Historical cached-input quantities were not retained.
-Accounting remains unchanged. Public Virtual Networks/Registry rates and SecretStash preview pricing
-are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and approval remain open.
+Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The latest read-only usage API reports
+**452 at 09:56 UTC**, 38 below local credits. No synchronized dashboard/invoice match or cause is inferred;
+no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/egress, taxes,
+private IAM/quota, grant/expiry terms, judge access funding and concrete approval remain open.
 
 ## Still mine to finish
 
@@ -58,7 +57,7 @@ are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and ap
    Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
    LT now retains its unconditional L70 and MacAdam evidence; DLC/driver options
    lack selection and availability remains unconfirmed for the complete candidate. New [QuickShip source research](replacement-research-20261023/quickship-follow-up.md) finds stock evidence for DIM models, but supplies neither their minimum dimming percent nor a specific DLC class. c03 lacks complete mold/assembly/availability
-   proof, and one candidate's VOC read is still unconfirmed. Broader discovery and current-source interpretation remain mine;
+   proof; both current VOC reads pass but one candidate lacks standards proof. Broader discovery and current-source interpretation remain mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
    move the actual authority and fence its old writer. The real wallet remains local and active. Authenticate
@@ -74,7 +73,7 @@ are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and ap
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
-6. **Deployment preparation:** the unpublished local candidate now matches the tested unit runtime;
+6. **Deployment preparation:** the unpublished local candidate predates the latest source corrections;
    finish the final validated image/registry digest, private account/IAM bindings and public-IP/egress/tax bounds.
    The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
    stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)

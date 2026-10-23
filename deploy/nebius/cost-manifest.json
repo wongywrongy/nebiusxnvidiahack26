@@ -295,7 +295,7 @@
     "evidence": "docs/judge-readiness/current-runtime-20261023/README.md",
     "registry_reference_verified": false,
     "release_approved": false,
-    "scope": "Local image matches tested unit runtime; final release evaluation, registry identity and owner approval remain pending."
+    "scope": "Local image matches the earlier tested unit runtime but predates e1a4c2e link/unit-instruction/status-merge corrections; final validated rebuild, registry identity and owner approval remain pending."
   },
   "published_free_services": {
     "virtual_networks": {

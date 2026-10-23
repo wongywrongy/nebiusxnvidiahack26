@@ -1123,3 +1123,29 @@ minima, and Utopia directs availability inquiries to its team. Exact URLs, hashe
 are retained in the linked checkpoint. No candidate is declared passing and no answer-key change is inferred.
 The replacement-proposal decision and gate acceptance remain Kyle's parts. This work adds $0 / 0 paid
 provider charges; actual local accounting stays $2.9516488 / 457 with no holds. G2 and later gates stay open.
+
+
+### Link/unit/status correction and affected-case validation — 2026-10-23
+
+[Actual source diagnostics, intermediate failures, prompts and same-read replays](judge-readiness/document-links-20261023/README.md)
+record three general corrections: prefer technical-sheet paths over navigation PDFs; explicitly request
+printed units for physical claims; validate each status against existing quote/identity rules before
+merging. No quote/value/scope/selection rule is relaxed. Ten new regressions; full **657 passed / 2 skipped
+in 31.96 s**, unchanged raw mock 6/8 / 5/6 / 0/2 / 0/5 and 46/65 / 8/20 gates. Both source `e1a4c2e`
+CI workflows pass Python/mock, presentation/build and mock browser checks. Earlier local image is historical.
+
+The first c07 item is invalid at fix/output_limit and preserves its failed charge. A separate 65,536-token,
+concurrency-one retry is valid but misses discontinuation: eight model claims are rejected, and unsupported
+active statuses cancel a supported notice before gating. The unit-prompt pass gets c03/c07 right; the final
+committed source check `20261023-095053-630ac4` keeps **2/2 calls/problems, 0/2 passing fixes**, zero
+warnings/invalidity. Item times **65.928 / 57.384 s** are partly cached, not cold-upload benchmarks. Final
+fresh **$0.0792648 / 2**; claims **131/340**, web **29/104**. Two-item source/archive/trace consistency passes.
+Four replacement investigations, none capped, yield no complete replacement; no primary investigation runs.
+G2 is not accepted. Missing mold/assembly/availability or selected driver/DLC proof remains unconfirmed.
+
+Six diagnostic/evaluation runs add **$0.41484102 / 33 credits**; exact payments reconcile by run. Actual
+local cumulative **$3.36648982 / 490**, engineering **$2.30788482 / 192**, no holds or persistent block.
+The unit-prompt pass's intermediate ledger was inspected after the next check; the audit does not invent a
+boundary snapshot. The 09:56 UTC Tavily API returns **452**, 38 below local credits. Earlier owner $2.13 /
+421 predates this work; dashboard/invoice reconciliation and the cause remain open, with no accounting edit.
+No full-set/blind run, final recording, image publication, cloud resource, real transfer or owner acceptance.

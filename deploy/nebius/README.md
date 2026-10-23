@@ -17,7 +17,8 @@ been created in this session. [Ownership and open work](../../docs/judge-readine
 
 The [current unit-runtime local image](../../docs/judge-readiness/current-runtime-20261023/README.md) includes
 the tested unit/revision corrections and blind-data exclusion, with isolated capped replay/restart proof.
-It remains unpublished; final validation, registry identity and release approval remain pending.
+It predates the latest link/unit-instruction/status-merge corrections. It remains unpublished; final
+validation, image rebuild, registry identity and release approval remain pending.
 The earlier image evidence below stays historical. No registry or hosted durability proof is claimed.
 
 Keep the GitHub repository variable `ENABLE_NEBIUS_JOBS` disabled and the application launcher settings
