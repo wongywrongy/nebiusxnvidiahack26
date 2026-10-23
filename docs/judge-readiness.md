@@ -309,3 +309,18 @@ Full mock regression: **621 passed, 2 skipped in 31.67 seconds**; raw mock remai
 $2.13 / 421 and separate Tavily API 415 observations predate this run; no current invoice match is claimed.
 The higher local accounting remains in force. G2 is open; no broader evaluation, blind evaluation, final
 recording, cloud action or owner approval is inferred.
+
+## Required evidence research and resource draft — 2026-10-23
+
+The [latest research checkpoint](judge-readiness/replacement-research-20261023/README.md) adds missing
+applicable property names and an explicit availability need to replacement research, and preserves new
+fetched sources for the bounded read. Actual c03/c07 `20261023-071700-8a9e33`: 2/2 calls/problems,
+0/2 fixes, four replacement investigations, no primary rescue/cap/provider warning; fresh $0.0671367 / 12.
+621 passed / 2 skipped, raw mock unchanged, matching-source two-item consistency passes. G2 stays open.
+
+The [unapproved rollout draft](../deploy/nebius/rollout.pending.md) fills public storage/preset/IAM risks,
+cost components, expiry/stop rules and rollback. Local CLI syntax and Decimal forecast checks pass;
+$1.881085 is the proposed 24-hour/two-job resource subtotal with explicit exclusions. Private account
+inputs, final image, complete cost bound and approval remain pending; no deployment action occurred.
+Local actual campaign $2.6351023 / 438, no holds/block. Earlier owner/API billing disagreements remain
+unresolved and predate this run. No full follow-up eval, blind run or final recording consumed.

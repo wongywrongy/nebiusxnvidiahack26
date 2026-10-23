@@ -1,0 +1,159 @@
+
+  NAME
+
+      nebius compute filesystem create
+        Creates a new filesystem with the specified configuration.
+        For details, see https://docs.nebius.com/compute/storage/manage.
+
+  SYNOPSIS
+
+      nebius compute filesystem create
+        --block-size-bytes
+        --forbid-deletion
+        --labels
+        --name
+        --parent-id [required]
+        --resource-version
+        --size-bytes
+        --size-gibibytes
+        --size-kibibytes
+        --size-mebibytes
+        --type [required]
+        --async
+        -i, --interactive
+
+  EXAMPLES
+
+      Create a filesystem
+
+        nebius compute filesystem create \
+          --name <filesystem_name> \
+          --size-gibibytes 10 \
+          --type network_ssd \
+          --block-size-bytes 4096
+
+  OPTIONS
+
+      --block-size-bytes (int64)
+         Block size in bytes.
+         The block size must be a power of two between 4096 bytes (4 KiB) and 131072 bytes (128 KiB).
+         The default value is 4096 bytes (4 KiB).
+
+      --forbid-deletion (bool)
+         Prevents deletion whilst set.
+
+      --labels (string->string)
+         Labels associated with the resource.
+
+      --name (string)
+         Human readable name for the resource.
+
+      --parent-id (string) [required]
+         Identifier of the parent resource to which the resource belongs.
+
+      --resource-version (int64)
+         Version of the resource for safe concurrent modifications and consistent reads.
+         Positive and monotonically increases on each resource spec change (but not on each change of the
+         resource's container(s) or status).
+         Service allows zero value or current.
+
+      --size-bytes (int64)
+         Mutually exclusive with: --size-gibibytes, --size-kibibytes, --size-mebibytes
+
+      --size-gibibytes (int64)
+         Mutually exclusive with: --size-bytes, --size-kibibytes, --size-mebibytes
+
+      --size-kibibytes (int64)
+         Mutually exclusive with: --size-bytes, --size-gibibytes, --size-mebibytes
+
+      --size-mebibytes (int64)
+         Mutually exclusive with: --size-bytes, --size-gibibytes, --size-kibibytes
+
+      --type (string) [required]
+         The Shared Filesystem type determines its limits and performance characteristics.
+         For details, see https://docs.nebius.com/compute/storage/types#filesystems-types.
+         A value must be one of:
+          • network_ssd
+          • network_hdd
+          • weka
+          • vast
+
+      --async (bool)
+         If set, returns operation id. Otherwise, waits for the operation to complete and returns its resource.
+
+      -i, --interactive (bool)
+         If set, suggests to insert field values in interactive mode.
+
+  GLOBAL OPTIONS
+
+      -h, --help (bool)
+         Show this message.
+
+      -p, --profile (string)
+         Set a profile for interacting with the cloud.
+
+      --format (string)
+         Output format. Supported values: yaml|json|jsonpath|table|text.
+
+      -f, --file (string)
+         Input file. For 'update' commands automatically set --full=true.
+
+      -c, --config (string)
+         Provide path to config file.
+
+      --debug (bool)
+         Enable debug logs.
+
+      -I, --impersonate-service-account-id (string)
+         Impersonate into the service account and use its token for a command.
+
+      --color (bool)
+         Enable colored output.
+
+      --no-browser (bool)
+         Do not open browser automatically on auth.
+
+      --insecure (bool)
+         Disable transport security.
+
+      --auth-timeout (duration: 2h30m10s)
+         Set the timeout for the request including authentication process, default is 15m0s.
+
+      --per-retry-timeout (duration: 2h30m10s)
+         Set the timeout for each retry attempt, default is 20s.
+
+      --retries (uint)
+         Set the number of retry attempts, 1 is disable retries, default is 3.
+
+      --timeout (duration: 2h30m10s)
+         Set the timeout for the main request, default is 1m0s.
+
+      --no-check-update (bool)
+         Suppress check for updates.
+
+      --no-progress (bool)
+         Suppress progress indicators and spinners.
+
+  INPUT SCHEMA
+
+  You can also provide a positional argument as a text in a json or yaml format which will be converted to the corresponding request structure.
+
+  nebius compute filesystem create '
+  {
+    "metadata": {
+      "labels": {
+        "": ""
+      },
+      "name": "",
+      "parent_id": "",
+      "resource_version": 0
+    },
+    "spec": {
+      "block_size_bytes": 0,
+      "forbid_deletion": false,
+      "size_bytes": 0,
+      "type": "unspecified"|"network_ssd"|"network_hdd"|"weka"|"vast"
+    }
+  }
+  '
+

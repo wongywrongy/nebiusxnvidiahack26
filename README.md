@@ -117,7 +117,7 @@ G2 remains open for a fully evidenced replacement. The [latest before/after evid
 records research of missing requirements and availability plus retention of newly discovered sources.
 The [preceding scope correction](docs/judge-readiness/scope-binding-20261023/README.md) preserves unconditional
 L70/MacAdam evidence; unselected driver/DLC evidence stays unconfirmed. The owner previously reported account-wide **$2.13 / 421**;
-Tavily's separate usage API reports 415. These totals are not reconciled; budget enforcement retains the
+Tavily's separate 07:10 UTC usage API observation was 415, before this latest run. These totals are not reconciled; budget enforcement retains the
 higher local ledger. Token Factory's catalog lists cached-input discounts absent from historical usage
 records, so the dollar difference cannot be reconstructed. Earlier [claim/citation fixes](docs/judge-readiness/claim-repair-20261023/README.md)
 and a [historical primary Investigator rescue](docs/judge-readiness/replacement-discovery-20261023/README.md)

@@ -26,6 +26,8 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Bounded numeric qualifier repair, Unicode quote matching, retained bundle claims and agreeing-source citations | [Actual before/after and verification](claim-repair-20261023/README.md); same magnitude/quote/identity/selection gates; coded-driver evidence remains scoped |
 | Independent lifetime-clause scope binding | [Actual two-item before/after](scope-binding-20261023/README.md); L70/MacAdam accepted, unselected driver/DLC still unknown |
 | Required-gap and availability research for replacements | [Targeted evidence](replacement-research-20261023/README.md); newly discovered sources retained, unsupported active status still rejected, no complete replacement |
+| Required-property/availability research and new-source priority | [Targeted live evidence](replacement-research-20261023/README.md); no passing replacement or gate weakening |
+| Public storage/IAM/cost/expiry/rollback preparation | [Unapproved bounded plan](../../deploy/nebius/rollout.pending.md); private inputs/final image/approval/hosted proof pending |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
 Current Python verification: **621 passed / 2 skipped**. Presentation/build and eight mock browser tests
@@ -47,7 +49,7 @@ The higher local accounting remains in force; no ledger is changed.
    Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
    LT now retains its unconditional L70 and MacAdam evidence; DLC/driver options
    lack selection and availability remains unconfirmed. c03 lacks complete mold/assembly/availability
-   proof, and one candidate's VOC read is still unconfirmed. Better supplementary evidence remains mine;
+   proof, and one candidate's VOC read is still unconfirmed. Broader discovery and current-source interpretation remain mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
    move the actual authority and fence its old writer. The real wallet remains local and active. Authenticate
@@ -64,8 +66,9 @@ The higher local accounting remains in force; no ledger is changed.
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
 6. **Deployment preparation:** pin the tested persistent-startup command in the final image/resource plan;
-   finalize registry digest, region/preset, private storage/IAM, current prices, expiry-aware operating schedule
-   and rollback commands. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
+   finish the final registry digest, private account/IAM bindings and unpriced network/registry/tax bounds.
+   The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
+   stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
    is a forecast, not spend or deployment approval. Keep Endpoint + Jobs; do not create resources yet.
 7. **After concrete cloud approval:** execute hosted restart/storage proof, public fresh-upload smoke and real
    manual/scheduled jobs. Capture actual states, timings, reports and screenshots; restore temporary caps.

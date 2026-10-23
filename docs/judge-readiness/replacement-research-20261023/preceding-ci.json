@@ -1,16 +1,19 @@
 {
-  "head_sha": "53eb99a750a64b14935aeaf81f86158b95842133",
-  "runs": [
+  "observed_at": "2026-10-23 07:26:29 UTC",
+  "scope": "preceding commit only",
+  "workflow_runs": [
     {
       "id": 39916360108,
-      "name": "checks",
+      "event": "pull_request",
+      "head_sha": "53eb99a750a64b14935aeaf81f86158b95842133",
       "status": "completed",
       "conclusion": "success",
       "url": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/39916360108"
     },
     {
       "id": 39916354607,
-      "name": "checks",
+      "event": "push",
+      "head_sha": "53eb99a750a64b14935aeaf81f86158b95842133",
       "status": "completed",
       "conclusion": "success",
       "url": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/39916354607"

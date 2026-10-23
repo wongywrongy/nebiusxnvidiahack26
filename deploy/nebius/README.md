@@ -15,7 +15,10 @@ been created in this session. [Ownership and open work](../../docs/judge-readine
   billing or completion retains its reservation; a missing/corrupt receipt persists an accounting block.
 - Final image digest, owner IAM/account configuration, credit expiry and storage design remain incomplete.
 
-Do not enable `ENABLE_NEBIUS_JOBS` or run old direct-job recipes while these blockers remain.
+Keep the GitHub repository variable `ENABLE_NEBIUS_JOBS` disabled and the application launcher settings
+unset while these blockers remain. That variable is not an application environment switch.
+Do not run old direct-job recipes. [Bounded rollout, IAM risks, expiry and rollback draft](rollout.pending.md)
+fills the proposed public-platform choices; private inputs and the final image remain approval blockers.
 
 ## What is implemented and checked locally
 
@@ -96,7 +99,9 @@ registry image is established. The proof container was removed; the image remain
 pages read on October 23. These forecasts are not actual cloud charges or an approved spending allowance.
 At 2 vCPU / 8 GiB, current component rates give **cpu-d3 $0.066/h** and **cpu-e2 $0.060/h** for compute.
 The Intel Ice Lake option is documented for eu-north1 only; owner quotas/preset availability remain unchecked.
-Disk, durable authority, bucket storage/requests, egress, taxes, Token Factory and Tavily are additional.
+The new controller-storage rows include a separate 32-GiB SSD filesystem and bounded worker compute.
+The initial 24-hour/two-job illustration is **$1.881085**, excluding registry/IP/network/egress, taxes and
+both providers. The earlier general forecasts exclude durable storage and remain labelled as such.
 
 Sources: [Compute rates](https://docs.nebius.com/compute/resources/pricing),
 [Object Storage rates](https://docs.nebius.com/object-storage/resources/pricing),

@@ -1012,3 +1012,13 @@ Full mock regression: **621 passed, 2 skipped in 31.67 seconds**; raw mock remai
 $2.13 / 421 and separate Tavily API 415 observations predate this run; no current invoice match is claimed.
 The higher local accounting remains in force. G2 is open; no broader evaluation, blind evaluation, final
 recording, cloud action or owner approval is inferred.
+
+## Required-evidence research checkpoint — 2026-10-23
+
+Run `20261023-071700-8a9e33` follows general missing-property/availability research and new-source priority
+changes. Actual panel **2/2 calls/problems, 0/2 fixes**, zero invalid items/warnings/caps; four replacement
+investigations, zero primary investigations/rescues. Fresh **$0.0671367 / 12 credits**, cumulative local
+**$2.6351023 / 438**, day **$1.1483655 / 80**, no holds/block. Python **621 passed, 2 skipped**; raw mock
+unchanged. [Before/after prompt, exact traces, check evidence and source reconstruction](judge-readiness/replacement-research-20261023/README.md).
+The owner $2.13 / 421 and API 415 observations above preceded this run and are not updated invoice totals.
+No ledger correction, full follow-up evaluation, blind evaluation, final recording or cloud mutation occurred.
