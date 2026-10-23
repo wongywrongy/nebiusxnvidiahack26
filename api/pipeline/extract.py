@@ -206,6 +206,8 @@ async def _read_claims(case_id, text, properties):
                 "the value quote, not just a table heading. Use product_wide only for unqualified product properties, not selectable options. "
                 "Return selection only when submitted evidence explicitly marks a selected/submitted/specified configuration, with its page and exact quote. "
                 "Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. "
+                "For every physical quantity, include unit explicitly and copy it from the supporting quote, even when the property name encodes a unit. "
+                "Use null units only for dimensionless or categorical values; omit a physical quantity if its unit is not printed. "
                 "Copy each quote verbatim as one contiguous substring from that page, including its exact punctuation; "
                 "never paraphrase, add sentence punctuation or join separate passages. "
                 "Omit properties that are not stated instead of returning null claims. "
@@ -220,6 +222,8 @@ async def _read_claims(case_id, text, properties):
         def model_json_schema(cls, **kwargs):
             schema = super().model_json_schema(**kwargs)
             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
+            schema["$defs"]["Claim"]["properties"]["unit"]["description"] = (
+                "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values.")
             schema["$defs"]["Claim"]["properties"]["scope_quote"]["description"] = (
                 "Shortest exact complete sentence or clause that contains this value quote and all conditions on this metric. "
                 "Exclude neighboring metrics and their independent conditions; do not copy a multi-metric paragraph.")

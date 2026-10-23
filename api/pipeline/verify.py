@@ -193,6 +193,9 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
     outputs, usage = [], []
     for batch in chunks or [[]]:
         out, u = await _read_sources(fx, submitted, batch, investigated, correction, submitted_label=submitted_label)
+        status = out.model_copy(update={"current_values": []})
+        gate(status, pages, measure=False, submitted=submitted)
+        out.status, out.status_quote = status.status, status.status_quote
         outputs.append(out)
         usage.append(u)
     merged = outputs[0].model_copy(deep=True)
@@ -205,6 +208,8 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
         status = next(out for out in outputs if out.status == merged.status)
         merged.status_quote, merged.status_date, merged.replacement = status.status_quote, status.status_date, status.replacement
         merged.status_family = status.status_family
+    else:
+        merged.status_quote = merged.status_date = merged.replacement = merged.status_family = None
     merged.source_urls = list(dict.fromkeys(url for out in outputs for url in out.source_urls))
     return merged, usage
 

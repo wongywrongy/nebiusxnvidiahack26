@@ -67,6 +67,7 @@ def _document_link(text: str, base: str) -> Optional[str]:
     links = re.finditer(r'''href\s*=\s*["']([^"']+)["']|(https?://[^\s"'<>()[\]]+)''', text, re.I)
     candidates = [m[1] or m[2] for m in links]
     candidates += re.findall(r"\(([^\s)]+\.pdf(?:\?[^\s)]*)?)\)", text, re.I)
+    documents = []
     for link in candidates:
         link = urljoin(base, unescape(link))
         if _full_catalog(link):
@@ -74,10 +75,13 @@ def _document_link(text: str, base: str) -> Optional[str]:
         if not re.search(r"\.pdf(?:[?#]|$)|/(?:PDS[_-]|[^/?#]*spec[_-]sheet)", link, re.I):
             continue
         try:
-            return Extract(url=link).url
+            documents.append(Extract(url=link).url)
         except ValueError:
             continue
-    return None
+    # shortcut: prefer explicit sheet paths; opaque document IDs retain page order until link labels are needed.
+    sheet = r"/spec(?:sheet|ification)s?\d*(?:/|[-_])|(?:data|spec)[\W_]*sheet|(?:product|technical)[\W_]*data|/PDS[_-]"
+    return next((url for url in documents if re.search(sheet, unquote(urlparse(url).path), re.I)),
+                documents[0] if documents else None)
 
 
 def _pdf_result(requested: str, pages: list[dict]) -> dict:

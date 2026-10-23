@@ -98,6 +98,51 @@ def test_family_status_does_not_import_family_values():
     assert out.status == "discontinued" and not out.current_values
 
 
+@pytest.mark.parametrize("reverse", [False, True])
+@pytest.mark.parametrize("active_quote", [None, "Model OTHER is available."])
+def test_unsupported_status_cannot_cancel_a_supported_notice(monkeypatch, reverse, active_quote):
+    from api.pipeline import metrics
+    notice = "The LX family is discontinued."
+    pages = [{"url": URL, "raw_content": "Model LX-20. " + notice + " Power 10 W."},
+             {"url": "https://maker.test/other", "raw_content": "Model OTHER is available."}]
+    outputs = [VerifyOut(status="discontinued", status_family="LX", status_quote=notice,
+        current_values=[dict(property="watts", value=10, unit="W", quote="Power 10 W.", source_url=URL,
+            model="LX-20", identity_quote="Model LX-20", scope="product_wide", scope_quote="Power 10 W.")]),
+        VerifyOut(status="active", status_quote=active_quote,
+            current_values=[dict(property="watts", value=999, unit="W", quote="Invented 999 W")])]
+    if reverse:
+        pages.reverse()
+        outputs.reverse()
+    monkeypatch.setattr(verify, "page_batches", lambda pages, limit: [[p] for p in pages])
+    async def read(*args, **kwargs):
+        return outputs.pop(0), Usage(task="verify", tier="verify", model="test")
+    monkeypatch.setattr(verify, "_read_sources", read)
+    counts = dict.fromkeys(metrics.FIELDS, 0)
+    token = metrics.COUNTS.set(counts)
+    try:
+        out, _ = asyncio.run(verify.read_sources(None, submitted(), pages))
+        assert out.status == "discontinued" and out.status_quote == notice
+        assert len(out.current_values) == 2  # Value validation and correction remain the caller's job.
+        verify.gate(out, pages, submitted=submitted())
+        assert len(out.current_values) == 1
+        assert counts["web_values_read"] == 2 and counts["web_values_kept"] == 1
+    finally:
+        metrics.COUNTS.reset(token)
+
+
+def test_genuinely_conflicting_supported_statuses_remain_unknown(monkeypatch):
+    quotes = ["The LX family is discontinued.", "Model LX-20 is available."]
+    outputs = [VerifyOut(status="discontinued", status_family="LX", status_quote=quotes[0]),
+               VerifyOut(status="active", status_quote=quotes[1])]
+    pages = [{"url": f"https://maker.test/{n}", "raw_content": quote} for n, quote in enumerate(quotes)]
+    monkeypatch.setattr(verify, "page_batches", lambda pages, limit: [[p] for p in pages])
+    async def read(*args, **kwargs):
+        return outputs.pop(0), Usage(task="verify", tier="verify", model="test")
+    monkeypatch.setattr(verify, "_read_sources", read)
+    out, _ = asyncio.run(verify.read_sources(None, submitted(), pages))
+    assert out.status == "unknown" and out.status_quote is None and out.status_family is None
+
+
 @pytest.mark.parametrize("descriptor", ["LX", "LX family", "LX series", "LX range"])
 @pytest.mark.parametrize("model,accepted", [("2LX-2X4", True), ("2LXX-2X4", False)])
 def test_family_descriptor_and_markdown_do_not_hide_a_family_wide_notice(descriptor, model, accepted):

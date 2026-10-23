@@ -351,6 +351,31 @@ def test_document_discovery_uses_public_links_and_resolves_relative_urls():
     assert tavily._document_link('"https://cdn.test/PDS_Product_English"', "https://maker.test") == "https://cdn.test/PDS_Product_English"
 
 
+@pytest.mark.parametrize("document", ["/specsheet2/product.pdf", "/docs/product-data-sheet.pdf", "/specifications/product.pdf"])
+def test_product_sheet_precedes_general_resource_pdf(document):
+    html = f'<a href="/resources/lighting-guide.pdf">Lighting guide</a><a href="{document}">Spec sheet</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test" + document
+
+
+def test_preferred_sheet_still_requires_a_public_url():
+    html = '<a href="http://127.0.0.1/specsheet2/private.pdf">Spec</a><a href="/docs/current.pdf">Data</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
+
+
+def test_direct_fallback_fetches_product_sheet_instead_of_navigation_guide(live):
+    page = "https://maker.test/product"
+    document = "https://maker.test/specsheet2/product.pdf"
+    live[0].get(page).respond(200, text='<a href="/resources/lighting-guide.pdf">Guide</a>'
+                            '<a href="/specsheet2/product.pdf">Spec sheet</a>')
+    wrong = live[0].get("https://maker.test/resources/lighting-guide.pdf").respond(500)
+    pdf = pymupdf.open()
+    pdf.new_page().insert_text((72, 72), "Product model Z technical data")
+    live[0].get(document).respond(200, content=pdf.tobytes())
+    pages = asyncio.run(tavily.fetch_pdf(page))
+    assert pages[0]["source_url"] == document and "Product model Z" in pages[0]["text"]
+    assert not wrong.called
+
+
 @pytest.mark.parametrize("name", ["FullCatalog_2026.pdf", "MASTER-catalog.pdf", "Complete%20Catalog.pdf"])
 def test_product_document_discovery_skips_company_catalogs(name):
     html = f'<a href="/{name}">Catalog</a>'
