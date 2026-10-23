@@ -104,8 +104,10 @@ pages read on October 23. These forecasts are not actual cloud charges or an app
 At 2 vCPU / 8 GiB, current component rates give **cpu-d3 $0.066/h** and **cpu-e2 $0.060/h** for compute.
 The Intel Ice Lake option is documented for eu-north1 only; owner quotas/preset availability remain unchecked.
 The new controller-storage rows include a separate 32-GiB SSD filesystem and bounded worker compute.
-The initial 24-hour/two-job illustration is **$1.881085**, excluding registry/IP/network/egress, taxes and
-both providers. The earlier general forecasts exclude durable storage and remain labelled as such.
+The initial 24-hour/two-job illustration is **$1.881085**, excluding public IP/egress, taxes and both
+providers. Current public Virtual Networks and Container Registry pricing is free; SecretStash is free
+during preview. [Actual response hashes and dates](../../docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json)
+resolve those public rates without establishing private quotas, taxes or grant terms. The earlier general forecasts exclude durable storage and remain labelled as such.
 
 Sources: [Compute rates](https://docs.nebius.com/compute/resources/pricing),
 [Object Storage rates](https://docs.nebius.com/object-storage/resources/pricing),
