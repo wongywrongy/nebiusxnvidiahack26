@@ -301,7 +301,8 @@ def _status_timing(notice: str, match):
     prefix = re.search(rf"(?:^|[.!?;:])\s*(?:as\s+of|effective(?:\s+on)?)\s+({printed})\s*,?\s*(?:the\s+)?$", before, re.I)
     suffix = re.match(rf"\s+(?:(on|as\s+of|effective(?:\s+on)?|from|starting(?:\s+on)?|in|until|through)\s+)?({printed})(?:\s*[.!?;]|\s*$)", after, re.I)
     prefix_condition = re.search(r"(?:^|[.!?;:])\s*(?:as\s+of|effective(?:\s+on)?)\b[^.!?;]*$", before, re.I)
-    date_like = r"(?:\d|[a-z]{3,9}\.?\s+\d|today\b|tomorrow\b|yesterday\b|next\b)"
+    date_like = (r"(?:\d|[a-z]{3,9}\.?\s+\d|q[1-4]\b|fy\s*\d|(?:the\s+)?end\s+of\b"
+                 r"|today\b|tomorrow\b|yesterday\b|next\b)")
     suffix_condition = re.match(rf"\s+(?:(?:on|as\s+of|effective(?:\s+on)?|from|starting(?:\s+on)?|in|until|through)\s+)?{date_like}", after, re.I)
     if prefix_condition and not prefix or suffix_condition and not suffix or prefix and not suffix and not re.match(r"\s*(?:[.!?;]|$)", after):
         return False, None

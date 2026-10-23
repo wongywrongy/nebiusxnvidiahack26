@@ -59,10 +59,16 @@ def test_undated_present_statement_does_not_borrow_an_invented_date():
     assert out.status == "discontinued" and out.status_date is None
 
 
-def test_release_replays_the_temporal_gate(monkeypatch):
-    quote = "As of May 1, 2095, the ZX family will be discontinued."
+@pytest.mark.parametrize("status,quote", [
+    ("discontinued", "As of May 1, 2095, the ZX family will be discontinued."),
+    ("active", "The ZX family is available until Q4 2001."),
+    ("active", "The ZX family is available through FY2001."),
+    ("active", "The ZX family is available until end of 2001."),
+])
+def test_release_replays_the_temporal_gate(monkeypatch, status, quote):
     product = submitted()
-    output = VerifyOut(status="discontinued", status_family="ZX", status_date="2095-05-01", status_quote=quote)
+    output = VerifyOut(status=status, status_family="ZX",
+                       status_date="2095-05-01" if status == "discontinued" else None, status_quote=quote)
     proof = SimpleNamespace(submitted=product, output=output, sources=[Evidence(url=URL, title="Synthetic notice", tier="manufacturer")])
     monkeypatch.setattr(release, "_archived", lambda *args: [quote])
     now = datetime.now(timezone.utc)
@@ -86,6 +92,9 @@ def test_replacement_metadata_needs_its_actual_status_quote(quote, replacement, 
     ("The ZX family is available in 2035.", "unknown"),
     ("The ZX family is available tomorrow.", "unknown"),
     ("The ZX family is available until May 1, 2001.", "unknown"),
+    ("The ZX family is available until Q4 2001.", "unknown"),
+    ("The ZX family is available through FY2001.", "unknown"),
+    ("The ZX family is available until end of 2001.", "unknown"),
     ("The ZX family is available until May 1, 2095.", "active"),
     ("The ZX family is available through 2095-05-01.", "active"),
     ("The ZX family is available from May 1, 2001.", "active"),
@@ -93,6 +102,8 @@ def test_replacement_metadata_needs_its_actual_status_quote(quote, replacement, 
     ("As of May 1, 2095, the ZX family is available until May 1, 2001.", "unknown"),
     ("The ZX family is available in all sizes.", "active"),
     ("The ZX family is available from stock.", "active"),
+    ("The ZX family is available through distributors.", "active"),
+    ("The ZX family is available until further notice.", "active"),
 ])
 def test_availability_dates_do_not_become_an_early_or_expired_pass(quote, expected):
     out = VerifyOut(status="active", status_date="2035-05-01", status_family="ZX", status_quote=quote)
