@@ -31,6 +31,7 @@ def manifest() -> dict:
         "cases": settings.cases_file, "specs": settings.specs_file,
         "samples": settings.samples_file,
         "documents": settings.data_dir / "cases" / "documents.json",
+        "document_lock": settings.data_dir / "documents.lock.json",
     }.items()}
     return {"version": 1, "commit": os.environ.get("SPECCHECK_COMMIT"), "config": config,
             "config_hash": digest(config), "code_hash": digest(sources), "checklists": checklists, "inputs": inputs}

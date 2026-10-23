@@ -17,9 +17,11 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Browser upload/review/edit/outcome/re-check/reload/reset and failure tests | Eight real Chromium tests against mock API; no new live-browser proof |
 | Required PDF lock/readability preflight and fail-closed Docker build | [13-document report](reliability-20261023/document-preflight.json); all have native text |
 | Authenticated, idempotent controller launch, full history, mandatory secret selectors and quality forwarding | Fake CLI tests; nightly workflow uses controller and remains disabled |
+| Controller job allowances, one-session claims, sealed child wallets and guarded settlement/publication | [Offline protocol checkpoint](controller-20261023/README.md); no shared job write path or hosted proof |
 | Read-only smoke mode; invalid/replayed evidence rejected as fresh deployment proof | `tests/test_smoke.py`; hosted smoke remains pending |
 
-Current verification: **399 passed / 2 skipped**, eight browser tests, presentation checks and build pass.
+Current Python/controller verification: **435 passed / 2 skipped**. Earlier frontend verification: eight
+browser tests, presentation checks and build pass; no frontend change or rerun in the controller checkpoint.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
 Actual cumulative provider spend is **$1.4867368 / 359 credits**, with no outstanding holds at this checkpoint.
 
@@ -28,11 +30,11 @@ Actual cumulative provider spend is **$1.4867368 / 359 credits**, with no outsta
 1. **G2:** obtain and verify an actual complete replacement evidence bundle. The linked Acuity CPX PDF
    returned no Tavily text; the product page does not establish L70, warranty, MacAdam, dimming or availability.
    c03 still lacks mold/assembly proof. No unknown check may be turned into a pass.
-2. **Cloud controller:** establish durable accounting authority; preserve/import actual wallet state;
-   implement job escrow/leases, child-enforced allowances and authenticated idempotent usage settlement/publication.
-   Jobs must not write controller state or publish directly through a shared evidence mount. Test restart,
-   concurrent admission, corrupt/missing authority, persistence failure, unknown completion and UTC rollover.
-   The completed launch-authentication work does not establish these guarantees.
+2. **Cloud controller:** finish remote authority handoff and explicit writer-cutover tooling, preserving the
+   actual wallet and fencing the original before activating a copy. The allowance/claim/child-wallet/receipt/
+   settlement protocol is implemented with isolated local tests; the actual campaign wallet has not moved.
+   Prove the private mounted filesystem, single-VM writer, restart and receipt persistence on the approved host.
+   VM reboot/replacement and interrupted-import recovery remain fail-closed and need explicit reconciliation.
 3. **Release preflight:** require complete cases, samples and reviewed blind-set evidence, compatible immutable
    configuration/code/document identities and explicit release dispositions. Diagnostic recording must remain
    able to preserve honest wrong calls. Targeted success cannot establish release readiness.

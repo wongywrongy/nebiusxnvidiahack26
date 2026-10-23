@@ -9,10 +9,10 @@ been created in this session. [Ownership and open work](../../docs/judge-readine
 - G2 has no fully evidenced passing replacement. Final cases/samples/blind validation and the new public
   recording are pending their gates.
 - Local SQLite proves local reservations; placing it on an S3 mount does not establish a cloud authority.
-- Jobs still need controller-owned escrow/leases, enforced child limits, authenticated usage settlement and
-  publication bound to the lease, immutable configuration, watched IDs and valid fresh results.
-- Remove the child's shared write path to controller reports/budgets before hosted execution. Unknown
-  creation, billing or completion must retain its reservation and block further unsafe paid work.
+- The controller-owned allowance/claim/child-wallet/receipt/settlement protocol is tested locally. Remote
+  authority migration and approved writer cutover remain unfinished; hosted persistence is unverified.
+- Jobs now return signed usage/evidence without a shared controller/archive mount. Unknown creation,
+  billing or completion retains its reservation; a missing/corrupt receipt persists an accounting block.
 - Final image digest, owner IAM/account configuration, credit expiry and storage design remain incomplete.
 
 Do not enable `ENABLE_NEBIUS_JOBS` or run old direct-job recipes while these blockers remain.
@@ -32,9 +32,17 @@ The disabled nightly workflow requests this same controller with GitHub's privat
 secret and `SPECCHECK_URL` variable. Its idempotency key uses the GitHub run ID. It neither signs into Nebius
 nor directly creates a job. Configure/enable it only after hosted safety and one real job have passed.
 
-Cloud commands require MysteryBox selectors for `NEBIUS_API_KEY`, `TAVILY_API_KEY` and `ADMIN_TOKEN`.
+Cloud commands require MysteryBox selectors for `NEBIUS_API_KEY`, `TAVILY_API_KEY` and `WORKER_TOKEN`.
 Missing selectors disable launch; raw credential values are never put into command arguments. All tested
 quality limits, including output/fix limits, are forwarded. This is fake-CLI evidence, not cloud validation.
+
+`CONTROLLER_STATE_DIR` must be a dedicated mounted POSIX filesystem, with `CAMPAIGN_BUDGET_FILE` exactly
+`<directory>/campaign.sqlite3`. Jobs receive neither the mount nor `ADMIN_TOKEN`. The authority marker binds
+one VM boot identity; a process restart on that VM can resume, while VM reboot/replacement fails closed.
+Use no second endpoint writer against the same filesystem. The current `install-controller --source ...
+--controller-dir ...` command requires direct access to the authoritative source and retires it before
+activation. It does not yet provide a safe remote transfer or interrupted-import recovery workflow. Do not
+copy a live wallet to initialize cloud accounting. [Protocol evidence and remaining work](../../docs/judge-readiness/controller-20261023/README.md).
 
 ## Build preparation
 

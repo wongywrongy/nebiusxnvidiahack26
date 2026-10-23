@@ -14,10 +14,10 @@ Nebius Token Factory. Tavily retrieves manufacturer evidence. Code checks the qu
 An unsupported claim becomes “couldn’t confirm.” A suggested replacement must pass the same checks.
 
 The app follows Inbox → Scan → Review → Outcome. A Nebius Serverless Endpoint can host it, Serverless Jobs can
-re-check the bundled watch list and run evaluations, and a mounted Object Storage bucket can retain evidence,
-watch reports and scores. These integrations are implemented and tested with a fake CLI and local disk;
-their live deployment requires owner approval, followed by agent-executed validation. Durable shared accounting
-and guarded job settlement are still unfinished. Review messages remain drafts in the browser.
+re-check the bundled watch list, and an archive can retain source evidence. Job allowances, receipts and
+publication belong to a private controller authority. The protocol is implemented and tested with a fake CLI
+and isolated local wallets; remote authority migration and hosted durability remain unfinished. Deployment
+requires owner approval, followed by agent-executed validation. Review messages remain drafts in the browser.
 
 ## Three-minute demonstration
 
@@ -46,8 +46,8 @@ cd web && npm run build
 The original fixture baseline yielded 8/8 calls, 6/6 planted problems, 0/2 major false alarms and 2/5 passing
 replacements. The current selection/evidence policy yields **6/8, 5/6, 0/2 and 0/5** against the unchanged key,
 with 48/65 claims and 8/20 web values retained. Kyle approved the disclosed selection-policy disagreements
-for continued engineering; the strict release gate still fails. The current suite passes 399 tests (2 skipped),
-and eight mock browser journey/failure tests pass. These are measured demonstration-set results, not live
+for continued engineering; the strict release gate still fails. The current suite passes 435 tests (2 skipped).
+Eight mock browser journey/failure tests passed at the preceding frontend checkpoint. These are measured demonstration-set results, not live
 accuracy or an unseen benchmark. Respx/fake-CLI tests
 cover paid-call boundaries, profile redaction, job create/poll, storage retention and the deployment smoke
 script. Real local Tesseract is exercised when installed. An eight-week soak has not been performed.

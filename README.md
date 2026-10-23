@@ -109,7 +109,8 @@ checks enforce the exact disagreements; the raw scoreboard and strict release ga
 
 The October 22 refinement check now gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
 replacements**. This targeted, cached-live confirmation is not an eight-case score or fresh latency
-benchmark. The October 23 reliability checkpoint passes **399 tests, 2 skipped**, plus **8 browser tests**.
+benchmark. The October 23 controller checkpoint passes **435 tests, 2 skipped**. The preceding reliability
+checkpoint also passed **8 browser tests**; no frontend code changed in the controller checkpoint.
 Additional engineering spend is **$0.4281318 / 61 credits**, cumulative **$1.4867368 / 359**.
 The linked-PDF c07 retry still has no passing replacement. G2 remains open for a fully evidenced replacement;
 see the [before/after evidence and commands](docs/judge-readiness/g2/live-validation.md).
@@ -274,10 +275,12 @@ Outcome shows cloud job state and the latest report. Cloud launches require the 
 and an idempotency key; the public browser cannot launch paid cloud compute. The primary
 **Check approved now** button still checks browser-approved items in-process; cloud jobs use the bundled watch list.
 `EVIDENCE_DIR` archives full source text and available approved/watched PDFs; Review links archived source copies.
-An evaluation job can write scores into the same bucket and Scoreboard shows its job name and date.
+The controller owns job allowances, private receipts and report publication. A worker gets a bounded local
+wallet and signed callbacks, with no admin token or controller/archive mount. Settlement waits for both
+the sealed usage report and independently observed cloud completion.
 
-These cloud paths are tested with a fake CLI, fixtures and local disk. Hosted durability and job settlement
-remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
+These cloud paths are tested with a fake CLI, fixtures and local disk. Remote authority migration and hosted
+durability remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
 Scheduled jobs stay disabled pending hosted verification and owner approval.
 
 _TODO(owner): add a real Nebius console screenshot showing the endpoint, a completed re-check job and its report.
@@ -311,9 +314,9 @@ are protected; a full active queue returns a clear 503. Completed runs evicted f
 from disk until disk retention removes them. Retention never deletes `runs/recorded/`, `runs/watch/` or uploads.
 These boundaries have offline regression tests; an eight-week live soak has not been performed.
 
-With `EVIDENCE_DIR` set, `watch/latest.json`, dated reports and `watch/jobs.json` are mirrored into that directory
-and read there first, with the image's `runs/watch/` as fallback. The owner should commit the **first real report**
-under `runs/watch/` as an image fallback; never commit a fake-CLI or mock report as live evidence. Startup logs
+Local manual watch reports can mirror to `EVIDENCE_DIR` with `runs/watch/` as historical fallback. A configured
+controller instead reads jobs and its latest verified report from its private accounting authority, without
+falling back to image or object-store state. Never commit a fake-CLI or mock report as live evidence. Startup logs
 show today's recorded spend and the configured caps. `.cache/budget/<UTC-date>.json` mirrors the authoritative
 campaign ledger; missing or corrupt campaign state blocks paid work. Its hosted persistence remains unverified.
 `/api/health` includes `uptime_s`, `disk_free_gb` and caps as well as key-presence booleans.
@@ -332,7 +335,7 @@ api/
   main.py          FastAPI: project, inbox, scan, SSE events, results, scores, watch report, static web app
   cloud_jobs.py    bounded CLI job creation/polling; private temporary service-account profile
   archive.py       optional full-text/PDF evidence archive
-  watch_store.py   bucket-first watch reports and job metadata, with local fallback
+  watch_store.py   historical/local watch reports; no cloud-controller authority
 data/
   cases/           cases.json (8 test submittals + answer key), samples.json (the tray), specs.json, documents.json
   fixtures/        recorded answers per case for mock mode; fixtures/fix/ for the fix step

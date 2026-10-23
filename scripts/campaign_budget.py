@@ -42,10 +42,18 @@ def initialize(days: list[str]) -> dict:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["init", "status"])
+    parser.add_argument("action", choices=["init", "status", "install-controller"])
     parser.add_argument("--seed-day", action="append", default=[])
+    parser.add_argument("--source", type=Path, help="existing campaign SQLite database for an explicit cold import")
+    parser.add_argument("--controller-dir", type=Path, help="controller-only mounted POSIX filesystem")
     args = parser.parse_args()
     try:
+        if args.action == "install-controller":
+            if not args.source or not args.controller_dir:
+                parser.error("install-controller requires --source and --controller-dir")
+            from api.authority import install
+            print(json.dumps(install(args.source, args.controller_dir), indent=2))
+            sys.exit(0)
         print(json.dumps(initialize(args.seed_day) if args.action == "init" else
                          campaign.status(settings.campaign_budget_file), indent=2))
     except (ValueError, OSError, budget.BudgetExceeded) as error:

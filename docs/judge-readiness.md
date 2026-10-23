@@ -120,3 +120,21 @@ recorded in the unapproved cost worksheet; this is not deployment authorization.
 
 G2 remains open. No follow-up full-set run or final recording has been consumed, no gate has been
 self-approved, and no cloud resource has been touched.
+
+## Controller protocol checkpoint — 2026-10-23
+
+[Protocol, review findings, tests and reproduction](judge-readiness/controller-20261023/README.md).
+The controller now reserves a job allowance before launch, assigns one worker session, enforces a sealed
+child wallet and retains a private receipt. Settlement/publication requires matching immutable inputs,
+watched IDs, evidence hashes and observed cloud completion. Jobs get neither controller/archive mounts
+nor admin credentials. Unknown usage and missing/corrupt receipts retain holds and block more paid work.
+Cold import fences the source and binds one VM writer; retired imports and unsupported mounts fail closed.
+
+Full offline verification: **435 passed, 2 skipped in 21.08 seconds**. Raw mock remains **6/8, 5/6, 0/2,
+0/5**, zero invalid items, one unnecessary note, **48/65 claims and 8/20 web values**. Independent AI review
+found and confirmed fixes for retired-source reuse, missing-receipt accounting blocks and controller URL
+validation. No paid call or resource was made; cumulative actual spend remains **$1.4867368 / 359**, no holds.
+
+Remote source-fencing/export/import, approved writer-cutover tooling, immutable deployment preparation
+and hosted persistence/job proof remain agent-owned work. No actual campaign wallet was migrated or reset.
+G2 stays open; broader cases/samples/blind validation, release promotion and recording remain pending.

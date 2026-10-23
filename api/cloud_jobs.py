@@ -7,14 +7,13 @@ import os
 import shlex
 import tempfile
 import time
-from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlparse
 
 from fastapi import HTTPException
 
 from .config import redact, settings
-from . import watch_store
+from . import job_control
+from .providers import budget
 
 log = logging.getLogger("speccheck.jobs")
 lock = asyncio.Lock()
@@ -72,20 +71,18 @@ def cleanup_profile() -> None:
         _profile_dir = None
 
 
+def configured() -> bool:
+    return bool(settings.live and profile_ready and settings.speccheck_image and job_control.controller_origin(settings.speccheck_url)
+                and settings.secret("admin_token") and job_control.configured()
+                and all(getattr(settings, f"nebius_secret_{key}") for key in ("nebius_api_key", "tavily_api_key", "worker_token")))
+
+
 def available() -> bool:
-    url = urlparse(settings.speccheck_url)
-    return bool(settings.live and profile_ready and settings.speccheck_image and url.scheme in ("http", "https")
-                and url.hostname and not url.username and not url.password and not url.query and not url.fragment
-                and settings.secret("admin_token") and all(getattr(settings, f"nebius_secret_{key}")
-                    for key in ("nebius_api_key", "tavily_api_key", "admin_token")))
+    return configured() and not budget.today().get("blocked", True)
 
 
 def read_jobs() -> list[dict]:
-    return watch_store.read("jobs.json", [])
-
-
-def write_jobs(jobs: list[dict]) -> None:
-    watch_store.write("jobs.json", jobs)
+    return [job_control.public(job) for job in job_control.records()]
 
 
 def apply_status(job: dict, payload: dict) -> None:
@@ -99,14 +96,18 @@ def apply_status(job: dict, payload: dict) -> None:
         # Unknown states remain in flight. Never infer that cloud compute has stopped.
 
 
-async def refresh(jobs: list[dict]) -> list[dict]:
+async def refresh() -> list[dict]:
     global _last_poll
-    if not available() or time.monotonic() - _last_poll < 15:
-        return jobs
+    if not configured() or time.monotonic() - _last_poll < 15:
+        return read_jobs()
     _last_poll = time.monotonic()
-    for job in jobs:
-        if job["state"] in ("done", "failed"):
+    for record in job_control.records():
+        if record.settled:
             continue
+        if record.cloud_terminal:
+            job_control.finalize(record.lease_id)
+            continue
+        job = job_control.public(record)
         try:
             if not job.get("id"):
                 job["id"] = (await cli("ai", "job", "get-by-name", "--name", job["name"], "--profile", "speccheck",
@@ -115,80 +116,60 @@ async def refresh(jobs: list[dict]) -> list[dict]:
                 payload = json.loads(await cli("ai", "job", "get", job["id"], "--profile", "speccheck", "--format", "json"))
                 apply_status(job, payload)
                 job.pop("poll_error", None)
+                job["cloud_terminal"] = job["state_known"] and job["state"] in ("done", "failed")
         except (RuntimeError, ValueError, TypeError, AttributeError):
             job["poll_error"] = "Could not refresh the job; its last known state is shown."
-    write_jobs(jobs)
-    return jobs
+            job["state_known"] = False
+        job_control.observe(record.lease_id, **{k: v for k, v in job.items() if k in (
+            "id", "state", "raw_state", "state_known", "cloud_terminal", "poll_error")})
+    return read_jobs()
 
 
-def command(name: str) -> list[str]:
-    if not all(getattr(settings, f"nebius_secret_{key}") for key in ("nebius_api_key", "tavily_api_key", "admin_token")):
+def command(job) -> list[str]:
+    if not all(getattr(settings, f"nebius_secret_{key}") for key in ("nebius_api_key", "tavily_api_key", "worker_token")):
         raise HTTPException(409, "Cloud jobs require MysteryBox selectors for all three credentials.")
-    args = ["ai", "job", "create", "--profile", "speccheck", "--name", name, "--image", settings.speccheck_image,
-            "--container-command", "python", "--args", shlex.join(["scripts/recheck.py", "--post", settings.speccheck_url]),
+    args = ["ai", "job", "create", "--profile", "speccheck", "--name", job.name, "--image", job.image,
+            "--container-command", "python", "--args", shlex.join(["scripts/recheck.py", "--controller", settings.speccheck_url,
+                                                                       "--lease", job.lease_id]),
             "--platform", "cpu-d3", "--preset", "2vcpu-8gb", "--disk-size", "32Gi", "--timeout", "1h",
             "--restart-policy", "never", "--on-demand", "--async", "--format", "json"]
-    env = {"SPECCHECK_MODE": "live", "THINKING": settings.thinking, "RECHECK_RUNNER": "Nebius Serverless Job", "JOB_NAME": name}
-    env.update(NEBIUS_BASE_URL=settings.nebius_base_url,
-               **{f"MODEL_{role.upper()}": model for role, model in settings.models.items()})
-    for key in ("budget_usd_per_run", "budget_usd_per_day", "budget_tavily_credits_per_item",
-                "budget_tavily_credits_per_day", "max_concurrency", "thinking_tasks", "max_page_chars", "web_source_chars",
-                "search_depth", "extract_depth", "search_max_results", "investigate_credit_cap", "investigate_max_steps",
-                "map_limit", "map_max_depth", "max_output_tokens", "fix_credit_cap", "fix_max_candidates"):
-        env[key.upper()] = str(getattr(settings, key))
-    if settings.nebius_evidence_bucket:
-        args += ["--volume", f"s3://{settings.nebius_evidence_bucket}:/app/evidence:rw"]
-        env.update(EVIDENCE_DIR="/app/evidence", EVIDENCE_LABEL="Nebius Object Storage")
+    env = {"SPECCHECK_MODE": "live", "RECHECK_RUNNER": "Nebius Serverless Job", "JOB_NAME": job.name}
+    profile = job.manifest["config"]
+    env.update({key.upper(): str(value) for key, value in profile.items() if key not in ("models", "prices")})
+    env.update({f"MODEL_{role.upper()}": model for role, model in profile["models"].items()})
+    if job.manifest.get("commit"):
+        env["SPECCHECK_COMMIT"] = job.manifest["commit"]
     for key, value in env.items():
         args += ["--env", f"{key}={value}"]
-    for key in ("nebius_api_key", "tavily_api_key", "admin_token"):
+    for key in ("nebius_api_key", "tavily_api_key", "worker_token"):
         selector = getattr(settings, f"nebius_secret_{key}")
         args += ["--env-secret", f"{key.upper()}={selector}"]
     return args
 
 
 async def start(request_id: str) -> dict:
-    if not available():
+    if not configured():
         raise HTTPException(409, "Nebius jobs need live mode, a configured profile, SPECCHECK_IMAGE and SPECCHECK_URL.")
     async with lock:
-        jobs = read_jobs()
-        if previous := next((j for j in jobs if j.get("request_id") == request_id), None):
-            return previous
-        jobs = await refresh(jobs)
-        if any(j["state"] not in ("done", "failed") for j in jobs):
-            raise HTTPException(409, "A Nebius re-check is already in flight.")
-        now = datetime.now(timezone.utc)
-        if jobs and (now - datetime.fromisoformat(jobs[0]["created_at"])).total_seconds() < settings.watch_run_interval_s:
-            raise HTTPException(429, "A Nebius job was requested recently. Try again after the job rate-limit interval.")
-        job = {"name": f"speccheck-recheck-{now.strftime('%Y%m%d-%H%M%S-%f')}", "id": None,
-               "created_at": now.isoformat(), "state": "queued", "raw_state": None, "state_known": True,
-               "request_id": request_id}
-        jobs.insert(0, job)
-        write_jobs(jobs)  # Reserve before awaiting create; ambiguous CLI failure must not create duplicate jobs.
+        # A repeated request is returned even while an unknown existing operation blocks new admissions.
+        previous = next((job for job in job_control.records() if job.request_id == request_id), None)
+        if previous:
+            return job_control.public(previous)
+        await refresh()
+        job, created = job_control.reserve(request_id)
+        if not created:
+            return job_control.public(job)
         try:
-            payload = json.loads(await cli(*command(job["name"])))
+            payload = json.loads(await cli(*command(job)))
             # --async --format json returns an Operation; its id is NOT the job id.
-            job["id"] = payload.get("resource_id") or None
+            if not isinstance(payload.get("resource_id"), str) or not payload["resource_id"]:
+                raise RuntimeError("Job creation did not confirm a resource ID")
+            job_control.observe(job.lease_id, id=payload["resource_id"])
         except (RuntimeError, ValueError, TypeError, AttributeError):
-            job["poll_error"] = "Creation not confirmed; checking by job name."
-        write_jobs(jobs)
-        return job
+            job_control.observe(job.lease_id, poll_error="Creation not confirmed; checking by job name.", state_known=False)
+        return next(row for row in read_jobs() if row["name"] == job.name)
 
 
 async def list_jobs() -> dict:
     async with lock:
-        return {"available": available(), "jobs": (await refresh(read_jobs()))[:5]}
-
-
-async def attach_report(report: dict) -> None:
-    if not report.get("job_name"):
-        return
-    async with lock:
-        jobs = read_jobs()
-        job = next((j for j in jobs if j["name"] == report["job_name"]), None)
-        if job is None:
-            job = {"name": report["job_name"], "id": None, "created_at": report["checked_at"],
-                   "state": "running", "raw_state": None, "state_known": True}
-            jobs.insert(0, job)
-        job.update(report_at=report["checked_at"], run_id=report.get("run_id"), duration_ms=report.get("duration_ms"))
-        write_jobs(jobs)
+        return {"available": available(), "jobs": (await refresh())[:5]}

@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-23T01:02:41.378648+00:00",
+  "mode": "mock",
+  "pytest": {
+    "passed": 435,
+    "skipped": 2,
+    "seconds": 21.08
+  },
+  "focused_tests": {
+    "passed": 91,
+    "seconds": 8.93
+  },
+  "independent_review": {
+    "kind": "AI read-only",
+    "concrete_findings": 3,
+    "confirmed_closed": 3,
+    "hosted_certification": false
+  },
+  "code_hash": "7ff1a3bb273b230fb5fd90389598a3154c1f06a7016e432e2b978f608d430fb4",
+  "config_hash": "be3cb9a47849d6fe262a339e6d6ed46c8bbfe0c9c97968d4765c0fbcb32f4c0d",
+  "live_or_cloud_calls_made": false,
+  "provider_usd_added": 0,
+  "tavily_credits_added": 0,
+  "authority_migrated": false,
+  "frontend_changed": false,
+  "browser_and_web_build_rerun": false,
+  "g2_accepted": false,
+  "deployment_ready": false,
+  "mock_run_id": "20261023-010148-b8bf8b"
+}

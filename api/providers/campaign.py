@@ -3,12 +3,16 @@
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Literal
 import os
+import re
 import sqlite3
 import uuid
 
 from pydantic import BaseModel, ConfigDict, Field
+from starlette.exceptions import HTTPException
 
+from ..config import settings
 from .budget import BudgetExceeded
 
 SESSION = uuid.uuid4().hex
@@ -36,11 +40,44 @@ class Payment(BaseModel):
     actual: Amount | None = None
     unknown: bool = False
     scopes: list[str] = []
+    kind: Literal["request", "job"] = "request"
+
+
+class JobLease(BaseModel):
+    model_config = ConfigDict(strict=True, extra="forbid")
+    lease_id: str
+    request_id: str
+    name: str
+    id: str | None = None
+    created_at: str
+    state: Literal["queued", "starting", "running", "done", "failed"] = "queued"
+    raw_state: str | None = None
+    state_known: bool = True
+    cloud_terminal: bool = False
+    poll_error: str | None = None
+    payment_id: str
+    phase: str
+    allowance: Amount
+    ids: list[str]
+    image: str
+    manifest: dict
+    worker_session: str | None = None
+    report_path: str | None = None
+    report_digest: str | None = None
+    wallet_unknown: bool = False
+    reconciliation_required: bool = False
+    report_hash: str | None = None
+    settled: bool = False
+    failure: str | None = None
+    duration_ms: int | None = None
+    run_id: str | None = None
+    report_at: str | None = None
 
 
 class State(BaseModel):
     model_config = ConfigDict(strict=True, extra="forbid")
     version: int = 1
+    campaign_id: str = Field(default_factory=lambda: uuid.uuid4().hex)
     seed: Amount
     day_seed: dict[str, Amount]
     limit: Amount
@@ -48,6 +85,9 @@ class State(BaseModel):
     phase: str = "engineering"
     payments: dict[str, Payment] = {}
     blocked: bool = False
+    retired_to: str | None = None
+    jobs: dict[str, JobLease] = {}
+    watch_report: dict | None = None
 
 
 def _sum(amounts):
@@ -71,6 +111,24 @@ def _validate(state):
     for day in state.day_seed:
         if datetime.fromisoformat(day).date().isoformat() != day:
             raise ValueError("Invalid seed date")
+    if not re.fullmatch(r"[0-9a-f]{32}", state.campaign_id):
+        raise ValueError("Invalid campaign identity")
+    escrows = {job.payment_id for job in state.jobs.values()}
+    if (len(escrows) != len(state.jobs) or len({job.name for job in state.jobs.values()}) != len(state.jobs)
+            or len({job.request_id for job in state.jobs.values()}) != len(state.jobs)
+            or escrows != {key for key, payment in state.payments.items() if payment.kind == "job"}):
+        raise ValueError("Job allowances must have exactly one retained lease")
+    for key, job in state.jobs.items():
+        payment = state.payments[job.payment_id]
+        if (key != job.lease_id or not re.fullmatch(r"[0-9a-f]{32}", job.lease_id)
+                or job.phase != payment.phase or payment.run != job.name
+                or payment.held.usd_nano > job.allowance.usd_nano or payment.held.credits > job.allowance.credits):
+            raise ValueError("Invalid job allowance provenance")
+        if any((job.report_path, job.report_digest, job.report_hash)) and (
+                not job.report_hash or not re.fullmatch(r"[0-9a-f]{64}", job.report_hash)
+                or not job.report_digest or not re.fullmatch(r"[0-9a-f]{64}", job.report_digest)
+                or job.report_path != f"reports/{job.lease_id}/{job.report_hash}.json"):
+            raise ValueError("Invalid private worker receipt identity")
 
 
 def initialize(path: Path, seed: Amount, day_seed: dict[str, Amount], limit: Amount, engineering: Amount):
@@ -91,18 +149,24 @@ def initialize(path: Path, seed: Amount, day_seed: dict[str, Amount], limit: Amo
 def transaction(path: Path):
     conn = None
     try:
+        if settings_controller := settings.controller_state_dir:
+            from ..authority import verify
+            verify(path, settings_controller)
         conn = sqlite3.connect(path.resolve().as_uri() + "?mode=rw", uri=True, timeout=5, isolation_level=None)
         conn.execute("PRAGMA synchronous=FULL")
         conn.execute("BEGIN IMMEDIATE")
         row = conn.execute("SELECT data FROM campaign WHERE id=1").fetchone()
         state = State.model_validate_json(row[0])
         _validate(state)
+        if settings_controller:
+            from ..authority import verify_identity
+            verify_identity(state.campaign_id, settings_controller)
         yield state
         state = State.model_validate(state.model_dump())
         _validate(state)
         conn.execute("UPDATE campaign SET data=? WHERE id=1", (state.model_dump_json(),))
         conn.execute("COMMIT")
-    except BudgetExceeded:
+    except (BudgetExceeded, HTTPException):
         raise
     except Exception as error:
         raise BudgetExceeded("Campaign accounting unavailable; no paid request allowed") from error
@@ -111,18 +175,15 @@ def transaction(path: Path):
             conn.close()
 
 
-def reserve(path: Path, held: Amount, *, run: str, item: str, run_usd_nano: int, day_usd_nano: int,
-            item_credits: int, day_credits: int, scopes: list[dict]) -> str:
+def _reserve(state: State, held: Amount, *, run: str, item: str, run_usd_nano: int, day_usd_nano: int,
+             item_credits: int, day_credits: int, scopes: list[dict]) -> str:
     if not run or not item or min(run_usd_nano, day_usd_nano, item_credits, day_credits) < 0:
         raise BudgetExceeded("Paid requests require valid run, item and cap context")
-    if any(p == str(path.resolve()) for p, _ in FAILED_SETTLEMENTS):
-        raise BudgetExceeded("Failed campaign settlement requires reconciliation")
-    with transaction(path) as state:
-        if state.blocked or any(p.unknown or p.actual is None and p.owner != SESSION for p in state.payments.values()):
-            raise BudgetExceeded("Unsettled campaign usage requires reconciliation before paid work")
-        day = datetime.now(timezone.utc).date().isoformat()
-        payments = list(state.payments.values())
-        limits = [
+    if state.blocked or state.retired_to or any(p.unknown or p.actual is None and p.owner != SESSION and p.kind != "job" for p in state.payments.values()):
+        raise BudgetExceeded("Unsettled campaign usage requires reconciliation before paid work")
+    day = datetime.now(timezone.utc).date().isoformat()
+    payments = list(state.payments.values())
+    limits = [
             (_sum([state.seed, *map(_charge, payments)]), state.limit),
             (_sum([_charge(p) for p in payments if p.phase == state.phase]), state.phases[state.phase]),
             (_sum([state.day_seed.get(day, Amount()), *[_charge(p) for p in payments if p.day == day or p.actual is None]]),
@@ -130,17 +191,24 @@ def reserve(path: Path, held: Amount, *, run: str, item: str, run_usd_nano: int,
             (_sum([_charge(p) for p in payments if p.run == run]), Amount(usd_nano=run_usd_nano, credits=state.limit.credits)),
             (_sum([_charge(p) for p in payments if p.run == run and p.item == item]),
              Amount(usd_nano=state.limit.usd_nano, credits=item_credits)),
-        ]
-        if any(spent.usd_nano + held.usd_nano > cap.usd_nano or spent.credits + held.credits > cap.credits for spent, cap in limits):
-            raise BudgetExceeded("Campaign, allocation, day, run or item cap would be exceeded")
-        for scope in scopes:
-            pending = sum(p.held.credits for p in payments if p.actual is None and scope["id"] in p.scopes)
-            if scope["spent"] + pending + held.credits > scope["cap"]:
-                raise BudgetExceeded("Tavily step cap would be exceeded including pending calls")
-        identifier = uuid.uuid4().hex
-        state.payments[identifier] = Payment(run=run, item=item, day=day, phase=state.phase, owner=SESSION,
-                                             held=held, scopes=[s["id"] for s in scopes])
-        return identifier
+    ]
+    if any(spent.usd_nano + held.usd_nano > cap.usd_nano or spent.credits + held.credits > cap.credits for spent, cap in limits):
+        raise BudgetExceeded("Campaign, allocation, day, run or item cap would be exceeded")
+    for scope in scopes:
+        pending = sum(p.held.credits for p in payments if p.actual is None and scope["id"] in p.scopes)
+        if scope["spent"] + pending + held.credits > scope["cap"]:
+            raise BudgetExceeded("Tavily step cap would be exceeded including pending calls")
+    identifier = uuid.uuid4().hex
+    state.payments[identifier] = Payment(run=run, item=item, day=day, phase=state.phase, owner=SESSION,
+                                         held=held, scopes=[s["id"] for s in scopes])
+    return identifier
+
+
+def reserve(path: Path, held: Amount, **context) -> str:
+    if any(p == str(path.resolve()) for p, _ in FAILED_SETTLEMENTS):
+        raise BudgetExceeded("Failed campaign settlement requires reconciliation")
+    with transaction(path) as state:
+        return _reserve(state, held, **context)
 
 
 def settle(path: Path, identifier: str, actual: Amount | None) -> tuple[dict, bool]:
@@ -181,7 +249,7 @@ def report(state: State, day: str) -> dict:
             "phase": state.phase, "phase_usd": phase.usd_nano / 1e9, "phase_credits": phase.credits,
             "usd_limit": state.limit.usd_nano / 1e9, "credit_limit": state.limit.credits,
             "phase_usd_limit": state.phases[state.phase].usd_nano / 1e9, "phase_credit_limit": state.phases[state.phase].credits,
-            "blocked": state.blocked or any(p.unknown or p.actual is None and p.owner != SESSION for p in payments)}
+            "blocked": bool(state.blocked or state.retired_to or any(p.unknown or p.actual is None and p.owner != SESSION and p.kind != "job" for p in payments))}
 
 
 def status(path: Path) -> dict:

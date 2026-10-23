@@ -42,12 +42,12 @@ from datetime import datetime
 from typing import Literal, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import FileResponse, Response, StreamingResponse
+from fastapi.responses import FileResponse, Response, StreamingResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from .config import settings
-from . import cloud_jobs, watch_store
+from .config import settings, redact
+from . import cloud_jobs, watch_store, job_control
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
@@ -69,8 +69,9 @@ async def lifespan(app):
     settings.runs_dir.mkdir(parents=True, exist_ok=True)
     prune_page_cache()
     prune_runs()
-    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on local disk; hosted persistence unverified)",
-                                               budget.today(), budget.caps())
+    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on %s; hosted persistence unverified)",
+                                               budget.today(), budget.caps(),
+                                               "private controller mount" if settings.controller_state_dir else "local disk")
     await cloud_jobs.setup_profile()
     try:
         yield
@@ -79,6 +80,11 @@ async def lifespan(app):
 
 
 app = FastAPI(title="SpecCheck", lifespan=lifespan)
+
+
+@app.exception_handler(budget.BudgetExceeded)
+async def accounting_unavailable(request: Request, error: budget.BudgetExceeded):
+    return JSONResponse(status_code=503, content={"detail": redact(str(error))[:400]})
 RUNS: dict[str, Run] = {}
 _tasks: set[asyncio.Task] = set()
 
@@ -165,13 +171,13 @@ def project():
         "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
         "mode": settings.mode,
         "recheck": latest_recheck(),
-        "jobs_available": cloud_jobs.available(),
+        "jobs_available": cloud_jobs.configured(),
     }
 
 
 def latest_recheck() -> Optional[dict]:
     """The newest nightly re-check report (scripts/recheck.py writes runs/watch/latest.json), or None."""
-    return watch_store.read("latest.json")
+    return job_control.latest() if settings.controller_state_dir else watch_store.read("latest.json")
 
 
 @app.post("/api/runs")
@@ -349,10 +355,46 @@ async def watch_report(body: WatchReport, request: Request):
     """The nightly job reports here with the admin token; the app shows the latest report on the Outcome step."""
     if not _is_admin(request):
         raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
+    if settings.controller_state_dir or body.job_name:
+        raise HTTPException(409, "Cloud reports must use their authenticated worker lease")
     report = body.model_dump(mode="json")
     watch_store.report(report)
-    await cloud_jobs.attach_report(report)
     return {"ok": True, "items": len(body.items)}
+
+
+async def worker_body(lease_id: str, action: str, request: Request) -> bytes:
+    job_control.authenticate(lease_id, action, b"", request.headers.get("X-Worker-Proof", ""))
+    raw = bytearray()
+    async for chunk in request.stream():
+        raw.extend(chunk)
+        if len(raw) > job_control.MAX_REPORT_BYTES:
+            raise HTTPException(413, "Worker report exceeds the size limit")
+    body = bytes(raw)
+    job_control.authenticate(lease_id, action, body, request.headers.get("X-Worker-Signature", ""))
+    if any(value and value.encode() in body for name in ("nebius_api_key", "tavily_api_key", "admin_token", "worker_token", "nebius_private_key")
+           if (value := settings.secret(name))):
+        raise HTTPException(400, "Worker payload contains credential material; nothing was stored")
+    return body
+
+
+@app.post("/api/watch/leases/{lease_id}/claim")
+async def worker_claim(lease_id: str, request: Request):
+    raw = await worker_body(lease_id, "claim", request)
+    try:
+        claim = job_control.Claim.model_validate_json(raw)
+    except ValueError:
+        raise HTTPException(422, "Worker claim is invalid") from None
+    return job_control.claimed(lease_id, claim)
+
+
+@app.post("/api/watch/leases/{lease_id}/report")
+async def worker_report(lease_id: str, request: Request):
+    raw = await worker_body(lease_id, "report", request)
+    try:
+        report = job_control.WorkerReport.model_validate_json(raw)
+    except ValueError:
+        raise HTTPException(422, "Worker report is invalid") from None
+    return job_control.receive(lease_id, report, hashlib.sha256(raw).hexdigest())
 
 
 @app.post("/api/watch/run")

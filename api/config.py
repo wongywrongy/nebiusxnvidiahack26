@@ -40,12 +40,12 @@ class Settings(BaseSettings):
     nebius_project_id: str = ""
     nebius_secret_nebius_api_key: str = ""
     nebius_secret_tavily_api_key: str = ""
-    nebius_secret_admin_token: str = ""
+    worker_token: SecretStr = SecretStr("")
+    nebius_secret_worker_token: str = ""
     speccheck_image: str = ""
     speccheck_url: str = ""
     evidence_dir: Path | None = None
     evidence_label: str = "disk"
-    nebius_evidence_bucket: str = ""
     # Populate only with state strings observed by the owner; COMPLETED is documented.
     nebius_job_state_map: dict[str, Literal["queued", "starting", "running", "done", "failed"]] = {"COMPLETED": "done"}
     watch_run_interval_s: int = Field(default=3600, ge=0)
@@ -99,6 +99,8 @@ class Settings(BaseSettings):
     raw_dir: Path = ROOT / "data" / "raw"
     cache_dir: Path = ROOT / ".cache"
     campaign_budget_file: Path = ROOT / "evidence" / "budget" / "campaign.sqlite3"
+    # Controller-only persistent POSIX mount; never an evidence bucket or a worker volume.
+    controller_state_dir: Path | None = None
     runs_dir: Path = ROOT / "runs"
     recorded_dir: Path = ROOT / "runs" / "recorded"
     uploads_dir: Path = ROOT / "data" / "raw" / "uploads"
@@ -150,7 +152,7 @@ _PATTERNS = re.compile(r"(Bearer\s+)\S+|\b(sk-|tvly-|lsv2_)[A-Za-z0-9_\-]{8,}")
 
 
 def redact(text: str) -> str:
-    for k in (*KEYS, "nebius_private_key"):
+    for k in (*KEYS, "nebius_private_key", "worker_token"):
         v = settings.secret(k)
         if len(v) >= 4:
             text = text.replace(v, "***")

@@ -53,7 +53,7 @@ def test_manifest_has_no_credentials_and_covers_fix_and_output_limits():
     assert m["config"]["fix_credit_cap"] == settings.fix_credit_cap
     assert not any("key" in k or "token" in k and k != "max_output_tokens" for k in m["config"])
     assert len(m["config_hash"]) == len(m["code_hash"]) == 64
-    assert set(m["inputs"]) == {"cases", "samples", "specs", "documents"}
+    assert set(m["inputs"]) == {"cases", "samples", "specs", "documents", "document_lock"}
 
 
 class Answer(BaseModel):
