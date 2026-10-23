@@ -1,8 +1,10 @@
 # First live pass — 2026-10-21–22
 
-Follow-up state on October 23: [readiness and ownership](judge-readiness/ownership.md). Additional targeted
-retrieval/reliability work brings actual cumulative spend to **$1.9702294 / 391 credits**. No later dashboard
-readout with scope/time was supplied; the historical three-credit discrepancy below remains unresolved.
+Follow-up state on October 23: [readiness and ownership](judge-readiness/ownership.md). Calculated cumulative
+spend is **$3.36648982 / 490 settled credits**, plus one unknown Tavily credit held. The
+[19:14 UTC read-only refresh](judge-readiness/replacement-proposals-20261023/billing-refresh.json) still shows
+485 monthly key/account credits, including five outside the campaign; campaign logs total 480. The ten-credit
+campaign difference and failed request's hold remain unresolved. Paid validation is blocked.
 The dated first-pass figures and recording in this document remain historical evidence.
 
 Status: Gates 1–3 accepted and pushed. On 2026-10-22 Kyle directed “finish all unfinished things”, authorizing continuation past Gate 4 with the recorded limitations disclosed.

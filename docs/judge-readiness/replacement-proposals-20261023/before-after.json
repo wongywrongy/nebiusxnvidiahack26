@@ -1,0 +1,51 @@
+{
+  "observed_at": "2026-10-23T19:20:32.109767+00:00",
+  "scope": "Offline synthetic boundary probe and stubbed prompt capture; no provider response",
+  "baseline_commit": "7419dda",
+  "current_code_hash": "0e9986fb5da0a10c997626b5e2ce432c0058f269339302a0c72ed43b29fcb35d",
+  "rows": [
+    {
+      "scenario": "Real submitted selection",
+      "source": "Selected: ZX-12 D1.",
+      "quote": "Selected: ZX-12 D1",
+      "before": true,
+      "after_original": true,
+      "after_replacement": true
+    },
+    {
+      "scenario": "Truncated submitted SKU",
+      "source": "Selected: ZX-12 D10. Other SKU: ZX-12 D1.",
+      "quote": "Selected: ZX-12 D1",
+      "before": true,
+      "after_original": false,
+      "after_replacement": false
+    },
+    {
+      "scenario": "Printed catalog proposal",
+      "source": "Catalog number: ZX-12-D1.",
+      "quote": "Catalog number: ZX-12-D1",
+      "before": false,
+      "after_original": false,
+      "after_replacement": true
+    },
+    {
+      "scenario": "Invented catalog proposal",
+      "source": "Catalog number: ZX-12-D10.",
+      "quote": "Catalog number: ZX-12-D1",
+      "before": false,
+      "after_original": false,
+      "after_replacement": false
+    },
+    {
+      "scenario": "Ordering example",
+      "source": "Ordering example: Catalog number: ZX-12-D1.",
+      "quote": "Catalog number: ZX-12-D1",
+      "before": false,
+      "after_original": false,
+      "after_replacement": false
+    }
+  ],
+  "ordinary_request_matches_baseline": true,
+  "paid_requests": 0,
+  "settlements": 0
+}

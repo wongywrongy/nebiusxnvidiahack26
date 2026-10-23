@@ -636,12 +636,14 @@ function asks(r: Result, section: string): string[] {
   return [...new Set(out)]
 }
 
-function returnNote(c: Case, r: Result, best?: { name: string }): string {
+function returnNote(c: Case, r: Result, best?: Fix['candidates'][number]): string {
   return [
     `Revise and resubmit ${c.number ?? c.title}.`,
     reviewSummary(r),
     `Please send:\n${asks(r, c.section).map((a) => `- ${a.charAt(0).toLowerCase()}${a.slice(1)}`).join('\n')}`,
-    ...(best ? [`Suggested replacement: ${best.name}.`] : []),
+    ...(best ? [best.selection?.origin === 'agent_proposal'
+      ? `SpecCheck proposal: ${best.selection.model}. Confirm configuration before ordering.`
+      : `Suggested replacement: ${best.name}.`] : []),
   ].join('\n\n')
 }
 
@@ -724,10 +726,20 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
           <div className="flex flex-col gap-1 rounded-xl border border-good/40 p-4">
             <span className={CAPS}>Suggested replacement</span>
             <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
+            {best.selection?.origin === 'agent_proposal' && <p className="text-sm text-soft">
+              Proposed by SpecCheck: {best.selection.model}. Confirm configuration before ordering.
+            </p>}
             <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes the listed checks</span>
             <details className="mt-2 text-sm">
               <summary className="cursor-pointer text-soft">Replacement evidence</summary>
               <ul className="mt-2 flex flex-col gap-3">
+                {best.selection?.origin === 'agent_proposal' && <li>
+                  <span className="font-medium">Proposed configuration · page {best.selection.page}</span>
+                  <blockquote className="mt-1 border-l-2 border-edge pl-3 text-muted">
+                    <p>“{best.selection.quote}”</p>
+                    <a href={best.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(best.source_url)} ↗</a>
+                  </blockquote>
+                </li>}
                 {best.checks.map((check, n) => <li key={n}>
                   <span className="font-medium">{check.label}</span>
                   {check.evidence?.map((e, i) => <blockquote key={i} className="mt-1 border-l-2 border-edge pl-3 text-muted">
@@ -1268,6 +1280,9 @@ function Alert({ c, result, sent, onRequest }: { c: Case; result: Result; sent: 
         <div className="flex flex-col gap-1 rounded-lg border border-good/40 p-3">
           <span className={CAPS}>Suggested replacement</span>
           <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
+          {best.selection?.origin === 'agent_proposal' && <p className="text-sm text-soft">
+            Proposed by SpecCheck: {best.selection.model}. Confirm configuration before ordering.
+          </p>}
           <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes all checks</span>
         </div>
       )}

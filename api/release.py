@@ -9,7 +9,7 @@ from types import SimpleNamespace
 
 from .config import settings
 from .pipeline.cases import all_cases, all_samples
-from .pipeline.extract import quoted, value_quoted, metric_quoted, unit_quoted, scope_is_product_wide, model_quoted, selection_supported, revision_supported, family_member
+from .pipeline.extract import quoted, value_quoted, metric_quoted, unit_quoted, scope_is_product_wide, model_quoted, selection_supported, selection_matches, revision_supported, family_member
 from .pipeline.decide import decide
 from .pipeline import spec_check, verify
 from .pipeline.scores import scores
@@ -128,13 +128,13 @@ def _citation(evidence, started: datetime, finished: datetime) -> bool:
     return bool(evidence.excerpt) and any(quoted(evidence.excerpt, text) for text in _archived(evidence, started, finished))
 
 
-def _claims(extracted, claims, selection, pages: dict[int, str]) -> None:
+def _claims(extracted, claims, selection, pages: dict[int, str], *, allow_proposal: bool = False) -> None:
     if extracted is None or extracted.claims != claims or extracted.selection != selection:
         raise ValueError("Saved claims must retain the complete extraction input")
     identifier = extracted.model or extracted.family or extracted.product
     if claims and not any(model_quoted(identifier, text) for text in pages.values()):
         raise ValueError("Submitted identity is absent from its pages")
-    if extracted.selection and (not selection_supported(extracted.selection, pages)
+    if extracted.selection and (not selection_supported(extracted.selection, pages, allow_proposal=allow_proposal)
             or not model_quoted(identifier, extracted.selection.model) or not model_quoted(extracted.selection.model, identifier)):
         raise ValueError("Selected configuration is not supported by its submitted page")
     if extracted.document_revision and not any(revision_supported(extracted.document_revision, text) for text in pages.values()):
@@ -150,14 +150,16 @@ def _claims(extracted, claims, selection, pages: dict[int, str]) -> None:
                 or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote, claim.property)
                 or claim.variant and not quoted(claim.variant, claim.quote or "")
                 or claim.model and not (model_quoted(identifier, claim.model) and model_quoted(claim.model, identifier)
-                    or selection and model_quoted(claim.model, text) and model_quoted(claim.model, selection.model))
-                or not (model_quoted(identifier, claim.product) or model_quoted(claim.product, identifier) or family_member(claim.product, identifier))):
+                    or selection and (model_quoted(claim.model, text) and model_quoted(claim.model, selection.model)
+                        or allow_proposal and selection.origin == "agent_proposal" and selection_matches(selection, claim.model, base=True)))
+                or not (model_quoted(identifier, claim.product) or model_quoted(claim.product, identifier) or family_member(claim.product, identifier)
+                        or allow_proposal and selection and selection.origin == "agent_proposal" and selection_matches(selection, claim.product, base=True))):
             raise ValueError("Claim identity, value and quote must survive the submitted-page gates")
         if not claim.variant and not (scope_is_product_wide(claim.scope, claim.scope_quote, claim.quote, claim.property)
                                       and quoted(claim.scope_quote, text)):
             raise ValueError("A product-wide claim needs its page-grounded scope")
         if claim.selection_quote and (not claim.variant or not selection or claim.selection_quote != selection.quote
-                                       or not model_quoted(claim.variant, selection.model)):
+                                       or not selection_matches(selection, claim.variant)):
             raise ValueError("An option value needs the actual submitted selection")
 
 
@@ -190,7 +192,7 @@ def _selection_proof(candidate, selection, started: datetime, finished: datetime
     for evidence in candidate.documents:
         if _citation(evidence.model_copy(update={"excerpt":selection.quote}), started, finished):
             path = (settings.evidence_dir / evidence.archived_path).resolve()
-            if any(selection_supported(selection, {selection.page:text}) for text in _text_pages(path)):
+            if any(selection_supported(selection, {selection.page:text}, allow_proposal=True) for text in _text_pages(path)):
                 return True
     return False
 
@@ -291,9 +293,9 @@ def _run(folder: Path, ids: set[str], catalog: dict, current: dict, *, score_ids
                     if not any(document.url == source.url and any(quoted(page_texts[number], text)
                             for text in _archived(document, started, finished)) for document in candidate.documents):
                         raise ValueError("Replacement page is absent from its bundled source")
-                _claims(candidate.extracted, candidate.claims, candidate.selection, page_texts)
+                _claims(candidate.extracted, candidate.claims, candidate.selection, page_texts, allow_proposal=True)
                 primary = candidate.verification.submitted
-                _claims(primary, primary.claims, primary.selection, page_texts)
+                _claims(primary, primary.claims, primary.selection, page_texts, allow_proposal=True)
                 if any(getattr(primary, field) != getattr(candidate.extracted, field) for field in
                        ("product", "manufacturer", "model", "family", "family_quote", "selection", "document_revision")):
                     raise ValueError("Replacement verification belongs to another submitted identity")
@@ -332,7 +334,7 @@ def _run(folder: Path, ids: set[str], catalog: dict, current: dict, *, score_ids
                         else:
                             selection = candidate.selection
                             if (not selection or claim.selection_quote != selection.quote or not quoted(claim.variant, claim.quote or "")
-                                    or not model_quoted(claim.variant, selection.model)
+                                    or not selection_matches(selection, claim.variant)
                                     or not _selection_proof(candidate, selection, started, finished)):
                                 raise ValueError("Replacement option needs a supported selected configuration")
         if any(inv.purpose == "primary" and inv.resolution in ("problem_found", "values_confirmed")

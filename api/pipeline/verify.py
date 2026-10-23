@@ -16,7 +16,7 @@ from ..llm import load_fixture, router
 from ..providers import ProviderError, budget
 from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Investigation, Usage, VerifyOut, VerificationProof
 from ..web import WebClient, snapshot
-from .extract import family_member, metric_quoted, model_quoted, page_batches, revision_supported, scope_is_product_wide, unit_quoted, value_quoted, quoted
+from .extract import family_member, metric_quoted, model_quoted, page_batches, revision_supported, scope_is_product_wide, selection_matches, unit_quoted, value_quoted, quoted
 from .investigate import investigate
 from .spec_check import UNIT_TO_BASE, _fmt, _label, normalize, to_number
 from . import metrics
@@ -388,7 +388,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: 
                     and source_of(pv.scope_quote, pv.source_url))
             if not pv.variant and not wide:
                 pv.variant = pv.quote
-            if pv.variant and submitted.selection and model_quoted(pv.variant, submitted.selection.model):
+            if pv.variant and submitted.selection and selection_matches(submitted.selection, pv.variant):
                 pv.selection_quote = submitted.selection.quote
     if measure:
         metrics.count("web_values_read", "web_values_kept", read, len(out.current_values))

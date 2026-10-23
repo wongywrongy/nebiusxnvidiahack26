@@ -82,6 +82,7 @@ class Selection(BaseModel):
     model: str
     page: int
     quote: str = Field(description="Exact submitted passage marking the selected/submitted/specified configuration; never an ordering example")
+    origin: Literal["submitted", "agent_proposal"] = "submitted"
 
 
 class ClaimsOut(BaseModel):

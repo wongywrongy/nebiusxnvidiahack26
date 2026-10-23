@@ -107,6 +107,12 @@ Kyle authorized the disclosed selection-policy exceptions and live validation on
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
 [readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
 
+On October 23 Kyle approved [source-backed replacement proposals](docs/judge-readiness/replacement-proposals-20261023/README.md).
+SpecCheck may propose one printed catalog SKU, labelled as its own choice with quoted configuration/check
+evidence and a request to confirm before ordering. Original submissions still need their own explicit
+selection. This path is implemented and checked offline; live validation remains blocked by the unresolved
+Tavily usage hold. It does not establish a passing live replacement or deployment readiness.
+
 The October 23 targeted run `20261023-095053-630ac4` gets **c03/c07 right, 2/2 problems caught,
 0/2 passing replacements**, zero invalid items and no warnings. Four replacement investigations run;
 none is capped or supplies a complete replacement. No primary investigation is needed. Fresh charges

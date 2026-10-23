@@ -5,7 +5,7 @@ import { createRequire } from 'node:module'
 import ts from 'typescript'
 
 const require = createRequire(import.meta.url)
-const source = fs.readFileSync('src/App.tsx', 'utf8') + '\nexport { longDate, replacement, approvalNote, reviewSummary }\n'
+const source = fs.readFileSync('src/App.tsx', 'utf8') + '\nexport { longDate, replacement, approvalNote, reviewSummary, returnNote }\n'
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX },
 }).outputText
@@ -24,6 +24,10 @@ assert.match(exports.replacement(candidate(null))[0], /couldn't confirm Required
 assert.ok(!exports.replacement(candidate(null))[0].includes('fails'))
 assert.match(exports.replacement(candidate(false))[0], /fails/)
 assert.equal(exports.replacement({ suggest: 'Verified replacement' })[1], true)
+const proposal = { name: 'Catalog family', selection: { origin: 'agent_proposal', model: 'ZX-12-D1' } }
+const draft = exports.returnNote({number: '01',section: 'test'}, {findings: [],validity: 'valid'}, proposal)
+assert.match(draft, /SpecCheck proposal: ZX-12-D1\. Confirm configuration before ordering\./)
+assert.ok(!draft.includes('Suggested replacement: Catalog family'))
 const pending = 'The checked product data can be approved. Assembly proof remains pending.'
 assert.match(exports.approvalNote({number: '01'}, {note_to_subcontractor: pending, validity: 'valid'}), /Assembly proof remains pending/)
 assert.ok(!exports.approvalNote({title: 'Assembly'}, {summary: pending}).includes('No exceptions'))

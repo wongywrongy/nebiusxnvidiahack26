@@ -67,7 +67,8 @@ def summarize(case: dict, res: Result | None) -> dict:
     if not {"currency", "status"} <= {f.check for f in res.findings} and status == "no_change":
         status, detail = "unverified", "The re-check did not complete both currency and status checks."
     fix = next((f.fix for f in res.findings if f.fix), None)
-    replacement = next((c.name for c in fix.candidates if c.passes), None) if fix else None
+    candidate = next((c for c in fix.candidates if c.passes), None) if fix else None
+    replacement = (fix.suggest or candidate.name) if candidate else None
     return {**item, "status": status, "detail": detail, "quote": quote, "source": source,
             "replacement": replacement, "decision": res.decision, "cost_usd": round(res.cost_usd, 6),
             "web_credits": res.web_credits, "duration_ms": res.duration_ms}

@@ -166,7 +166,8 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
             await web.warn("fix", budget.BudgetExceeded("Fix credit cap reached before candidate verification"))
             break  # credit cap for this item
         pages = page.get("pages") or [{"page": 1, "text": text}]
-        cl, u = await extract.extract_claims(cfx, pages, extract.all_product_data(pages), props)
+        proposal_options = {"propose": True} if settings.live else {}
+        cl, u = await extract.extract_claims(cfx, pages, extract.all_product_data(pages), props, **proposal_options)
         usage += u
         if not verify._unambiguous(cl.claims):
             continue  # no quoted product properties: cannot establish a passing replacement
@@ -207,15 +208,16 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                         "archived_path": archive.save(case["id"], p["text"].encode(), "txt", document.retrieved_at),
                     })
         if len(bundle) > 1:
-            more, u = await extract.extract_claims(cfx, bundle_pages, extract.all_product_data(bundle_pages), props)
+            more, u = await extract.extract_claims(cfx, bundle_pages, extract.all_product_data(bundle_pages), props, **proposal_options)
             identifier, other = cl.model or cl.family or cl.product, more.model or more.family or more.product
             selection_agrees = (not cl.selection or more.selection and
                                 extract.model_quoted(cl.selection.model, more.selection.model) and
-                                extract.model_quoted(more.selection.model, cl.selection.model))
+                                extract.model_quoted(more.selection.model, cl.selection.model)
+                                and cl.selection.origin == more.selection.origin)
             if selection_agrees and extract.model_quoted(identifier, other) and extract.model_quoted(other, identifier):
                 for claim in more.claims:
                     claim.selection_quote = (cl.selection.quote if claim.variant and cl.selection and
-                                             extract.model_quoted(claim.variant, cl.selection.model) else None)
+                                             extract.selection_matches(cl.selection, claim.variant) else None)
                 merged, identifiers = {}, set()
                 for claim in [*cl.claims, *more.claims]:
                     key = (claim.property, json.dumps(claim.value, sort_keys=True), claim.unit,
@@ -262,5 +264,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         if u.task != "investigate":
             u.task = f"fix: {u.task}"
     best = next((c for c in cands if c.passes), None)
-    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=best.name if best else "")
+    suggestion = (f"SpecCheck proposal: {best.selection.model}. Confirm configuration before ordering."
+                  if best and best.selection and best.selection.origin == "agent_proposal" else best.name if best else "")
+    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion)
     return fix, usage, web.credits + verify_credits

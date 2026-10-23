@@ -61,5 +61,7 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
     if settings.live or case_id is not None:
         out.summary = lead
         details = [f"{f.title}: {f.detail}" for f in findings if f.verdict not in ("pass", "not_applicable")]
+        details += [f.fix.suggest for f in findings if f.fix and any(
+            c.passes and c.selection and c.selection.origin == "agent_proposal" for c in f.fix.candidates)]
         out.note_to_subcontractor = lead + ("\n\n" + "\n".join(details) if details else "")
     return out, [usage]

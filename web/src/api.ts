@@ -55,7 +55,8 @@ export interface Finding {
 }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
 interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
-interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean }
+interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean;
+  selection?: { model: string; page: number; quote: string; origin?: 'submitted' | 'agent_proposal' } | null }
 export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.

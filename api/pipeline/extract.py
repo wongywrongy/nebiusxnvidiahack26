@@ -96,12 +96,16 @@ def page_batches(pages: list[dict], limit: int):
         yield batch
 
 
-async def extract_claims(case_id: Optional[str], pages: list[dict], labels: TriageOut, properties: list[str]) -> tuple[ClaimsOut, list[Usage]]:
+async def extract_claims(case_id: Optional[str], pages: list[dict], labels: TriageOut, properties: list[str],
+                         *, propose: bool = False) -> tuple[ClaimsOut, list[Usage]]:
     usage, outputs, kept, identities = [], [], {}, []
     ambiguous = False
     texts = {p["page"]: p["text"] for p in pages}
     for text in page_batches(pages, settings.max_page_chars):
-        out, u = await _read_claims(case_id, text, properties)
+        out, u = (await _read_claims(case_id, text, properties, propose=True) if propose
+                  else await _read_claims(case_id, text, properties))
+        if propose and out.selection and not selection_supported(out.selection, texts):
+            out.selection.origin = "agent_proposal"
         usage.append(u)
         extracted = len(out.claims)
         repairable = [c for c in out.claims if c.property in properties and c.page in texts
@@ -132,9 +136,13 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
             if not identity:
                 ambiguous = True
             identities.append(identity)
-            ambiguous |= any((c.model and not (model_quoted(identity, c.model) and model_quoted(c.model, identity)))
+            same_configuration = lambda name: bool(propose and out.selection
+                and selection_supported(out.selection, texts, allow_proposal=True)
+                and selection_matches(out.selection, identity, base=True) and selection_matches(out.selection, name, base=True))
+            ambiguous |= any((c.model and not (model_quoted(identity, c.model) and model_quoted(c.model, identity)
+                                               or same_configuration(c.model)))
                              or not (model_quoted(identity, c.product) or model_quoted(c.product, identity)
-                                     or family_member(c.product, identity)) for c in out.claims)
+                                     or family_member(c.product, identity) or same_configuration(c.product)) for c in out.claims)
         metrics.count("claims_extracted", "claims_kept", extracted, len(out.claims))
         for c in out.claims:
             key = (c.property, json.dumps(c.value, sort_keys=True), c.unit, c.page, c.quote, c.variant)
@@ -152,14 +160,15 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
         result.family_quote = family.family_quote
     else:
         result.family = result.family_quote = None
-    selections = [o.selection for o in outputs if o.selection and selection_supported(o.selection, texts)]
+    selections = [o.selection for o in outputs if o.selection and selection_supported(o.selection, texts, allow_proposal=propose)]
     result.selection = selections[0] if selections and len({s.model for s in selections}) == 1 else None
     if not result.selection and result.model and any(re.search(r"\bexample\s*:", p["text"], re.I) for p in pages) and not any(
             model_quoted(result.model, re.sub(r"\b(?:ordering\s+)?example\s*:[^\n.;]*", "", p["text"], flags=re.I)) for p in pages):
         result.model = result.family
-    ambiguous |= bool(identities and any(not (model_quoted(identities[0], other) and
-                        model_quoted(other, identities[0])) for other in identities[1:]))
-    ambiguous |= bool(result.selection and any(not model_quoted(identity, result.selection.model) for identity in identities))
+    ambiguous |= bool(identities and any(not (model_quoted(identities[0], other) and model_quoted(other, identities[0])
+                        or propose and result.selection and selection_matches(result.selection, identities[0], base=True)
+                        and selection_matches(result.selection, other, base=True)) for other in identities[1:]))
+    ambiguous |= bool(result.selection and any(not selection_matches(result.selection, identity, base=True) for identity in identities))
     if ambiguous:
         # Mixed product/assembly bundles need explicit attribution before their properties can be combined.
         result.selection = None
@@ -175,7 +184,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
             c.variant = c.variant or c.quote
         if ambiguous:
             c.scope = "unknown"
-        if not ambiguous and c.variant and result.selection and model_quoted(c.variant, result.selection.model):
+        if not ambiguous and c.variant and result.selection and selection_matches(result.selection, c.variant):
             c.selection_quote = result.selection.quote
         if c.id in ids:
             c.id = f"{c.id}-chunk-{n}"
@@ -183,7 +192,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     return result, usage
 
 
-async def _read_claims(case_id, text, properties):
+async def _read_claims(case_id, text, properties, *, propose=False):
     messages = [
         {
             "role": "user",
@@ -217,10 +226,33 @@ async def _read_claims(case_id, text, properties):
             ),
         }
     ]
+    if propose:
+        content = messages[0]["content"]
+        content = content.replace(
+            "Do not dump option tables. Return SKU-dependent table values only when these pages explicitly mark "
+            "a selected/submitted/specified SKU and you return that matching selection object. ",
+            "Do not dump option tables. Read SKU-dependent values only for the one configuration you propose. ")
+        content = content.replace("A printed identifier or factory default does not select a SKU. ",
+                                  "A family identifier or factory default cannot establish a complete proposed SKU. ")
+        content = content.replace(
+            "Return selection only when submitted evidence explicitly marks a selected/submitted/specified configuration, with its page and exact quote. ",
+            "This is replacement research. You may propose at most one complete manufacturer-printed catalog/stock SKU. "
+            "Return it in selection with its page and an exact contiguous quote including its catalog/stock/part-number label. "
+            "Never construct an order code from separate options, choose a default, fill a placeholder or use an ordering example. "
+            "If no complete SKU is printed, leave selection null. Keep model as the printed base product identifier. "
+            "Set variant to the exact printed option code for each option-dependent claim; it must be a complete component "
+            "of this SKU. Every value still needs its own quote and complete applicability clause. "
+            "Family-level conditional listings do not establish this SKU's certification. ")
+        messages[0]["content"] = content
     class ClaimsRead(ClaimsOut):
         @classmethod
         def model_json_schema(cls, **kwargs):
             schema = super().model_json_schema(**kwargs)
+            # Provenance is set by the caller, never by the model; preserve ordinary extraction cache keys.
+            schema["$defs"]["Selection"]["properties"].pop("origin")
+            if propose:
+                schema["$defs"]["Selection"]["properties"]["quote"]["description"] = (
+                    "Exact page passage with the complete printed catalog/stock SKU and its label; never an ordering example.")
             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
             schema["$defs"]["Claim"]["properties"]["unit"]["description"] = (
                 "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values.")
@@ -273,18 +305,36 @@ def scope_is_product_wide(scope: str, scope_quote: Optional[str], value_quote: O
         for clause in limited))
 
 
-def selection_supported(selection: Selection, pages: dict[int, str]) -> bool:
+def selection_supported(selection: Selection, pages: dict[int, str], *, allow_proposal: bool = False) -> bool:
     text = pages.get(selection.page, "")
     quote = selection.quote
     normalized = _plain(text)
     start = normalized.find(_plain(quote))
     prefix = normalized[max(0, start - 80):start]
+    end = start + len(_plain(quote))
+    if (not model_quoted(selection.model, text) or _plain(quote)[-1:].isalnum()
+            and re.match(r"[\w+]|[-_/][\w+]", normalized[end:])):
+        return False  # A quote truncated inside another SKU cannot select or propose it.
+    if selection.origin == "agent_proposal":
+        return bool(allow_proposal and quoted(quote, text) and model_quoted(selection.model, quote)
+                    and re.search(r"\b(?:sku|stock|catalog(?:ue)?\s*(?:number|no\.?|#)|part\s*(?:number|no\.?|#)|order\s*code)\b", quote, re.I)
+                    and not re.search(r"[\[\]{}*<>]|\b(?:xx+|tbd|select|options?|driver|voltage)\b", selection.model, re.I)
+                    and not re.search(r"\b(?:example|sample|not|maybe)\b|e\.g\.", quote, re.I)
+                    and not re.search(r"\b(?:example|sample)\s*:[^\n]{0,80}$", prefix, re.I))
     label = re.search(r"\b(selected|submitted|specified)(?:\s+(?:model|sku|configuration|driver|product|catalog number))?\s*[:=]", quote, re.I)
     selected = re.split(r";|\r?\n|\.(?=\s|$)", quote[label.end():].strip(), maxsplit=1)[0] if label else ""
     return (quoted(quote, text) and model_quoted(selection.model, quote)
             and model_quoted(selection.model, selected)
             and not re.search(r"\b(example|sample|not|if|or|either|maybe)\b|e\.g\.", quote, re.I)
             and not re.search(r"\b(example|sample)\b[^.!?]{0,80}$", prefix, re.I))
+
+
+def selection_matches(selection: Selection, identifier: str, *, base: bool = False) -> bool:
+    if selection.origin != "agent_proposal":
+        return model_quoted(identifier, selection.model)
+    part = re.findall(r"[\w+]+", _plain(identifier).casefold())
+    sku = re.findall(r"[\w+]+", _plain(selection.model).casefold())
+    return bool(part) and any(sku[n:n + len(part)] == part for n in ([0] if base else range(len(sku))))
 
 
 def revision_supported(value: str, text: str) -> bool:

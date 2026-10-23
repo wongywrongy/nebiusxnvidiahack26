@@ -91,3 +91,34 @@ test('lost scan stream offers Retry instead of spinning', async ({ page }) => {
   await expect(page.getByText('Lost the scan connection. Retry this item.')).toBeVisible()
   await expect(page.getByRole('button', { name: /^Retry / })).toBeVisible()
 })
+
+test('replacement proposal is labelled in review, draft and outcome', async ({ page }, testInfo) => {
+  await page.route('**/api/runs/*/results/*', async route => {
+    const response = await route.fetch()
+    const result = await response.json()
+    result.decision = 'send_back'
+    result.summary = result.note_to_subcontractor = 'Revise and resubmit to address the findings below.'
+    result.findings = [{ id: 'synthetic-status', check: 'status', verdict: 'fail', severity: 'major',
+      title: 'Synthetic retired product', detail: 'Synthetic browser scenario, not live evidence.',
+      claim_ids: [], highlights: [], evidence: [], decided_by: 'code', fix: {
+        head: 'Checked proposal', query: '', suggest: 'SpecCheck proposal: ZX-12-D1. Confirm configuration before ordering.',
+        candidates: [{ name: 'Synthetic catalog', source_url: 'https://maker.test/catalog', passes: true,
+          selection: { model: 'ZX-12-D1', origin: 'agent_proposal', page: 1, quote: 'Catalog number: ZX-12-D1' },
+          checks: [{ label: 'Synthetic quoted check', ok: true, note: '',
+            evidence: [{url: 'https://maker.test/catalog', excerpt: 'Synthetic quoted evidence.'}] }] }] } }]
+    await route.fulfill({ response, json: result })
+  })
+  await review(page)
+  await expect(page.getByText('Proposed by SpecCheck: ZX-12-D1. Confirm configuration before ordering.')).toBeVisible()
+  await expect(page.locator('#message')).toHaveValue(/SpecCheck proposal: ZX-12-D1/)
+  await page.getByText('Replacement evidence', {exact:true}).click()
+  await expect(page.getByText('“Catalog number: ZX-12-D1”')).toBeVisible()
+  await expect(page.getByText('“Synthetic quoted evidence.”')).toBeVisible()
+  await page.screenshot({path: testInfo.outputPath('proposal-desktop.png'),fullPage:true})
+  await page.setViewportSize({width:390,height:844})
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+  await page.screenshot({path:testInfo.outputPath('proposal-mobile.png'),fullPage:true})
+  await page.getByRole('button', {name:'Save return decision',exact:true}).click()
+  await expect(page.getByRole('heading', {name:'Outcome',exact:true})).toBeVisible()
+  await expect(page.getByText('SpecCheck proposal: ZX-12-D1. Confirm configuration before ordering.', {exact:true})).toBeVisible()
+})

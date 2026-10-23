@@ -37,8 +37,9 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Quoted lifecycle timing and status metadata | [Synthetic before/after and cached-live c07](status-timing-20261023/README.md); [unsupported bounds](status-timing-20261023/bounds.md) stay unknown; the subsequent affected-case attempt is invalid and its one-credit usage hold requires reconciliation |
 | Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
+| Owner-approved, source-backed replacement proposals | [Policy, before/after, source gates and synthetic browser screens](replacement-proposals-20261023/README.md); 718 tests / 2 skipped, presentation/build and 9 mock browser journeys pass. No original selection is inferred; live proof remains blocked by billing |
 
-Retained-source Python verification: **697 passed / 2 skipped**; [exact source/test match](status-timing-20261023/bounds-current-source.json), [output](status-timing-20261023/bounds-pytest.txt). Both [workflows for tested source `e89329f`](status-timing-20261023/bounds-ci.json)
+Before the proposal change, retained-source Python verification was **697 passed / 2 skipped**; [exact source/test match](status-timing-20261023/bounds-current-source.json), [output](status-timing-20261023/bounds-pytest.txt). Both [workflows for tested source `e89329f`](status-timing-20261023/bounds-ci.json)
 pass Python/mock, presentation/build and mock browser checks; no hosted browser proof. Raw mock remains
 **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with 46/65 claims and 8/20
 web values. Settled local accounting is **$3.36648982 / 490**, plus **one unknown Tavily credit held**;
@@ -66,7 +67,7 @@ private IAM/quota, grant/expiry terms, judge access funding and concrete approva
 1. **G2:** obtain and verify an actual complete replacement evidence bundle. Broader discovery now reaches
    Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
    LT now retains its unconditional L70 and MacAdam evidence; DLC/driver options
-   lack selection and availability remains unconfirmed for the complete candidate. New [QuickShip source research](replacement-research-20261023/quickship-follow-up.md) finds stock evidence for DIM models, but supplies neither their minimum dimming percent nor a specific DLC class. c03 lacks complete mold/assembly/availability
+   have not yet been validated as a complete proposal and availability remains unconfirmed. New [QuickShip source research](replacement-research-20261023/quickship-follow-up.md) finds stock evidence for DIM models, but supplies neither their minimum dimming percent nor a specific DLC class. c03 lacks complete mold/assembly/availability
    proof; both current VOC reads pass but one candidate lacks standards proof. Broader discovery and current-source interpretation remain mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
@@ -95,10 +96,10 @@ private IAM/quota, grant/expiry terms, judge access funding and concrete approva
 
 ## Kyle's parts, later
 
-- Decide the [replacement proposal policy](document-revisions-20261023/replacement-policy-question.md):
-  require a user-selected replacement configuration, or allow a clearly labelled agent proposal whose
-  exact configuration is verified from source quotes. The submitted-selection rule remains binding
-  until that decision; neither option fills today's missing evidence by itself.
+- The [replacement proposal policy](document-revisions-20261023/replacement-policy-question.md) is approved:
+  Kyle allows clearly labelled agent proposals with every SKU, option and check backed by fetched quotes.
+  Original submissions still require their own selection. Implementation/offline verification is recorded
+  [here](replacement-proposals-20261023/README.md); an actual passing live replacement remains unverified.
 - Review each gate's evidence and accept or reject its remaining misses. Engineering authorization of the
   c05/c06 selection-policy disagreements is recorded; release acceptance remains a separate judgment.
 - Review the blind labels before evaluation and adjudicate any new source/answer-key contradiction.
