@@ -20,8 +20,9 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Controller job allowances, one-session claims, sealed child wallets and guarded settlement/publication | [Offline protocol checkpoint](controller-20261023/README.md); no shared job write path or hosted proof |
 | Read-only smoke mode; invalid/replayed evidence rejected as fresh deployment proof | `tests/test_smoke.py`; hosted smoke remains pending |
 | Separate release promotion check across cases, samples, frozen blind set and full public recording | [Offline release preflight](release-preflight-20261023/README.md); submitted-page and web quote gates replayed; no actual blind review or promotion |
+| Six new source-labelled packages and a label-isolated eval runner | [Frozen draft review table](blind-20261023/README.md); six downloaded native PDFs, hashes and page quotes checked; owner review pending, no pipeline evaluation |
 
-Current Python verification: **524 passed / 2 skipped**. Presentation checks and web build passed in the
+Current Python verification: **532 passed / 2 skipped**. Presentation checks and web build passed in the
 preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;
 no new local browser run is claimed for the backend changes below.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
@@ -44,8 +45,9 @@ The latest [targeted c03/c07 run](replacement-discovery-20261023/README.md) gets
 3. **Release evidence:** assemble the actual complete cases, samples, reviewed blind set and public recording
    under the implemented promotion check. The offline check rejects the current incomplete bundle. Actual
    owner dispositions and a passing check remain pending; diagnostic recording preserves honest wrong calls.
-4. **Blind preparation:** independently prepare six new source-labelled packages and freeze URLs, PDF hashes,
-   page quotes, selection/assembly scope and draft labels before pipeline evaluation. Keep labels outside inputs.
+4. **Blind review application:** apply Kyle's decisions to the six prepared draft labels, retain exact PDF/page
+   evidence, and bind the approved freeze/review before evaluation. Preparation and the label-isolated runner
+   are complete; label approval remains Kyle's part. Do not infer approval or run the unreviewed set.
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.

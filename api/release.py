@@ -3,6 +3,7 @@
 from datetime import datetime, timezone, timedelta
 import hashlib
 import json
+import re
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -75,6 +76,8 @@ def _blind(folder: Path) -> tuple[dict, dict, str]:
     if (len(packages) != 6 or len(inputs["cases"]) != 6 or set(packages) != set(answers)
             or len(labels["labels"]) != 6 or set(packages) & (all_cases().keys() | all_samples().keys())):
         raise ValueError("Exactly six new blind packages and matching labels are required")
+    if any(not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,63}", key) for key in packages):
+        raise ValueError("Blind identifiers must be safe result filenames")
     primary_hashes = []
     for key, package in packages.items():
         if package["section"] not in {row["section"] for row in all_cases().values()} or not package["submittal"]:

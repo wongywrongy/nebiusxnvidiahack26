@@ -39,9 +39,11 @@ log = logging.getLogger("speccheck.runs")
 
 class Run:
     def __init__(self, case_ids: list[str], delay_ms: Optional[int] = None, mock: Iterable[str] = (),
-                 shared_item_budget: bool = False, replay_of: str | None = None, refresh_web: bool = False):
+                 shared_item_budget: bool = False, replay_of: str | None = None, refresh_web: bool = False,
+                 catalog: dict[str, dict] | None = None):
         self.id = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         self.case_ids = case_ids
+        self.catalog = catalog
         self.mock = set(mock)  # items forced to mock mode even when the server is live (public uploads)
         self.shared_item_budget = shared_item_budget
         self.replay_of = replay_of
@@ -100,7 +102,7 @@ class Run:
 
 
 async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
-    case = get_case(case_id)
+    case = run.catalog[case_id] if run.catalog is not None else get_case(case_id)
     usage: list[Usage] = []
     investigations: list[Investigation] = []
     warnings: list[str] = []

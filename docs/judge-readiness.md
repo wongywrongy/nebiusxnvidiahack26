@@ -185,3 +185,23 @@ Final target fresh charges are $0.1244169 / 7; displayed usage-equivalent costs 
 G2 remains open: SLLT lacks complete proof; LT has a lost L70 bound, unselected options and unconfirmed
 availability; c03 lacks complete VOC/mold/assembly/availability proof. A bounded corrective read is still
 agent-owned. No full follow-up eval, blind eval, final recording, deployment or cloud resource was created.
+
+## Six-package preparation checkpoint — 2026-10-23
+
+The [new-source review table](judge-readiness/blind-20261023/README.md) has six downloaded manufacturer
+PDFs with distinct hashes outside the known 13-document lock: STI SSS, TREMstop Acrylic SP, STI C-AJ-0113,
+STI F-A-1118, RAB RPLED and RAB RTLED. Every page has native text; every draft source quote is on its cited
+page. The implementation agent prepared the drafts before application evaluation; this is not an independent
+human study. Scope and missing selections are explicit, and no label entered a pipeline input.
+
+The existing eval runner now accepts a frozen, owner-reviewed external catalog, strips expectations before
+execution and binds the exact set digest in its saved manifest. It refuses unreviewed sets, mock blind runs,
+mixed suites and unsafe result identifiers. It keeps the public scoreboard unchanged. Source preflight passes;
+the actual `--check` correctly refuses this draft because Kyle has not reviewed it. No self-approval was added.
+
+Full mock regression: **532 passed, 2 skipped in 26.95 seconds**; an additional **7 tests pass in 0.31 seconds**
+after adding a label-canary assertion. Final mock run `20261023-040437-584300` preserves **6/8, 5/6, 0/2, 0/5**,
+zero invalid items and one unnecessary note. Fresh provider spend is $0 / 0; campaign usage remains
+**$1.9702294 / 391**, with no holds. GitHub CI for preceding commit `7deb149` passed Python/mock/web/browser
+checks. No new frontend changes were made. G2/G3 remain open; no blind run, broader evaluation, final recording,
+deployment or cloud resource was started. Kyle's pending task is label review, not preparation or runner work.

@@ -109,7 +109,7 @@ checks enforce the exact disagreements; the raw scoreboard and strict release ga
 
 The October 23 refinement check gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
 replacements**, one primary Investigator recovery and no cap/provider warnings. This targeted, partly cached
-confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **524 tests,
+confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **532 tests,
 2 skipped**. Presentation/build checks and eight mock browser journeys passed in the preceding checkpoints.
 Additional engineering spend is **$0.9116244 / 93 credits**, cumulative local ledger **$1.9702294 / 391**.
 G2 remains open for a fully evidenced replacement. See the [latest query, matcher and metadata before/after
@@ -117,6 +117,8 @@ evidence](docs/judge-readiness/replacement-discovery-20261023/README.md) and [ea
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
 cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.
+The [six new-source packages and draft labels](docs/judge-readiness/blind-20261023/README.md) are prepared
+for Kyle's review. They have not been evaluated; the label-isolated runner refuses an unreviewed freeze.
 
 Live run **`20261022-181611-a9d0b5`**, recorded **2026-10-22**, is committed under
 [runs/recorded/](runs/recorded/20261022-181611-a9d0b5/scores.json). It contains c01–c08 and public samples

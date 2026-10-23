@@ -1,0 +1,106 @@
+{
+  "requests": [
+    {
+      "name": "sti-sss",
+      "url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_SSS%20Intumescent%20Sealant.pdf",
+      "final_url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_SSS%20Intumescent%20Sealant.pdf",
+      "status": 200,
+      "file": "blind/20261023/sti-sss.pdf",
+      "sha256": "4e918dbb57da12ca8258fa4221f744eeb1e9447844cd876d5d29920c1677deaf",
+      "bytes": 734645,
+      "pages": 3,
+      "native_text_chars": [
+        3857,
+        2828,
+        3518
+      ],
+      "retrieved_at": "2026-10-23T03:58:38.376981+00:00"
+    },
+    {
+      "name": "tremstop-acrylic",
+      "url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_SP_DS.pdf",
+      "final_url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_SP_DS.pdf",
+      "status": 200,
+      "file": "blind/20261023/tremstop-acrylic.pdf",
+      "sha256": "011a230b8d5c1eb3dbea3ab939b7276dbc50c9bdea13d17c0510ce2698759604",
+      "bytes": 208816,
+      "pages": 2,
+      "native_text_chars": [
+        2026,
+        967
+      ],
+      "retrieved_at": "2026-10-23T03:58:38.037188+00:00"
+    },
+    {
+      "name": "sti-caj0113",
+      "url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Fcaj0113_dl.pdf",
+      "final_url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Fcaj0113_dl.pdf",
+      "status": 200,
+      "file": "blind/20261023/sti-caj0113.pdf",
+      "sha256": "de359ea0a878b692b3182c40b40822c134f45ace8c4a9f4bdd085d5192bda9d2",
+      "bytes": 222287,
+      "pages": 2,
+      "native_text_chars": [
+        1642,
+        1220
+      ],
+      "retrieved_at": "2026-10-23T03:58:38.169176+00:00"
+    },
+    {
+      "name": "sti-fa1118",
+      "url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Ffa1118_dl.pdf",
+      "final_url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Ffa1118_dl.pdf",
+      "status": 200,
+      "file": "blind/20261023/sti-fa1118.pdf",
+      "sha256": "e82a38eb68963ce504ef199f117a62f03fe1b8a09fc9264254fedd0e5482b20c",
+      "bytes": 361935,
+      "pages": 3,
+      "native_text_chars": [
+        1003,
+        3476,
+        2996
+      ],
+      "retrieved_at": "2026-10-23T03:58:38.728138+00:00"
+    },
+    {
+      "name": "rab-rpled",
+      "url": "https://www.rablighting.com/sites/default/files/downloads/RPLED_Family_Spec_Sheet.pdf",
+      "final_url": "https://www.rablighting.com/sites/default/files/downloads/RPLED_Family_Spec_Sheet.pdf",
+      "status": 200,
+      "file": "blind/20261023/rab-rpled.pdf",
+      "sha256": "b54270043c00e2c66fa4145e3b6c01b0b8f0f779e79417fe22af778eb18a3ae1",
+      "bytes": 349208,
+      "pages": 4,
+      "native_text_chars": [
+        2024,
+        4367,
+        352,
+        2463
+      ],
+      "retrieved_at": "2026-10-23T03:58:38.597770+00:00"
+    },
+    {
+      "name": "delviro-troffer",
+      "url": "https://delviroledlighting.ca/delviro/uploads/2024/03/delviro_troffer_rft_1x4_01_24.pdf",
+      "error": "ConnectError"
+    },
+    {
+      "name": "rab-rtled",
+      "url": "https://www.rablighting.com/sites/default/files/downloads/RTLED_Field_Adjustable_Family_Spec_Sheet_2.pdf",
+      "final_url": "https://www.rablighting.com/sites/default/files/downloads/RTLED_Field_Adjustable_Family_Spec_Sheet_2.pdf",
+      "status": 200,
+      "file": "blind/20261023/rab-rtled.pdf",
+      "sha256": "0bfc8844c42ccd3a9db3a5dc0a26a308f02ead29a9082e30e3df2545518fcd45",
+      "bytes": 347435,
+      "pages": 4,
+      "native_text_chars": [
+        2106,
+        2964,
+        326,
+        2483
+      ],
+      "retrieved_at": "2026-10-23T03:59:18.016770+00:00"
+    }
+  ],
+  "provider_calls": 0
+}

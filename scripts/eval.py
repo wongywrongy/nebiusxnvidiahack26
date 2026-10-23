@@ -3,6 +3,7 @@
   python scripts/eval.py                 # all cases, mock mode by default
   python scripts/eval.py --case c03      # one case
   python scripts/eval.py --samples       # the sample inbox (data/cases/samples.json); in mock mode, only recorded ones
+  python scripts/eval.py --blind-set path/to/frozen-set --check  # validate reviewed sources without providers
   SPECCHECK_MODE=live python scripts/eval.py --case c03
 
 Prints per-case results and the panel numbers: right call, problems caught, false alarms on clean
@@ -28,10 +29,16 @@ from api.pipeline.runner import Run, execute  # noqa: E402
 from api.pipeline.scores import scores  # noqa: E402
 
 async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[str] | None = None,
-               release_gate: bool = False) -> int:
-    run = Run(list(dict.fromkeys([*case_ids, *(extra_ids or [])])), delay_ms=0)
+               release_gate: bool = False, catalog: dict | None = None,
+               validation_set_sha256: str | None = None) -> int:
+    inputs = None if catalog is None else {key: {k: v for k, v in row.items() if k != "expected"}
+                                           for key, row in catalog.items()}
+    run = Run(list(dict.fromkeys([*case_ids, *(extra_ids or [])])), delay_ms=0, catalog=inputs)
+    if validation_set_sha256:
+        run.manifest["validation_set_sha256"] = validation_set_sha256
+        (run.dir / "manifest.json").write_text(json.dumps(run.manifest, indent=2))
     await execute(run)
-    s = scores(run, case_ids)
+    s = scores(run, case_ids, catalog=catalog)
     s.update(runner=os.environ.get("RECHECK_RUNNER", "local"), job_name=os.environ.get("JOB_NAME"))
     (run.dir / "scores.json").write_text(json.dumps(s, indent=2))
 
@@ -70,7 +77,7 @@ async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[
     print(f"Quote gate: claims {gate['claims_kept']}/{gate['claims_extracted']} kept ({rate('claims_drop_rate')} dropped); "
           f"web values {gate['web_values_kept']}/{gate['web_values_read']} kept ({rate('web_values_drop_rate')} dropped)")
 
-    if out is not None or sorted(case_ids) == sorted(all_cases()):
+    if out is not None or catalog is None and sorted(case_ids) == sorted(all_cases()):
         path = out or settings.scores_file
         path.parent.mkdir(parents=True, exist_ok=True)
         temp = path.with_suffix(".tmp")
@@ -87,15 +94,38 @@ async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[
     return 0 if rc["n"] == rc["of"] and ca["n"] == ca["of"] and fa["n"] == 0 and not bad_fix else 1
 
 
-if __name__ == "__main__":
+def cli() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--case", action="append", help="case id, repeatable (default: all)")
-    p.add_argument("--samples", action="store_true", help="score the sample inbox instead of the test cases")
+    group = p.add_mutually_exclusive_group()
+    group.add_argument("--case", action="append", help="case id, repeatable (default: all)")
+    group.add_argument("--samples", action="store_true", help="score the sample inbox instead of the test cases")
+    group.add_argument("--blind-set", type=Path, help="six frozen, owner-reviewed packages; live mode required")
+    p.add_argument("--check", action="store_true", help="check --blind-set sources/review without running providers")
     p.add_argument("--release-gate", action="store_true", help="require case evidence prerequisites; full promotion uses scripts/check_release.py")
     p.add_argument("--out", "--write", type=Path, help="scoreboard output path (default: runs/scores.json for all cases)")
     args = p.parse_args()
+    if args.check and not args.blind_set:
+        p.error("--check requires --blind-set")
+    if args.blind_set and args.release_gate:
+        p.error("--release-gate checks cases only; use scripts/check_release.py for complete release promotion")
+    if args.blind_set:
+        from api.release import _blind
+        try:
+            catalog, _, digest = _blind(args.blind_set)
+        except (OSError, ValueError, KeyError, TypeError, RuntimeError, AttributeError, IndexError):
+            p.error("Blind set is missing, invalid or not owner-reviewed; no run started")
+        if args.check:
+            print(json.dumps({"packages": len(catalog), "validation_set_sha256": digest, "checked_only": True}))
+            return 0
+        if not settings.live:
+            p.error("Blind evaluation requires SPECCHECK_MODE=live; no fixture fallback is allowed")
+        return asyncio.run(main(sorted(catalog), args.out, catalog=catalog, validation_set_sha256=digest))
     if args.samples:
         ids = sorted(i for i, s in all_samples().items() if settings.live or mock_ready(s))
     else:
         ids = args.case or sorted(all_cases())
-    sys.exit(asyncio.run(main(ids, args.out, release_gate=args.release_gate)))
+    return asyncio.run(main(ids, args.out, release_gate=args.release_gate))
+
+
+if __name__ == "__main__":
+    sys.exit(cli())

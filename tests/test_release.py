@@ -296,6 +296,19 @@ def test_blind_freeze_and_pre_evaluation_review_are_mandatory(bundle, fault):
     assert not release.check(root / 'bundle.json')['passed']
 
 
+def test_blind_inputs_cannot_escape_the_result_folder(bundle):
+    folder = bundle.frozen
+    metadata = release._read(folder / 'manifest.json')
+    for name, field in [('inputs.json', 'cases'), ('labels.json', 'labels')]:
+        value = release._read(folder / name)
+        value[field][0]['id'] = '../escape'
+        write(folder / name, value)
+        metadata['inputs_sha256' if field == 'cases' else 'labels_sha256'] = release.file_hash(folder / name)
+    write(folder / 'manifest.json', metadata)
+    with pytest.raises(ValueError, match='safe result filenames'):
+        release._blind(folder)
+
+
 def test_explicit_owner_disposition_preserves_raw_disagreement_and_cannot_waive_invalidity(bundle):
     path = bundle.root / 'cases/results/beta.json'
     value = release._read(path); value['decision'] = 'approve_with_note'
