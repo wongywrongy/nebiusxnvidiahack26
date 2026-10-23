@@ -29,6 +29,11 @@ After integration with the separately committed replacement-query correction `ba
 suite passed **698 / 2 skipped in 31.73 s**; [output](bounds-integrated-pytest.txt).
 [Before/after hashes](bounds-integration.json) prove the integrated runtime
 `d91b4811d8e902254a186a7117af803efdcebef1ecf49938a519f0c4de96a88c` stayed unchanged during that suite.
+That concurrent query experiment was subsequently reverted in `2a62b6a`; it was never measured live.
+The retained API/scripts/tests [exactly match the isolated 697-test snapshot](bounds-current-source.json),
+runtime `c96827f71513da92c346679ec0cbc87ba9f021a144227f0b52452716be4dd7c2`.
+Both [GitHub workflows for evidence head `e89329f`](bounds-ci.json) completed successfully, including
+Python/mock, web presentation/build and mock browser journeys. This is source validation, not hosted proof.
 Both mock evals retain **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**,
 zero invalid items, 46/65 claims and 8/20 web values; [integrated score](bounds-integrated-mock-score.json).
 Their exit 1 is the disclosed unchanged-key selection-policy disagreement, not a passing release gate.

@@ -1,6 +1,6 @@
 {
-  "checked_at": "2026-10-23T10:44:10.061718+00:00",
-  "scope": "Owned proposed source/tests/evidence only; no environment, cache, raw PDF or private wallet staged",
+  "checked_at": "2026-10-23T10:50:27.585661+00:00",
+  "scope": "Owned proposed source/tests/evidence only; environment, cache, raw PDFs, private wallet and owner files excluded",
   "files": [
     {
       "file": "api/pipeline/verify.py",
@@ -27,7 +27,7 @@
         "tavily_api_key": false,
         "admin_token": false
       },
-      "sha256": "e6716ff03e15e8031409746eceddabb6198cb404d2f6d1852934c020b9a87e27"
+      "sha256": "7aa77b557eeadef40020f4112d61d92b42e6f58f438598b07da29d02b41bbebe"
     },
     {
       "file": "docs/judge-readiness.md",
@@ -36,7 +36,7 @@
         "tavily_api_key": false,
         "admin_token": false
       },
-      "sha256": "18a953a52044600e51f291938634e90f84fcfd21a42eb7bc708dbda4201d2193"
+      "sha256": "347f32b95fe70b12678da7a559907411fd02b898e652681e88c80b9b9623be19"
     },
     {
       "file": "docs/judge-readiness/ownership.md",
@@ -45,7 +45,7 @@
         "tavily_api_key": false,
         "admin_token": false
       },
-      "sha256": "1bfaafb8f3d37f178cef4ff9c4e469a658faf0e38aa6ec6bc4fc20611246fe7e"
+      "sha256": "ccb94997de5a5af5713c21e8270ee90d9ec357675fc6aaa07fc19c063b2991bc"
     },
     {
       "file": "docs/judge-readiness/status-timing-20261023/README.md",
@@ -63,7 +63,7 @@
         "tavily_api_key": false,
         "admin_token": false
       },
-      "sha256": "65ab9b2cacb2e05c4b74d0a4702fc11223fe3e7201bf02bb8c43d81f323ac8c9"
+      "sha256": "222eb5d760039aaf65d20a70862fe92e839c02a6c97e44ba216125f06f1ff17a"
     },
     {
       "file": "docs/judge-readiness/status-timing-20261023/bounds-after.json",
@@ -82,6 +82,24 @@
         "admin_token": false
       },
       "sha256": "56581cec43a13fa330933fd2f8640da3d473bdb6488fbe8ab005023bd948f334"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-ci.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "d7bd02840adb61fad864797768c3d1b9db67faf8e683825621a9afbbf67b2fc6"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-current-source.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "7223483a1518154311a0ef4a34714a9bfe50b4e35d0c96b4ae27054a5e310a71"
     },
     {
       "file": "docs/judge-readiness/status-timing-20261023/bounds-integrated-mock-eval.txt",

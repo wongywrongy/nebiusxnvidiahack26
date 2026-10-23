@@ -38,7 +38,7 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current integrated Python verification: **698 passed / 2 skipped**; [source-bound output](status-timing-20261023/bounds-integration.json). Both [workflows for previously tested source `56aeef2`](status-timing-20261023/ci.json)
+Retained-source Python verification: **697 passed / 2 skipped**; [exact source/test match](status-timing-20261023/bounds-current-source.json), [output](status-timing-20261023/bounds-pytest.txt). Both [workflows for tested source `e89329f`](status-timing-20261023/bounds-ci.json)
 pass Python/mock, presentation/build and mock browser checks; no hosted browser proof. Raw mock remains
 **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with 46/65 claims and 8/20
 web values. Settled local accounting is **$3.36648982 / 490**, plus **one unknown Tavily credit held**;

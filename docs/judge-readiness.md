@@ -5,8 +5,8 @@ Kyle approved the comprehensive refinement plan on 2026-10-22. Historical first-
 Latest accounting exception: the [date-bound affected-case attempt](judge-readiness/status-timing-20261023/bounds.md)
 left c07 invalid after a Tavily failure, with **one credit of unknown usage held**. Settled totals remain
 **$3.36648982 / 490**; the wallet total 491 includes the hold, and paid work is blocked pending reconciliation.
-No earlier no-hold checkpoint below describes this latest state. The integrated offline suite passes
-698 tests / 2 skips; G2 and all later gates remain open.
+No earlier no-hold checkpoint below describes this latest state. The retained source passes
+697 tests / 2 skips; both source CI workflows pass. G2 and all later gates remain open.
 
 ## Locked decisions
 

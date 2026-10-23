@@ -1,0 +1,9 @@
+{
+  "code_hash": "c96827f71513da92c346679ec0cbc87ba9f021a144227f0b52452716be4dd7c2",
+  "differences_from_tested_isolated_snapshot": {
+    "api": [],
+    "scripts": [],
+    "tests": []
+  },
+  "matches": true
+}
