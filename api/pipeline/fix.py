@@ -69,7 +69,11 @@ def _query(group: str, case: dict, claims: ClaimsOut, flagged: list[Finding], re
                        for r in requirements if r.id in ids and r.operator == "eq_ref")
         return f"UL listed firestop system {_penetrant(case, claims)} {where}{tail}"
     if any(f.check == "status" for f in flagged):
-        return f'"{_category(case)}" manufacturer specification sheet'
+        roles = {document["role"] for document in case.get("submittal", [])}
+        applicable = [r for r in requirements if not r.applies_to or roles.intersection(r.applies_to)]
+        properties = {r.property for r in applicable} | {str(r.value) for r in applicable if r.operator == "eq_ref"}
+        fields = ", ".join(spec_check._label(prop) for prop in sorted(properties))
+        return f'"{_category(case)}" manufacturer specification sheet {fields}'.strip()
     return f"{maker} {claims.product} {claims.model or ''} current data sheet".replace("  ", " ")
 
 

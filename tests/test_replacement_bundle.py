@@ -111,7 +111,7 @@ def test_replacement_discovery_and_verification_do_not_reuse_another_manufacture
     assert ('Original maker' in observed['query']) is (problem == 'currency')
     if problem == 'status':
         assert '"LED fixture"' in observed['query'] and 'specification sheet' in observed['query']
-        assert 'Power' not in observed['query']
+        assert 'Power draw' in observed['query'] and '20' not in observed['query']
     assert observed['verify_domains'] == (['original.test'] if candidate_maker == 'Original maker' else [])
     assert not result.suggest and not result.candidates[0].passes  # Discovery alone proves no availability.
 
