@@ -263,6 +263,8 @@ async def _read_sources(fx, submitted, pages, investigated=False, correction=Non
                     "using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status "
                     "cannot establish this product's status. Quote the family notice when it applies. "
                     "Do not use certification/category codes or a catalog's Updated timestamp as a document revision. "
+                    "Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. "
+                    "If conflicting technical-sheet revisions have no established current source, leave current_revision null. "
                     "Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. "
                     "For each property, first locate a short verbatim quote stating its current value. "
                     "Copy the value from that quote, preserving any numeric bound. Never take the value from "
@@ -274,6 +276,13 @@ async def _read_sources(fx, submitted, pages, investigated=False, correction=Non
         ],
         {"case_id": fx, "fixture_key": "investigate_verify" if investigated else "verify"},
     )
+
+
+def _data_revision_supported(value: str, text: str) -> bool:
+    # shortcut: identify SDS by its title and identification section; add document roles if formats vary.
+    safety_sheet = (re.search(r"\b(?:material\s+)?safety\s+data\s+sheet\b", text, re.I)
+                    and re.search(r"\b(?:section\s+)?1\s*[:.)-]?\s*identification\b", text, re.I))
+    return not safety_sheet and revision_supported(value, text)
 
 
 def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: ClaimsOut | None = None) -> dict[str, str]:
@@ -288,7 +297,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: 
         return next((p["url"] for p in pages if (not url or p["url"] == url) and quoted(quote, p["raw_content"])
                      and (not identity or same_product(p))), None)
 
-    if out.current_revision and not any(same_product(p) and revision_supported(out.current_revision, p["raw_content"]) for p in pages):
+    if out.current_revision and not any(same_product(p) and _data_revision_supported(out.current_revision, p["raw_content"]) for p in pages):
         out.current_revision = None
     family_name = re.sub(r"\s+(?:product\s+)?(?:family|series|range)$", "", (out.status_family or "").strip(), flags=re.I)
     notice = re.sub(r"[*`]", "", out.status_quote or "")
@@ -379,7 +388,7 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
             title="Data sheet is out of date",
             claim_ids=[claims[r.property].id for r in changed],
             compare=Compare(left_label=f"Submitted ({sent})", right_label=f"Current ({now})", verdict="changed", rows=changed),
-            detail=f"The submitted sheet ({submitted.document_revision}) differs from the current one ({out.current_revision}) on: "
+            detail=f"The submitted sheet ({sent}) differs from the current source ({now}) on: "
             + ", ".join(r.label for r in changed) + ".",
             evidence=evidence, decided_by="tavily + super",
         ))
@@ -402,13 +411,15 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
         proof = []
         for e in evidence:
             quotes = [r.quote for r in rows if r.source_url == e.url and r.quote]
-            if out.current_revision and any(p["url"] == e.url and revision_supported(out.current_revision, p["raw_content"])
+            if out.current_revision and any(p["url"] == e.url and _data_revision_supported(out.current_revision, p["raw_content"])
                     and model_quoted(submitted.model or submitted.family or submitted.product, p["raw_content"]) for p in pages):
                 quotes.append(out.current_revision)
             proof += [e.model_copy(update={"excerpt": quote}) for quote in dict.fromkeys(quotes)]
         findings.append(Finding(
             id="currency-current", check="currency", verdict="pass", severity="info",
-            title="Data sheet matches the manufacturer's current version", evidence=proof, decided_by="tavily + super",
+            title=("Compared values match current sources" if rows else
+                   "Source revision matches the submitted revision" if submitted.document_revision else
+                   "Current-source revision found"), evidence=proof, decided_by="tavily + super",
             compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value=now, verdict="pass"),
         ))
     if out.status == "active":

@@ -107,14 +107,17 @@ Kyle authorized the disclosed selection-policy exceptions and live validation on
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
 [readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
 
-The October 23 current-code confirmation `20261023-073518-c1e622` gets **c03 and c07 right (2/2 problems caught)**,
+The October 23 targeted run `20261023-081257-c725cf` gets **c03 and c07 right (2/2 problems caught)**,
 with **0/2 passing replacements** and no cap/provider warnings. Four replacement investigations run;
-none supplies a complete replacement, and no primary investigation is needed. This targeted confirmation
-uses cached provider responses ($0 / 0 fresh charges); it is not an eight-case score or fresh latency benchmark.
-The current checkpoint passes **626 tests, 2 skipped**. Presentation/build checks and eight mock browser journeys passed earlier.
-Additional engineering spend is **$1.5764973 / 144 credits**, cumulative local ledger **$2.6351023 / 442**.
-G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/catalog-fallback-20261023/README.md)
-corrects a full-company-catalog substitution for a product page and repairs only affected cached entries.
+none supplies a complete replacement, and no primary investigation is needed. Fresh charges are
+**$0.1664979 / 4 credits**, with partly cached times of **174.509 / 137.884 seconds**; this is not an
+eight-case score or controlled cold-upload benchmark. The current checkpoint passes **632 tests, 2 skipped**.
+Presentation/build checks and eight mock browser journeys passed at the preceding runtime checkpoint.
+Additional engineering spend is **$1.7436012 / 149 credits**, cumulative local ledger **$2.8022062 / 447**.
+G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/document-revisions-20261023/README.md)
+rejects safety-sheet revisions as technical-sheet revision proof while preserving valid property quotes,
+and limits pass wording to the values or revisions actually compared. The [catalog correction](docs/judge-readiness/catalog-fallback-20261023/README.md)
+prevents a full company catalog from replacing a product page and repairs only affected cached entries.
 The [preceding paid run](docs/judge-readiness/replacement-research-20261023/README.md) records research of
 missing requirements and availability plus retention of newly discovered sources.
 The [preceding scope correction](docs/judge-readiness/scope-binding-20261023/README.md) preserves unconditional
@@ -124,8 +127,9 @@ higher local ledger. Token Factory's catalog lists cached-input discounts absent
 records, so the dollar difference cannot be reconstructed. Earlier [claim/citation fixes](docs/judge-readiness/claim-repair-20261023/README.md)
 and a [historical primary Investigator rescue](docs/judge-readiness/replacement-discovery-20261023/README.md)
 remain tied to their recorded source. [Persistent startup](docs/judge-readiness/controller-startup-20261023/README.md)
-has network-disabled synthetic container evidence. The [current-source local image](docs/judge-readiness/current-image-20261023/README.md)
-repeats mock/privacy/synthetic restart checks; it stays unpublished, with no hosted proof or release approval.
+has network-disabled synthetic container evidence. The [local image of source `1c3c7fe`](docs/judge-readiness/current-image-20261023/README.md)
+repeats mock/privacy/synthetic restart checks; it predates the latest revision correction and stays unpublished.
+No hosted proof or release approval is claimed.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
 cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.

@@ -27,21 +27,22 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Independent lifetime-clause scope binding | [Actual two-item before/after](scope-binding-20261023/README.md); L70/MacAdam accepted, unselected driver/DLC still unknown |
 | Required-gap and availability research for replacements | [Targeted evidence](replacement-research-20261023/README.md); newly discovered sources retained, unsupported active status still rejected, no complete replacement |
 | Company-catalog fallback and affected legacy cache repair | [Actual product-page before/after](catalog-fallback-20261023/README.md); direct catalog requests remain valid, quote/selection gates unchanged |
+| Technical-sheet revision attribution and bounded comparison wording | [Actual replay and live prompt/gate check](document-revisions-20261023/README.md); SDS revisions rejected, supported property quotes preserved |
 | Public storage/IAM/cost/expiry/rollback preparation | [Unapproved bounded plan](../../deploy/nebius/rollout.pending.md); private inputs/final image/approval/hosted proof pending |
 | Current-source local image | [Source `1c3c7fe`, mock/privacy/synthetic restart and CI](current-image-20261023/README.md); unpublished, no real authority transfer or hosted proof |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **626 passed / 2 skipped**. Both GitHub workflows for tested runtime `1c3c7fe`
+Current Python verification: **632 passed / 2 skipped**. Both GitHub workflows for preceding runtime `1c3c7fe`
 pass Python/mock, presentation/build and mock browser journey/failure checks; no live/hosted browser proof.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
-Actual cumulative local ledger is **$2.6351023 / 442 credits**, with no outstanding holds at this checkpoint.
-The latest [cached c03/c07 confirmation](catalog-fallback-20261023/README.md) gets 2/2 calls/problems,
+Actual cumulative local ledger is **$2.8022062 / 447 credits**, with no outstanding holds at this checkpoint.
+The latest [partly cached c03/c07 run](document-revisions-20261023/README.md) gets 2/2 calls/problems,
 0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes for two
 items only. Four replacement investigations do not yield a passing replacement; no primary investigation
-runs. The earlier primary recovery remains historical. The current local image matches this runtime source;
-its synthetic-only proof does not establish real wallet transfer, deployment or release approval.
+runs. The earlier primary recovery remains historical. The local image of source `1c3c7fe` predates the
+revision correction; its synthetic-only proof does not establish real wallet transfer, deployment or release approval.
 Kyle reports account-wide **$2.13 / 421**; a later Tavily usage API reports 415. Local-minus-owner is
-$0.5051023 / 21 credits; the owner's reading predates the latest work. Scope is confirmed, billing cutoff and cause are unresolved. Current public Super
+$0.6722062 / 26 credits; the owner's reading predates the latest work. Scope is confirmed, billing cutoff and cause are unresolved. Current public Super
 cached-input pricing could lower actual billing, but historical cached-token quantities were not saved.
 The higher local accounting remains in force; no ledger is changed.
 

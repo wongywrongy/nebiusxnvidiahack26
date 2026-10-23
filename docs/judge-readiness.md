@@ -359,3 +359,26 @@ journey/failure checks. No real authority, provider request, cloud resource or r
 Local cumulative accounting remains $2.6351023 / 442, no holds. This closes the outdated-local-image gap
 without passing G2, promoting the release, or establishing hosted storage/reboot/IAM behavior. G2 and the
 remaining owner gates stay open; actual final validation and hosted execution remain agent-owned.
+
+## Technical-sheet revision checkpoint — 2026-10-23
+
+[Actual before/after and live read metadata](judge-readiness/document-revisions-20261023/README.md)
+corrects an SDS version borrowed for a technical-sheet comparison. The deterministic type check rejects
+that revision and preserves the supported property quotes; reader instructions distinguish source types
+and conflicting technical revisions. Pass titles state only compared values or revisions, and unknown
+revision details no longer print `None`. Six new regressions; full **632 passed / 2 skipped in 31.66 s**.
+Raw mock stays **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 fixes**, no invalid items, one note.
+
+Final targeted run `20261023-081257-c725cf`: **2/2 calls/problems, 0/2 fixes**, no invalid items or
+provider/cap warnings, 56/209 claims and 61/124 web values retained. Four replacement investigations,
+none capped; two confirm values and two remain unresolved. No primary investigation runs. The two-item
+archive/source/trace consistency check passes; this is not full promotion. Timings 174.509 / 137.884 s
+include fresh and cached work. The raw response audit records 61 source reads, 51 fresh; two still emit
+the SDS date and are rejected by code.
+
+Gate-only validation adds $0.000606 / 1 credit; final prompt validation adds $0.1664979 / 4, checkpoint
+**$0.1671039 / 5**. Actual cumulative local **$2.8022062 / 447**, UTC-day **$1.3154694 / 89**, no holds
+or persistent block. Earlier dashboard/API observations predate this work; no reconciliation or ledger
+adjustment is inferred. No original expectation, reviewed requirement, broader evaluation, blind run, final
+recording, cloud resource or owner approval changes. G2 remains open. The earlier packaged runtime predates
+this source correction; it is not current-source release evidence.
