@@ -98,7 +98,7 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
     r = reqs.get(f.requirement_id or "")
     right = f.compare.right_value if f.compare else None
     if f.verdict in ("unverified", "pending"):
-        note = "not stated"
+        note = "not confirmed"
     elif f.id == "status-discontinued":
         note = "discontinued"
     elif isinstance(right, list):

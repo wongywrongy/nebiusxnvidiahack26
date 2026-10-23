@@ -97,7 +97,8 @@ def test_missing_claim_is_unverified_minor():
 def test_missing_reviewed_property_is_a_note_not_a_spec_failure(property, operator, value):
     findings = check([req(property=property, operator=operator, value=value)], [])
     assert len(findings) == 1 and findings[0].verdict == "unverified"
-    assert findings[0].title.startswith("Not stated:")
+    assert findings[0].title.startswith("Couldn't confirm:")
+    assert findings[0].compare.right_value == "Not confirmed" and findings[0].compare.verdict == "unverified"
     assert decide(findings) == "approve_with_note"
 
 

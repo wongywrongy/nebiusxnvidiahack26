@@ -110,13 +110,15 @@ checks enforce the exact disagreements; the raw scoreboard and strict release ga
 The October 23 refinement run `20261023-055339-e48fd0` gets **c03 and c07 right (2/2 problems caught)**,
 with **0/2 passing replacements** and no cap/provider warnings. Its two replacement investigations do not
 resolve a replacement; no primary investigation is needed in this run. This targeted, partly cached
-confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **591 tests,
+confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **602 tests,
 2 skipped**. Presentation/build checks and eight mock browser journeys passed in the preceding checkpoints.
 Additional engineering spend is **$1.4669268 / 121 credits**, cumulative local ledger **$2.5255318 / 419**.
 G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/claim-repair-20261023/README.md)
 records bounded qualifier repair, quote/bundle retention, driver-option gates and an agreeing-source citation
 fix. An earlier [targeted run](docs/judge-readiness/replacement-discovery-20261023/README.md) demonstrated a
 primary Investigator recovery; it is historical evidence from its recorded code, not a rescue in this run.
+Subsequent [uncertainty and persistent-startup changes](docs/judge-readiness/controller-startup-20261023/README.md)
+have mock and network-disabled synthetic container verification; they add no new live panel or hosted proof.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
 cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.

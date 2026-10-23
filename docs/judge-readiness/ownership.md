@@ -24,8 +24,9 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Explicit private wallet export/import, interrupted-transfer recovery and approved writer-cutover tools | [Local transfer evidence](authority-transfer-20261023/README.md); synthetic wallets/mounts only, no real transfer or approval |
 | Local container packaging and pinned CLI verification | [Image build evidence](image-build-20261023/README.md); 13 locked PDFs, source hash, CLI/help, mock eval and network-disabled API/assets pass; keys/private paths absent; image unpublished |
 | Bounded numeric qualifier repair, Unicode quote matching, retained bundle claims and agreeing-source citations | [Actual before/after and verification](claim-repair-20261023/README.md); same magnitude/quote/identity/selection gates; coded-driver evidence remains scoped |
+| Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **591 passed / 2 skipped**. Presentation checks and web build passed in the
+Current Python verification: **602 passed / 2 skipped**. Presentation checks and web build passed in the
 preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;
 no new local browser run is claimed for the backend changes below.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
@@ -34,6 +35,8 @@ The latest [targeted c03/c07 run](claim-repair-20261023/README.md) gets 2/2 call
 0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes; this is not
 release promotion. Two replacement investigations do not resolve a replacement, and no primary investigation
 runs. The earlier primary Investigator recovery remains recorded under its own historical code/configuration.
+Subsequent startup/uncertainty code has mock and synthetic local-container checks only. The old live code
+identity cannot establish release evidence for this newer revision. No additional provider spend was made.
 
 ## Still mine to finish
 
@@ -57,15 +60,14 @@ runs. The earlier primary Investigator recovery remains recorded under its own h
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
-6. **Deployment preparation:** finalize image digest, region/preset, durable storage, IAM, current prices,
-   expiry-aware operating schedule and rollback commands. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
+6. **Deployment preparation:** pin the tested persistent-startup command in the final image/resource plan;
+   finalize registry digest, region/preset, private storage/IAM, current prices, expiry-aware operating schedule
+   and rollback commands. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
    is a forecast, not spend or deployment approval. Keep Endpoint + Jobs; do not create resources yet.
 7. **After concrete cloud approval:** execute hosted restart/storage proof, public fresh-upload smoke and real
    manual/scheduled jobs. Capture actual states, timings, reports and screenshots; restore temporary caps.
 8. **Demo/release:** finish the judge walk, video assets, truthful README/SUBMISSION/FEEDBACK, ranked issues,
    exact reproduction commands and PR. Request final approval only on a concrete reviewable release.
-9. **Uncertainty copy:** replace “Not stated” where a row actually means that a source claim was rejected or
-   could not be confirmed. Keep the reason and evidence visible; do not imply source absence was proved.
 
 ## Kyle's parts, later
 

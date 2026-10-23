@@ -186,7 +186,7 @@ class Compare(BaseModel):
 class FixCheck(BaseModel):
     label: str
     check: Optional[Check] = None
-    ok: Optional[bool]  # None: not stated in the candidate's document
+    ok: Optional[bool]  # None: not confirmed by accepted evidence
     note: str = ""
     requirement_id: Optional[str] = None
     claim_ids: list[str] = []

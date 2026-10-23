@@ -390,7 +390,7 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
             id="currency-unverified", check="currency", verdict="unverified", severity="minor",
             title="Couldn't confirm the current documents",
             detail="No source quoted a revision or a value; check manually.", decided_by="tavily",
-            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value="Not found", verdict="fail"),
+            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value="Not confirmed", verdict="unverified"),
         ))
     if not findings:
         proof = []
@@ -420,5 +420,5 @@ def unconfirmed(reason: str) -> Finding:
         id="currency-unverified", check="currency", verdict="unverified", severity="minor",
         title="Couldn't confirm the current documents", detail=f"Web check skipped: {reason}. Check manually.",
         decided_by="code",
-        compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="fail"),
+        compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="unverified"),
     )

@@ -161,5 +161,17 @@
     "published": false,
     "release_approved": false,
     "evidence": "../../docs/judge-readiness/image-build-20261023/README.md"
+  },
+  "controller_startup_checkpoint": {
+    "source_base_commit": "23028a0042d1a8768af9f4d7548706a3fd0aa499",
+    "code_hash": "45fdc999fb46316773de81ed1e41127f1f1e358adbf725ef8660cd3313bdeba1",
+    "local_image_id": "sha256:aa8292661e33256a99aa3758105ec484c2fd20faac291e69e12ae94ae60e6a7f",
+    "command": [
+      "python",
+      "scripts/serve.py"
+    ],
+    "evidence": "docs/judge-readiness/controller-startup-20261023/README.md",
+    "published": false,
+    "hosted_persistence_verified": false
   }
 }

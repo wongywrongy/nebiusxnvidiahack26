@@ -165,7 +165,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                  left=None, right=None) -> Finding:
             shown = right if right is not None else alternatives
             if shown is None:
-                shown = (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not stated"
+                shown = (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not confirmed"
             return Finding(
                 id=f"{r.check}-{r.id}",
                 check=r.check,
@@ -197,7 +197,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                 findings.append(make("pending", "Pending assembly proof",
                                      "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately."))
             else:
-                findings.append(make("unverified", f"Not stated: {_label(r.property)}",
+                findings.append(make("unverified", f"Couldn't confirm: {_label(r.property)}",
                                      "Both quoted ratings are needed for this comparison.", severity="minor"))
             continue
 
@@ -207,7 +207,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                                      f"Quoted values apply only to {', '.join(dict.fromkeys(variants))}. Confirm the submitted configuration.",
                                      severity="minor", right="Option dependent"))
             else:
-                findings.append(make("unverified", f"Not stated: {_label(r.property)}", r.text, severity="minor"))
+                findings.append(make("unverified", f"Couldn't confirm: {_label(r.property)}", r.text, severity="minor"))
             continue
 
         ok: Optional[bool] = None

@@ -1,0 +1,6 @@
+{
+  "parent": "23028a0042d1a8768af9f4d7548706a3fd0aa499",
+  "runtime_code_hash": "45fdc999fb46316773de81ed1e41127f1f1e358adbf725ef8660cd3313bdeba1",
+  "matches_tested_source_and_image": true,
+  "dockerfile_sha256": "41a021efba178de29f21a6641f210cfc4ef5f35a1e2aad22a664268076286494"
+}

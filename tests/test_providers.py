@@ -470,6 +470,7 @@ def test_budget_exceeded_marks_step_couldnt_confirm(monkeypatch):
     for cid in ("c01", "c03"):
         f = next(f for f in run.results[cid].findings if f.check == "currency")
         assert f.verdict == "unverified" and f.title == "Couldn't confirm the current documents" and "Tavily cap" in f.detail
+        assert f.compare.verdict == "unverified"
         assert any("verify:" in warning and "Tavily cap" in warning for warning in run.results[cid].warnings)
         assert any(e.case_id == cid and e.stage == "verify" and (e.data or {}).get("warning") for e in run.events)
     shutil.rmtree(run.dir, ignore_errors=True)

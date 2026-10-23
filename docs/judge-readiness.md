@@ -258,3 +258,25 @@ This checkpoint adds **$0.5553024 / 28 credits**, cumulative **$2.5255318 / 419*
 No new dashboard reconciliation is claimed. G2 stays open for complete replacement evidence and remaining
 scope/source causes; original expectations, reviewed checklists and historical recording remain untouched.
 Both full follow-up evals and the final recording remain unused. Deployment and cloud resources stay untouched.
+
+## Persistent startup and uncertainty checkpoint — 2026-10-23
+
+[Local evidence and commands](judge-readiness/controller-startup-20261023/README.md) verify persistent
+raw/upload/cache/run/score/evidence paths on the controller's private mount. The image's default startup
+checks that mount and wallet location, seeds only locked readable public PDFs without overwriting changed
+state, and keeps requirements/fixed inputs/replay in the image. It never creates or imports a wallet.
+Existing health/admission behavior supports the no-wallet stage; project/watch state remains unavailable.
+
+A network-disabled local container on an actual ext4 bind mount seeds all 13 required documents, explicitly
+transfers a newly created synthetic authority, then preserves its state/marker and app files across restart.
+Read-only API/static routes return 200 after activation. The actual image refuses an unmounted directory,
+exit 2. A fresh image reports no configured keys or excluded private paths; this is not a whole-filesystem
+secret scan. Every temporary container is removed; the unpublished image remains local. No real authority,
+Nebius filesystem, VM reboot, hosted safety or release is established.
+
+Unknown evidence now says “Not confirmed”; both unconfirmed currency comparison paths use the unverified
+state, preserving outer decisions and quote gates. Full suite: **602 passed, 2 skipped in 31.93 seconds**.
+Mock remains **6/8, 5/6, 0/2, 0/5**, zero invalid items, one unnecessary note, 48/65 claims and 8/20 web values.
+Both preceding `23028a0` workflows passed. No new live evaluation was run for these startup/wording changes.
+Fresh provider spend is $0 / 0; cumulative actual remains **$2.5255318 / 419**, no holds or persistent block.
+G2 remains open, later gates remain pending, and the agent retains unfinished validation/deployment/demo work.

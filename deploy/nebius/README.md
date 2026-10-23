@@ -72,6 +72,24 @@ mock eval and a network-disabled API/static smoke. Its filesystem scan excludes 
 state. It is not published, is not the final release artifact, and proves no hosted behavior. The final
 registry digest remains unset; rebuild from the final validated source before publication approval.
 
+## Persistent application startup
+
+The image now starts `python scripts/serve.py`. For a controller, mount its private POSIX filesystem at
+`/controller` and set the nonsecret values in [controller.env.example](controller.env.example), supplying
+credentials through the separately approved private selectors. Startup derives raw/upload/cache/run/score
+and evidence paths under `/controller/app/`; requirements, fixed inputs and committed replay stay in the image.
+It checks/atomically seeds locked public PDFs and refuses changed existing documents or escaping paths.
+It never initializes or imports a wallet. Do not share this mount with jobs or expose it as an archive bucket.
+
+The existing API can serve health while the wallet is absent, with paid admission blocked and project/watch
+state unavailable. Prepare/export/receive the exact authority through the approved private transfer process.
+The running API can then read it without reseeding. A replacement VM still needs owner-approved writer cutover.
+Final publication, profile/secrets and any job-enabled settings must be pinned in the approved rollout manifest.
+
+[Local build, actual ext4/synthetic transfer/restart proof and refusal tests](../../docs/judge-readiness/controller-startup-20261023/README.md)
+verify this preparation locally. No real wallet transfer, hosted mount/reboot proof, deployment or final
+registry image is established. The proof container was removed; the image remains local and unpublished.
+
 ## Current price worksheet
 
 [Machine-readable rates, source hashes and forecasts](cost-manifest.json) were prepared from official public

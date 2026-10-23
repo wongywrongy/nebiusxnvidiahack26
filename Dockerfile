@@ -34,4 +34,4 @@ COPY --from=web /web/dist web/dist
 # Defaults for a public demo. Set SPECCHECK_MODE=live, the keys and ADMIN_TOKEN in the deployment's environment.
 ENV SPECCHECK_MODE=mock MOCK_STAGE_DELAY_MS=700 THINKING=off
 EXPOSE 8000
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "scripts/serve.py"]

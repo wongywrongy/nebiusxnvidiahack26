@@ -1,0 +1,16 @@
+#25 [stage-1 14/14] COPY --from=web /web/dist web/dist
+#25 DONE 0.1s
+
+#26 exporting to image
+#26 exporting layers
+#26 exporting layers 0.8s done
+#26 exporting manifest sha256:e550b1b8b73efae35d026a0ba1419f52c45097514fbf1ce95331080e51f208ed 0.0s done
+#26 exporting config sha256:9464a75342103df586bbe7cf0c50392be7aaac9a7d6d4eeaef413065234434fa 0.0s done
+#26 exporting attestation manifest sha256:e4e419b1b8224cbf1cf0c4c19c5d19a3198f01825dbfb862ea07857dd6efd8bf
+#26 exporting attestation manifest sha256:e4e419b1b8224cbf1cf0c4c19c5d19a3198f01825dbfb862ea07857dd6efd8bf 0.1s done
+#26 exporting manifest list sha256:aa8292661e33256a99aa3758105ec484c2fd20faac291e69e12ae94ae60e6a7f 0.1s done
+#26 naming to docker.io/library/speccheck:controller-startup-local
+#26 naming to docker.io/library/speccheck:controller-startup-local done
+#26 unpacking to docker.io/library/speccheck:controller-startup-local
+#26 unpacking to docker.io/library/speccheck:controller-startup-local 0.3s done
+#26 DONE 1.4s
