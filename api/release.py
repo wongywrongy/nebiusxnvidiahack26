@@ -153,7 +153,7 @@ def _claims(extracted, claims, selection, pages: dict[int, str]) -> None:
                     or selection and model_quoted(claim.model, text) and model_quoted(claim.model, selection.model))
                 or not (model_quoted(identifier, claim.product) or model_quoted(claim.product, identifier) or family_member(claim.product, identifier))):
             raise ValueError("Claim identity, value and quote must survive the submitted-page gates")
-        if not claim.variant and not (scope_is_product_wide(claim.scope, claim.scope_quote, claim.quote)
+        if not claim.variant and not (scope_is_product_wide(claim.scope, claim.scope_quote, claim.quote, claim.property)
                                       and quoted(claim.scope_quote, text)):
             raise ValueError("A product-wide claim needs its page-grounded scope")
         if claim.selection_quote and (not claim.variant or not selection or claim.selection_quote != selection.quote
@@ -326,7 +326,7 @@ def _run(folder: Path, ids: set[str], catalog: dict, current: dict, *, score_ids
                                 or not any(_citation(e.model_copy(update={"excerpt":claim.quote}), started, finished) for e in check.evidence)):
                             raise ValueError("Replacement check must cite its actual claim quote")
                         if not claim.variant:
-                            if (not scope_is_product_wide(claim.scope, claim.scope_quote, claim.quote) or not any(_citation(
+                            if (not scope_is_product_wide(claim.scope, claim.scope_quote, claim.quote, claim.property) or not any(_citation(
                                     e.model_copy(update={"excerpt":claim.scope_quote}), started, finished) for e in check.evidence)):
                                 raise ValueError("Replacement property-wide scope is unsupported")
                         else:

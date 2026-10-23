@@ -1,0 +1,22 @@
+{
+  "owner_reading_received_at": "2026-10-23T07:04:28+00:00",
+  "request": "Read current dashboard spend; do not send credentials.",
+  "response": {
+    "token_factory_usd": "2.13",
+    "tavily_credits": 421,
+    "scope": "account-wide",
+    "dashboard_as_of": null,
+    "includes_today_explicitly_confirmed": false
+  },
+  "local_campaign": {
+    "usd": "2.5679656",
+    "credits": 426
+  },
+  "local_minus_owner": {
+    "usd": "0.4379656",
+    "credits": 5
+  },
+  "reconciled": false,
+  "ledger_adjusted": false,
+  "budget_enforcement": "Retain the higher local totals; account-wide scope is confirmed, billing cutoff remains unspecified."
+}

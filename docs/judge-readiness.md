@@ -280,3 +280,16 @@ Mock remains **6/8, 5/6, 0/2, 0/5**, zero invalid items, one unnecessary note, 4
 Both preceding `23028a0` workflows passed. No new live evaluation was run for these startup/wording changes.
 Fresh provider spend is $0 / 0; cumulative actual remains **$2.5255318 / 419**, no holds or persistent block.
 G2 remains open, later gates remain pending, and the agent retains unfinished validation/deployment/demo work.
+
+## Independent metric scope and account billing — 2026-10-23
+
+[Scope checkpoint](judge-readiness/scope-binding-20261023/README.md) preserves the old/new matcher,
+actual archived quotes, 615 passed / 2 skipped, unchanged raw mock panel and targeted run
+`20261023-064841-187b83`: 2/2 calls/problems, 0/2 fixes, no invalid items. Unconditional L70/MacAdam
+statements now survive a separate explicit optional lifetime sentence; driver/DLC selection remains
+unconfirmed. Runtime patch reconstructs the measured source hash exactly. G2 remains open.
+
+Local cumulative $2.5679656 / 426 has no holds. Kyle reports account-wide $2.13 / 421; a separate later
+Tavily usage API reads 415. Cutoff and cause remain unresolved; current cached-input pricing is a possible
+unquantified dollar difference, not a proven explanation. The higher local ledger is retained unchanged.
+No follow-up full eval, unreviewed blind evaluation, final recording, image publication or cloud action.

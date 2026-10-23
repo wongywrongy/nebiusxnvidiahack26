@@ -1,0 +1,35 @@
+{
+  "observed_at": "2026-10-23T07:10:33.130662+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://tokenfactory.nebius.com/api/public/models_info",
+    "authorization": null
+  },
+  "status": 200,
+  "response_body_sha256": "811f9e31142537ad94d82d9281c530ac08fd54950a432c8380b1ebd38dfd6a4c",
+  "response_configured_models_only": [
+    {
+      "model_id": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_price_per_million_tokens": 0.06,
+      "input_cached_price_per_million_tokens": null,
+      "output_price_per_million_tokens": 0.24
+    },
+    {
+      "model_id": "nvidia/nemotron-3-super-120b-a12b",
+      "input_price_per_million_tokens": 0.3,
+      "input_cached_price_per_million_tokens": 0.06,
+      "output_price_per_million_tokens": 0.9
+    }
+  ],
+  "configured_prices": {
+    "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": [
+      0.06,
+      0.24
+    ],
+    "nvidia/nemotron-3-super-120b-a12b": [
+      0.3,
+      0.9
+    ]
+  },
+  "limits": "Current public prices do not establish historical rates, cached-token quantities or account discounts."
+}

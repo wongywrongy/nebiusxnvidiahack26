@@ -976,3 +976,23 @@ The intermediate live reservation settled normally without resetting accounting 
 Kyle has supplied no new timestamped dashboard reading for this usage. His earlier confirmation and the
 unexplained historical three-credit discrepancy remain as recorded. No invoice match is inferred and no
 ledger is altered. The previous model/credit caps and final-validation reserves remain in force.
+
+## Scope and account-wide billing checkpoint — 2026-10-23
+
+Targeted run `20261023-064841-187b83` retains 2/2 correct calls/problems, 0/2 passing fixes, no invalid
+items or provider/cap warnings. It adds **$0.0424338 / 7 credits**, cumulative local **$2.5679656 / 426**,
+UTC-day **$1.0812288 / 68**, no holds. The general matcher accepts unconditional L70/MacAdam statements
+beside a separate optional lifetime clause; it still rejects unselected driver and conditional DLC proof.
+[Exact before/after, traces and 615-test verification](judge-readiness/scope-binding-20261023/README.md).
+No follow-up full set or final recording was used; G2 remains open.
+
+Kyle's new reading, received **07:04:28 UTC**, is **$2.13 / 421 Tavily credits**. He explicitly confirms
+**account-wide** scope. The dashboard's own cutoff/time and inclusion of today's usage remain unspecified.
+Local minus owner is **$0.4379656 / 5 credits**. A separate authenticated read-only Tavily `GET /usage` at
+**07:10:32 UTC** reports **415** for both account and key, not a match to the dashboard or local ledger.
+The current public Token Factory catalog lists Super cached input at $0.06/million versus ordinary
+$0.30/million; the ledger used ordinary prices and historical cached-token quantities were not retained.
+This could explain part of the dollar difference, but no amount or cause is established. A local audit
+checks 776 settled records, zero holds and exact seed-plus-settlement conservation. Reconciliation is
+**unresolved**, not an invoice match; no seed, ledger, invoice or cap was changed. The higher local total
+continues to enforce the ceiling. Redacted requests/responses and reproduction are in the linked checkpoint.

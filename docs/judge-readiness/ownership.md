@@ -24,27 +24,29 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Explicit private wallet export/import, interrupted-transfer recovery and approved writer-cutover tools | [Local transfer evidence](authority-transfer-20261023/README.md); synthetic wallets/mounts only, no real transfer or approval |
 | Local container packaging and pinned CLI verification | [Image build evidence](image-build-20261023/README.md); 13 locked PDFs, source hash, CLI/help, mock eval and network-disabled API/assets pass; keys/private paths absent; image unpublished |
 | Bounded numeric qualifier repair, Unicode quote matching, retained bundle claims and agreeing-source citations | [Actual before/after and verification](claim-repair-20261023/README.md); same magnitude/quote/identity/selection gates; coded-driver evidence remains scoped |
+| Independent lifetime-clause scope binding | [Actual two-item before/after](scope-binding-20261023/README.md); L70/MacAdam accepted, unselected driver/DLC still unknown |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **602 passed / 2 skipped**. Presentation checks and web build passed in the
-preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;
-no new local browser run is claimed for the backend changes below.
+Current Python verification: **615 passed / 2 skipped**. Presentation/build and eight mock browser tests
+passed at preceding frontend checkpoints; no new browser run is claimed for these backend changes.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
-Actual cumulative local ledger is **$2.5255318 / 419 credits**, with no outstanding holds at this checkpoint.
-The latest [targeted c03/c07 run](claim-repair-20261023/README.md) gets 2/2 calls/problems,
-0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes; this is not
-release promotion. Two replacement investigations do not resolve a replacement, and no primary investigation
-runs. The earlier primary Investigator recovery remains recorded under its own historical code/configuration.
-Subsequent startup/uncertainty code has mock and synthetic local-container checks only. The old live code
-identity cannot establish release evidence for this newer revision. No additional provider spend was made.
+Actual cumulative local ledger is **$2.5679656 / 426 credits**, with no outstanding holds at this checkpoint.
+The latest [targeted c03/c07 run](scope-binding-20261023/README.md) gets 2/2 calls/problems,
+0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes for two
+items only. Two replacement investigations do not yield a passing replacement; no primary investigation
+runs. The earlier primary recovery remains historical. The local container image predates this scope change.
+Kyle reports account-wide **$2.13 / 421**; a later Tavily usage API reports 415. Local-minus-owner is
+$0.4379656 / 5 credits; scope is confirmed, billing cutoff and cause are unresolved. Current public Super
+cached-input pricing could lower actual billing, but historical cached-token quantities were not saved.
+The higher local accounting remains in force; no ledger is changed.
 
 ## Still mine to finish
 
 1. **G2:** obtain and verify an actual complete replacement evidence bundle. Broader discovery now reaches
    Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
-   LT retains its identifier and L70 bound, but scope includes an unrelated optional clause; DLC/driver options
-   lack selection, and revision/availability remain unconfirmed. c03 lacks complete mold/assembly/availability
-   proof, and one candidate's VOC read is still unconfirmed. Scope correction and better supplementary evidence remain mine;
+   LT now retains its unconditional L70 and MacAdam evidence; DLC/driver options
+   lack selection and availability remains unconfirmed. c03 lacks complete mold/assembly/availability
+   proof, and one candidate's VOC read is still unconfirmed. Better supplementary evidence remains mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
    move the actual authority and fence its old writer. The real wallet remains local and active. Authenticate
@@ -76,8 +78,8 @@ identity cannot establish release evidence for this newer revision. No additiona
 - Review the blind labels before evaluation and adjudicate any new source/answer-key contradiction.
   Specify a configuration only when the submitted package actually selects it; leaving an option unconfirmed
   is allowed. Do not invent missing selection or assembly proof to make a case pass.
-- Read provider/AI Cloud billing, account/key scope and grant expiry from private consoles. The previous
-  three-credit discrepancy is unexplained; the ledger has not been adjusted. Never send keys in chat.
+- Read provider/AI Cloud billing, account/key scope and grant expiry from private consoles. The latest
+  account-wide reading and separate API/local totals disagree; the ledger has not been adjusted. Never send keys in chat.
 - Approve the final resource/IAM/storage/cost/rollback manifest and supply private account access when needed.
   The agent then carries out the approved work; Kyle need not write deployment scripts or debug storage.
 - Review final claims, pitch/video and release PR, then authorize final submission through the owner account.

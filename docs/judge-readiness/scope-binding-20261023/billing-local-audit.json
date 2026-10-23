@@ -1,0 +1,130 @@
+{
+  "observed_at": "2026-10-23T07:10:31.845672+00:00",
+  "request": "read-only local campaign SQLite audit",
+  "response": {
+    "seed": {
+      "usd_nano": 1058605000,
+      "credits": 298
+    },
+    "day_seed": {
+      "2026-10-21": {
+        "usd_nano": 1048778000,
+        "credits": 291
+      },
+      "2026-10-22": {
+        "usd_nano": 9827000,
+        "credits": 7
+      }
+    },
+    "settled_request_count": 776,
+    "settled_usd_nano": 1509360600,
+    "settled_credits": 128,
+    "unsettled_request_count": 0,
+    "seed_plus_settlements_equals_status": true,
+    "status": {
+      "day": "2026-10-23",
+      "usd": 1.0812288,
+      "credits": 68,
+      "held_usd": 0.0,
+      "held_credits": 0,
+      "total_usd": 2.5679656,
+      "total_credits": 426,
+      "phase": "engineering",
+      "phase_usd": 1.5093606,
+      "phase_credits": 128,
+      "usd_limit": 20.0,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10.0,
+      "phase_credit_limit": 1000,
+      "blocked": false
+    },
+    "by_run": {
+      "20261022-223246-9cbcfb": {
+        "usd_nano": 32377500,
+        "credits": 8,
+        "settled_requests": 22
+      },
+      "20261022-223541-d36a04": {
+        "usd_nano": 121091100,
+        "credits": 16,
+        "settled_requests": 75
+      },
+      "20261022-224517-45ecb8": {
+        "usd_nano": 76272300,
+        "credits": 9,
+        "settled_requests": 33
+      },
+      "20261022-224901-c1a03d": {
+        "usd_nano": 90397800,
+        "credits": 17,
+        "settled_requests": 57
+      },
+      "20261022-225656-f21c6c": {
+        "usd_nano": 107993100,
+        "credits": 10,
+        "settled_requests": 54
+      },
+      "20261023-000514-d915c4": {
+        "usd_nano": 0,
+        "credits": 1,
+        "settled_requests": 4
+      },
+      "20261023-020458-c4e76f": {
+        "usd_nano": 4486200,
+        "credits": 2,
+        "settled_requests": 8
+      },
+      "20261023-020743-7d7662": {
+        "usd_nano": 160105800,
+        "credits": 16,
+        "settled_requests": 115
+      },
+      "20261023-021821-1d7ea1": {
+        "usd_nano": 49206900,
+        "credits": 4,
+        "settled_requests": 26
+      },
+      "20261023-022206-1c7f2e": {
+        "usd_nano": 145276800,
+        "credits": 3,
+        "settled_requests": 49
+      },
+      "20261023-023154-e725f0": {
+        "usd_nano": 124416900,
+        "credits": 7,
+        "settled_requests": 63
+      },
+      "20261023-050455-d06920": {
+        "usd_nano": 120356700,
+        "credits": 12,
+        "settled_requests": 63
+      },
+      "20261023-052918-e9faa8": {
+        "usd_nano": 205694400,
+        "credits": 8,
+        "settled_requests": 89
+      },
+      "20261023-054428-d1e291": {
+        "usd_nano": 47541600,
+        "credits": 1,
+        "settled_requests": 18
+      },
+      "20261023-054816-7e4a00": {
+        "usd_nano": 125498400,
+        "credits": 7,
+        "settled_requests": 61
+      },
+      "20261023-055339-e48fd0": {
+        "usd_nano": 56211300,
+        "credits": 0,
+        "settled_requests": 14
+      },
+      "20261023-064841-187b83": {
+        "usd_nano": 42433800,
+        "credits": 7,
+        "settled_requests": 25
+      }
+    }
+  },
+  "limits": "Conservation checks do not prove provider billing, eliminate historical seed estimates or detect a duplicated real HTTP request."
+}

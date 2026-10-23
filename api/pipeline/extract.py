@@ -17,6 +17,11 @@ from . import metrics
 from .spec_check import _label, _mentions, to_number
 
 DRIVER_OPTION = re.compile(r"\b([A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*)\s+\d+(?:\.\d+)?\s*%\s+driver\b", re.I)
+SCOPE_LIMIT = re.compile(r"\b(optional|options?|selected|non[\s-]*configurable)\b|"
+                        r"\bnot\s+all\b|\bexcept(?:ing)?\b|\bexcluding\b|"
+                        r"\b(?:some|certain|specific)\s+(?:versions?|models?|configurations?|variants?)\b|"
+                        r"\bonly\s+(?:for\s+)?(?:model|sku|driver|configuration)\b|"
+                        r"\b(?:model|sku|driver|configuration)\s+\S+\s+only\b", re.I)
 
 
 async def triage(case_id: Optional[str], pages: list[dict]) -> tuple[TriageOut, Usage]:
@@ -164,7 +169,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     ids = set()
     for n, c in enumerate(result.claims):
         c.selection_quote = None
-        wide = (scope_is_product_wide(c.scope, c.scope_quote, c.quote) and c.page in texts
+        wide = (scope_is_product_wide(c.scope, c.scope_quote, c.quote, c.property) and c.page in texts
                 and quoted(c.scope_quote, texts[c.page]))
         if ambiguous or not c.variant and not wide:
             c.variant = c.variant or c.quote
@@ -249,14 +254,19 @@ async def _repair_values(case_id, claims: list[Claim]):
     return await router.call("extract_claims", ClaimValueRepairs, messages, {"case_id": case_id})
 
 
-def scope_is_product_wide(scope: str, scope_quote: Optional[str], value_quote: Optional[str]) -> bool:
-    return bool(scope == "product_wide" and quoted(value_quote, scope_quote or "")
-                and not DRIVER_OPTION.search(scope_quote or "")
-                and not re.search(r"\b(optional|options?|selected|non[\s-]*configurable)\b|"
-                                  r"\bnot\s+all\b|\bexcept(?:ing)?\b|\bexcluding\b|"
-                                  r"\b(?:some|certain|specific)\s+(?:versions?|models?|configurations?|variants?)\b|"
-                                  r"\bonly\s+(?:for\s+)?(?:model|sku|driver|configuration)\b|"
-                                  r"\b(?:model|sku|driver|configuration)\s+\S+\s+only\b", scope_quote or "", re.I))
+def scope_is_product_wide(scope: str, scope_quote: Optional[str], value_quote: Optional[str], property: str = "") -> bool:
+    if scope != "product_wide" or not quoted(value_quote, scope_quote or ""):
+        return False
+    clauses = re.split(r"(?<=[.!?;])\s+", _plain(scope_quote or ""))
+    limited = [clause for clause in clauses if SCOPE_LIMIT.search(clause) or DRIVER_OPTION.search(clause)]
+    if not limited:
+        return True
+    # A separate lifetime sentence can qualify its own metric without qualifying its neighbours.
+    return bool(property and any(quoted(value_quote, clause) for clause in clauses) and all(
+        not metric_quoted(property, clause) and re.fullmatch(
+            r"L[\W_]*\d{1,3}\s*(?:[<>]=?|[≥≤=])?\s*\d[\d,]*(?:\.\d+)?\s*(?:hours?|hrs?)\s+"
+            r"(?:with|for)\s+[\w-]+(?:\s+[\w-]+){0,3}\s+options?[.!?;]?", clause, re.I)
+        for clause in limited))
 
 
 def selection_supported(selection: Selection, pages: dict[int, str]) -> bool:

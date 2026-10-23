@@ -316,7 +316,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: 
     for pv in out.current_values:
         pv.selection_quote = None
         if submitted is not None:
-            wide = (scope_is_product_wide(pv.scope, pv.scope_quote, pv.quote)
+            wide = (scope_is_product_wide(pv.scope, pv.scope_quote, pv.quote, pv.property)
                     and source_of(pv.scope_quote, pv.source_url))
             if not pv.variant and not wide:
                 pv.variant = pv.quote
