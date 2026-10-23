@@ -1,0 +1,8 @@
+{
+  "base_source_commit": "061cf9d2fcb4eb68729eb2961f6f4a8758e24e55",
+  "script": "docs/judge-readiness/preproduction-packaging-20261023/reproduce.py",
+  "source_sha256": "2e3630aff5cf598d0d3e9231d7b22701543889a1f89e3a5c0bee8f4ae3c673c8",
+  "only_change": "Pinned local image constant",
+  "executed_sha256": "7b9d26ae44917f1636f0c5ee4a5265a7ad2495b0321c95db8f2ded79d7c36c7d",
+  "private_report": "/tmp/speccheck-synthetic-o41ruz43/result.json"
+}

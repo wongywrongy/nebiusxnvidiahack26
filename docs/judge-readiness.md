@@ -467,3 +467,17 @@ The unit-prompt pass's intermediate ledger was inspected after the next check; t
 boundary snapshot. The 09:56 UTC Tavily API returns **452**, 38 below local credits. Earlier owner $2.13 /
 421 predates this work; dashboard/invoice reconciliation and the cause remain open, with no accounting edit.
 No full-set/blind run, final recording, image publication, cloud resource, real transfer or owner acceptance.
+
+
+### Frozen validated-source image proof — 2026-10-23
+
+The [isolated local build](judge-readiness/document-links-20261023/image/README.md) pins committed
+`061cf9d` / runtime `3480e5d073f7a58d7fae7317cac2c0a83a3dc880b45e3709e2bec7e9f07f0b45` to
+image/index `sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7`.
+All 13 locked PDFs/native text, strict unit reproduction, expected raw mock 6/8, private-path absence and
+configured-secret scan over 8,562 regular files pass. The existing synthetic import/two-restart proof
+returns ten explicit historical replay results and all eight public items at a zero day cap; a fresh
+re-check returns 429. No provider call, real key environment/authority mount, publication or cloud resource.
+The shared uncommitted status-timing correction is excluded, preserved and not validated by this image.
+Final source/configuration/input freeze, registry identity and release approval remain pending. Actual
+local accounting observed afterward remains $3.36648982 / 490, no holds. No gate acceptance is inferred.

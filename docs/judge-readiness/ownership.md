@@ -33,6 +33,7 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Frozen revision-source local image | [Source `2ac6f89`, blind exclusion, mock/privacy/capped replay/restart and CI](document-revisions-20261023/README.md); predates the unit correction, unpublished, no real authority transfer or hosted proof |
 | Unit-runtime local image and further primary-source research | [Unit runtime, mock, privacy and synthetic replay/restart](current-runtime-20261023/README.md); predates latest source corrections, unpublished, no hosted proof |
 | Product-sheet selection, printed-unit instructions and status validation before merging | [Actual diagnostics, intermediate failures and final affected-case check](document-links-20261023/README.md); existing evidence gates preserved |
+| Frozen validated-source image | [Commit `061cf9d`, 13 native PDFs, mock/unit/privacy and synthetic capped replay/restart](document-links-20261023/image/README.md); unpublished, excludes newer shared status-timing work |
 | Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
@@ -44,7 +45,8 @@ The [latest c03/c07 run](document-links-20261023/README.md) gets 2/2 calls/probl
 zero invalidity or warnings; two-item source/trace consistency passes. Four replacement investigations,
 none capped, give no complete fix. No primary investigation occurs; the old primary rescue stays historical.
 An output-limit item and valid intermediate miss remain preserved. The 65,536-token/concurrency-one
-profile and partly cached timing are disclosed; the unit-runtime image predates the newest corrections.
+profile and partly cached timing are disclosed. The frozen `061cf9d` image matches that validated source;
+newer shared status-timing work is excluded from its proof.
 
 Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The latest read-only usage API reports
 **452 at 09:56 UTC**, 38 below local credits. No synchronized dashboard/invoice match or cause is inferred;
@@ -73,7 +75,8 @@ private IAM/quota, grant/expiry terms, judge access funding and concrete approva
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
-6. **Deployment preparation:** the unpublished local candidate predates the latest source corrections;
+6. **Deployment preparation:** the unpublished candidate freezes validated source `061cf9d`;
+   bind the final source/configuration and packaged inputs after all remaining corrections and validation;
    finish the final validated image/registry digest, private account/IAM bindings and public-IP/egress/tax bounds.
    The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
    stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)

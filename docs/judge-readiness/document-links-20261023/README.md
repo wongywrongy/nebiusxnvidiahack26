@@ -102,3 +102,7 @@ Live reproduction can spend on cache misses; inspect the UTC budget mirror after
 environment defaults are unchanged; the larger output cap/concurrency override is explicitly measured.
 The two authorized follow-up full-set evals and final recording remain unused and gated. Kyle's pending
 selection policy, blind-label review, gate acceptance, private rollout facts and release approval remain open.
+
+The [subsequent local packaging proof](image/README.md) freezes this validated source at `061cf9d` in an
+isolated image and repeats native-document, unit, mock, privacy and synthetic capped replay/restart checks.
+It remains unpublished and excludes newer shared status-timing work; it is not final release approval.

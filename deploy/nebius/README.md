@@ -15,10 +15,10 @@ been created in this session. [Ownership and open work](../../docs/judge-readine
   billing or completion retains its reservation; a missing/corrupt receipt persists an accounting block.
 - Final image digest, owner IAM/account configuration, credit expiry and storage design remain incomplete.
 
-The [current unit-runtime local image](../../docs/judge-readiness/current-runtime-20261023/README.md) includes
-the tested unit/revision corrections and blind-data exclusion, with isolated capped replay/restart proof.
-It predates the latest link/unit-instruction/status-merge corrections. It remains unpublished; final
-validation, image rebuild, registry identity and release approval remain pending.
+The [frozen validated-source local image](../../docs/judge-readiness/document-links-20261023/image/README.md)
+pins `061cf9d`, including the tested link/unit/status-merge corrections, with isolated mock/privacy/capped
+replay/restart proof. Newer shared status-timing work is excluded. It remains unpublished; final validation,
+image/configuration freeze, registry identity and release approval remain pending.
 The earlier image evidence below stays historical. No registry or hosted durability proof is claimed.
 
 Keep the GitHub repository variable `ENABLE_NEBIUS_JOBS` disabled and the application launcher settings

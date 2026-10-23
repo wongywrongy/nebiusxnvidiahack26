@@ -132,9 +132,10 @@ Kyle previously reported **$2.13 / 421, account-wide**, cutoff unspecified. The 
 reports **452**, versus local **490**. The API read changes no accounting; dashboard/invoice reconciliation
 and historical cached-input quantities remain unresolved. Enforcement retains the higher local accounting.
 
-The [unpublished unit-runtime image](docs/judge-readiness/current-runtime-20261023/README.md) has
-network-disabled synthetic import/capped-replay/restart evidence and excludes blind PDFs. It predates
-the latest source corrections; final validation, image rebuild/registry identity and owner approval remain pending.
+The [unpublished validated-source image](docs/judge-readiness/document-links-20261023/image/README.md)
+freezes `061cf9d`, with native-document/unit/mock/privacy and network-disabled synthetic replay/restart
+proof. Newer shared status-timing work is excluded; final source/configuration validation, registry identity
+and owner approval remain pending.
 No hosted proof or release approval is claimed.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete

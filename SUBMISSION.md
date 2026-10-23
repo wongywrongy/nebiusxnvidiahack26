@@ -69,8 +69,9 @@ zero invalid items or warnings. It adds **$0.0792648 / 2 credits**; cumulative l
 **$3.36648982 / 490**. [Actual trace, before/after, intermediate failures and reproduction](docs/judge-readiness/document-links-20261023/README.md).
 The measured profile uses a 65,536-token cap and concurrency 1 after an invalid output-limit item; it is
 partly cached evidence, not a current full-set/blind score or release approval. The earlier
-[unpublished image](docs/judge-readiness/current-runtime-20261023/README.md) predates the newest source
-corrections. Final validation/image rebuild, registry identity, owner approval and hosted proof remain pending.
+[unpublished validated-source image](docs/judge-readiness/document-links-20261023/image/README.md)
+freezes `061cf9d` and excludes newer shared status-timing work. Final source/configuration validation,
+registry identity, owner approval and hosted proof remain pending.
 
 ## Links and judge access to finalize
 

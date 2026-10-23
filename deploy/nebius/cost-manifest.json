@@ -280,22 +280,22 @@
     "judge_access_and_funding_plan": null
   },
   "tested_local_candidate_image": {
-    "tag": "speccheck:unit-source-local",
-    "local_image_id": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
-    "source_commit": "a9df48cffc9dadd157c43145df28add595f44feb",
-    "runtime_code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
+    "tag": "speccheck:validated-source-local",
+    "local_image_id": "sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7",
+    "source_commit": "061cf9d2fcb4eb68729eb2961f6f4a8758e24e55",
+    "runtime_code_hash": "3480e5d073f7a58d7fae7317cac2c0a83a3dc880b45e3709e2bec7e9f07f0b45",
     "default_command": [
       "python",
       "scripts/serve.py"
     ],
     "published": false,
     "repo_digests": [
-      "speccheck@sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586"
+      "speccheck@sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7"
     ],
-    "evidence": "docs/judge-readiness/current-runtime-20261023/README.md",
+    "evidence": "docs/judge-readiness/document-links-20261023/image/README.md",
     "registry_reference_verified": false,
     "release_approved": false,
-    "scope": "Local image matches the earlier tested unit runtime but predates e1a4c2e link/unit-instruction/status-merge corrections; final validated rebuild, registry identity and owner approval remain pending."
+    "scope": "Frozen validated commit 061cf9d; isolated source excludes later shared status-timing work. Final validated source/configuration, registry identity and owner approval remain pending."
   },
   "published_free_services": {
     "virtual_networks": {

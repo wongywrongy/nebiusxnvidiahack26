@@ -92,10 +92,10 @@ must have an approved stop/expiry review, not an indefinite promise of nightly o
 ## Execution and rollback, after concrete approval
 
 1. Freeze final validation source/inputs/configuration and build/scan that exact image; publish only after
-   registry approval, verify its digest, then fill the final manifest. The [current local candidate](../../docs/judge-readiness/current-runtime-20261023/README.md)
-   contains tested runtime `a9df48c`, the unit/revision corrections and blind-PDF exclusion, with synthetic full-tray
-   capped replay/restart proof. It predates source `e1a4c2e` and must be rebuilt from final validated source.
-   It is unpublished and not release-approved. Earlier image proofs remain historical.
+   registry approval, verify its digest, then fill the final manifest. The [frozen local candidate](../../docs/judge-readiness/document-links-20261023/image/README.md)
+   contains validated source `061cf9d` with synthetic full-tray capped replay/restart proof and no blind PDFs.
+   Newer shared status-timing work is excluded. Rebuild if final validated source/configuration or packaged
+   inputs change. It is unpublished and not release-approved. Earlier image proofs remain historical.
 2. Verify account permissions, region/preset/quota, complete price bounds and actual stop/expiry fields.
    Create only the approved private filesystem and endpoint. Start with paid admission blocked because
    no wallet exists; launcher settings remain absent. Confirm mount/boot/resource identities privately.
