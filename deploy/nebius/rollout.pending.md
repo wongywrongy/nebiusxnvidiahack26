@@ -83,8 +83,8 @@ must have an approved stop/expiry review, not an indefinite promise of nightly o
 ## Execution and rollback, after concrete approval
 
 1. Freeze final validation source/inputs/configuration and build/scan that exact image; publish only after
-   registry approval, verify its digest, then fill the final manifest. The [current local candidate](../../docs/judge-readiness/document-revisions-20261023/README.md)
-   contains tested source `2ac6f89`, the revision correction and blind-PDF exclusion, with synthetic full-tray
+   registry approval, verify its digest, then fill the final manifest. The [current local candidate](../../docs/judge-readiness/current-runtime-20261023/README.md)
+   contains tested runtime `a9df48c`, the unit/revision corrections and blind-PDF exclusion, with synthetic full-tray
    capped replay/restart proof. It is unpublished and not release-approved; rebuild it if final validation
    requires another runtime change. Earlier image proofs remain historical.
 2. Verify account permissions, region/preset/quota, complete price bounds and actual stop/expiry fields.

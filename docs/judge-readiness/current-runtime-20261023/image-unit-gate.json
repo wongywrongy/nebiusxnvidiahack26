@@ -1,0 +1,26 @@
+{
+  "scope": "Offline synthetic provider response; no model, HTTP or paid call",
+  "code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
+  "request": {
+    "id": "q",
+    "product": "ZX-9",
+    "manufacturer": "Synthetic maker",
+    "model": "ZX-9",
+    "property": "dim_min_percent",
+    "value": 0.0,
+    "unit": null,
+    "page": 1,
+    "bbox": null,
+    "quote": "Dimming control interface: 0-12 V.",
+    "variant": null,
+    "scope": "product_wide",
+    "scope_quote": "Dimming control interface: 0-12 V.",
+    "selection_quote": null
+  },
+  "observed_response": {
+    "extracted_claims_kept": 0,
+    "spec_verdict": "unverified",
+    "web_values_kept": 0,
+    "release_claim_gate_accepted": false
+  }
+}

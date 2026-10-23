@@ -133,9 +133,9 @@ Token Factory's cached-input discounts are absent from historical usage records,
 cannot be reconstructed. Enforcement retains the higher local accounting.
 
 [Persistent startup](docs/judge-readiness/controller-startup-20261023/README.md) and the
-[frozen revision-source image `2ac6f89`](docs/judge-readiness/document-revisions-20261023/README.md) have
-network-disabled synthetic import/capped-replay/restart evidence. That unpublished image excludes blind PDFs
-but predates the unit correction; the final image must be rebuilt from final validated source.
+[current unit-runtime image](docs/judge-readiness/current-runtime-20261023/README.md) have
+network-disabled synthetic import/capped-replay/restart evidence. The unpublished image matches the tested
+unit correction and excludes blind PDFs; final validation, registry identity and release approval remain pending.
 No hosted proof or release approval is claimed.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete

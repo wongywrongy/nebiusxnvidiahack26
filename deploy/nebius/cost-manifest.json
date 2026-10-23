@@ -279,22 +279,22 @@
     "public_ip_egress_tax_price_bound": null
   },
   "tested_local_candidate_image": {
-    "tag": "speccheck:revision-source-local",
-    "local_image_id": "sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28",
-    "source_commit": "2ac6f89d9ffc8af1eb6142ee8d7421a266b19c1a",
-    "runtime_code_hash": "4a660ea2136462a7c72d30100372c22f06fcc4e2d14f679de3169b3f23ddfad8",
+    "tag": "speccheck:unit-source-local",
+    "local_image_id": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
+    "source_commit": "a9df48cffc9dadd157c43145df28add595f44feb",
+    "runtime_code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
     "default_command": [
       "python",
       "scripts/serve.py"
     ],
     "published": false,
     "repo_digests": [
-      "speccheck@sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28"
+      "speccheck@sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586"
     ],
-    "evidence": "docs/judge-readiness/document-revisions-20261023/README.md",
+    "evidence": "docs/judge-readiness/current-runtime-20261023/README.md",
     "registry_reference_verified": false,
     "release_approved": false,
-    "scope": "Frozen revision-source checkpoint; predates unit correction a9df48c. Final validated runtime image remains pending."
+    "scope": "Local image matches tested unit runtime; final release evaluation, registry identity and owner approval remain pending."
   },
   "published_free_services": {
     "virtual_networks": {

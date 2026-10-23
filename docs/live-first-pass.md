@@ -1104,3 +1104,22 @@ Public Virtual Networks/Registry service rates and SecretStash preview pricing a
 unapproved cost worksheet; private account facts, actual dates, tax/IP/egress bounds and approval remain open.
 This documentation/identity review makes no paid provider call. G2 stays open; no full-set/blind evaluation,
 final recording, cloud resource, real authority transfer or owner acceptance is inferred.
+
+
+### Current unit-runtime local image and further source research — 2026-10-23
+
+The [new local image](judge-readiness/current-runtime-20261023/README.md) matches tested unit runtime
+`a9df48c` / `00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3`, image/index
+`sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586`. Required 13-PDF preflight,
+existing synthetic unit-boundary proof, expected raw mock 6/8 and privacy checks pass. No configured secret
+occurs in 8,562 regular image files. The existing isolated synthetic import/two-restart/capped replay proof
+returns 10 explicit recorded results and all eight public items; replayed results survive restart. Fresh
+re-check at the synthetic zero cap returns 429. This closes the outdated local-runtime-image gap, not
+release validation, registry publication, real authority transfer or hosted proof.
+
+Three manual manufacturer GETs add source facts without altering a case or selection: Williams QuickShip
+stock wording covers six listed configurations, Elite's newly researched PDF contains conflicting dimming
+minima, and Utopia directs availability inquiries to its team. Exact URLs, hashes, short quotes and scopes
+are retained in the linked checkpoint. No candidate is declared passing and no answer-key change is inferred.
+The replacement-proposal decision and gate acceptance remain Kyle's parts. This work adds $0 / 0 paid
+provider charges; actual local accounting stays $2.9516488 / 457 with no holds. G2 and later gates stay open.
