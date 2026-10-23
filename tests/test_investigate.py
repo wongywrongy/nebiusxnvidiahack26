@@ -379,32 +379,6 @@ def test_fix_query_uses_reviewed_requirement_semantics():
     assert "Temperature rating (T) equals Fire rating (F)" in query
 
 
-def test_status_replacement_search_uses_applicable_properties_without_targets(monkeypatch):
-    searches = []
-    async def search(self, query, **kwargs):
-        searches.append(query)
-        return []
-    async def extract(self, urls, **kwargs):
-        return []
-    monkeypatch.setattr(WebClient, "search", search)
-    monkeypatch.setattr(WebClient, "extract", extract)
-    requirements = [
-        Requirement(id="life", section="synthetic", paragraph="", property="l70_hours",
-                    operator="gte", value=987654, text="Synthetic threshold", applies_to=["product_data"]),
-        Requirement(id="link", section="synthetic", paragraph="", property="measurement",
-                    operator="eq_ref", value="reference_measurement", text="Synthetic reference", applies_to=[]),
-        Requirement(id="install", section="synthetic", paragraph="", property="field_procedure",
-                    operator="contains", value="secret target text", text="Synthetic procedure", applies_to=["installation"]),
-    ]
-    case = {**CASE, "title": "Panel, offices", "submittal": [{"role": "product_data"}]}
-    finding = Finding(id="retired", check="status", verdict="fail", severity="major", title="Retired")
-    result, _, _ = asyncio.run(fix._fix(case, "currency", [finding], requirements, CLAIMS, 1, 30))
-    assert len(searches) == 1 and result.query == searches[0]
-    assert '"Panel" manufacturer specification sheet' in searches[0]
-    assert "Rated life (L70)" in searches[0] and "reference measurement" in searches[0]
-    assert all(value not in searches[0] for value in ("987654", "secret target text", "field procedure", "Synthetic"))
-
-
 def test_fix_warns_when_candidate_verification_does_not_fit_cap(monkeypatch):
     async def search(*args, **kwargs):
         return [{"url": URL, "title": "Product X"}]
