@@ -56,7 +56,7 @@ are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and ap
 1. **G2:** obtain and verify an actual complete replacement evidence bundle. Broader discovery now reaches
    Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
    LT now retains its unconditional L70 and MacAdam evidence; DLC/driver options
-   lack selection and availability remains unconfirmed. c03 lacks complete mold/assembly/availability
+   lack selection and availability remains unconfirmed for the complete candidate. New [QuickShip source research](replacement-research-20261023/quickship-follow-up.md) finds stock evidence for DIM models, but supplies neither their minimum dimming percent nor a specific DLC class. c03 lacks complete mold/assembly/availability
    proof, and one candidate's VOC read is still unconfirmed. Broader discovery and current-source interpretation remain mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
