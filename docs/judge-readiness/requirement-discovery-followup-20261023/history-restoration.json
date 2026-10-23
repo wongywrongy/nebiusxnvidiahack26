@@ -1,0 +1,8 @@
+{
+  "scope": "Restore the three mistakenly overwritten historical artifacts byte-for-byte from HEAD; all new checkpoint files moved to a unique path",
+  "restored": {
+    "docs/judge-readiness/replacement-discovery-20261023/README.md": true,
+    "docs/judge-readiness/replacement-discovery-20261023/pytest.txt": true,
+    "docs/judge-readiness/replacement-discovery-20261023/mock-score.json": true
+  }
+}

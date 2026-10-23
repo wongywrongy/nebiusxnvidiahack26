@@ -1186,3 +1186,24 @@ $2.13 / 421 is account-wide with unspecified cutoff; the prior 09:56 UTC usage A
 local credits. No synchronized reconciliation or cause is established, no accounting changed. G2 stays
 open. Existing image excludes this correction; no full-set/blind run, final recording, cloud operation,
 real authority transfer or gate acceptance occurs.
+
+
+### Scoped manufacturer follow-up and rejected query experiment — 2026-10-23
+
+[Six public manufacturer GETs and native-page inspections](judge-readiness/requirement-discovery-followup-20261023/README.md)
+identify a new Cooper Accord stock/SKU lead with life, warranty, color and CD-driver data. Exact DLC/
+selection remains unverified and the SKU page's dimension/mounting fields conflict. Existing Starco and
+Williams documents do not close their missing fields. No candidate, selected option or passing fix is
+injected into the app. These are manual source observations, not pipeline accuracy evidence.
+
+A temporary property-name query experiment passes offline checks but is reverted after finding the
+recorded earlier failure of that approach; no paid comparison is made. The historical evidence-path
+collision is restored exactly, and new observations have a unique directory. Retained current source
+passes **697 tests / 2 skipped in 31.96 s**, with hash unchanged during the check, raw mock 6/8 and
+46/65 claims / 8/20 web values. Every original case-input JSON remains identical to 9568d1c.
+
+This follow-up adds $0 / 0 paid charges. The separate date-bound validation's failed Tavily request
+leaves **1 credit held**, distinct from **$3.36648982 / 490 settled**. The process has ended; further
+paid work is blocked until usage is reconciled. The 10:39 UTC usage counter 485 is not a per-request
+receipt or synchronized invoice. Kyle has been asked for request billing detail. No hold/ledger reset,
+gate acceptance, full-set/blind run, final recording or deployment is inferred.
