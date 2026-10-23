@@ -1,0 +1,55 @@
+{
+  "image_id": "sha256:60c7b9f12562ef1db4210c7a651b9ae6dc5aa9cdbcadd5337aa2e893b3e56ad1",
+  "source_commit": "1c3c7fed4ba3a09cea448173f5eb6073ac2a8643",
+  "runtime_hash_matches_committed_checkpoint": true,
+  "proposed_patch": "blind-exclusion.patch",
+  "proof": {
+    "required_documents": 13,
+    "raw_files_exactly_lock_plus_manifest": true,
+    "blind_documents_absent": true,
+    "application_env_cache_absent": true,
+    "keys_present": {
+      "NEBIUS_API_KEY": false,
+      "TAVILY_API_KEY": false,
+      "ADMIN_TOKEN": false
+    },
+    "native_preflight": true,
+    "runtime_code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
+    "mock": {
+      "right_call": {
+        "n": 6,
+        "of": 8
+      },
+      "caught": {
+        "n": 5,
+        "of": 6
+      },
+      "false_alarms": {
+        "n": 0,
+        "of": 2
+      },
+      "fixes_passing": {
+        "n": 0,
+        "of": 5
+      },
+      "validity": {
+        "invalid_items": 0,
+        "requested_items": 8
+      },
+      "quote_gate": {
+        "claims_extracted": 65,
+        "claims_kept": 48,
+        "web_values_read": 20,
+        "web_values_kept": 8,
+        "claims_drop_rate": 0.2615384615384615,
+        "web_values_drop_rate": 0.6
+      },
+      "run_id": "20261023-075033-a669df"
+    },
+    "mock_exit": 1,
+    "mock_fresh_usd": 0,
+    "mock_fresh_credits": 0
+  },
+  "published": false,
+  "release_promoted": false
+}

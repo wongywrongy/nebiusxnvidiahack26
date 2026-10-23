@@ -1,0 +1,14 @@
+{
+  "runtime_source_commit": "1c3c7fed4ba3a09cea448173f5eb6073ac2a8643",
+  "runtime_code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
+  "scope": "Frozen runtime snapshot and one independent packaging exclusion; no latest-runtime accuracy or release claim.",
+  "runtime_build_input_files_compared": 110,
+  "all_compared_input_bytes_match": true,
+  "dockerignore_sha256": "e4b27e387352176522288aa0af592544cdd2afa9be240c37e607283162aa8129",
+  "packaging_delta": "source.patch",
+  "target_file_precondition_passed": true,
+  "global_clean_precondition_passed": false,
+  "concurrent_change_observed": "api/pipeline/verify.py; left untouched",
+  "original_cases_and_reviewed_requirements_changed": false,
+  "image_published": false
+}
