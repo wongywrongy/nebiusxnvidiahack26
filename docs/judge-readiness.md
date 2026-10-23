@@ -481,3 +481,13 @@ re-check returns 429. No provider call, real key environment/authority mount, pu
 The shared uncommitted status-timing correction is excluded, preserved and not validated by this image.
 Final source/configuration/input freeze, registry identity and release approval remain pending. Actual
 local accounting observed afterward remains $3.36648982 / 490, no holds. No gate acceptance is inferred.
+
+
+## Quoted lifecycle timing — 2026-10-23
+
+[The same synthetic response and affected cached-live item](judge-readiness/status-timing-20261023/README.md)
+show a future notice no longer causes a current failure, availability start/end bounds are checked, and
+status metadata needs its actual quote. No prompt/key/checklist change. Full **689 passed / 2 skipped**,
+unchanged raw mock 6/8. c07 remains correct, no passing fix or invalid item, $0 / 0 fresh charges;
+source/archive/trace consistency passes. Local cumulative **$3.36648982 / 490**, no holds. G2 and all later
+gates remain open; existing image predates this correction. Broader evaluation/release is not inferred.

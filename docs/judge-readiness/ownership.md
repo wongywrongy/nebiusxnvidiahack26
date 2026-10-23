@@ -34,10 +34,11 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Unit-runtime local image and further primary-source research | [Unit runtime, mock, privacy and synthetic replay/restart](current-runtime-20261023/README.md); predates latest source corrections, unpublished, no hosted proof |
 | Product-sheet selection, printed-unit instructions and status validation before merging | [Actual diagnostics, intermediate failures and final affected-case check](document-links-20261023/README.md); existing evidence gates preserved |
 | Frozen validated-source image | [Commit `061cf9d`, 13 native PDFs, mock/unit/privacy and synthetic capped replay/restart](document-links-20261023/image/README.md); unpublished, excludes newer shared status-timing work |
+| Quoted lifecycle timing and status metadata | [Synthetic before/after and cached-live c07](status-timing-20261023/README.md); future/expired statements stay unconfirmed, past effective notice survives; no passing fix or new charge |
 | Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **657 passed / 2 skipped**. Both [workflows for tested source `e1a4c2e`](document-links-20261023/ci.json)
+Current Python verification: **689 passed / 2 skipped**; [temporal status proof and cached-live c07 check](status-timing-20261023/README.md). Both [workflows for tested source `56aeef2`](status-timing-20261023/ci.json)
 pass Python/mock, presentation/build and mock browser checks; no hosted browser proof. Raw mock remains
 **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with 46/65 claims and 8/20
 web values. Actual local accounting is **$3.36648982 / 490**, no holds or persistent block.

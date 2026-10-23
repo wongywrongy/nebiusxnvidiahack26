@@ -52,3 +52,44 @@ accounting is **$3.36648982 / 490**, UTC day **$1.87975302 / 132**, no holds or 
 account-wide dashboard observation predates that checkpoint; billing reconciliation remains open.
 G2 still lacks a complete passing replacement. This proof does not accept a gate or validate the full
 set, blind packages, a final recording/image, hosted operation or deployment.
+
+## Affected-case validation
+
+Run **`20261023-102055-14f173`**, source `56aeef2`, reprocesses **cached live provider responses** under
+the existing measured 65,536-output-token/concurrency-one profile. It is not a fresh independent model
+sample or a cold latency benchmark. No new provider response was returned; [fresh-response metadata](live/response-metadata.json).
+
+| c07 panel | Before, `20261023-095053-630ac4` | After |
+| --- | --- | --- |
+| Correct call / problem caught | 1/1 / 1/1 | 1/1 / 1/1 |
+| Passing fix | 0/1 | 0/1 |
+| Invalid items / warnings | 0 / 0 | 0 / 0 |
+| Claims retained | 109/262 | 109/262 |
+| Web values retained | 19/60 | 19/60 |
+
+The actual status quote has a past 2024 effective date; the corrected gate preserves the failure and
+derives `2024-06-30`. A future notice would stay unknown. [Score](live/score.json), [trace](live/events.jsonl),
+[stage/candidate diagnosis](live/diagnosis.json), [one-item native-page/archive/trace consistency](live/consistency.json).
+No primary investigation runs. Two replacement investigations confirm some values, neither is capped,
+and neither supplies a complete fix. SLLT still lacks MacAdam/minimum-dimming/availability proof; LT
+lacks selected DLC/driver/availability proof. Missing proof remains unconfirmed, not a failure.
+
+Item time **1.129 s** includes cached work. Its **$0.174062** usage-equivalent model amount is not a new
+charge. Actual fresh spend is **$0 / 0 credits**; [settled campaign](live/campaign-after.json) and
+[UTC-day mirror](live/daily-after.json) stay **$3.36648982 / 490** cumulative, **$1.87975302 / 132** today,
+no holds or persistent block. No accounting was reset. The prior Tavily usage API counter was 452 at
+09:56 UTC, 38 below local credits; the older account-wide dashboard $2.13 / 421 has no synchronized cutoff.
+This check does not resolve the discrepancy or accept G2. The existing local image predates this correction.
+
+```bash
+SPECCHECK_MODE=live MAX_OUTPUT_TOKENS=65536 MAX_CONCURRENCY=1 INVESTIGATE_MAX_STEPS=24 INVESTIGATE_CREDIT_CAP=30 FIX_CREDIT_CAP=40 EVIDENCE_DIR=.cache/live-evidence .venv/bin/python docs/judge-readiness/status-timing-20261023/capture_live.py
+.venv/bin/python scripts/campaign_budget.py status
+```
+
+Reproduction may spend on cache misses; inspect the UTC ledger after the command. Full cases/samples,
+owner-reviewed blind evaluation, final recording, release image and hosted proof remain gated. The two
+authorized follow-up full-set runs and final recording are unused.
+
+Both [GitHub workflows for source `56aeef2`](ci.json) completed successfully: Python/raw mock, web
+presentation/build and mock browser journey/failure checks. These are source regressions, not hosted or
+fresh live-browser validation.

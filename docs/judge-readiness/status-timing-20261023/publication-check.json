@@ -1,0 +1,121 @@
+{
+  "scope": "Configured secret-byte presence only; values never printed",
+  "observed_at": "2026-10-23T10:24:16.513812+00:00",
+  "files": {
+    "FEEDBACK.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/ownership.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/README.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/before.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/capture_live.py": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/ci.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/integration.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/budget-before.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/campaign-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/consistency.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/daily-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/diagnosis.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/eval.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/events.jsonl": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/response-metadata.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/live/score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/mock-eval.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/mock-score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/pytest.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/status-timing-20261023/reproduce.py": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/live-first-pass.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    }
+  }
+}

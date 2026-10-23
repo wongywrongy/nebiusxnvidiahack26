@@ -1163,3 +1163,26 @@ re-check returns 429. No provider call, real key environment/authority mount, pu
 The shared uncommitted status-timing correction is excluded, preserved and not validated by this image.
 Final source/configuration/input freeze, registry identity and release approval remain pending. Actual
 local accounting observed afterward remains $3.36648982 / 490, no holds. No gate acceptance is inferred.
+
+
+### Status timing trust boundary and cached-live confirmation — 2026-10-23
+
+[Actual synthetic before/after, shared gate and affected c07 check](judge-readiness/status-timing-20261023/README.md)
+close a false current failure from future discontinuation wording, plus early/expired availability passes
+and unsupported status-date/replacement metadata. This is a general quoted-date gate, no prompt, key or
+checklist change. Thirty-two regressions; integrated **689 passed / 2 skipped in 32.31 s**, unchanged raw
+mock 6/8 / 5/6 / 0/2 / 0/5 and 46/65 / 8/20 quote retention.
+
+Run `20261023-102055-14f173` reprocesses cached live responses with runtime `1bd1495a7fe75c733886cb4d471371b264657fccad5f2d03e0e260da02c52a8d`:
+c07 **1/1 call/problem, 0/1 passing fix**, zero invalidity/warnings, claims 109/262 and web 19/60. The
+quoted past discontinuation survives with its grounded 2024-06-30 date. One-item native/source/archive/trace
+consistency passes. Two replacement investigations confirm values, none capped; missing selected-driver/
+DLC, MacAdam, dimming or availability proof still prevents a complete fix. No primary investigation runs.
+The 1.129-second item time is cached, not cold performance; $0.174062 is usage-equivalent, not fresh spend.
+
+Fresh charges **$0 / 0 credits**; immediately inspected settled ledger stays **$3.36648982 / 490**,
+UTC day **$1.87975302 / 132**, engineering **$2.30788482 / 192**, no holds or persistent block. Owner
+$2.13 / 421 is account-wide with unspecified cutoff; the prior 09:56 UTC usage API 452 remains 38 below
+local credits. No synchronized reconciliation or cause is established, no accounting changed. G2 stays
+open. Existing image excludes this correction; no full-set/blind run, final recording, cloud operation,
+real authority transfer or gate acceptance occurs.
