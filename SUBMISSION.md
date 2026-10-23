@@ -61,8 +61,9 @@ labelled mock and are not a replacement for a real console screenshot.
 Run `20261023-084824-7ab49b` checks c03/c07 only: **2/2 calls and problems, 0/2 passing replacements**,
 zero invalid items. It adds **$0.1494426 / 10 credits**; cumulative local accounting is **$2.9516488 / 457**.
 [Actual trace, quote gates, stage diagnosis and reproduction](docs/judge-readiness/quantity-units-20261023/README.md).
-This is partly cached evidence, not a current full-set/blind score or release approval. The latest frozen
-local image predates the unit correction; final packaging and hosted proof remain pending.
+This is partly cached evidence, not a current full-set/blind score or release approval. The
+[current unpublished local image](docs/judge-readiness/current-runtime-20261023/README.md) now matches the
+unit runtime; final validation, registry identity, owner approval and hosted proof remain pending.
 
 ## Owner sign-offs and access
 

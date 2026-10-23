@@ -103,4 +103,5 @@ SPECCHECK_MODE=live MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=24 INVESTIGATE
 
 Reproduction can spend on cache misses. G2 still lacks a fully evidenced passing replacement. Full
 current cases/samples/reviewed blind evidence, final image, recording, owner dispositions and approved
-hosted proof remain pending; no gate is accepted here. Earlier local images predate this unit correction.
+hosted proof remain pending; no gate is accepted here. The later [unpublished local image](../current-runtime-20261023/README.md)
+matches this unit runtime and has synthetic-only replay/restart proof; it is not a final release or deployment.
