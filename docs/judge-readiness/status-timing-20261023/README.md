@@ -93,3 +93,7 @@ authorized follow-up full-set runs and final recording are unused.
 Both [GitHub workflows for source `56aeef2`](ci.json) completed successfully: Python/raw mock, web
 presentation/build and mock browser journey/failure checks. These are source regressions, not hosted or
 fresh live-browser validation.
+
+The [subsequent unsupported-bound correction](bounds.md) records quarter/fiscal/year-end false-pass
+regressions and an invalid affected-case attempt. Its unresolved one-credit usage hold blocks paid
+work; the no-hold accounting above describes the earlier successful cached-live checkpoint.

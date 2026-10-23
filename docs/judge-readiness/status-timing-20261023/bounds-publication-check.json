@@ -1,0 +1,269 @@
+{
+  "checked_at": "2026-10-23T10:44:10.061718+00:00",
+  "scope": "Owned proposed source/tests/evidence only; no environment, cache, raw PDF or private wallet staged",
+  "files": [
+    {
+      "file": "api/pipeline/verify.py",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "91f039235890f2826ce60ace01e5ad439ae404cfffb33dade5547fc720b5fbda"
+    },
+    {
+      "file": "tests/test_status_timing.py",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "dc338f73e4b65554ab1ac8b1908594014507bad24d2d1b67cc775fa74ee1af4c"
+    },
+    {
+      "file": "FEEDBACK.md",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "e6716ff03e15e8031409746eceddabb6198cb404d2f6d1852934c020b9a87e27"
+    },
+    {
+      "file": "docs/judge-readiness.md",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "18a953a52044600e51f291938634e90f84fcfd21a42eb7bc708dbda4201d2193"
+    },
+    {
+      "file": "docs/judge-readiness/ownership.md",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "1bfaafb8f3d37f178cef4ff9c4e469a658faf0e38aa6ec6bc4fc20611246fe7e"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/README.md",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "1acb27042ce0c51c00307e29ee077fa6aac4d4130832f14908e4363a351e6e9f"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds.md",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "65ab9b2cacb2e05c4b74d0a4702fc11223fe3e7201bf02bb8c43d81f323ac8c9"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-after.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "4479679c8dc8983edc0c8e99e63ed80c0b5c3e8a80b0789345541455bc122d3a"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-before.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "56581cec43a13fa330933fd2f8640da3d473bdb6488fbe8ab005023bd948f334"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-integrated-mock-eval.txt",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "bc0e1e6dd736f4b13f912ab53da70a3186d0eda1a879383746f1b9c7e2848f70"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-integrated-mock-score.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "65b302f4c99aecf6039d0972bf524677b7960d76e2c2e8550fd85c056e0f955e"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-integrated-pytest.txt",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "1f615b5c5f4c604c101dcbd44580895c32ff311cbf20ccec96cd061b062a02cf"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-integration.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "3913ff0e85417f010d6de7db9dea5b3c37b7a767cf79128f2beb730eec5b5a9d"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-mock-eval.txt",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "4a98989a58896a292d2ae9da57ce1d6502cc2bede340c6e16f12eaa1ba1c3803"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-mock-score.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "a950fe83827e9677f932ae46d3c221d62f8dea62c84fe34f24cc2b258d939678"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-pytest.txt",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "da5cb3c309ea8687cc36c08a3deb23a8c2817af04549510ad74eba88d7ca968f"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-reproduce.py",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "0cda9431ac3ee8b4d8ab31909f02571a941008cef93404523ad8a334c3e177f2"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-source.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "029d6fdd3b0a472c16c6f960db2e4f8a7f1c5add7d57a5bd7ea4a71b049ca756"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-source.patch",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "4ef846660d2c004c2e0e422bcb730b4360d845e889630cc29f1f3bca1d5db9aa"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-tests-before.txt",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "887a5527c9ea78f30a97179bea4601c8a69139480e5b6baa4f93d72a186e6f0d"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/admission-spent-before.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "2ed27c1421e6928dbe13dbfdb5c59e1045b30341fe7ebe05700006bc5ac572c0"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/campaign-after.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "5082575d0c002276b3c77011864704c5af13f2041e0221f36be892411a784b3d"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/consistency.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "6d5015af2894418d8ca8f47f4ea4f0844ca76315bf8f5422839436fef0847fb1"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/daily-after.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "7676be5fcdebc9f8338914f098d975b4e52ea2fb4454836dc5605b8aca28132b"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/diagnosis.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "e70f4a17a48afbfb1511817266bf9150551ebdfa1f3597261ca3ad043f6091f0"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/events.jsonl",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "17181c184003e27f41da76125fdfbe820392fc5b59a73ba9f0716221eaf1b2eb"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/payment-audit.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "e5519c7eb6a90d6d4b727605b0732b6f70bb9b2ee2bbc5590bcfb1bf61bc3e45"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/score.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "16bfae96b8ad256f082592fa3e4db5347948b1be65d90c6566ef1693f79fad5d"
+    },
+    {
+      "file": "docs/judge-readiness/status-timing-20261023/bounds-live/tavily-usage.json",
+      "contains_configured_secret": {
+        "nebius_api_key": false,
+        "tavily_api_key": false,
+        "admin_token": false
+      },
+      "sha256": "eb8c119d00cc2a68c23ee71fec625818ede64ca60bfef9bca69341e1a644f26a"
+    }
+  ],
+  "protected_files_changed": [],
+  "passed": true
+}

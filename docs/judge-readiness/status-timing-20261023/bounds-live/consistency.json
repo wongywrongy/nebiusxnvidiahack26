@@ -1,0 +1,5 @@
+{
+  "scope": "Two-item consistency check, not full release promotion",
+  "passed": false,
+  "reason": "Every release result must be valid live evidence from this configuration"
+}

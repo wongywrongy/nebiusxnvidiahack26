@@ -34,23 +34,27 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Unit-runtime local image and further primary-source research | [Unit runtime, mock, privacy and synthetic replay/restart](current-runtime-20261023/README.md); predates latest source corrections, unpublished, no hosted proof |
 | Product-sheet selection, printed-unit instructions and status validation before merging | [Actual diagnostics, intermediate failures and final affected-case check](document-links-20261023/README.md); existing evidence gates preserved |
 | Frozen validated-source image | [Commit `061cf9d`, 13 native PDFs, mock/unit/privacy and synthetic capped replay/restart](document-links-20261023/image/README.md); unpublished, excludes newer shared status-timing work |
-| Quoted lifecycle timing and status metadata | [Synthetic before/after and cached-live c07](status-timing-20261023/README.md); future/expired statements stay unconfirmed, past effective notice survives; no passing fix or new charge |
+| Quoted lifecycle timing and status metadata | [Synthetic before/after and cached-live c07](status-timing-20261023/README.md); [unsupported bounds](status-timing-20261023/bounds.md) stay unknown; the subsequent affected-case attempt is invalid and its one-credit usage hold requires reconciliation |
 | Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **689 passed / 2 skipped**; [temporal status proof and cached-live c07 check](status-timing-20261023/README.md). Both [workflows for tested source `56aeef2`](status-timing-20261023/ci.json)
+Current integrated Python verification: **698 passed / 2 skipped**; [source-bound output](status-timing-20261023/bounds-integration.json). Both [workflows for previously tested source `56aeef2`](status-timing-20261023/ci.json)
 pass Python/mock, presentation/build and mock browser checks; no hosted browser proof. Raw mock remains
 **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with 46/65 claims and 8/20
-web values. Actual local accounting is **$3.36648982 / 490**, no holds or persistent block.
-The [latest c03/c07 run](document-links-20261023/README.md) gets 2/2 calls/problems, 0/2 passing fixes,
+web values. Settled local accounting is **$3.36648982 / 490**, plus **one unknown Tavily credit held**;
+paid work is blocked pending reconciliation. The ledger total 491 includes that hold, not a known charge.
+The [last valid two-item c03/c07 run](document-links-20261023/README.md) gets 2/2 calls/problems, 0/2 passing fixes,
 zero invalidity or warnings; two-item source/trace consistency passes. Four replacement investigations,
 none capped, give no complete fix. No primary investigation occurs; the old primary rescue stays historical.
 An output-limit item and valid intermediate miss remain preserved. The 65,536-token/concurrency-one
 profile and partly cached timing are disclosed. The frozen `061cf9d` image matches that validated source;
 newer shared status-timing work is excluded from its proof.
+The [subsequent date-bound affected-case attempt](status-timing-20261023/bounds.md) retains a valid
+c03 but an invalid c07/provider-accounting result; it does not replace that valid accuracy panel.
 
 Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The latest read-only usage API reports
-**452 at 09:56 UTC**, 38 below local credits. No synchronized dashboard/invoice match or cause is inferred;
+**485 at 10:39 UTC**, five below settled local credits, with an additional unknown credit held locally.
+No synchronized dashboard/invoice match, per-request charge or cause is inferred;
 no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/egress, taxes,
 private IAM/quota, grant/expiry terms, judge access funding and concrete approval remain open.
 
