@@ -154,5 +154,12 @@
   "credit_expiry": "owner must read account grant terms; public program terms do not establish this grant expiry",
   "image_digest": null,
   "durable_authority": "unresolved; no SQLite on object mounts",
-  "resource_mutations_made": false
+  "resource_mutations_made": false,
+  "local_packaging_checkpoint": {
+    "source_commit": "b9de109842e9d5bcbcd48e11bc27d3419ec0c761",
+    "local_image_id": "sha256:653211984dbebafe719ad79b666043f0db0aeddace2f9b1b12392a4c496dd528",
+    "published": false,
+    "release_approved": false,
+    "evidence": "../../docs/judge-readiness/image-build-20261023/README.md"
+  }
 }

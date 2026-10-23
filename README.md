@@ -286,6 +286,8 @@ the sealed usage report and independently observed cloud completion.
 These cloud paths and the [explicit authority transfer/cutover tools](docs/judge-readiness/authority-transfer-20261023/README.md)
 are tested with a fake CLI, synthetic wallets and local disk. No real wallet has moved; remote execution and
 hosted durability remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
+A [local image packaging check](docs/judge-readiness/image-build-20261023/README.md) passes required PDFs,
+the pinned CLI, mock evaluation and an isolated API/assets smoke; the image remains unpublished.
 Scheduled jobs stay disabled pending hosted verification and owner approval.
 
 _TODO(after approval): the agent captures a real Nebius console screenshot showing the endpoint, a completed re-check job and its report; Kyle supplies private access.

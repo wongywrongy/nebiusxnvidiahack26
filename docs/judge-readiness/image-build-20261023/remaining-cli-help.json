@@ -1,0 +1,33 @@
+{
+  "profile_create": {
+    "exit_code": 0,
+    "flags_present": {
+      "--config": true,
+      "--endpoint": true,
+      "--service-account-id": true,
+      "--public-key-id": true,
+      "--private-key-file": true,
+      "--parent-id": true,
+      "--profile": true,
+      "--no-browser": true
+    },
+    "help_sha256": "d4a96b9a9bfe4aa70e73486dce6174c53c76679f580a75ac96880fa6db88ebfc"
+  },
+  "job_get": {
+    "exit_code": 0,
+    "flags_present": {
+      "--profile": true,
+      "--format": true
+    },
+    "help_sha256": "246e3817c611a07d2f1b0ebd418d77d9e3f12ce3dc16d10c017476ed351d0801"
+  },
+  "job_get_by_name": {
+    "exit_code": 0,
+    "flags_present": {
+      "--name": true,
+      "--profile": true,
+      "--format": true
+    },
+    "help_sha256": "43f65754eee1d8540c8defb09a71cfd8225e19561c6d6bfee5fa3a3762e98403"
+  }
+}

@@ -66,6 +66,12 @@ Pin the final image by digest after its clean build. The existing Dockerfile pin
 Nebius CLI 0.12.289. Verify the pinned CLI's local help against the final account/region before approving
 commands; do not assume newer convenience flags exist. No final image digest has been produced here.
 
+A [local packaging image](../../docs/judge-readiness/image-build-20261023/README.md) now builds at source
+commit `b9de109`, with matching runtime code, all 13 locked PDFs, the real CLI 0.12.289, required help flags,
+mock eval and a network-disabled API/static smoke. Its filesystem scan excludes configured keys and private
+state. It is not published, is not the final release artifact, and proves no hosted behavior. The final
+registry digest remains unset; rebuild from the final validated source before publication approval.
+
 ## Current price worksheet
 
 [Machine-readable rates, source hashes and forecasts](cost-manifest.json) were prepared from official public

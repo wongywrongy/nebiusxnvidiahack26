@@ -22,6 +22,7 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Separate release promotion check across cases, samples, frozen blind set and full public recording | [Offline release preflight](release-preflight-20261023/README.md); submitted-page and web quote gates replayed; no actual blind review or promotion |
 | Six new source-labelled packages and a label-isolated eval runner | [Frozen draft review table](blind-20261023/README.md); six downloaded native PDFs, hashes and page quotes checked; owner review pending, no pipeline evaluation |
 | Explicit private wallet export/import, interrupted-transfer recovery and approved writer-cutover tools | [Local transfer evidence](authority-transfer-20261023/README.md); synthetic wallets/mounts only, no real transfer or approval |
+| Local container packaging and pinned CLI verification | [Image build evidence](image-build-20261023/README.md); 13 locked PDFs, source hash, CLI/help, mock eval and network-disabled API/assets pass; keys/private paths absent; image unpublished |
 
 Current Python verification: **560 passed / 2 skipped**. Presentation checks and web build passed in the
 preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;

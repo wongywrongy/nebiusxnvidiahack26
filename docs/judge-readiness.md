@@ -222,3 +222,16 @@ holds and no retirement. CI for the preceding `c97f1f8` checkpoint passed Python
 The local Docker daemon reports version 29.9.2; no release image was built in this checkpoint. The concrete
 startup/persistence/image/resource/cost/expiry/rollback manifest remains agent-owned preparation. G2–G5 stay
 open; no full-set follow-up, blind evaluation, final recording, deployment or cloud resource was started.
+
+## Local image packaging checkpoint — 2026-10-23
+
+The [local image build](judge-readiness/image-build-20261023/README.md) from `b9de109` succeeds with all
+13 locked native PDFs, the actual CLI 0.12.289 and the documented raw mock panel. Real CLI help confirms the
+profile/job/endpoint flags used by the application. A temporary, network-disabled container serves API and
+static assets; it correctly exposes the bundled historical recording, not a new live panel. Scanning 8,566
+files finds no configured key strings or excluded private paths. All temporary containers are removed.
+
+The image remains local and unapproved for release. No production source changed, no provider spend was
+added, and no image was published or cloud resource created. Actual cumulative usage remains $1.9702294 /
+391, no holds. Source-commit CI passed all checks. Final source/image publication, startup/persistent-state
+layout, resource/cost/IAM/expiry/rollback approval and hosted proof remain agent-owned work after their gates.
