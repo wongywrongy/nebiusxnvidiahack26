@@ -266,5 +266,23 @@
     "registry_network_tax_price_bound": null,
     "maximum_approved_cloud_usd": null,
     "owner_approval": null
+  },
+  "tested_local_candidate_image": {
+    "tag": "speccheck:readiness-1c3c7fe",
+    "local_image_id": "sha256:e92d0c23c9233f21607b4171b250e8598f220d8982d4d859c05ac69cd63387b7",
+    "repo_digests": [
+      "speccheck@sha256:e92d0c23c9233f21607b4171b250e8598f220d8982d4d859c05ac69cd63387b7"
+    ],
+    "created": "2026-10-23T07:40:22.582527055Z",
+    "default_command": [
+      "python",
+      "scripts/serve.py"
+    ],
+    "published": false,
+    "source_commit": "1c3c7fe",
+    "runtime_code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
+    "evidence": "docs/judge-readiness/current-image-20261023/README.md",
+    "registry_reference_verified": false,
+    "release_approved": false
   }
 }

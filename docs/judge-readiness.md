@@ -343,3 +343,19 @@ The two diagnostic probes plus actual cache repair add **$0 / 4 credits**. Actua
 **$2.6351023 / 442**, UTC-day **$1.1483655 / 84**, no holds or persistent block. Earlier dashboard/API
 readings predate these charges and remain unreconciled; no ledger is adjusted. G2 stays open. No broader
 evaluation, blind evaluation, final recording, cloud resource or approval occurs.
+
+## Current-source packaging checkpoint — 2026-10-23
+
+[Local image evidence](judge-readiness/current-image-20261023/README.md) now binds tested runtime
+`1c3c7fe` / code hash `f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a`
+to unpublished image/index `sha256:e92d0c23c9233f21607b4171b250e8598f220d8982d4d859c05ac69cd63387b7`.
+Build and image-native 13-PDF preflight pass; dependency/web layers are reused. Network-disabled mock
+eval preserves raw 6/8 / 5/6 / 0/2 / 0/5, expected exit 1, no invalid items. Fresh key/path booleans
+are false and an actual scan finds no configured secret strings in 126 regular `/app` files; this is not
+a layer/entire-filesystem scan. A new synthetic-only import/restart preserves state/authority/app markers.
+
+Both CI workflows for runtime source `1c3c7fe` pass Python/mock, presentation/build and mock browser
+journey/failure checks. No real authority, provider request, cloud resource or registry publication occurs.
+Local cumulative accounting remains $2.6351023 / 442, no holds. This closes the outdated-local-image gap
+without passing G2, promoting the release, or establishing hosted storage/reboot/IAM behavior. G2 and the
+remaining owner gates stay open; actual final validation and hosted execution remain agent-owned.

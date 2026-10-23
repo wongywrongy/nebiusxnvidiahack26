@@ -124,7 +124,8 @@ higher local ledger. Token Factory's catalog lists cached-input discounts absent
 records, so the dollar difference cannot be reconstructed. Earlier [claim/citation fixes](docs/judge-readiness/claim-repair-20261023/README.md)
 and a [historical primary Investigator rescue](docs/judge-readiness/replacement-discovery-20261023/README.md)
 remain tied to their recorded source. [Persistent startup](docs/judge-readiness/controller-startup-20261023/README.md)
-has network-disabled synthetic container evidence; no hosted proof or final release image is claimed.
+has network-disabled synthetic container evidence. The [current-source local image](docs/judge-readiness/current-image-20261023/README.md)
+repeats mock/privacy/synthetic restart checks; it stays unpublished, with no hosted proof or release approval.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
 cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.

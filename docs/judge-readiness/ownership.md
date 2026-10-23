@@ -28,16 +28,18 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Required-gap and availability research for replacements | [Targeted evidence](replacement-research-20261023/README.md); newly discovered sources retained, unsupported active status still rejected, no complete replacement |
 | Company-catalog fallback and affected legacy cache repair | [Actual product-page before/after](catalog-fallback-20261023/README.md); direct catalog requests remain valid, quote/selection gates unchanged |
 | Public storage/IAM/cost/expiry/rollback preparation | [Unapproved bounded plan](../../deploy/nebius/rollout.pending.md); private inputs/final image/approval/hosted proof pending |
+| Current-source local image | [Source `1c3c7fe`, mock/privacy/synthetic restart and CI](current-image-20261023/README.md); unpublished, no real authority transfer or hosted proof |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **626 passed / 2 skipped**. Presentation/build and eight mock browser tests
-passed at preceding frontend checkpoints; no new browser run is claimed for these backend changes.
+Current Python verification: **626 passed / 2 skipped**. Both GitHub workflows for tested runtime `1c3c7fe`
+pass Python/mock, presentation/build and mock browser journey/failure checks; no live/hosted browser proof.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
 Actual cumulative local ledger is **$2.6351023 / 442 credits**, with no outstanding holds at this checkpoint.
 The latest [cached c03/c07 confirmation](catalog-fallback-20261023/README.md) gets 2/2 calls/problems,
 0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes for two
 items only. Four replacement investigations do not yield a passing replacement; no primary investigation
-runs. The earlier primary recovery remains historical. The local container image predates this scope change.
+runs. The earlier primary recovery remains historical. The current local image matches this runtime source;
+its synthetic-only proof does not establish real wallet transfer, deployment or release approval.
 Kyle reports account-wide **$2.13 / 421**; a later Tavily usage API reports 415. Local-minus-owner is
 $0.5051023 / 21 credits; the owner's reading predates the latest work. Scope is confirmed, billing cutoff and cause are unresolved. Current public Super
 cached-input pricing could lower actual billing, but historical cached-token quantities were not saved.
@@ -65,7 +67,7 @@ The higher local accounting remains in force; no ledger is changed.
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
-6. **Deployment preparation:** pin the tested persistent-startup command in the final image/resource plan;
+6. **Deployment preparation:** the current unpublished candidate pins the tested startup/runtime;
    finish the final registry digest, private account/IAM bindings and unpriced network/registry/tax bounds.
    The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
    stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)

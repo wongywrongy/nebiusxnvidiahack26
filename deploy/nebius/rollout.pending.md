@@ -1,6 +1,6 @@
 # Proposed bounded rollout — requires final validation and owner approval
 
-This plan creates nothing. G2 is open; the final image, private identities and billing/expiry facts are
+This plan creates nothing. G2 is open; the published release image, private identities and billing/expiry facts are
 not available yet. Null fields in `cost-manifest.json` are blockers, not permission to guess defaults.
 The agent owns filling and executing this plan after the gates. Kyle supplies private account access,
 grant terms and approval of the final concrete resources/costs.
@@ -81,8 +81,9 @@ must have an approved stop/expiry review, not an indefinite promise of nightly o
 ## Execution and rollback, after concrete approval
 
 1. Freeze final validation source/inputs/configuration and build/scan that exact image; publish only after
-   registry approval, verify its digest, then fill the final manifest. Current local images predate the
-   latest scope/retrieval changes and cannot be substituted.
+   registry approval, verify its digest, then fill the final manifest. The [current local candidate](../../docs/judge-readiness/current-image-20261023/README.md)
+   contains tested source `1c3c7fe` and passes local mock/privacy/synthetic-restart checks. It is unpublished,
+   not release-approved, and must be rebuilt if final validation requires another runtime change.
 2. Verify account permissions, region/preset/quota, complete price bounds and actual stop/expiry fields.
    Create only the approved private filesystem and endpoint. Start with paid admission blocked because
    no wallet exists; launcher settings remain absent. Confirm mount/boot/resource identities privately.
