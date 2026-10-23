@@ -47,7 +47,7 @@ cd web && npm run build
 The original fixture baseline yielded 8/8 calls, 6/6 planted problems, 0/2 major false alarms and 2/5 passing
 replacements. The current selection/evidence policy yields **6/8, 5/6, 0/2 and 0/5** against the unchanged key,
 with 48/65 claims and 8/20 web values retained. Kyle approved the disclosed selection-policy disagreements
-for continued engineering; the strict release gate still fails. The current suite passes 621 tests (2 skipped).
+for continued engineering; the strict release gate still fails. The current suite passes 626 tests (2 skipped).
 Eight mock browser journey/failure tests passed at the preceding frontend checkpoint. These are measured demonstration-set results, not live
 accuracy or an unseen benchmark. Respx/fake-CLI tests
 cover paid-call boundaries, profile redaction, job create/poll, storage retention and the deployment smoke

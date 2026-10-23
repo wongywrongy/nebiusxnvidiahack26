@@ -1022,3 +1022,22 @@ investigations, zero primary investigations/rescues. Fresh **$0.0671367 / 12 cre
 unchanged. [Before/after prompt, exact traces, check evidence and source reconstruction](judge-readiness/replacement-research-20261023/README.md).
 The owner $2.13 / 421 and API 415 observations above preceded this run and are not updated invoice totals.
 No ledger correction, full follow-up evaluation, blind evaluation, final recording or cloud mutation occurred.
+
+## Product-page/catalog checkpoint — 2026-10-23
+
+[Actual retrieval before/after](judge-readiness/catalog-fallback-20261023/README.md) shows a LightMart
+product request replaced with a full company catalog. The shared link helper now skips explicit full/
+master/complete catalog filenames, preserving the product page. Affected legacy substitutions refresh
+once through normal accounting; explicitly requested catalogs and unrelated caches remain usable.
+Five new regressions pass; full suite **626 passed / 2 skipped in 32.12 s**. No prompt, key, checklist,
+quote gate or selection rule changes. Two discovery diagnostics find no complete replacement, so their
+queries are not adopted in production.
+
+Current-code run `20261023-073518-c1e622` is fully cached: **2/2 calls/problems, 0/2 fixes**, no invalid
+items or provider/cap warnings, **$0 / 0 fresh charges**. Its two-item source/archive/trace consistency
+check passes; it is not release promotion or a fresh latency benchmark. Quote counters remain 56/209
+claims and 54/110 web values. Four replacement investigations, none capped; no primary investigation.
+The two diagnostic probes plus actual cache repair add **$0 / 4 credits**. Actual local cumulative
+**$2.6351023 / 442**, UTC-day **$1.1483655 / 84**, no holds or persistent block. Earlier dashboard/API
+readings predate these charges and remain unreconciled; no ledger is adjusted. G2 stays open. No broader
+evaluation, blind evaluation, final recording, cloud resource or approval occurs.

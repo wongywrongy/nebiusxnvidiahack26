@@ -107,14 +107,16 @@ Kyle authorized the disclosed selection-policy exceptions and live validation on
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
 [readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
 
-The October 23 refinement run `20261023-071700-8a9e33` gets **c03 and c07 right (2/2 problems caught)**,
+The October 23 current-code confirmation `20261023-073518-c1e622` gets **c03 and c07 right (2/2 problems caught)**,
 with **0/2 passing replacements** and no cap/provider warnings. Four replacement investigations run;
-neither supplies a complete replacement, and no primary investigation is needed. This targeted, partly
-cached confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes
-**621 tests, 2 skipped**. Presentation/build checks and eight mock browser journeys passed earlier.
-Additional engineering spend is **$1.5764973 / 140 credits**, cumulative local ledger **$2.6351023 / 438**.
-G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/replacement-research-20261023/README.md)
-records research of missing requirements and availability plus retention of newly discovered sources.
+none supplies a complete replacement, and no primary investigation is needed. This targeted confirmation
+uses cached provider responses ($0 / 0 fresh charges); it is not an eight-case score or fresh latency benchmark.
+The current checkpoint passes **626 tests, 2 skipped**. Presentation/build checks and eight mock browser journeys passed earlier.
+Additional engineering spend is **$1.5764973 / 144 credits**, cumulative local ledger **$2.6351023 / 442**.
+G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/catalog-fallback-20261023/README.md)
+corrects a full-company-catalog substitution for a product page and repairs only affected cached entries.
+The [preceding paid run](docs/judge-readiness/replacement-research-20261023/README.md) records research of
+missing requirements and availability plus retention of newly discovered sources.
 The [preceding scope correction](docs/judge-readiness/scope-binding-20261023/README.md) preserves unconditional
 L70/MacAdam evidence; unselected driver/DLC evidence stays unconfirmed. The owner previously reported account-wide **$2.13 / 421**;
 Tavily's separate 07:10 UTC usage API observation was 415, before this latest run. These totals are not reconciled; budget enforcement retains the

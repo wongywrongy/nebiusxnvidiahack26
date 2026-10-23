@@ -351,6 +351,40 @@ def test_document_discovery_uses_public_links_and_resolves_relative_urls():
     assert tavily._document_link('"https://cdn.test/PDS_Product_English"', "https://maker.test") == "https://cdn.test/PDS_Product_English"
 
 
+@pytest.mark.parametrize("name", ["FullCatalog_2026.pdf", "MASTER-catalog.pdf", "Complete%20Catalog.pdf"])
+def test_product_document_discovery_skips_company_catalogs(name):
+    html = f'<a href="/{name}">Catalog</a>'
+    assert tavily._document_link(html, "https://maker.test/product") is None
+    html += '<a href="/product-catalog/model-data.pdf">Product Data Sheet</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/product-catalog/model-data.pdf"
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_company_catalog_fallback_preserves_product_page_and_repairs_only_legacy_entry(live, legacy):
+    from api import cache
+    page, catalog = "https://maker.test/product", "https://maker.test/FullCatalog_2026.pdf"
+    html = f'<h1>Product X</h1><a href="{catalog}">Download Catalog</a>Product data sheet'
+    key = {"urls": [page], "depth": "basic"}
+    if legacy:
+        cache.put("tavily_extract", key, {"version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            "results": [{"url": catalog, "requested_url": page, "raw_content": "Unrelated catalog text"}]})
+    post = live[0].post(tavily.API + "/extract").respond(200, json={
+        "results": [{"url": page, "raw_content": html}], "usage": {"credits": 1}})
+    direct = live[0].get(page).respond(200, text=html)
+    first, charged = asyncio.run(tavily.extract([page]))
+    assert charged == 1 and len(first) == 1 and first[0]["url"] == page
+    assert first[0]["raw_content"] == html and not first[0].get("requested_url")
+    again, charged = asyncio.run(tavily.extract([page]))
+    assert charged == 0 and again == [{**p, "cache_hit": True} for p in first]
+    assert len(post.calls) == len(direct.calls) == 1
+    # An explicitly requested catalog remains a normal cache hit, without a paid refresh.
+    cache.put("tavily_extract", {"urls": [catalog], "depth": "basic"}, {
+        "version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(),
+        "results": [{"url": catalog, "requested_url": catalog, "raw_content": "Catalog requested explicitly"}]})
+    assert asyncio.run(tavily.extract([catalog]))[1] == 0
+    assert len(post.calls) == 1
+
+
 def test_product_page_extract_resolves_linked_pdf_and_keeps_its_url(live):
     page, document = "https://maker.test/product", "https://cdn.test/PDS_Product_English"
     route = live[0].post(f"{tavily.API}/extract").respond(200, json={
