@@ -23,21 +23,25 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Six new source-labelled packages and a label-isolated eval runner | [Frozen draft review table](blind-20261023/README.md); six downloaded native PDFs, hashes and page quotes checked; owner review pending, no pipeline evaluation |
 | Explicit private wallet export/import, interrupted-transfer recovery and approved writer-cutover tools | [Local transfer evidence](authority-transfer-20261023/README.md); synthetic wallets/mounts only, no real transfer or approval |
 | Local container packaging and pinned CLI verification | [Image build evidence](image-build-20261023/README.md); 13 locked PDFs, source hash, CLI/help, mock eval and network-disabled API/assets pass; keys/private paths absent; image unpublished |
+| Bounded numeric qualifier repair, Unicode quote matching, retained bundle claims and agreeing-source citations | [Actual before/after and verification](claim-repair-20261023/README.md); same magnitude/quote/identity/selection gates; coded-driver evidence remains scoped |
 
-Current Python verification: **560 passed / 2 skipped**. Presentation checks and web build passed in the
+Current Python verification: **591 passed / 2 skipped**. Presentation checks and web build passed in the
 preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;
 no new local browser run is claimed for the backend changes below.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
-Actual cumulative local ledger is **$1.9702294 / 391 credits**, with no outstanding holds at this checkpoint.
-The latest [targeted c03/c07 run](replacement-discovery-20261023/README.md) gets 2/2 calls/problems,
-0/2 passing replacements and one primary Investigator recovery, with no cap/provider warnings.
+Actual cumulative local ledger is **$2.5255318 / 419 credits**, with no outstanding holds at this checkpoint.
+The latest [targeted c03/c07 run](claim-repair-20261023/README.md) gets 2/2 calls/problems,
+0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes; this is not
+release promotion. Two replacement investigations do not resolve a replacement, and no primary investigation
+runs. The earlier primary Investigator recovery remains recorded under its own historical code/configuration.
 
 ## Still mine to finish
 
 1. **G2:** obtain and verify an actual complete replacement evidence bundle. Broader discovery now reaches
-   Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/current-document/availability evidence;
-   LT still loses its L70 bound, has unselected DLC/driver options and unconfirmed availability. c03 lacks
-   complete VOC, mold and assembly proof. Bounded correction of omitted identifiers/lost bounds remains mine;
+   Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
+   LT retains its identifier and L70 bound, but scope includes an unrelated optional clause; DLC/driver options
+   lack selection, and revision/availability remain unconfirmed. c03 lacks complete mold/assembly/availability
+   proof, and one candidate's VOC read is still unconfirmed. Scope correction and better supplementary evidence remain mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
    move the actual authority and fence its old writer. The real wallet remains local and active. Authenticate
@@ -60,6 +64,8 @@ The latest [targeted c03/c07 run](replacement-discovery-20261023/README.md) gets
    manual/scheduled jobs. Capture actual states, timings, reports and screenshots; restore temporary caps.
 8. **Demo/release:** finish the judge walk, video assets, truthful README/SUBMISSION/FEEDBACK, ranked issues,
    exact reproduction commands and PR. Request final approval only on a concrete reviewable release.
+9. **Uncertainty copy:** replace “Not stated” where a row actually means that a source claim was rejected or
+   could not be confirmed. Keep the reason and evidence visible; do not imply source absence was proved.
 
 ## Kyle's parts, later
 

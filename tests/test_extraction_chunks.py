@@ -34,7 +34,10 @@ def test_complete_chunks_reach_tail_and_preserve_each_call(monkeypatch):
 
 def test_property_allowlist_reaches_schema_and_drops_unrequested_aliases(monkeypatch):
     async def call(task, schema, messages, ctx):
-        assert schema.model_json_schema()["$defs"]["Claim"]["properties"]["property"]["enum"] == ["watts"]
+        shape = schema.model_json_schema()
+        assert shape["$defs"]["Claim"]["properties"]["property"]["enum"] == ["watts"]
+        assert "model" in shape["required"] and {"type": "null"} in shape["properties"]["model"]["anyOf"]
+        assert "all conditions on this metric" in shape["$defs"]["Claim"]["properties"]["scope_quote"]["description"]
         claims = [{"id": prop, "product": "X", "manufacturer": "M", "property": prop,
                    "value": 10, "unit": "W", "page": 1, "quote": "Power draw 10 W"}
                   for prop in ("watts", "power_draw_w")]
@@ -43,6 +46,22 @@ def test_property_allowlist_reaches_schema_and_drops_unrequested_aliases(monkeyp
     pages = [{"page": 1, "text": "Power draw 10 W"}]
     out, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), ["watts"]))
     assert [c.property for c in out.claims] == ["watts"]
+
+
+@pytest.mark.parametrize("empty_model", [None, "Driver-7"])
+def test_an_empty_supplementary_chunk_cannot_clear_the_evidenced_product_identifier(monkeypatch, empty_model):
+    pages = [{"page": 1, "text": "Alpha-1. Warranty 7 years"}, {"page": 2, "text": "Driver-7 instructions"}]
+    monkeypatch.setattr(extract, "page_batches", lambda pages, limit: ([page] for page in pages))
+    async def read(fx, batch, properties):
+        claims = [{"id":"w", "product":"Alpha-1", "manufacturer":"Maker", "property":"warranty_years",
+            "value":7, "unit":"yr", "page":1, "quote":"Warranty 7 years", "scope":"product_wide",
+            "scope_quote":"Warranty 7 years"}] if batch[0]["page"] == 1 else []
+        return ClaimsOut(product="Alpha-1" if claims else "Driver instructions", manufacturer="Maker",
+            model="Alpha-1" if claims else empty_model, claims=claims), Usage(task="extract_claims",tier="extract",model="test")
+    monkeypatch.setattr(extract, "_read_claims", read)
+    out, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), ["warranty_years"]))
+    assert out.model == "Alpha-1" and out.selection is None
+    assert verify._unambiguous(out.claims)["warranty_years"].value == 7
 
 
 @pytest.mark.parametrize("other", ["Alpha-1", "Beta-2", None])

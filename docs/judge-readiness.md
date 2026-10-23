@@ -235,3 +235,26 @@ The image remains local and unapproved for release. No production source changed
 added, and no image was published or cloud resource created. Actual cumulative usage remains $1.9702294 /
 391, no holds. Source-commit CI passed all checks. Final source/image publication, startup/persistent-state
 layout, resource/cost/IAM/expiry/rollback approval and hosted proof remain agent-owned work after their gates.
+
+## Claim repair and source attribution checkpoint — 2026-10-23
+
+[Measured before/after, redacted responses and commands](judge-readiness/claim-repair-20261023/README.md)
+record bounded same-magnitude qualifier repair, literal Unicode quote normalization, retention of validated
+bundle claims, coded-driver selection gates, empty-chunk model merging and exact quote/URL attribution.
+The schema's shorter-scope instruction did not resolve the live Williams scope drops; this remains open.
+An actual agreeing-page quote/URL mismatch failed evidence consistency before the one-line comparison fix.
+
+Final targeted run `20261023-055339-e48fd0`: **2/2 calls, 2/2 problems, 0/2 passing fixes**, no typed invalidity,
+unnecessary notes or cap/provider warnings. It keeps 58/209 claims and 51/100 web values. Both scripted checks
+succeed without a primary Investigator; two replacement runs end not-resolved/revision-only, none capped.
+The final archive/quote/trace consistency check passes. c03 takes 131.411 s and c07 0.945 s, partly cached;
+these are not cold or full-set timings. Fresh charges for that run are $0.0562113 / 0 credits.
+
+The full mock suite passes **591 tests, 2 skipped in 31.04 seconds**. The unchanged raw mock panel remains
+6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 fixes, one unnecessary note, no invalid items,
+48/65 claims and 8/20 web values. No frontend change was made. The local packaging image predates this code.
+
+This checkpoint adds **$0.5553024 / 28 credits**, cumulative **$2.5255318 / 419**, no holds or persistent block.
+No new dashboard reconciliation is claimed. G2 stays open for complete replacement evidence and remaining
+scope/source causes; original expectations, reviewed checklists and historical recording remain untouched.
+Both full follow-up evals and the final recording remain unused. Deployment and cloud resources stay untouched.

@@ -12,6 +12,7 @@ answers candidate n's claims and verify, shaped like a case fixture.
 
 from __future__ import annotations
 
+import json
 from typing import Optional
 
 from ..config import settings
@@ -193,7 +194,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                                     **{key:source[key] for key in ("sha256", "retrieved_at", "archived_path", "cache_hit") if key in source}})
             documents.append(document)
             for p in source.get("pages") or [{"page": 1, "text": source["raw_content"]}]:
-                number = len(bundle_pages) + 1
+                number = p["page"] if source is page else max(page_sources, default=0) + 1
                 bundle_pages.append({**p, "page": number})
                 page_sources[number] = document
                 if p["text"] != source["raw_content"]:
@@ -211,7 +212,17 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                 for claim in more.claims:
                     claim.selection_quote = (cl.selection.quote if claim.variant and cl.selection and
                                              extract.model_quoted(claim.variant, cl.selection.model) else None)
-                cl = cl.model_copy(update={"claims": more.claims})
+                merged, identifiers = {}, set()
+                for claim in [*cl.claims, *more.claims]:
+                    key = (claim.property, json.dumps(claim.value, sort_keys=True), claim.unit,
+                           claim.variant, claim.selection_quote)
+                    if key in merged:
+                        continue
+                    while claim.id in identifiers:
+                        claim = claim.model_copy(update={"id": claim.id + "-bundle"})
+                    identifiers.add(claim.id)
+                    merged[key] = claim
+                cl = cl.model_copy(update={"claims": list(merged.values())})
             usage += u
         found_f = spec_check.check(requirements, cl.claims, roles)
         by_id = {c.id: c for c in cl.claims}

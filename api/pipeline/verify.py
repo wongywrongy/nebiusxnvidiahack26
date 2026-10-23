@@ -344,7 +344,7 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
             submitted=_fmt(c.value, c.unit),
             current=_fmt(pv.value, pv.unit),
             changed=not _same(c.value, pv.value, c.unit, pv.unit),
-            source_url=confirmed[pv.property], quote=pv.quote,
+            source_url=pv.source_url or confirmed[pv.property], quote=pv.quote,
         )
         rows.append(row)
         if row.changed:

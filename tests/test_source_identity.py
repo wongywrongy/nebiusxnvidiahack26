@@ -1,4 +1,4 @@
-from api.pipeline import extract, verify
+from api.pipeline import extract, spec_check, verify
 from api.schemas import Claim, ClaimsOut, VerifyOut
 import asyncio
 import pytest
@@ -73,6 +73,23 @@ def test_declared_source_and_identity_quote_must_share_the_fetched_page():
     assert not out.current_values
 
 
+@pytest.mark.parametrize("current", [5, 7])
+def test_agreeing_pages_keep_each_quote_bound_to_its_own_source(current):
+    product = submitted().model_copy(update={"claims":[Claim(id="w",product="LX-20",manufacturer="Maker",
+        property="warranty_years",value=5,unit="yr")]})
+    other = "https://maker.test/other.pdf"
+    quotes = [f"Warranty {current} years", f"Warranty: {current}-year"]
+    pages = [{"url":url,"raw_content":"Model LX-20. " + quote} for url,quote in zip((URL,other),quotes)]
+    out = VerifyOut(status="unknown",current_values=[dict(property="warranty_years",value=current,unit="yr",
+        quote=quote,source_url=url,model="LX-20",identity_quote="Model LX-20",scope="product_wide",scope_quote=quote)
+        for url,quote in zip((URL,other),quotes)])
+    confirmed = verify.gate(out,pages,submitted=product)
+    _,rows = verify.compare(product,out,confirmed,[],pages)
+    assert len(rows) == 1 and rows[0].quote == quotes[0] and rows[0].source_url == URL
+    assert extract.quoted(rows[0].quote,next(p["raw_content"] for p in pages if p["url"]==rows[0].source_url))
+    assert rows[0].changed is (current != 5)
+
+
 def test_family_status_does_not_import_family_values():
     out = VerifyOut(status="discontinued", status_family="LX", status_quote="The LX family is discontinued.",
         current_values=[{"property": "watts", "value": 15, "quote": "Power 15 W"}])
@@ -110,6 +127,40 @@ def test_header_identity_survives_an_ordering_example_without_selecting_it(monke
     monkeypatch.setattr(extract, "_read_claims", read)
     out, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), []))
     assert out.model == "2LX-2X4" and out.selection is None
+
+
+@pytest.mark.parametrize("footer,model", [("\nLX-20 luminaire", "LX-20"), ("", None)])
+def test_example_before_the_product_heading_does_not_erase_its_identifier(monkeypatch, footer, model):
+    pages = [{"page": 1, "text": "Ordering example: LX-20 DRB7." + footer}]
+    async def read(*args):
+        return ClaimsOut(product="LX-20 luminaire", manufacturer="Maker", model="LX-20", claims=[]), Usage(
+            task="extract_claims", tier="extract", model="test")
+    monkeypatch.setattr(extract, "_read_claims", read)
+    out, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), []))
+    assert out.model == model and out.selection is None
+
+
+@pytest.mark.parametrize("selected", [False, True])
+def test_coded_driver_row_requires_a_selection_even_if_labelled_product_wide(monkeypatch, selected):
+    quote = "DRB7 2 % Driver with external dimming wires"
+    heading = "Selected: LX-20 DRB7" if selected else "Model LX-20"
+    pages = [{"page": 1, "text": heading + ". " + quote}]
+    async def read(*args):
+        return ClaimsOut(product="LX-20", manufacturer="Maker", model="LX-20",
+            selection=Selection(model="LX-20 DRB7", page=1, quote=heading) if selected else None,
+            claims=[Claim(id="dim", product="LX-20", manufacturer="Maker", property="dim_min_percent",
+                value=2, unit="%", page=1, quote=quote, scope="product_wide", scope_quote=quote)]), Usage(
+                    task="extract_claims", tier="extract", model="test")
+    monkeypatch.setattr(extract, "_read_claims", read)
+    out, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), ["dim_min_percent"]))
+    assert out.claims[0].variant == "DRB7"
+    req = Requirement(id="dim", section="test", paragraph="", text="Synthetic limit", property="dim_min_percent",
+                      operator="lte", value=5, unit="%")
+    assert spec_check.check([req], out.claims, {"product_data"})[0].verdict == ("pass" if selected else "unverified")
+    web_out = VerifyOut(status="unknown", current_values=[dict(property="dim_min_percent", value=2, unit="%",
+        quote=quote, scope="product_wide", scope_quote=quote, source_url=URL, model="LX-20", identity_quote="Model LX-20")])
+    verify.gate(web_out, [{"url": URL, "raw_content": "Model LX-20. " + quote}], submitted=submitted())
+    assert not verify._unambiguous(web_out.current_values)
 
 
 def test_generic_product_word_cannot_establish_family_discontinuation():

@@ -7,12 +7,16 @@ import re
 import unicodedata
 from typing import Optional
 
+from pydantic import BaseModel, Field
+
 from ..config import settings
 from ..llm import router
-from ..schemas import ClaimsOut, PageLabel, RequirementsOut, Selection, TriageOut, Usage
+from ..schemas import Claim, ClaimsOut, PageLabel, RequirementsOut, Selection, TriageOut, Usage, Value
 
 from . import metrics
 from .spec_check import _label, _mentions, to_number
+
+DRIVER_OPTION = re.compile(r"\b([A-Z][A-Z0-9]*(?:[-_][A-Z0-9]+)*)\s+\d+(?:\.\d+)?\s*%\s+driver\b", re.I)
 
 
 async def triage(case_id: Optional[str], pages: list[dict]) -> tuple[TriageOut, Usage]:
@@ -94,9 +98,24 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     for text in page_batches(pages, settings.max_page_chars):
         out, u = await _read_claims(case_id, text, properties)
         usage.append(u)
-        outputs.append(out)
         extracted = len(out.claims)
+        repairable = [c for c in out.claims if c.property in properties and c.page in texts
+                      and quoted(c.quote, texts[c.page]) and to_number(c.value) is not None
+                      and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote)
+                      and not value_quoted(c.value, c.quote, c.property)]
+        if settings.live and repairable:
+            repaired, u = await _repair_values(case_id, repairable)
+            usage.append(u)
+            extracted += len(repaired.claims)
+            for claim in repairable:
+                matching = [r for r in repaired.claims if (r.id, r.property, _plain(r.quote)) ==
+                            (claim.id, claim.property, _plain(claim.quote))]
+                if len(matching) == 1 and to_number(matching[0].value) == to_number(claim.value):
+                    out.claims.append(claim.model_copy(update={"value": matching[0].value}))
+        outputs.append(out)
         for c in out.claims:
+            if not c.variant and (option := DRIVER_OPTION.search(c.quote or "")):
+                c.variant = option[1]
             if not c.variant and (scope := re.search(r"^((?:non[\s-]*configurable|configurable|optional)[^:]{0,100}):", _plain(c.quote or ""), re.I)):
                 c.variant = scope[1].strip()
         out.claims = [c for c in out.claims if c.property in properties and c.page in texts and quoted(c.quote, texts[c.page])
@@ -117,7 +136,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
             kept.setdefault(key, c)
     result = outputs[0].model_copy(deep=True) if outputs else ClaimsOut(product="", manufacturer="", claims=[])
     for field in ("model", "document_revision", "family"):
-        values = {getattr(o, field) for o in outputs if getattr(o, field)}
+        values = {getattr(o, field) for o in outputs if getattr(o, field) and (field != "model" or o.claims or not kept)}
         setattr(result, field, next(iter(values)) if len(values) == 1 else None)
     if result.model and not any(model_quoted(result.model, p["text"]) for p in pages):
         result.model = None
@@ -131,7 +150,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
     selections = [o.selection for o in outputs if o.selection and selection_supported(o.selection, texts)]
     result.selection = selections[0] if selections and len({s.model for s in selections}) == 1 else None
     if not result.selection and result.model and any(re.search(r"\bexample\s*:", p["text"], re.I) for p in pages) and not any(
-            model_quoted(result.model, re.split(r"\bexample\s*:", p["text"], maxsplit=1, flags=re.I)[0]) for p in pages):
+            model_quoted(result.model, re.sub(r"\b(?:ordering\s+)?example\s*:[^\n.;]*", "", p["text"], flags=re.I)) for p in pages):
         result.model = result.family
     ambiguous |= bool(identities and any(not (model_quoted(identities[0], other) and
                         model_quoted(other, identities[0])) for other in identities[1:]))
@@ -171,19 +190,23 @@ async def _read_claims(case_id, text, properties):
                 "A product identifier names the product; selection separately proves a chosen ordering configuration. "
                 "Separately identify the printed family and family_quote. Do not treat a blank catalog field or an ordering example as a selected model. "
                 "Keep each test/rating metric distinct; never relabel a different metric to fit a requested name. "
-                "Do not dump option tables. Omit SKU-dependent table values unless an exact submitted SKU is identified. "
+                "Do not dump option tables. Return SKU-dependent table values only when these pages explicitly mark "
+                "a selected/submitted/specified SKU and you return that matching selection object. "
+                "If selection is null, omit SKU-dependent table values. A printed identifier or factory default does not select a SKU. "
                 "A blank catalog-number field or an ordering example is not a submitted SKU selection. "
                 "For other stated alternatives, retain distinct values without repeating the same value for every option. "
                 "Set variant to the exact quoted option/configuration phrase whenever a value is limited to that option. "
-                "Set scope and scope_quote from the full applicability statement; scope_quote must contain the value quote, "
-                "not just a table heading. Use product_wide only for unqualified product properties, not selectable options. "
+                "Set scope and scope_quote from the complete applicability clause for this value. Include every condition "
+                "on this value; do not mix in another metric's independently qualified clause. scope_quote must contain "
+                "the value quote, not just a table heading. Use product_wide only for unqualified product properties, not selectable options. "
                 "Return selection only when submitted evidence explicitly marks a selected/submitted/specified configuration, with its page and exact quote. "
                 "Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. "
-                "Copy each quote verbatim as one contiguous substring from that page; never paraphrase or join separate passages. "
+                "Copy each quote verbatim as one contiguous substring from that page, including its exact punctuation; "
+                "never paraphrase, add sentence punctuation or join separate passages. "
                 "Omit properties that are not stated instead of returning null claims. "
                 "For lists, put each distinct standard or certification identifier in its own array entry. "
                 "For covered pipe types, quote the enumerated penetrating-item list, not the wall studs or sleeves.\n\n"
-                + json.dumps(text)
+                + json.dumps(text, ensure_ascii=False)
             ),
         }
     ]
@@ -192,12 +215,43 @@ async def _read_claims(case_id, text, properties):
         def model_json_schema(cls, **kwargs):
             schema = super().model_json_schema(**kwargs)
             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
+            schema["$defs"]["Claim"]["properties"]["scope_quote"]["description"] = (
+                "Shortest exact complete sentence or clause that contains this value quote and all conditions on this metric. "
+                "Exclude neighboring metrics and their independent conditions; do not copy a multi-metric paragraph.")
+            schema["properties"]["model"]["description"] = "Short product or system identifier printed on these pages; null if absent. This does not select an ordering configuration."
+            if "model" not in schema["required"]:
+                schema["required"].append("model")
             return schema
     return await router.call("extract_claims", ClaimsRead, messages, {"case_id": case_id})
 
 
+class ClaimValueRepair(BaseModel):
+    id: str
+    property: str
+    value: Value = Field(description="Original numeric magnitude; use a string with the quoted comparison prefix when a bound is stated")
+    quote: str
+
+
+class ClaimValueRepairs(BaseModel):
+    claims: list[ClaimValueRepair]
+
+
+async def _repair_values(case_id, claims: list[Claim]):
+    messages = [{"role": "user", "content": (
+        "Correct only numeric bounds or qualifiers in these already-quoted claims, keeping the numeric magnitude unchanged. "
+        "When a bound is stated, return a JSON string beginning with <, <=, >, >= or ~ as appropriate, not a bare number. "
+        "Return that correction even when the numeric digits were already correct. Preserve inequalities and words "
+        "such as at least or up to. Read the supplied quote; "
+        "never introduce requirement limits or unstated values. Copy id, property and quote exactly unchanged. "
+        "Return no correction when the quote cannot establish a value. Product identity, units, applicability "
+        "and selected configurations cannot be changed by this correction.\n\n"
+        + json.dumps([c.model_dump(include={"id", "property", "value", "unit", "quote"}) for c in claims], ensure_ascii=False))}]
+    return await router.call("extract_claims", ClaimValueRepairs, messages, {"case_id": case_id})
+
+
 def scope_is_product_wide(scope: str, scope_quote: Optional[str], value_quote: Optional[str]) -> bool:
     return bool(scope == "product_wide" and quoted(value_quote, scope_quote or "")
+                and not DRIVER_OPTION.search(scope_quote or "")
                 and not re.search(r"\b(optional|options?|selected|non[\s-]*configurable)\b|"
                                   r"\bnot\s+all\b|\bexcept(?:ing)?\b|\bexcluding\b|"
                                   r"\b(?:some|certain|specific)\s+(?:versions?|models?|configurations?|variants?)\b|"
@@ -232,6 +286,7 @@ _TYPO = str.maketrans({"\u2010": "-", "\u2011": "-", "\u2012": "-", "\u2013": "-
 
 
 def _plain(text: str) -> str:
+    text = re.sub(r"\\u([0-9a-fA-F]{4})", lambda match: chr(int(match[1], 16)), text)
     text = re.sub(r"\\[nrt]", " ", text.translate(_TYPO))
     text = re.sub(r"(?<!\w)\*\*(?=\S)([^\r\n]*?\S)\*\*(?!\w)", r"\1", text)
     return " ".join(unicodedata.normalize("NFKC", text).split())

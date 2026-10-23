@@ -64,6 +64,11 @@ def test_quote_normalization_keeps_words_numbers_and_page_evidence_exact():
                       "As of **June 30th, 2024**, the LX family is discontinued.")
     assert quoted("VOC Content** 26 g/L", "VOC Content**\n26 g/L\n**VOC uses a stated test method.\nVOC Content**")
     assert not quoted("VOC Content 26 g/L", "VOC Content**\n26 g/L")
+    assert quoted(r"Reported life 64,000 hours @25\u00b0C", "Reported life 64,000 hours @25°C")
+    assert quoted("Reported life 64,000 hours @25°C", r"Reported life 64,000 hours @25\u00b0C")
+    assert not quoted(r"Reported life 65,000 hours @25\u00b0C", "Reported life 64,000 hours @25°C")
+    assert not quoted(r"Reported life 64,000 hours @25\u00b0F", "Reported life 64,000 hours @25°C")
+    assert not quoted(r"\u2122\u00ae", "anything")
 
 
 @pytest.mark.parametrize("property,quote,value,kept", [

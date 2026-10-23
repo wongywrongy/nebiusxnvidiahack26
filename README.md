@@ -107,13 +107,16 @@ Kyle authorized the disclosed selection-policy exceptions and live validation on
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
 [readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
 
-The October 23 refinement check gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
-replacements**, one primary Investigator recovery and no cap/provider warnings. This targeted, partly cached
-confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **560 tests,
+The October 23 refinement run `20261023-055339-e48fd0` gets **c03 and c07 right (2/2 problems caught)**,
+with **0/2 passing replacements** and no cap/provider warnings. Its two replacement investigations do not
+resolve a replacement; no primary investigation is needed in this run. This targeted, partly cached
+confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **591 tests,
 2 skipped**. Presentation/build checks and eight mock browser journeys passed in the preceding checkpoints.
-Additional engineering spend is **$0.9116244 / 93 credits**, cumulative local ledger **$1.9702294 / 391**.
-G2 remains open for a fully evidenced replacement. See the [latest query, matcher and metadata before/after
-evidence](docs/judge-readiness/replacement-discovery-20261023/README.md) and [earlier live corrections](docs/judge-readiness/g2/live-validation.md).
+Additional engineering spend is **$1.4669268 / 121 credits**, cumulative local ledger **$2.5255318 / 419**.
+G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/claim-repair-20261023/README.md)
+records bounded qualifier repair, quote/bundle retention, driver-option gates and an agreeing-source citation
+fix. An earlier [targeted run](docs/judge-readiness/replacement-discovery-20261023/README.md) demonstrated a
+primary Investigator recovery; it is historical evidence from its recorded code, not a rescue in this run.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
 cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.

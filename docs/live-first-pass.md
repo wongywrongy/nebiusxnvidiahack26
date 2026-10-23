@@ -964,3 +964,15 @@ Kyle's last response confirmed the previously reported $1.4867368 / 358, without
 readout, timestamp or account/key scope. No new dashboard reading covers the additional usage here.
 Reconciliation is therefore pending, not a claimed match. The historical three-credit discrepancy remains
 unexplained; no ledger or invoice was adjusted. [Per-run requests, responses, traces and wallet](judge-readiness/replacement-discovery-20261023/README.md).
+
+## Claim-repair billing checkpoint — 2026-10-23
+
+The [five targeted claim/citation runs](judge-readiness/claim-repair-20261023/README.md) add **$0.5553024 /
+28 Tavily credits**. The actual cumulative local ledger is **$2.5255318 / 419**, no outstanding holds or
+persistent block; UTC-day usage is **$1.038795 / 61**. Final two-item run `20261023-055339-e48fd0` adds
+**$0.0562113 / 0**, makes 2/2 correct calls and has no passing fix. This is not a full-set result or release.
+The intermediate live reservation settled normally without resetting accounting or starting a duplicate run.
+
+Kyle has supplied no new timestamped dashboard reading for this usage. His earlier confirmation and the
+unexplained historical three-credit discrepancy remain as recorded. No invoice match is inferred and no
+ledger is altered. The previous model/credit caps and final-validation reserves remain in force.
