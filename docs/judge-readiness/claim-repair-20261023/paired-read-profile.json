@@ -1,0 +1,60 @@
+{
+  "provenance": "Actual cached responses from the paired live run; credentials and full request bodies omitted.",
+  "numeric_repair": {
+    "redacted_request": {
+      "task": "extract_claims",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "claims": [
+        {
+          "id": "cl-9",
+          "property": "l70_hours",
+          "value": 72000.0,
+          "unit": "hours",
+          "quote": "L70 > 72,000 hours per IES TM-21."
+        }
+      ]
+    },
+    "response": {
+      "claims": [
+        {
+          "id": "cl-9",
+          "property": "l70_hours",
+          "value": "> 72000",
+          "quote": "L70 > 72,000 hours per IES TM-21."
+        }
+      ]
+    },
+    "usage": {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 435,
+      "output_tokens": 61,
+      "cost_usd": 0.0001854,
+      "latency_ms": 2054,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  "native_extraction": {
+    "raw_claims": 20,
+    "variant_rows": 1,
+    "usage": {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5688,
+      "output_tokens": 3027,
+      "cost_usd": 0.0044307,
+      "latency_ms": 11384,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  }
+}

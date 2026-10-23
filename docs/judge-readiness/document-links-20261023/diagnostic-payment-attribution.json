@@ -1,0 +1,21 @@
+{
+  "scope": "Exact request payments grouped by diagnostic run; avoids conflating overlapping case work",
+  "runs": [
+    {
+      "run_id": "source-research-20261023-092556",
+      "requests": 1,
+      "usd": 0.0,
+      "credits": 0,
+      "unsettled": 0,
+      "unknown": false
+    },
+    {
+      "run_id": "source-research-20261023-092943",
+      "requests": 1,
+      "usd": 0.0,
+      "credits": 1,
+      "unsettled": 0,
+      "unknown": false
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "scope": "Same bounded two-URL extraction diagnostic after shared link-priority fix; only this cache key refreshed",
+  "run_id": "source-research-20261023-092943",
+  "redacted_request": {
+    "operation": "Tavily extract through existing WebClient",
+    "urls": [
+      "https://iuseelite.com/product/24-ovhp-rtk-led-ml-cct/",
+      "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf"
+    ],
+    "depth": "basic",
+    "authentication": "REDACTED",
+    "credit_scope": 4,
+    "refresh_this_batch": true
+  },
+  "redacted_response": [
+    {
+      "url": "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf",
+      "requested_url": "https://iuseelite.com/product/24-ovhp-rtk-led-ml-cct/",
+      "sha256": "2babf558fa8ce0cdd90ab47efefa094cd8aed9b3bff4d12fbcc02fe3aeeda424",
+      "retrieved_at": "2026-10-23T09:29:45+00:00",
+      "archived_path": "manufacturer-source-research/2026-10-23T09_29_45+00_00/2babf558fa8ce0cdd90ab47efefa094cd8aed9b3bff4d12fbcc02fe3aeeda424.txt",
+      "chars": 11732,
+      "cache_hit": null,
+      "has_expected_product_identifier": true
+    },
+    {
+      "url": "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf",
+      "requested_url": null,
+      "sha256": "6e92f125fc87300117788682143fa2f73e79c863b1fe5031426033820f7796c2",
+      "retrieved_at": "2026-10-23T09:29:44+00:00",
+      "archived_path": "manufacturer-source-research/2026-10-23T09_29_44+00_00/6e92f125fc87300117788682143fa2f73e79c863b1fe5031426033820f7796c2.txt",
+      "chars": 11676,
+      "cache_hit": false,
+      "has_expected_product_identifier": true
+    }
+  ],
+  "elapsed_seconds": 1.481,
+  "fresh": {
+    "usd": 0.0,
+    "credits": 1
+  },
+  "ledger_before": {
+    "day": "2026-10-23",
+    "usd": 1.464912,
+    "credits": 99,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.9516488,
+    "total_credits": 457,
+    "phase": "engineering",
+    "phase_usd": 1.8930438,
+    "phase_credits": 159,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "ledger_after": {
+    "day": "2026-10-23",
+    "usd": 1.464912,
+    "credits": 100,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.9516488,
+    "total_credits": 458,
+    "phase": "engineering",
+    "phase_usd": 1.8930438,
+    "phase_credits": 160,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "daily_mirror": {
+    "day": "2026-10-23",
+    "usd": 1.464912,
+    "credits": 100,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.9516488,
+    "total_credits": 458,
+    "phase": "engineering",
+    "phase_usd": 1.8930438,
+    "phase_credits": 160,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "accounting_issues": {},
+  "fresh_attribution": "Confirmed against exact campaign payments for this run"
+}

@@ -1,0 +1,47 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+Inbox
+Scan
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Start over
+← Back to Outcome
+Specs
+07 84 00 · Firestopping
+
+Chicago Public Schools · CPS control 02_07/01/2025 · Source PDF ↗
+
+Reviewed checklist for live scans. Drafted by Nemotron 3 Super from cps_07_84_00.pdf on Oct 21, 2026; reviewed on Oct 21, 2026.
+
+Reviewed by Kyle on 2026-10-21; only the explicitly approved Gate 3 rows are included.
+
+Paragraph	Property	Operator	Value	Unit	Severity	Applies to	Text
+2.02.B	voc_g_per_l	lte	250	g/L	major	product_data	VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).
+2.02.C	astm_g21_rating	eq	0	—	major	product_data	Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.
+2.04.A.1	t_rating_hr	eq_ref	f_rating_hr	hr	critical	All submittal roles	Minimum T Rating equal to F Rating.
+2.04.A.1	standards	any_of	astm e814, astm e119, ul 1479	—	major	product_data	Tested in accordance with ASTM E814, ASTM E119 or UL 1479.
+26 51 00 · Interior Lighting
+
+Chicago Public Schools · CPS control 04_08/09/2024 · Source PDF ↗
+
+Reviewed checklist for live scans. Drafted by Nemotron 3 Super from cps_26_51_00.pdf on Oct 21, 2026; reviewed on Oct 21, 2026.
+
+Reviewed by Kyle on 2026-10-21; only the explicitly approved Gate 3 rows are included.
+
+Paragraph	Property	Operator	Value	Unit	Severity	Applies to	Text
+2.02.S.3	l70_hours	gte	50000	hr	major	product_data	LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.
+1.10.B.1	warranty_years	gte	5	yr	major	product_data	Warranty Period for LED Luminaires, including LED modules, LED boards, chips, and drivers: Five (5) years from date of Preliminary Acceptance.
+2.02.H	dlc_listed	any_of	dlc standard, dlc premium	—	major	product_data	Listed as a qualified DLC product, where applicable.
+2.02.S.6	macadam_steps	lte	3	—	major	product_data	LEDs shall be binned within a maximum 3-step MacAdam Ellipse.
+2.05.C.1	dim_min_percent	lte	5	%	major	product_data	Continuous dimming from 100 to 5 percent without flicker.
+Draft a checklist from a spec PDF
+
+The draft stays in this browser view until you leave. It is not saved as a project checklist or used by scans.
+
+Spec section
+Section title
+Drop a spec PDF here or browse

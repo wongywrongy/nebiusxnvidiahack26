@@ -1,0 +1,9 @@
+{
+  "base_commit": "981c8be440042456bc88293a6f49b005e98ac191",
+  "owned_paths": [
+    "api/pipeline/fix.py",
+    "tests/test_investigate.py",
+    "tests/test_replacement_bundle.py"
+  ],
+  "scope": "Isolate only the discovery query and its regressions; concurrent uncommitted timing-bound changes are excluded"
+}

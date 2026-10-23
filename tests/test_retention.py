@@ -95,13 +95,10 @@ def test_memory_retention_falls_back_to_disk_and_rejects_full_active_queue(stora
 def test_watch_state_survives_container_replacement_and_reads_bucket_first(storage, monkeypatch):
     monkeypatch.setattr(settings, "evidence_dir", storage / "bucket")
     report = {"checked_at": "2026-10-13T12:00:00Z", "mode": "mock", "runner": "offline test", "items": []}
-    jobs = [{"name": "fixture-job", "created_at": report["checked_at"], "state": "queued", "raw_state": None}]
     watch_store.report(report)
-    cloud_jobs.write_jobs(jobs)
     assert (settings.runs_dir / "watch/latest.json").is_file()
-    assert (settings.evidence_dir / "watch/jobs.json").is_file()
     monkeypatch.setattr(settings, "runs_dir", storage / "replacement/runs")
-    assert main.latest_recheck() == report and cloud_jobs.read_jobs() == jobs
+    assert main.latest_recheck() == report and cloud_jobs.read_jobs() == []
     local = settings.runs_dir / "watch/latest.json"
     local.parent.mkdir(parents=True)
     local.write_text(json.dumps({"runner": "stale image fallback"}))
@@ -115,4 +112,4 @@ def test_startup_logs_spend_caps_and_health_has_resource_metrics(storage, caplog
         health = client.get("/api/health").json()
     assert health["uptime_s"] >= 0 and health["disk_free_gb"] > 0
     assert "Today's recorded spend:" in caplog.text and "budget_usd_per_day" in caplog.text
-    assert "local ledger may reset" in caplog.text
+    assert "campaign ledger on local disk" in caplog.text and "hosted persistence unverified" in caplog.text

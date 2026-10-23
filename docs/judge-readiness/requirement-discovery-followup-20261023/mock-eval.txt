@@ -1,0 +1,27 @@
+
+mode=mock  run=20261023-103404-7979d6
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -         35   0.0446       5 ✓
+c02   send_back          send_back          spec                   spec                       none      10   0.0498       6 ✓
+c03   send_back          send_back          currency               currency                   none      47   0.1168      14 ✓
+c04   send_back          send_back          validity               validity                   none      10   0.0909      11 ✓
+c05   approve            approve_with_note  -                      -                          -         33   0.0603       7 ✗
+c06   send_back          approve_with_note  currency               currency_note              none      25   0.0602       7 ✗
+c07   send_back          send_back          status                 status                     none      88   0.1182      14 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -          8   0.0416       5 ✓
+
+Answer-key panel
+  right call                      6 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        0 of 8
+  unnecessary notes               1
+  fresh model spend / web credits $0.000000 / 0
+  case evidence gate              Live evidence required; Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      0.0 s
+  cost per submittal (model+web)  $0.0728   (mock: estimated token counts)
+Quote gate: claims 46/65 kept (29.2% dropped); web values 8/20 kept (60.0% dropped)
+
+wrote /tmp/speccheck-discovery-itf5n86a/mock-score.json

@@ -1,0 +1,62 @@
+{
+  "checked_at": "2026-10-23T04:36:08.165729+00:00",
+  "network": "none",
+  "mode": "mock",
+  "temporary_container": true,
+  "cli_version": "0.12.289",
+  "cli_flags_present": {
+    "job_create_help": {
+      "--args": true,
+      "--async": true,
+      "--env-secret": true,
+      "--platform": true,
+      "--preset": true,
+      "--restart-policy": true,
+      "--timeout": true,
+      "--on-demand": true
+    },
+    "endpoint_create_help": {
+      "--volume": true,
+      "--env-secret": true,
+      "--ssh-key": true
+    }
+  },
+  "api": {
+    "/api/health": {
+      "status": 200,
+      "bytes": 648,
+      "mode": "mock",
+      "keys_present": null
+    },
+    "/api/project": {
+      "status": 200,
+      "bytes": 4837
+    },
+    "/api/scores": {
+      "status": 200,
+      "bytes": 4403,
+      "mode": "live",
+      "run_id": "20261022-181611-a9d0b5",
+      "right_call": {
+        "n": 6,
+        "of": 8
+      }
+    },
+    "/": {
+      "status": 200,
+      "bytes": 951,
+      "assets": [
+        {
+          "path": "/assets/index-CQzom0Yd.js",
+          "status": 200,
+          "bytes": 208918
+        },
+        {
+          "path": "/assets/index-De3q2k5x.css",
+          "status": 200,
+          "bytes": 21786
+        }
+      ]
+    }
+  }
+}

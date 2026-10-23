@@ -1,0 +1,59 @@
+{
+  "checked_at": "2026-10-23T09:38:39.933887+00:00",
+  "scope": "Submission documents, source snapshots, links and actual configured-secret bytes only; not current runtime regression, release or private eligibility approval",
+  "files": [
+    {
+      "file": "README.md",
+      "configured_secret_present": false,
+      "sha256": "289ce6ead3ffbb217dff56acf8b70111f101c2aee45f3d7674feb316e94d17ef"
+    },
+    {
+      "file": "SUBMISSION.md",
+      "configured_secret_present": false,
+      "sha256": "9a148765ab8918ce2a090c3a46e9257c4135b3c99eb012c4de3d6780b4e68bb1"
+    },
+    {
+      "file": "FEEDBACK.md",
+      "configured_secret_present": false,
+      "sha256": "1445b2b266f6cf7af965dfff955b435ec7e2d9d29b1f534cb2426a32a43c181a"
+    },
+    {
+      "file": "deploy/nebius/cost-manifest.json",
+      "configured_secret_present": false,
+      "sha256": "a320fe9b753d3d0a80fd36bb231bdd78b89a09d911770ae6b2b30cae28167bce"
+    },
+    {
+      "file": "deploy/nebius/rollout.pending.md",
+      "configured_secret_present": false,
+      "sha256": "c4e7d58293645fbb3b7157b3a0cb7c18a01452b12238d4a057acc3504ecbd51b"
+    },
+    {
+      "file": "docs/judge-readiness/ownership.md",
+      "configured_secret_present": false,
+      "sha256": "cc2411e4c86d20dcb9da8679e41f1d2da78e2d3f1277677e452472d2012a594c"
+    },
+    {
+      "file": "docs/judge-readiness/submission-requirements-20261023.md",
+      "configured_secret_present": false,
+      "sha256": "3f93048d13b11bd17c6fd02a54513331afd50aec620046b2c42ab819fb84f437"
+    },
+    {
+      "file": "docs/judge-readiness/submission-sources-20261023.json",
+      "configured_secret_present": false,
+      "sha256": "c0ee5662bca1d56c3643da58f00b62eba84d0cf7035d84e072341e51a7502d27"
+    },
+    {
+      "file": "docs/judge-readiness/submission-repository-20261023.json",
+      "configured_secret_present": false,
+      "sha256": "00f69cf7fbf0c788676c8ff509e8cf08070354b3a76707a8b3c2557f59c569ce"
+    }
+  ],
+  "local_links_resolve": true,
+  "public_repo_mit_detected": true,
+  "official_date_timezone_conversions_checked": true,
+  "original_case_inputs_unchanged": true,
+  "demo_video_and_judge_access_approval_fields_unset": true,
+  "cloud_resource_approval_unset": true,
+  "no_paid_provider_call_by_this_audit": true,
+  "passed_document_checks": true
+}

@@ -1,0 +1,20 @@
+
+> speccheck-web@0.1.0 test:browser
+> playwright test
+
+
+Running 9 tests using 1 worker
+
+(node:3613490) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 test/browser/journey.spec.ts:25:1 › upload, review source, edit decision, outcome, fresh re-check, reload and start over (996ms)
+  ✓  2 test/browser/journey.spec.ts:53:3 › project HTTP/malformed response null stays recoverable (409ms)
+  ✓  3 test/browser/journey.spec.ts:53:3 › project HTTP/malformed response {} stays recoverable (422ms)
+  ✓  4 test/browser/journey.spec.ts:53:3 › project HTTP/malformed response {"mode":"mock","name":"Broken","specs":[null],"tray":[],"watched":[]} stays recoverable (421ms)
+  ✓  5 test/browser/journey.spec.ts:64:1 › budget denial shows its reason and leaves the inbox retryable (489ms)
+  ✓  6 test/browser/journey.spec.ts:72:1 › failed result retrieval offers Retry (539ms)
+  ✓  7 test/browser/journey.spec.ts:80:1 › missing PDF uses the text view (667ms)
+  ✓  8 test/browser/journey.spec.ts:87:1 › lost scan stream offers Retry instead of spinning (456ms)
+  ✓  9 test/browser/journey.spec.ts:95:1 › replacement proposal is labelled in review, draft and outcome (971ms)
+
+  9 passed (6.3s)

@@ -1,0 +1,92 @@
+{
+  "run_id": "20261023-020458-c4e76f",
+  "redacted_logical_request": {
+    "query": "current LED troffer manufacturer data sheet Rated life (L70) Warranty DLC listing macadam steps Dims down to",
+    "search_depth": "basic",
+    "max_results": 5,
+    "topic": "general",
+    "include_published_date": false,
+    "exact_match": false
+  },
+  "retrieved_at": "2026-10-23T02:05:03+00:00",
+  "search_response": [
+    {
+      "url": "https://www.youtube.com/watch?v=o_s06Qq1LGE",
+      "title": "L70 ratings: clearing up the confusion"
+    },
+    {
+      "url": "https://hi-hyperlite.com/blogs/comprehensive-guides/led-warranty-l70-lifespan-guide",
+      "title": "LED Warranty vs. L70 Lifespan: Guide for Facility Managers | Hyperlite"
+    },
+    {
+      "url": "https://www.dayolite.com/downloads/m-392/aadfcf23fa1248628a13862ece0099e3/l70-lifetime-statement.pdf",
+      "title": "LED Lifetime Statement"
+    },
+    {
+      "url": "https://www.accessfixtures.com/led-lifetime-l70",
+      "title": "LED Lifetime - L70 Rating and Lumen Depreciation"
+    },
+    {
+      "url": "https://designlights.org/qpl",
+      "title": "DLC Qualified Products Lists - DesignLights"
+    }
+  ],
+  "extraction_diagnosis": [
+    {
+      "url": "https://www.youtube.com/watch?v=o_s06Qq1LGE",
+      "characters": 6080,
+      "raw_claims": [],
+      "kept_claims": [],
+      "comparable_properties": []
+    },
+    {
+      "url": "https://hi-hyperlite.com/blogs/comprehensive-guides/led-warranty-l70-lifespan-guide",
+      "characters": 12865,
+      "raw_claims": [
+        {
+          "id": "clm-1",
+          "product": "LED Linear High Bay Lights",
+          "manufacturer": "HyperLite",
+          "model": "HPLH01 Series",
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "Fixtures like the [Linear High Bay LED Lights -HPLH01 Series](https://hi-hyperlite.com/products/wholesale-linear-high-bay-led-lights-130-104-78-52w) use drivers designed to outlast the warranty period, ensuring operational reliability.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Fixtures like the [Linear High Bay LED Lights -HPLH01 Series](https://hi-hyperlite.com/products/wholesale-linear-high-bay-led-lights-130-104-78-52w) use drivers designed to outlast the warranty period, ensuring operational reliability.",
+          "selection_quote": null
+        }
+      ],
+      "kept_claims": [],
+      "comparable_properties": []
+    },
+    {
+      "url": "https://www.dayolite.com/downloads/m-392/aadfcf23fa1248628a13862ece0099e3/l70-lifetime-statement.pdf",
+      "characters": 1741,
+      "raw_claims": [
+        {
+          "id": "clm-1",
+          "product": "LED",
+          "manufacturer": "Day-O-Lite",
+          "model": null,
+          "property": "l70_hours",
+          "value": 50000.0,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "rated with an L70 lifespan of at least 50,000 hours",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Day-O-Lite LED fixtures are rated with an L70 lifespan of at least 50,000 hours, equating to over 11 years of operation at 12 hours per day.",
+          "selection_quote": null
+        }
+      ],
+      "kept_claims": [],
+      "comparable_properties": []
+    }
+  ],
+  "provider_http_disabled": true
+}

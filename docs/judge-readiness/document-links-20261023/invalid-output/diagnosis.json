@@ -1,0 +1,24 @@
+{
+  "scope": "Invalid c07 item; not acceptance evidence",
+  "run_id": "20261023-092946-ca92c6",
+  "stage": "fix",
+  "warnings": [
+    "fix: The reply was cut off at the token limit; couldn't confirm"
+  ],
+  "diagnostics": [
+    {
+      "stage": "fix",
+      "kind": "output_limit",
+      "message": "The reply was cut off at the token limit"
+    }
+  ],
+  "fresh_model_usd": 0.0318993,
+  "fresh_web_credits": 1.0,
+  "claims_extracted": 69,
+  "claims_kept": 17,
+  "web_values_read": 34,
+  "web_values_kept": 17,
+  "duration_ms": 168134,
+  "failed_response_body_saved": false,
+  "failed_response_reasoning_tokens": "Not retained; do not infer"
+}

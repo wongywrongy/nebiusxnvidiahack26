@@ -1,0 +1,12 @@
+#26 exporting to image
+#26 exporting layers
+#26 exporting layers 7.6s done
+#26 exporting manifest sha256:3c40534645b9dee857d49086e16672ea85dc820358a29634baa175433d1d15f4 0.0s done
+#26 exporting config sha256:9957521ea06d229e379ec6273c1b8d1ad85adba1a1f743e85fed8329420aec28 0.0s done
+#26 exporting attestation manifest sha256:cfddd0765517860a1051ba60fb4587b5f48f4d050bf2b307a9e5c9b8326c4590
+#26 exporting attestation manifest sha256:cfddd0765517860a1051ba60fb4587b5f48f4d050bf2b307a9e5c9b8326c4590 0.0s done
+#26 exporting manifest list sha256:653211984dbebafe719ad79b666043f0db0aeddace2f9b1b12392a4c496dd528 0.0s done
+#26 naming to docker.io/library/speccheck:readiness-b9de109 done
+#26 unpacking to docker.io/library/speccheck:readiness-b9de109
+#26 unpacking to docker.io/library/speccheck:readiness-b9de109 1.2s done
+#26 DONE 9.0s

@@ -14,7 +14,9 @@
         "value": 1514,
         "page": 1,
         "unit": "lm",
-        "quote": "1514"
+        "quote": "1514",
+        "scope": "unknown",
+        "scope_quote": "1514"
       },
       {
         "id": "k2",
@@ -24,7 +26,9 @@
         "value": 17.5,
         "page": 1,
         "unit": "W",
-        "quote": "17.5"
+        "quote": "17.5",
+        "scope": "unknown",
+        "scope_quote": "17.5"
       },
       {
         "id": "k3",
@@ -34,9 +38,13 @@
         "value": 86.4,
         "page": 1,
         "unit": "lm/W",
-        "quote": "86.4"
+        "quote": "86.4",
+        "scope": "unknown",
+        "scope_quote": "86.4"
       }
-    ]
+    ],
+    "family": "LDN6",
+    "family_quote": "LDN6 6” OPEN and WALLWASH LED Non-"
   },
   "web": {
     "search": [

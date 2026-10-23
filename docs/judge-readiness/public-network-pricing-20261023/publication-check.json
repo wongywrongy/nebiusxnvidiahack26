@@ -1,0 +1,58 @@
+{
+  "checked_at": "2026-10-23T11:00:39.534244+00:00",
+  "scope": "Public-rate documentation and metadata only; private cache/environment excluded",
+  "files": [
+    {
+      "file": "FEEDBACK.md",
+      "contains_configured_secret": false,
+      "sha256": "27315c10e0fb59fe1449f77834e7e344bbbcf00976b3bc42ad55b040165dfbb3"
+    },
+    {
+      "file": "deploy/nebius/cost-manifest.json",
+      "contains_configured_secret": false,
+      "sha256": "1b5bb4de2401ae6c9af074b4ed49b0ca09dba1c3ddecd035123bcbbb8ccc282f"
+    },
+    {
+      "file": "deploy/nebius/rollout.pending.md",
+      "contains_configured_secret": false,
+      "sha256": "d0e75a118929bfeaf4fa0d7be338356b5a0dbd291126cdee473ad87bc70e5f4e"
+    },
+    {
+      "file": "deploy/nebius/README.md",
+      "contains_configured_secret": false,
+      "sha256": "42ed9ae28faf9094b0cfef9cd5d7fd64dddc9316be7826b4778073a6e783a323"
+    },
+    {
+      "file": "docs/judge-readiness/ownership.md",
+      "contains_configured_secret": false,
+      "sha256": "fe22f91ba695be39153093f821e5aa0e765ee6d91a807358e57aebc89464f4ac"
+    },
+    {
+      "file": "docs/judge-readiness/public-network-pricing-20261023/README.md",
+      "contains_configured_secret": false,
+      "sha256": "00b670e718e8122f1cd127977e7c1bc4d3a13edb83147295660e71b1ed0009d4"
+    },
+    {
+      "file": "docs/judge-readiness/public-network-pricing-20261023/accounting-after.json",
+      "contains_configured_secret": false,
+      "sha256": "5082575d0c002276b3c77011864704c5af13f2041e0221f36be892411a784b3d"
+    },
+    {
+      "file": "docs/judge-readiness/public-network-pricing-20261023/daily-after.json",
+      "contains_configured_secret": false,
+      "sha256": "7676be5fcdebc9f8338914f098d975b4e52ea2fb4454836dc5605b8aca28132b"
+    },
+    {
+      "file": "docs/judge-readiness/public-network-pricing-20261023/forecast-check.json",
+      "contains_configured_secret": false,
+      "sha256": "bb7075b12a0c153475a077b28f2c539dd359341baec803ee23c72d62fdc98b0c"
+    },
+    {
+      "file": "docs/judge-readiness/public-network-pricing-20261023/source.json",
+      "contains_configured_secret": false,
+      "sha256": "cc65ed4b7d5eefcd075362243c688129a197532dbf6644ae920cf84ac63bb7f3"
+    }
+  ],
+  "protected_files_changed": [],
+  "passed": true
+}

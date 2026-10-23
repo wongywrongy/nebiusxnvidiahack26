@@ -1,0 +1,5 @@
+
+> speccheck-web@0.1.0 test:presentation
+> node test/presentation.mjs
+
+Presentation checks passed: source dates, unconfirmed replacement evidence and scoped approval drafts

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-21",
+  "request": {
+    "urls": [
+      "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6.pdf",
+      "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+    ],
+    "extract_depth": "advanced",
+    "include_usage": true
+  },
+  "response": [
+    {
+      "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf",
+      "text_chars": 38688,
+      "prefix": "COMMERCIAL INDOOR  BLT-2X4 BLT Series LED 2BLT4 \n\n2' x 4' LED Catalog Number Notes Type \n\n# FEATURES & SPECIFICATIONS INTENDED USE \u2014The BLT Best-in-Value Low Profile LED luminaire ",
+      "text_sha256": "142b001bf10dc66e04b011e3ff0c27dd44a13a06ef4c3ff511eb782e44f184f8",
+      "technical_snippets": [
+        " quality of illumination for extended service life. 80% LED lumen maintenance at 60,000 hours (L80/60,000). Color Variation within 3-step MacAdam ellipse (3SDCM). \n\nNon-Configurable BLT: Generic 0-",
+        "acuitybrands.com/buy-american for additional information. \n\nWARRANTY \u2014 5-year limited warranty. This is the only warranty provided and no other statements in this speci-fication sheet crea",
+        "can for additional information. \n\nWARRANTY \u2014 5-year limited warranty. This is the only warranty provided and no other statements in this speci-fication sheet create any warranty of any kin",
+        "ion. \n\nWARRANTY \u2014 5-year limited warranty. This is the only warranty provided and no other statements in this speci-fication sheet create any warranty of any kind. All other express and im"
+      ]
+    }
+  ],
+  "credits": 1,
+  "ledger_before": {
+    "usd": 0.658762,
+    "credits": 213.0
+  },
+  "ledger_after": {
+    "usd": 0.658762,
+    "credits": 214.0
+  }
+}

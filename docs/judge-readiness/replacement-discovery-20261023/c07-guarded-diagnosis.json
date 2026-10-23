@@ -1,0 +1,388 @@
+{
+  "case_id": "c07",
+  "decision": "send_back",
+  "validity": "valid",
+  "warnings": [],
+  "diagnostics": [],
+  "duration_ms": 72854,
+  "fresh_model_cost_usd": 0.0492069,
+  "fresh_web_credits": 4.0,
+  "claims_extracted": 58,
+  "claims_kept": 21,
+  "web_values_read": 36,
+  "web_values_kept": 4,
+  "candidates": [
+    {
+      "name": "Spec Sheet-LED Troffer",
+      "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+      "passes": false,
+      "checks": [
+        {
+          "label": "Rated life (L70)",
+          "check": "spec",
+          "ok": true,
+          "note": "349000 hours",
+          "requirement_id": "req_t_rating_hr_led",
+          "claim_ids": [
+            "cl-9"
+          ]
+        },
+        {
+          "label": "Warranty",
+          "check": "spec",
+          "ok": true,
+          "note": "10 years",
+          "requirement_id": "req_warranty_years_led",
+          "claim_ids": [
+            "cl-22"
+          ]
+        },
+        {
+          "label": "DLC listing",
+          "check": "spec",
+          "ok": true,
+          "note": "",
+          "requirement_id": "lt-dlc",
+          "claim_ids": [
+            "cl-3"
+          ]
+        },
+        {
+          "label": "macadam steps",
+          "check": "spec",
+          "ok": null,
+          "note": "not stated",
+          "requirement_id": "req_macadam_ellipse",
+          "claim_ids": []
+        },
+        {
+          "label": "Dims down to",
+          "check": "spec",
+          "ok": null,
+          "note": "not stated",
+          "requirement_id": "lt-dim",
+          "claim_ids": []
+        },
+        {
+          "label": "Current document",
+          "check": "currency",
+          "ok": null,
+          "note": "not stated",
+          "requirement_id": null,
+          "claim_ids": []
+        },
+        {
+          "label": "Still made",
+          "check": "status",
+          "ok": null,
+          "note": "No quoted confirmation that this replacement is available",
+          "requirement_id": null,
+          "claim_ids": []
+        }
+      ],
+      "document_hashes": [
+        {
+          "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+          "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+          "retrieved_at": "2026-10-23T02:07:45+00:00",
+          "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt"
+        }
+      ]
+    },
+    {
+      "name": "LT LED Troffer",
+      "source_url": "https://hew.com/specifications/LT_led.pdf",
+      "passes": false,
+      "checks": [
+        {
+          "label": "Rated life (L70)",
+          "check": "spec",
+          "ok": null,
+          "note": "not stated",
+          "requirement_id": "req_t_rating_hr_led",
+          "claim_ids": []
+        },
+        {
+          "label": "Warranty",
+          "check": "spec",
+          "ok": true,
+          "note": "5 years",
+          "requirement_id": "req_warranty_years_led",
+          "claim_ids": [
+            "cl-19"
+          ]
+        },
+        {
+          "label": "DLC listing",
+          "check": "spec",
+          "ok": null,
+          "note": "not stated",
+          "requirement_id": "lt-dlc",
+          "claim_ids": []
+        },
+        {
+          "label": "macadam steps",
+          "check": "spec",
+          "ok": true,
+          "note": "3",
+          "requirement_id": "req_macadam_ellipse",
+          "claim_ids": [
+            "cl-11"
+          ]
+        },
+        {
+          "label": "Dims down to",
+          "check": "spec",
+          "ok": null,
+          "note": "not stated",
+          "requirement_id": "lt-dim",
+          "claim_ids": []
+        },
+        {
+          "label": "Current document",
+          "check": "currency",
+          "ok": true,
+          "note": "",
+          "requirement_id": null,
+          "claim_ids": []
+        },
+        {
+          "label": "Still made",
+          "check": "status",
+          "ok": null,
+          "note": "No quoted confirmation that this replacement is available",
+          "requirement_id": null,
+          "claim_ids": []
+        }
+      ],
+      "document_hashes": [
+        {
+          "url": "https://hew.com/specifications/LT_led.pdf",
+          "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+          "retrieved_at": "2026-10-23T02:07:45+00:00",
+          "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt"
+        }
+      ]
+    }
+  ],
+  "investigations": [
+    {
+      "purpose": "replacement",
+      "outcome": "not_found",
+      "resolution": "not_resolved",
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "Starco Lighting Inc. SLLT LED troffer luminaire"
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "extract",
+          "args": {
+            "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": [
+            "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf"
+          ]
+        },
+        {
+          "n": 3,
+          "tool": "search",
+          "args": {
+            "query": "Starco Lighting SLLT LED troffer discontinued"
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 4,
+          "tool": "search",
+          "args": {
+            "query": "Starco Lighting product discontinuation notice SLLT",
+            "topic": "news"
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 5,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+            "document_title": "Spec Sheet-LED Troffer",
+            "revision_quote": "October 2024",
+            "evidence_quote": "SLLT LED TROFFER LUMINAIRE DESCRIPTION Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. [...] Reported L90 Lifetime: 101,000 hours @25\u00b0C Reported L70 Lifetime: 349,000 hours @25\u00b0C Warranty 10 Years [...] Certification UL & cUL; DLC Premium [...] Operating Temperature: -20\u00b0C (-4\u00b0F) to 50\u00b0C (122\u00b0F) [...] LED CRI: 80+, 90+",
+            "status": "active",
+            "status_quote": "The SLLT LED Troffer is a versatile and energy-efficient lighting solution, specifically designed to replace traditional 1\u2019x4\u2019, 2\u2019x2\u2019, and 2\u2019x4\u2019 fluorescent fixtures in commercial and institutional settings.",
+            "note": "Found current specification document dated October 2024 showing SLLT LED Troffer Luminaire is actively marketed. Key properties confirmed: CRI 80+/90+, L70 349,000 hours @25\u00b0C, service temp range -20\u00b0C to 50\u00b0C (-4\u00b0F to 122\u00b0F), standards: UL/cUL & DLC Premium, warranty: 10 years. No discontinuation notices found for this product line."
+          },
+          "summary": "couldn't confirm the quotes",
+          "credits": 0.0,
+          "ms": 15,
+          "succeeded": false,
+          "source_urls": []
+        }
+      ]
+    },
+    {
+      "purpose": "replacement",
+      "outcome": "found",
+      "resolution": "not_resolved",
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "H.E. Williams LT LED Troffer specification sheet datasheet",
+            "include_domains": [
+              "hewilliams.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2878,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "extract",
+          "args": {
+            "url": "https://hewilliams.com/specifications/LT_quickship.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 1351,
+          "succeeded": true,
+          "source_urls": [
+            "https://hewilliams.com/specifications/LT_quickship.pdf"
+          ]
+        },
+        {
+          "n": 3,
+          "tool": "extract",
+          "args": {
+            "url": "https://hewilliams.com/products/indoor/troffers"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 797,
+          "succeeded": true,
+          "source_urls": [
+            "https://hewilliams.com/specifications/50_led.pdf"
+          ]
+        },
+        {
+          "n": 4,
+          "tool": "extract",
+          "args": {
+            "url": "https://hewilliams.com/products/indoor/troffers"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 1,
+          "succeeded": true,
+          "source_urls": [
+            "https://hewilliams.com/specifications/50_led.pdf"
+          ]
+        },
+        {
+          "n": 5,
+          "tool": "search",
+          "args": {
+            "query": "H.E. Williams LT LED Troffer discontinued end of life",
+            "include_domains": [
+              "hewilliams.com"
+            ]
+          },
+          "summary": "0 results",
+          "credits": 1.0,
+          "ms": 3926,
+          "succeeded": false,
+          "source_urls": []
+        },
+        {
+          "n": 6,
+          "tool": "extract",
+          "args": {
+            "url": "https://hewilliams.com/products/indoor/troffers"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": [
+            "https://hewilliams.com/specifications/50_led.pdf"
+          ]
+        },
+        {
+          "n": 7,
+          "tool": "search",
+          "args": {
+            "query": "\"LT Troffer\" site:hewilliams.com",
+            "include_domains": [
+              "hewilliams.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2244,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 8,
+          "tool": "extract",
+          "args": {
+            "url": "https://hewilliams.com/brochure/Troffers-Panels_brochure.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 1.0,
+          "ms": 402,
+          "succeeded": true,
+          "source_urls": [
+            "https://hewilliams.com/brochure/Troffers-Panels_brochure.pdf"
+          ]
+        },
+        {
+          "n": 9,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://hewilliams.com/specifications/LT_quickship.pdf",
+            "document_title": "LT LED QuickShip Troffer",
+            "revision_quote": "REV.07/30/26.LM",
+            "evidence_quote": "LT LED QuickShip Troffer Information contained herein is subject to change without notice. Recessed \\b Page 1 of 2 H.E. Williams, Inc. Carthage, Missouri www.hew.com 417-358-4065 Designed and Manufactured in the USA REV.07/30/26.LM",
+            "status": "active",
+            "status_quote": "LT Troffer, Recessed\\nLT\\nTroffer\\nRecessed\\nLED | Tunable White QuickShip\\nInfo",
+            "note": "Found LT LED Troffer specification document showing 80 CRI, 5-year warranty, and revision REV.07/30/26.LM. Product is still actively manufactured and sold as evidenced by its presence on H.E. Williams' current troffers product page. MacAdam steps information not found in accessed documents."
+          },
+          "summary": "REV.07/30/26.LM, unknown",
+          "credits": 0.0,
+          "ms": 19,
+          "succeeded": true,
+          "source_urls": []
+        }
+      ]
+    }
+  ]
+}

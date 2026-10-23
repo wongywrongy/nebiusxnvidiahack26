@@ -1,0 +1,9 @@
+{
+  "started_at": "2026-10-23T10:40:49.021036+00:00",
+  "finished_at": "2026-10-23T10:41:21.141970+00:00",
+  "exit_code": 0,
+  "code_hash_before": "d91b4811d8e902254a186a7117af803efdcebef1ecf49938a519f0c4de96a88c",
+  "code_hash_after": "d91b4811d8e902254a186a7117af803efdcebef1ecf49938a519f0c4de96a88c",
+  "source_unchanged": true,
+  "scope": "Integrated current source, including independently committed replacement-query correction"
+}

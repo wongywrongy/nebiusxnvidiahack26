@@ -1,0 +1,298 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=765 out=28 reasoning=0 ms=832 cost=$0.000053 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=1805 out=66 reasoning=0 ms=1050 cost=$0.000124 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2349 out=225 reasoning=0 ms=2088 cost=$0.000907 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=2
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=1 results=3
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=4392 out=1960 reasoning=0 ms=21001 cost=$0.003082 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11013 out=1033 reasoning=0 ms=7841 cost=$0.004234 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=340 out=61 reasoning=0 ms=1016 cost=$0.000157 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=2054 out=85 reasoning=0 ms=1200 cost=$0.000144 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2965 out=1485 reasoning=0 ms=11637 cost=$0.002226 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=10015 out=824 reasoning=0 ms=4215 cost=$0.003746 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=10833 out=694 reasoning=0 ms=8794 cost=$0.003874 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11064 out=8545 reasoning=0 ms=48085 cost=$0.011010 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=19643 out=13627 reasoning=0 ms=80425 cost=$0.018157 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://pubmed.ncbi.nlm.nih.gov/10858336 "HTTP/1.1 301 Moved Permanently"
+httpx HTTP Request: GET https://pubmed.ncbi.nlm.nih.gov/10858336/ "HTTP/1.1 203 Non-Authoritative Information"
+httpx HTTP Request: GET https://www.reddit.com/r/cavesofqud/comments/1i4lo4r/penetration "HTTP/1.1 301 Moved Permanently"
+httpx HTTP Request: GET https://www.reddit.com/r/cavesofqud/comments/1i4lo4r/penetration/ "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1293 out=127 ms=3030 cost=$0.000502 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=3305 out=110 ms=1296 cost=$0.001091 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=5266 out=83 ms=1577 cost=$0.001654 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=7402 out=292 ms=2418 cost=$0.002483 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: GET https://multimedia.3m.com/mws/media/672348O/3m-through-penetration-specification-07-84-13.rtf "HTTP/1.1 200 OK"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=10829 out=169 ms=2452 cost=$0.003401 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=12786 out=312 ms=2902 cost=$0.004117 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=1 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=15068 out=608 ms=4546 cost=$0.005068 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=3
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=17089 out=1670 ms=11215 cost=$0.006630 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2672 out=49 reasoning=0 ms=1211 cost=$0.000846 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1285 out=119 ms=1695 cost=$0.000493 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=4
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2724 out=117 ms=3552 cost=$0.000922 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=4654 out=185 ms=2624 cost=$0.001563 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=6753 out=337 ms=2672 cost=$0.002329 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=760 out=349 reasoning=0 ms=8726 cost=$0.000542 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=1213 out=47 reasoning=0 ms=1091 cost=$0.000084 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2579 out=1074 reasoning=0 ms=4865 cost=$0.001740 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=0
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=3
+httpx HTTP Request: GET https://www.hilti.com/content/hilti/W1/US/en/business/business/engineering/fire-protection/systems-to-withstand-movement.html "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://www.hilti.com/content/dam/urgent-folder/w1/pdf/firestop/W_en_movement_case_study.pdf "HTTP/1.1 200 OK"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=4775 out=249 reasoning=0 ms=2062 cost=$0.001657 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=5049 out=231 reasoning=0 ms=2430 cost=$0.001723 format=json_schema thinking=off
+httpx HTTP Request: GET https://www.hilti.com/engineering/question/fire-stopping-wall-penetrations-at-an-angle/bchlwx "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://files-ask.hilti.com/original/c0/c0h18brkj0.pdf "HTTP/1.1 200 OK"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2937 out=438 reasoning=0 ms=2868 cost=$0.001275 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=6846 out=27 reasoning=0 ms=4722 cost=$0.002078 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2388 out=41 reasoning=0 ms=2754 cost=$0.000753 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2993 out=479 reasoning=0 ms=3006 cost=$0.001329 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/map "HTTP/1.1 200 OK"
+speccheck.tavily tavily_map credits=0 results=0
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=1 results=3
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=7720 out=234 reasoning=0 ms=2897 cost=$0.002527 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=745 out=336 reasoning=0 ms=4284 cost=$0.000526 format=json_schema thinking=off
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/456337/lithonia-lighting/blt-series/low-profile-recessed-led-luminaire "HTTP/1.1 403 Forbidden"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=3850 out=85 reasoning=0 ms=1042 cost=$0.000251 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=7388 out=2352 reasoning=0 ms=11294 cost=$0.004333 format=json_schema thinking=off
+httpx HTTP Request: GET https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch "HTTP/1.1 200 OK"
+httpx HTTP Request: GET http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf "HTTP/1.1 301 Moved Permanently"
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf "HTTP/1.1 403 Forbidden"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=10967 out=176 reasoning=0 ms=1782 cost=$0.003449 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1268 out=80 ms=2611 cost=$0.000452 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=3919 out=85 ms=1468 cost=$0.001252 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=4021 out=99 ms=1427 cost=$0.001295 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=4137 out=125 ms=1711 cost=$0.001354 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=6298 out=125 ms=2068 cost=$0.002002 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://lithonia.acuitybrands.com/products/detail/1112971/lithonia-lighting/contractor-select-ldn6-round-series/most-popular-6-open-and-wallwash-downlight-for-your-everyday-lighting-needs "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=9284 out=220 reasoning=0 ms=1846 cost=$0.002983 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=6440 out=73 ms=1596 cost=$0.001998 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2838 out=432 reasoning=0 ms=4036 cost=$0.001240 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=6530 out=265 ms=2831 cost=$0.002197 format=tools
+httpx HTTP Request: GET https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch "HTTP/1.1 200 OK"
+httpx HTTP Request: GET http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf "HTTP/1.1 301 Moved Permanently"
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf "HTTP/1.1 403 Forbidden"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=8892 out=463 ms=3325 cost=$0.003084 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=662 out=273 reasoning=0 ms=2766 cost=$0.000444 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=2585 out=68 reasoning=0 ms=1009 cost=$0.000171 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=5191 out=7680 reasoning=0 ms=33112 cost=$0.008469 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=0
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://lithonia.acuitybrands.com/products/commercial-indoor/troffers "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=0 results=2
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel "HTTP/1.1 403 Forbidden"
+httpx HTTP Request: GET https://insights.acuitybrands.com/product-updates-blog/legacy-juno-residential-recessed-fixtures-discontinuation-notice "HTTP/1.1 200 OK"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=12279 out=149 reasoning=0 ms=1856 cost=$0.003818 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=12460 out=145 reasoning=0 ms=1814 cost=$0.003868 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1283 out=124 ms=1479 cost=$0.000496 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1718 out=86 ms=1371 cost=$0.000593 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=9390 out=154 reasoning=0 ms=4293 cost=$0.002956 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=2
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=3154 out=280 reasoning=0 ms=2522 cost=$0.001198 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2193 out=64 ms=1071 cost=$0.000715 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2274 out=71 ms=1208 cost=$0.000746 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=2
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2738 out=90 ms=1542 cost=$0.000902 format=tools
+httpx HTTP Request: POST https://api.tavily.com/map "HTTP/1.1 200 OK"
+speccheck.tavily tavily_map credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2845 out=70 ms=2773 cost=$0.000916 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=2
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=3304 out=77 ms=1270 cost=$0.001061 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=3
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=3872 out=111 ms=1716 cost=$0.001262 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x2.pdf "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=4000 out=81 ms=1324 cost=$0.001273 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=4098 out=86 ms=3883 cost=$0.001307 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=7792 out=106 ms=1432 cost=$0.002433 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=7989 out=97 ms=2474 cost=$0.002484 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=3
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=685 out=291 reasoning=0 ms=5028 cost=$0.000467 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=1454 out=48 reasoning=0 ms=806 cost=$0.000099 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=2815 out=1749 reasoning=0 ms=12377 cost=$0.002419 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11398 out=155 reasoning=0 ms=3343 cost=$0.003559 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=522 out=194 reasoning=0 ms=2040 cost=$0.000331 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=1 results=3
+httpx HTTP Request: GET https://insights.acuitybrands.com/product-updates/discontinuation-notice-jebl-by-lithonia-lighting-2 "HTTP/1.1 200 OK"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=9375 out=272 reasoning=0 ms=3354 cost=$0.003057 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=631 out=243 reasoning=0 ms=2571 cost=$0.000408 format=json_schema thinking=off
+
+mode=live  run=20261021-101810-01e6fb
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -      30995   0.0076       0 ✓
+c02   send_back          send_back          spec                   currency_note,spec         none  269655   0.1658      13 ✓
+c03   send_back          send_back          currency               currency                   none  467503   0.0235       0 ✓
+c04   send_back          send_back          validity               validity                   none   59782   0.0844       9 ✓
+c05   approve            approve_with_note  -                      currency_note              -        237   0.0345       0 ✗
+c06   send_back          approve_with_note  currency               -                          none   43224   0.0381       2 ✗
+c07   send_back          approve_with_note  status                 -                          none  106402   0.1270      12 ✗
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -      32245   0.0460       5 ✓
+
+Answer-key panel
+  right call                      5 of 8
+  planted problems caught         4 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  average time per submittal      126.3 s
+  cost per submittal (model+web)  $0.0659
+Quote gate: claims 144/173 kept (16.8% dropped); web values 17/34 kept (50.0% dropped)
+
+wrote /tmp/speccheck-live-full-after-fixes.json
+POST-RUN LEDGER: {"usd": 0.658762, "credits": 213.0}

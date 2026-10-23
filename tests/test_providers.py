@@ -6,6 +6,7 @@ import logging
 import shutil
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
@@ -207,6 +208,44 @@ def test_list_models(live):
     assert asyncio.run(tokenfactory.list_models()) == ["a", "b"]
 
 
+@pytest.mark.parametrize("enabled,count,arguments", [
+    (False, 0, '{}'), (True, 1, '{"model_number":"SPK-100"}'),
+    (True, 2, '{"model_number":"SPK-100"}'), (True, 1, 'invalid'), (True, 0, '{}'),
+])
+def test_spike_models_tools_flag(live, monkeypatch, capsys, enabled, count, arguments):
+    monkeypatch.setenv("SPECCHECK_MODE", "mock")
+    from scripts import spike_models
+
+    monkeypatch.setattr(sys, "argv", ["spike_models.py", "--yes", *(["--tools"] if enabled else [])])
+    live[0].get(settings.nebius_base_url + "models").respond(200, json={
+        "data": [{"id": m} for m in set(settings.models.values())]})
+
+    def respond(request):
+        body = json.loads(request.content)
+        if "tools" not in body:
+            return reply('{"product":"sealant","f_rating_hours":2,"standard":"ASTM E814"}')
+        assert "response_format" not in body and body["model"] == settings.model_verify
+        assert body["tools"][0]["function"]["name"] == "lookup"
+        assert body["tools"][0]["function"]["parameters"]["required"] == ["model_number"]
+        return httpx.Response(200, json={"choices": [{"finish_reason": "tool_calls" if count else "stop", "message": {
+            "role": "assistant", "tool_calls": [{"id": f"call-{i}", "type": "function", "function": {
+                "name": "lookup", "arguments": arguments}} for i in range(count)]}}],
+            "usage": {"prompt_tokens": 100, "completion_tokens": 20,
+                      "completion_tokens_details": {"reasoning_tokens": 7}}})
+
+    route = live[0].post(CHAT).mock(side_effect=respond)
+    asyncio.run(spike_models.main())
+    output = capsys.readouterr().out
+    assert len(route.calls) == (3 if enabled else 2)
+    if enabled:
+        assert f"tool_calls={bool(count)}  count={count}" in output
+        assert f"finish_reason={'tool_calls' if count else 'stop'}" in output
+        assert f"arguments_json={bool(count) and arguments != 'invalid'}" in output
+        assert f"multiple_calls={count > 1}" in output and "reasoning_tokens=7" in output
+    else:
+        assert "== tools:" not in output
+
+
 def test_cache_hit_makes_no_call(live):
     route = live[0].post(CHAT).mock(return_value=reply())
     _, first = chat()
@@ -274,6 +313,27 @@ def test_tavily_401_is_typed(live):
         asyncio.run(tavily.search("q"))
 
 
+def test_tavily_reported_usage_overrides_credit_estimates(live):
+    mock = live[0]
+    search = mock.post(f"{tavily.API}/search").respond(200, json={"results": [], "usage": {"credits": 3}})
+    extract = mock.post(f"{tavily.API}/extract").respond(200, json={"results": [], "usage": {"credits": 1}})
+    mp = mock.post(f"{tavily.API}/map").respond(200, json={"results": ["https://a.test/1"], "usage": {"credits": 0}})
+    mock.get("https://a.test/1").respond(403)
+    led_token = budget.LEDGER.set(budget.Ledger())
+    item_token = budget.ITEM.set("test")
+    try:
+        assert asyncio.run(tavily.search("usage"))[1] == 3
+        assert asyncio.run(tavily.extract(["https://a.test/1"]))[1] == 1  # failed URL can still be billed
+        assert asyncio.run(tavily.map("https://a.test"))[1] == 0  # reported zero must remain zero
+        assert budget.today()["credits"] == 4
+        assert asyncio.run(tavily.extract(["https://a.test/1"]))[1] == 0
+        assert len(extract.calls) == 1
+        assert all(json.loads(r.calls[0].request.content)["include_usage"] for r in (search, extract, mp))
+    finally:
+        budget.LEDGER.reset(led_token)
+        budget.ITEM.reset(item_token)
+
+
 def test_fetch_pdf_keeps_only_pdfs(live):
     doc = pymupdf.open()
     doc.new_page().insert_text((72, 72), "FS-ONE MAX data sheet")
@@ -285,6 +345,181 @@ def test_fetch_pdf_keeps_only_pdfs(live):
     assert live[0].calls[0].request.headers["user-agent"].startswith("Mozilla/5.0")
 
 
+def test_document_discovery_uses_public_links_and_resolves_relative_urls():
+    html = '<a href="http://127.0.0.1/private.pdf">Bad</a><a href="/docs/current.pdf">Spec</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
+    assert tavily._document_link('"https://cdn.test/PDS_Product_English"', "https://maker.test") == "https://cdn.test/PDS_Product_English"
+
+
+@pytest.mark.parametrize("document", ["/specsheet2/product.pdf", "/docs/product-data-sheet.pdf", "/specifications/product.pdf"])
+def test_product_sheet_precedes_general_resource_pdf(document):
+    html = f'<a href="/resources/lighting-guide.pdf">Lighting guide</a><a href="{document}">Spec sheet</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test" + document
+
+
+def test_preferred_sheet_still_requires_a_public_url():
+    html = '<a href="http://127.0.0.1/specsheet2/private.pdf">Spec</a><a href="/docs/current.pdf">Data</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
+
+
+def test_direct_fallback_fetches_product_sheet_instead_of_navigation_guide(live):
+    page = "https://maker.test/product"
+    document = "https://maker.test/specsheet2/product.pdf"
+    live[0].get(page).respond(200, text='<a href="/resources/lighting-guide.pdf">Guide</a>'
+                            '<a href="/specsheet2/product.pdf">Spec sheet</a>')
+    wrong = live[0].get("https://maker.test/resources/lighting-guide.pdf").respond(500)
+    pdf = pymupdf.open()
+    pdf.new_page().insert_text((72, 72), "Product model Z technical data")
+    live[0].get(document).respond(200, content=pdf.tobytes())
+    pages = asyncio.run(tavily.fetch_pdf(page))
+    assert pages[0]["source_url"] == document and "Product model Z" in pages[0]["text"]
+    assert not wrong.called
+
+
+@pytest.mark.parametrize("name", ["FullCatalog_2026.pdf", "MASTER-catalog.pdf", "Complete%20Catalog.pdf"])
+def test_product_document_discovery_skips_company_catalogs(name):
+    html = f'<a href="/{name}">Catalog</a>'
+    assert tavily._document_link(html, "https://maker.test/product") is None
+    html += '<a href="/product-catalog/model-data.pdf">Product Data Sheet</a>'
+    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/product-catalog/model-data.pdf"
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_company_catalog_fallback_preserves_product_page_and_repairs_only_legacy_entry(live, legacy):
+    from api import cache
+    page, catalog = "https://maker.test/product", "https://maker.test/FullCatalog_2026.pdf"
+    html = f'<h1>Product X</h1><a href="{catalog}">Download Catalog</a>Product data sheet'
+    key = {"urls": [page], "depth": "basic"}
+    if legacy:
+        cache.put("tavily_extract", key, {"version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(),
+            "results": [{"url": catalog, "requested_url": page, "raw_content": "Unrelated catalog text"}]})
+    post = live[0].post(tavily.API + "/extract").respond(200, json={
+        "results": [{"url": page, "raw_content": html}], "usage": {"credits": 1}})
+    direct = live[0].get(page).respond(200, text=html)
+    first, charged = asyncio.run(tavily.extract([page]))
+    assert charged == 1 and len(first) == 1 and first[0]["url"] == page
+    assert first[0]["raw_content"] == html and not first[0].get("requested_url")
+    again, charged = asyncio.run(tavily.extract([page]))
+    assert charged == 0 and again == [{**p, "cache_hit": True} for p in first]
+    assert len(post.calls) == len(direct.calls) == 1
+    # An explicitly requested catalog remains a normal cache hit, without a paid refresh.
+    cache.put("tavily_extract", {"urls": [catalog], "depth": "basic"}, {
+        "version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(),
+        "results": [{"url": catalog, "requested_url": catalog, "raw_content": "Catalog requested explicitly"}]})
+    assert asyncio.run(tavily.extract([catalog]))[1] == 0
+    assert len(post.calls) == 1
+
+
+def test_product_page_extract_resolves_linked_pdf_and_keeps_its_url(live):
+    page, document = "https://maker.test/product", "https://cdn.test/PDS_Product_English"
+    route = live[0].post(f"{tavily.API}/extract").respond(200, json={
+        "results": [{"url": page, "raw_content": "Product Data Sheet"}], "usage": {"credits": 1}})
+    html = live[0].get(page).respond(200, text=f'<a href="{document}">Product Data Sheet</a>')
+    doc = pymupdf.open()
+    doc.new_page().insert_text((72, 72), "Manufacturer product data sheet, Revision C")
+    pdf = live[0].get(document).respond(200, content=doc.tobytes())
+    pages, spent = asyncio.run(tavily.extract([page]))
+    assert pages[0]["url"] == document and pages[0]["requested_url"] == page
+    assert "Revision C" in pages[0]["raw_content"] and spent == 1
+    cached, charged = asyncio.run(tavily.extract([page]))
+    assert charged == 0 and cached == [{**p, "cache_hit": True} for p in pages]
+    assert len(route.calls) == len(html.calls) == len(pdf.calls) == 1
+
+
+def test_failed_linked_pdf_probe_is_not_repeated_on_cache_hit(live):
+    page = "https://maker.test/product"
+    post = live[0].post(tavily.API + "/extract").respond(200, json={
+        "results": [{"url": page, "raw_content": "Product data sheet"}]})
+    direct = live[0].get(page).respond(403)
+    first, _ = asyncio.run(tavily.extract([page]))
+    second, spent = asyncio.run(tavily.extract([page]))
+    assert second == [{**p, "cache_hit": True} for p in first] and first[0]["raw_content"] == "Product data sheet"
+    assert spent == 0 and len(post.calls) == len(direct.calls) == 1
+
+
+@pytest.mark.parametrize("legacy_checked", [False, True])
+def test_blocked_product_page_follows_link_through_tavily_once(live, legacy_checked):
+    from api import cache
+    page, document = "https://maker.test/product", "https://maker.test/current.pdf"
+    stamp = datetime.now(timezone.utc).isoformat()
+    cache.put("tavily_extract", {"urls": [page], "depth": "basic"}, {
+        "version": 1, "retrieved_at": stamp, "results": [{"url": page,
+            "raw_content": "[Spec sheet](/current.pdf)", "document_checked": legacy_checked}]})
+    direct = live[0].get(page).respond(403)
+    post = live[0].post(tavily.API + "/extract").respond(200, json={"usage": {"credits": 2},
+        "results": [{"url": document, "raw_content": "Actual data sheet. [Other](/another.pdf)"}]})
+    pages, spent = asyncio.run(tavily.extract([page]))
+    assert spent == 2 and [p["url"] for p in pages] == [page, document]
+    assert pages[0]["retrieved_at"] == stamp and pages[1]["requested_url"] == page
+    assert pages[1]["cache_hit"] is False
+    cached, spent = asyncio.run(tavily.extract([page]))
+    assert spent == 0 and cached == [{**p, "cache_hit": True} for p in pages]
+    assert len(post.calls) == 1 and len(direct.calls) == (0 if legacy_checked else 1)
+    assert json.loads(post.calls[0].request.content)["urls"] == [document]
+    assert len(cache.get("tavily_extract", {"urls": [page], "depth": "basic"})["results"]) == 1
+
+
+def test_linked_pdf_negative_cache_expires_independently(live):
+    from api import cache
+    from datetime import timedelta
+    page, document = "https://maker.test/product", "https://maker.test/blocked.pdf"
+    live[0].get(page).respond(403)
+    live[0].get(document).respond(403)
+    def respond(request):
+        requested = json.loads(request.content)["urls"]
+        return httpx.Response(200, json={"results": ([{"url": page,
+            "raw_content": "[Data](/blocked.pdf)"}] if requested == [page] else []), "usage": {"credits": 1}})
+    post = live[0].post(tavily.API + "/extract").mock(side_effect=respond)
+    assert asyncio.run(tavily.extract([page]))[1] == 2
+    assert asyncio.run(tavily.extract([page]))[1] == 0
+    key = {"urls": [document], "depth": "basic"}
+    entry = cache.get("tavily_extract", key)
+    entry["retrieved_at"] = (datetime.now(timezone.utc) - timedelta(hours=2)).isoformat()
+    cache.put("tavily_extract", key, entry)
+    assert asyncio.run(tavily.extract([page]))[1] == 1
+    assert len(post.calls) == 3
+
+
+def test_linked_pdf_provider_failure_is_not_silently_hidden(live):
+    page = "https://maker.test/product"
+    live[0].get(page).respond(403)
+    live[0].post(tavily.API + "/extract").mock(side_effect=[httpx.Response(200, json={
+        "results": [{"url": page, "raw_content": "[Data](/blocked.pdf)"}], "usage": {"credits": 1}}),
+        httpx.Response(429)])
+    with pytest.raises(RateLimited):
+        asyncio.run(tavily.extract([page]))
+
+
+def test_direct_pdf_lookup_has_total_timeout(live, monkeypatch):
+    real_timeout = asyncio.timeout
+    monkeypatch.setattr(tavily.asyncio, "timeout", lambda _: real_timeout(0))
+    async def delayed(request):
+        await asyncio.sleep(0.01)
+        return httpx.Response(200, content=b"%PDF-invalid")
+    live[0].get(URL := "https://maker.test/slow.pdf").mock(side_effect=delayed)
+    assert asyncio.run(tavily.fetch_pdf(URL)) is None
+
+
+@pytest.mark.parametrize("cached", [False, True])
+def test_raw_pdf_syntax_is_replaced_with_direct_text_or_dropped(live, cached):
+    from api import cache
+    urls = ["https://m.test/good.pdf", "https://m.test/blocked.pdf"]
+    raw = [{"url": u, "raw_content": "%PDF-1.7 1 0 obj xref gibberish"} for u in urls]
+    route = live[0].post(f"{tavily.API}/extract").respond(200, json={"results": raw, "usage": {"credits": 1}})
+    if cached:
+        cache.put("tavily_extract", {"urls": sorted(urls), "depth": "basic"}, {
+            "version": 1, "retrieved_at": datetime.now(timezone.utc).isoformat(), "results": raw})
+    doc = pymupdf.open()
+    doc.new_page().insert_text((72, 72), "Readable current product data, Rev C")
+    live[0].get(urls[0]).respond(200, content=doc.tobytes())
+    live[0].get(urls[1]).respond(403)
+    pages, spent = asyncio.run(tavily.extract(urls))
+    assert [p["url"] for p in pages] == [urls[0]] and "Rev C" in pages[0]["raw_content"]
+    assert spent == (0 if cached else 1) and len(route.calls) == (0 if cached else 1)
+    assert asyncio.run(tavily.extract(urls))[0] == [{**p, "cache_hit": True} for p in pages]
+    assert tavily._pdf_syntax("binary fragment\nstartxref\n116\n%%EOF")
+
+
 # ---------- budget in the pipeline (mock mode) ----------
 
 def test_budget_exceeded_marks_step_couldnt_confirm(monkeypatch):
@@ -294,6 +529,9 @@ def test_budget_exceeded_marks_step_couldnt_confirm(monkeypatch):
     for cid in ("c01", "c03"):
         f = next(f for f in run.results[cid].findings if f.check == "currency")
         assert f.verdict == "unverified" and f.title == "Couldn't confirm the current documents" and "Tavily cap" in f.detail
+        assert f.compare.verdict == "unverified"
+        assert any("verify:" in warning and "Tavily cap" in warning for warning in run.results[cid].warnings)
+        assert any(e.case_id == cid and e.stage == "verify" and (e.data or {}).get("warning") for e in run.events)
     shutil.rmtree(run.dir, ignore_errors=True)
 
 

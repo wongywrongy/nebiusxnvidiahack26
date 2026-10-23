@@ -1,0 +1,6 @@
+Command: SPECCHECK_MODE=mock .venv/bin/python scripts/eval.py --blind-set docs/judge-readiness/blind-20261023 --check
+Exit: 2; no run started
+
+usage: eval.py [-h] [--case CASE | --samples | --blind-set BLIND_SET]
+               [--check] [--release-gate] [--out OUT]
+eval.py: error: Blind set is missing, invalid or not owner-reviewed; no run started

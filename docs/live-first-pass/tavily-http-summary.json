@@ -1,0 +1,348 @@
+[
+  {
+    "provider": "api.providers.tavily",
+    "request": {
+      "args": [
+        "/search",
+        {
+          "query": "Hilti FS-ONE MAX intumescent firestop sealant technical data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "hilti.com",
+            "hilti.ca"
+          ]
+        }
+      ],
+      "kwargs": {}
+    },
+    "response": {
+      "response_time": 1.91,
+      "request_id": "658b2951-222c-4994-8dc2-50c61fd2bf48",
+      "results": [
+        {
+          "url": "https://www.hilti.com/c/CLS_FIRESTOP_PROTECTION_7131/CLS_FIRESTOP_SEALANTS_SPRAY_7131/r3859360",
+          "title": "FS-ONE MAX Firestop intumescent sealant - Sealants, sprays and coatings - Hilti USA",
+          "score": 0.8969848,
+          "id": "f36a9f-00",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1411,
+          "content_sha256": "531b577df21b7e39252c9034d163c8dc6cfda6f69e6f2f3c1dcb6221ac07d18d"
+        },
+        {
+          "url": "https://www.hilti.com/c/CLS_FIRESTOP_PROTECTION_7131/CLS_FIRESTOP_SEALANTS_SPRAY_7131",
+          "title": "Sealants, sprays and coatings - Hilti USA",
+          "score": 0.7555112,
+          "id": "428b28-01",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1287,
+          "content_sha256": "229299e8c9b7be2048b87598809af3b571c6259d6ee5d2e660afbb318384eff5"
+        },
+        {
+          "url": "https://www.hilti.com/content/hilti/W1/US/en/business/business/trends/mass-timber.html",
+          "title": "Mass Timber - Hilti USA",
+          "score": 0.73207545,
+          "id": "510b21-02",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1445,
+          "content_sha256": "07b3577e6f6d8786fd163069f90f76339a9b0c394bfca8fbddf42fb81448fcd9"
+        },
+        {
+          "url": "https://www.hilti.com/c/CLS_FIRESTOP_PROTECTION_7131/CLS_FIRESTOP_SEALANTS_SPRAY_7131/r361",
+          "title": "CP 606 Firestop acrylic sealant - Sealants, sprays and coatings - Hilti USA",
+          "score": 0.7311551,
+          "id": "4f9666-03",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1426,
+          "content_sha256": "ed7ba11a613f626bd38dba8efb927c20989c8b1fad39dc354987e61eb06f17f9"
+        },
+        {
+          "url": "https://www.hilti.com/content/hilti/W1/US/en/business/business/engineering/fire-protection.html",
+          "title": "Firestop Design Center - Hilti USA",
+          "score": 0.46075046,
+          "id": "98abda-04",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1115,
+          "content_sha256": "52dba4950f31a369d68bf6c5834776c56b2f031b648d68dd478ada31bac283c9"
+        }
+      ]
+    },
+    "latency_ms": 2224,
+    "run": "tavily-baseline"
+  },
+  {
+    "provider": "api.providers.tavily",
+    "request": {
+      "args": [
+        "/search",
+        {
+          "query": "Chicago Public Schools 07 84 00 firestopping specification",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "cps.edu"
+          ]
+        }
+      ],
+      "kwargs": {}
+    },
+    "response": {
+      "response_time": 2.46,
+      "request_id": "cd5c347f-227d-464f-893e-ba777afbd9a3",
+      "results": [
+        {
+          "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/electrical/260533-13_conduit-for-electrical-systems.pdf",
+          "title": "SECTION 26 05 33.13 ~~~ PROJECT NOTE",
+          "score": 0.78074646,
+          "id": "4dac92-00",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1505,
+          "content_sha256": "3be764e6713a563ef02bc51279aea47744ae603988f5e29850670648e368bc5c"
+        },
+        {
+          "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-13-13-communications-copper-backbone-cabling.pdf",
+          "title": "27-13-13-communications-copper-backbone-cabling. ...",
+          "score": 0.7640656,
+          "id": "f35584-01",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 988,
+          "content_sha256": "b707eeb7758ae19031ddfeb405f05eeef22d90dc20f1cff64b1bf9a805516c3c"
+        },
+        {
+          "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-05-38-cable-trays-for-structured-cabling-systems.pdf",
+          "title": "SECTION 27 05 38 ~~~ PROJECT NOTE",
+          "score": 0.7623715,
+          "id": "9b3064-02",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1501,
+          "content_sha256": "faad55a6d6687c89b58a31c804f0dba596503efa1406fe8bcb300c2a7770b0ec"
+        },
+        {
+          "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-53-14-wireless-clock-systems.pdf",
+          "title": "SECTION 27 53 14 WIRELESS CLOCK SYSTEMS",
+          "score": 0.7180613,
+          "id": "8a4692-03",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 498,
+          "content_sha256": "7d183ab642e4fbe9b676b10b3734844384345c469bdcb1f9db5c4c642dc935bb"
+        },
+        {
+          "url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-11-16-communications-cabinets-racks-and-enclosures.pdf",
+          "title": "SECTION 27 11 16 ~~~ PROJECT NOTE",
+          "score": 0.709684,
+          "id": "8e401c-04",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1495,
+          "content_sha256": "6ad81076797fe594bc595229062719896b241cc9d4ffac490cd96f8cbad10058"
+        }
+      ]
+    },
+    "latency_ms": 2728,
+    "run": "tavily-baseline"
+  },
+  {
+    "provider": "api.providers.tavily",
+    "request": {
+      "args": [
+        "/search",
+        {
+          "query": "Lithonia TL recessed troffer discontinued",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        }
+      ],
+      "kwargs": {}
+    },
+    "response": {
+      "response_time": 2.6,
+      "request_id": "0d95f13b-f5ba-4190-adbb-1005a8cd183b",
+      "results": [
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-breeze-bzl-2",
+          "title": "Discontinuation Notice: Lithonia Lighting\u00ae Breeze (BZL)",
+          "score": 0.6934942,
+          "id": "780324-00",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1465,
+          "content_sha256": "add9f166163ebba62fea7815376051cadb0cf79232d41bacb192343df02c2dd9"
+        },
+        {
+          "url": "https://lithonia.acuitybrands.com",
+          "title": "Lithonia Lighting\u00ae | Best Value in Lighting",
+          "score": 0.5809471,
+          "id": "8c5e47-01",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 138,
+          "content_sha256": "5eb30d8cbd80d96e01ab5529b5fccf8fa83583c9bd34fffc91aae61f935df582"
+        },
+        {
+          "url": "https://lithonia.acuitybrands.com/products",
+          "title": "Commercial Lighting Fixtures | Lithonia Lighting",
+          "score": 0.22645885,
+          "id": "49002d-02",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1136,
+          "content_sha256": "e7645a3d83b043365f48242939690d4bed414e9dc885e1266b7de2748d130490"
+        },
+        {
+          "url": "https://lithonia.acuitybrands.com/products/family/led-high-bays",
+          "title": "LED High Bay Family | Lithonia Lighting",
+          "score": 0.093620166,
+          "id": "a944b7-03",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 310,
+          "content_sha256": "d293d1580004a7a90b0288485e3f336638c417e95de0a296b4b872b67b4dff01"
+        },
+        {
+          "url": "https://www.acuitybrands.com/search",
+          "title": "Product Search | Acuity Brands",
+          "score": 0.051429514,
+          "id": "6aeb93-04",
+          "raw_content_chars": 0,
+          "raw_content_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "content_chars": 1380,
+          "content_sha256": "fd2fa653844420c0801116e798c65c206ddecd43bf284f086f0431e7cef43ae9"
+        }
+      ]
+    },
+    "latency_ms": 2868,
+    "run": "tavily-baseline"
+  },
+  {
+    "provider": "api.providers.tavily",
+    "request": {
+      "args": [
+        "/extract",
+        {
+          "urls": [
+            "https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW",
+            "https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf",
+            "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+            "https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324751_Specification-PDF.pdf",
+            "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      ],
+      "kwargs": {}
+    },
+    "response": {
+      "usage": {
+        "credits": 1
+      },
+      "failed_results": [
+        {
+          "url": "https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW",
+          "error": "404 page not found"
+        }
+      ],
+      "response_time": 0.78,
+      "request_id": "9ca08d1a-bf4b-4798-8029-0d7618b25045",
+      "results": [
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+          "title": "Discontinuation Notice: Lithonia Lighting\u00ae TL Recessed Luminaire",
+          "images": [],
+          "raw_content_chars": 19301,
+          "raw_content_sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7"
+        },
+        {
+          "url": "https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324751_Specification-PDF.pdf",
+          "title": null,
+          "images": [],
+          "raw_content_chars": 4389,
+          "raw_content_sha256": "48b9d4e0506b7ccbff0ccb9dc05ae424a2c80851f1b3cab754697402ad6b19f9"
+        },
+        {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+          "title": null,
+          "images": [],
+          "raw_content_chars": 4836,
+          "raw_content_sha256": "5a386246e0d84be12ea11e6172409dca07de827fd7ef4caa87af552f6aac0b6d"
+        },
+        {
+          "url": "https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf",
+          "title": null,
+          "images": [],
+          "raw_content_chars": 2315,
+          "raw_content_sha256": "75259759c104b6fd609ebba90a3bd2770bcd33684b43b80e992dc88a752911a9"
+        }
+      ]
+    },
+    "latency_ms": 1304,
+    "run": "hosts"
+  },
+  {
+    "provider": "api.providers.tavily",
+    "request": {
+      "args": [
+        "/map",
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog",
+          "limit": 20,
+          "max_depth": 1,
+          "include_usage": true
+        }
+      ],
+      "kwargs": {}
+    },
+    "response": {
+      "usage": {
+        "credits": 2
+      },
+      "response_time": 1.37,
+      "request_id": "3bc93d94-f3cb-4cb7-9f27-6c50a9768b6d",
+      "results": [
+        "https://insights.acuitybrands.com/product-updates-blog",
+        "https://insights.acuitybrands.com/product-updates-blog/lithonia-lighting-dsxpg-and-dsxpgt-new-product-updates-2",
+        "https://insights.acuitybrands.com/industrial",
+        "https://insights.acuitybrands.com/awards",
+        "https://insights.acuitybrands.com/product-updates-blog/mlx-expands-with-baa-dlc-premium-options-as-ufit-transitions-out",
+        "https://insights.acuitybrands.com/lighting-controls",
+        "https://insights.acuitybrands.com/product-updates-blog/juno-tcss-linear-ambient-led-trac-head-2",
+        "https://insights.acuitybrands.com/acuity-perspectives",
+        "https://insights.acuitybrands.com/social-segments",
+        "https://insights.acuitybrands.com/new-products",
+        "https://insights.acuitybrands.com/literature",
+        "https://insights.acuitybrands.com/healthcare",
+        "https://insights.acuitybrands.com/product-updates-blog/stack-pack-is-now-fully-switchable-2",
+        "https://insights.acuitybrands.com/retail",
+        "https://insights.acuitybrands.com/product-updates-blog/mlx-is-now-baa-compliant-2",
+        "https://insights.acuitybrands.com/product-updates-blog/lithonia-lighting-beyond-high-bay-selected-for-2026-ies-progress-report",
+        "https://insights.acuitybrands.com/product-updates-blog/discontinuation-reintroduction-notice-lithonia-lighting-cprb-round-high-bay",
+        "https://insights.acuitybrands.com/product-updates-blog/see-why-contractors-rate-visual-installer-4-8",
+        "https://insights.acuitybrands.com/product-updates-blog/the-lithonia-lighting-csvt-continues-to-grow-2",
+        "https://insights.acuitybrands.com/renovation"
+      ]
+    },
+    "latency_ms": 1678,
+    "run": "hosts"
+  }
+]

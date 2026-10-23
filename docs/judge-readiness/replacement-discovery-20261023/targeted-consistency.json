@@ -1,0 +1,22 @@
+{
+  "scope": "two-item consistency only; not release promotion",
+  "passed": true,
+  "run_id": "20261023-023154-e725f0",
+  "right_call": {
+    "n": 2,
+    "of": 2
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 2
+  },
+  "investigations": {
+    "scripted_unconfirmed_items": 1,
+    "primary_runs": 1,
+    "resolved": 1,
+    "revision_only": 0,
+    "capped": 0,
+    "replacement_runs": 3,
+    "replacement_capped": 0
+  }
+}

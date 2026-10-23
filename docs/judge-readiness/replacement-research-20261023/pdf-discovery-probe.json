@@ -1,0 +1,171 @@
+{
+  "run_id": "pdf-discovery-20261023-072845",
+  "purpose": "query relevance diagnostic, not a case evaluation",
+  "before": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 80,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 438,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 140,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "requests": [
+    {
+      "request": {
+        "query": "\"LED troffer\" manufacturer specification sheet",
+        "depth": "basic",
+        "max_results": 5,
+        "authorization": "REDACTED"
+      },
+      "response": {
+        "results": [
+          {
+            "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+            "title": "Spec Sheet-LED Troffer"
+          },
+          {
+            "url": "https://www.currentlighting.com/indoor-lighting/troffers-panels",
+            "title": "LED Troffers and Flat Panel Lighting | Current - HLI Brands"
+          },
+          {
+            "url": "https://hew.com/specifications/LT_led.pdf",
+            "title": "LT LED Troffer"
+          },
+          {
+            "url": "https://www.creelighting.com/products/indoor/troffers",
+            "title": "LED Troffer Lighting - Indoor LED Troffers | Cree Lighting"
+          },
+          {
+            "url": "https://www.led.com/indoor-lighting/troffers-and-panels",
+            "title": "LED Troffer and Flat Panel Lighting | Current"
+          }
+        ],
+        "extracted": [
+          {
+            "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+            "characters": 15977,
+            "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+            "excerpt": "Project: Type: Note: SLLT LED TROFFER LUMINAIRE DESCRIPTION Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. The LED troffer are fully dimmable, and are compatible with building controls, motion sensors, timers, and daylight harvesting systems.\nThe design of the LED troffer produces an"
+          },
+          {
+            "url": "https://www.currentlighting.com/indoor-lighting/troffers-panels",
+            "characters": 14168,
+            "sha256": "aff8276047b78edd5181cdd3fc7b696b3dd4fea50efc3d7ec208688a6a028fe8",
+            "excerpt": "The Current website is localized for EU/ME/ANZ. Would you like to continue to the localized version?\n\n[Continue](#) [\u2715](#)\n\n[![Home](/sites/default/files/Current_Lockup-White_RGB.png)](/ \"Home\")\n\n[![](/sites/default/files/images/HLI%20Icon.png)](/brands-old \"Home\")\n\n![print-logo](/sites/default/themes/custom/startupgrowth/images/current-lighting-logo-black-250x50.jpg \"print-logo\")\n\n![](/sites/defa"
+          },
+          {
+            "url": "https://hew.com/specifications/LT_led.pdf",
+            "characters": 12357,
+            "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+            "excerpt": "ORDERING EXAMPLE: LT - 24 - L52/835 - AF - OPTIONS - CONTROL/DIM - UNV SERIES WIDTH LENGTH LUMENS [1] CRI CCT LT Static LT-AR Air Return [2] 1 1\u2032 2 2\u2032 2 2\u2032 4 4\u2032 1x2 L20 2,000lm L31 3,100lm L40 4,000lm [3] 1x4 L28 2,800lm L47 4,700lm L63 6,300lm L90 9,000lm [4] 2x2 L27 2,700lm L39 3,900lm L49 4,900lm [5] L61 6,100lm [6] 2x4 L40 4,000lm L52 5,200lm L64 6,400lm L82 8,200lm L110 11,000lm [7] 8 80 9 90"
+          },
+          {
+            "url": "https://www.currentlighting.com/sites/default/files/documents/NX_Indoor_Luminaire_Look-up_Guide.pdf",
+            "characters": 3928,
+            "sha256": "a864b3617883007348f774bcfba4c5cc7eaa5a5fc71626dd65a1f717e1b4f249",
+            "excerpt": "Control Option Ordering Logic & Description Control Option Functionality Control Option Components Networkable Grouping Scheduling Occupancy / Motion Daylight Harvesting 0-10V Dimming On/Off Control Bluetooth\u00ae App Programming NX Wireless NX Connect NX Wired Independent Architectural Linear Downlighting Litecontrol Kurt Versen Prescolite MODx Bend (88L) Flow (91L) Note (67L) NELO\u2122 (70L, 75L) SAE100"
+          }
+        ]
+      },
+      "charged_credits": 0.0
+    },
+    {
+      "request": {
+        "query": "\"LED troffer\" manufacturer specification sheet filetype:pdf",
+        "depth": "basic",
+        "max_results": 5,
+        "authorization": "REDACTED"
+      },
+      "response": {
+        "results": [
+          {
+            "url": "https://hew.com/specifications/LT_led.pdf",
+            "title": "LT LED Troffer"
+          },
+          {
+            "url": "https://lsicorp.com/wp-content/uploads/sites/2/TRK-specsheet.pdf",
+            "title": "Troffer Retrofit Kit Gen 2 (TRK)"
+          },
+          {
+            "url": "https://assets.led-llc.com/spec-sheets/RP-TRV-TRF-TAA-Spec_Sheet.pdf",
+            "title": "TAA TROFFER RETROFIT KITS (TRV/TRF)"
+          },
+          {
+            "url": "https://www.deq.nc.gov/factsheet-upgrading-troffer-luminaires-led2/download",
+            "title": "Upgrading Troffer Luminaires to LED"
+          },
+          {
+            "url": "https://www.tcpi.com/wp-content/uploads/2022/12/LED-Volumetric-Troffer-Retrofit-Kit-Spec-Sheet.pdf",
+            "title": "LED Volumetric Troffer Retrofit Kit"
+          }
+        ],
+        "extracted": [
+          {
+            "url": "https://hew.com/specifications/LT_led.pdf",
+            "characters": 12357,
+            "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+            "excerpt": "ORDERING EXAMPLE: LT - 24 - L52/835 - AF - OPTIONS - CONTROL/DIM - UNV SERIES WIDTH LENGTH LUMENS [1] CRI CCT LT Static LT-AR Air Return [2] 1 1\u2032 2 2\u2032 2 2\u2032 4 4\u2032 1x2 L20 2,000lm L31 3,100lm L40 4,000lm [3] 1x4 L28 2,800lm L47 4,700lm L63 6,300lm L90 9,000lm [4] 2x2 L27 2,700lm L39 3,900lm L49 4,900lm [5] L61 6,100lm [6] 2x4 L40 4,000lm L52 5,200lm L64 6,400lm L82 8,200lm L110 11,000lm [7] 8 80 9 90"
+          },
+          {
+            "url": "https://lsicorp.com/wp-content/uploads/sites/2/TRK-specsheet.pdf",
+            "characters": 13865,
+            "sha256": "86442436a719cb419b9bcd8edd224dc68a891ac660809de5a9caf9b165bdd18e",
+            "excerpt": "LSI Industries Inc. 10000 Alliance Rd. Cincinnati, OH 45242 \u2022 (513) 372-3200 \u2022 www.lsicorp.com \u00a9LSI Industries Inc. All Rights Reserved. Speci\ufb01 cations and dimensions subject to industry standard tolerances. Speci\ufb01 cations subject to change without notice.\nHave questions? Call us at (800) 436-7800 Type : Project : Catalog # : Date : Prepared By : Page 1/7 Rev. 05/13/26 Troffer Retrofit Kit Gen 2 ("
+          },
+          {
+            "url": "https://assets.led-llc.com/spec-sheets/RP-TRV-TRF-TAA-Spec_Sheet.pdf",
+            "characters": 11652,
+            "sha256": "67a775c176900f6baa4ca752696f4a92741673db89b892b1b8aee0b51cd3ee3c",
+            "excerpt": "TAA TROFFER RETROFIT KITS (TRV/TRF) 03.03.26 Information is subject to change without notice.\nHEADQUARTERS & TRAINING CENTER \u2022 Cary, IL | INNOVATION & MANUFACTURING CENTER \u2022 Middleton, MA 847.380.3540 \u2022 led-llc.com \u2022 sales@led-llc.com PART # UPC DESCRIPTION LUMENS WATTAGE CCT DLC CODES RP-TRV-1X4-24W-40K-WC-TAA 197810030768 1X4 VOLUMETRIC RETROFIT KIT 2000/2500/3000 FLEXWATT 16W/20W/24W FLEXCOLOR "
+          }
+        ]
+      },
+      "charged_credits": 1.0
+    }
+  ],
+  "after": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 81,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 439,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 141,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "day_mirror": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 81,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 439,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 141,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "fresh_credits": 1.0,
+  "fresh_usd": 0
+}

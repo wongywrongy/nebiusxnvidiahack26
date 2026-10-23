@@ -1,0 +1,176 @@
+{
+  "run_id": "metric-discovery-20261023-073020",
+  "purpose": "requirement-name discovery diagnostic, no case evaluation",
+  "before": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 81,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 439,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 141,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "request": {
+    "query": "\"LED troffer\" \"MacAdam\" specification sheet",
+    "authorization": "REDACTED",
+    "depth": "basic"
+  },
+  "response": {
+    "results": [
+      {
+        "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+        "title": "Spec Sheet-LED Troffer"
+      },
+      {
+        "url": "https://hew.com/specifications/LT_led.pdf",
+        "title": "LT LED Troffer"
+      },
+      {
+        "url": "https://www.lightmart.com/30w-40w-50w-selectable-wattage-lumens-and-color-temperature-led-architectural-2x4-troffer-light",
+        "title": "30W-40W-50W Selectable Wattage, Lumens and Color Temperature LED Architectural 2x4 Troffer Light | LightMart.com"
+      },
+      {
+        "url": "https://www.signify.com/api/assets/v1/file/Signify/content/DSRT-Selectable-Troffer-Spec-heet-FINAL/Day-Brite-CFI-DSRT-Selectable-Troffer-Spec-sheet-ENG-FINAL.pdf",
+        "title": "DSRT Selectable Troffer - Signify"
+      },
+      {
+        "url": "https://www.litetronics.com/products/led-volumetric-troffer-with-sensor-socket",
+        "title": "LED Smart Volumetric Troffer | Commercial Smart Lighting"
+      }
+    ],
+    "extracted": [
+      {
+        "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+        "characters": 15977,
+        "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+        "archived_path": "replacement-discovery/2026-10-23T07_30_24+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+        "excerpts": {
+          "L70": [
+            "nable Range: 3000K to 5000K Reported L90 Lifetime: 101,000 hours @25\u00b0C Reported L70 Lifetime: 349,000 hours @25\u00b0C Warranty 10 Years 2495 Main Street, Suite 218, Buffalo NY 14214 USA T (716) 931-9322 info@starcous.com www.starcous.com Starco Lighting Inc. reserves the right to make c"
+          ],
+          "MacAdam": [],
+          "dimm": [
+            "ings in of\ufb01ces, schools, and healthcare applications. The LED troffer are fully dimmable, and are compatible with building controls, motion sensors, timers, and daylight harvesting systems.\nThe design of the LED troffer produces an even, consistent shadow-less light. The LEDs enable ",
+            "l, 50/60Hz Operating Temperature: -20\u00b0C (-4\u00b0F) to 50\u00b0C (122\u00b0F) 0-10V Continuous dimming Power Factor: >0.90 Total Harmonic Distortion: <15% Wireless Driver Standby (Off State) Power: >1W Optical System High impact acrylic optics provides even distribution Frosted lens provides maximu"
+          ],
+          "warranty": [
+            "ed L90 Lifetime: 101,000 hours @25\u00b0C Reported L70 Lifetime: 349,000 hours @25\u00b0C Warranty 10 Years 2495 Main Street, Suite 218, Buffalo NY 14214 USA T (716) 931-9322 info@starcous.com www.starcous.com Starco Lighting Inc. reserves the right to make changes to this product at any time with"
+          ],
+          "DLC": [
+            "\u201d 1213mm 2-1/2\u201d 63.5mm W L Weight 9.8lbs 10.0lbs 16.5lbs Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control DR Dynamic Range 3000K to 5000K 23-3/4\u201d 60"
+          ],
+          "available": [],
+          "catalog": []
+        }
+      },
+      {
+        "url": "https://hew.com/specifications/LT_led.pdf",
+        "characters": 12357,
+        "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+        "archived_path": "replacement-discovery/2026-10-23T07_30_24+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+        "excerpts": {
+          "L70": [
+            "iency, and inhibit corrosion. \u25a0 ELECTRICAL \u2013 High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CC"
+          ],
+          "MacAdam": [
+            "shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses. \u25a0 MOUNTING \u2013 NEMA Type \u201cG\u201d 15/16\u2033 or 1\u2033 grid standard. For NEMA Type \u201cNFG\u201d and \u201cSG\u201d 9/16\u2033 grid installations, specify EQCLIPS option. Surface mount and drywall kit accessories available, sh"
+          ],
+          "dimm": [
+            "NS.\n120 120V 277 277V UNV 120-277V 347 347V [13] DIM Driver with external 0-10V dimming wires DIM1 1 % Driver with external 0-10V dimming wires DRV Driver without external dimming wires [14] FEATURES \u25a0 Low-profile depth for shallow plenum \u25a0 Diffuse lens provides smooth illumination \u25a0",
+            "IM Driver with external 0-10V dimming wires DIM1 1 % Driver with external 0-10V dimming wires DRV Driver without external dimming wires [14] FEATURES \u25a0 Low-profile depth for shallow plenum \u25a0 Diffuse lens provides smooth illumination \u25a0 Air return capability reduces number of unsightly"
+          ],
+          "warranty": [
+            "y American Act (BAA) compliant. Request certification at hew.com/buy-american \u25a0 WARRANTY \u2013 5-year limited warranty, see hew.com/warranty NOTES 1 Lumens based on 80 CRI, 3500K for static white and 4000K for tunable white. Actual performance may vary +/-5%. See page 2 for FIXTURE PERFORMAN",
+            "iant. Request certification at hew.com/buy-american \u25a0 WARRANTY \u2013 5-year limited warranty, see hew.com/warranty NOTES 1 Lumens based on 80 CRI, 3500K for static white and 4000K for tunable white. Actual performance may vary +/-5%. See page 2 for FIXTURE PERFORMANCE DATA. Additional lumen "
+          ],
+          "DLC": [
+            "ignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL \u25a0Build America, Buy America (BABA) and Buy American Act (BAA) compliant. Request certification at hew.com/buy-american \u25a0 WAR",
+            "alified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL \u25a0Build America, Buy America (BABA) and Buy American Act (BAA) compliant. Request certification at hew.com/buy-american \u25a0 WARRANTY \u2013 5-year limited "
+          ],
+          "available": [
+            "IP OPTIONS.\nEQCLIPS Earthquake clips [10] (L__) Additional lower lumen packages available [11] Example: 5,800 lumens = LT-24-L64/840-(L58) HE High efficacy lumen package [12] CP Chicago Plenum (CCEA) LT-14-SMK-W Surface mount kit, 1\u2032x4\u2032, white LT-22-SMK-W Surface mount kit, 2\u2032x2\u2032, white L",
+            "t contact with insulation \u25a0 ISO 5-9 and IP5X rated for cleanroom applications \u25a0 Available on QuickShip at hew.com/LT_quickship.pdf \u25a0 Support human-centric design with adaptive, individualized lighting using tunable white light \u25a0 Wireless in-fixture control solutions available \u25a0 Made Right"
+          ],
+          "catalog": [
+            "atteries.\n14 Not available with tunable white.\n3-7/8\u2033 23-13/16\u2033 2x2 | 2x4 Shown CATALOG #: \b ______________________________________________ TYPE: \b____________________________________________________ PROJECT:\b_________________________________________________ LT LED Troffer Information c",
+            " in the option code when California Energy Commission regulations are required.\nCATALOG NUMBER DESCRIPTION EM/10W 10-watt emergency battery [1] EM/10WRM Remote mount 10-watt emergency battery [2] EM/10WRM/RTS Remote mount 10-watt emergency battery with regressed test switch [2] EM/12W 1"
+          ]
+        }
+      },
+      {
+        "url": "https://store-h2h8t9woje.mybigcommerce.com/content/pdfs/product-catalog/FullCatalog_LightMart_2020_SM%20%281%29.pdf",
+        "characters": 96133,
+        "sha256": "8b6673af8eb2d0a519c79a5e7090c4b40db30a3a91bcf9b8d4d61e3afc043eda",
+        "archived_path": "replacement-discovery/2026-10-23T07_30_25+00_00/8b6673af8eb2d0a519c79a5e7090c4b40db30a3a91bcf9b8d4d61e3afc043eda.txt",
+        "excerpts": {
+          "L70": [],
+          "MacAdam": [],
+          "dimm": [
+            " \n$259\n300 \n41,400 \n=es \n120\u0011277 \n23.5 x 12 x 3.5\u201d \n91085\u0011%L \n$368\nWatts\nLumens\nDimmable\nVoltage\nDimensions\nItem #\nPrice\nEasy Installation with our Universal Arm\nUniversal backplate \naccommodates \nnumerous drill patterns\nHigh performance \nsilicone gaskets for \nmaximum moisture \nprote",
+            " \n$259\n300 \n41,400 \n=es \n120\u0011277 \n23.5 x 12 x 3.5\u201d \n91085\u0011FL \n$368\nWatts\nLumens\nDimmable\nVoltage\nDimensions\nItem #\nPrice\n450 Watt LED Flood Light\n\u2022 60,750 Lumens\n\u2022 %luminum frame and housing\n\u2022 1eanwell driZer\n\u2022 4000K or 5000K options, >70 CRI\n\u2022 3Zer 50,000 hour life expectancy\n\u2022 120\u0011"
+          ],
+          "warranty": [
+            "to 35 feet high; \nnational delivery through world class LTL partners\n\u2022  10 year warranty on aluminum light poles; 5 year warranty\non LED lights and Pro Series Heavy Duty steel poles.\n                              at a Glance\nCheck out our MADE IN USA \nproducts throughout \nthe catalog\nPro",
+            "gh world class LTL partners\n\u2022  10 year warranty on aluminum light poles; 5 year warranty\non LED lights and Pro Series Heavy Duty steel poles.\n                              at a Glance\nCheck out our MADE IN USA \nproducts throughout \nthe catalog\nPro\u2019s Choice Heavy Duty Light Poles \n4-5\nLED"
+          ],
+          "DLC": [
+            "al Grade    \n    \u2022  100,000 Hour Life Expectancy\n(200 Watt, 50,000 Hours)\n    \u2022 DLC and UL Listed\n    \u2022 Dark Bronze\nCustom LED options available\nPK80 \n1 \n80 Watts \n10,800 \n$599 \n$639 \n$679 \n- \n-\nPK802 \n2 \n160 Watts \n21,600 \n$787 \n$827 \n$867 \n- \n-\nPK803 \n3 \n240 Watts \n 32,400 \n$971 \n",
+            "al Grade    \n    \u2022  100,000 Hour Life Expectancy\n(200 Watt, 50,000 Hours)\n    \u2022 DLC and UL Listed\n    \u2022 Dark Bronze\nCustom LED options available\nAdjustable Mount Lights\nItem #\n#\nFixtures\nTotal \nPower \nDelivered \nLumens\n10\u2019\nPole\n15\u2019\nPole\n20\u2019\nPole\n25\u2019\nPole\n30\u2019\nPole\nPK80A\nPK1502A\nPK200"
+          ],
+          "available": [
+            "54\n3\n2\n \nSales@LightMart.com\nSHIPPING\nFREE\nSTOP\nSOLUTION\n1\nHIGH VOLTAGE\nOPTIONS AVAILABLE\n-\nCUSTOM\nCOLORS\nQUICK\nSHIP\n\u2022  Largest and most complete source for light poles and light \npole brackets since 1998\n\u2022  In-house metal fabrication capabilities with plasma cutting, \nwelding and powder ",
+            "\u2022 4\u201d Square \n30\u2019 Poles\n    \u2022 7 Gauge Steel\n    \u2022 5\u201d Square \nCustom pole options available\nStandard LED Speci\ufb01 cations:\n    \u2022 120-277 Volt\n    \u2022 Die-cast Aluminum\n    \u2022 IP66 (IP65 200 Watt)\n    \u2022 5000K\n    \u2022 Commercial Grade    \n    \u2022  100,000 Hour Life Expectancy\n(200 Watt, 50,000 Hours)\n"
+          ],
+          "catalog": [
+            "                at a Glance\nCheck out our MADE IN USA \nproducts throughout \nthe catalog\nPro\u2019s Choice Heavy Duty Light Poles \n4-5\nLED Parking Lot Light Pole Kits \n6-8\nDecorative LED Light Pole Kits \n9-11\nQuick-Ship Light Poles \n12-13\nSteel Light Poles \n14-17\nAluminum Light Poles \n18-27\nF",
+            "r notice. Although every effort has been made to ensure the information in this catalog \nis up to date and accurate, Lightmart.com makes no representations or warranties as to the completeness or accuracy of the information. Lightmart.com has no liability for any errors or omissions in "
+          ]
+        }
+      }
+    ]
+  },
+  "after": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 83,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 441,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 143,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "day_mirror": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 83,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 441,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 143,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "fresh_credits": 2.0,
+  "fresh_usd": 0
+}

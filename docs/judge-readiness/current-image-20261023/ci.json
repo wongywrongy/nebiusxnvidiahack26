@@ -1,0 +1,169 @@
+{
+  "head_sha": "1c3c7fed4ba3a09cea448173f5eb6073ac2a8643",
+  "runs": [
+    {
+      "id": 39919293221,
+      "jobs": [
+        {
+          "id": 120300364488,
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m pip install -r api/requirements.txt -c api/constraints.txt",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m pytest -q",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run code=0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm ci && npm run test:presentation && npm run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Browser journey and failure regressions (mock only)",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 39919284883,
+      "jobs": [
+        {
+          "id": 120300339834,
+          "status": "completed",
+          "conclusion": "success",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m pip install -r api/requirements.txt -c api/constraints.txt",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run python -m pytest -q",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run code=0",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npm ci && npm run test:presentation && npm run build",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Run npx playwright install --with-deps chromium",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Browser journey and failure regressions (mock only)",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-node@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/setup-python@v5",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Post Run actions/checkout@v4",
+              "status": "completed",
+              "conclusion": "success"
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

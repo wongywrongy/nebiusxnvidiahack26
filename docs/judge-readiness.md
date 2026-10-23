@@ -1,0 +1,519 @@
+# Judge readiness — implementation ledger
+
+Kyle approved the comprehensive refinement plan on 2026-10-22. Historical first-pass evidence and answer keys stay unchanged.
+
+Latest accounting exception: the [date-bound affected-case attempt](judge-readiness/status-timing-20261023/bounds.md)
+left c07 invalid after a Tavily failure, with **one credit of unknown usage held**. Settled totals remain
+**$3.36648982 / 490**; the wallet total 491 includes the hold, and paid work is blocked pending reconciliation.
+No earlier no-hold checkpoint below describes this latest state. The retained source passes
+697 tests / 2 skips; both source CI workflows pass. G2 and all later gates remain open.
+
+## Locked decisions
+
+- Full review → fix → watch; strict release gate.
+- Independent AI audit plus Kyle's spec and practical review; no independent human-study claim.
+- Browser approvals have manual re-check; scheduled monitoring covers bundled watched samples only.
+- Missing assembly ratings on product-data-only packages appear as pending proof, without changing the product-data verdict. Submitted assemblies with missing ratings remain unconfirmed.
+- NVIDIA Nano/Super only; exact source quotes, numeric bounds, metric identity and product configuration remain mandatory.
+- Cumulative provider ceiling $20 / 2,000 credits; baseline $1.058605 / 298. Engineering allocation at most $10 / 1,000 additional; retain $8.941395 / 702 for final validation and judging.
+- Keep Endpoint + Serverless Jobs. No deployment/resources until a concrete manifest, current cost/credit-expiry review and Kyle's separate approval.
+
+## Gates
+
+| Gate | Acceptance | Status |
+| --- | --- | --- |
+| G1 | Validity and fresh-spend accounting, configuration manifests, CI, assembly-policy regressions | Accepted by Kyle on 2026-10-22 |
+| G2 | General extraction/identity/freshness fixes; verified replacement and genuine Investigator rescue | In progress |
+| G3 | Unchanged-key cases/samples, independently prepared blind packages, independent AI audit | Pending |
+| G4 | Approved hosted rollout, restart/storage proof, public smoke, real manual and scheduled jobs | Pending owner deployment approval |
+| G5 | Full public recording, screenshots/video, truthful submission, reviewed release PR | Pending |
+
+## Process
+
+Diagnose result → check stage validity and ledger → fix one general cause → regression checks → affected live items.
+Do not reopen the four-run first pass. The follow-up allows two full scoring-set evals plus one final recording, inside the cumulative ceiling.
+Every source/expectation contradiction needs Kyle's dated URL/quote adjudication. An unresolved contradiction blocks readiness; never rewrite the key.
+No new track, extra spec sections, Ultra experiment, email integration, durable approval enrollment or visual redesign.
+
+## Remaining implementation
+
+1. Complete document chunks with page-grounded quotes; bounded merge and semantic numeric/identity checks.
+2. Pending assembly scope and deterministic report coverage; compatible API/browser states.
+3. Original web fetch times, 24-hour cache age and fresh approved/scheduled checks; preserve model cache by content.
+4. Replacement evidence bundles and per-check citations; distinct Investigator retrieval/resolution outcomes.
+5. Durable campaign reservations, failed/retried usage accounting and job leases; authenticated idempotent controller-only job launches and report publication.
+6. Browser journey/failure tests, independent source-labelled validation set, current pricing/credit manifest, release build document preflight.
+7. Targeted live validation, final case/sample/blind panels, recorded evidence and updated PR/submission.
+
+## Assembly-policy consequence
+
+The first-pass mock c03 replacement appeared to pass because absent F/T proof was skipped. With explicit pending assembly proof, that replacement remains unconfirmed. The original 2/5 mock-fix panel stays historical; no test should restore an unsupported replacement pass. Kyle's later selection-policy adjudication below supersedes the original 8/8 mock acceptance requirement without changing the raw key or release gate.
+
+## G1 evidence — 2026-10-22
+
+The independent AI reviewer identified uploaded-assembly scoping, omitted pending proof in drafts, unchecked public recording extras, malformed paid-response accounting and missing answer-key hashes. Those findings are fixed with regressions. The final replay finding is handled in the UI: historical summaries and newly generated approval drafts cannot repeat the old blanket coverage claim; the original recording remains unchanged.
+
+Validation in this session:
+
+- `SPECCHECK_MODE=mock .venv/bin/python -m pytest -q`: **262 passed, 2 skipped** (12.52 seconds).
+- `SPECCHECK_MODE=mock .venv/bin/python scripts/eval.py --out /tmp/speccheck-readiness-g1.json`: **8/8 calls, 6/6 problems, 0/2 major false alarms, 1/5 passing fixes**, 0 invalid items, 0 unnecessary notes. [Full scoreboard](judge-readiness/g1/mock-scores.json), run `20261022-194346-d0279a`.
+- Quote gates: **45/48 claims**, **19/20 web values**. These are fixture results, not fresh live evidence.
+- `cd web && npm run test:presentation && npm run build`: passed, including pending/legacy approval-draft checks.
+- `git diff --check`: clean.
+
+Mock evaluation fresh charges: **$0 / 0 credits**. Actual date ledgers remain October 21 **$1.048778 / 291** and October 22 **$0.009827 / 7**; cumulative **$1.058605 / 298**. No fresh provider calls were made for G1.
+
+G1 adds typed invalidity, failed-attempt time/spend, fresh versus usage-equivalent reporting, guarded recording of every public item, manifests hashing runtime settings/code/checklists/answer-key inputs, and PR/image regression workflows with pinned dependency constraints. [GitHub checks passed for implementation commit `2fcc0d0`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/39842769408), including clean dependency installation, pytest, mock eval, presentation checks and web build on Node 22.
+
+G1 does **not** establish new live accuracy, a passing live replacement, an Investigator rescue, durable campaign reservations, browser journey coverage or deployment readiness. The release gate therefore remains closed. The historical dashboard discrepancy is still unresolved; no billing ledger has been adjusted.
+
+## G2 policy checkpoint — 2026-10-22
+
+Kyle explicitly chose: **require a selected configuration in submitted evidence; leave unselected options unconfirmed**. An ordering example, blank catalog field or family-only inbox label does not select a configuration. The original answer key and reviewed requirements remain unchanged.
+
+That policy exposes a conflict with the original requirement that the mock panel remain 8/8. The measured checkpoint is [run `20261022-210601-d5edbe`](judge-readiness/g2/mock-scores.json): **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**, no invalid items, one note on an originally clean item. Quote gates keep **48/65 claims and 8/20 web values**. Fresh charges are **$0 / 0 credits**. Kyle authorized the disclosed policy exceptions and targeted live validation on 2026-10-22 ("ok lets do that i give permission for live validation"). This remains a raw-key disagreement, not a passed G2 or a successful live run.
+
+| Package | Original key | Strict result | Source evidence and cause |
+| --- | --- | --- | --- |
+| c05 (and s2 using its fixture) | approve | approve_with_note | [BLT sheet](https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf), page 2: `EZ1` / `eldoLED dims to` / `1% (0-10 volt dimming)`; a separate `GZ10` option dims to 10%. The catalog field is blank. A 1% value belongs to EZ1, not every BLT. |
+| c06 | send_back for currency | approve_with_note | [Submitted LDN6 sheet](https://assets.usesi.com/product-media/specification-sheets/USESI_531911_specification_sheets.pdf), page 1 prints an ordering example, not a selected SKU. Page 3 performance depends on target lumens and CCT. [Current source](https://dublinohiousa.gov/alpha/wp-content/uploads/2023/01/C1_Lighting.pdf) quotes a different revision, but no selected matching performance configuration is established. |
+| c07 replacement | originally passing BLT in mock | no passing replacement | The same unselected EZ1 dimming option cannot satisfy a replacement check for the whole product. It needs a specified configuration and its evidence. |
+
+The [full suite at this checkpoint](judge-readiness/g2/pytest.txt) reported **344 passed, 9 failed, 2 skipped** in **14.93 seconds**. The nine failures are existing assertions requiring the old c05/c06 decisions, their aggregate 8/8, or the previously passing BLT replacement. A focused payment/source/replacement/retention/Investigator run passed **119 tests** in **4.31 seconds**. Presentation checks and the production web build passed. That pre-adjudication failure report is preserved. After Kyle's authorization, regression tests now require exactly the c05/c06 (and shared-fixture s2) selection-policy disagreements and require unsupported BLT replacements to remain unconfirmed. CI explicitly checks the raw 6/8 panel and failing release gate; no production case branches, checklist edits, or answer-key edits were added. The approved checkpoint passed **353 tests, 2 skipped** in **14.77 seconds**, and presentation/build checks passed. Mock run `20261022-223237-73a5c3` reproduced the same raw panel and quote counters with **$0 / 0 credits** fresh spend. Targeted paid validation is authorized; G2 has not been accepted or pushed.
+
+Implemented work under review: complete bounded document chunks, cited-page quote checks, metric/unit/bound gates, explicit scope and selected-configuration proof, mandatory per-value web identity, model identity separate from family-wide status, original source cache timestamps with positive/negative expiry and explicit refresh, attributable primary Investigator rescue counts, replacement bundles of at most three matching documents with per-check citations and availability proof, and local durable payment reservations before each HTTP attempt. Known billing is retained even when answer parsing or persistence fails; unknown usage retains a hold and blocks further paid work.
+
+An independent AI audit reproduced and then confirmed fixes for optional-driver evidence falsely labelled product-wide, member-only discontinuation spreading across a family, ordering examples/alternative models falsely selected, copied bundle selection proof, omitted web identity, and missing replacement availability/currency citations. Its focused final review found no additional must-fix issue in those paths; this is not fresh live validation or a construction-professional study.
+
+The local payment database is deliberately separate from `.cache/`: the latter holds reports, not spend authority. Initialization requires explicit historical dates, refuses an existing database, and does not happen during a provider call. It was initialized locally with `python scripts/campaign_budget.py init --seed-day 2026-10-21 --seed-day 2026-10-22`. The authorized seed is October 21 **$1.048778 / 291** plus October 22 **$0.009827 / 7**; it excludes the unrelated October 8 ledger. The campaign ceiling is **$20 / 2,000**, with **$10 / 1,000** for engineering and **$8.941395 / 702** retained for final validation. [Initialization status](judge-readiness/g2/campaign-status.json) shows no new spend or outstanding reservations. This establishes no hosted or object-mount storage safety.
+
+The conservative model holds use the approved two-model allowlist and the public catalog's context sizes, treating K as binary to over-reserve, with current input/output prices. [Nebius catalog](https://nebius.com/services/token-factory/models/nvidia-nemotron-models-inference). Tavily bounds follow its documented search, extraction and mapping charges; failed extract/map responses are free, while unreported model/search billing remains unknown. [Tavily credit rules](https://docs.tavily.com/documentation/api-credits).
+
+Fixture corrections are source corrections, not new answer-key evidence: c01 includes complete native text from its manifest-verified document; c05/c06/BLT-replacement ordering options are explicitly scoped; c08 includes the complete previously captured manufacturer response rather than an abbreviated family-only excerpt. The c08 URL is unchanged; captured text SHA-256 is `5a386246e0d84be12ea11e6172409dca07de827fd7ef4caa87af552f6aac0b6d`. Historical live recordings remain untouched.
+
+## G2 live checkpoint — 2026-10-22
+
+Kyle authorized live validation and the documented raw-key policy exceptions. [Full evidence, before/after changes and commands](judge-readiness/g2/live-validation.md). Final targeted run `20261022-230145-fc12db` makes **2/2 calls and catches 2/2 problems**, with no invalid items, **0/2 passing fixes**, **19/85 claims** and **43/78 web values** kept. It confirms the guarded code on cached live responses; it is not a new eight-case score or a fresh latency benchmark. One primary Investigator run recovered c03's quoted temperature change, with no cap; c07's scripted status now succeeds.
+
+The first live contact broke product-identifier handling and family/format status matching. General corrections preserve printed identities, explicit selection, scope attribution and same-subject status. An independent audit additionally reproduced and verified closures for catalog cross-product pooling and selection rebinding. [Final pytest](judge-readiness/g2/pytest-final.txt): **382 passed, 2 skipped**; raw mock panel still **6/8, 5/6, 0/2, 0/5**. Presentation/build checks passed.
+
+Additional local provider spend is **$0.4281318 / 60 credits**, bringing the cumulative pass to **$1.4867368 / 358**, with no unsettled reservations. Kyle replied “that is correct” to the reported cumulative $1.4867368 / 358 totals on 2026-10-22. This is owner confirmation of the reported totals; a separate dashboard readout, its timestamp and account/key scope were not supplied. The earlier three-credit gap is still unexplained, and no ledger was adjusted.
+
+**G2 is not accepted:** no replacement has every required cited check. Current CPX proof leaves L70, warranty, MacAdam, dimming and availability unconfirmed; c03 lacks complete mold/assembly proof. G3 case/sample/blind validation and deployment remain pending. The historical recording, answer keys and reviewed checklists are unchanged.
+
+## Reliability checkpoint — 2026-10-23
+
+[Ownership and remaining-work audit](judge-readiness/ownership.md), [measured evidence and reproduction](judge-readiness/reliability-20261023/README.md).
+The linked-PDF path now tries Tavily when direct HTTP cannot obtain the linked document, using a separate
+cache age/credit path and one-hop bound. Actual c07 retry `20261023-000514-d915c4` remains correct with no
+passing replacement: the CPX PDF yielded no Tavily text and direct HTTP returned a Cloudflare 403. Fresh
+spend **$0 / 1 credit**; cumulative **$1.4867368 / 359**, no holds. This is an unsuccessful retrieval correction,
+not a quality gain or a new full panel.
+
+The full mock suite passes **399 tests, 2 skipped in 15.96 seconds**; raw mock remains **6/8, 5/6, 0/2, 0/5**
+with zero invalid items. Eight real Chromium tests against the mock API pass; presentation/build checks pass.
+The 13 required PDFs match a frozen lock and contain readable native text. Blank/scanned-without-text,
+missing, damaged and changed inputs fail release preflight; Docker no longer silently substitutes excerpts.
+Read-only smoke makes no scan, and invalid/replayed results cannot prove a fresh deployment.
+
+Outstanding model/web reservations constrain the next UTC day's admission. Invalid watch results cannot
+claim no change. Cloud launch now requires admin authentication and an idempotency key, retains full history,
+requires secret selectors and forwards exact model/quality settings. The disabled scheduler goes through
+the same controller and refuses credential-bearing redirects. These are local/fake-CLI tests only.
+An independent AI review confirmed the scoped corrections; **durable hosted authority, job escrow/leases,
+child limits and guarded settlement/publication remain unfinished agent work**. Current official prices are
+recorded in the unapproved cost worksheet; this is not deployment authorization.
+
+G2 remains open. No follow-up full-set run or final recording has been consumed, no gate has been
+self-approved, and no cloud resource has been touched.
+
+## Controller protocol checkpoint — 2026-10-23
+
+[Protocol, review findings, tests and reproduction](judge-readiness/controller-20261023/README.md).
+The controller now reserves a job allowance before launch, assigns one worker session, enforces a sealed
+child wallet and retains a private receipt. Settlement/publication requires matching immutable inputs,
+watched IDs, evidence hashes and observed cloud completion. Jobs get neither controller/archive mounts
+nor admin credentials. Unknown usage and missing/corrupt receipts retain holds and block more paid work.
+Cold import fences the source and binds one VM writer; retired imports and unsupported mounts fail closed.
+
+Full offline verification: **435 passed, 2 skipped in 21.08 seconds**. Raw mock remains **6/8, 5/6, 0/2,
+0/5**, zero invalid items, one unnecessary note, **48/65 claims and 8/20 web values**. Independent AI review
+found and confirmed fixes for retired-source reuse, missing-receipt accounting blocks and controller URL
+validation. No paid call or resource was made; cumulative actual spend remains **$1.4867368 / 359**, no holds.
+
+Remote source-fencing/export/import, approved writer-cutover tooling, immutable deployment preparation
+and hosted persistence/job proof remain agent-owned work. No actual campaign wallet was migrated or reset.
+G2 stays open; broader cases/samples/blind validation, release promotion and recording remain pending.
+
+## Release preflight checkpoint — 2026-10-23
+
+The [separate promotion check](judge-readiness/release-preflight-20261023/README.md) now requires complete
+cases, samples, six frozen owner-reviewed blind packages and the full public recording. It recomputes raw
+panels, validates immutable inputs/configuration/code, replays submitted-page claim gates and web comparisons,
+and checks every passing replacement and attributable primary Investigator rescue. Dated owner dispositions
+bind exact artifact hashes and preserve raw disagreements. A case evidence check alone cannot claim release.
+
+Review closed three false-promotion paths: fabricated submitted-page claims, omitted web outcomes and
+replacement availability cited by unrelated text. Paired tests preserve legitimate selected base models
+while rejecting a shared option code attached to a different product. Tool traces retain actual returned
+source URLs and success states; results retain extraction/verification proof and candidate page provenance.
+Old recordings remain viewable and cannot establish this new proof without the missing evidence.
+
+The full mock suite passed **505 tests, 2 skipped in 27.10 seconds** outside the sandbox; sandboxed TestClient
+attempts stalled and were interrupted. Presentation checks and web build passed. The raw mock panel remains
+**6/8, 5/6, 0/2, 0/5**, with 48/65 claims and 8/20 web values retained, no invalid items and one unnecessary
+note. Fresh spend was **$0 / 0 credits**; cumulative actual spend remains **$1.4867368 / 359**, no holds.
+
+The actual promotion check of the incomplete artifact bundle **fails**. No blind review, release approval,
+provider run, cloud action, broader evaluation or final recording was performed. G2 remains open; blind
+preparation, actual release evidence, remote wallet handoff and hosted durability proof remain agent-owned.
+
+## Replacement discovery / live quote checkpoint — 2026-10-23
+
+[Measured runs and before/after evidence](judge-readiness/replacement-discovery-20261023/README.md) show four
+general corrections: discontinued-product discovery can reach other makers; candidate verification avoids
+another maker's domain constraint; existing unit aliases work symmetrically; conditional scope remains
+unconfirmed. A live false replacement failure also exposed SDS/TDS dates being compared as performance.
+Document revision is now excluded from performance values, requested source properties and recovery counts;
+explicit revision labels retain their separate note path. Quotes, numeric bounds and selection proof stay strict.
+
+Final targeted run `20261023-023154-e725f0`: **2/2 calls, 2/2 problems, 0/2 passing fixes**, no invalid items,
+unnecessary notes, cap or provider warnings. It keeps 36/160 claims and 3/41 web values. One primary
+scripted-unconfirmed item is resolved by the primary Investigator; no primary or replacement runs are capped.
+The real two-item extraction/web/archive/trace consistency check passes. c03 takes 126.228 seconds and c07
+86.670 seconds, partly cached; this is not a cold or full-set benchmark.
+
+Full mock regression: **524 passed, 2 skipped in 26.91 seconds**. Raw mock remains **6/8, 5/6, 0/2, 0/5**,
+48/65 claims and 8/20 web values. Earlier checkpoint 499b44f passed GitHub's Python/mock/web/browser checks.
+New checkpoint spend is **$0.4834926 / 32 credits**, cumulative local ledger **$1.9702294 / 391**, no holds.
+Final target fresh charges are $0.1244169 / 7; displayed usage-equivalent costs are not fresh billing.
+
+G2 remains open: SLLT lacks complete proof; LT has a lost L70 bound, unselected options and unconfirmed
+availability; c03 lacks complete VOC/mold/assembly/availability proof. A bounded corrective read is still
+agent-owned. No full follow-up eval, blind eval, final recording, deployment or cloud resource was created.
+
+## Six-package preparation checkpoint — 2026-10-23
+
+The [new-source review table](judge-readiness/blind-20261023/README.md) has six downloaded manufacturer
+PDFs with distinct hashes outside the known 13-document lock: STI SSS, TREMstop Acrylic SP, STI C-AJ-0113,
+STI F-A-1118, RAB RPLED and RAB RTLED. Every page has native text; every draft source quote is on its cited
+page. The implementation agent prepared the drafts before application evaluation; this is not an independent
+human study. Scope and missing selections are explicit, and no label entered a pipeline input.
+
+The existing eval runner now accepts a frozen, owner-reviewed external catalog, strips expectations before
+execution and binds the exact set digest in its saved manifest. It refuses unreviewed sets, mock blind runs,
+mixed suites and unsafe result identifiers. It keeps the public scoreboard unchanged. Source preflight passes;
+the actual `--check` correctly refuses this draft because Kyle has not reviewed it. No self-approval was added.
+
+Full mock regression: **532 passed, 2 skipped in 26.95 seconds**; an additional **7 tests pass in 0.31 seconds**
+after adding a label-canary assertion. Final mock run `20261023-040437-584300` preserves **6/8, 5/6, 0/2, 0/5**,
+zero invalid items and one unnecessary note. Fresh provider spend is $0 / 0; campaign usage remains
+**$1.9702294 / 391**, with no holds. GitHub CI for preceding commit `7deb149` passed Python/mock/web/browser
+checks. No new frontend changes were made. G2/G3 remain open; no blind run, broader evaluation, final recording,
+deployment or cloud resource was started. Kyle's pending task is label review, not preparation or runner work.
+
+## Private authority transfer checkpoint — 2026-10-23
+
+[Transfer preparation and reproduction](judge-readiness/authority-transfer-20261023/README.md) now implements
+destination-bound export/import, source fencing, receipt preservation, exact interrupted-transfer recovery
+and explicit approved boot cutover. Retired state is read-only, and writer identity is checked again after
+the SQLite lock. Tests use synthetic wallets and simulated mounts/boots; no real source was retired or
+approval generated. The CLI trusts an operator-pinned owner record; the agent must authenticate the actual
+stopped-host observation before preparing a real cutover. Hosted transport and durability remain unverified.
+
+Full mock regression: **560 passed, 2 skipped in 30.79 seconds**. Mock run `20261023-042244-894557` preserves
+**6/8 calls, 5/6 problems, 0/2 major false alarms and 0/5 passing replacements**, zero invalid items and one
+unnecessary note. No provider calls were made. Actual cumulative ledger remains **$1.9702294 / 391**, no
+holds and no retirement. CI for the preceding `c97f1f8` checkpoint passed Python/mock/web/browser checks.
+The local Docker daemon reports version 29.9.2; no release image was built in this checkpoint. The concrete
+startup/persistence/image/resource/cost/expiry/rollback manifest remains agent-owned preparation. G2–G5 stay
+open; no full-set follow-up, blind evaluation, final recording, deployment or cloud resource was started.
+
+## Local image packaging checkpoint — 2026-10-23
+
+The [local image build](judge-readiness/image-build-20261023/README.md) from `b9de109` succeeds with all
+13 locked native PDFs, the actual CLI 0.12.289 and the documented raw mock panel. Real CLI help confirms the
+profile/job/endpoint flags used by the application. A temporary, network-disabled container serves API and
+static assets; it correctly exposes the bundled historical recording, not a new live panel. Scanning 8,566
+files finds no configured key strings or excluded private paths. All temporary containers are removed.
+
+The image remains local and unapproved for release. No production source changed, no provider spend was
+added, and no image was published or cloud resource created. Actual cumulative usage remains $1.9702294 /
+391, no holds. Source-commit CI passed all checks. Final source/image publication, startup/persistent-state
+layout, resource/cost/IAM/expiry/rollback approval and hosted proof remain agent-owned work after their gates.
+
+## Claim repair and source attribution checkpoint — 2026-10-23
+
+[Measured before/after, redacted responses and commands](judge-readiness/claim-repair-20261023/README.md)
+record bounded same-magnitude qualifier repair, literal Unicode quote normalization, retention of validated
+bundle claims, coded-driver selection gates, empty-chunk model merging and exact quote/URL attribution.
+The schema's shorter-scope instruction did not resolve the live Williams scope drops; this remains open.
+An actual agreeing-page quote/URL mismatch failed evidence consistency before the one-line comparison fix.
+
+Final targeted run `20261023-055339-e48fd0`: **2/2 calls, 2/2 problems, 0/2 passing fixes**, no typed invalidity,
+unnecessary notes or cap/provider warnings. It keeps 58/209 claims and 51/100 web values. Both scripted checks
+succeed without a primary Investigator; two replacement runs end not-resolved/revision-only, none capped.
+The final archive/quote/trace consistency check passes. c03 takes 131.411 s and c07 0.945 s, partly cached;
+these are not cold or full-set timings. Fresh charges for that run are $0.0562113 / 0 credits.
+
+The full mock suite passes **591 tests, 2 skipped in 31.04 seconds**. The unchanged raw mock panel remains
+6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 fixes, one unnecessary note, no invalid items,
+48/65 claims and 8/20 web values. No frontend change was made. The local packaging image predates this code.
+
+This checkpoint adds **$0.5553024 / 28 credits**, cumulative **$2.5255318 / 419**, no holds or persistent block.
+No new dashboard reconciliation is claimed. G2 stays open for complete replacement evidence and remaining
+scope/source causes; original expectations, reviewed checklists and historical recording remain untouched.
+Both full follow-up evals and the final recording remain unused. Deployment and cloud resources stay untouched.
+
+## Persistent startup and uncertainty checkpoint — 2026-10-23
+
+[Local evidence and commands](judge-readiness/controller-startup-20261023/README.md) verify persistent
+raw/upload/cache/run/score/evidence paths on the controller's private mount. The image's default startup
+checks that mount and wallet location, seeds only locked readable public PDFs without overwriting changed
+state, and keeps requirements/fixed inputs/replay in the image. It never creates or imports a wallet.
+Existing health/admission behavior supports the no-wallet stage; project/watch state remains unavailable.
+
+A network-disabled local container on an actual ext4 bind mount seeds all 13 required documents, explicitly
+transfers a newly created synthetic authority, then preserves its state/marker and app files across restart.
+Read-only API/static routes return 200 after activation. The actual image refuses an unmounted directory,
+exit 2. A fresh image reports no configured keys or excluded private paths; this is not a whole-filesystem
+secret scan. Every temporary container is removed; the unpublished image remains local. No real authority,
+Nebius filesystem, VM reboot, hosted safety or release is established.
+
+Unknown evidence now says “Not confirmed”; both unconfirmed currency comparison paths use the unverified
+state, preserving outer decisions and quote gates. Full suite: **602 passed, 2 skipped in 31.93 seconds**.
+Mock remains **6/8, 5/6, 0/2, 0/5**, zero invalid items, one unnecessary note, 48/65 claims and 8/20 web values.
+Both preceding `23028a0` workflows passed. No new live evaluation was run for these startup/wording changes.
+Fresh provider spend is $0 / 0; cumulative actual remains **$2.5255318 / 419**, no holds or persistent block.
+G2 remains open, later gates remain pending, and the agent retains unfinished validation/deployment/demo work.
+
+## Independent metric scope and account billing — 2026-10-23
+
+[Scope checkpoint](judge-readiness/scope-binding-20261023/README.md) preserves the old/new matcher,
+actual archived quotes, 615 passed / 2 skipped, unchanged raw mock panel and targeted run
+`20261023-064841-187b83`: 2/2 calls/problems, 0/2 fixes, no invalid items. Unconditional L70/MacAdam
+statements now survive a separate explicit optional lifetime sentence; driver/DLC selection remains
+unconfirmed. Runtime patch reconstructs the measured source hash exactly. G2 remains open.
+
+Local cumulative $2.5679656 / 426 has no holds. Kyle reports account-wide $2.13 / 421; a separate later
+Tavily usage API reads 415. Cutoff and cause remain unresolved; current cached-input pricing is a possible
+unquantified dollar difference, not a proven explanation. The higher local ledger is retained unchanged.
+No follow-up full eval, unreviewed blind evaluation, final recording, image publication or cloud action.
+
+## Required replacement research checkpoint — 2026-10-23
+
+[Targeted run `20261023-071700-8a9e33`](judge-readiness/replacement-research-20261023/README.md)
+passes two-item evidence consistency and keeps **2/2 calls/problems, 0/2 passing replacements**, no invalid
+items or provider/cap warnings. Four replacement investigations run, none capped; no primary investigation
+is needed. Applicable missing requirements, candidate URL and explicit availability context now reach the
+Investigator, and newly discovered status/supplementary sources survive the final bounded read. Unsupported
+availability and unselected configurations still fail to establish proof. No key or checklist is changed.
+
+Full mock regression: **621 passed, 2 skipped in 31.67 seconds**; raw mock remains **6/8, 5/6, 0/2, 0/5**,
+48/65 claims and 8/20 web values. Fresh targeted charges **$0.0671367 / 12 credits**, cumulative actual local
+**$2.6351023 / 438**, UTC-day **$1.1483655 / 80**, no holds or persistent block. The prior owner account-wide
+$2.13 / 421 and separate Tavily API 415 observations predate this run; no current invoice match is claimed.
+The higher local accounting remains in force. G2 is open; no broader evaluation, blind evaluation, final
+recording, cloud action or owner approval is inferred.
+
+## Required evidence research and resource draft — 2026-10-23
+
+The [latest research checkpoint](judge-readiness/replacement-research-20261023/README.md) adds missing
+applicable property names and an explicit availability need to replacement research, and preserves new
+fetched sources for the bounded read. Actual c03/c07 `20261023-071700-8a9e33`: 2/2 calls/problems,
+0/2 fixes, four replacement investigations, no primary rescue/cap/provider warning; fresh $0.0671367 / 12.
+621 passed / 2 skipped, raw mock unchanged, matching-source two-item consistency passes. G2 stays open.
+
+The [unapproved rollout draft](../deploy/nebius/rollout.pending.md) fills public storage/preset/IAM risks,
+cost components, expiry/stop rules and rollback. Local CLI syntax and Decimal forecast checks pass;
+$1.881085 is the proposed 24-hour/two-job resource subtotal with explicit exclusions. Private account
+inputs, final image, complete cost bound and approval remain pending; no deployment action occurred.
+Local actual campaign $2.6351023 / 438, no holds/block. Earlier owner/API billing disagreements remain
+unresolved and predate this run. No full follow-up eval, blind run or final recording consumed.
+
+## Product-page/catalog checkpoint — 2026-10-23
+
+[Actual retrieval before/after](judge-readiness/catalog-fallback-20261023/README.md) shows a LightMart
+product request replaced with a full company catalog. The shared link helper now skips explicit full/
+master/complete catalog filenames, preserving the product page. Affected legacy substitutions refresh
+once through normal accounting; explicitly requested catalogs and unrelated caches remain usable.
+Five new regressions pass; full suite **626 passed / 2 skipped in 32.12 s**. No prompt, key, checklist,
+quote gate or selection rule changes. Two discovery diagnostics find no complete replacement, so their
+queries are not adopted in production.
+
+Current-code run `20261023-073518-c1e622` is fully cached: **2/2 calls/problems, 0/2 fixes**, no invalid
+items or provider/cap warnings, **$0 / 0 fresh charges**. Its two-item source/archive/trace consistency
+check passes; it is not release promotion or a fresh latency benchmark. Quote counters remain 56/209
+claims and 54/110 web values. Four replacement investigations, none capped; no primary investigation.
+The two diagnostic probes plus actual cache repair add **$0 / 4 credits**. Actual local cumulative
+**$2.6351023 / 442**, UTC-day **$1.1483655 / 84**, no holds or persistent block. Earlier dashboard/API
+readings predate these charges and remain unreconciled; no ledger is adjusted. G2 stays open. No broader
+evaluation, blind evaluation, final recording, cloud resource or approval occurs.
+
+## Current-source packaging checkpoint — 2026-10-23
+
+[Local image evidence](judge-readiness/current-image-20261023/README.md) now binds tested runtime
+`1c3c7fe` / code hash `f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a`
+to unpublished image/index `sha256:e92d0c23c9233f21607b4171b250e8598f220d8982d4d859c05ac69cd63387b7`.
+Build and image-native 13-PDF preflight pass; dependency/web layers are reused. Network-disabled mock
+eval preserves raw 6/8 / 5/6 / 0/2 / 0/5, expected exit 1, no invalid items. Fresh key/path booleans
+are false and an actual scan finds no configured secret strings in 126 regular `/app` files; this is not
+a layer/entire-filesystem scan. A new synthetic-only import/restart preserves state/authority/app markers.
+
+Both CI workflows for runtime source `1c3c7fe` pass Python/mock, presentation/build and mock browser
+journey/failure checks. No real authority, provider request, cloud resource or registry publication occurs.
+Local cumulative accounting remains $2.6351023 / 442, no holds. This closes the outdated-local-image gap
+without passing G2, promoting the release, or establishing hosted storage/reboot/IAM behavior. G2 and the
+remaining owner gates stay open; actual final validation and hosted execution remain agent-owned.
+
+## Technical-sheet revision checkpoint — 2026-10-23
+
+[Actual before/after and live read metadata](judge-readiness/document-revisions-20261023/README.md)
+corrects an SDS version borrowed for a technical-sheet comparison. The deterministic type check rejects
+that revision and preserves the supported property quotes; reader instructions distinguish source types
+and conflicting technical revisions. Pass titles state only compared values or revisions, and unknown
+revision details no longer print `None`. Six new regressions; full **632 passed / 2 skipped in 31.66 s**.
+Raw mock stays **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 fixes**, no invalid items, one note.
+
+Final targeted run `20261023-081257-c725cf`: **2/2 calls/problems, 0/2 fixes**, no invalid items or
+provider/cap warnings, 56/209 claims and 61/124 web values retained. Four replacement investigations,
+none capped; two confirm values and two remain unresolved. No primary investigation runs. The two-item
+archive/source/trace consistency check passes; this is not full promotion. Timings 174.509 / 137.884 s
+include fresh and cached work. The raw response audit records 61 source reads, 51 fresh; two still emit
+the SDS date and are rejected by code.
+
+Gate-only validation adds $0.000606 / 1 credit; final prompt validation adds $0.1664979 / 4, checkpoint
+**$0.1671039 / 5**. Actual cumulative local **$2.8022062 / 447**, UTC-day **$1.3154694 / 89**, no holds
+or persistent block. Earlier dashboard/API observations predate this work; no reconciliation or ledger
+adjustment is inferred. No original expectation, reviewed requirement, broader evaluation, blind run, final
+recording, cloud resource or owner approval changes. G2 remains open. The earlier packaged runtime predates
+this source correction; it is not current-source release evidence.
+
+### Frozen revision-source image follow-up — 2026-10-23
+
+The [frozen revision-source image](judge-readiness/document-revisions-20261023/README.md) binds runtime source
+`2ac6f89` / `4a660ea2136462a7c72d30100372c22f06fcc4e2d14f679de3169b3f23ddfad8` to unpublished image/index
+`sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28`. Required 13-PDF preflight
+passes; blind PDFs and private app paths are absent. No configured secret string occurs in 8,562 regular
+image files (virtual filesystems/symlinks and deleted layers excluded). Raw mock panel remains 6/8 / 5/6 /
+0/2 / 0/5, expected exit 1. Source CI passes Python/mock, presentation/build and mock browser checks.
+
+An isolated synthetic wallet/import/two-restart proof serves the historical live scoreboard, replays ten
+recorded results and all eight public items at a temporary zero day cap; fresh re-check returns 429 instead
+of replaying. This is loopback with Docker networking disabled, no real keys/authority mounted, and no
+provider request. Its checkpoint accounting is $2.8022062 / 447, before the later unit validation. No current full-set evaluation, recording, registry
+publication, hosted proof or approval occurs. The separate replacement-proposal policy question is pending;
+the existing submitted-selection rule stays binding.
+
+### Unit-validation and documentation reconciliation — 2026-10-23
+
+The [actual synthetic before/after and targeted live check](judge-readiness/quantity-units-20261023/README.md)
+binds runtime `a9df48c` / `00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3`.
+Missing physical units cannot borrow the requirement's unit; dimensionless values and explicit conversions
+remain valid. Shared extraction, web and both release paths apply the same gate. No prompt, original key
+or reviewed checklist changes. Fifteen new regressions bring the integrated suite to **647 passed / 2 skipped**.
+Raw mock remains **6/8 / 5/6 / 0/2 / 0/5**, zero invalid items, with **46/65** claims and **8/20** web values.
+
+Actual live run `20261023-084824-7ab49b` gets c03/c07 **2/2 calls/problems, 0/2 passing fixes**, zero invalidity
+or warnings. Two-item archive consistency passes; no complete promotion. Four replacement investigations
+return found, none capped, without complete evidence; no primary investigation runs. Fresh charges are
+**$0.1494426 / 10 credits**. Settled cumulative ledger: **$2.9516488 / 457**, UTC day **$1.464912 / 99**,
+no holds or persistent block. Tavily's 08:53 UTC usage API reports **437**; the local 20-credit difference
+remains unresolved and no accounting is changed. The owner's $2.13 / 421 is account-wide, cutoff unspecified.
+
+Both [CI workflows for source `95d5a27`](judge-readiness/quantity-units-20261023/ci.json) pass Python/mock,
+presentation/build and mock browser checks. The frozen image above predates this unit correction; rebuilding
+the final validated source remains required. Current README/SUBMISSION/ownership now separate those scopes.
+Public Virtual Networks/Registry service rates and SecretStash preview pricing are resolved in the
+unapproved cost worksheet; private account facts, actual dates, tax/IP/egress bounds and approval remain open.
+This documentation/identity review makes no paid provider call. G2 stays open; no full-set/blind evaluation,
+final recording, cloud resource, real authority transfer or owner acceptance is inferred.
+
+
+### Current unit-runtime local image and further source research — 2026-10-23
+
+The [new local image](judge-readiness/current-runtime-20261023/README.md) matches tested unit runtime
+`a9df48c` / `00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3`, image/index
+`sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586`. Required 13-PDF preflight,
+existing synthetic unit-boundary proof, expected raw mock 6/8 and privacy checks pass. No configured secret
+occurs in 8,562 regular image files. The existing isolated synthetic import/two-restart/capped replay proof
+returns 10 explicit recorded results and all eight public items; replayed results survive restart. Fresh
+re-check at the synthetic zero cap returns 429. This closes the outdated local-runtime-image gap, not
+release validation, registry publication, real authority transfer or hosted proof.
+
+Three manual manufacturer GETs add source facts without altering a case or selection: Williams QuickShip
+stock wording covers six listed configurations, Elite's newly researched PDF contains conflicting dimming
+minima, and Utopia directs availability inquiries to its team. Exact URLs, hashes, short quotes and scopes
+are retained in the linked checkpoint. No candidate is declared passing and no answer-key change is inferred.
+The replacement-proposal decision and gate acceptance remain Kyle's parts. This work adds $0 / 0 paid
+provider charges; actual local accounting stays $2.9516488 / 457 with no holds. G2 and later gates stay open.
+
+
+### Link/unit/status correction and affected-case validation — 2026-10-23
+
+[Actual source diagnostics, intermediate failures, prompts and same-read replays](judge-readiness/document-links-20261023/README.md)
+record three general corrections: prefer technical-sheet paths over navigation PDFs; explicitly request
+printed units for physical claims; validate each status against existing quote/identity rules before
+merging. No quote/value/scope/selection rule is relaxed. Ten new regressions; full **657 passed / 2 skipped
+in 31.96 s**, unchanged raw mock 6/8 / 5/6 / 0/2 / 0/5 and 46/65 / 8/20 gates. Both source `e1a4c2e`
+CI workflows pass Python/mock, presentation/build and mock browser checks. Earlier local image is historical.
+
+The first c07 item is invalid at fix/output_limit and preserves its failed charge. A separate 65,536-token,
+concurrency-one retry is valid but misses discontinuation: eight model claims are rejected, and unsupported
+active statuses cancel a supported notice before gating. The unit-prompt pass gets c03/c07 right; the final
+committed source check `20261023-095053-630ac4` keeps **2/2 calls/problems, 0/2 passing fixes**, zero
+warnings/invalidity. Item times **65.928 / 57.384 s** are partly cached, not cold-upload benchmarks. Final
+fresh **$0.0792648 / 2**; claims **131/340**, web **29/104**. Two-item source/archive/trace consistency passes.
+Four replacement investigations, none capped, yield no complete replacement; no primary investigation runs.
+G2 is not accepted. Missing mold/assembly/availability or selected driver/DLC proof remains unconfirmed.
+
+Six diagnostic/evaluation runs add **$0.41484102 / 33 credits**; exact payments reconcile by run. Actual
+local cumulative **$3.36648982 / 490**, engineering **$2.30788482 / 192**, no holds or persistent block.
+The unit-prompt pass's intermediate ledger was inspected after the next check; the audit does not invent a
+boundary snapshot. The 09:56 UTC Tavily API returns **452**, 38 below local credits. Earlier owner $2.13 /
+421 predates this work; dashboard/invoice reconciliation and the cause remain open, with no accounting edit.
+No full-set/blind run, final recording, image publication, cloud resource, real transfer or owner acceptance.
+
+
+### Frozen validated-source image proof — 2026-10-23
+
+The [isolated local build](judge-readiness/document-links-20261023/image/README.md) pins committed
+`061cf9d` / runtime `3480e5d073f7a58d7fae7317cac2c0a83a3dc880b45e3709e2bec7e9f07f0b45` to
+image/index `sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7`.
+All 13 locked PDFs/native text, strict unit reproduction, expected raw mock 6/8, private-path absence and
+configured-secret scan over 8,562 regular files pass. The existing synthetic import/two-restart proof
+returns ten explicit historical replay results and all eight public items at a zero day cap; a fresh
+re-check returns 429. No provider call, real key environment/authority mount, publication or cloud resource.
+The shared uncommitted status-timing correction is excluded, preserved and not validated by this image.
+Final source/configuration/input freeze, registry identity and release approval remain pending. Actual
+local accounting observed afterward remains $3.36648982 / 490, no holds. No gate acceptance is inferred.
+
+
+## Quoted lifecycle timing — 2026-10-23
+
+[The same synthetic response and affected cached-live item](judge-readiness/status-timing-20261023/README.md)
+show a future notice no longer causes a current failure, availability start/end bounds are checked, and
+status metadata needs its actual quote. No prompt/key/checklist change. Full **689 passed / 2 skipped**,
+unchanged raw mock 6/8. c07 remains correct, no passing fix or invalid item, $0 / 0 fresh charges;
+source/archive/trace consistency passes. Local cumulative **$3.36648982 / 490**, no holds. G2 and all later
+gates remain open; existing image predates this correction. Broader evaluation/release is not inferred.
+
+
+### Owner-approved replacement proposals — 2026-10-23
+
+Kyle chose **“Allow clearly labelled agent proposals, with every SKU, option and check supported by fetched quotes.”**
+The [implementation evidence](judge-readiness/replacement-proposals-20261023/README.md) binds this to candidate-only
+extraction and independent release replay. Original submitted selections, answer keys, reviewed checklists and blind
+labels stay strict. Printed catalog/stock SKU proof, exact component binding, quote/value/unit/scope checks and current
+availability are still required. A token-boundary correction also rejects selection quotes truncated inside another SKU.
+Review, report, watch, drafts and outcome identify SpecCheck's proposal and ask for configuration confirmation.
+
+Final verification: **722 passed / 2 skipped**, presentation/build clean, **9 mock Chromium journeys** pass, desktop/mobile
+screens retained. Code hash `0cb242eda7b7a8d599741f074c98eaf44aebd24ccc1e48bf99d95426724e8688`; mock run
+`20261023-213704-979880` remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**, with one unnecessary
+note and zero invalid items. Claims 46/65, web values 8/20; fresh $0 / 0 credits. No live gain or gate acceptance is claimed.
+
+A read-only refresh at **19:14:04 UTC** still yields monthly key/account 485 and campaign log total 480 versus local settled
+490; the failed 10:36–10:38 request has no attributable receipt. The unknown one-credit hold remains. Calculated cumulative
+spend stays **$3.36648982 / 490 settled credits**, plus that hold. Paid validation is blocked; no authority transfer,
+recording replacement, registry publication, cloud creation, deployment or merge occurred. G2 and subsequent gates stay open.

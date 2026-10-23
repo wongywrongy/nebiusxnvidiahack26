@@ -1,0 +1,48 @@
+{
+  "scope": "Manual native-document inspection; no configuration chosen or pipeline verdict",
+  "request": {
+    "method": "GET",
+    "url": "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf",
+    "authentication": "none"
+  },
+  "observed_at": "2026-10-23T09:22:05.131074+00:00",
+  "response": {
+    "status": 200,
+    "sha256": "c3f8ac4cc527d096ec085e3010eff400c298cc161cf1be5da5e456ab4dca777d",
+    "bytes": 8206905,
+    "pages": 3
+  },
+  "page_quotes": [
+    {
+      "page": 1,
+      "quote": "3 Step MacAdam Ellipse"
+    },
+    {
+      "page": 1,
+      "quote": "L70 at 167,000 Hours"
+    },
+    {
+      "page": 1,
+      "quote": "DLC Premium"
+    },
+    {
+      "page": 2,
+      "quote": "Flicker Free 1%"
+    },
+    {
+      "page": 2,
+      "quote": "Five-year warranty for parts and components."
+    }
+  ],
+  "product_page_plain_http_observation": {
+    "date": "2026-10-23",
+    "status": 403,
+    "user_agent": "httpx default"
+  },
+  "limits": [
+    "No submitted selection",
+    "Retrofit kit requires compatible existing housing",
+    "Indexed product-page stock/DLC snippets are not a fetched-page proof in the SpecCheck run",
+    "No complete passing replacement claimed"
+  ]
+}

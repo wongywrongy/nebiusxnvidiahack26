@@ -1,0 +1,51 @@
+{
+  "checked_at": "2026-10-23T04:02:01.581268+00:00",
+  "packages": [
+    {
+      "id": "b01",
+      "native_text": true,
+      "hash_matches": true,
+      "quotes_on_pages": true,
+      "source_name": "sti-sss"
+    },
+    {
+      "id": "b02",
+      "native_text": true,
+      "hash_matches": true,
+      "quotes_on_pages": true,
+      "source_name": "tremstop-acrylic"
+    },
+    {
+      "id": "b03",
+      "native_text": true,
+      "hash_matches": true,
+      "quotes_on_pages": true,
+      "source_name": "sti-caj0113"
+    },
+    {
+      "id": "b04",
+      "native_text": true,
+      "hash_matches": true,
+      "quotes_on_pages": true,
+      "source_name": "sti-fa1118"
+    },
+    {
+      "id": "b05",
+      "native_text": true,
+      "hash_matches": true,
+      "quotes_on_pages": true,
+      "source_name": "rab-rpled"
+    },
+    {
+      "id": "b06",
+      "native_text": true,
+      "hash_matches": true,
+      "quotes_on_pages": true,
+      "source_name": "rab-rtled"
+    }
+  ],
+  "distinct_new_primary_hashes": 6,
+  "owner_reviewed": false,
+  "pipeline_evaluated": false,
+  "paid_provider_calls": 0
+}

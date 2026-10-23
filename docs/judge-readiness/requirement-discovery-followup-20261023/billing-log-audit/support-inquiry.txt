@@ -1,0 +1,22 @@
+Subject: Confirm billing for a request without a response, October 23 2026
+
+Please help confirm whether my API key incurred any charge for a request attempted
+between 2026-10-23 10:36 and 10:38 UTC. The client failed after approximately 60 seconds
+without receiving a confirmed usage amount. No server request ID was retained.
+
+At 10:55 UTC, a key-filtered POST /logs for October 1–23 returned 630 rows totalling
+485 credits; GET /usage also reported 485. The latest returned log was at 09:52:39 UTC,
+with none in the failed-request window. I have not treated that absence as a confirmed
+zero charge. My application retains a one-credit reservation pending reconciliation.
+
+Could you confirm whether the attempted request was received and billed, and supply
+an attributable request record or billing confirmation with its credit amount?
+
+I also need to understand a separate historical difference: for October 21–23, the
+provider logs total 480 credits, while my local conservative accounting totals 490.
+Per UTC day: October 21, 283 vs 291; October 22, 66 vs 67; October 23, 131 vs 132.
+The monthly provider counter includes five additional credits dated October 8,
+which are outside this campaign period.
+
+Kyle: add the account/key identifier from the authenticated dashboard privately.
+Do not include the API key secret. This is a draft; no message has been sent.

@@ -44,7 +44,9 @@
         "value": 1,
         "unit": "%",
         "page": 2,
-        "quote": "eldoLED dims to 1% (0-10 volt dimming)"
+        "quote": "eldoLED dims to 1% (0-10 volt dimming)",
+        "scope": "unknown",
+        "scope_quote": "eldoLED dims to 1% (0-10 volt dimming)"
       },
       {
         "id": "k2",
@@ -54,7 +56,9 @@
         "value": 5,
         "unit": "yr",
         "page": 1,
-        "quote": "WARRANTY — 5-year limited warranty."
+        "quote": "WARRANTY — 5-year limited warranty.",
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY — 5-year limited warranty."
       },
       {
         "id": "k3",
@@ -64,7 +68,9 @@
         "value": 3010.9,
         "unit": "lm",
         "page": 2,
-        "quote": "3,010.9"
+        "quote": "3,010.9",
+        "scope": "unknown",
+        "scope_quote": "3,010.9"
       },
       {
         "id": "k4",
@@ -74,9 +80,13 @@
         "value": 120.4,
         "unit": "lm/W",
         "page": 2,
-        "quote": "120.4"
+        "quote": "120.4",
+        "scope": "unknown",
+        "scope_quote": "120.4"
       }
-    ]
+    ],
+    "family": "2TL4",
+    "family_quote": "n acrylic lens.\nExample: 2TL4 40L RW A19 EZ1 LP835 N80\nAcce"
   },
   "web": {
     "search": [
@@ -98,7 +108,8 @@
     "source_urls": [
       "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
     ],
-    "status_quote": "As of June 30th, 2024, the TL family will be discontinued."
+    "status_quote": "As of June 30th, 2024, the TL family will be discontinued.",
+    "status_family": "TL"
   },
   "report": {
     "summary": "This fixture family was discontinued on June 30, 2024, so it can't be ordered for the project.",

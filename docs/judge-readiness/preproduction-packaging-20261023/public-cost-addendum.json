@@ -1,0 +1,34 @@
+{
+  "scope": "public rate clarification only, no cloud/account operation, approval or actual bill",
+  "services": [
+    {
+      "url": "https://docs.nebius.com/container-registry/resources/pricing.md",
+      "observed_at": "2026-10-23T07:50:35.825690+00:00",
+      "body_sha256": "c4cd96e4cead2615936116004eba9b5b66a18aa451532c0a169700bf89a57586",
+      "published_service_price_usd": 0,
+      "statement": "Official raw Markdown describes this service as free."
+    },
+    {
+      "url": "https://docs.nebius.com/mysterybox/resources/pricing.md",
+      "observed_at": "2026-10-23T07:50:35.728039+00:00",
+      "body_sha256": "1ae17c31018c9fd3ea28d5c63ae77f666dbbfe194c69b796282533acbb9d8851",
+      "published_service_price_usd": 0,
+      "statement": "Official raw Markdown describes this service as free; SecretStash is in preview."
+    },
+    {
+      "url": "https://docs.nebius.com/vpc/resources/pricing.md",
+      "observed_at": "2026-10-23T07:49:34.106292+00:00",
+      "body_sha256": "9e1c8b8fe89b2c5fec407c82a1ab391151fffa4918e2bf5d712fcd5f4c0e8c66",
+      "published_service_price_usd": 0,
+      "statement": "Official raw Markdown describes this service as free."
+    }
+  ],
+  "remaining_account_inputs": [
+    "grant balance and expiry",
+    "project/subnet/preset quotas",
+    "IAM and private secret selectors",
+    "tax treatment",
+    "approved actual operating/retention dates and maximum spend"
+  ],
+  "limits": "These statements do not establish any external provider cost, private grant entitlement, future pricing or owner approval."
+}

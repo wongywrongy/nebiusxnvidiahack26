@@ -1,0 +1,95 @@
+{
+  "run_id": "catalog-fallback-20261023-073456",
+  "purpose": "actual affected batch retrieval, not case scoring",
+  "before": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 83,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 441,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 143,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "request": {
+    "urls": [
+      "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+      "https://hew.com/specifications/LT_led.pdf",
+      "https://www.lightmart.com/30w-40w-50w-selectable-wattage-lumens-and-color-temperature-led-architectural-2x4-troffer-light"
+    ],
+    "depth": "basic",
+    "authorization": "REDACTED"
+  },
+  "response": [
+    {
+      "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+      "requested_url": null,
+      "characters": 15977,
+      "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+      "archived_path": "replacement-discovery/2026-10-23T07_34_56+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+      "excerpt": "Project: Type: Note: SLLT LED TROFFER LUMINAIRE DESCRIPTION Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. The LED troffer are fully dimmable, and are compatible with building controls",
+      "cache_hit": false
+    },
+    {
+      "url": "https://hew.com/specifications/LT_led.pdf",
+      "requested_url": null,
+      "characters": 12357,
+      "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+      "archived_path": "replacement-discovery/2026-10-23T07_34_56+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+      "excerpt": "ORDERING EXAMPLE: LT - 24 - L52/835 - AF - OPTIONS - CONTROL/DIM - UNV SERIES WIDTH LENGTH LUMENS [1] CRI CCT LT Static LT-AR Air Return [2] 1 1\u2032 2 2\u2032 2 2\u2032 4 4\u2032 1x2 L20 2,000lm L31 3,100lm L40 4,000lm [3] 1x4 L28 2,800lm L47 4,700lm L63 6,300lm L90 9,000lm [4] 2x2 L27 2,700lm L39 3,900lm L49 4,900lm",
+      "cache_hit": false
+    },
+    {
+      "url": "https://www.lightmart.com/30w-40w-50w-selectable-wattage-lumens-and-color-temperature-led-architectural-2x4-troffer-light",
+      "requested_url": null,
+      "characters": 9303,
+      "sha256": "eb87a0d4ecbf136c6d75be17543291de6507ba68ab6cffe3f5eb1aae833762a8",
+      "archived_path": "replacement-discovery/2026-10-23T07_34_56+00_00/eb87a0d4ecbf136c6d75be17543291de6507ba68ab6cffe3f5eb1aae833762a8.txt",
+      "excerpt": "* [Home](https://www.lightmart.com/)\n* [LED Light Fixtures](https://www.lightmart.com/led-light-fixtures/)\n* [Indoor Commercial Lighting](https://www.lightmart.com/commercial-light-fixtures/indoor-commercial-lighting/)\n* [LED Troffers & Panels](https://www.lightmart.com/commercial-light-fixtures/ind",
+      "cache_hit": false
+    }
+  ],
+  "after": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 84,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 442,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 144,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "day_mirror": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 84,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 442,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 144,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "fresh_usd": 0,
+  "fresh_credits": 1.0
+}

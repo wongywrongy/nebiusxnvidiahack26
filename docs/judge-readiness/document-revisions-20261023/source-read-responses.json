@@ -1,0 +1,1893 @@
+[
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c03",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "ad26b8c5b97d504d9e4c99a443bd2e428759f99413ab083a8362d716097ed5e9",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4930,
+      "output_tokens": 313,
+      "cost_usd": 0.0017607,
+      "latency_ms": 2608,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "b11b4204de3a4f273eb93a909ff35852bf273dfdf2b8b57ab3094c0580e2d0b5",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7138,
+      "output_tokens": 212,
+      "cost_usd": 0.0023322,
+      "latency_ms": 2756,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "cea92d20b15327db261cb22a69a29ea0e63772472fb8e8e9ae5c0f1be938d3a8",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6252,
+      "output_tokens": 160,
+      "cost_usd": 0.0020196,
+      "latency_ms": 2547,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c03",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "01512000a8ffe1e4c6103c1a89165f5ddedd06f6ce13dddab2f57d9615f48f29",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5117,
+      "output_tokens": 361,
+      "cost_usd": 0.00186,
+      "latency_ms": 3281,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "2d4b24a2421cdcc9c50de754ce6bf65690eabdbe594a743bc978ce50d9726589",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 0
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3108,
+      "output_tokens": 26,
+      "cost_usd": 0.0009558,
+      "latency_ms": 1251,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "de8c179167ac14a47fdfae409cdf83218fbcf286104023264bbad52c01bda49d",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "discontinued",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5515,
+      "output_tokens": 200,
+      "cost_usd": 0.0018345,
+      "latency_ms": 1861,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c03",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "e63f8caca8264eea8abbbfb3ca139fac920bb8e36b23a994a87970afd3b4daa3",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4723,
+      "output_tokens": 360,
+      "cost_usd": 0.0017409,
+      "latency_ms": 2935,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "348a06c29ba98fb347f1a960a6b6281f6a5599995dfe7d2087feb9d59f3a7c04",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 0
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5017,
+      "output_tokens": 26,
+      "cost_usd": 0.0015285,
+      "latency_ms": 1741,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "5ebeca5ef5150859f0928bd2c3de17203be55c6d2824bae79b6eac0a0c407b80",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7612,
+      "output_tokens": 237,
+      "cost_usd": 0.0024969,
+      "latency_ms": 1872,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "38a550dca1e37d5f1aa2005609fb25ec5c7cd30cae990906520410f327ce37a5",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6726,
+      "output_tokens": 237,
+      "cost_usd": 0.0022311,
+      "latency_ms": 2091,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "55bc87ac31679a550df41b17b91aeba7cee7403244743e39a72218d0d8d9b981",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3581,
+      "output_tokens": 237,
+      "cost_usd": 0.0012876,
+      "latency_ms": 2190,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "6f79be7b649de0d5532afc2df03e7e916d65510b71d2750104e6c9a121cdea6e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5178,
+      "output_tokens": 1944,
+      "cost_usd": 0.003303,
+      "latency_ms": 9254,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "32bbbb4c62e3443f988aeaacddeea50ac9f4222663212ff91339a979524b9949",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "discontinued",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5989,
+      "output_tokens": 200,
+      "cost_usd": 0.0019767,
+      "latency_ms": 2198,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "c07",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "9e5717609a5ebe9acc824b7be77eefdee92c014865d90c88e4c1b1e0fec3a302",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 0
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5491,
+      "output_tokens": 55,
+      "cost_usd": 0.0016968,
+      "latency_ms": 1292,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "a536ecc430fc7e31c22a4872e034d2e4536b20b67564e1877f105736a19eeca6",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4907,
+      "output_tokens": 1681,
+      "cost_usd": 0.002985,
+      "latency_ms": 6927,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "741730cc55dd9d393a290731429f1ff927954b7281b5a8ef4cc41938a97e7c1e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6772,
+      "output_tokens": 2011,
+      "cost_usd": 0.0038415,
+      "latency_ms": 7735,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "35441566733c160a7e874cb159e57d917323644516ff80d0b958c854921b0f5e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "02/06/24",
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4726,
+      "output_tokens": 1527,
+      "cost_usd": 0.0027921,
+      "latency_ms": 6132,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "fb0d8baa666ff21bb41ca1b8064f3b2fea659403710382bad97bea85bc6afed7",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 0
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2482,
+      "output_tokens": 26,
+      "cost_usd": 0.000768,
+      "latency_ms": 1494,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "be6bda7f0d3eeaea40943e15ce586387a2edb6fd00a343da5a3f6879e5f37c12",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6916,
+      "output_tokens": 1444,
+      "cost_usd": 0.0033744,
+      "latency_ms": 6619,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "3a06ee33f1584c2a2a4ac2999770a0df0b8f49f779c0e755c33672179fb5c97e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "Rev.04/29/2026",
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6964,
+      "output_tokens": 2236,
+      "cost_usd": 0.0041016,
+      "latency_ms": 9797,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "ad07c70f369b7f742a8908044e43e1686d643d367458798cd8f3e80c1be4e44a",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4862,
+      "output_tokens": 2860,
+      "cost_usd": 0.0040326,
+      "latency_ms": 13040,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "f7ef3adeb1dde7e9ddd0774e31ea3b2cb8e0c4fb74dd113ca92e53e599f8063d",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11554,
+      "output_tokens": 1789,
+      "cost_usd": 0.0050763,
+      "latency_ms": 8572,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "0153ccd92b9bfc36d8c4dde9326adff7741e4416c26f8221c7078f43cd6ec094",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4971,
+      "output_tokens": 1907,
+      "cost_usd": 0.0032076,
+      "latency_ms": 9917,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "e999009280ff75744aab5de262368d954ff29e6c13f9a2b13348583d9f5acd09",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11698,
+      "output_tokens": 1823,
+      "cost_usd": 0.0051501,
+      "latency_ms": 8738,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "19564c21b7855a5d0a72d5eba585653a911970c4008ef4de9786a6d973a529de",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14164,
+      "output_tokens": 1944,
+      "cost_usd": 0.0059988,
+      "latency_ms": 10415,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "fcceff7378e992fed4fa70cf2b0076561d8f377ae286008b89ae07667cb08a5e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "Rev.04/29/2026",
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11745,
+      "output_tokens": 2036,
+      "cost_usd": 0.0053559,
+      "latency_ms": 8155,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "54ce0b4134ef649c3878830187e132b4d85b46732b1763d78fead66eb6da2a1e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13893,
+      "output_tokens": 2161,
+      "cost_usd": 0.0061128,
+      "latency_ms": 8555,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "739847b011b8f28106f198566336e122f6964e28390f3c70d61534da5c2de0d7",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13712,
+      "output_tokens": 1699,
+      "cost_usd": 0.0056427,
+      "latency_ms": 7474,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "61ae6261c33bb74eabe8a87dc017a6f5f848541afa67c8ba0499e30f068c5840",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11467,
+      "output_tokens": 2143,
+      "cost_usd": 0.0053688,
+      "latency_ms": 8573,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "b44270e639206db8f649fb4798ac9117e3d5d5476058a0525bca589ba4a1aaee",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13848,
+      "output_tokens": 2029,
+      "cost_usd": 0.0059805,
+      "latency_ms": 10790,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "741730cc55dd9d393a290731429f1ff927954b7281b5a8ef4cc41938a97e7c1e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6772,
+      "output_tokens": 2011,
+      "cost_usd": 0.0038415,
+      "latency_ms": 7735,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "5f0b5a569b14c0e50a7ac346c5c0f0d5af64c8aea857349a28c21a8fec67f32f",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 8
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7791,
+      "output_tokens": 1456,
+      "cost_usd": 0.0036477,
+      "latency_ms": 7982,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "5ba513e040f9349cee63c18ecce11eef335204ea8b4796fb2154fb40b978e967",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "REV.07/30/26.LM",
+      "status": "active",
+      "current_values_returned": 4
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6838,
+      "output_tokens": 710,
+      "cost_usd": 0.0026904,
+      "latency_ms": 4154,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "0241ca47f2e58880927af6d8ed37f059d8ed20374e4997e250cf3a88d2d14257",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13956,
+      "output_tokens": 1929,
+      "cost_usd": 0.0059229,
+      "latency_ms": 18016,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "6f79be7b649de0d5532afc2df03e7e916d65510b71d2750104e6c9a121cdea6e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5178,
+      "output_tokens": 1944,
+      "cost_usd": 0.003303,
+      "latency_ms": 9254,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "a536ecc430fc7e31c22a4872e034d2e4536b20b67564e1877f105736a19eeca6",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4907,
+      "output_tokens": 1681,
+      "cost_usd": 0.002985,
+      "latency_ms": 6927,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "35441566733c160a7e874cb159e57d917323644516ff80d0b958c854921b0f5e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "02/06/24",
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4726,
+      "output_tokens": 1527,
+      "cost_usd": 0.0027921,
+      "latency_ms": 6132,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "fb0d8baa666ff21bb41ca1b8064f3b2fea659403710382bad97bea85bc6afed7",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 0
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2482,
+      "output_tokens": 26,
+      "cost_usd": 0.000768,
+      "latency_ms": 1494,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-1",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "ad07c70f369b7f742a8908044e43e1686d643d367458798cd8f3e80c1be4e44a",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 5
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4862,
+      "output_tokens": 2860,
+      "cost_usd": 0.0040326,
+      "latency_ms": 13040,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "d42e9fdf515d401598ab8c9ca942d7e6eb0393ebfa650f3d886faab18af7d504",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "REV.01/20/26.JL",
+      "status": "active",
+      "current_values_returned": 4
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3329,
+      "output_tokens": 660,
+      "cost_usd": 0.0015927,
+      "latency_ms": 4138,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "c9da8a5f6eac06b9a29ba7eb96318141dfde09a8f36bd07b6b99384f01d40866",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4956,
+      "output_tokens": 438,
+      "cost_usd": 0.001881,
+      "latency_ms": 2881,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "cd68c731c5aec25c9b1466309223e445fba50110f20df680ec50be9fdccdbdc5",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "REV.07/30/26.LM",
+      "status": "active",
+      "current_values_returned": 4
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7986,
+      "output_tokens": 684,
+      "cost_usd": 0.0030114,
+      "latency_ms": 3905,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "34a412b2aaf530c7b343b70dcc14c85a2161f09b98fe8f97af7333aa38b93dce",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4685,
+      "output_tokens": 429,
+      "cost_usd": 0.0017916,
+      "latency_ms": 3278,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "407933611f1190008ad6c88a1df95f21b3aa11a9c5583823c49bde2364618cdf",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "REV.01/20/26.JL",
+      "status": "active",
+      "current_values_returned": 4
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4477,
+      "output_tokens": 683,
+      "cost_usd": 0.0019578,
+      "latency_ms": 3723,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "bb205ff95f28b5de4fefe9d3d7050a038144926171c936ea40046f980b90d73f",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "REV.01/21/26.LM",
+      "status": "active",
+      "current_values_returned": 4
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7344,
+      "output_tokens": 617,
+      "cost_usd": 0.0027585,
+      "latency_ms": 4136,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "bd9495678226216463ec1c78420de9c64c4e66d0125369498424626f50a56b6f",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4504,
+      "output_tokens": 404,
+      "cost_usd": 0.0017148,
+      "latency_ms": 7101,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "cef206b1b3b4f5aaaa835cdcc9edb89c726258a31e44b3f2c3717e0cd32a5d9e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2260,
+      "output_tokens": 39,
+      "cost_usd": 0.0007131,
+      "latency_ms": 1510,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c07-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "4242a223a2e0b9f54cf76b65f20025c89e4584c8458de93894a6f8318da12e4e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "REV.01/21/26.LM",
+      "status": "active",
+      "current_values_returned": 4
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7068,
+      "output_tokens": 649,
+      "cost_usd": 0.0027045,
+      "latency_ms": 4267,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "b5ef6cd93b184e63576486728167950fec9104682b686bb2771465d53ec5832a",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4640,
+      "output_tokens": 886,
+      "cost_usd": 0.0021894,
+      "latency_ms": 4937,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "5836d6cf5fb8d024a3816bd053482252540e18aa82953a83d2465fe86c5395ae",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4749,
+      "output_tokens": 650,
+      "cost_usd": 0.0020097,
+      "latency_ms": 3856,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "b472831a7413e3ff1f21e82040e00db09bd42cac9b8cd6288e01e00f4bd50eea",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7554,
+      "output_tokens": 575,
+      "cost_usd": 0.0027837,
+      "latency_ms": 2993,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "8d73b73906bdb233c627b62b79f833266b3a54ef5daba8f918f65ca1eea57f9b",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7283,
+      "output_tokens": 648,
+      "cost_usd": 0.0027681,
+      "latency_ms": 3514,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "6d6e728fa3b089f2f09c1ada279316bf2c30b36fabb2fae967aa14ea48e15440",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7102,
+      "output_tokens": 648,
+      "cost_usd": 0.0027138,
+      "latency_ms": 3417,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "651184e6d2bfafcf6dc4a116a0633295beda4ee29aae9f065279efa74266a6de",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4857,
+      "output_tokens": 648,
+      "cost_usd": 0.0020403,
+      "latency_ms": 5730,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "820d077677790834603ff23e51fe647d95dd259ad970b8a40f5250175fd70882",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7238,
+      "output_tokens": 920,
+      "cost_usd": 0.0029994,
+      "latency_ms": 4101,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "2d4d1772971a17efee56036cfd1dbaf5e0bbebd14fdf8d17c43c114ed805b109",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7346,
+      "output_tokens": 486,
+      "cost_usd": 0.0026412,
+      "latency_ms": 3140,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "aa8ea7bed6276bed35b21334803bcf0230c361758cbba8036ef43a035b737f50",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": "January / 2026",
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4726,
+      "output_tokens": 531,
+      "cost_usd": 0.0018957,
+      "latency_ms": 3702,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "34a412b2aaf530c7b343b70dcc14c85a2161f09b98fe8f97af7333aa38b93dce",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4685,
+      "output_tokens": 429,
+      "cost_usd": 0.0017916,
+      "latency_ms": 3278,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "bd9495678226216463ec1c78420de9c64c4e66d0125369498424626f50a56b6f",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4504,
+      "output_tokens": 404,
+      "cost_usd": 0.0017148,
+      "latency_ms": 7101,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "cef206b1b3b4f5aaaa835cdcc9edb89c726258a31e44b3f2c3717e0cd32a5d9e",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "unknown",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2260,
+      "output_tokens": 39,
+      "cost_usd": 0.0007131,
+      "latency_ms": 1510,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  {
+    "request": {
+      "task": "verify",
+      "context": {
+        "case_id": "fix/c03-3",
+        "fixture_key": "investigate_verify"
+      },
+      "authorization": "REDACTED",
+      "messages_sha256": "c9da8a5f6eac06b9a29ba7eb96318141dfde09a8f36bd07b6b99384f01d40866",
+      "instruction": "Compare the submitted product data with these current web sources. Report product status, the current document revision exactly as printed, and the CURRENT value for each submitted property you can find, each with the exact quote from the source that states it. Return only properties in SUBMITTED.claims, copying their property names exactly. Use documents for the exact submitted product/model or listed system, not a generic certificate. For each value, give source_url and an exact identity_quote naming that source's model. Set model to the exact short identifier from SUBMITTED.model (or family, then product if absent), only when that identifier is actually printed in identity_quote. Do not replace it with a marketing title. Those fields and model are mandatory evidence; omitted identity is rejected. Set scope and scope_quote to the full applicability passage; never call an option-specific value product_wide. scope_quote must include the value quote, not just a table heading. Preserve a limiting option/SKU as variant; never compare a different configuration as product-wide. Read status notices independently of data sheet values. A manufacturer's family-wide status notice can apply to a member model without printing its full order code; establish that family relationship using the submitted label and product/model names, and set status_family to its exact name in both. An unrelated product's values or active status cannot establish this product's status. Quote the family notice when it applies. Do not use certification/category codes or a catalog's Updated timestamp as a document revision. Read revision from the technical/product data sheet or listed-system drawing, never a safety data sheet's version or issue date. If conflicting technical-sheet revisions have no established current source, leave current_revision null. Prefer the data sheet linked by the manufacturer's product page over a standalone search hit. For each property, first locate a short verbatim quote stating its current value. Copy the value from that quote, preserving any numeric bound. Never take the value from a different passage than its quote. A related limit is not evidence for a different number. Omit values you cannot support with that exact quote."
+    },
+    "response": {
+      "current_revision": null,
+      "status": "active",
+      "current_values_returned": 1
+    },
+    "usage": {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4956,
+      "output_tokens": 438,
+      "cost_usd": 0.001881,
+      "latency_ms": 2881,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  }
+]

@@ -9,6 +9,7 @@ import json
 from typing import Optional
 
 from ..llm import router
+from ..config import settings
 from ..schemas import Decision, Finding, ReportOut, Usage
 
 FLAGGED = ("fail", "outdated")
@@ -34,9 +35,12 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
                 "content": (
                     "Write the result of a submittal review for a busy project engineer. Plain language, no jargon, no model names. "
                     "Give a one or two sentence summary, a short note to send to the subcontractor, a plain title for each issue, "
-                    "and one sentence on why each issue matters on site. Where an issue has a suggested_fix, name it in the note.\n\n"
+                    "and one sentence on why each issue matters on site. Where an issue has a suggested_fix, name it in the note. "
+                    "Respect each coded verdict: unverified or not stated means missing evidence, not a failed requirement. "
+                    "Different revision labels alone do not establish which document is newer. "
+                    "Do not infer safety or code violations from a documentation difference.\n\n"
                     + json.dumps({"submittal": title, "decision": decision,
-                                  "issues": [{**f.model_dump(include={"id", "title", "detail", "spec_ref"}),
+                                  "issues": [{**f.model_dump(include={"id", "title", "detail", "spec_ref", "verdict", "severity"}),
                                               "suggested_fix": f.fix.suggest if f.fix else None} for f in issues]})
                 ),
             }
@@ -48,4 +52,16 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
             f.title = out.finding_titles[f.id]
         if f.id in out.why_it_matters:
             f.why_it_matters = out.why_it_matters[f.id]
+    # Verdict and coverage statements are templates: generated prose cannot broaden the review.
+    lead = {"approve": "The checked product data can be approved.",
+            "approve_with_note": "The product data can be approved with the clarification notes below.",
+            "send_back": "Revise and resubmit to address the findings below."}[decision]
+    if any(f.verdict == "pending" for f in findings):
+        lead += " Assembly proof remains pending; confirm the listed assembly separately."
+    if settings.live or case_id is not None:
+        out.summary = lead
+        details = [f"{f.title}: {f.detail}" for f in findings if f.verdict not in ("pass", "not_applicable")]
+        details += [f.fix.suggest for f in findings if f.fix and any(
+            c.passes and c.selection and c.selection.origin == "agent_proposal" for c in f.fix.candidates)]
+        out.note_to_subcontractor = lead + ("\n\n" + "\n".join(details) if details else "")
     return out, [usage]

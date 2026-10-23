@@ -1,0 +1,60 @@
+{
+  "base_commit": "dbc60ef90df1a5322b02c625c6af1761bf853934",
+  "original_run": "20261023-073518-c1e622",
+  "scope": "offline replay of the same archived output; no historical result promoted",
+  "before": {
+    "current_revision": "Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22",
+    "current_values_kept": 6,
+    "rows": 4,
+    "findings": [
+      {
+        "id": "currency-current",
+        "title": "Data sheet matches the manufacturer's current version",
+        "verdict": "pass",
+        "detail": "",
+        "current": "Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22"
+      }
+    ]
+  },
+  "after": {
+    "current_revision": null,
+    "current_values_kept": 6,
+    "rows": 4,
+    "findings": [
+      {
+        "id": "currency-current",
+        "title": "Compared values match current sources",
+        "verdict": "pass",
+        "detail": "",
+        "current": "unknown"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+      "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt"
+    },
+    {
+      "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+      "sha256": "870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1",
+      "archived_path": "c03/2026-10-22T22_45_18+00_00/870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1.txt"
+    },
+    {
+      "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+      "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+      "archived_path": "c03/2026-10-22T22_45_18+00_00/b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f.txt"
+    },
+    {
+      "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+      "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+      "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt"
+    },
+    {
+      "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+      "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt"
+    }
+  ]
+}

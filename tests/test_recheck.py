@@ -38,10 +38,22 @@ def test_recheck_summarizes_the_watched_item(runs_dir):
     by = {i["id"]: i for i in rep["items"]}
     assert by["c07"]["status"] == "discontinued" and by["c07"]["approved"] == "2024-03-12"
     assert "discontinued" in by["c07"]["quote"].lower() and by["c07"]["source"].startswith("https://")
-    assert by["c07"]["replacement"]  # the fix step found a passing troffer
-    assert by["c01"]["status"] == "no_change"
+    assert by["c07"]["replacement"] is None  # No selected driver or cited availability proof.
+    assert by["c01"]["status"] == "unverified"  # Currency matches, but no quoted availability proof exists.
     assert [i["id"] for i in rep["items"]] == ["c07", "c01"]  # worst first
     assert (runs_dir / "watch" / f"{rep['checked_at'][:10]}.json").exists()
+
+
+def test_invalid_recheck_cannot_publish_no_change(runs_dir):
+    import recheck
+    from api.pipeline.cases import all_cases
+    from api.pipeline.runner import Run, execute
+    run = asyncio.run(execute(Run(["c01"], delay_ms=0)))
+    result = run.results["c01"]
+    result.warnings.append("verify: provider request failed")
+    item = recheck.summarize(all_cases()["c01"], result)
+    assert item["status"] == "unverified" and item["diagnostics"]
+    assert "Matches" not in item["detail"]
 
 
 def test_project_shows_the_latest_report(runs_dir):

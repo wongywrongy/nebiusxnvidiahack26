@@ -4,9 +4,12 @@ from __future__ import annotations
 
 import hashlib
 import json
+from contextvars import ContextVar
 from typing import Any, Optional
 
 from .config import settings
+
+REFRESH_WEB: ContextVar[bool] = ContextVar("refresh_web", default=False)
 
 
 def _path(namespace: str, key: Any):

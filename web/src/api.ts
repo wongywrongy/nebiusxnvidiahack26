@@ -34,11 +34,11 @@ export interface Event {
   data: Record<string, unknown> | null
 }
 
-interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string; archived_path?: string | null }
+interface Evidence { url: string; tier: string; title: string; retrieved_at?: string; sha256?: string; archived_path?: string | null; cache_hit?: boolean | null; excerpt?: string | null }
 export interface Finding {
   id: string
   check: string
-  verdict: 'pass' | 'fail' | 'outdated' | 'unverified' | 'note' | 'not_applicable'
+  verdict: 'pass' | 'fail' | 'outdated' | 'unverified' | 'note' | 'not_applicable' | 'pending'
   severity: 'critical' | 'major' | 'minor' | 'info'
   title: string
   detail: string
@@ -54,14 +54,15 @@ export interface Finding {
   fix?: Fix | null
 }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
-interface FixCheck { label: string; ok: boolean | null; note: string }
-interface FixCandidate { name: string; source_url: string; checks: FixCheck[]; passes: boolean }
+interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
+interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean;
+  selection?: { model: string; page: number; quote: string; origin?: 'submitted' | 'agent_proposal' } | null }
 export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
 export interface Compare {
   left_label: string; left_value: Value; right_label: string; right_value: Value
-  verdict: 'fail' | 'pass' | 'changed'; rows: CompareRow[]
+  verdict: 'fail' | 'pass' | 'changed' | 'unverified'; rows: CompareRow[]
 }
 export interface CompareRow { property: string; label: string; submitted: string | null; current: string | null; changed: boolean }
 // One model call (api/schemas.py Usage). thinking: live only, whether the server was asked not to think.
@@ -96,6 +97,9 @@ export interface Result {
   mode?: 'mock' | 'live' | null
   replayed_from?: string | null
   warnings?: string[]
+  diagnostics?: { stage: string; kind: string; message: string }[]
+  validity?: 'valid' | 'invalid' | 'legacy'
+  fresh_model_cost_usd?: number; fresh_web_credits?: number; queue_ms?: number
   ocr_pages?: number
   evidence_label?: string | null
   archived_submittals?: string[]
@@ -132,8 +136,13 @@ export interface Scores {
     claims_drop_rate: number | null; web_values_drop_rate: number | null }
   mode: Project['mode']; generated_at: string; run_id: string; models: Record<string, string>
   right_call: Score; caught: Score; false_alarms: Score; fixes_passing: Score
+  validity?: { invalid_items: number; requested_items: number }
+  unnecessary_notes?: Score
+  fresh_model_cost_usd?: number; fresh_web_credits?: number
+  release_gate?: { scope?: 'cases'; passed: boolean; issues: string[] }
   rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]
     decision?: Decision; found_problems?: string[]; error?: boolean; right_call?: boolean
+    valid?: boolean; diagnostics?: { stage: string; message: string }[]
     fix?: { suggest: string | null; passes: boolean; candidates: number } | null
     time_ms?: number; cost_usd?: number }[]
 }
@@ -144,7 +153,6 @@ export interface CloudJob {
   raw_state?: string | null; state_known?: boolean; poll_error?: string
 }
 export async function getJobs(): Promise<{ available: boolean; jobs: CloudJob[] }> { return ok(await fetch('/api/watch/jobs')) }
-export async function runJob(): Promise<CloudJob> { return ok(await fetch('/api/watch/run', { method: 'POST' })) }
 export async function getWatch(): Promise<Recheck | null> {
   const r = await fetch('/api/watch')
   return r.status === 404 ? null : ok(r)
@@ -152,7 +160,19 @@ export async function getWatch(): Promise<Recheck | null> {
 export const archiveUrl = (path: string) => `/api/evidence/${path.split('/').map(encodeURIComponent).join('/')}`
 
 export async function getProject(): Promise<Project> {
-  return (await fetch('/api/project')).json()
+  const project = await ok<Project>(await fetch('/api/project'))
+  if (!project || !['mock', 'live'].includes(project.mode) || typeof project.name !== 'string'
+    || !Array.isArray(project.specs) || !Array.isArray(project.tray) || !Array.isArray(project.watched)
+    || project.specs.some((s) => !s || typeof s.section !== 'string')
+    || project.tray.some((sender) => !sender || !Array.isArray(sender.items))) {
+    throw new Error('Project response was incomplete. Reload to try again.')
+  }
+  if ([...project.watched, ...project.tray.flatMap((s) => s.items)].some((c) => !c || typeof c.id !== 'string'
+    || typeof c.section !== 'string' || !Array.isArray(c.submittal)
+    || c.submittal.some((d) => !d || typeof d.file !== 'string'))) {
+    throw new Error('Project attachments were incomplete. Reload to try again.')
+  }
+  return project
 }
 
 async function ok<T>(r: Response): Promise<T> {
@@ -173,15 +193,19 @@ export async function uploadToInbox(file: File): Promise<Case> {
 }
 
 /** One run over inbox items. delayMs paces mock mode so the stages are visible. */
-export async function scan(ids: string[], delayMs = 700): Promise<{ run_id: string; note?: string | null }> {
+export async function scan(ids: string[], delayMs = 700, refreshWeb = false): Promise<{ run_id: string; note?: string | null }> {
   return ok(await fetch('/api/scan', {
-    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids, delay_ms: delayMs }),
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ids, delay_ms: delayMs, refresh_web: refreshWeb }),
   }))
 }
 
-export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: () => void): () => void {
+export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: () => void, onError: (e: Error) => void): () => void {
   const es = new EventSource(`/api/runs/${runId}/events`)
-  es.onmessage = (m) => onEvent(JSON.parse(m.data))
+  es.onmessage = (m) => {
+    try { onEvent(JSON.parse(m.data)) }
+    catch { es.close(); onError(new Error('Scan updates were unreadable. Retry this item.')) }
+  }
+  es.onerror = () => { es.close(); onError(new Error('Lost the scan connection. Retry this item.')) }
   es.addEventListener('end', () => { es.close(); onEnd() })
   return () => es.close()
 }
@@ -211,7 +235,7 @@ export const pageUrl = (caseId: string, file: string, n: number) =>
   `/api/docs/${caseId}/${encodeURIComponent(basename(file))}/pages/${n}.png`
 
 export async function getCaseText(caseId: string): Promise<TextPage[]> {
-  return (await (await fetch(`/api/cases/${caseId}/text`)).json()).pages
+  return (await ok<{ pages: TextPage[] }>(await fetch(`/api/cases/${caseId}/text`))).pages
 }
 
 export const DECISION_LABEL: Record<Decision, string> = {

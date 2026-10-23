@@ -1,0 +1,24 @@
+{
+  "base_url": "http://127.0.0.1:8001",
+  "scores_run": "20261022-181611-a9d0b5",
+  "scores_cases": 8,
+  "public_ids": [
+    "c01",
+    "c02",
+    "c03",
+    "c04",
+    "c06",
+    "c07",
+    "s3",
+    "s4"
+  ],
+  "replay": {
+    "run_id": "20261022-181817-262d89",
+    "replay_of": "20261022-181611-a9d0b5"
+  },
+  "replayed_results": 10,
+  "ledger_after": {
+    "usd": 0.0,
+    "credits": 0.0
+  }
+}

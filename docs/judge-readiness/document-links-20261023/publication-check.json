@@ -1,0 +1,302 @@
+{
+  "meaning": "true means a configured secret string occurs",
+  "files": {
+    "FEEDBACK.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "README.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "SUBMISSION.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "deploy/nebius/README.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "deploy/nebius/cost-manifest.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "deploy/nebius/rollout.pending.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/README.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/before-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/campaign-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/capture_live.py": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/ci.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/consistency.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/diagnosis.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/diagnostic-payment-attribution.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/elite-extract-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/elite-extract-observation.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/events.jsonl": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/higher-cap-before-prompt/diagnosis.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/higher-cap-before-prompt/events.jsonl": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/higher-cap-before-prompt/extraction-response.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/higher-cap-before-prompt/response-metadata.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/higher-cap-before-prompt/score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/invalid-output/diagnosis.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/invalid-output/events.jsonl": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/invalid-output/score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/mock-score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/native-document-observation.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/prompt-before-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/pytest-final.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/pytest.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/retry-response-metadata.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/source-identity.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/source-reproduction.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/source.patch": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/spend-audit.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/status-before-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/tavily-usage.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/unit-prompt-before-status/events.jsonl": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/unit-prompt-before-status/response-metadata.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/unit-prompt-before-status/score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/unit-prompt-before-status/source-identity.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/document-links-20261023/unit-prompt-before-status/source.patch": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/ownership.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/live-first-pass.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/.gitkeep": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/events.jsonl": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c01.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c02.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c03.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c04.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c05.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c06.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c07.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/c08.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/s3.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/results/s4.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "runs/recorded/20261022-181611-a9d0b5/scores.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    }
+  },
+  "protected_inputs_and_recording_unchanged": true,
+  "local_artifact_links_exist": true
+}

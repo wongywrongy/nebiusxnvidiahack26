@@ -1,0 +1,43 @@
+..................FFF.......FFF.........                                 [100%]
+=================================== FAILURES ===================================
+_ test_release_replays_the_temporal_gate[active-The ZX family is available until Q4 2001.] _
+tests/test_status_timing.py:75: in test_release_replays_the_temporal_gate
+    with pytest.raises(ValueError, match="Saved verification values do not survive"):
+E   Failed: DID NOT RAISE ValueError
+_ test_release_replays_the_temporal_gate[active-The ZX family is available through FY2001.] _
+tests/test_status_timing.py:75: in test_release_replays_the_temporal_gate
+    with pytest.raises(ValueError, match="Saved verification values do not survive"):
+E   Failed: DID NOT RAISE ValueError
+_ test_release_replays_the_temporal_gate[active-The ZX family is available until end of 2001.] _
+tests/test_status_timing.py:75: in test_release_replays_the_temporal_gate
+    with pytest.raises(ValueError, match="Saved verification values do not survive"):
+E   Failed: DID NOT RAISE ValueError
+_ test_availability_dates_do_not_become_an_early_or_expired_pass[The ZX family is available until Q4 2001.-unknown] _
+tests/test_status_timing.py:111: in test_availability_dates_do_not_become_an_early_or_expired_pass
+    assert out.status == expected and out.status_date is None
+E   AssertionError: assert ('active' == 'unknown'
+E     
+E     - unknown
+E     + active)
+_ test_availability_dates_do_not_become_an_early_or_expired_pass[The ZX family is available through FY2001.-unknown] _
+tests/test_status_timing.py:111: in test_availability_dates_do_not_become_an_early_or_expired_pass
+    assert out.status == expected and out.status_date is None
+E   AssertionError: assert ('active' == 'unknown'
+E     
+E     - unknown
+E     + active)
+_ test_availability_dates_do_not_become_an_early_or_expired_pass[The ZX family is available until end of 2001.-unknown] _
+tests/test_status_timing.py:111: in test_availability_dates_do_not_become_an_early_or_expired_pass
+    assert out.status == expected and out.status_date is None
+E   AssertionError: assert ('active' == 'unknown'
+E     
+E     - unknown
+E     + active)
+=========================== short test summary info ============================
+FAILED tests/test_status_timing.py::test_release_replays_the_temporal_gate[active-The ZX family is available until Q4 2001.]
+FAILED tests/test_status_timing.py::test_release_replays_the_temporal_gate[active-The ZX family is available through FY2001.]
+FAILED tests/test_status_timing.py::test_release_replays_the_temporal_gate[active-The ZX family is available until end of 2001.]
+FAILED tests/test_status_timing.py::test_availability_dates_do_not_become_an_early_or_expired_pass[The ZX family is available until Q4 2001.-unknown]
+FAILED tests/test_status_timing.py::test_availability_dates_do_not_become_an_early_or_expired_pass[The ZX family is available through FY2001.-unknown]
+FAILED tests/test_status_timing.py::test_availability_dates_do_not_become_an_early_or_expired_pass[The ZX family is available until end of 2001.-unknown]
+6 failed, 34 passed in 0.28s

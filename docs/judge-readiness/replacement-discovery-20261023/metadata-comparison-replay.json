@@ -1,0 +1,100 @@
+{
+  "provider_http_disabled": "compare/gate are pure functions",
+  "rows": [
+    {
+      "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "before_currency": [
+        {
+          "label": "Current document",
+          "check": "currency",
+          "ok": true,
+          "note": "",
+          "requirement_id": null,
+          "claim_ids": []
+        }
+      ],
+      "after_currency": [
+        {
+          "id": "currency-current",
+          "verdict": "pass",
+          "compare": {
+            "left_label": "Submitted",
+            "left_value": "undated",
+            "right_label": "Current",
+            "right_value": "unknown",
+            "verdict": "pass",
+            "rows": []
+          }
+        }
+      ],
+      "metadata_values": [
+        {
+          "value": "\u00a9 3M 2018",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "quote": "\u00a9 3M 2018. All rights reserved."
+        },
+        {
+          "value": "\u00a9 3M 2018",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "quote": "\u00a9 3M 2018. All rights reserved."
+        },
+        {
+          "value": "\u00a9 3M 2018",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "quote": "\u00a9 3M 2018. All rights reserved."
+        }
+      ]
+    },
+    {
+      "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+      "before_currency": [
+        {
+          "label": "Current document",
+          "check": "currency",
+          "ok": false,
+          "note": "",
+          "requirement_id": null,
+          "claim_ids": [
+            "clm-5"
+          ]
+        }
+      ],
+      "after_currency": [
+        {
+          "id": "currency-current",
+          "verdict": "pass",
+          "compare": {
+            "left_label": "Submitted",
+            "left_value": "January / 2026",
+            "right_label": "Current",
+            "right_value": "unknown",
+            "verdict": "pass",
+            "rows": []
+          }
+        }
+      ],
+      "metadata_values": [
+        {
+          "value": "02/06/24",
+          "source_url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+          "quote": "Issue Date: 02/06/24"
+        },
+        {
+          "value": "02/06/24",
+          "source_url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+          "quote": "3M FireBarrier\u2122 Sealant IC 15 WB+ 02/06/24"
+        },
+        {
+          "value": "02/06/24",
+          "source_url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+          "quote": "Document Group: 19-9776-6 Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22"
+        },
+        {
+          "value": "Printed in USA. \u00a9 3M 2018.",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "quote": "Printed in USA. \u00a9 3M 2018. All rights reserved."
+        }
+      ]
+    }
+  ]
+}

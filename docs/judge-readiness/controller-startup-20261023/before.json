@@ -1,0 +1,19 @@
+{
+  "stage": "before synthetic import",
+  "filesystem": "ext4",
+  "wallet_exists": false,
+  "authority_exists": false,
+  "mode": "live",
+  "accounting": {
+    "usd": null,
+    "credits": null,
+    "blocked": true,
+    "accounting_available": false
+  },
+  "remaining": {
+    "usd_left": 0.0,
+    "credits_left": 0.0
+  },
+  "documents": true,
+  "document_count": 13
+}

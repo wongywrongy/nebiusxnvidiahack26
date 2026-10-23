@@ -1,0 +1,323 @@
+{
+  "run_id": "20261023-052918-e9faa8",
+  "code_hash": "eb81c2cffa4f81cbb5d115ad21100d9c060ffd9403c386c6861aabcc505027a3",
+  "stage_validity": {
+    "c03": {
+      "result_sha256": "4949a8b0fd6b326cca349d1b67937609f97ee9b14fe4971656593658db7da7e7",
+      "warnings": [],
+      "diagnostics": [],
+      "validity": "valid"
+    },
+    "c07": {
+      "result_sha256": "22dfcc8f3dea7536d8d79a03fc4fb5d227e102034b01a806f7d1c4bea97d456c",
+      "warnings": [],
+      "diagnostics": [],
+      "validity": "valid"
+    }
+  },
+  "candidates": {
+    "c03": [
+      {
+        "name": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+        "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+        "passes": false,
+        "model": "IC 15WB+",
+        "selection": null,
+        "checks": [
+          {
+            "label": "VOC (air quality)",
+            "ok": true,
+            "note": "<250 g/L",
+            "quotes": [
+              "Halogen-free, low VOC — Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)"
+            ]
+          },
+          {
+            "label": "astm g21 rating",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Temperature rating (T)",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Test standards",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "",
+            "quotes": [
+              "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)."
+            ]
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available",
+            "quotes": []
+          }
+        ],
+        "claims": []
+      },
+      {
+        "name": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+        "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+        "passes": false,
+        "model": "IC 15WB+",
+        "selection": null,
+        "checks": [
+          {
+            "label": "VOC (air quality)",
+            "ok": true,
+            "note": "<250 g/L",
+            "quotes": [
+              "Halogen-free, low VOC — Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)"
+            ]
+          },
+          {
+            "label": "astm g21 rating",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Temperature rating (T)",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Test standards",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "",
+            "quotes": [
+              "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)."
+            ]
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available",
+            "quotes": []
+          }
+        ],
+        "claims": []
+      }
+    ],
+    "c07": [
+      {
+        "name": "Spec Sheet-LED Troffer",
+        "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+        "passes": false,
+        "model": "SLLT",
+        "selection": null,
+        "checks": [
+          {
+            "label": "Rated life (L70)",
+            "ok": true,
+            "note": "349000 hours",
+            "quotes": [
+              "Reported L70 Lifetime: 349,000 hours @25°C"
+            ]
+          },
+          {
+            "label": "Warranty",
+            "ok": true,
+            "note": "10 years",
+            "quotes": [
+              "Warranty 10 Years"
+            ]
+          },
+          {
+            "label": "DLC listing",
+            "ok": true,
+            "note": "",
+            "quotes": [
+              "Certiﬁcation UL & cUL; DLC Premium; Control & Networking"
+            ]
+          },
+          {
+            "label": "macadam steps",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Dims down to",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "",
+            "quotes": [
+              "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+              "Certiﬁcation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+              "Reported L70 Lifetime: 349,000 hours @25°C",
+              "Operating Temperature: -20°C (-4°F) to 50°C (122°F)",
+              "Warranty 10 Years",
+              "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+              "Certiﬁcation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+              "Reported L70 Lifetime: 349,000 hours @25°C",
+              "Operating Temperature: -20°C (-4°F) to 50°C (122°F)",
+              "Warranty 10 Years"
+            ]
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available",
+            "quotes": []
+          }
+        ],
+        "claims": [
+          {
+            "id": "cl-9",
+            "property": "l70_hours",
+            "value": 349000.0,
+            "unit": "hours",
+            "quote": "Reported L70 Lifetime: 349,000 hours @25°C",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Reported L90 Lifetime: 101,000 hours @25°C Reported L70 Lifetime: 349,000 hours @25°C Warranty 10 Years",
+            "selection_quote": null
+          }
+        ]
+      },
+      {
+        "name": "LT LED Troffer",
+        "source_url": "https://hew.com/specifications/LT_led.pdf",
+        "passes": false,
+        "model": null,
+        "selection": null,
+        "checks": [
+          {
+            "label": "Rated life (L70)",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Warranty",
+            "ok": true,
+            "note": "5 years",
+            "quotes": [
+              "WARRANTY – 5-year limited warranty, see hew.com/warranty"
+            ]
+          },
+          {
+            "label": "DLC listing",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "macadam steps",
+            "ok": null,
+            "note": "not stated",
+            "quotes": []
+          },
+          {
+            "label": "Dims down to",
+            "ok": true,
+            "note": "1 %",
+            "quotes": [
+              "DIM1 1 % Driver with external 0-10V dimming wires"
+            ]
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "REV.01/21/26.LM",
+            "quotes": [
+              "1%",
+              "REV.01/21/26.LM",
+              "1%",
+              "REV.01/21/26.LM",
+              "1%",
+              "REV.01/21/26.LM",
+              "1%",
+              "REV.01/21/26.LM"
+            ]
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available",
+            "quotes": []
+          }
+        ],
+        "claims": [
+          {
+            "id": "cl-2",
+            "property": "dim_min_percent",
+            "value": 1.0,
+            "unit": "%",
+            "quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+            "selection_quote": null
+          },
+          {
+            "id": "cl-11",
+            "property": "macadam_steps",
+            "value": 3.0,
+            "unit": null,
+            "quote": "All CCTs are within 3 MacAdam ellipses.",
+            "variant": "All CCTs are within 3 MacAdam ellipses.",
+            "scope": "product_wide",
+            "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses.",
+            "selection_quote": null
+          },
+          {
+            "id": "cl-9",
+            "property": "l70_hours",
+            "value": "> 72000",
+            "unit": "hours",
+            "quote": "L70 > 72,000 hours per IES TM-21.",
+            "variant": "L70 > 72,000 hours per IES TM-21.",
+            "scope": "product_wide",
+            "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses.",
+            "selection_quote": null
+          }
+        ]
+      }
+    ]
+  },
+  "fresh_model_cost_usd": 0.2056944,
+  "fresh_web_credits": 8.0,
+  "investigations": {
+    "c03": [],
+    "c07": [
+      {
+        "outcome": "found",
+        "purpose": "replacement",
+        "resolution": "not_resolved",
+        "step_count": 8
+      },
+      {
+        "outcome": "found",
+        "purpose": "replacement",
+        "resolution": "not_resolved",
+        "step_count": 9
+      }
+    ]
+  }
+}

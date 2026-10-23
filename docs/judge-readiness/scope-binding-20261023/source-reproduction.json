@@ -1,0 +1,7 @@
+{
+  "base_commit": "81d05ea3e446cc9d4f34e4b08d0f9109d874c04f",
+  "patch": "source.patch",
+  "command": "git archive 81d05ea api scripts; git apply --whitespace=error source.patch; sha256 of sorted runtime Python source map",
+  "reconstructed_code_hash": "fb8286db4c960c17e5cb6d1613d4a62e05e92eb652c01f3c5edeeafe30fa1337",
+  "matches_actual_live_manifest": true
+}

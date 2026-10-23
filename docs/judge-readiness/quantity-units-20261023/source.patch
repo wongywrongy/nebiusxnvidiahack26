@@ -1,0 +1,110 @@
+diff --git a/api/pipeline/extract.py b/api/pipeline/extract.py
+index 4f4caed..05b22a9 100644
+--- a/api/pipeline/extract.py
++++ b/api/pipeline/extract.py
+@@ -106,7 +106,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
+         extracted = len(out.claims)
+         repairable = [c for c in out.claims if c.property in properties and c.page in texts
+                       and quoted(c.quote, texts[c.page]) and to_number(c.value) is not None
+-                      and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote)
++                      and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote, c.property)
+                       and not value_quoted(c.value, c.quote, c.property)]
+         if settings.live and repairable:
+             repaired, u = await _repair_values(case_id, repairable)
+@@ -124,7 +124,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
+             if not c.variant and (scope := re.search(r"^((?:non[\s-]*configurable|configurable|optional)[^:]{0,100}):", _plain(c.quote or ""), re.I)):
+                 c.variant = scope[1].strip()
+         out.claims = [c for c in out.claims if c.property in properties and c.page in texts and quoted(c.quote, texts[c.page])
+-                      and value_quoted(c.value, c.quote, c.property) and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote)
++                      and value_quoted(c.value, c.quote, c.property) and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote, c.property)
+                       and (not c.variant or quoted(c.variant, c.quote or ""))]
+         if out.claims:
+             names = [out.model, out.family, *[c.model or c.product for c in out.claims], out.product]
+@@ -334,6 +334,9 @@ def metric_quoted(property: str, quote: Optional[str]) -> bool:
+         return bool(re.search(rf"\b{property[0]}[\W_]*rat(?:ings?|ed)\b", text, re.I))
+     if property == "cri":
+         return bool(re.search(r"(?<![a-z])cri(?![a-z])|colou?r rendering", text, re.I))
++    if property == "dim_min_percent":
++        return bool(re.search(r"\bdim(?:ming|s|\d+)?\b", text, re.I)
++                    and re.search(r"%|\bpercent\b", text, re.I))
+     patterns = {
+         "lumens": r"\blumens?\b|\blm\b(?!\s*[/p]\s*w)",
+         "watts": r"\b(?:watts?|wattage)\b|(?<![a-z/])w\b",
+@@ -348,9 +351,13 @@ def metric_quoted(property: str, quote: Optional[str]) -> bool:
+     return True
+ 
+ 
+-def unit_quoted(unit: Optional[str], quote: Optional[str]) -> bool:
++def unit_quoted(unit: Optional[str], quote: Optional[str], property: str = "") -> bool:
+     if not unit:
+-        return True
++        # A physical quantity cannot borrow its missing unit from the requirement.
++        quantities = {"lumens", "watts", "warranty_years", "dim_min_percent", "voc_g_per_l",
++                      "f_rating_hr", "t_rating_hr", "max_annular_space_in", "efficacy_lm_per_w",
++                      "input_watts_120v", "input_watts_277v", "service_temp_max_f", "service_temp_range_f"}
++        return property not in quantities and not re.fullmatch(r"l\d+_hours", property)
+     aliases = {"hr": r"h(?:ours?|rs?)?", "yr": r"y(?:ears?|rs?)", "lm": r"lm|lumens?",
+                "w": r"w|watts?|wattage", "lm/w": r"lm\s*/\s*w|lpw", "%": r"%|percent",
+                "steps": r"steps?|sdcm", "rating": r"rating|class"}
+diff --git a/api/pipeline/verify.py b/api/pipeline/verify.py
+index e10026d..8365597 100644
+--- a/api/pipeline/verify.py
++++ b/api/pipeline/verify.py
+@@ -321,7 +321,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted:
+         out.status_quote = None
+     read = len(out.current_values)
+     out.current_values = [pv for pv in out.current_values if source_of(pv.quote, pv.source_url) and value_quoted(pv.value, pv.quote, pv.property)
+-                          and metric_quoted(pv.property, pv.quote) and unit_quoted(pv.unit, pv.quote)
++                          and metric_quoted(pv.property, pv.quote) and unit_quoted(pv.unit, pv.quote, pv.property)
+                           and (submitted is None or pv.source_url and pv.model and pv.identity_quote)
+                           and (not pv.identity_quote or source_of(pv.identity_quote, pv.source_url) == source_of(pv.quote, pv.source_url)
+                                and (submitted is None or model_quoted(pv.model, pv.identity_quote)))
+diff --git a/api/release.py b/api/release.py
+index 0a1f208..3061f88 100644
+--- a/api/release.py
++++ b/api/release.py
+@@ -147,7 +147,7 @@ def _claims(extracted, claims, selection, pages: dict[int, str]) -> None:
+     for claim in claims:
+         text = pages.get(claim.page, "")
+         if (not quoted(claim.quote, text) or not value_quoted(claim.value, claim.quote, claim.property)
+-                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote)
++                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote, claim.property)
+                 or claim.variant and not quoted(claim.variant, claim.quote or "")
+                 or claim.model and not (model_quoted(identifier, claim.model) and model_quoted(claim.model, identifier)
+                     or selection and model_quoted(claim.model, text) and model_quoted(claim.model, selection.model))
+@@ -322,7 +322,7 @@ def _run(folder: Path, ids: set[str], catalog: dict, current: dict, *, score_ids
+                     for identifier in check.claim_ids:
+                         claim = next((claim for claim in candidate.claims if claim.id == identifier), None)
+                         if (not claim or not value_quoted(claim.value, claim.quote, claim.property)
+-                                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote)
++                                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote, claim.property)
+                                 or not any(_citation(e.model_copy(update={"excerpt":claim.quote}), started, finished) for e in check.evidence)):
+                             raise ValueError("Replacement check must cite its actual claim quote")
+                         if not claim.variant:
+diff --git a/tests/test_extraction_chunks.py b/tests/test_extraction_chunks.py
+index a328e5e..1af90c9 100644
+--- a/tests/test_extraction_chunks.py
++++ b/tests/test_extraction_chunks.py
+@@ -173,7 +173,7 @@ def test_web_reader_reads_after_the_first_bounded_batch(monkeypatch):
+     async def call(task, schema, messages, ctx):
+         sources = json.loads(messages[0]["content"].split("SOURCES:\n")[-1])
+         calls.append(sources)
+-        values = [{"property": "warranty_years", "value": 7, "quote": "Warranty 7 years."}] if any(
++        values = [{"property": "warranty_years", "value": 7, "unit": "yr", "quote": "Warranty 7 years."}] if any(
+             "Warranty 7 years." in p["text"] for p in sources) else []
+         return VerifyOut(status="unknown", current_values=values), Usage(task=task, tier="verify", model="test")
+     monkeypatch.setattr(verify.router, "call", call)
+diff --git a/tests/test_pipeline_mock.py b/tests/test_pipeline_mock.py
+index 0932eb1..b601030 100644
+--- a/tests/test_pipeline_mock.py
++++ b/tests/test_pipeline_mock.py
+@@ -90,7 +90,8 @@ def test_related_metrics_cannot_be_relabelled(property, quote, value, kept, monk
+     async def call(*args, **kwargs):
+         return ClaimsOut(product="X", manufacturer="Maker", claims=[{
+             "id": "measurement", "product": "X", "manufacturer": "Maker", "property": property,
+-            "value": value, "page": 1, "quote": quote}]), Usage(task="extract_claims", tier="extract", model="test")
++            "value": value, "unit": "hr" if property.endswith(("_hours", "_hr")) else None,
++            "page": 1, "quote": quote}]), Usage(task="extract_claims", tier="extract", model="test")
+     monkeypatch.setattr(extract.router, "call", call)
+     pages = [{"page": 1, "text": quote}]
+     result, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), [property]))
