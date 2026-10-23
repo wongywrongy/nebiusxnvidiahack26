@@ -33,6 +33,18 @@
     "https://docs.nebius.com/compute/storage/types": {
       "body_sha256": "9ab807aded23d0b77dbd2f7a0766a1ea14d8a6548587612034da588cf55f3885",
       "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/container-registry/resources/pricing.md": {
+      "body_sha256": "c4cd96e4cead2615936116004eba9b5b66a18aa451532c0a169700bf89a57586",
+      "recorded_at": "2026-10-23T07:50:35.825690+00:00"
+    },
+    "https://docs.nebius.com/mysterybox/resources/pricing.md": {
+      "body_sha256": "1ae17c31018c9fd3ea28d5c63ae77f666dbbfe194c69b796282533acbb9d8851",
+      "recorded_at": "2026-10-23T07:50:35.728039+00:00"
+    },
+    "https://docs.nebius.com/vpc/resources/pricing.md": {
+      "body_sha256": "9e1c8b8fe89b2c5fec407c82a1ab391151fffa4918e2bf5d712fcd5f4c0e8c66",
+      "recorded_at": "2026-10-23T07:49:34.106292+00:00"
     }
   },
   "forecasts": [
@@ -234,8 +246,7 @@
       }
     ],
     "excludes": [
-      "registry storage",
-      "IP/network/egress charges",
+      "public IP and egress charges",
       "taxes",
       "Token Factory",
       "Tavily"
@@ -263,26 +274,46 @@
     "initial_start_at_utc": null,
     "initial_stop_at_utc": null,
     "private_filesystem_retention_until_utc": null,
-    "registry_network_tax_price_bound": null,
     "maximum_approved_cloud_usd": null,
-    "owner_approval": null
+    "owner_approval": null,
+    "public_ip_egress_tax_price_bound": null
   },
   "tested_local_candidate_image": {
-    "tag": "speccheck:readiness-1c3c7fe",
-    "local_image_id": "sha256:e92d0c23c9233f21607b4171b250e8598f220d8982d4d859c05ac69cd63387b7",
-    "repo_digests": [
-      "speccheck@sha256:e92d0c23c9233f21607b4171b250e8598f220d8982d4d859c05ac69cd63387b7"
-    ],
-    "created": "2026-10-23T07:40:22.582527055Z",
+    "tag": "speccheck:revision-source-local",
+    "local_image_id": "sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28",
+    "source_commit": "2ac6f89d9ffc8af1eb6142ee8d7421a266b19c1a",
+    "runtime_code_hash": "4a660ea2136462a7c72d30100372c22f06fcc4e2d14f679de3169b3f23ddfad8",
     "default_command": [
       "python",
       "scripts/serve.py"
     ],
     "published": false,
-    "source_commit": "1c3c7fe",
-    "runtime_code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
-    "evidence": "docs/judge-readiness/current-image-20261023/README.md",
+    "evidence": "docs/judge-readiness/document-revisions-20261023/README.md",
     "registry_reference_verified": false,
     "release_approved": false
+  },
+  "published_free_services": {
+    "virtual_networks": {
+      "usd": 0,
+      "condition": "Published current service price; public IP and traffic pricing are separate"
+    },
+    "container_registry": {
+      "usd": 0,
+      "condition": "Published current service price"
+    },
+    "secretstash": {
+      "usd": 0,
+      "condition": "Published preview service price; recheck before operating beyond preview"
+    },
+    "evidence": "docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json"
+  },
+  "blind_asset_exclusion_checkpoint": {
+    "source_base_commit": "1c3c7fe",
+    "runtime_code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
+    "local_image_id": "sha256:60c7b9f12562ef1db4210c7a651b9ae6dc5aa9cdbcadd5337aa2e893b3e56ad1",
+    "evidence": "docs/judge-readiness/preproduction-packaging-20261023/README.md",
+    "published": false,
+    "release_approved": false,
+    "scope": "13 locked public PDFs retained; unreviewed blind PDFs excluded; predates later runtime corrections"
   }
 }

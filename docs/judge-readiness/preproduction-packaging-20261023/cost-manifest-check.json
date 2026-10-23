@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-23T08:51:00.469163+00:00",
+  "scope": "Local JSON/arithmetic/source-reference checks; no private account/cloud operation",
+  "published_free_services": [
+    "virtual_networks",
+    "container_registry",
+    "secretstash"
+  ],
+  "owner_approval_set": false,
+  "final_registry_digest_set": false,
+  "cloud_resources_created": false,
+  "forecast_arithmetic_unchanged": true
+}

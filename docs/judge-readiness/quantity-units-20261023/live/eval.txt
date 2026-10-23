@@ -1,0 +1,21 @@
+
+mode=live  run=20261023-084824-7ab49b
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c03   send_back          send_back          currency               currency                   none  147759   0.2297       6 ✓
+c07   send_back          send_back          status                 status                     none   97052   0.1817       4 ✓
+
+Answer-key panel
+  right call                      2 of 2
+  planted problems caught         2 of 2
+  clean packages wrongly flagged  0 of 0
+  fixes that pass the spec        0 of 2
+  invalid acceptance items        0 of 2
+  unnecessary notes               0
+  fresh model spend / web credits $0.149443 / 10
+  case evidence gate              Full scoring set required; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      122.4 s
+  cost per submittal (model+web)  $0.2057
+Quote gate: claims 50/209 kept (76.1% dropped); web values 54/100 kept (46.0% dropped)
+
+wrote /tmp/speccheck-units-v22tpo22/live-score.json

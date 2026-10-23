@@ -60,8 +60,10 @@ The checked worksheet includes endpoint compute/boot disk, the private filesyste
 | Fifteen-day illustration | 360 | 15 | 27.179589 |
 | Fifty-four-day illustration | 1296 | 54 | 97.846521 |
 
-These are computed forecasts, not bills or approved allowances. Registry, IP/network/egress, taxes,
-Token Factory and Tavily are excluded and must be priced/bounded before final approval. A stopped
+These are computed forecasts, not bills or approved allowances. Current public pricing makes Virtual
+Networks and Container Registry free, and SecretStash free during preview; [actual public responses](../../docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json)
+resolve those service-rate questions. Public IP/egress, taxes, Token Factory and Tavily remain excluded
+and must be bounded before final approval. Free Virtual Networks does not establish free public IPs or traffic. A stopped
 endpoint still leaves the private filesystem billable: 32 GiB costs $2.56 per 730 retained hours at the
 published rate. Deletion protection deliberately prevents accidental wallet deletion.
 
@@ -81,9 +83,10 @@ must have an approved stop/expiry review, not an indefinite promise of nightly o
 ## Execution and rollback, after concrete approval
 
 1. Freeze final validation source/inputs/configuration and build/scan that exact image; publish only after
-   registry approval, verify its digest, then fill the final manifest. The [current local candidate](../../docs/judge-readiness/current-image-20261023/README.md)
-   contains tested source `1c3c7fe` and passes local mock/privacy/synthetic-restart checks. It is unpublished,
-   not release-approved, and must be rebuilt if final validation requires another runtime change.
+   registry approval, verify its digest, then fill the final manifest. The [current local candidate](../../docs/judge-readiness/document-revisions-20261023/README.md)
+   contains tested source `2ac6f89`, the revision correction and blind-PDF exclusion, with synthetic full-tray
+   capped replay/restart proof. It is unpublished and not release-approved; rebuild it if final validation
+   requires another runtime change. Earlier image proofs remain historical.
 2. Verify account permissions, region/preset/quota, complete price bounds and actual stop/expiry fields.
    Create only the approved private filesystem and endpoint. Start with paid admission blocked because
    no wallet exists; launcher settings remain absent. Confirm mount/boot/resource identities privately.
