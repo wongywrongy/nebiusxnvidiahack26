@@ -86,3 +86,45 @@ SPECCHECK_MODE=live MAX_OUTPUT_TOKENS=32768 INVESTIGATE_MAX_STEPS=24 INVESTIGATE
 [Capture script](capture_read.py) calls the ordinary targeted eval and retains only instruction/response
 metadata. Reproduction may spend on cache misses; preserve the existing authority and caches.
 No owner approval, answer-key adjudication or release acceptance is inferred.
+
+## Frozen revision-source local packaging
+
+Local tag `speccheck:revision-source-local`, image/index ID
+`sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28`,
+contains source `2ac6f89` / runtime hash
+`4a660ea2136462a7c72d30100372c22f06fcc4e2d14f679de3169b3f23ddfad8`.
+[Metadata](image/metadata.json), [actual build output](image/build.json).
+It stays unpublished and predates the later unit correction `a9df48c`; it is not the final runtime image. Dependency/web build layers were reused; no uncached dependency/frontend build
+is claimed. Both GitHub workflows for this source pass Python/mock-policy, presentation/build and mock
+browser journey/failure checks; [actual job steps](image/ci.json).
+
+The image contains exactly the 13 locked public PDFs plus the raw manifest, with no blind PDFs, uploads,
+private cache, authority or `.env` in their app paths. All provider/admin key-presence booleans are false.
+[Inventory/runtime](image/runtime-privacy.json), [13/13 native preflight](image/document-preflight.json).
+A private-stdin scan finds no configured secret string in **8,562 regular image files**, excluding
+virtual filesystems/symlinks and not inspecting deleted layers; [booleans](image/secret-scan.json).
+Image-native mock eval preserves raw 6/8 / 5/6 / 0/2 / 0/5 and expected exit 1; [output](image/mock-eval.txt).
+
+The existing [isolated capped-replay reproducer](../preproduction-packaging-20261023/reproduce.py) runs
+with only its image constant changed to this local ID; [executed script identity](image/reproducer.json).
+It uses a new temporary bind mount, synthetic credentials/wallet and Docker networking disabled.
+No wallet is initialized by startup. Explicit synthetic import and two container restarts preserve
+authority, app files and replayed results. GET scores serves historical live recording
+`20261022-181611-a9d0b5`; explicit replay returns 10 results, and all eight public items replay under the
+temporary zero day cap. Fresh re-check returns HTTP 429 instead of replaying. The real caps/wallet are
+untouched. [Actual API/restart proof](image/capped-replay-restart.json).
+This is not hosted durability, a fresh upload, a new recording or a current full-set evaluation.
+
+Packaging adds **$0 / 0 provider charges**; [real accounting unchanged](image/campaign-after.json).
+The temporary proof container is removed. The local image and private synthetic directory remain for
+inspection. Rebuild/publish/hosted execution still require the final gates and concrete owner approval.
+
+```bash
+docker build --progress=plain --tag speccheck:revision-source-local .
+docker run --rm --network none --entrypoint python speccheck:revision-source-local scripts/check_pdfs.py --required
+docker run --rm --network none --entrypoint python speccheck:revision-source-local scripts/eval.py --out /tmp/image-mock.json
+# Expected mock exit 1. Use the saved reproducer with this inspected local image ID for the synthetic proof.
+```
+
+The [replacement-selection policy question](replacement-policy-question.md) awaits Kyle's decision.
+The current submitted-evidence rule remains in force; no proposed selection is implemented or approved.

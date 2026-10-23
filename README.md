@@ -107,28 +107,35 @@ Kyle authorized the disclosed selection-policy exceptions and live validation on
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
 [readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
 
-The October 23 targeted run `20261023-081257-c725cf` gets **c03 and c07 right (2/2 problems caught)**,
-with **0/2 passing replacements** and no cap/provider warnings. Four replacement investigations run;
-none supplies a complete replacement, and no primary investigation is needed. Fresh charges are
-**$0.1664979 / 4 credits**, with partly cached times of **174.509 / 137.884 seconds**; this is not an
-eight-case score or controlled cold-upload benchmark. The current checkpoint passes **632 tests, 2 skipped**.
-Presentation/build checks and eight mock browser journeys passed at the preceding runtime checkpoint.
-Additional engineering spend is **$1.7436012 / 149 credits**, cumulative local ledger **$2.8022062 / 447**.
-G2 remains open for a fully evidenced replacement. The [latest before/after evidence](docs/judge-readiness/document-revisions-20261023/README.md)
-rejects safety-sheet revisions as technical-sheet revision proof while preserving valid property quotes,
-and limits pass wording to the values or revisions actually compared. The [catalog correction](docs/judge-readiness/catalog-fallback-20261023/README.md)
-prevents a full company catalog from replacing a product page and repairs only affected cached entries.
-The [preceding paid run](docs/judge-readiness/replacement-research-20261023/README.md) records research of
-missing requirements and availability plus retention of newly discovered sources.
-The [preceding scope correction](docs/judge-readiness/scope-binding-20261023/README.md) preserves unconditional
-L70/MacAdam evidence; unselected driver/DLC evidence stays unconfirmed. The owner previously reported account-wide **$2.13 / 421**;
-Tavily's separate 07:10 UTC usage API observation was 415, before this latest run. These totals are not reconciled; budget enforcement retains the
-higher local ledger. Token Factory's catalog lists cached-input discounts absent from historical usage
-records, so the dollar difference cannot be reconstructed. Earlier [claim/citation fixes](docs/judge-readiness/claim-repair-20261023/README.md)
-and a [historical primary Investigator rescue](docs/judge-readiness/replacement-discovery-20261023/README.md)
-remain tied to their recorded source. [Persistent startup](docs/judge-readiness/controller-startup-20261023/README.md)
-has network-disabled synthetic container evidence. The [local image of source `1c3c7fe`](docs/judge-readiness/current-image-20261023/README.md)
-repeats mock/privacy/synthetic restart checks; it predates the latest revision correction and stays unpublished.
+The October 23 targeted run `20261023-084824-7ab49b` gets **c03 and c07 right (2/2 problems caught)**,
+with **0/2 passing replacements**, zero invalid items and no recorded cap/provider warnings. Four replacement
+investigations return found, none capped; none supplies a complete replacement and no primary investigation
+is needed. Fresh charges are **$0.1494426 / 10 credits**, with partly cached times of **147.759 / 97.052
+seconds**. This is not an eight-case score or controlled cold-upload benchmark. Claims retained are
+**50/209** and web values **54/100**; the current raw mock retains **46/65** and **8/20**.
+The current checkpoint passes **647 tests, 2 skipped**. Both [GitHub workflows for tested source `95d5a27`](docs/judge-readiness/quantity-units-20261023/ci.json)
+pass Python/mock, presentation/build and mock browser journey/failure checks.
+Additional engineering spend is **$1.8930438 / 159 credits**, cumulative local ledger **$2.9516488 / 457**.
+
+G2 remains open for a fully evidenced replacement. The [unit correction and actual before/after](docs/judge-readiness/quantity-units-20261023/README.md)
+reject missing physical units and control voltage offered as minimum dimming. Unsupported quantities remain
+unconfirmed. The [revision correction](docs/judge-readiness/document-revisions-20261023/README.md) rejects safety-sheet
+revisions as technical-sheet proof and limits pass wording to the values or revisions actually compared.
+The [catalog correction](docs/judge-readiness/catalog-fallback-20261023/README.md) prevents company-catalog
+substitution; [scope evidence](docs/judge-readiness/scope-binding-20261023/README.md) preserves unconditional
+L70/MacAdam while unselected driver/DLC options stay unknown. The earlier
+[primary Investigator rescue](docs/judge-readiness/replacement-discovery-20261023/README.md) stays historical.
+
+Kyle previously reported **$2.13 / 421, account-wide**, with billing cutoff unspecified. Tavily usage API
+observations were 415 at 07:10 UTC, 421 at 07:46 UTC and **437 at 08:53 UTC**. The latest is 20 below the
+settled local credit ledger; the read-only GET changes no accounting. These totals remain unreconciled.
+Token Factory's cached-input discounts are absent from historical usage records, so the dollar difference
+cannot be reconstructed. Enforcement retains the higher local accounting.
+
+[Persistent startup](docs/judge-readiness/controller-startup-20261023/README.md) and the
+[frozen revision-source image `2ac6f89`](docs/judge-readiness/document-revisions-20261023/README.md) have
+network-disabled synthetic import/capped-replay/restart evidence. That unpublished image excludes blind PDFs
+but predates the unit correction; the final image must be rebuilt from final validated source.
 No hosted proof or release approval is claimed.
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete

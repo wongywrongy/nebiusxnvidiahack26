@@ -382,3 +382,43 @@ or persistent block. Earlier dashboard/API observations predate this work; no re
 adjustment is inferred. No original expectation, reviewed requirement, broader evaluation, blind run, final
 recording, cloud resource or owner approval changes. G2 remains open. The earlier packaged runtime predates
 this source correction; it is not current-source release evidence.
+
+### Frozen revision-source image follow-up — 2026-10-23
+
+The [frozen revision-source image](judge-readiness/document-revisions-20261023/README.md) binds runtime source
+`2ac6f89` / `4a660ea2136462a7c72d30100372c22f06fcc4e2d14f679de3169b3f23ddfad8` to unpublished image/index
+`sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28`. Required 13-PDF preflight
+passes; blind PDFs and private app paths are absent. No configured secret string occurs in 8,562 regular
+image files (virtual filesystems/symlinks and deleted layers excluded). Raw mock panel remains 6/8 / 5/6 /
+0/2 / 0/5, expected exit 1. Source CI passes Python/mock, presentation/build and mock browser checks.
+
+An isolated synthetic wallet/import/two-restart proof serves the historical live scoreboard, replays ten
+recorded results and all eight public items at a temporary zero day cap; fresh re-check returns 429 instead
+of replaying. This is loopback with Docker networking disabled, no real keys/authority mounted, and no
+provider request. Its checkpoint accounting is $2.8022062 / 447, before the later unit validation. No current full-set evaluation, recording, registry
+publication, hosted proof or approval occurs. The separate replacement-proposal policy question is pending;
+the existing submitted-selection rule stays binding.
+
+### Unit-validation and documentation reconciliation — 2026-10-23
+
+The [actual synthetic before/after and targeted live check](judge-readiness/quantity-units-20261023/README.md)
+binds runtime `a9df48c` / `00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3`.
+Missing physical units cannot borrow the requirement's unit; dimensionless values and explicit conversions
+remain valid. Shared extraction, web and both release paths apply the same gate. No prompt, original key
+or reviewed checklist changes. Fifteen new regressions bring the integrated suite to **647 passed / 2 skipped**.
+Raw mock remains **6/8 / 5/6 / 0/2 / 0/5**, zero invalid items, with **46/65** claims and **8/20** web values.
+
+Actual live run `20261023-084824-7ab49b` gets c03/c07 **2/2 calls/problems, 0/2 passing fixes**, zero invalidity
+or warnings. Two-item archive consistency passes; no complete promotion. Four replacement investigations
+return found, none capped, without complete evidence; no primary investigation runs. Fresh charges are
+**$0.1494426 / 10 credits**. Settled cumulative ledger: **$2.9516488 / 457**, UTC day **$1.464912 / 99**,
+no holds or persistent block. Tavily's 08:53 UTC usage API reports **437**; the local 20-credit difference
+remains unresolved and no accounting is changed. The owner's $2.13 / 421 is account-wide, cutoff unspecified.
+
+Both [CI workflows for source `95d5a27`](judge-readiness/quantity-units-20261023/ci.json) pass Python/mock,
+presentation/build and mock browser checks. The frozen image above predates this unit correction; rebuilding
+the final validated source remains required. Current README/SUBMISSION/ownership now separate those scopes.
+Public Virtual Networks/Registry service rates and SecretStash preview pricing are resolved in the
+unapproved cost worksheet; private account facts, actual dates, tax/IP/egress bounds and approval remain open.
+This documentation/identity review makes no paid provider call. G2 stays open; no full-set/blind evaluation,
+final recording, cloud resource, real authority transfer or owner acceptance is inferred.

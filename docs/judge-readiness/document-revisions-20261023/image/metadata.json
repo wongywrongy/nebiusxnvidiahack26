@@ -1,0 +1,11 @@
+{
+  "tag": "speccheck:revision-source-local",
+  "local_image_id": "sha256:018f77291d3efb90b1d6ce9c5a3472dd795ba8ba12660f8cc0068a1a8d14be28",
+  "source_commit": "2ac6f89d9ffc8af1eb6142ee8d7421a266b19c1a",
+  "runtime_code_hash": "4a660ea2136462a7c72d30100372c22f06fcc4e2d14f679de3169b3f23ddfad8",
+  "default_command": [
+    "python",
+    "scripts/serve.py"
+  ],
+  "published": false
+}

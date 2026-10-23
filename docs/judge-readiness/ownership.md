@@ -29,22 +29,26 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Company-catalog fallback and affected legacy cache repair | [Actual product-page before/after](catalog-fallback-20261023/README.md); direct catalog requests remain valid, quote/selection gates unchanged |
 | Technical-sheet revision attribution and bounded comparison wording | [Actual replay and live prompt/gate check](document-revisions-20261023/README.md); SDS revisions rejected, supported property quotes preserved |
 | Public storage/IAM/cost/expiry/rollback preparation | [Unapproved bounded plan](../../deploy/nebius/rollout.pending.md); private inputs/final image/approval/hosted proof pending |
-| Current-source local image | [Source `1c3c7fe`, mock/privacy/synthetic restart and CI](current-image-20261023/README.md); unpublished, no real authority transfer or hosted proof |
+| Frozen revision-source local image | [Source `2ac6f89`, blind exclusion, mock/privacy/capped replay/restart and CI](document-revisions-20261023/README.md); predates the unit correction, unpublished, no real authority transfer or hosted proof |
+| Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **632 passed / 2 skipped**. Both GitHub workflows for preceding runtime `1c3c7fe`
-pass Python/mock, presentation/build and mock browser journey/failure checks; no live/hosted browser proof.
-Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
-Actual cumulative local ledger is **$2.8022062 / 447 credits**, with no outstanding holds at this checkpoint.
-The latest [partly cached c03/c07 run](document-revisions-20261023/README.md) gets 2/2 calls/problems,
-0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes for two
-items only. Four replacement investigations do not yield a passing replacement; no primary investigation
-runs. The earlier primary recovery remains historical. The local image of source `1c3c7fe` predates the
-revision correction; its synthetic-only proof does not establish real wallet transfer, deployment or release approval.
-Kyle reports account-wide **$2.13 / 421**; a later Tavily usage API reports 415. Local-minus-owner is
-$0.6722062 / 26 credits; the owner's reading predates the latest work. Scope is confirmed, billing cutoff and cause are unresolved. Current public Super
-cached-input pricing could lower actual billing, but historical cached-token quantities were not saved.
-The higher local accounting remains in force; no ledger is changed.
+Current Python verification: **647 passed / 2 skipped**. Both [workflows for tested source `95d5a27`](quantity-units-20261023/ci.json)
+pass Python/mock, presentation/build and mock browser journey/failure checks; no hosted browser proof.
+Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**,
+with 46/65 claims, 8/20 web values and the unchanged selection-policy disagreements.
+Actual cumulative local ledger is **$2.9516488 / 457 credits**, no holds or persistent block.
+The [latest c03/c07 run](quantity-units-20261023/README.md) gets 2/2 calls/problems, 0/2 passing replacements,
+zero invalidity or cap/provider warnings; two-item submitted-page/web/archive/trace consistency passes.
+Four replacement investigations return found, none capped, without complete proof; no primary investigation
+runs. The earlier primary rescue stays historical. The frozen `2ac6f89` image predates the unit correction;
+its synthetic proof establishes no real wallet transfer, deployment or release approval.
+
+Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. Usage API observations are 415 at 07:10 UTC,
+421 at 07:46 UTC and **437 at 08:53 UTC**. Local credits are 20 higher than the latest API observation;
+none establishes a synchronized invoice match. Historical cached-input quantities were not retained.
+Accounting remains unchanged. Public Virtual Networks/Registry rates and SecretStash preview pricing
+are now resolved; public IP/egress, taxes, private IAM/quota, grant terms and approval remain open.
 
 ## Still mine to finish
 
@@ -69,7 +73,7 @@ The higher local accounting remains in force; no ledger is changed.
    final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
    evals and one recording are authorized; none has been used at this checkpoint.
 6. **Deployment preparation:** the current unpublished candidate pins the tested startup/runtime;
-   finish the final registry digest, private account/IAM bindings and unpriced network/registry/tax bounds.
+   finish the final validated image/registry digest, private account/IAM bindings and public-IP/egress/tax bounds.
    The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
    stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
    is a forecast, not spend or deployment approval. Keep Endpoint + Jobs; do not create resources yet.
@@ -80,6 +84,10 @@ The higher local accounting remains in force; no ledger is changed.
 
 ## Kyle's parts, later
 
+- Decide the [replacement proposal policy](document-revisions-20261023/replacement-policy-question.md):
+  require a user-selected replacement configuration, or allow a clearly labelled agent proposal whose
+  exact configuration is verified from source quotes. The submitted-selection rule remains binding
+  until that decision; neither option fills today's missing evidence by itself.
 - Review each gate's evidence and accept or reject its remaining misses. Engineering authorization of the
   c05/c06 selection-policy disagreements is recorded; release acceptance remains a separate judgment.
 - Review the blind labels before evaluation and adjudicate any new source/answer-key contradiction.
