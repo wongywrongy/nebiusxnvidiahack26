@@ -52,10 +52,12 @@ newer shared status-timing work is excluded from its proof.
 The [subsequent date-bound affected-case attempt](status-timing-20261023/bounds.md) retains a valid
 c03 but an invalid c07/provider-accounting result; it does not replace that valid accuracy panel.
 
-Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The latest read-only usage API reports
-**485 at 10:39 UTC**, five below settled local credits, with an additional unknown credit held locally.
-No synchronized dashboard/invoice match, per-request charge or cause is inferred;
-no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/traffic
+Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The [read-only log-window audit](requirement-discovery-followup-20261023/billing-log-audit/README.md)
+finds **480 provider-logged credits versus 490 locally settled credits for October 21–23**.
+The monthly counter is 485 because it also includes five credits from October 8, outside this campaign.
+No returned record identifies the failed request; absence does not prove zero charge. Its one-credit
+hold remains unresolved. The ten-credit historical difference and Token Factory invoice reconciliation
+remain open; no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/traffic
 rates are now [source-verified as advertised free](public-network-pricing-20261023/source.json); account overrides, taxes,
 private IAM/quota, grant/expiry terms, judge access funding and concrete approval remain open.
 
@@ -102,8 +104,11 @@ private IAM/quota, grant/expiry terms, judge access funding and concrete approva
 - Review the blind labels before evaluation and adjudicate any new source/answer-key contradiction.
   Specify a configuration only when the submitted package actually selects it; leaving an option unconfirmed
   is allowed. Do not invent missing selection or assembly proof to make a case pass.
-- Read provider/AI Cloud billing, account/key scope and grant expiry from private consoles. The latest
-  account-wide reading and separate API/local totals disagree; the ledger has not been adjusted. Never send keys in chat.
+- Obtain attributable billing confirmation for the failed October 23, 10:36–10:38 UTC Tavily request;
+  a [private support-inquiry draft](requirement-discovery-followup-20261023/billing-log-audit/support-inquiry.txt)
+  is ready and has not been sent. The agent will reconcile the hold and retry after confirmation.
+  Review the separate 490-versus-480 campaign-credit difference and Token Factory invoice with timestamps/scope.
+  Read AI Cloud balance, grant expiry and account tax/pricing facts privately. Never send keys in chat.
 - Approve the final resource/IAM/storage/cost/rollback manifest and supply private account access when needed.
   The agent then carries out the approved work; Kyle need not write deployment scripts or debug storage.
 - Review final claims, pitch/video and release PR, then authorize final submission through the owner account.
