@@ -173,7 +173,7 @@ def test_web_reader_reads_after_the_first_bounded_batch(monkeypatch):
     async def call(task, schema, messages, ctx):
         sources = json.loads(messages[0]["content"].split("SOURCES:\n")[-1])
         calls.append(sources)
-        values = [{"property": "warranty_years", "value": 7, "quote": "Warranty 7 years."}] if any(
+        values = [{"property": "warranty_years", "value": 7, "unit": "yr", "quote": "Warranty 7 years."}] if any(
             "Warranty 7 years." in p["text"] for p in sources) else []
         return VerifyOut(status="unknown", current_values=values), Usage(task=task, tier="verify", model="test")
     monkeypatch.setattr(verify.router, "call", call)

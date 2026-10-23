@@ -90,7 +90,8 @@ def test_related_metrics_cannot_be_relabelled(property, quote, value, kept, monk
     async def call(*args, **kwargs):
         return ClaimsOut(product="X", manufacturer="Maker", claims=[{
             "id": "measurement", "product": "X", "manufacturer": "Maker", "property": property,
-            "value": value, "page": 1, "quote": quote}]), Usage(task="extract_claims", tier="extract", model="test")
+            "value": value, "unit": "hr" if property.endswith(("_hours", "_hr")) else None,
+            "page": 1, "quote": quote}]), Usage(task="extract_claims", tier="extract", model="test")
     monkeypatch.setattr(extract.router, "call", call)
     pages = [{"page": 1, "text": quote}]
     result, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), [property]))

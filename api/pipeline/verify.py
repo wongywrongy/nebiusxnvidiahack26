@@ -321,7 +321,7 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: 
         out.status_quote = None
     read = len(out.current_values)
     out.current_values = [pv for pv in out.current_values if source_of(pv.quote, pv.source_url) and value_quoted(pv.value, pv.quote, pv.property)
-                          and metric_quoted(pv.property, pv.quote) and unit_quoted(pv.unit, pv.quote)
+                          and metric_quoted(pv.property, pv.quote) and unit_quoted(pv.unit, pv.quote, pv.property)
                           and (submitted is None or pv.source_url and pv.model and pv.identity_quote)
                           and (not pv.identity_quote or source_of(pv.identity_quote, pv.source_url) == source_of(pv.quote, pv.source_url)
                                and (submitted is None or model_quoted(pv.model, pv.identity_quote)))

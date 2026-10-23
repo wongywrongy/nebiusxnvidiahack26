@@ -147,7 +147,7 @@ def _claims(extracted, claims, selection, pages: dict[int, str]) -> None:
     for claim in claims:
         text = pages.get(claim.page, "")
         if (not quoted(claim.quote, text) or not value_quoted(claim.value, claim.quote, claim.property)
-                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote)
+                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote, claim.property)
                 or claim.variant and not quoted(claim.variant, claim.quote or "")
                 or claim.model and not (model_quoted(identifier, claim.model) and model_quoted(claim.model, identifier)
                     or selection and model_quoted(claim.model, text) and model_quoted(claim.model, selection.model))
@@ -322,7 +322,7 @@ def _run(folder: Path, ids: set[str], catalog: dict, current: dict, *, score_ids
                     for identifier in check.claim_ids:
                         claim = next((claim for claim in candidate.claims if claim.id == identifier), None)
                         if (not claim or not value_quoted(claim.value, claim.quote, claim.property)
-                                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote)
+                                or not metric_quoted(claim.property, claim.quote) or not unit_quoted(claim.unit, claim.quote, claim.property)
                                 or not any(_citation(e.model_copy(update={"excerpt":claim.quote}), started, finished) for e in check.evidence)):
                             raise ValueError("Replacement check must cite its actual claim quote")
                         if not claim.variant:

@@ -106,7 +106,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
         extracted = len(out.claims)
         repairable = [c for c in out.claims if c.property in properties and c.page in texts
                       and quoted(c.quote, texts[c.page]) and to_number(c.value) is not None
-                      and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote)
+                      and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote, c.property)
                       and not value_quoted(c.value, c.quote, c.property)]
         if settings.live and repairable:
             repaired, u = await _repair_values(case_id, repairable)
@@ -124,7 +124,7 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
             if not c.variant and (scope := re.search(r"^((?:non[\s-]*configurable|configurable|optional)[^:]{0,100}):", _plain(c.quote or ""), re.I)):
                 c.variant = scope[1].strip()
         out.claims = [c for c in out.claims if c.property in properties and c.page in texts and quoted(c.quote, texts[c.page])
-                      and value_quoted(c.value, c.quote, c.property) and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote)
+                      and value_quoted(c.value, c.quote, c.property) and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote, c.property)
                       and (not c.variant or quoted(c.variant, c.quote or ""))]
         if out.claims:
             names = [out.model, out.family, *[c.model or c.product for c in out.claims], out.product]
@@ -334,6 +334,9 @@ def metric_quoted(property: str, quote: Optional[str]) -> bool:
         return bool(re.search(rf"\b{property[0]}[\W_]*rat(?:ings?|ed)\b", text, re.I))
     if property == "cri":
         return bool(re.search(r"(?<![a-z])cri(?![a-z])|colou?r rendering", text, re.I))
+    if property == "dim_min_percent":
+        return bool(re.search(r"\bdim(?:ming|s|\d+)?\b", text, re.I)
+                    and re.search(r"%|\bpercent\b", text, re.I))
     patterns = {
         "lumens": r"\blumens?\b|\blm\b(?!\s*[/p]\s*w)",
         "watts": r"\b(?:watts?|wattage)\b|(?<![a-z/])w\b",
@@ -348,9 +351,13 @@ def metric_quoted(property: str, quote: Optional[str]) -> bool:
     return True
 
 
-def unit_quoted(unit: Optional[str], quote: Optional[str]) -> bool:
+def unit_quoted(unit: Optional[str], quote: Optional[str], property: str = "") -> bool:
     if not unit:
-        return True
+        # A physical quantity cannot borrow its missing unit from the requirement.
+        quantities = {"lumens", "watts", "warranty_years", "dim_min_percent", "voc_g_per_l",
+                      "f_rating_hr", "t_rating_hr", "max_annular_space_in", "efficacy_lm_per_w",
+                      "input_watts_120v", "input_watts_277v", "service_temp_max_f", "service_temp_range_f"}
+        return property not in quantities and not re.fullmatch(r"l\d+_hours", property)
     aliases = {"hr": r"h(?:ours?|rs?)?", "yr": r"y(?:ears?|rs?)", "lm": r"lm|lumens?",
                "w": r"w|watts?|wattage", "lm/w": r"lm\s*/\s*w|lpw", "%": r"%|percent",
                "steps": r"steps?|sdcm", "rating": r"rating|class"}
