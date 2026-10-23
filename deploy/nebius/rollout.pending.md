@@ -22,8 +22,11 @@ in the image; persist uploads/cache/runs/evidence with the controller startup al
 The public demo uses the managed HTTPS URL and application admin authentication. Endpoint-wide bearer
 authentication would prevent a judge's unauthenticated browser/upload flow. Omit `--auth token` for the
 approved public trial, retain mandatory application admin/worker authentication, and verify public access
-on the actual account. The managed URL does not itself require `--public`; temporary SSH adds a dynamic
-IP, whose quota and price must be confirmed. Neither an IP nor network cost is assumed free.
+on the actual account. The managed URL does not itself require `--public`. Temporary SSH can require a
+public IP; verify actual account quota/access before creating one. The
+[public-price check](../../docs/judge-readiness/public-network-pricing-20261023/source.json) resolves
+advertised IP/traffic rates as free. Account overrides, taxes and approval remain unchecked; a published
+zero rate does not authorize adding a public IP.
 
 ## Identities and secrets to pin before approval
 
@@ -62,8 +65,12 @@ The checked worksheet includes endpoint compute/boot disk, the private filesyste
 
 These are computed forecasts, not bills or approved allowances. Current public pricing makes Virtual
 Networks and Container Registry free, and SecretStash free during preview; [actual public responses](../../docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json)
-resolve those service-rate questions. Public IP/egress, taxes, Token Factory and Tavily remain excluded
-and must be bounded before final approval. Free Virtual Networks does not establish free public IPs or traffic. A stopped
+resolve those service-rate questions. The [current public pricing page](https://nebius.com/prices) also
+explicitly lists networking ingress/egress and public IP addresses as free; [actual dated response](../../docs/judge-readiness/public-network-pricing-20261023/source.json).
+The resource subtotal therefore has zero published networking charges, with account overrides, future
+price changes, taxes, Token Factory and Tavily still excluded. Standard Object Storage egress is a separate
+charge and is not used by this filesystem-based trial. The remaining approval field must bind actual
+account pricing/taxes; it is not a missing public-rate lookup. A stopped
 endpoint still leaves the private filesystem billable: 32 GiB costs $2.56 per 730 retained hours at the
 published rate. Deletion protection deliberately prevents accidental wallet deletion.
 

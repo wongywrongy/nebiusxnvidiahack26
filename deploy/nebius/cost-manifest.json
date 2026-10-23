@@ -45,6 +45,10 @@
     "https://docs.nebius.com/vpc/resources/pricing.md": {
       "body_sha256": "9e1c8b8fe89b2c5fec407c82a1ab391151fffa4918e2bf5d712fcd5f4c0e8c66",
       "recorded_at": "2026-10-23T07:49:34.106292+00:00"
+    },
+    "https://nebius.com/prices": {
+      "body_sha256": "5b521f89c057cc947188a06f0e432b083b5bf4aceae92b97544decaa9480ce8e",
+      "recorded_at": "2026-10-23T10:57:20.576277+00:00"
     }
   },
   "forecasts": [
@@ -246,14 +250,17 @@
       }
     ],
     "excludes": [
-      "public IP and egress charges",
+      "account-specific price overrides or later rate changes",
       "taxes",
       "Token Factory",
       "Tavily"
     ],
     "account_region_quota_iam_verified": false,
     "grant_expiry_verified": false,
-    "cloud_resources_created": false
+    "cloud_resources_created": false,
+    "published_networking_charge_usd": 0,
+    "networking_price_source": "https://nebius.com/prices",
+    "networking_price_evidence": "docs/judge-readiness/public-network-pricing-20261023/source.json"
   },
   "rollout_plan": "deploy/nebius/rollout.pending.md",
   "pending_approval_inputs": {
@@ -310,7 +317,19 @@
       "usd": 0,
       "condition": "Published preview service price; recheck before operating beyond preview"
     },
-    "evidence": "docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json"
+    "evidence": "docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json",
+    "network_traffic": {
+      "usd": 0,
+      "condition": "Current published networking price; private account overrides and future rate changes not verified; Standard Object Storage egress is separate",
+      "source": "https://nebius.com/prices",
+      "evidence": "docs/judge-readiness/public-network-pricing-20261023/source.json"
+    },
+    "public_ip": {
+      "usd": 0,
+      "condition": "Current published networking price; private account overrides and future rate changes not verified; Standard Object Storage egress is separate",
+      "source": "https://nebius.com/prices",
+      "evidence": "docs/judge-readiness/public-network-pricing-20261023/source.json"
+    }
   },
   "blind_asset_exclusion_checkpoint": {
     "source_base_commit": "1c3c7fe",

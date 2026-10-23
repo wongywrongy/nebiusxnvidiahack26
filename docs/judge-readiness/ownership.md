@@ -55,7 +55,8 @@ c03 but an invalid c07/provider-accounting result; it does not replace that vali
 Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The latest read-only usage API reports
 **485 at 10:39 UTC**, five below settled local credits, with an additional unknown credit held locally.
 No synchronized dashboard/invoice match, per-request charge or cause is inferred;
-no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/egress, taxes,
+no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/traffic
+rates are now [source-verified as advertised free](public-network-pricing-20261023/source.json); account overrides, taxes,
 private IAM/quota, grant/expiry terms, judge access funding and concrete approval remain open.
 
 ## Still mine to finish
@@ -82,7 +83,7 @@ private IAM/quota, grant/expiry terms, judge access funding and concrete approva
    evals and one recording are authorized; none has been used at this checkpoint.
 6. **Deployment preparation:** the unpublished candidate freezes validated source `061cf9d`;
    bind the final source/configuration and packaged inputs after all remaining corrections and validation;
-   finish the final validated image/registry digest, private account/IAM bindings and public-IP/egress/tax bounds.
+   finish the final validated image/registry digest, private account/IAM bindings and account-specific price/tax bounds.
    The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
    stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
    is a forecast, not spend or deployment approval. Keep Endpoint + Jobs; do not create resources yet.

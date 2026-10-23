@@ -1,0 +1,33 @@
+{
+  "checked_at": "2026-10-23T10:59:24.883812+00:00",
+  "scope": "Recomputed resource-only forecasts with current published zero networking; not bills or approved allowances",
+  "rows": [
+    {
+      "endpoint_hours": 24,
+      "computed_subtotal_usd": 1.8810849315068494,
+      "stored_subtotal_usd": 1.8810849315068494,
+      "passed": true
+    },
+    {
+      "endpoint_hours": 168,
+      "computed_subtotal_usd": 12.683808219178083,
+      "stored_subtotal_usd": 12.683808219178083,
+      "passed": true
+    },
+    {
+      "endpoint_hours": 360,
+      "computed_subtotal_usd": 27.17958904109589,
+      "stored_subtotal_usd": 27.17958904109589,
+      "passed": true
+    },
+    {
+      "endpoint_hours": 1296,
+      "computed_subtotal_usd": 97.8465205479452,
+      "stored_subtotal_usd": 97.8465205479452,
+      "passed": true
+    }
+  ],
+  "account_price_tax_bound_pending": true,
+  "approved": false,
+  "passed": true
+}
