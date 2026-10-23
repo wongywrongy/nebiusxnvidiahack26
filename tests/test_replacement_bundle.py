@@ -78,6 +78,42 @@ def test_different_revision_note_cannot_qualify_a_replacement():
     assert fix._row(note, {}).ok is None
 
 
+@pytest.mark.parametrize('problem', ['status','currency'])
+@pytest.mark.parametrize('candidate_maker', ['Original maker','Other maker'])
+def test_replacement_discovery_and_verification_do_not_reuse_another_manufacturers_domains(monkeypatch, problem, candidate_maker):
+    observed = {}
+    async def search(self, query, **kwargs):
+        observed.update(query=query, search_domains=kwargs['include_domains'])
+        return [{'url':'https://candidate.test/data.pdf','title':'Candidate X'}]
+    async def extract(self, urls):
+        return [{'url':urls[0],'raw_content':'Candidate X. Power 10 W'}]
+    async def claims(*args, **kwargs):
+        return ClaimsOut(product='Candidate X', manufacturer=candidate_maker, model='Candidate X', claims=[
+            Claim(id='power', product='Candidate X', manufacturer=candidate_maker, property='watts', value=10, unit='W',
+                  page=1, quote='Power 10 W', scope='product_wide', scope_quote='Power 10 W')]), []
+    async def verify(case, submitted, **kwargs):
+        observed['verify_domains'] = case['manufacturer_domains']
+        return [], [], [], 0, None
+    monkeypatch.setattr(WebClient, 'search', search)
+    monkeypatch.setattr(WebClient, 'extract', extract)
+    monkeypatch.setattr(fix.extract, 'extract_claims', claims)
+    monkeypatch.setattr(fix.verify, 'verify', verify)
+    requirement = Requirement(id='power', section='26 51 00', paragraph='2.1', property='watts', operator='lte', value=20,
+                              unit='W', text='Power limit')
+    old = Finding(id='old', check=problem, verdict='fail' if problem == 'status' else 'outdated', severity='major', title='Old')
+    case = {'id':'discovery-test','fixture':None,'title':'LED fixture, office','submittal':[{'role':'product_data'}],
+            'manufacturer_domains':['original.test']}
+    result, _, _ = asyncio.run(fix._fix(case, 'currency', [old], [requirement],
+        ClaimsOut(product='Old product', manufacturer='Original maker', claims=[]), 1, 40))
+    assert observed['search_domains'] == (['original.test'] if problem == 'currency' else None)
+    assert ('Original maker' in observed['query']) is (problem == 'currency')
+    if problem == 'status':
+        assert '"LED fixture"' in observed['query'] and 'specification sheet' in observed['query']
+        assert 'Power' not in observed['query']
+    assert observed['verify_domains'] == (['original.test'] if candidate_maker == 'Original maker' else [])
+    assert not result.suggest and not result.candidates[0].passes  # Discovery alone proves no availability.
+
+
 def test_quoted_changed_value_source_precedes_search_catalog(monkeypatch):
     from api.schemas import Compare, CompareRow
     primary, catalog = "https://maker.test/current.pdf", "https://maker.test/catalog.pdf"

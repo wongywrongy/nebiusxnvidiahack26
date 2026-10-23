@@ -68,7 +68,7 @@ def _query(group: str, case: dict, claims: ClaimsOut, flagged: list[Finding], re
                        for r in requirements if r.id in ids and r.operator == "eq_ref")
         return f"UL listed firestop system {_penetrant(case, claims)} {where}{tail}"
     if any(f.check == "status" for f in flagged):
-        return f"{maker} current {_category(case)} data sheet"
+        return f'"{_category(case)}" manufacturer specification sheet'
     return f"{maker} {claims.product} {claims.model or ''} current data sheet".replace("  ", " ")
 
 
@@ -118,7 +118,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     web = WebClient(fix_fx, on_step, on_warning)
     own = {d.get("url") for d in case.get("submittal", [])}
     query = _query(group, case, claims, flagged, requirements)
-    domains = case.get("manufacturer_domains", []) if group == "currency" else []
+    domains = case.get("manufacturer_domains", []) if group == "currency" and not any(f.check == "status" for f in flagged) else []
     results = await web.search(query, include_domains=domains or None)
     known = [{"url": row.source_url, "title": next((e.title for e in f.evidence if e.url == row.source_url), row.source_url)}
              for f in flagged if f.check == "currency" and f.compare for row in f.compare.rows
@@ -170,8 +170,10 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         if not verify._unambiguous(cl.claims):
             continue  # no quoted product properties: cannot establish a passing replacement
         sources, verification = [], []
+        candidate_domains = (case.get("manufacturer_domains", []) if
+                             spec_check._text(cl.manufacturer) == spec_check._text(claims.manufacturer) else [])
         vf, _, vu, vc, inv = await verify.verify(
-            {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": case.get("manufacturer_domains", [])}, cl,
+            {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": candidate_domains}, cl,
             on_step=on_step, on_warning=on_warning, on_sources=sources.extend, on_proof=verification.append)
         if inv is not None and investigations is not None:
             inv.purpose = "replacement"

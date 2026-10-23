@@ -78,7 +78,7 @@ def comparable_units(a, b) -> bool:
 def _unambiguous(values) -> dict:
     grouped = {}
     for value in values:
-        if getattr(value, "variant", None) and not getattr(value, "selection_quote", None):
+        if value.property == "document_revision" or getattr(value, "variant", None) and not getattr(value, "selection_quote", None):
             continue
         grouped.setdefault(value.property, []).append(value)
     return {prop: group[0] for prop, group in grouped.items()

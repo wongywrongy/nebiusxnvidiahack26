@@ -199,6 +199,8 @@ async def _read_claims(case_id, text, properties):
 def scope_is_product_wide(scope: str, scope_quote: Optional[str], value_quote: Optional[str]) -> bool:
     return bool(scope == "product_wide" and quoted(value_quote, scope_quote or "")
                 and not re.search(r"\b(optional|options?|selected|non[\s-]*configurable)\b|"
+                                  r"\bnot\s+all\b|\bexcept(?:ing)?\b|\bexcluding\b|"
+                                  r"\b(?:some|certain|specific)\s+(?:versions?|models?|configurations?|variants?)\b|"
                                   r"\bonly\s+(?:for\s+)?(?:model|sku|driver|configuration)\b|"
                                   r"\b(?:model|sku|driver|configuration)\s+\S+\s+only\b", scope_quote or "", re.I))
 
@@ -287,7 +289,8 @@ def unit_quoted(unit: Optional[str], quote: Optional[str]) -> bool:
     aliases = {"hr": r"h(?:ours?|rs?)?", "yr": r"y(?:ears?|rs?)", "lm": r"lm|lumens?",
                "w": r"w|watts?|wattage", "lm/w": r"lm\s*/\s*w|lpw", "%": r"%|percent",
                "steps": r"steps?|sdcm", "rating": r"rating|class"}
-    pattern = aliases.get(unit.lower(), re.escape(unit).replace(r"\ ", r"\s*"))
+    pattern = next((pattern for pattern in aliases.values() if re.fullmatch(pattern, unit.strip(), re.I)),
+                   re.escape(unit).replace(r"\ ", r"\s*"))
     return bool(re.search(r"(?<![a-z])(?:" + pattern + r")(?![a-z])", _plain(quote or ""), re.I))
 
 

@@ -107,13 +107,13 @@ Kyle authorized the disclosed selection-policy exceptions and live validation on
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
 [readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
 
-The October 22 refinement check now gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
-replacements**. This targeted, cached-live confirmation is not an eight-case score or fresh latency
-benchmark. The October 23 release-preflight checkpoint passes **505 tests, 2 skipped**, with presentation
-checks and web build passing. The preceding reliability checkpoint passed **8 browser tests**.
-Additional engineering spend is **$0.4281318 / 61 credits**, cumulative **$1.4867368 / 359**.
-The linked-PDF c07 retry still has no passing replacement. G2 remains open for a fully evidenced replacement;
-see the [before/after evidence and commands](docs/judge-readiness/g2/live-validation.md).
+The October 23 refinement check gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
+replacements**, one primary Investigator recovery and no cap/provider warnings. This targeted, partly cached
+confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **524 tests,
+2 skipped**. Presentation/build checks and eight mock browser journeys passed in the preceding checkpoints.
+Additional engineering spend is **$0.9116244 / 93 credits**, cumulative local ledger **$1.9702294 / 391**.
+G2 remains open for a fully evidenced replacement. See the [latest query, matcher and metadata before/after
+evidence](docs/judge-readiness/replacement-discovery-20261023/README.md) and [earlier live corrections](docs/judge-readiness/g2/live-validation.md).
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
 cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.

@@ -1,7 +1,7 @@
 # First live pass — 2026-10-21–22
 
 Follow-up state on October 23: [readiness and ownership](judge-readiness/ownership.md). Additional targeted
-retrieval/reliability work brings actual cumulative spend to **$1.4867368 / 359 credits**. No later dashboard
+retrieval/reliability work brings actual cumulative spend to **$1.9702294 / 391 credits**. No later dashboard
 readout with scope/time was supplied; the historical three-credit discrepancy below remains unresolved.
 The dated first-pass figures and recording in this document remain historical evidence.
 
@@ -949,6 +949,18 @@ No merge or deployment was performed.
 
 ## Readiness follow-up billing checkpoint — 2026-10-22
 
-The original first pass above remains historical. Kyle subsequently authorized the readiness refinement plan and targeted live validation. [Readiness evidence](judge-readiness/g2/live-validation.md) records c03/c07 before and after general fixes. The two-item final guarded confirmation is **2/2 calls, 2/2 problems, 0/2 passing fixes**, not a new full evaluation or release pass. No follow-up full eight-case eval has run.
+The original first pass above remains historical. Kyle subsequently authorized the readiness refinement plan and targeted live validation. [Readiness evidence](judge-readiness/g2/live-validation.md) records c03/c07 before and after general fixes. The two-item guarded confirmation at this dated checkpoint is **2/2 calls, 2/2 problems, 0/2 passing fixes**, not a new full evaluation or release pass. No follow-up full eight-case eval had run.
 
 After these targeted runs, the actual local day report is **$0.4379588 / 67 credits** for October 22; adding October 21 **$1.048778 / 291** gives cumulative **$1.4867368 / 358**. The follow-up added **$0.4281318 / 60** beyond the prior cumulative baseline. The local durable wallet has no outstanding holds. Kyle replied “that is correct” to the reported cumulative $1.4867368 / 358 totals on 2026-10-22. This is owner confirmation of the reported totals; a separate dashboard readout, its timestamp and account/key scope were not supplied. The earlier three-credit gap is still unexplained, and no ledger was adjusted.
+
+## Post-targeted billing note — 2026-10-23
+
+After final affected c03/c07 run `20261023-023154-e725f0`, the actual local campaign ledger reports
+**$1.9702294 / 391 Tavily credits**, with no outstanding holds. The UTC day ledger reports
+**$0.4834926 / 33 credits**; one of those day credits preceded this checkpoint. The checkpoint itself
+adds **$0.4834926 / 32 credits**. The final two-item run adds **$0.1244169 / 7 credits**.
+
+Kyle's last response confirmed the previously reported $1.4867368 / 358, without a separate dashboard
+readout, timestamp or account/key scope. No new dashboard reading covers the additional usage here.
+Reconciliation is therefore pending, not a claimed match. The historical three-credit discrepancy remains
+unexplained; no ledger or invoice was adjusted. [Per-run requests, responses, traces and wallet](judge-readiness/replacement-discovery-20261023/README.md).

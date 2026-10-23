@@ -161,3 +161,27 @@ note. Fresh spend was **$0 / 0 credits**; cumulative actual spend remains **$1.4
 The actual promotion check of the incomplete artifact bundle **fails**. No blind review, release approval,
 provider run, cloud action, broader evaluation or final recording was performed. G2 remains open; blind
 preparation, actual release evidence, remote wallet handoff and hosted durability proof remain agent-owned.
+
+## Replacement discovery / live quote checkpoint — 2026-10-23
+
+[Measured runs and before/after evidence](judge-readiness/replacement-discovery-20261023/README.md) show four
+general corrections: discontinued-product discovery can reach other makers; candidate verification avoids
+another maker's domain constraint; existing unit aliases work symmetrically; conditional scope remains
+unconfirmed. A live false replacement failure also exposed SDS/TDS dates being compared as performance.
+Document revision is now excluded from performance values, requested source properties and recovery counts;
+explicit revision labels retain their separate note path. Quotes, numeric bounds and selection proof stay strict.
+
+Final targeted run `20261023-023154-e725f0`: **2/2 calls, 2/2 problems, 0/2 passing fixes**, no invalid items,
+unnecessary notes, cap or provider warnings. It keeps 36/160 claims and 3/41 web values. One primary
+scripted-unconfirmed item is resolved by the primary Investigator; no primary or replacement runs are capped.
+The real two-item extraction/web/archive/trace consistency check passes. c03 takes 126.228 seconds and c07
+86.670 seconds, partly cached; this is not a cold or full-set benchmark.
+
+Full mock regression: **524 passed, 2 skipped in 26.91 seconds**. Raw mock remains **6/8, 5/6, 0/2, 0/5**,
+48/65 claims and 8/20 web values. Earlier checkpoint 499b44f passed GitHub's Python/mock/web/browser checks.
+New checkpoint spend is **$0.4834926 / 32 credits**, cumulative local ledger **$1.9702294 / 391**, no holds.
+Final target fresh charges are $0.1244169 / 7; displayed usage-equivalent costs are not fresh billing.
+
+G2 remains open: SLLT lacks complete proof; LT has a lost L70 bound, unselected options and unconfirmed
+availability; c03 lacks complete VOC/mold/assembly/availability proof. A bounded corrective read is still
+agent-owned. No full follow-up eval, blind eval, final recording, deployment or cloud resource was created.

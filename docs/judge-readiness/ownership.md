@@ -21,16 +21,21 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Read-only smoke mode; invalid/replayed evidence rejected as fresh deployment proof | `tests/test_smoke.py`; hosted smoke remains pending |
 | Separate release promotion check across cases, samples, frozen blind set and full public recording | [Offline release preflight](release-preflight-20261023/README.md); submitted-page and web quote gates replayed; no actual blind review or promotion |
 
-Current Python verification: **505 passed / 2 skipped**. Presentation checks and web build pass at this
-checkpoint. The eight browser tests are from the preceding reliability checkpoint, not a new browser run.
+Current Python verification: **524 passed / 2 skipped**. Presentation checks and web build passed in the
+preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;
+no new local browser run is claimed for the backend changes below.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
-Actual cumulative provider spend is **$1.4867368 / 359 credits**, with no outstanding holds at this checkpoint.
+Actual cumulative local ledger is **$1.9702294 / 391 credits**, with no outstanding holds at this checkpoint.
+The latest [targeted c03/c07 run](replacement-discovery-20261023/README.md) gets 2/2 calls/problems,
+0/2 passing replacements and one primary Investigator recovery, with no cap/provider warnings.
 
 ## Still mine to finish
 
-1. **G2:** obtain and verify an actual complete replacement evidence bundle. The linked Acuity CPX PDF
-   returned no Tavily text; the product page does not establish L70, warranty, MacAdam, dimming or availability.
-   c03 still lacks mold/assembly proof. No unknown check may be turned into a pass.
+1. **G2:** obtain and verify an actual complete replacement evidence bundle. Broader discovery now reaches
+   Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/current-document/availability evidence;
+   LT still loses its L70 bound, has unselected DLC/driver options and unconfirmed availability. c03 lacks
+   complete VOC, mold and assembly proof. Bounded correction of omitted identifiers/lost bounds remains mine;
+   missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
 2. **Cloud controller:** finish remote authority handoff and explicit writer-cutover tooling, preserving the
    actual wallet and fencing the original before activating a copy. The allowance/claim/child-wallet/receipt/
    settlement protocol is implemented with isolated local tests; the actual campaign wallet has not moved.

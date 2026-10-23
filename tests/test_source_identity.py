@@ -7,9 +7,42 @@ from api.schemas import Requirement, Selection, Usage
 URL = "https://maker.test/current.pdf"
 
 
+@pytest.mark.parametrize('unit,quote,accepted', [('years','Warranty 5-year',True), ('yr','Warranty 5 years',True),
+    ('hours','Rated life 50,000 hr',True), ('hr','Rated life 50,000 hours',True), ('lumens','Output 500 lm',True),
+    ('percent','Dimming to 5%',True), ('years','Rated life 50,000 hr',False), ('hours','Warranty 5-year',False),
+    ('mm','Diameter 2 in',False)])
+def test_unit_synonyms_match_in_both_directions_without_changing_dimensions(unit, quote, accepted):
+    assert extract.unit_quoted(unit,quote) is accepted
+
+
+@pytest.mark.parametrize('qualifier', ['Not all versions are qualified.', 'Some models are qualified.',
+    'Specific configurations are qualified.', 'All models except the emergency variant are qualified.'])
+def test_conditional_scope_cannot_be_promoted_to_product_wide(qualifier):
+    value='DLC Premium listed.'
+    assert not extract.scope_is_product_wide('product_wide',f'{value} {qualifier}',value)
+    assert extract.scope_is_product_wide('product_wide',value,value)
+
+
 def submitted():
     return ClaimsOut(product="Series LX luminaire", manufacturer="Maker", model="LX-20",
                      claims=[Claim(id="w", product="LX", manufacturer="Maker", property="watts", value=10, unit="W")])
+
+
+@pytest.mark.parametrize('revision,expected', [(None,'unverified'),('Rev C','note')])
+def test_document_metadata_cannot_become_a_changed_performance_value(revision, expected):
+    product=submitted().model_copy(update={'document_revision':'Rev B','claims':[
+        Claim(id='date', product='X', manufacturer='Maker', property='document_revision',value='January 2026')]})
+    quote='Safety Data Sheet Issue Date: 02/06/24'
+    out=VerifyOut(status='unknown',current_revision=revision,current_values=[{'property':'document_revision',
+        'value':'02/06/24','quote':quote,'source_url':URL,'model':'LX-20','identity_quote':'Model LX-20',
+        'scope':'product_wide','scope_quote':quote}])
+    pages=[{'url':URL,'raw_content':f'Model LX-20. {quote}. Rev C'}]
+    confirmed=verify.gate(out,pages,submitted=product)
+    findings,rows=verify.compare(product,out,confirmed,[],pages)
+    assert findings[0].verdict == expected
+    assert not verify._unambiguous(product.claims) and not verify._unambiguous(out.current_values)
+    assert not any(f.verdict in ('fail','outdated') for f in findings)
+    assert len(rows) == (1 if revision else 0)  # Explicit revision metadata keeps its dedicated note path.
 
 
 def test_neighboring_model_cannot_supply_current_values_or_revision():
