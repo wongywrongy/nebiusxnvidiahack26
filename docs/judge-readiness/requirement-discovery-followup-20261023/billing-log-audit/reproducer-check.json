@@ -1,0 +1,43 @@
+{
+  "scope": "Offline HTTP-mocked replay of the actual captured log/counter data; no new provider request",
+  "passed": true,
+  "result": {
+    "scope": "Read-only log/counter observation; no payment settlement",
+    "observed_at": "2026-10-23T10:59:39.014564+00:00",
+    "request_body": {
+      "limit": 10000,
+      "start_date": "2026-10-01",
+      "end_date": "2026-10-23",
+      "filter_by_api_key": true
+    },
+    "log_count": 630,
+    "credits_by_utc_day_endpoint": {
+      "2026-10-23": {
+        "search": 120.0,
+        "extract": 11.0
+      },
+      "2026-10-22": {
+        "extract": 8.0,
+        "search": 58.0
+      },
+      "2026-10-21": {
+        "extract": 34.0,
+        "search": 247.0,
+        "map": 2.0
+      },
+      "2026-10-08": {
+        "map": 2.0,
+        "search": 3.0,
+        "extract": 0.0
+      }
+    },
+    "latest_log": "2026-10-23T09:52:39.055891+00:00",
+    "key_usage": 485,
+    "account_usage": 485,
+    "wallet_unchanged": true
+  },
+  "input_sha256": {
+    "logs-month.json": "3962cea3064e9604969d6619d57dcdf8b4d422f949959d0449678a69caa5df50",
+    "usage-after-logs.json": "8450f636a7611a902986f678fdfdcae9419569cab7bb784b51a025f47781254c"
+  }
+}

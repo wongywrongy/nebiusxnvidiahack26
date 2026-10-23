@@ -49,6 +49,15 @@ Never place a PEM, provider key, admin token or worker token in git, CLI argumen
   manual job commissioning is approved. `ENABLE_NEBIUS_JOBS` is a **GitHub repository variable**, not an
   application switch; setting it in the endpoint environment does not disable the admin job API.
 
+The unapproved template proposes the measured targeted profile: **65,536 output tokens, concurrency 1**,
+thinking off, 24 investigation steps / 30 investigation credits, and 40 fix credits. The earlier
+32,768-output/concurrency-2 c07 attempt was invalid at fix/output_limit; the later
+[valid two-item check](../../docs/judge-readiness/document-links-20261023/README.md) used 65,536/1.
+The active local environment still has 8,192/2 and is not evidence for that candidate profile. No local
+environment was changed. Full cases/samples/blind/recording validation must bind one final exact profile
+before rollout approval; neither the targeted panel nor a green mock build validates production quality.
+The latest source's Tavily usage hold must also be reconciled before another paid check.
+
 [Official roles](https://docs.nebius.com/iam/authorization/roles),
 [official endpoint flags](https://docs.nebius.com/serverless/endpoints/manage).
 

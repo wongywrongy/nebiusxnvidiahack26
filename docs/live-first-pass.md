@@ -1207,3 +1207,21 @@ leaves **1 credit held**, distinct from **$3.36648982 / 490 settled**. The proce
 paid work is blocked until usage is reconciled. The 10:39 UTC usage counter 485 is not a per-request
 receipt or synchronized invoice. Kyle has been asked for request billing detail. No hold/ledger reset,
 gate acceptance, full-set/blind run, final recording or deployment is inferred.
+
+
+### Read-only billing-log scope and candidate-profile audit — 2026-10-23
+
+[Actual Tavily Logs/Usage reads](judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/README.md)
+return 630 current-key monthly records / 485 credits, matching the 10:55 UTC key/account counter. Five
+credits date to October 8 outside this campaign. Provider logs for October 21–23 total **480**, versus
+**490 locally settled**: per-day local-minus-log differences 8, 1 and 1. The earlier five-credit
+local/account gap mixed date scopes; it did not establish the campaign-level discrepancy. These logs
+do not assign individual causes or justify rewriting the wallet. The failed 10:36–10:38 request has
+no returned receipt; **one unknown credit stays held**, raw local total 491, paid work blocked.
+Local calculated dollars remain $3.36648982. A support inquiry is drafted, not sent.
+
+The same production-preparation review identifies local 8192/2, template 32768/2 and measured targeted
+65536/1 output/concurrency profiles. The unapproved rollout template now proposes **65536/1**, with
+other quality/budget limits intact; a parsed-settings check proves the active local environment is
+unchanged. No final-profile validation, gate acceptance, resource creation or deployment is implied.
+The retained application runtime remains c96827f7; the 697-test/raw-mock result remains source-scoped.
