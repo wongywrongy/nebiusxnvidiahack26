@@ -109,7 +109,7 @@ checks enforce the exact disagreements; the raw scoreboard and strict release ga
 
 The October 23 refinement check gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
 replacements**, one primary Investigator recovery and no cap/provider warnings. This targeted, partly cached
-confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **532 tests,
+confirmation is not an eight-case score or cold latency benchmark. The current checkpoint passes **560 tests,
 2 skipped**. Presentation/build checks and eight mock browser journeys passed in the preceding checkpoints.
 Additional engineering spend is **$0.9116244 / 93 credits**, cumulative local ledger **$1.9702294 / 391**.
 G2 remains open for a fully evidenced replacement. See the [latest query, matcher and metadata before/after
@@ -223,7 +223,7 @@ writes the same provenance fields.
 **Scoreboard**, linked from the header and Scan totals, displays `/api/scores`: four computed panel values,
 per-case expected/actual calls, problems, fixes, time and cost. Its label comes from the score file's mode/date.
 On a clean install with no saved scores or recording, the API computes and saves the mock set without any
-provider calls, even on a live server. It stays labelled mock until the owner records a live evaluation.
+provider calls, even on a live server. It stays labelled mock until an authorized live evaluation is recorded.
 The answer key is a small hand-authored demonstration set, not an unseen validation set.
 
 Owner checklist workflow (the draft call below spends real model tokens):
@@ -283,11 +283,12 @@ The controller owns job allowances, private receipts and report publication. A w
 wallet and signed callbacks, with no admin token or controller/archive mount. Settlement waits for both
 the sealed usage report and independently observed cloud completion.
 
-These cloud paths are tested with a fake CLI, fixtures and local disk. Remote authority migration and hosted
-durability remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
+These cloud paths and the [explicit authority transfer/cutover tools](docs/judge-readiness/authority-transfer-20261023/README.md)
+are tested with a fake CLI, synthetic wallets and local disk. No real wallet has moved; remote execution and
+hosted durability remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
 Scheduled jobs stay disabled pending hosted verification and owner approval.
 
-_TODO(owner): add a real Nebius console screenshot showing the endpoint, a completed re-check job and its report.
+_TODO(after approval): the agent captures a real Nebius console screenshot showing the endpoint, a completed re-check job and its report; Kyle supplies private access.
 Do not substitute the fake CLI screenshots or a mock score for live evidence._
 
 ## Deployment smoke check

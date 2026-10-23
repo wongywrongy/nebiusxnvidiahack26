@@ -9,8 +9,8 @@ been created in this session. [Ownership and open work](../../docs/judge-readine
 - G2 has no fully evidenced passing replacement. Final cases/samples/blind validation and the new public
   recording are pending their gates.
 - Local SQLite proves local reservations; placing it on an S3 mount does not establish a cloud authority.
-- The controller-owned allowance/claim/child-wallet/receipt/settlement protocol is tested locally. Remote
-  authority migration and approved writer cutover remain unfinished; hosted persistence is unverified.
+- The controller-owned allowance/claim/child-wallet/receipt/settlement protocol and explicit private wallet
+  transfer/cutover tools are tested locally. No real wallet was moved; hosted persistence is unverified.
 - Jobs now return signed usage/evidence without a shared controller/archive mount. Unknown creation,
   billing or completion retains its reservation; a missing/corrupt receipt persists an accounting block.
 - Final image digest, owner IAM/account configuration, credit expiry and storage design remain incomplete.
@@ -39,10 +39,12 @@ quality limits, including output/fix limits, are forwarded. This is fake-CLI evi
 `CONTROLLER_STATE_DIR` must be a dedicated mounted POSIX filesystem, with `CAMPAIGN_BUDGET_FILE` exactly
 `<directory>/campaign.sqlite3`. Jobs receive neither the mount nor `ADMIN_TOKEN`. The authority marker binds
 one VM boot identity; a process restart on that VM can resume, while VM reboot/replacement fails closed.
-Use no second endpoint writer against the same filesystem. The current `install-controller --source ...
---controller-dir ...` command requires direct access to the authoritative source and retires it before
-activation. It does not yet provide a safe remote transfer or interrupted-import recovery workflow. Do not
-copy a live wallet to initialize cloud accounting. [Protocol evidence and remaining work](../../docs/judge-readiness/controller-20261023/README.md).
+Use no second endpoint writer against the same filesystem. The explicit `scripts/transfer_authority.py`
+prepare/export/receive protocol binds the destination boot/mount, fences the source before releasing a
+snapshot, preserves receipts/holds and supports exact interrupted-transfer recovery. Writer cutover and
+recovery after a destination reboot require pinned owner approval of the authenticated stopped-host
+observation; the CLI does not itself verify cloud state. Do not copy a live wallet or run the legacy local
+`install-controller` command as a remote migration. [Transfer commands, evidence and trust boundary](../../docs/judge-readiness/authority-transfer-20261023/README.md).
 
 ## Build preparation
 

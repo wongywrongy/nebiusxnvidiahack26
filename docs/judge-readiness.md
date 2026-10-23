@@ -205,3 +205,20 @@ zero invalid items and one unnecessary note. Fresh provider spend is $0 / 0; cam
 **$1.9702294 / 391**, with no holds. GitHub CI for preceding commit `7deb149` passed Python/mock/web/browser
 checks. No new frontend changes were made. G2/G3 remain open; no blind run, broader evaluation, final recording,
 deployment or cloud resource was started. Kyle's pending task is label review, not preparation or runner work.
+
+## Private authority transfer checkpoint — 2026-10-23
+
+[Transfer preparation and reproduction](judge-readiness/authority-transfer-20261023/README.md) now implements
+destination-bound export/import, source fencing, receipt preservation, exact interrupted-transfer recovery
+and explicit approved boot cutover. Retired state is read-only, and writer identity is checked again after
+the SQLite lock. Tests use synthetic wallets and simulated mounts/boots; no real source was retired or
+approval generated. The CLI trusts an operator-pinned owner record; the agent must authenticate the actual
+stopped-host observation before preparing a real cutover. Hosted transport and durability remain unverified.
+
+Full mock regression: **560 passed, 2 skipped in 30.79 seconds**. Mock run `20261023-042244-894557` preserves
+**6/8 calls, 5/6 problems, 0/2 major false alarms and 0/5 passing replacements**, zero invalid items and one
+unnecessary note. No provider calls were made. Actual cumulative ledger remains **$1.9702294 / 391**, no
+holds and no retirement. CI for the preceding `c97f1f8` checkpoint passed Python/mock/web/browser checks.
+The local Docker daemon reports version 29.9.2; no release image was built in this checkpoint. The concrete
+startup/persistence/image/resource/cost/expiry/rollback manifest remains agent-owned preparation. G2–G5 stay
+open; no full-set follow-up, blind evaluation, final recording, deployment or cloud resource was started.

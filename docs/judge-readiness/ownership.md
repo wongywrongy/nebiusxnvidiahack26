@@ -21,8 +21,9 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Read-only smoke mode; invalid/replayed evidence rejected as fresh deployment proof | `tests/test_smoke.py`; hosted smoke remains pending |
 | Separate release promotion check across cases, samples, frozen blind set and full public recording | [Offline release preflight](release-preflight-20261023/README.md); submitted-page and web quote gates replayed; no actual blind review or promotion |
 | Six new source-labelled packages and a label-isolated eval runner | [Frozen draft review table](blind-20261023/README.md); six downloaded native PDFs, hashes and page quotes checked; owner review pending, no pipeline evaluation |
+| Explicit private wallet export/import, interrupted-transfer recovery and approved writer-cutover tools | [Local transfer evidence](authority-transfer-20261023/README.md); synthetic wallets/mounts only, no real transfer or approval |
 
-Current Python verification: **532 passed / 2 skipped**. Presentation checks and web build passed in the
+Current Python verification: **560 passed / 2 skipped**. Presentation checks and web build passed in the
 preceding release-preflight checkpoint. The eight browser tests also pass in that checkpoint's GitHub CI;
 no new local browser run is claimed for the backend changes below.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
@@ -37,11 +38,11 @@ The latest [targeted c03/c07 run](replacement-discovery-20261023/README.md) gets
    LT still loses its L70 bound, has unselected DLC/driver options and unconfirmed availability. c03 lacks
    complete VOC, mold and assembly proof. Bounded correction of omitted identifiers/lost bounds remains mine;
    missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
-2. **Cloud controller:** finish remote authority handoff and explicit writer-cutover tooling, preserving the
-   actual wallet and fencing the original before activating a copy. The allowance/claim/child-wallet/receipt/
-   settlement protocol is implemented with isolated local tests; the actual campaign wallet has not moved.
-   Prove the private mounted filesystem, single-VM writer, restart and receipt persistence on the approved host.
-   VM reboot/replacement and interrupted-import recovery remain fail-closed and need explicit reconciliation.
+2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
+   move the actual authority and fence its old writer. The real wallet remains local and active. Authenticate
+   stopped-host observations before preparing cutover approval, and prove the private filesystem, single-VM
+   writer, restart, import recovery and receipt persistence on the approved host. Offline tests do not prove
+   hosted durability, transport, IAM or control-plane observations.
 3. **Release evidence:** assemble the actual complete cases, samples, reviewed blind set and public recording
    under the implemented promotion check. The offline check rejects the current incomplete bundle. Actual
    owner dispositions and a passing check remain pending; diagnostic recording preserves honest wrong calls.

@@ -155,15 +155,20 @@ def transaction(path: Path):
         conn = sqlite3.connect(path.resolve().as_uri() + "?mode=rw", uri=True, timeout=5, isolation_level=None)
         conn.execute("PRAGMA synchronous=FULL")
         conn.execute("BEGIN IMMEDIATE")
+        if settings_controller:
+            verify(path, settings_controller)  # A cutover may have completed while this writer waited for the lock.
         row = conn.execute("SELECT data FROM campaign WHERE id=1").fetchone()
         state = State.model_validate_json(row[0])
         _validate(state)
+        retired = state.model_dump() if state.retired_to else None
         if settings_controller:
             from ..authority import verify_identity
             verify_identity(state.campaign_id, settings_controller)
         yield state
         state = State.model_validate(state.model_dump())
         _validate(state)
+        if retired is not None and state.model_dump() != retired:
+            raise BudgetExceeded("Retired accounting is read-only; reconcile at the active authority")
         conn.execute("UPDATE campaign SET data=? WHERE id=1", (state.model_dump_json(),))
         conn.execute("COMMIT")
     except (BudgetExceeded, HTTPException):
