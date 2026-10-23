@@ -312,8 +312,8 @@ def selection_supported(selection: Selection, pages: dict[int, str], *, allow_pr
     start = normalized.find(_plain(quote))
     prefix = normalized[max(0, start - 80):start]
     end = start + len(_plain(quote))
-    if (not model_quoted(selection.model, text) or _plain(quote)[-1:].isalnum()
-            and re.match(r"[\w+]|[-_/][\w+]", normalized[end:])):
+    if (not model_quoted(selection.model, text) or re.search(r"[\w+._/-]$", _plain(quote))
+            and re.match(r"[\w+]|[-_/.][\w+]", normalized[end:])):
         return False  # A quote truncated inside another SKU cannot select or propose it.
     if selection.origin == "agent_proposal":
         return bool(allow_proposal and quoted(quote, text) and model_quoted(selection.model, quote)

@@ -508,9 +508,9 @@ labels stay strict. Printed catalog/stock SKU proof, exact component binding, qu
 availability are still required. A token-boundary correction also rejects selection quotes truncated inside another SKU.
 Review, report, watch, drafts and outcome identify SpecCheck's proposal and ask for configuration confirmation.
 
-Final verification: **718 passed / 2 skipped**, presentation/build clean, **9 mock Chromium journeys** pass, desktop/mobile
-screens retained. Code hash `0e9986fb5da0a10c997626b5e2ce432c0058f269339302a0c72ed43b29fcb35d`; mock run
-`20261023-191656-8ef1f4` remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**, with one unnecessary
+Final verification: **722 passed / 2 skipped**, presentation/build clean, **9 mock Chromium journeys** pass, desktop/mobile
+screens retained. Code hash `0cb242eda7b7a8d599741f074c98eaf44aebd24ccc1e48bf99d95426724e8688`; mock run
+`20261023-213704-979880` remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing fixes**, with one unnecessary
 note and zero invalid items. Claims 46/65, web values 8/20; fresh $0 / 0 credits. No live gain or gate acceptance is claimed.
 
 A read-only refresh at **19:14:04 UTC** still yields monthly key/account 485 and campaign log total 480 versus local settled

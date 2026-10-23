@@ -1,15 +1,15 @@
 
-mode=mock  run=20261023-191656-8ef1f4
+mode=mock  run=20261023-213704-979880
 
 case  expected           got                problems expected      found                      fix       ms   cost $ credits
-c01   approve            approve            -                      -                          -         58   0.0455       5 ✓
+c01   approve            approve            -                      -                          -         59   0.0455       5 ✓
 c02   send_back          send_back          spec                   spec                       none      36   0.0508       6 ✓
-c03   send_back          send_back          currency               currency                   none      82   0.1178      14 ✓
+c03   send_back          send_back          currency               currency                   none      83   0.1178      14 ✓
 c04   send_back          send_back          validity               validity                   none      30   0.0919      11 ✓
-c05   approve            approve_with_note  -                      -                          -         83   0.0649       7 ✗
-c06   send_back          approve_with_note  currency               currency_note              none      69   0.0648       7 ✗
-c07   send_back          send_back          status                 status                     none     136   0.1228      14 ✓
-c08   approve_with_note  approve_with_note  currency_note          currency_note              -         53   0.0463       5 ✓
+c05   approve            approve_with_note  -                      -                          -         84   0.0649       7 ✗
+c06   send_back          approve_with_note  currency               currency_note              none      73   0.0648       7 ✗
+c07   send_back          send_back          status                 status                     none     139   0.1228      14 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -         57   0.0463       5 ✓
 
 Answer-key panel
   right call                      6 of 8

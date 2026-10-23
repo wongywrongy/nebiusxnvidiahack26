@@ -26,6 +26,8 @@ rows = []
 for label, model, quote, text, origin in [
     ("Real submitted selection", "ZX-12 D1", "Selected: ZX-12 D1", "Selected: ZX-12 D1.", "submitted"),
     ("Truncated submitted SKU", "ZX-12 D1", "Selected: ZX-12 D1", "Selected: ZX-12 D10. Other SKU: ZX-12 D1.", "submitted"),
+    ("Truncated plus-ended SKU", "ZX+", "Selected: ZX+", "Selected: ZX+0. Other SKU: ZX+.", "submitted"),
+    ("Truncated dot-ended SKU", "ZX.", "Selected: ZX.", "Selected: ZX.0. Other SKU: ZX..", "submitted"),
     ("Printed catalog proposal", "ZX-12-D1", "Catalog number: ZX-12-D1", "Catalog number: ZX-12-D1.", "agent_proposal"),
     ("Invented catalog proposal", "ZX-12-D1", "Catalog number: ZX-12-D1", "Catalog number: ZX-12-D10.", "agent_proposal"),
     ("Ordering example", "ZX-12-D1", "Catalog number: ZX-12-D1", "Ordering example: Catalog number: ZX-12-D1.", "agent_proposal"),
@@ -35,9 +37,9 @@ for label, model, quote, text, origin in [
         "before": namespace["selection_supported"](selection, {1: text}),
         "after_original": extract.selection_supported(selection, {1: text}),
         "after_replacement": extract.selection_supported(selection, {1: text}, allow_proposal=True)})
-assert [r["before"] for r in rows] == [True, True, False, False, False]
-assert [r["after_original"] for r in rows] == [True, False, False, False, False]
-assert [r["after_replacement"] for r in rows] == [True, False, True, False, False]
+assert [r["before"] for r in rows] == [True, True, True, True, False, False, False]
+assert [r["after_original"] for r in rows] == [True, False, False, False, False, False, False]
+assert [r["after_replacement"] for r in rows] == [True, False, False, False, True, False, False]
 
 captured = []
 async def capture(task, schema, messages, ctx):

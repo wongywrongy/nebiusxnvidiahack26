@@ -1,8 +1,8 @@
 {
-  "observed_at": "2026-10-23T19:20:32.109767+00:00",
+  "observed_at": "2026-10-23T21:37:39.543751+00:00",
   "scope": "Offline synthetic boundary probe and stubbed prompt capture; no provider response",
   "baseline_commit": "7419dda",
-  "current_code_hash": "0e9986fb5da0a10c997626b5e2ce432c0058f269339302a0c72ed43b29fcb35d",
+  "current_code_hash": "0cb242eda7b7a8d599741f074c98eaf44aebd24ccc1e48bf99d95426724e8688",
   "rows": [
     {
       "scenario": "Real submitted selection",
@@ -16,6 +16,22 @@
       "scenario": "Truncated submitted SKU",
       "source": "Selected: ZX-12 D10. Other SKU: ZX-12 D1.",
       "quote": "Selected: ZX-12 D1",
+      "before": true,
+      "after_original": false,
+      "after_replacement": false
+    },
+    {
+      "scenario": "Truncated plus-ended SKU",
+      "source": "Selected: ZX+0. Other SKU: ZX+.",
+      "quote": "Selected: ZX+",
+      "before": true,
+      "after_original": false,
+      "after_replacement": false
+    },
+    {
+      "scenario": "Truncated dot-ended SKU",
+      "source": "Selected: ZX.0. Other SKU: ZX..",
+      "quote": "Selected: ZX.",
       "before": true,
       "after_original": false,
       "after_replacement": false

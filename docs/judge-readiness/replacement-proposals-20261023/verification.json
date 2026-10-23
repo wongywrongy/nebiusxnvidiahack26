@@ -1,7 +1,7 @@
 {
-  "observed_at": "2026-10-23T19:18:44.095084+00:00",
-  "code_hash": "0e9986fb5da0a10c997626b5e2ce432c0058f269339302a0c72ed43b29fcb35d",
-  "mock_run": "20261023-191656-8ef1f4",
+  "observed_at": "2026-10-23T21:38:03.543640+00:00",
+  "code_hash": "0cb242eda7b7a8d599741f074c98eaf44aebd24ccc1e48bf99d95426724e8688",
+  "mock_run": "20261023-213704-979880",
   "wallet": {
     "day": "2026-10-23",
     "usd": 1.87975302,
@@ -53,7 +53,7 @@
     "proposal-desktop.png": "21332f7201401417d06a40bc319a40e61512b1aa6c8d17e8448782164cea0c8f",
     "proposal-mobile.png": "1f763a31d9f0c9025aa13c6aa9b2aeaed8430ba4f69ebb9e50198608b8f49a4e"
   },
-  "new_test_sha256": "a90619e43807c5577cf23e800d707f922dde27e88d670f82c5760ead7f86344d",
+  "new_test_sha256": "f35601fa0cb443ae09100a69318f799d6242824c3f573f35fdf825c291070abe",
   "web_sources": [
     {
       "file": "web/src/App.tsx",

@@ -68,9 +68,10 @@ def test_proposal_options_match_complete_components_and_identity_prefix(part, ba
 
 
 @pytest.mark.parametrize("origin,label", [("submitted", "Selected"), ("agent_proposal", "Catalog number")])
-def test_configuration_quote_cannot_end_inside_a_longer_sku(origin, label):
-    selection = Selection(model=SKU, page=1, quote=f"{label}: {SKU}", origin=origin)
-    assert not extract.selection_supported(selection, {1: f"{label}: {SKU}0. Other SKU: {SKU}."}, allow_proposal=True)
+@pytest.mark.parametrize("model", [SKU, "ZX+", "ZX."])
+def test_configuration_quote_cannot_end_inside_a_longer_sku(origin, label, model):
+    selection = Selection(model=model, page=1, quote=f"{label}: {model}", origin=origin)
+    assert not extract.selection_supported(selection, {1: f"{label}: {model}0. Other SKU: {model}."}, allow_proposal=True)
 
 
 def test_forged_proposal_cannot_enter_original_extraction(monkeypatch):

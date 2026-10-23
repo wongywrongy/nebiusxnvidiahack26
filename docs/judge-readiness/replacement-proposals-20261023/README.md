@@ -21,7 +21,7 @@ This is not contractor selection, acceptance or approval of the original package
 
 The [actual boundary probe](before-after.json) executes the previous selection gate from commit `7419dda`
 and the current gate on synthetic text. The previous gate accepted a selected-SKU quote cut inside a
-longer SKU; the new token boundary rejects it. A real submitted selection remains accepted. A catalog SKU
+longer SKU; the new token boundary rejects it, including identifiers ending in `+` or `.`. A real submitted selection remains accepted. A catalog SKU
 is accepted only in replacement mode; invented SKUs and ordering examples remain rejected in both modes.
 
 [Ordinary extraction prompt](prompt-before.txt), [replacement proposal prompt](prompt-after.txt).
@@ -34,9 +34,9 @@ new model, discovery query or extra model call is introduced.
 ## Verification and limits
 
 See [final Python output](pytest-final.txt), [presentation checks](presentation.txt), [production build](build.txt)
-and [nine Chromium journeys](browser-final.txt): **718 tests passed / 2 skipped**, presentation/build clean,
+and [nine Chromium journeys](browser-final.txt): **722 tests passed / 2 skipped**, presentation/build clean,
 **9/9 browser journeys passed**. The [source/accounting snapshot](verification.json) binds these results to
-code hash `0e9986fb5da0a10c997626b5e2ce432c0058f269339302a0c72ed43b29fcb35d`. The new scenarios exercise proposal provenance, printed
+code hash `0cb242eda7b7a8d599741f074c98eaf44aebd24ccc1e48bf99d95426724e8688`. The new scenarios exercise proposal provenance, printed
 SKU/option boundaries, invented/truncated codes, original-submission forgery, archived proof, wrong-SKU web
 values, conditional DLC evidence, missing availability and the review/draft/outcome UI. Browser input is
 explicitly synthetic; the screenshots below are not live case evidence.
