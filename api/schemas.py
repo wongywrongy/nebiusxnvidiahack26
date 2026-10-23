@@ -137,6 +137,12 @@ class VerifyOut(BaseModel):
     notes: Optional[str] = None
 
 
+class VerificationProof(BaseModel):
+    submitted: ClaimsOut
+    output: VerifyOut
+    sources: list[Evidence] = []
+
+
 class CompareRow(BaseModel):
     property: str
     label: str
@@ -179,9 +185,11 @@ class Compare(BaseModel):
 
 class FixCheck(BaseModel):
     label: str
+    check: Optional[Check] = None
     ok: Optional[bool]  # None: not stated in the candidate's document
     note: str = ""
     requirement_id: Optional[str] = None
+    claim_ids: list[str] = []
     evidence: list[Evidence] = []
 
 
@@ -190,6 +198,12 @@ class FixCandidate(BaseModel):
     source_url: str
     documents: list[Evidence] = Field(default=[], max_length=3)
     checks: list[FixCheck] = []
+    claims: list[Claim] = []
+    selection: Optional[Selection] = None
+    document_roles: list[str] = []
+    extracted: Optional[ClaimsOut] = None
+    verification: Optional[VerificationProof] = None
+    page_sources: dict[int, Evidence] = {}
     passes: bool
 
 
@@ -268,6 +282,8 @@ class InvestigationStep(BaseModel):
     summary: str
     credits: float = 0
     ms: int = 0
+    succeeded: Optional[bool] = None
+    source_urls: list[str] = []
 
 
 class Investigation(BaseModel):
@@ -275,6 +291,7 @@ class Investigation(BaseModel):
     outcome: Literal["found", "not_found", "capped"] = "not_found"
     purpose: Literal["primary", "replacement"] = "primary"
     resolution: Literal["not_resolved", "revision_only", "values_confirmed", "problem_found"] = "not_resolved"
+    scripted: Optional[VerifyOut] = None
     # Whole extracted pages stay internal; the public trace contains only short, redacted summaries.
     _pages: list[dict] = PrivateAttr(default_factory=list)
     _usage: list[Usage] = PrivateAttr(default_factory=list)
@@ -298,6 +315,9 @@ class Result(BaseModel):
     comparison: list[CompareRow] = []
     claims: list[Claim] = []
     selection: Optional[Selection] = None
+    document_roles: list[str] = []
+    extracted: Optional[ClaimsOut] = None
+    verification: Optional[VerificationProof] = None
     document_revision: Optional[str] = None
     note_to_subcontractor: str = ""
     usage: list[Usage] = []

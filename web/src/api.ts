@@ -138,7 +138,7 @@ export interface Scores {
   validity?: { invalid_items: number; requested_items: number }
   unnecessary_notes?: Score
   fresh_model_cost_usd?: number; fresh_web_credits?: number
-  release_gate?: { passed: boolean; issues: string[] }
+  release_gate?: { scope?: 'cases'; passed: boolean; issues: string[] }
   rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]
     decision?: Decision; found_problems?: string[]; error?: boolean; right_call?: boolean
     valid?: boolean; diagnostics?: { stage: string; message: string }[]

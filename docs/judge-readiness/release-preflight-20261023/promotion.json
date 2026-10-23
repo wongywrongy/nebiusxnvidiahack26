@@ -1,0 +1,17 @@
+{
+  "passed": false,
+  "issues": [
+    "Blind set is missing, invalid, unfrozen or not owner-reviewed",
+    "cases: complete compatible live run and trace required",
+    "samples: complete compatible live run and trace required",
+    "blind: complete compatible live run and trace required",
+    "recording: complete compatible live run and trace required",
+    "Dated owner release approval and exact evidence-bound dispositions required",
+    "cases: no evidenced passing replacement",
+    "cases: no demonstrated primary Investigator rescue",
+    "recording: no evidenced passing replacement",
+    "recording: no demonstrated primary Investigator rescue"
+  ],
+  "artifact_hashes": {},
+  "panels": {}
+}

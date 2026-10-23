@@ -15,6 +15,7 @@ from __future__ import annotations
 from typing import Optional
 
 from ..config import settings
+from .. import archive
 from ..llm import load_fixture
 from ..providers import budget, tavily
 from ..schemas import ClaimsOut, Evidence, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
@@ -106,7 +107,8 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
         if r and r.operator == "eq_ref":
             note = f"{spec_check.SHORT.get(r.property, '')} {note}".strip()  # "T 0 hr"
     label = spec_check._label(r.property) if r else VERIFY_LABEL.get(f.id, f.title)
-    return FixCheck(label=label, ok=ok, note=note, requirement_id=f.requirement_id, evidence=f.evidence)
+    return FixCheck(label=label, check=f.check, ok=ok, note=note, requirement_id=f.requirement_id,
+                    claim_ids=f.claim_ids, evidence=f.evidence)
 
 
 async def _fix(case: dict, group: str, flagged: list[Finding], requirements: list[Requirement], claims: ClaimsOut,
@@ -167,10 +169,10 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         usage += u
         if not verify._unambiguous(cl.claims):
             continue  # no quoted product properties: cannot establish a passing replacement
-        sources = []
+        sources, verification = [], []
         vf, _, vu, vc, inv = await verify.verify(
             {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": case.get("manufacturer_domains", [])}, cl,
-            on_step=on_step, on_warning=on_warning, on_sources=sources.extend)
+            on_step=on_step, on_warning=on_warning, on_sources=sources.extend, on_proof=verification.append)
         if inv is not None and investigations is not None:
             inv.purpose = "replacement"
             investigations.append(inv)
@@ -185,12 +187,18 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         documents, bundle_pages, page_sources = [], [], {}
         for source in bundle:
             document = Evidence(tier=verify.classify(source["url"], case.get("manufacturer_domains", [])),
-                                title=source["url"], **snapshot(source["url"], source["raw_content"], source.get("retrieved_at")))
+                                title=source["url"], **{**snapshot(source["url"], source["raw_content"], source.get("retrieved_at")),
+                                    **{key:source[key] for key in ("sha256", "retrieved_at", "archived_path", "cache_hit") if key in source}})
             documents.append(document)
             for p in source.get("pages") or [{"page": 1, "text": source["raw_content"]}]:
                 number = len(bundle_pages) + 1
                 bundle_pages.append({**p, "page": number})
                 page_sources[number] = document
+                if p["text"] != source["raw_content"]:
+                    page_sources[number] = document.model_copy(update={
+                        **snapshot(document.url, p["text"], document.retrieved_at),
+                        "archived_path": archive.save(case["id"], p["text"].encode(), "txt", document.retrieved_at),
+                    })
         if len(bundle) > 1:
             more, u = await extract.extract_claims(cfx, bundle_pages, extract.all_product_data(bundle_pages), props)
             identifier, other = cl.model or cl.family or cl.product, more.model or more.family or more.product
@@ -203,8 +211,6 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                                              extract.model_quoted(claim.variant, cl.selection.model) else None)
                 cl = cl.model_copy(update={"claims": more.claims})
             usage += u
-        else:
-            page_sources = {p["page"]: documents[0] for p in pages}
         found_f = spec_check.check(requirements, cl.claims, roles)
         by_id = {c.id: c for c in cl.claims}
         for finding in found_f:
@@ -217,19 +223,22 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         checks = [_row(f, reqs) for f in found_f if f.verdict != "not_applicable"]
         checked = {f.requirement_id for f in found_f if f.verdict != "not_applicable"}
         for original in flagged:
-            if original.check == "status" and not any(f.id == "status-active" and f.evidence for f in vf):
-                checks.append(FixCheck(label="Still made", ok=None, note="No quoted confirmation that this replacement is available"))
-            elif original.requirement_id in reqs and original.requirement_id not in checked:
+            if original.requirement_id in reqs and original.requirement_id not in checked:
                 req = reqs[original.requirement_id]
                 checks.append(FixCheck(label=spec_check._label(req.property), ok=None,
-                                       requirement_id=req.id,
+                                       check=req.check, requirement_id=req.id,
                                        note="No quoted evidence that this corrects the failed requirement"))
             elif original.requirement_id:
                 for check in checks:
                     if check.requirement_id == original.requirement_id and check.ok is None:
                         check.note = "No quoted evidence that this corrects the failed requirement"
+        if not any(f.id == "status-active" and f.evidence for f in vf):
+            checks.append(FixCheck(label="Still made", check="status", ok=None,
+                                   note="No quoted confirmation that this replacement is available"))
         cands.append(FixCandidate(
             name=r.get("title") or cl.product, source_url=r["url"], documents=documents, checks=checks,
+            claims=cl.claims, selection=cl.selection, document_roles=sorted(roles),
+            extracted=cl, verification=verification[0] if verification else None, page_sources=page_sources,
             passes=bool(checks) and all(k.ok is True and k.evidence for k in checks),
         ))
     for u in usage:

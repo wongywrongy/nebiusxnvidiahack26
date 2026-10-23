@@ -109,12 +109,14 @@ checks enforce the exact disagreements; the raw scoreboard and strict release ga
 
 The October 22 refinement check now gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
 replacements**. This targeted, cached-live confirmation is not an eight-case score or fresh latency
-benchmark. The October 23 controller checkpoint passes **435 tests, 2 skipped**. The preceding reliability
-checkpoint also passed **8 browser tests**; no frontend code changed in the controller checkpoint.
+benchmark. The October 23 release-preflight checkpoint passes **505 tests, 2 skipped**, with presentation
+checks and web build passing. The preceding reliability checkpoint passed **8 browser tests**.
 Additional engineering spend is **$0.4281318 / 61 credits**, cumulative **$1.4867368 / 359**.
 The linked-PDF c07 retry still has no passing replacement. G2 remains open for a fully evidenced replacement;
 see the [before/after evidence and commands](docs/judge-readiness/g2/live-validation.md).
 The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
+The [separate release preflight](docs/judge-readiness/release-preflight-20261023/README.md) requires complete
+cases, samples, reviewed blind evidence and the public recording; its check of current artifacts fails.
 
 Live run **`20261022-181611-a9d0b5`**, recorded **2026-10-22**, is committed under
 [runs/recorded/](runs/recorded/20261022-181611-a9d0b5/scores.json). It contains c01–c08 and public samples

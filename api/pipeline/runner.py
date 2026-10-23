@@ -17,6 +17,7 @@ import shutil
 import logging
 from contextlib import nullcontext
 from collections import Counter
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import AsyncIterator, Iterable, Optional
 
@@ -51,7 +52,8 @@ class Run:
         self.results: dict[str, Result] = {}
         self.attempts: dict[str, dict] = {}
         self.manifest = readiness.manifest()
-        self.manifest["refresh_web"] = refresh_web
+        self.manifest.update(refresh_web=refresh_web, run_id=self.id, requested_ids=case_ids,
+                             started_at=datetime.now(timezone.utc).isoformat())
         self.done = asyncio.Event()
         self._subscribers: list[asyncio.Queue] = []
         self._t0 = time.perf_counter()
@@ -162,7 +164,9 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                      data={"spec": tally})
             try:
                 stage = "verify"
-                vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating, on_warning=warn)
+                verification = []
+                vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating, on_warning=warn,
+                                                              on_proof=verification.append)
                 usage += u
                 if inv is not None:
                     investigations.append(inv)
@@ -226,6 +230,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
                 comparison=rows, claims=claims.claims, selection=claims.selection, document_revision=claims.document_revision,
+                document_roles=sorted(roles),
+                extracted=claims, verification=verification[0] if verification else None,
                 note_to_subcontractor=rep.note_to_subcontractor, usage=usage, web_credits=credits,
                 duration_ms=int((time.perf_counter() - t0) * 1000),
                 investigation=investigation, investigations=investigations,

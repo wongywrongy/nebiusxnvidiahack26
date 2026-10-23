@@ -32,8 +32,8 @@ def item_cost(result) -> float:
     return result.cost_usd + result.web_credits * settings.tavily_credit_usd
 
 
-def scores(run, case_ids: list[str]) -> dict:
-    cases = {**all_cases(), **all_samples()}  # samples score against their own expected (scripts/eval.py --samples)
+def scores(run, case_ids: list[str], *, catalog: dict | None = None) -> dict:
+    cases = catalog if catalog is not None else {**all_cases(), **all_samples()}
     rows = []
     for cid in case_ids:
         exp, res = cases[cid]["expected"], run.results.get(cid)
@@ -107,7 +107,7 @@ def scores(run, case_ids: list[str]) -> dict:
         "cost_usd_per_item": round(sum(r["cost_usd"] for r in rows) / n, 6),
         "rows": rows,
     }
-    result["release_gate"] = {"passed": not (issues := release_checks(result)), "issues": issues}
+    result["release_gate"] = {"scope": "cases", "passed": not (issues := release_checks(result)), "issues": issues}
     return result
 
 
@@ -122,6 +122,7 @@ async def run_scoring_set(*, mock: bool = False) -> dict:
     s = scores(run, ids)
     if mock:
         s["mode"] = "mock"
+    (run.dir / "scores.json").write_text(json.dumps(s, indent=2))
     settings.scores_file.parent.mkdir(parents=True, exist_ok=True)
     settings.scores_file.write_text(json.dumps(s, indent=2))
     return s

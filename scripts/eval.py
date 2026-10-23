@@ -33,6 +33,7 @@ async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[
     await execute(run)
     s = scores(run, case_ids)
     s.update(runner=os.environ.get("RECHECK_RUNNER", "local"), job_name=os.environ.get("JOB_NAME"))
+    (run.dir / "scores.json").write_text(json.dumps(s, indent=2))
 
     print(f"\nmode={settings.mode}  run={run.id}\n")
     zero = sorted({m for m in settings.models.values() if m and not all(PRICES.get(m, (0, 0)))})
@@ -57,7 +58,7 @@ async def main(case_ids: list[str], out: Path | None = None, *, extra_ids: list[
     print(f"  invalid acceptance items        {s['validity']['invalid_items']} of {len(case_ids)}")
     print(f"  unnecessary notes               {s['unnecessary_notes']['n']}")
     print(f"  fresh model spend / web credits ${s['run_fresh_spend']['usd']:.6f} / {s['run_fresh_spend']['credits']:g}")
-    print(f"  release gate                    {'passed' if s['release_gate']['passed'] else '; '.join(s['release_gate']['issues'])}")
+    print(f"  case evidence gate              {'passed' if s['release_gate']['passed'] else '; '.join(s['release_gate']['issues'])}")
     for row in s["rows"]:
         if not row["valid"]:
             print(f"  INVALID {row['id']}: " + "; ".join(d["message"] for d in row["diagnostics"]))
@@ -90,7 +91,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--case", action="append", help="case id, repeatable (default: all)")
     p.add_argument("--samples", action="store_true", help="score the sample inbox instead of the test cases")
-    p.add_argument("--release-gate", action="store_true", help="also require an evidenced replacement and Investigator rescue")
+    p.add_argument("--release-gate", action="store_true", help="require case evidence prerequisites; full promotion uses scripts/check_release.py")
     p.add_argument("--out", "--write", type=Path, help="scoreboard output path (default: runs/scores.json for all cases)")
     args = p.parse_args()
     if args.samples:

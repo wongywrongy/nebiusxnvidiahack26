@@ -166,6 +166,8 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
                         return result
                     tool = call.function.name
                     args = {}
+                    succeeded = False
+                    source_urls = []
                     before, t0 = web.credits, time.perf_counter()
                     if web.on_step:
                         await web.on_step(tool)
@@ -179,6 +181,7 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
                             budget.reserve_credits(0, real=settings.live)
                             summary = _finish(result, arguments)
                             output = summary
+                            succeeded = result.outcome == "found"
                         else:
                             # WebClient/providers check caps after cache lookup; cache hits are free.
                             if tool == "search":
@@ -190,7 +193,9 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
                             else:
                                 output = await web.extract([arguments.url])
                                 result._pages.extend(p for p in output if p.get("raw_content"))
+                                source_urls = [p["url"] for p in output if p.get("raw_content")]
                                 summary = f"{len(output)} extracted source{'s' if len(output) != 1 else ''}"
+                            succeeded = bool(output)
                     except budget.BudgetExceeded as error:
                         await web.warn("investigate", error)
                         result.outcome = "capped"
@@ -203,7 +208,7 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
                     result.steps.append(InvestigationStep(
                         n=len(result.steps) + 1, tool=redact(tool), args=clean(args) if isinstance(args, dict) else {},
                         summary=redact(summary)[:500], credits=web.credits - before,
-                        ms=int((time.perf_counter() - t0) * 1000)))
+                        ms=int((time.perf_counter() - t0) * 1000), succeeded=succeeded, source_urls=clean(source_urls)))
                     if tool == "finish" or result.outcome == "capped":
                         return result
                     messages.append({"role": "tool", "tool_call_id": call.id,

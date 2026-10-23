@@ -75,6 +75,19 @@ def test_search_extract_finish_is_verified_and_uses_native_tools(http):
     assert all(b["tools"] and b["tool_choice"] == "auto" and "response_format" not in b for b in bodies)
     assert all(b["reasoning_effort"] == "none" and b["chat_template_kwargs"] == {"enable_thinking": False} for b in bodies)
     assert bodies[1]["messages"][-1]["role"] == "tool" and bodies[1]["messages"][-1]["tool_call_id"] == "call-1"
+    assert inv.steps[1].succeeded and inv.steps[1].source_urls == [URL]
+
+
+def test_extract_records_returned_linked_document_url_instead_of_requested_page(http, monkeypatch):
+    page = 'https://maker.test/product-page'
+    async def extract(self, urls):
+        assert urls == [page]
+        return [{'url':URL, 'requested_url':page, 'raw_content':'Product X. Rev B. Product X is still made.'}]
+    monkeypatch.setattr(WebClient, 'extract', extract)
+    http.post(CHAT).mock(side_effect=[reply('extract', {'url':page}), reply('finish', FINAL)])
+    inv = asyncio.run(investigate(CASE, CLAIMS, WebClient('test')))
+    assert inv.outcome == 'found' and inv.steps[0].args['url'] == page
+    assert inv.steps[0].succeeded and inv.steps[0].source_urls == [URL]
 
 
 @pytest.mark.parametrize("final", [{**FINAL, "revision_quote": "Rev C", "status_quote": "Discontinued", "status": "discontinued"},
@@ -246,6 +259,7 @@ def test_rescue_requires_new_evidence_for_the_scripted_gap(http, monkeypatch, ou
     _, rows, _, _, inv = asyncio.run(verify.verify(CASE, submitted))
     assert any(r.changed for r in rows)  # The scripted wattage problem is never credited as a rescue.
     assert inv.resolution == resolution
+    assert inv.scripted == scripted
 
 
 def test_accepted_document_uses_existing_comparison(http):
@@ -254,9 +268,12 @@ def test_accepted_document_uses_existing_comparison(http):
     http.post(CHAT).mock(side_effect=[reply(text='{"status":"unknown"}'), reply("extract", {"url": URL}),
                                       reply("finish", {**FINAL, "status": "unknown"}),
                                       reply(text='{"status":"unknown","current_revision":"Rev B"}')])
-    findings, rows, usage, _, inv = asyncio.run(verify.verify(CASE, CLAIMS))
+    proof = []
+    findings, rows, usage, _, inv = asyncio.run(verify.verify(CASE, CLAIMS, on_proof=proof.append))
     assert inv.outcome == "found" and findings[0].id == "currency-newer" and rows[0].current == "Rev B"
     assert sum(u.task == "investigate" for u in usage) == 2
+    assert len(proof) == 1 and proof[0].submitted == CLAIMS and proof[0].output.current_revision == "Rev B"
+    assert any(source.url == URL for source in proof[0].sources)
 
 
 def test_mock_s4_streams_investigation_and_answer_key_cases_do_not(monkeypatch, tmp_path):
@@ -265,6 +282,8 @@ def test_mock_s4_streams_investigation_and_answer_key_cases_do_not(monkeypatch, 
     with respx.mock:
         run = asyncio.run(execute(Run([*all_cases(), "s4"], delay_ms=0)))
     assert not [e for e in run.events if e.stage == "error"]
+    assert all(result.extracted and result.verification and result.verification.submitted == result.extracted
+               for result in run.results.values())
     assert all(run.results[c].investigation is None for c in all_cases())
     inv = run.results["s4"].investigation
     assert inv.outcome == "found" and [s.tool for s in inv.steps] == ["search", "map", "extract", "finish"]
@@ -376,13 +395,15 @@ def test_fix_warns_when_candidate_verification_does_not_fit_cap(monkeypatch):
     assert not result.candidates and warnings == [("fix", "Fix credit cap reached before candidate verification")]
 
 
-@pytest.mark.parametrize("reference_present,passes", [(False, False), (True, True)])
-def test_fix_must_demonstrate_original_failed_requirement(monkeypatch, reference_present, passes):
+@pytest.mark.parametrize("reference_present,availability_present,passes", [
+    (False, False, False), (False, True, False), (True, False, False), (True, True, True)])
+def test_fix_must_demonstrate_original_failed_requirement(monkeypatch, reference_present, availability_present, passes):
     from api.schemas import Usage
     async def search(*args, **kwargs):
         return [{"url": URL, "title": "Product X"}]
     async def extract(*args, **kwargs):
-        return [{"url": URL, "raw_content": "Product X. Rev A. measurement 10"}]
+        return [{"url": URL, "raw_content": "Product X. Rev A. measurement 10" +
+                 (" Product X is currently available." if availability_present else "")}]
     async def claims(*args, **kwargs):
         values = [Claim(id="m", product="X", manufacturer="Maker", property="measurement", value=10,
                         page=1, quote="measurement 10")]
@@ -390,8 +411,12 @@ def test_fix_must_demonstrate_original_failed_requirement(monkeypatch, reference
             values.append(values[0].model_copy(update={"id": "r", "property": "reference"}))
         return CLAIMS.model_copy(update={"claims": values}), [Usage(task="extract_claims", tier="extract", model="test")]
     async def current(*args, **kwargs):
-        return [Finding(id="currency-current", check="currency", verdict="pass", severity="info", title="Current",
-                        evidence=[Evidence(url=URL, tier="manufacturer", title="Product X", excerpt="Rev A")])], [], [], 0, None
+        findings = [Finding(id="currency-current", check="currency", verdict="pass", severity="info", title="Current",
+                            evidence=[Evidence(url=URL, tier="manufacturer", title="Product X", excerpt="Rev A")])]
+        if availability_present:
+            findings.append(Finding(id="status-active", check="status", verdict="pass", severity="info", title="Available",
+                            evidence=[Evidence(url=URL, tier="manufacturer", title="Product X", excerpt="Product X is currently available.")]))
+        return findings, [], [], 0, None
     monkeypatch.setattr(WebClient, "search", search)
     monkeypatch.setattr(WebClient, "extract", extract)
     monkeypatch.setattr(fix.extract, "extract_claims", claims)
@@ -402,8 +427,11 @@ def test_fix_must_demonstrate_original_failed_requirement(monkeypatch, reference
     finding = Finding(id="failed", requirement_id=req.id, check="spec", verdict="fail", severity="critical", title="Unequal")
     result, _, _ = asyncio.run(fix._fix(case, "spec", [finding], [req], CLAIMS, 1, 10))
     assert result.candidates[0].passes is passes
-    if not passes:
+    assert all(check.check for check in result.candidates[0].checks)
+    if not reference_present:
         assert any(c.ok is None and "failed requirement" in c.note for c in result.candidates[0].checks)
+    if not availability_present:
+        assert any(c.check == "status" and c.ok is None for c in result.candidates[0].checks)
 
 
 def test_source_selection_keeps_manufacturer_status_notice():

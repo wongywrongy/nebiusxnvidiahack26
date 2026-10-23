@@ -13,7 +13,7 @@ from urllib.parse import urlparse
 from ..config import settings
 from ..llm import load_fixture, router
 from ..providers import ProviderError, budget
-from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Investigation, Usage, VerifyOut
+from ..schemas import ClaimsOut, Compare, CompareRow, Evidence, Finding, Investigation, Usage, VerifyOut, VerificationProof
 from ..web import WebClient, snapshot
 from .extract import family_member, metric_quoted, model_quoted, page_batches, revision_supported, scope_is_product_wide, unit_quoted, value_quoted, quoted
 from .investigate import investigate
@@ -85,7 +85,7 @@ def _unambiguous(values) -> dict:
             if all(_same(group[0].value, v.value) and group[0].unit == v.unit for v in group)}
 
 
-async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=None, on_sources=None
+async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=None, on_sources=None, on_proof=None
                  ) -> tuple[list[Finding], list[CompareRow], list[Usage], float, Investigation | None]:
     fx = case.get("fixture", case["id"])  # uploads: the matching case's fixture, or None
     web = WebClient(fx, on_step, on_warning)
@@ -142,6 +142,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
                                   not any(classify(r["url"], domains) == "manufacturer" for r in results))
     )):
         investigation = await investigate({**case, "unconfirmed_properties": sorted(missing)}, submitted, web)
+        investigation.scripted = scripted
         usage += investigation._usage
         if investigation.outcome == "found":
             accepted = [p for p in investigation._pages if p["url"] == investigation._document_url]
@@ -165,6 +166,8 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
     ]
     if on_sources:
         on_sources(pages)
+    if on_proof:
+        on_proof(VerificationProof(submitted=submitted.model_copy(deep=True), output=out.model_copy(deep=True), sources=evidence))
     findings, rows = compare(submitted, out, confirmed, evidence, pages)
     if investigation and investigation.outcome == "found":
         rescued = [r for r in rows if r.property in missing and any(

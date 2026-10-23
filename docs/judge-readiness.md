@@ -138,3 +138,26 @@ validation. No paid call or resource was made; cumulative actual spend remains *
 Remote source-fencing/export/import, approved writer-cutover tooling, immutable deployment preparation
 and hosted persistence/job proof remain agent-owned work. No actual campaign wallet was migrated or reset.
 G2 stays open; broader cases/samples/blind validation, release promotion and recording remain pending.
+
+## Release preflight checkpoint — 2026-10-23
+
+The [separate promotion check](judge-readiness/release-preflight-20261023/README.md) now requires complete
+cases, samples, six frozen owner-reviewed blind packages and the full public recording. It recomputes raw
+panels, validates immutable inputs/configuration/code, replays submitted-page claim gates and web comparisons,
+and checks every passing replacement and attributable primary Investigator rescue. Dated owner dispositions
+bind exact artifact hashes and preserve raw disagreements. A case evidence check alone cannot claim release.
+
+Review closed three false-promotion paths: fabricated submitted-page claims, omitted web outcomes and
+replacement availability cited by unrelated text. Paired tests preserve legitimate selected base models
+while rejecting a shared option code attached to a different product. Tool traces retain actual returned
+source URLs and success states; results retain extraction/verification proof and candidate page provenance.
+Old recordings remain viewable and cannot establish this new proof without the missing evidence.
+
+The full mock suite passed **505 tests, 2 skipped in 27.10 seconds** outside the sandbox; sandboxed TestClient
+attempts stalled and were interrupted. Presentation checks and web build passed. The raw mock panel remains
+**6/8, 5/6, 0/2, 0/5**, with 48/65 claims and 8/20 web values retained, no invalid items and one unnecessary
+note. Fresh spend was **$0 / 0 credits**; cumulative actual spend remains **$1.4867368 / 359**, no holds.
+
+The actual promotion check of the incomplete artifact bundle **fails**. No blind review, release approval,
+provider run, cloud action, broader evaluation or final recording was performed. G2 remains open; blind
+preparation, actual release evidence, remote wallet handoff and hosted durability proof remain agent-owned.

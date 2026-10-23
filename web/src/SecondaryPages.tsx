@@ -126,7 +126,7 @@ export function ScoreboardPage({ back }: { back: string }) {
         <p className="text-muted">{scores.validity
           ? `${scores.validity.invalid_items} of ${scores.validity.requested_items} items invalid for acceptance. ${scores.unnecessary_notes?.n ?? 0} unnecessary notes.`
           : 'Legacy recording: acceptance validity was not recorded.'}</p>
-        {scores.release_gate && <p className="text-muted">Release evidence: {scores.release_gate.passed ? 'passed' : scores.release_gate.issues.join('; ')}.</p>}
+        {scores.release_gate && <p className="text-muted">Case evidence: {scores.release_gate.passed ? 'prerequisites passed; full release review still required' : scores.release_gate.issues.join('; ')}.</p>}
         {scores.fresh_model_cost_usd !== undefined && <p className="text-muted">Fresh charges for scored items: ${scores.fresh_model_cost_usd.toFixed(6)} model usage · {scores.fresh_web_credits ?? 0} Tavily credits. Incomplete accounting is marked invalid.</p>}
         {scores.job_name && <p className="text-muted">Evaluated on {scores.runner || 'Nebius Serverless Job'} {scores.job_name}, {date(scores.generated_at)}.</p>}
         <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">

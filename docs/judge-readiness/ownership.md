@@ -19,9 +19,10 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Authenticated, idempotent controller launch, full history, mandatory secret selectors and quality forwarding | Fake CLI tests; nightly workflow uses controller and remains disabled |
 | Controller job allowances, one-session claims, sealed child wallets and guarded settlement/publication | [Offline protocol checkpoint](controller-20261023/README.md); no shared job write path or hosted proof |
 | Read-only smoke mode; invalid/replayed evidence rejected as fresh deployment proof | `tests/test_smoke.py`; hosted smoke remains pending |
+| Separate release promotion check across cases, samples, frozen blind set and full public recording | [Offline release preflight](release-preflight-20261023/README.md); submitted-page and web quote gates replayed; no actual blind review or promotion |
 
-Current Python/controller verification: **435 passed / 2 skipped**. Earlier frontend verification: eight
-browser tests, presentation checks and build pass; no frontend change or rerun in the controller checkpoint.
+Current Python verification: **505 passed / 2 skipped**. Presentation checks and web build pass at this
+checkpoint. The eight browser tests are from the preceding reliability checkpoint, not a new browser run.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
 Actual cumulative provider spend is **$1.4867368 / 359 credits**, with no outstanding holds at this checkpoint.
 
@@ -35,9 +36,9 @@ Actual cumulative provider spend is **$1.4867368 / 359 credits**, with no outsta
    settlement protocol is implemented with isolated local tests; the actual campaign wallet has not moved.
    Prove the private mounted filesystem, single-VM writer, restart and receipt persistence on the approved host.
    VM reboot/replacement and interrupted-import recovery remain fail-closed and need explicit reconciliation.
-3. **Release preflight:** require complete cases, samples and reviewed blind-set evidence, compatible immutable
-   configuration/code/document identities and explicit release dispositions. Diagnostic recording must remain
-   able to preserve honest wrong calls. Targeted success cannot establish release readiness.
+3. **Release evidence:** assemble the actual complete cases, samples, reviewed blind set and public recording
+   under the implemented promotion check. The offline check rejects the current incomplete bundle. Actual
+   owner dispositions and a passing check remain pending; diagnostic recording preserves honest wrong calls.
 4. **Blind preparation:** independently prepare six new source-labelled packages and freeze URLs, PDF hashes,
    page quotes, selection/assembly scope and draft labels before pipeline evaluation. Keep labels outside inputs.
 5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
