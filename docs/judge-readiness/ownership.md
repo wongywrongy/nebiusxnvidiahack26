@@ -25,18 +25,19 @@ The active readiness goal is **not complete**; the following unfinished implemen
 | Local container packaging and pinned CLI verification | [Image build evidence](image-build-20261023/README.md); 13 locked PDFs, source hash, CLI/help, mock eval and network-disabled API/assets pass; keys/private paths absent; image unpublished |
 | Bounded numeric qualifier repair, Unicode quote matching, retained bundle claims and agreeing-source citations | [Actual before/after and verification](claim-repair-20261023/README.md); same magnitude/quote/identity/selection gates; coded-driver evidence remains scoped |
 | Independent lifetime-clause scope binding | [Actual two-item before/after](scope-binding-20261023/README.md); L70/MacAdam accepted, unselected driver/DLC still unknown |
+| Required-gap and availability research for replacements | [Targeted evidence](replacement-research-20261023/README.md); newly discovered sources retained, unsupported active status still rejected, no complete replacement |
 | Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
 
-Current Python verification: **615 passed / 2 skipped**. Presentation/build and eight mock browser tests
+Current Python verification: **621 passed / 2 skipped**. Presentation/build and eight mock browser tests
 passed at preceding frontend checkpoints; no new browser run is claimed for these backend changes.
 Raw mock remains **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**.
-Actual cumulative local ledger is **$2.5679656 / 426 credits**, with no outstanding holds at this checkpoint.
-The latest [targeted c03/c07 run](scope-binding-20261023/README.md) gets 2/2 calls/problems,
+Actual cumulative local ledger is **$2.6351023 / 438 credits**, with no outstanding holds at this checkpoint.
+The latest [targeted c03/c07 run](replacement-research-20261023/README.md) gets 2/2 calls/problems,
 0/2 passing replacements, with no cap/provider warnings. Its evidence-consistency check passes for two
-items only. Two replacement investigations do not yield a passing replacement; no primary investigation
+items only. Four replacement investigations do not yield a passing replacement; no primary investigation
 runs. The earlier primary recovery remains historical. The local container image predates this scope change.
 Kyle reports account-wide **$2.13 / 421**; a later Tavily usage API reports 415. Local-minus-owner is
-$0.4379656 / 5 credits; scope is confirmed, billing cutoff and cause are unresolved. Current public Super
+$0.5051023 / 17 credits; the owner's reading predates the latest run. Scope is confirmed, billing cutoff and cause are unresolved. Current public Super
 cached-input pricing could lower actual billing, but historical cached-token quantities were not saved.
 The higher local accounting remains in force; no ledger is changed.
 

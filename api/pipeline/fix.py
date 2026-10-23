@@ -174,7 +174,11 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
         candidate_domains = (case.get("manufacturer_domains", []) if
                              spec_check._text(cl.manufacturer) == spec_check._text(claims.manufacturer) else [])
         vf, _, vu, vc, inv = await verify.verify(
-            {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": candidate_domains}, cl,
+            {"id": cfx or case["id"], "fixture": cfx, "manufacturer_domains": candidate_domains,
+             "candidate_url": r["url"], "require_availability": True,
+             "required_properties": sorted({r.property for r in requirements if not r.applies_to or roles.intersection(r.applies_to)} |
+                                           {str(r.value) for r in requirements if r.operator == "eq_ref" and
+                                            (not r.applies_to or roles.intersection(r.applies_to))})}, cl,
             on_step=on_step, on_warning=on_warning, on_sources=sources.extend, on_proof=verification.append)
         if inv is not None and investigations is not None:
             inv.purpose = "replacement"

@@ -135,18 +135,24 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
     investigation = None
     comparable = bool(set(_unambiguous(submitted.claims)) & set(_unambiguous(out.current_values)))
     missing = set(_unambiguous(submitted.claims)) - set(_unambiguous(out.current_values))
+    missing |= set(case.get("required_properties", [])) - set(_unambiguous(submitted.claims))
+    availability_missing = case.get("require_availability") and out.status == "unknown"
     scripted = out.model_copy(deep=True)
     # A quoted revision or discontinuation already answered the scripted check.
     if (settings.live or load_fixture(fx).get("investigate")) and out.status != "discontinued" and (
-        missing or out.current_revision is None and (not comparable or (out.status == "unknown" and
+        missing or availability_missing or out.current_revision is None and (not comparable or (out.status == "unknown" and
                                   not any(classify(r["url"], domains) == "manufacturer" for r in results))
     )):
         investigation = await investigate({**case, "unconfirmed_properties": sorted(missing)}, submitted, web)
         investigation.scripted = scripted
         usage += investigation._usage
         if investigation.outcome == "found":
-            accepted = [p for p in investigation._pages if p["url"] == investigation._document_url]
-            accepted += [p for p in pages if p["url"] not in {a["url"] for a in accepted}][:max(0, 3 - len(accepted))]
+            accepted = []
+            priority = [p for p in investigation._pages if p["url"] == investigation._document_url]
+            priority += [p for p in investigation._pages if quoted(investigation._verified.status_quote, p["raw_content"])]
+            for page in [*priority, *investigation._pages, *pages]:
+                if len(accepted) < 3 and page["url"] not in {p["url"] for p in accepted}:
+                    accepted.append(page)
             newer = investigation._verified.model_copy(deep=True)
             try:
                 newer, u = await read_sources(fx, submitted, accepted, investigated=True, submitted_label=case.get("product"))

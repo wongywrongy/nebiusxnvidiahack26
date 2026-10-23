@@ -996,3 +996,19 @@ This could explain part of the dollar difference, but no amount or cause is esta
 checks 776 settled records, zero holds and exact seed-plus-settlement conservation. Reconciliation is
 **unresolved**, not an invoice match; no seed, ledger, invoice or cap was changed. The higher local total
 continues to enforce the ceiling. Redacted requests/responses and reproduction are in the linked checkpoint.
+
+## Required replacement research checkpoint — 2026-10-23
+
+[Targeted run `20261023-071700-8a9e33`](judge-readiness/replacement-research-20261023/README.md)
+passes two-item evidence consistency and keeps **2/2 calls/problems, 0/2 passing replacements**, no invalid
+items or provider/cap warnings. Four replacement investigations run, none capped; no primary investigation
+is needed. Applicable missing requirements, candidate URL and explicit availability context now reach the
+Investigator, and newly discovered status/supplementary sources survive the final bounded read. Unsupported
+availability and unselected configurations still fail to establish proof. No key or checklist is changed.
+
+Full mock regression: **621 passed, 2 skipped in 31.67 seconds**; raw mock remains **6/8, 5/6, 0/2, 0/5**,
+48/65 claims and 8/20 web values. Fresh targeted charges **$0.0671367 / 12 credits**, cumulative actual local
+**$2.6351023 / 438**, UTC-day **$1.1483655 / 80**, no holds or persistent block. The prior owner account-wide
+$2.13 / 421 and separate Tavily API 415 observations predate this run; no current invoice match is claimed.
+The higher local accounting remains in force. G2 is open; no broader evaluation, blind evaluation, final
+recording, cloud action or owner approval is inferred.

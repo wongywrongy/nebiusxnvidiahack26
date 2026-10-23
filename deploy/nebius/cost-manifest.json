@@ -10,7 +10,8 @@
     "object_standard_gib_per_730_hours": 0.0147,
     "object_class_a_per_1000": 0.0034,
     "object_class_b_per_1000": 0.00028,
-    "object_egress_per_gib": 0.015
+    "object_egress_per_gib": 0.015,
+    "shared_filesystem_gib_per_730_hours": 0.08
   },
   "sources": {
     "https://docs.nebius.com/compute/resources/pricing": {
@@ -153,7 +154,7 @@
   "region_limit": "cpu-e2 only eu-north1; confirm preset/quotas in owner account",
   "credit_expiry": "owner must read account grant terms; public program terms do not establish this grant expiry",
   "image_digest": null,
-  "durable_authority": "unresolved; no SQLite on object mounts",
+  "durable_authority": "proposed private 32-GiB network_ssd filesystem at /controller, exactly one controller VM; public platform support verified, hosted proof and IAM/account approval pending",
   "resource_mutations_made": false,
   "local_packaging_checkpoint": {
     "source_commit": "b9de109842e9d5bcbcd48e11bc27d3419ec0c761",
@@ -173,5 +174,97 @@
     "evidence": "docs/judge-readiness/controller-startup-20261023/README.md",
     "published": false,
     "hosted_persistence_verified": false
+  },
+  "controller_storage_forecasts": {
+    "status": "unapproved published-rate estimates, not actual charges",
+    "platform": "cpu-d3",
+    "preset": "2vcpu-8gb",
+    "endpoint_boot_disk_gib": 32,
+    "private_filesystem_gib": 32,
+    "filesystem_type": "network_ssd",
+    "filesystem_block_size_bytes": 4096,
+    "controller_mount": "/controller",
+    "concurrent_controller_writers": 1,
+    "workers_attach_controller_filesystem": false,
+    "rates_source": "https://docs.nebius.com/compute/resources/pricing",
+    "rows": [
+      {
+        "endpoint_hours": 24,
+        "filesystem_retention_hours": 24,
+        "jobs_max_count": 2,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 1.584,
+        "endpoint_boot_disk_usd": 0.0746958904109589,
+        "private_filesystem_usd": 0.08416438356164384,
+        "job_compute_and_boot_disk_usd": 0.13822465753424656,
+        "subtotal_usd": 1.8810849315068494
+      },
+      {
+        "endpoint_hours": 168,
+        "filesystem_retention_hours": 168,
+        "jobs_max_count": 7,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 11.088,
+        "endpoint_boot_disk_usd": 0.5228712328767123,
+        "private_filesystem_usd": 0.5891506849315068,
+        "job_compute_and_boot_disk_usd": 0.483786301369863,
+        "subtotal_usd": 12.683808219178083
+      },
+      {
+        "endpoint_hours": 360,
+        "filesystem_retention_hours": 360,
+        "jobs_max_count": 15,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 23.76,
+        "endpoint_boot_disk_usd": 1.1204383561643836,
+        "private_filesystem_usd": 1.2624657534246575,
+        "job_compute_and_boot_disk_usd": 1.0366849315068494,
+        "subtotal_usd": 27.17958904109589
+      },
+      {
+        "endpoint_hours": 1296,
+        "filesystem_retention_hours": 1296,
+        "jobs_max_count": 54,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 85.536,
+        "endpoint_boot_disk_usd": 4.033578082191781,
+        "private_filesystem_usd": 4.544876712328767,
+        "job_compute_and_boot_disk_usd": 3.7320657534246577,
+        "subtotal_usd": 97.8465205479452
+      }
+    ],
+    "excludes": [
+      "registry storage",
+      "IP/network/egress charges",
+      "taxes",
+      "Token Factory",
+      "Tavily"
+    ],
+    "account_region_quota_iam_verified": false,
+    "grant_expiry_verified": false,
+    "cloud_resources_created": false
+  },
+  "rollout_plan": "deploy/nebius/rollout.pending.md",
+  "pending_approval_inputs": {
+    "final_source_commit": null,
+    "final_registry_image_digest": null,
+    "tenant_id": null,
+    "controller_project_id": null,
+    "worker_project_id": null,
+    "subnet_id": null,
+    "launcher_sa_id": null,
+    "launcher_public_key_id": null,
+    "secret_version_selectors": null,
+    "ssh_key_fingerprint": null,
+    "confirmed_quotas": null,
+    "cloud_grant_balance_usd": null,
+    "cloud_grant_expires_at": null,
+    "provider_grant_expiries": null,
+    "initial_start_at_utc": null,
+    "initial_stop_at_utc": null,
+    "private_filesystem_retention_until_utc": null,
+    "registry_network_tax_price_bound": null,
+    "maximum_approved_cloud_usd": null,
+    "owner_approval": null
   }
 }

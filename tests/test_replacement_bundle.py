@@ -93,6 +93,8 @@ def test_replacement_discovery_and_verification_do_not_reuse_another_manufacture
                   page=1, quote='Power 10 W', scope='product_wide', scope_quote='Power 10 W')]), []
     async def verify(case, submitted, **kwargs):
         observed['verify_domains'] = case['manufacturer_domains']
+        assert case['require_availability'] is True and case['required_properties'] == ['watts']
+        assert case['candidate_url'] == 'https://candidate.test/data.pdf'
         return [], [], [], 0, None
     monkeypatch.setattr(WebClient, 'search', search)
     monkeypatch.setattr(WebClient, 'extract', extract)
