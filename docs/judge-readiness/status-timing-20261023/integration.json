@@ -1,0 +1,14 @@
+{
+  "base_commit": "e1a4c2e1f196cf2f61dd87023254e7f459c5213c",
+  "current_parent": "061cf9d2fcb4eb68729eb2961f6f4a8758e24e55",
+  "preimage_verified": true,
+  "paths": {
+    "api/pipeline/verify.py": "b7daaa5eadb7ca695bf5c9c0594dd6cb1866f73bca034d9f3967f163e518b771",
+    "tests/test_status_timing.py": "606afd8045018720632ec38b8975d3105607bf8dd8ae4734f0c692712973f555"
+  },
+  "scope": "Final isolated temporal status gate, including availability windows and quote-grounded metadata",
+  "previous_integration": {
+    "api/pipeline/verify.py": "b50c08039f091afe6425c84039d9ea9182308d7ba975f0e15b93c54fc95eb5de",
+    "tests/test_status_timing.py": "d0892af27160a009c95527a59c4f3c45f0ba45bc82f83e907bd6065995b720e9"
+  }
+}

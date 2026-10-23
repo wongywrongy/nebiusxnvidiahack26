@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import re
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 from ..config import settings
@@ -290,6 +291,46 @@ def _data_revision_supported(value: str, text: str) -> bool:
     return not safety_sheet and revision_supported(value, text)
 
 
+def _status_timing(notice: str, match):
+    if not isinstance(match, re.Match):
+        return not bool(re.search(r"\bwill\s+be\b", notice, re.I)), None
+    # shortcut: English named-month and ISO calendar dates; add other notations when observed notices require them.
+    day = r"\d{1,2}(?:st|nd|rd|th)?"
+    printed = rf"(?:\d{{4}}-\d{{1,2}}-\d{{1,2}}|[a-z]{{3,9}}\.?\s+{day}(?:,\s*|\s+)\d{{4}}|{day}\s+[a-z]{{3,9}}\.?(?:,\s*|\s+)\d{{4}})"
+    before, after = notice[:match.start()], notice[match.end():]
+    prefix = re.search(rf"(?:^|[.!?;:])\s*(?:as\s+of|effective(?:\s+on)?)\s+({printed})\s*,?\s*(?:the\s+)?$", before, re.I)
+    suffix = re.match(rf"\s+(?:(on|as\s+of|effective(?:\s+on)?|from|starting(?:\s+on)?|in|until|through)\s+)?({printed})(?:\s*[.!?;]|\s*$)", after, re.I)
+    prefix_condition = re.search(r"(?:^|[.!?;:])\s*(?:as\s+of|effective(?:\s+on)?)\b[^.!?;]*$", before, re.I)
+    date_like = r"(?:\d|[a-z]{3,9}\.?\s+\d|today\b|tomorrow\b|yesterday\b|next\b)"
+    suffix_condition = re.match(rf"\s+(?:(?:on|as\s+of|effective(?:\s+on)?|from|starting(?:\s+on)?|in|until|through)\s+)?{date_like}", after, re.I)
+    if prefix_condition and not prefix or suffix_condition and not suffix or prefix and not suffix and not re.match(r"\s*(?:[.!?;]|$)", after):
+        return False, None
+    bounds = []
+    if prefix:
+        bounds.append(("start", prefix[1]))
+    if suffix:
+        bounds.append(("end" if (suffix[1] or "").casefold() in {"until", "through"} else "start", suffix[2]))
+    dates = {"start": set(), "end": set()}
+    for kind, raw in bounds:
+        text = re.sub(r"(\d)(?:st|nd|rd|th)\b", r"\1", raw, flags=re.I)
+        text = " ".join(re.sub(r"[,.]", " ", text).split())
+        for fmt in ("%Y-%m-%d", "%B %d %Y", "%b %d %Y", "%d %B %Y", "%d %b %Y"):
+            try:
+                dates[kind].add(datetime.strptime(text, fmt).date())
+                break
+            except ValueError:
+                continue
+        else:
+            return False, None
+    if any(len(values) > 1 for values in dates.values()):
+        return False, None
+    start, end = (next(iter(dates[kind]), None) for kind in ("start", "end"))
+    if re.search(r"\bwill\s+be\b", match[0], re.I) and start is None:
+        return False, None
+    today = datetime.now(timezone.utc).date()
+    return (not start or start <= today) and (not end or today <= end) and (not start or not end or start <= end), start
+
+
 def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: ClaimsOut | None = None) -> dict[str, str]:
     """Keep only what a fetched page actually quotes, for both scripted and investigated sources."""
     def same_product(page):
@@ -321,9 +362,15 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: 
                                    for f in (submitted.family, family_name))
     model_status = submitted is None or (not family_only and model_quoted(identifier, out.status_quote or "")
                                         and re.search(r"(?<![\w+])" + re.escape(identifier) + predicate, notice, re.I))
-    if out.status != "unknown" and not ((family or model_status) and source_of(out.status_quote, identity=not bool(family))):
+    status_match = family or model_status
+    current, effective = _status_timing(notice, status_match)
+    if out.status != "unknown" and not (status_match and current and source_of(out.status_quote, identity=not bool(family))):
         out.status = "unknown"
-        out.status_quote = None
+        out.status_quote = out.status_date = out.status_family = out.replacement = None
+    elif out.status != "unknown":
+        out.status_date = effective.isoformat() if out.status == "discontinued" and effective else None
+    if out.replacement and not quoted(out.replacement, out.status_quote):
+        out.replacement = None
     read = len(out.current_values)
     out.current_values = [pv for pv in out.current_values if source_of(pv.quote, pv.source_url) and value_quoted(pv.value, pv.quote, pv.property)
                           and metric_quoted(pv.property, pv.quote) and unit_quoted(pv.unit, pv.quote, pv.property)
