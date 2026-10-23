@@ -152,7 +152,6 @@ export interface CloudJob {
   raw_state?: string | null; state_known?: boolean; poll_error?: string
 }
 export async function getJobs(): Promise<{ available: boolean; jobs: CloudJob[] }> { return ok(await fetch('/api/watch/jobs')) }
-export async function runJob(): Promise<CloudJob> { return ok(await fetch('/api/watch/run', { method: 'POST' })) }
 export async function getWatch(): Promise<Recheck | null> {
   const r = await fetch('/api/watch')
   return r.status === 404 ? null : ok(r)
@@ -160,7 +159,19 @@ export async function getWatch(): Promise<Recheck | null> {
 export const archiveUrl = (path: string) => `/api/evidence/${path.split('/').map(encodeURIComponent).join('/')}`
 
 export async function getProject(): Promise<Project> {
-  return (await fetch('/api/project')).json()
+  const project = await ok<Project>(await fetch('/api/project'))
+  if (!project || !['mock', 'live'].includes(project.mode) || typeof project.name !== 'string'
+    || !Array.isArray(project.specs) || !Array.isArray(project.tray) || !Array.isArray(project.watched)
+    || project.specs.some((s) => !s || typeof s.section !== 'string')
+    || project.tray.some((sender) => !sender || !Array.isArray(sender.items))) {
+    throw new Error('Project response was incomplete. Reload to try again.')
+  }
+  if ([...project.watched, ...project.tray.flatMap((s) => s.items)].some((c) => !c || typeof c.id !== 'string'
+    || typeof c.section !== 'string' || !Array.isArray(c.submittal)
+    || c.submittal.some((d) => !d || typeof d.file !== 'string'))) {
+    throw new Error('Project attachments were incomplete. Reload to try again.')
+  }
+  return project
 }
 
 async function ok<T>(r: Response): Promise<T> {
@@ -187,9 +198,13 @@ export async function scan(ids: string[], delayMs = 700, refreshWeb = false): Pr
   }))
 }
 
-export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: () => void): () => void {
+export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: () => void, onError: (e: Error) => void): () => void {
   const es = new EventSource(`/api/runs/${runId}/events`)
-  es.onmessage = (m) => onEvent(JSON.parse(m.data))
+  es.onmessage = (m) => {
+    try { onEvent(JSON.parse(m.data)) }
+    catch { es.close(); onError(new Error('Scan updates were unreadable. Retry this item.')) }
+  }
+  es.onerror = () => { es.close(); onError(new Error('Lost the scan connection. Retry this item.')) }
   es.addEventListener('end', () => { es.close(); onEnd() })
   return () => es.close()
 }
@@ -219,7 +234,7 @@ export const pageUrl = (caseId: string, file: string, n: number) =>
   `/api/docs/${caseId}/${encodeURIComponent(basename(file))}/pages/${n}.png`
 
 export async function getCaseText(caseId: string): Promise<TextPage[]> {
-  return (await (await fetch(`/api/cases/${caseId}/text`)).json()).pages
+  return (await ok<{ pages: TextPage[] }>(await fetch(`/api/cases/${caseId}/text`))).pages
 }
 
 export const DECISION_LABEL: Record<Decision, string> = {

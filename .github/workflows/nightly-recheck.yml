@@ -1,5 +1,4 @@
-# GitHub supplies the clock; Nebius Serverless Jobs have no schedule of their own.
-# TODO(owner): paste real CLI state strings after the first live job. Only COMPLETED is assumed below.
+# GitHub supplies the clock; every launch goes through the authenticated app controller.
 name: nightly-recheck
 on:
   schedule:
@@ -12,82 +11,55 @@ concurrency:
   cancel-in-progress: false
 jobs:
   recheck:
-    # Deliberately disabled until the owner has verified the test deployment and its costs.
+    # Keep disabled until the owner approves and verifies hosted accounting and a real job.
     if: ${{ vars.ENABLE_NEBIUS_JOBS == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 75
     env:
-      IMAGE: ${{ vars.SPECCHECK_IMAGE || format('ghcr.io/{0}/speccheck:latest', github.repository_owner) }}
       SPECCHECK_URL: ${{ vars.SPECCHECK_URL }}
-      NEBIUS_EVIDENCE_BUCKET: ${{ vars.NEBIUS_EVIDENCE_BUCKET }}
-      NEBIUS_SA_ID: ${{ secrets.NEBIUS_SA_ID }}
-      NEBIUS_PUBLIC_KEY_ID: ${{ secrets.NEBIUS_PUBLIC_KEY_ID }}
-      NEBIUS_PROJECT_ID: ${{ secrets.NEBIUS_PROJECT_ID }}
-      NEBIUS_SECRET_NEBIUS_API_KEY: ${{ secrets.NEBIUS_SECRET_NEBIUS_API_KEY }}
-      NEBIUS_SECRET_TAVILY_API_KEY: ${{ secrets.NEBIUS_SECRET_TAVILY_API_KEY }}
-      NEBIUS_SECRET_ADMIN_TOKEN: ${{ secrets.NEBIUS_SECRET_ADMIN_TOKEN }}
+      SPECCHECK_ADMIN_TOKEN: ${{ secrets.SPECCHECK_ADMIN_TOKEN }}
     steps:
-      - name: Install the pinned Nebius CLI
+      - name: Request one idempotent controller launch and wait for its report
         run: |
-          curl -fsSL https://artifacts.nebius.cloud/cli/install.sh -o "$RUNNER_TEMP/install-nebius.sh"
-          NEBIUS_CLI_VERSION=0.12.289 NEBIUS_INSTALL_FOLDER="$RUNNER_TEMP/nebius-bin" SHELL=/bin/sh bash "$RUNNER_TEMP/install-nebius.sh"
-          echo "$RUNNER_TEMP/nebius-bin" >> "$GITHUB_PATH"
-      - name: Sign in as the service account
-        env:
-          NEBIUS_PRIVATE_KEY: ${{ secrets.NEBIUS_PRIVATE_KEY }}
-        run: |
-          umask 077
-          printf '%s\n' "$NEBIUS_PRIVATE_KEY" > "$RUNNER_TEMP/sa.pem"
-          nebius profile create --endpoint api.nebius.cloud --service-account-id "$NEBIUS_SA_ID" \
-            --public-key-id "$NEBIUS_PUBLIC_KEY_ID" --private-key-file "$RUNNER_TEMP/sa.pem" \
-            --parent-id "$NEBIUS_PROJECT_ID" --profile ci --no-browser
-      - name: Create the Serverless Job
-        id: job
-        run: |
-          : "${SPECCHECK_URL:?Set SPECCHECK_URL}"
-          : "${NEBIUS_EVIDENCE_BUCKET:?Set NEBIUS_EVIDENCE_BUCKET}"
-          : "${NEBIUS_SECRET_NEBIUS_API_KEY:?Set the MysteryBox selector}"
-          : "${NEBIUS_SECRET_TAVILY_API_KEY:?Set the MysteryBox selector}"
-          : "${NEBIUS_SECRET_ADMIN_TOKEN:?Set the MysteryBox selector}"
-          NAME="speccheck-recheck-$(date -u +%Y%m%d-%H%M%S)"
-          nebius ai job create --profile ci --name "$NAME" --image "$IMAGE" \
-            --container-command python --args "scripts/recheck.py --post $SPECCHECK_URL" \
-            --platform cpu-d3 --preset 2vcpu-8gb --disk-size 32Gi --timeout 1h --restart-policy never --on-demand \
-            --volume "s3://$NEBIUS_EVIDENCE_BUCKET:/app/evidence:rw" \
-            --env EVIDENCE_DIR=/app/evidence --env EVIDENCE_LABEL="Nebius Object Storage" \
-            --env SPECCHECK_MODE=live --env THINKING=off --env RECHECK_RUNNER="Nebius Serverless Job" --env JOB_NAME="$NAME" \
-            --env BUDGET_USD_PER_RUN=3 --env BUDGET_USD_PER_DAY=8 \
-            --env BUDGET_TAVILY_CREDITS_PER_ITEM=60 --env BUDGET_TAVILY_CREDITS_PER_DAY=600 --env MAX_CONCURRENCY=2 \
-            --env-secret "NEBIUS_API_KEY=$NEBIUS_SECRET_NEBIUS_API_KEY" \
-            --env-secret "TAVILY_API_KEY=$NEBIUS_SECRET_TAVILY_API_KEY" \
-            --env-secret "ADMIN_TOKEN=$NEBIUS_SECRET_ADMIN_TOKEN" --async --format json > "$RUNNER_TEMP/job-operation.json"
-          echo "name=$NAME" >> "$GITHUB_OUTPUT"
-          # --async returns an Operation: resource_id is the job; id is the operation.
-          echo "id=$(jq -r '.resource_id // empty' "$RUNNER_TEMP/job-operation.json")" >> "$GITHUB_OUTPUT"
-      - name: Record real states and wait for completion
-        env:
-          JOB_ID: ${{ steps.job.outputs.id }}
-          JOB_NAME: ${{ steps.job.outputs.name }}
-        run: |
-          for i in $(seq 1 30); do
-            [ -n "$JOB_ID" ] && break
-            JOB_ID=$(nebius ai job get-by-name --profile ci --name "$JOB_NAME" --format 'jsonpath={.metadata.id}' 2>/dev/null || true)
-            sleep 10
-          done
-          test -n "$JOB_ID"
-          for i in $(seq 1 240); do
-            STATE=$(nebius ai job get --profile ci "$JOB_ID" --format 'jsonpath={.status.state}' 2>/dev/null || echo unavailable)
-            printf 'Observed CLI state: %s\n' "$STATE"
-            if [ "$STATE" = COMPLETED ]; then
-              nebius ai job logs --profile ci "$JOB_ID"
-              # Completion alone does not establish that the report succeeded.
-              curl --fail --silent --show-error "$SPECCHECK_URL/api/watch" | jq -e --arg name "$JOB_NAME" '.job_name == $name'
-              exit 0
-            fi
-            sleep 15
-          done
-          echo 'No documented completion observed. Inspect the job in Nebius; do not infer success.'
-          exit 1
-      - name: Remove the temporary private key
-        if: always()
-        run: rm -f "$RUNNER_TEMP/sa.pem"
+          python3 - <<'PY'
+          import json
+          import os
+          import time
+          from urllib.error import HTTPError, URLError
+          from urllib.parse import urlsplit
+          from urllib.request import Request, HTTPRedirectHandler, build_opener
+
+          base = os.environ['SPECCHECK_URL'].rstrip('/')
+          token = os.environ['SPECCHECK_ADMIN_TOKEN']
+          parsed = urlsplit(base)
+          if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment or not token:
+              raise SystemExit('Set the HTTPS controller URL and private SPECCHECK_ADMIN_TOKEN secret.')
+
+          class NoRedirect(HTTPRedirectHandler):
+              def redirect_request(self, *args, **kwargs):
+                  return None
+          client = build_opener(NoRedirect)
+
+          def request(path, *, launch=False):
+              headers = {'X-Admin-Token': token, 'Idempotency-Key': 'nightly-' + os.environ['GITHUB_RUN_ID']}
+              try:
+                  with client.open(Request(base + path, data=b'' if launch else None, headers=headers), timeout=45) as response:
+                      return json.load(response)
+              except (HTTPError, URLError, ValueError):
+                  raise SystemExit('Controller request failed; inspect its job status before retrying. No direct cloud launch was attempted.') from None
+
+          job = request('/api/watch/run', launch=True)
+          for _ in range(240):
+              current = next((row for row in request('/api/watch/jobs')['jobs'] if row['name'] == job['name']), None)
+              if current and current['state'] == 'failed':
+                  raise SystemExit('Cloud job failed; inspect controller diagnostics.')
+              if current and current['state'] == 'done':
+                  report = request('/api/watch')
+                  if report.get('job_name') != job['name'] or report.get('mode') != 'live' or not report.get('items') or any(row.get('status') == 'unverified' for row in report['items']):
+                      raise SystemExit('Completion has no matching valid live report.')
+                  print('Controller reports completed job:', job['name'])
+                  break
+              time.sleep(15)
+          else:
+              raise SystemExit('No confirmed completion before timeout. Inspect the existing job; no duplicate was submitted.')
+          PY

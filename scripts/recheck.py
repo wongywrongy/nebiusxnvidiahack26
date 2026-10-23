@@ -38,6 +38,7 @@ from api import watch_store  # noqa: E402
 from api.pipeline.cases import all_cases, mock_ready  # noqa: E402
 from api.pipeline.runner import Run, execute  # noqa: E402
 from api.schemas import Result  # noqa: E402
+from api.readiness import invalid_reasons  # noqa: E402
 
 STATUS_ORDER = ("discontinued", "changed", "unverified", "no_change")
 
@@ -48,6 +49,10 @@ def summarize(case: dict, res: Result | None) -> dict:
             "approved": (case.get("watch") or {}).get("approved")}
     if res is None:
         return {**item, "status": "unverified", "detail": "The re-check could not run for this item (see the run log)."}
+    if reasons := invalid_reasons(res):
+        return {**item, "status": "unverified", "detail": "The re-check is incomplete; inspect the run diagnostics.",
+                "diagnostics": reasons, "cost_usd": res.fresh_model_cost_usd, "web_credits": res.fresh_web_credits,
+                "duration_ms": res.duration_ms}
     status, detail, source, quote = "no_change", "Matches the manufacturer's current documents.", None, None
     for f in res.findings:
         if f.check == "status" and f.verdict == "fail":

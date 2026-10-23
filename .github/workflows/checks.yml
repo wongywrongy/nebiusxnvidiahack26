@@ -32,3 +32,16 @@ jobs:
           python -c 'import json; s=json.load(open("/tmp/mock-scores.json")); assert s["right_call"] == {"n":6,"of":8}; assert s["caught"] == {"n":5,"of":6}; assert s["validity"]["invalid_items"] == 0; assert not s["release_gate"]["passed"]'
       - run: npm ci && npm run test:presentation && npm run build
         working-directory: web
+      - run: npx playwright install --with-deps chromium
+        working-directory: web
+      - name: Browser journey and failure regressions (mock only)
+        run: |
+          RUNS_DIR="$RUNNER_TEMP/browser-runs" python -m uvicorn api.main:app --host 127.0.0.1 --port 8007 > "$RUNNER_TEMP/browser-api.log" 2>&1 &
+          server=$!
+          trap 'kill "$server"' EXIT
+          for i in $(seq 1 30); do
+            curl --fail --silent http://127.0.0.1:8007/api/health > /dev/null && break
+            sleep 1
+          done
+          cd web
+          npm run test:browser

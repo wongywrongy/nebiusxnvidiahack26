@@ -1,7 +1,7 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
   DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
-  streamEvents, uploadToInbox, archiveUrl, getJobs, getWatch, runJob, type CloudJob,
+  streamEvents, uploadToInbox, archiveUrl, getJobs, getWatch, type CloudJob,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
   type Health, type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
@@ -148,8 +148,13 @@ export default function App() {
   }
 
   // Stream a run into a row map; onDone gets each item's result.
-  function follow(run: string, set: typeof setRows, onDone: (id: string, r: Result) => void) {
+  function follow(run: string, ids: string[], set: typeof setRows, onDone: (id: string, r: Result) => void) {
     const active = generation.current
+    const incomplete = (reason: string) => {
+      if (active !== generation.current) return
+      set((m) => Object.fromEntries(Object.entries(m).map(([id, row]) => [id,
+        !ids.includes(id) || ['done', 'error'].includes(row.stage) ? row : { stage: 'error', model: null, reason }])))
+    }
     const close = streamEvents(run, (e) => {
       if (active !== generation.current) return
       const id = e.case_id
@@ -160,7 +165,11 @@ export default function App() {
       }).catch((error: Error) => { if (active === generation.current) set((m) => ({ ...m, [id]: { stage: 'error', model: null, reason: error.message } })) })
       set((m) => ({ ...m, [id]: { ...m[id], stage: e.stage, reason: e.stage === 'error' ? e.message : undefined,
         model: e.model ?? (e.stage === 'done' ? null : m[id]?.model ?? null) } }))
-    }, () => { streams.current.delete(close); getHealth().then(setHealth).catch(() => {}) })
+    }, () => {
+      streams.current.delete(close)
+      incomplete('The scan ended before this item completed. Retry this item.')
+      getHealth().then(setHealth).catch(() => {})
+    }, (error) => { streams.current.delete(close); incomplete(error.message) })
     streams.current.add(close)
   }
 
@@ -205,7 +214,7 @@ export default function App() {
       if (active !== generation.current) return
       setScanNote(run.note ?? null)
       setRows((m) => ({ ...m, ...Object.fromEntries(fresh.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
-      follow(run.run_id, setRows, async (id, result) => {
+      follow(run.run_id, fresh.map((c) => c.id), setRows, async (id, result) => {
         const c = fresh.find((x) => x.id === id)!
         const found = await Promise.all(c.submittal.map((d) => getDocPages(id, d.file)))
         const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
@@ -244,7 +253,7 @@ export default function App() {
       setCheckNote(run.note ?? null)
       setChecked({})
       setChecks((m) => ({ ...m, ...Object.fromEntries(watchList.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
-      follow(run.run_id, setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
+      follow(run.run_id, watchList.map((c) => c.id), setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
     } catch (e) { if (active === generation.current) setError((e as Error).message) }
   }
 
@@ -1102,7 +1111,6 @@ const recheckLine = (r: Recheck | null | undefined) => {
 function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck | null }) {
   const [report, setReport] = useState(initial)
   const [jobs, setJobs] = useState<CloudJob[]>([])
-  const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
     if (!enabled) return
@@ -1118,20 +1126,12 @@ function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck 
     return () => { active = false; window.clearInterval(timer) }
   }, [enabled])
   const current = jobs.find((job) => !['done', 'failed'].includes(job.state))
-  async function launch() {
-    setBusy(true); setError(null)
-    try { setJobs([await runJob()]) }
-    catch (e) { setError((e as Error).message) }
-    finally { setBusy(false) }
-  }
   return <div className="flex flex-col items-start gap-1 break-words text-xs text-muted">
     <span>{recheckLine(report)}</span>
     {current && <span role="status">{current.name} · {current.state_known === false ? 'Unmapped state' : current.state}
-      {current.raw_state ? ` (${current.raw_state})` : ''}. Nebius starts a job in a few minutes.
+      {current.raw_state ? ` (${current.raw_state})` : ''}. Waiting for confirmed job status.
       {current.poll_error ? ` ${current.poll_error}` : ''}</span>}
     {!current && jobs[0]?.state === 'failed' && <span role="status">{jobs[0].name} · failed ({jobs[0].raw_state})</span>}
-    {enabled && <button className="min-h-8 text-left underline underline-offset-4 hover:text-ink disabled:opacity-50"
-      disabled={busy || !!current} onClick={launch}>{busy ? 'Requesting job…' : 'Run as a Nebius Serverless Job'}</button>}
     {error && <span role="alert">{error}</span>}
   </div>
 }

@@ -125,7 +125,7 @@ def reserve(path: Path, held: Amount, *, run: str, item: str, run_usd_nano: int,
         limits = [
             (_sum([state.seed, *map(_charge, payments)]), state.limit),
             (_sum([_charge(p) for p in payments if p.phase == state.phase]), state.phases[state.phase]),
-            (_sum([state.day_seed.get(day, Amount()), *[_charge(p) for p in payments if p.day == day]]),
+            (_sum([state.day_seed.get(day, Amount()), *[_charge(p) for p in payments if p.day == day or p.actual is None]]),
              Amount(usd_nano=day_usd_nano, credits=day_credits)),
             (_sum([_charge(p) for p in payments if p.run == run]), Amount(usd_nano=run_usd_nano, credits=state.limit.credits)),
             (_sum([_charge(p) for p in payments if p.run == run and p.item == item]),
@@ -172,7 +172,7 @@ def settle(path: Path, identifier: str, actual: Amount | None) -> tuple[dict, bo
 def report(state: State, day: str) -> dict:
     payments = list(state.payments.values())
     actual = _sum([state.day_seed.get(day, Amount()), *[p.actual for p in payments if p.day == day and p.actual is not None]])
-    held = _sum([p.held for p in payments if p.day == day and p.actual is None])
+    held = _sum([p.held for p in payments if p.actual is None])
     total = _sum([state.seed, *[_charge(p) for p in payments]])
     phase = _sum([_charge(p) for p in payments if p.phase == state.phase])
     return {"day": day, "usd": actual.usd_nano / 1e9, "credits": actual.credits,

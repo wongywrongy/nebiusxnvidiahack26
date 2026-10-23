@@ -52,6 +52,9 @@ def invalid_reasons(result) -> list[dict]:
 def release_checks(score: dict, *, minimum_fixes: int = 1, minimum_resolved: int = 1) -> list[str]:
     """A successful eval is necessary but does not establish the promised complete workflow."""
     issues = []
+    from .pipeline.cases import all_cases
+    if {r.get("id") for r in score.get("rows", [])} != set(all_cases()):
+        issues.append("Full scoring set required")
     if score.get("mode") != "live":
         issues.append("Live evidence required")
     if score.get("validity", {}).get("invalid_items", 1):

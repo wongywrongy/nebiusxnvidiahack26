@@ -109,9 +109,11 @@ checks enforce the exact disagreements; the raw scoreboard and strict release ga
 
 The October 22 refinement check now gets **c03 and c07 right (2/2 problems caught)**, with **0/2 passing
 replacements**. This targeted, cached-live confirmation is not an eight-case score or fresh latency
-benchmark. The current test suite passes **382 tests, 2 skipped**. Additional engineering spend is
-**$0.4281318 / 60 credits**, cumulative **$1.4867368 / 358**. G2 remains open for a fully evidenced replacement;
+benchmark. The October 23 reliability checkpoint passes **399 tests, 2 skipped**, plus **8 browser tests**.
+Additional engineering spend is **$0.4281318 / 61 credits**, cumulative **$1.4867368 / 359**.
+The linked-PDF c07 retry still has no passing replacement. G2 remains open for a fully evidenced replacement;
 see the [before/after evidence and commands](docs/judge-readiness/g2/live-validation.md).
+The [ownership and remaining-work ledger](docs/judge-readiness/ownership.md) separates implementation from Kyle's sign-offs.
 
 Live run **`20261022-181611-a9d0b5`**, recorded **2026-10-22**, is committed under
 [runs/recorded/](runs/recorded/20261022-181611-a9d0b5/scores.json). It contains c01–c08 and public samples
@@ -268,15 +270,15 @@ are owner-only and require an explicit paid run later; none was performed here.
 
 ## AI Cloud in the workflow
 
-Outcome can launch a re-check as a Nebius Serverless Job, show its raw/normalized state, and link the returned
-report by job name. The action is hidden in mock mode or without a configured CLI profile. The primary
+Outcome shows cloud job state and the latest report. Cloud launches require the authenticated controller API
+and an idempotency key; the public browser cannot launch paid cloud compute. The primary
 **Check approved now** button still checks browser-approved items in-process; cloud jobs use the bundled watch list.
 `EVIDENCE_DIR` archives full source text and available approved/watched PDFs; Review links archived source copies.
 An evaluation job can write scores into the same bucket and Scoreboard shows its job name and date.
 
-These paths are tested with a fake CLI, fixtures and local disk. No live deployment or provider result is claimed.
-Deployment commands, MysteryBox selectors, bucket mounts and the Oct 16–17 / Oct 22 sequence are in
-[the Nebius guide](deploy/nebius/README.md). Scheduled jobs stay disabled until the owner enables them.
+These cloud paths are tested with a fake CLI, fixtures and local disk. Hosted durability and job settlement
+remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
+Scheduled jobs stay disabled pending hosted verification and owner approval.
 
 _TODO(owner): add a real Nebius console screenshot showing the endpoint, a completed re-check job and its report.
 Do not substitute the fake CLI screenshots or a mock score for live evidence._
@@ -285,6 +287,7 @@ Do not substitute the fake CLI screenshots or a mock score for live evidence._
 
 ```bash
 # Owner-only, paid: point at the deployed live endpoint. ADMIN_TOKEN in the environment is optional.
+python scripts/smoke.py "$SPECCHECK_URL" --preflight-only  # read-only; no uploads or scans
 python scripts/smoke.py "$SPECCHECK_URL"
 # Or: python scripts/smoke.py "$SPECCHECK_URL" --admin-token "$ADMIN_TOKEN"
 ```
@@ -294,9 +297,10 @@ key-presence booleans, positive caps at or below production limits, Specs, Score
 404. If preflight fails, it starts no scan. Then c01 and the smallest synthetic one-page PDF in `tests/data/`
 share **one scan**: one run's model USD cap and one item's total Tavily allowance, processed sequentially.
 `shared_item_budget=true` can only tighten limits. The script makes no retries and refuses an older deployment
-without this budget capability. It requires a fresh Nemotron call (or an explicit replay) for c01 and a live
+without this budget capability. It requires a fresh Nemotron call for c01 and a valid live
 upload result with a quoted claim or an honest couldn't-confirm finding. A fully cached c01 is reported as
-insufficient proof, not quietly rerun at extra cost. Exit status is nonzero with a readable failure list.
+insufficient proof, not quietly rerun at extra cost. Replayed or invalid results cannot establish fresh deployment
+proof. Exit status is nonzero with a readable failure list.
 This script was tested against HTTP doubles; no deployed endpoint was smoke-tested during development.
 
 ## Runtime retention

@@ -24,10 +24,10 @@ COPY scripts/ scripts/
 COPY tests/data/ tests/data/
 # data/cases (the test set and answer key), data/fixtures (mock answers), data/requirements (reviewed checklists),
 # and data/raw when it exists on the build machine: the public manufacturer and agency PDFs are not committed, so
-# building from a checkout that ran scripts/fetch_docs.py bakes them in. Otherwise they are fetched at build time;
-# a host that refuses leaves that case on its recorded-text excerpt (the app still runs).
+# building from a checkout that ran scripts/fetch_docs.py bakes them in. Otherwise they are fetched at build time.
+# Missing, unreadable or changed public PDFs fail the image build for owner review.
 COPY data/ data/
-RUN python scripts/fetch_docs.py || echo "fetch_docs: some documents were not downloaded"
+RUN SPECCHECK_MODE=mock python scripts/fetch_docs.py && SPECCHECK_MODE=mock python scripts/check_pdfs.py --required
 # Recorded live runs (scripts/record_live.py) and the last nightly re-check report, when committed.
 COPY runs/ runs/
 COPY --from=web /web/dist web/dist

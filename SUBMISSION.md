@@ -1,8 +1,9 @@
 # SpecCheck submission package
 
 Prepared for Best Apps and Agents, Nebius x NVIDIA Global AI Hackathon. Owner-provided dates:
-test deployment October 16–17, production October 22, submission Friday October 30, 2026 at 10:00 AM PT;
-judging December 1–15. First live pass completed October 21–22; deployment and nightly cloud execution remain unverified. Live evidence is separate from the offline results below.
+submission Friday October 30, 2026 at 10:00 AM PT; judging December 1–15. The original October 22 production
+target has passed without a deployment. First live pass completed October 21–22; refinement is ongoing.
+Deployment and nightly cloud execution remain unverified. Live evidence is separate from offline results.
 
 ## Submission description
 
@@ -15,7 +16,8 @@ An unsupported claim becomes “couldn’t confirm.” A suggested replacement m
 The app follows Inbox → Scan → Review → Outcome. A Nebius Serverless Endpoint can host it, Serverless Jobs can
 re-check the bundled watch list and run evaluations, and a mounted Object Storage bucket can retain evidence,
 watch reports and scores. These integrations are implemented and tested with a fake CLI and local disk;
-their live deployment is still the owner’s verification step. Review messages remain drafts in the browser.
+their live deployment requires owner approval, followed by agent-executed validation. Durable shared accounting
+and guarded job settlement are still unfinished. Review messages remain drafts in the browser.
 
 ## Three-minute demonstration
 
@@ -27,7 +29,7 @@ their live deployment is still the owner’s verification step. Review messages 
    Nemotron’s reading tasks and code’s verdicts. Edit a message and save the decision; no email is sent.
 4. **Outcome:** show saved return decisions and approvals. Click **Check approved now** to re-check them plus
    the sample watched troffer. The live local walk found the watched TL discontinuation. No passing live replacement was found.
-5. **Cloud proof, only after owner validation:** use the secondary job link, then show its real console state,
+5. **Cloud proof, only after approved deployment validation:** launch through the authenticated controller, then show its real console state,
    matching job-name report and archived source. Do not substitute a fake CLI capture for cloud execution.
 6. Open **Specs** and **Scoreboard** from the header. Explain the two reviewed-section targets, public draft
    behavior, quote-gate counts and the small, known answer key. Reload to show saved drafts; **Start over**
@@ -41,31 +43,29 @@ SPECCHECK_MODE=mock python scripts/eval.py --out /tmp/speccheck-final.json
 cd web && npm run build
 ```
 
-The fixture evaluation yields 8/8 correct calls, 6/6 planted problems caught, 0/2 clean packages falsely flagged
-and 2/5 passing replacements. The current stricter mock quote gates retain 45/48 extracted claims and 19/20 web values: 6.2% and 5% dropped; the original mock baseline retained 48/48.
-These are measured demonstration-set results, not live results or an unseen benchmark. Respx/fake-CLI tests
+The original fixture baseline yielded 8/8 calls, 6/6 planted problems, 0/2 major false alarms and 2/5 passing
+replacements. The current selection/evidence policy yields **6/8, 5/6, 0/2 and 0/5** against the unchanged key,
+with 48/65 claims and 8/20 web values retained. Kyle approved the disclosed selection-policy disagreements
+for continued engineering; the strict release gate still fails. The current suite passes 399 tests (2 skipped),
+and eight mock browser journey/failure tests pass. These are measured demonstration-set results, not live
+accuracy or an unseen benchmark. Respx/fake-CLI tests
 cover paid-call boundaries, profile redaction, job create/poll, storage retention and the deployment smoke
 script. Real local Tesseract is exercised when installed. An eight-week soak has not been performed.
 
 Browser walkthrough captures are in [docs/mock-walkthrough](docs/mock-walkthrough/README.md). They are all
 labelled mock and are not a replacement for a real console screenshot.
 
-## Owner completion checklist
+## Owner sign-offs and access
 
-- Follow [the Nebius deployment guide](deploy/nebius/README.md): check credit expiry, configure the service
-  account, MysteryBox selectors and bucket, test for one day, delete that endpoint, then deploy production.
-- Run `python scripts/smoke.py "$SPECCHECK_URL"` once against the live test deployment. It shares one run’s USD
-  cap and one item’s Tavily allowance across c01 and the tiny PDF; the command spends real tokens/credits.
-- Submit one real re-check, observe its actual state strings, and fill the state-map TODOs. Confirm the
-  report/job-name link, bucket archive retrieval, callback-secret refresh and report persistence after restart.
-- Add a real console screenshot to the README and commit the first real `runs/watch/latest.json` fallback.
-  Record live runs only from actual execution; keep credentials, cache files and downloaded PDFs out of Git.
-- Enable the nightly workflow only after the test job succeeds. Avoid overlapping app and scheduled launches;
-  per-process budgets are not an account-wide cloud spending limit.
-- Replace the README’s live URL and video placeholders. Check the demo without an admin token, then submit
-  the video, repository link, deployment URL and only observed feedback. [FEEDBACK.md](FEEDBACK.md) separates
-  docs review from offline tests. The known-set live panel is 6/8 calls, 5/6 problems, 0/2 major false alarms and 0/5 passing fixes. No deployment, nightly-execution or cost-saving claim is made.
-
+- Review gate evidence, source/answer-key conflicts and independently prepared blind labels. Require submitted
+  selected configurations rather than inferring them from catalog examples.
+- Read account billing/credit-expiry details unavailable to the agent. Confirm scope and date; do not share keys.
+- Approve a concrete immutable-image, storage, IAM, cost and rollback plan before any cloud resources are created.
+- Provide private account access/configuration where required. The agent owns deployment execution, restart and
+  storage tests, paid smoke checks, manual/scheduled job verification, screenshots and documentation after approval.
+- Approve final claims, demo/video and release PR, then submit through the owner account. See
+  [the full ownership ledger](docs/judge-readiness/ownership.md). No deployment, nightly-execution or cost-saving
+  claim is made. The historical known-set live panel remains 6/8, 5/6, 0/2 and 0/5.
 
 ## First live pass — 2026-10-22
 

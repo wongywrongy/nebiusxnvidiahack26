@@ -378,6 +378,59 @@ def test_failed_linked_pdf_probe_is_not_repeated_on_cache_hit(live):
     assert spent == 0 and len(post.calls) == len(direct.calls) == 1
 
 
+@pytest.mark.parametrize("legacy_checked", [False, True])
+def test_blocked_product_page_follows_link_through_tavily_once(live, legacy_checked):
+    from api import cache
+    page, document = "https://maker.test/product", "https://maker.test/current.pdf"
+    stamp = datetime.now(timezone.utc).isoformat()
+    cache.put("tavily_extract", {"urls": [page], "depth": "basic"}, {
+        "version": 1, "retrieved_at": stamp, "results": [{"url": page,
+            "raw_content": "[Spec sheet](/current.pdf)", "document_checked": legacy_checked}]})
+    direct = live[0].get(page).respond(403)
+    post = live[0].post(tavily.API + "/extract").respond(200, json={"usage": {"credits": 2},
+        "results": [{"url": document, "raw_content": "Actual data sheet. [Other](/another.pdf)"}]})
+    pages, spent = asyncio.run(tavily.extract([page]))
+    assert spent == 2 and [p["url"] for p in pages] == [page, document]
+    assert pages[0]["retrieved_at"] == stamp and pages[1]["requested_url"] == page
+    assert pages[1]["cache_hit"] is False
+    cached, spent = asyncio.run(tavily.extract([page]))
+    assert spent == 0 and cached == [{**p, "cache_hit": True} for p in pages]
+    assert len(post.calls) == 1 and len(direct.calls) == (0 if legacy_checked else 1)
+    assert json.loads(post.calls[0].request.content)["urls"] == [document]
+    assert len(cache.get("tavily_extract", {"urls": [page], "depth": "basic"})["results"]) == 1
+
+
+def test_linked_pdf_negative_cache_expires_independently(live):
+    from api import cache
+    from datetime import timedelta
+    page, document = "https://maker.test/product", "https://maker.test/blocked.pdf"
+    live[0].get(page).respond(403)
+    live[0].get(document).respond(403)
+    def respond(request):
+        requested = json.loads(request.content)["urls"]
+        return httpx.Response(200, json={"results": ([{"url": page,
+            "raw_content": "[Data](/blocked.pdf)"}] if requested == [page] else []), "usage": {"credits": 1}})
+    post = live[0].post(tavily.API + "/extract").mock(side_effect=respond)
+    assert asyncio.run(tavily.extract([page]))[1] == 2
+    assert asyncio.run(tavily.extract([page]))[1] == 0
+    key = {"urls": [document], "depth": "basic"}
+    entry = cache.get("tavily_extract", key)
+    entry["retrieved_at"] = (datetime.now(timezone.utc) - timedelta(hours=2)).isoformat()
+    cache.put("tavily_extract", key, entry)
+    assert asyncio.run(tavily.extract([page]))[1] == 1
+    assert len(post.calls) == 3
+
+
+def test_linked_pdf_provider_failure_is_not_silently_hidden(live):
+    page = "https://maker.test/product"
+    live[0].get(page).respond(403)
+    live[0].post(tavily.API + "/extract").mock(side_effect=[httpx.Response(200, json={
+        "results": [{"url": page, "raw_content": "[Data](/blocked.pdf)"}], "usage": {"credits": 1}}),
+        httpx.Response(429)])
+    with pytest.raises(RateLimited):
+        asyncio.run(tavily.extract([page]))
+
+
 def test_direct_pdf_lookup_has_total_timeout(live, monkeypatch):
     real_timeout = asyncio.timeout
     monkeypatch.setattr(tavily.asyncio, "timeout", lambda _: real_timeout(0))

@@ -76,7 +76,8 @@ def available() -> bool:
     url = urlparse(settings.speccheck_url)
     return bool(settings.live and profile_ready and settings.speccheck_image and url.scheme in ("http", "https")
                 and url.hostname and not url.username and not url.password and not url.query and not url.fragment
-                and (settings.secret("admin_token") or settings.nebius_secret_admin_token))
+                and settings.secret("admin_token") and all(getattr(settings, f"nebius_secret_{key}")
+                    for key in ("nebius_api_key", "tavily_api_key", "admin_token")))
 
 
 def read_jobs() -> list[dict]:
@@ -84,7 +85,7 @@ def read_jobs() -> list[dict]:
 
 
 def write_jobs(jobs: list[dict]) -> None:
-    watch_store.write("jobs.json", jobs[:5])
+    watch_store.write("jobs.json", jobs)
 
 
 def apply_status(job: dict, payload: dict) -> None:
@@ -103,7 +104,7 @@ async def refresh(jobs: list[dict]) -> list[dict]:
     if not available() or time.monotonic() - _last_poll < 15:
         return jobs
     _last_poll = time.monotonic()
-    for job in jobs[:5]:
+    for job in jobs:
         if job["state"] in ("done", "failed"):
             continue
         try:
@@ -121,14 +122,19 @@ async def refresh(jobs: list[dict]) -> list[dict]:
 
 
 def command(name: str) -> list[str]:
+    if not all(getattr(settings, f"nebius_secret_{key}") for key in ("nebius_api_key", "tavily_api_key", "admin_token")):
+        raise HTTPException(409, "Cloud jobs require MysteryBox selectors for all three credentials.")
     args = ["ai", "job", "create", "--profile", "speccheck", "--name", name, "--image", settings.speccheck_image,
             "--container-command", "python", "--args", shlex.join(["scripts/recheck.py", "--post", settings.speccheck_url]),
             "--platform", "cpu-d3", "--preset", "2vcpu-8gb", "--disk-size", "32Gi", "--timeout", "1h",
             "--restart-policy", "never", "--on-demand", "--async", "--format", "json"]
     env = {"SPECCHECK_MODE": "live", "THINKING": settings.thinking, "RECHECK_RUNNER": "Nebius Serverless Job", "JOB_NAME": name}
+    env.update(NEBIUS_BASE_URL=settings.nebius_base_url,
+               **{f"MODEL_{role.upper()}": model for role, model in settings.models.items()})
     for key in ("budget_usd_per_run", "budget_usd_per_day", "budget_tavily_credits_per_item",
                 "budget_tavily_credits_per_day", "max_concurrency", "thinking_tasks", "max_page_chars", "web_source_chars",
-                "search_depth", "extract_depth", "search_max_results", "investigate_credit_cap", "investigate_max_steps", "map_limit"):
+                "search_depth", "extract_depth", "search_max_results", "investigate_credit_cap", "investigate_max_steps",
+                "map_limit", "map_max_depth", "max_output_tokens", "fix_credit_cap", "fix_max_candidates"):
         env[key.upper()] = str(getattr(settings, key))
     if settings.nebius_evidence_bucket:
         args += ["--volume", f"s3://{settings.nebius_evidence_bucket}:/app/evidence:rw"]
@@ -137,26 +143,26 @@ def command(name: str) -> list[str]:
         args += ["--env", f"{key}={value}"]
     for key in ("nebius_api_key", "tavily_api_key", "admin_token"):
         selector = getattr(settings, f"nebius_secret_{key}")
-        if selector:
-            args += ["--env-secret", f"{key.upper()}={selector}"]
-        else:
-            log.warning("%s has no MysteryBox selector; falling back to --env", key.upper())
-            args += ["--env", f"{key.upper()}={settings.secret(key)}"]
+        args += ["--env-secret", f"{key.upper()}={selector}"]
     return args
 
 
-async def start() -> dict:
+async def start(request_id: str) -> dict:
     if not available():
         raise HTTPException(409, "Nebius jobs need live mode, a configured profile, SPECCHECK_IMAGE and SPECCHECK_URL.")
     async with lock:
-        jobs = await refresh(read_jobs())
+        jobs = read_jobs()
+        if previous := next((j for j in jobs if j.get("request_id") == request_id), None):
+            return previous
+        jobs = await refresh(jobs)
         if any(j["state"] not in ("done", "failed") for j in jobs):
             raise HTTPException(409, "A Nebius re-check is already in flight.")
         now = datetime.now(timezone.utc)
         if jobs and (now - datetime.fromisoformat(jobs[0]["created_at"])).total_seconds() < settings.watch_run_interval_s:
             raise HTTPException(429, "A Nebius job was requested recently. Try again after the job rate-limit interval.")
         job = {"name": f"speccheck-recheck-{now.strftime('%Y%m%d-%H%M%S-%f')}", "id": None,
-               "created_at": now.isoformat(), "state": "queued", "raw_state": None, "state_known": True}
+               "created_at": now.isoformat(), "state": "queued", "raw_state": None, "state_known": True,
+               "request_id": request_id}
         jobs.insert(0, job)
         write_jobs(jobs)  # Reserve before awaiting create; ambiguous CLI failure must not create duplicate jobs.
         try:
@@ -171,7 +177,7 @@ async def start() -> dict:
 
 async def list_jobs() -> dict:
     async with lock:
-        return {"available": available(), "jobs": await refresh(read_jobs())}
+        return {"available": available(), "jobs": (await refresh(read_jobs()))[:5]}
 
 
 async def attach_report(report: dict) -> None:

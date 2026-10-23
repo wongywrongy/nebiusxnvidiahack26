@@ -158,7 +158,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
             text = page["raw_content"]
             r = {"url": page["url"], "title": inv._document_title}
         scripted_cost = (4 if case.get("manufacturer_domains") else 3) * tavily.search_credits(settings.search_depth)
-        scripted_cost += tavily.extract_credits(3, settings.extract_depth)
+        scripted_cost += 2 * tavily.extract_credits(3, settings.extract_depth)
         if web.credits + verify_credits + scripted_cost > cap:
             await web.warn("fix", budget.BudgetExceeded("Fix credit cap reached before candidate verification"))
             break  # credit cap for this item

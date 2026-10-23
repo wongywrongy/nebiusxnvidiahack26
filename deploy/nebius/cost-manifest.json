@@ -1,0 +1,158 @@
+{
+  "verified_date": "2026-10-23",
+  "approved": false,
+  "currency": "USD",
+  "rates": {
+    "cpu_d3_vcpu_per_hour": 0.015,
+    "cpu_e2_vcpu_per_hour": 0.012,
+    "ram_gib_per_hour": 0.0045,
+    "network_ssd_gib_per_730_hours": 0.071,
+    "object_standard_gib_per_730_hours": 0.0147,
+    "object_class_a_per_1000": 0.0034,
+    "object_class_b_per_1000": 0.00028,
+    "object_egress_per_gib": 0.015
+  },
+  "sources": {
+    "https://docs.nebius.com/compute/resources/pricing": {
+      "body_sha256": "164ad546cb024de75ed9b57bf9950c6a03410ed577e20fb7b2e6640fb4a81fe3",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/object-storage/resources/pricing": {
+      "body_sha256": "690cca0134ae1494380aa3aa47d83b9dd477fbd55609ce4ed1d023899e1d4264",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/serverless/overview": {
+      "body_sha256": "2ec736df38433d94f4bc9eaa62513a6354d1382da0c4d645e35426ef22b34bb4",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/serverless/pricing-quotas": {
+      "body_sha256": "1a11cd6da0fe3f691dab061f08702114a9bb946bad9f50bf4112bf3759320cae",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/compute/storage/types": {
+      "body_sha256": "9ab807aded23d0b77dbd2f7a0766a1ea14d8a6548587612034da588cf55f3885",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    }
+  },
+  "forecasts": [
+    {
+      "platform": "cpu-d3",
+      "hours": 24,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.066,
+      "compute_usd": 1.584,
+      "disk_32gib_usd": 0.074696,
+      "archive_10gib_usd": 0.004833,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-e2",
+      "hours": 24,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.06,
+      "compute_usd": 1.44,
+      "disk_32gib_usd": 0.074696,
+      "archive_10gib_usd": 0.004833,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-d3",
+      "hours": 168,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.066,
+      "compute_usd": 11.088,
+      "disk_32gib_usd": 0.522871,
+      "archive_10gib_usd": 0.03383,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-e2",
+      "hours": 168,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.06,
+      "compute_usd": 10.08,
+      "disk_32gib_usd": 0.522871,
+      "archive_10gib_usd": 0.03383,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-d3",
+      "hours": 1296,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.066,
+      "compute_usd": 85.536,
+      "disk_32gib_usd": 4.033578,
+      "archive_10gib_usd": 0.260975,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-e2",
+      "hours": 1296,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.06,
+      "compute_usd": 77.76,
+      "disk_32gib_usd": 4.033578,
+      "archive_10gib_usd": 0.260975,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    }
+  ],
+  "region_limit": "cpu-e2 only eu-north1; confirm preset/quotas in owner account",
+  "credit_expiry": "owner must read account grant terms; public program terms do not establish this grant expiry",
+  "image_digest": null,
+  "durable_authority": "unresolved; no SQLite on object mounts",
+  "resource_mutations_made": false
+}

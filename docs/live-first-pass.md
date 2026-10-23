@@ -1,5 +1,10 @@
 # First live pass — 2026-10-21–22
 
+Follow-up state on October 23: [readiness and ownership](judge-readiness/ownership.md). Additional targeted
+retrieval/reliability work brings actual cumulative spend to **$1.4867368 / 359 credits**. No later dashboard
+readout with scope/time was supplied; the historical three-credit discrepancy below remains unresolved.
+The dated first-pass figures and recording in this document remain historical evidence.
+
 Status: Gates 1–3 accepted and pushed. On 2026-10-22 Kyle directed “finish all unfinished things”, authorizing continuation past Gate 4 with the recorded limitations disclosed.
 All **four** permitted full live evals are complete: final cases **6/8**, samples **1/4**. No cap/provider
 warnings occurred in either final run. No more full eight-case runs are allowed in this pass.

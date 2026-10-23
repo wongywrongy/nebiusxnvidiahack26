@@ -61,6 +61,25 @@ def test_concurrent_requests_include_outstanding_holds(campaign_state):
     assert sum(r is not None for r in results) == 1
 
 
+def test_pending_payment_still_protects_next_day_cap(campaign_state, monkeypatch):
+    from datetime import datetime, timezone
+    class Clock:
+        day = "2026-10-24"
+        @classmethod
+        def now(cls, tz=None):
+            return datetime.fromisoformat(cls.day).replace(tzinfo=timezone.utc)
+    monkeypatch.setattr(campaign, "datetime", Clock)
+    # Keep provenance validation on the real date parser.
+    Clock.fromisoformat = datetime.fromisoformat
+    ticket = reserve(campaign_state, usd=1800000000)
+    Clock.day = "2026-10-25"
+    assert campaign.status(campaign_state)["held_usd"] == 1.8
+    with pytest.raises(BudgetExceeded):
+        reserve(campaign_state, usd=400000000, run="next-run", day_usd_nano=2000000000)
+    campaign.settle(campaign_state, ticket, campaign.Amount(usd_nano=10000000))
+    assert reserve(campaign_state, usd=400000000, run="next-run", day_usd_nano=2000000000)
+
+
 def test_unknown_settlement_blocks_paid_work_after_restart(campaign_state):
     ticket = reserve(campaign_state)
     report, _ = campaign.settle(campaign_state, ticket, None)
@@ -124,6 +143,7 @@ def response(text='{"ok":true}', *, usage=True):
 
 
 def test_invalid_json_retry_and_cache_settle_every_paid_attempt(campaign_state):
+    opening_usd = campaign.status(campaign_state)["usd"]
     with respx.mock as http:
         route = http.post(settings.nebius_base_url + "chat/completions").mock(side_effect=[response('invalid'), response()])
         _, usage = asyncio.run(tokenfactory.chat("triage", [], Answer))
@@ -132,7 +152,7 @@ def test_invalid_json_retry_and_cache_settle_every_paid_attempt(campaign_state):
     assert budget.LEDGER.get().fresh_usd["item"] == pytest.approx(2 * usage.cost_usd)
     with campaign.transaction(campaign_state) as state:
         assert len(state.payments) == 2 and all(p.actual is not None for p in state.payments.values())
-    assert json.loads(budget._day_file().read_text())["usd"] == pytest.approx(0.009827 + 2 * usage.cost_usd)
+    assert json.loads(budget._day_file().read_text())["usd"] == pytest.approx(opening_usd + 2 * usage.cost_usd)
 
 
 def test_missing_usage_retains_hold_and_cached_reply_stays_invalid(campaign_state):
@@ -160,22 +180,24 @@ def test_429_cannot_start_another_paid_attempt_with_unknown_billing(campaign_sta
 
 
 def test_reported_tavily_usage_is_settled_before_malformed_results(campaign_state):
+    opening_credits = campaign.status(campaign_state)["credits"]
     with respx.mock as http:
         http.post(tavily.API + "/extract").respond(200, json={"usage": {"credits": 3}, "results": None})
         with pytest.raises(TypeError):
             asyncio.run(tavily.extract(["https://maker.test/sheet.pdf"]))
     report = campaign.status(campaign_state)
-    assert report["credits"] == 10 and report["blocked"]  # Reported 3 exceeded the request's one-credit bound.
+    assert report["credits"] == opening_credits + 3 and report["blocked"]  # Above the request's one-credit bound.
     assert budget.LEDGER.get().fresh_credits["item"] == 3
 
 
 def test_failed_extract_is_zero_cost_and_does_not_erase_other_holds(campaign_state):
+    opening_credits = campaign.status(campaign_state)["credits"]
     with respx.mock as http:
         http.post(tavily.API + "/extract").respond(503)
         with pytest.raises(ProviderError):
             asyncio.run(tavily.extract(["https://maker.test/sheet.pdf"]))
     report = campaign.status(campaign_state)
-    assert not report["blocked"] and report["credits"] == 7 and report["held_credits"] == 0
+    assert not report["blocked"] and report["credits"] == opening_credits and report["held_credits"] == 0
 
 
 def test_concurrent_http_admission_reserves_before_network(campaign_state, monkeypatch):

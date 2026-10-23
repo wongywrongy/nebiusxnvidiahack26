@@ -161,8 +161,8 @@ async def search(query: str, include_domains: Optional[list[str]] = None, depth:
     return await _cached("tavily_search", body, search_credits(depth), call, lambda _: paid[0])
 
 
-async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], int]:
-    """Pages Tavily could not read get one direct try with fetch_pdf (free)."""
+async def extract(urls: list[str], depth: str = "basic", *, _follow_documents: bool = True) -> tuple[list[dict], int]:
+    """Try direct PDFs, then one linked document through Tavily when HTTP is blocked."""
     paid: list[int] = []
 
     async def call():
@@ -185,7 +185,7 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
     for r in results:
         text = r.get("raw_content") or ""
         corrupt = _pdf_syntax(text)
-        linked = (not r.get("document_checked") and not r.get("requested_url") and not urlparse(r["url"]).path.lower().endswith(".pdf") and
+        linked = (_follow_documents and not r.get("document_checked") and not r.get("requested_url") and not urlparse(r["url"]).path.lower().endswith(".pdf") and
                   (_document_link(text, r["url"]) or re.search(r"\b(?:product data|spec(?:ification)?)\s+sheet", text, re.I)))
         if corrupt or linked:
             if corrupt:
@@ -200,6 +200,22 @@ async def extract(urls: list[str], depth: str = "basic") -> tuple[list[dict], in
     if resolved != results:
         entry = cache.get("tavily_extract", key)
         cache.put("tavily_extract", key, {**entry, "results": resolved})
+    links = {}
+    if _follow_documents:
+        for r in resolved:
+            if not r.get("requested_url") and not urlparse(r["url"]).path.lower().endswith(".pdf"):
+                link = _document_link(r.get("raw_content", ""), r["url"])
+                if link and link != r["url"]:
+                    links[r["url"]] = link
+    if links:
+        found = {r["url"]: r for r in resolved}
+        pending = sorted(set(links.values()) - found.keys())
+        if pending:
+            documents, charged = await extract(pending, depth, _follow_documents=False)
+            spent += charged
+            found.update((r.get("requested_url", r["url"]), r) for r in documents)
+        # Keep document age/negative expiry independent of the cached product page.
+        resolved += [{**found[link], "requested_url": parent} for parent, link in links.items() if link in found]
     return resolved, spent
 
 

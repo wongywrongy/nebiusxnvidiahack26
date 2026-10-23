@@ -39,6 +39,7 @@ def test_cap_and_replay_cannot_be_used_as_valid_acceptance(monkeypatch, tmp_path
     run.results["c01"] = result
     assert scores(run, ["c01"])["validity"]["invalid_items"] == 0
     assert "No evidenced passing replacement" in release_checks(scores(run, ["c01"]))
+    assert "Full scoring set required" in release_checks(scores(run, ["c01"]), minimum_fixes=0, minimum_resolved=0)
     result.investigation = Investigation(outcome="capped")
     assert scores(run, ["c01"])["validity"]["invalid_items"] == 1
     result.investigation = None

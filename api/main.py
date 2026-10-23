@@ -358,8 +358,11 @@ async def watch_report(body: WatchReport, request: Request):
 @app.post("/api/watch/run")
 async def run_watch(request: Request):
     if not _is_admin(request):
-        _rate_limit(request)
-    return await cloud_jobs.start()
+        raise HTTPException(403, "Launching a cloud re-check needs the admin token (X-Admin-Token header)")
+    request_id = request.headers.get("Idempotency-Key", "")
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", request_id):
+        raise HTTPException(400, "Supply an Idempotency-Key containing 1–128 letters, digits, underscores or hyphens.")
+    return await cloud_jobs.start(request_id)
 
 
 @app.get("/api/watch/jobs")

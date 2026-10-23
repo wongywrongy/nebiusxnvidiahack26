@@ -30,7 +30,7 @@ def deployment(*, mode="live", cached=False, replay=False, upload_error=False, b
         elif path == "/api/scan":
             body = {"run_id": "smoke-run", "shared_item_budget": True}
         elif path == "/api/runs/smoke-run/results":
-            common = {"mode": "live", "findings": [{"verdict": "unverified"}], "claims": []}
+            common = {"mode": "live", "validity": "valid", "findings": [{"verdict": "unverified"}], "claims": []}
             body = {"done": True, "results": [{**common, "case_id": "c01", "replayed_from": "recorded" if replay else None,
                 "usage": [{"model": "nvidia/nemotron-3-super-120b-a12b", "cached": cached}]}]}
             if not upload_error:
@@ -59,13 +59,20 @@ def test_preflight_failures_never_start_paid_work(options, part):
     assert not any(method == "POST" for method, _, _ in calls)
 
 
-def test_cached_only_is_not_live_proof_but_recorded_replay_is():
+def test_cached_or_recorded_replay_does_not_establish_fresh_deployment_proof():
     client, _ = deployment(cached=True)
     with client:
         assert any("non-cached" in f for f in smoke.check(client, poll_s=0))
     client, _ = deployment(cached=True, replay=True)
     with client:
-        assert smoke.check(client, poll_s=0) == []
+        assert any("replayed" in f for f in smoke.check(client, poll_s=0))
+
+
+def test_read_only_preflight_never_uploads_or_scans():
+    client, calls = deployment()
+    with client:
+        assert smoke.check(client, preflight_only=True) == []
+    assert all(method == "GET" for method, _, _ in calls)
 
 
 def test_failed_upload_run_returns_readable_failure_without_retry():

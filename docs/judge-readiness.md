@@ -94,3 +94,29 @@ The first live contact broke product-identifier handling and family/format statu
 Additional local provider spend is **$0.4281318 / 60 credits**, bringing the cumulative pass to **$1.4867368 / 358**, with no unsettled reservations. Kyle replied “that is correct” to the reported cumulative $1.4867368 / 358 totals on 2026-10-22. This is owner confirmation of the reported totals; a separate dashboard readout, its timestamp and account/key scope were not supplied. The earlier three-credit gap is still unexplained, and no ledger was adjusted.
 
 **G2 is not accepted:** no replacement has every required cited check. Current CPX proof leaves L70, warranty, MacAdam, dimming and availability unconfirmed; c03 lacks complete mold/assembly proof. G3 case/sample/blind validation and deployment remain pending. The historical recording, answer keys and reviewed checklists are unchanged.
+
+## Reliability checkpoint — 2026-10-23
+
+[Ownership and remaining-work audit](judge-readiness/ownership.md), [measured evidence and reproduction](judge-readiness/reliability-20261023/README.md).
+The linked-PDF path now tries Tavily when direct HTTP cannot obtain the linked document, using a separate
+cache age/credit path and one-hop bound. Actual c07 retry `20261023-000514-d915c4` remains correct with no
+passing replacement: the CPX PDF yielded no Tavily text and direct HTTP returned a Cloudflare 403. Fresh
+spend **$0 / 1 credit**; cumulative **$1.4867368 / 359**, no holds. This is an unsuccessful retrieval correction,
+not a quality gain or a new full panel.
+
+The full mock suite passes **399 tests, 2 skipped in 15.96 seconds**; raw mock remains **6/8, 5/6, 0/2, 0/5**
+with zero invalid items. Eight real Chromium tests against the mock API pass; presentation/build checks pass.
+The 13 required PDFs match a frozen lock and contain readable native text. Blank/scanned-without-text,
+missing, damaged and changed inputs fail release preflight; Docker no longer silently substitutes excerpts.
+Read-only smoke makes no scan, and invalid/replayed results cannot prove a fresh deployment.
+
+Outstanding model/web reservations constrain the next UTC day's admission. Invalid watch results cannot
+claim no change. Cloud launch now requires admin authentication and an idempotency key, retains full history,
+requires secret selectors and forwards exact model/quality settings. The disabled scheduler goes through
+the same controller and refuses credential-bearing redirects. These are local/fake-CLI tests only.
+An independent AI review confirmed the scoped corrections; **durable hosted authority, job escrow/leases,
+child limits and guarded settlement/publication remain unfinished agent work**. Current official prices are
+recorded in the unapproved cost worksheet; this is not deployment authorization.
+
+G2 remains open. No follow-up full-set run or final recording has been consumed, no gate has been
+self-approved, and no cloud resource has been touched.
