@@ -142,6 +142,18 @@ def test_categorical_prefix_can_be_grounded_by_its_exact_quote():
     assert check([r], [c])[0].verdict == "fail"
 
 
+@pytest.mark.parametrize("value,quote,verdict", [
+    ("A12 Series", "A12 Series", "unverified"),
+    ("A12 Series", "Maker A12 Series", "pass"),
+    ("Other B20", "Other B20", "fail"),
+])
+def test_incomplete_named_identifier_is_unknown_not_a_definite_mismatch(value, quote, verdict):
+    r = req(property="lock_series", operator="any_of", value=["Maker A12 Series"])
+    c = claim("lock_series", value)
+    c.quote = quote
+    assert check([r], [c])[0].verdict == verdict
+
+
 def test_option_value_does_not_fail_an_unspecified_configuration():
     r = req(property="measurement", operator="lte", value=5, severity="major")
     c = claim("measurement", 10)

@@ -1,0 +1,958 @@
+{
+  "kind": "offline code re-comparison of preserved live quotes; not a new live run",
+  "input_run": "20261027-193336-2b2fea",
+  "checklist_id": "ck-4876841d748e4698bc1bdf55e9ddded7",
+  "before_finding": {
+    "id": "spec-087100-3.1.7.1",
+    "check": "spec",
+    "verdict": "fail",
+    "severity": "major",
+    "title": "Cylindrical lock series does not meet approval",
+    "detail": "Package states ND Series; allowed: Corbin CL3300 series, Schlage ND series, Sargent 10 line, LSDA-800 series.",
+    "why_it_matters": "The submitted ND Series cylindrical lock is not on the approved list \u2014 using it risks keying mismatches, maintenance issues, and rejection during installation.",
+    "requirement_id": "087100-3.1.7.1",
+    "claim_id": "cl-2",
+    "claim_ids": [
+      "cl-2"
+    ],
+    "highlights": [
+      {
+        "claim_id": "cl-2",
+        "doc_file": "uploads/u-dc1ff7be/schlage-nd.pdf",
+        "page": 11,
+        "quote": "ND Series",
+        "boxes": [
+          {
+            "x0": 0.8412,
+            "y0": 0.0193,
+            "x1": 0.9345,
+            "y1": 0.0448
+          }
+        ],
+        "kind": "problem"
+      }
+    ],
+    "compare": {
+      "left_label": "Spec requires",
+      "left_value": [
+        "Corbin CL3300 series",
+        "Schlage ND series",
+        "Sargent 10 line",
+        "LSDA-800 series"
+      ],
+      "right_label": "Submitted",
+      "right_value": "ND Series",
+      "verdict": "fail",
+      "rows": []
+    },
+    "spec_ref": "08 71 00 3.1.7.1",
+    "evidence": [],
+    "quote": null,
+    "decided_by": "code",
+    "fix": {
+      "head": "No passing replacement found",
+      "query": "ND Series manufacturer product data sheet cylindrical lock series ['Corbin CL3300 series', 'Schlage ND series', 'Sargent 10 line', 'LSDA-800 series']",
+      "candidates": [
+        {
+          "name": "Schlage ND Series Guide|American Locksets",
+          "source_url": "https://www.americanlocksets.com/schlage-nd-series-guide",
+          "documents": [
+            {
+              "url": "https://www.americanlocksets.com/schlage-nd-series-guide",
+              "tier": "distributor",
+              "title": "https://www.americanlocksets.com/schlage-nd-series-guide",
+              "retrieved_at": "2026-10-27T19:34:46+00:00",
+              "sha256": "7650ed2f10179cfe41aa1d8986261e787a759be62defa4c943cfed9338fdb5d1",
+              "excerpt": "![usa](/Themes/DefaultClean/Content/images/design/general/flag.png) Trusted Since 2001\n\n![](/Themes/DefaultClean/Content/images/design/common/ups.svg)\n\nFree Shipping On All Orders $450 And Up\n\nSame Day Shipping\n\nExpedited delivery available\n\n[![American Locksets](https://americanlocksets.blob.core.windows.net/thumbs/0151389_logo (1).svg)](/)\n\n[Log in](/login?returnUrl=%2Fschlage-nd-series-guide)  ",
+              "archived_path": null,
+              "cache_hit": false
+            },
+            {
+              "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+              "tier": "distributor",
+              "title": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+              "retrieved_at": "2026-10-27T19:19:14+00:00",
+              "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+              "excerpt": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks Beyond Grade 1 performance is the hallmark of the mechanical and electrified ND Series locks. These locks are put through extreme levels of testing and are proven to withstand 3,100 in-lb. of abusive lever torque-more than 2-1/2 times the Grade 1 standard requirement. Offset lever pull testing up to 1,600 lbs. assures you of the l",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            {
+              "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+              "tier": "distributor",
+              "title": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+              "retrieved_at": "2026-10-27T19:18:36+00:00",
+              "sha256": "0834327d8a8f42e7e27e2890b5009180a7d604ba674f528cb83f584c82df2a5f",
+              "excerpt": "Commercial.Schlage.com ND Series Electrified Cylindrical Lock Overview Features & Benefits Many of the most advanced electronic access control systems still rely on the strength and functionality of the mechanical lock hardware on the door. ND Series electrified locks feature Schlage's most robust cylindrical design built for performance, security and durability. It is a \"beyond grade 1\" lock in t",
+              "archived_path": null,
+              "cache_hit": true
+            }
+          ],
+          "checks": [
+            {
+              "label": "warranty start date",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "labor warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "door closer warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.2",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "exit device warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.3",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "mortise lockset warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.4",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "cylindrical lockset warranty years",
+              "check": "spec",
+              "ok": true,
+              "note": "10 years",
+              "requirement_id": "087100-1.7.2.5",
+              "claim_ids": [
+                "cl-3"
+              ],
+              "evidence": [
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor",
+                  "title": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "retrieved_at": "2026-10-27T19:19:14+00:00",
+                  "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                  "excerpt": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "archived_path": null,
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "power operator electronics warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.6",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "power operator mechanical warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.6b",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "electrified lockset electronics warranty years",
+              "check": "spec",
+              "ok": true,
+              "note": "3 years",
+              "requirement_id": "087100-1.7.2.7",
+              "claim_ids": [
+                "cl-5"
+              ],
+              "evidence": [
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor",
+                  "title": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "retrieved_at": "2026-10-27T19:19:14+00:00",
+                  "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                  "excerpt": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "archived_path": null,
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "electrified lockset mechanical warranty years",
+              "check": "spec",
+              "ok": true,
+              "note": "10 years",
+              "requirement_id": "087100-1.7.2.7b",
+              "claim_ids": [
+                "cl-4"
+              ],
+              "evidence": [
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor",
+                  "title": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "retrieved_at": "2026-10-27T19:19:14+00:00",
+                  "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                  "excerpt": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "archived_path": null,
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "other electrified hardware warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.8",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "other mechanical hardware warranty years",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-1.7.2.9",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "standard csa",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-2.3.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "grade",
+              "check": "spec",
+              "ok": true,
+              "note": "Grade 1",
+              "requirement_id": "087100-2.3.2",
+              "claim_ids": [
+                "clm-1"
+              ],
+              "evidence": [
+                {
+                  "url": "https://www.americanlocksets.com/schlage-nd-series-guide",
+                  "tier": "distributor",
+                  "title": "https://www.americanlocksets.com/schlage-nd-series-guide",
+                  "retrieved_at": "2026-10-27T19:34:46+00:00",
+                  "sha256": "7650ed2f10179cfe41aa1d8986261e787a759be62defa4c943cfed9338fdb5d1",
+                  "excerpt": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+                  "archived_path": null,
+                  "cache_hit": false
+                }
+              ]
+            },
+            {
+              "label": "lock cylinder manufacturer",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.1.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "hinge manufacturer",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.2.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "pivot manufacturer",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.3.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "door stop manufacturer",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.4.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "flush bolt manufacturer",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.5.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "mortise lock series",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.6.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "cylindrical lock series",
+              "check": "spec",
+              "ok": true,
+              "note": "ND Series",
+              "requirement_id": "087100-3.1.7.1",
+              "claim_ids": [
+                "clm-2"
+              ],
+              "evidence": [
+                {
+                  "url": "https://www.americanlocksets.com/schlage-nd-series-guide",
+                  "tier": "distributor",
+                  "title": "https://www.americanlocksets.com/schlage-nd-series-guide",
+                  "retrieved_at": "2026-10-27T19:34:46+00:00",
+                  "sha256": "7650ed2f10179cfe41aa1d8986261e787a759be62defa4c943cfed9338fdb5d1",
+                  "excerpt": "Schlage ND Series",
+                  "archived_path": null,
+                  "cache_hit": false
+                }
+              ]
+            },
+            {
+              "label": "push button code lock model",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.8.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "alarm lock model",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.9.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "panic bar style models",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.9.2",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "mortise deadbolt model",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.10.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "cylindrical deadbolt model",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.10.2",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "magnetic lock allowed",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.11.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "magnetic lock model if used",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.11.2",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "exit device model",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.12.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "door closer model",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "087100-3.1.13.1",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Cut Sheet",
+                  "retrieved_at": "2026-10-27T19:19:14+00:00",
+                  "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                  "excerpt": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "archived_path": null,
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ],
+          "claims": [
+            {
+              "id": "clm-2",
+              "product": "Schlage ND Series",
+              "manufacturer": "Allegion",
+              "model": "ND Series",
+              "property": "cylindrical_lock_series",
+              "value": "ND Series",
+              "unit": null,
+              "page": 1,
+              "bbox": null,
+              "quote": "Schlage ND Series",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Schlage ND Series",
+              "selection_quote": null
+            },
+            {
+              "id": "clm-1",
+              "product": "Schlage ND Series",
+              "manufacturer": "Allegion",
+              "model": "ND Series",
+              "property": "grade",
+              "value": "Grade 1",
+              "unit": null,
+              "page": 1,
+              "bbox": null,
+              "quote": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-3",
+              "product": "Schlage ND Series Electrified Cylindrical Lock",
+              "manufacturer": "Allegion plc",
+              "model": "ND Series",
+              "property": "cylindrical_lockset_warranty_years",
+              "value": 10,
+              "unit": "years",
+              "page": 2,
+              "bbox": null,
+              "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Warranty 10 years mechanical, 3 year wired electrified",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-4",
+              "product": "Schlage ND Series Electrified Cylindrical Lock",
+              "manufacturer": "Allegion plc",
+              "model": "ND Series",
+              "property": "electrified_lockset_mechanical_warranty_years",
+              "value": 10,
+              "unit": "years",
+              "page": 2,
+              "bbox": null,
+              "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Warranty 10 years mechanical, 3 year wired electrified",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-5",
+              "product": "Schlage ND Series Electrified Cylindrical Lock",
+              "manufacturer": "Allegion plc",
+              "model": "ND Series",
+              "property": "electrified_lockset_electronics_warranty_years",
+              "value": 3,
+              "unit": "years",
+              "page": 2,
+              "bbox": null,
+              "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Warranty 10 years mechanical, 3 year wired electrified",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-10",
+              "product": "Schlage ND Series Electrified Cylindrical Lock",
+              "manufacturer": "Allegion plc",
+              "model": "ND Series",
+              "property": "service_temp_max_f",
+              "value": 120,
+              "unit": "\u00b0F",
+              "page": 3,
+              "bbox": null,
+              "quote": "Operating temperature Maximum +120\u00b0F (+49\u00b0C) Minimum 32\u00b0F (0\u00b0C)",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Operating temperature Maximum +120\u00b0F (+49\u00b0C) Minimum 32\u00b0F (0\u00b0C)",
+              "selection_quote": null
+            }
+          ],
+          "selection": null,
+          "document_roles": [
+            "product_data"
+          ],
+          "extracted": {
+            "product": "Schlage ND Series",
+            "manufacturer": "Schlage",
+            "model": "ND Series",
+            "selection": null,
+            "family": null,
+            "family_quote": null,
+            "document_revision": null,
+            "claims": [
+              {
+                "id": "clm-2",
+                "product": "Schlage ND Series",
+                "manufacturer": "Allegion",
+                "model": "ND Series",
+                "property": "cylindrical_lock_series",
+                "value": "ND Series",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "Schlage ND Series",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Schlage ND Series",
+                "selection_quote": null
+              },
+              {
+                "id": "clm-1",
+                "product": "Schlage ND Series",
+                "manufacturer": "Allegion",
+                "model": "ND Series",
+                "property": "grade",
+                "value": "Grade 1",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-3",
+                "product": "Schlage ND Series Electrified Cylindrical Lock",
+                "manufacturer": "Allegion plc",
+                "model": "ND Series",
+                "property": "cylindrical_lockset_warranty_years",
+                "value": 10,
+                "unit": "years",
+                "page": 2,
+                "bbox": null,
+                "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-4",
+                "product": "Schlage ND Series Electrified Cylindrical Lock",
+                "manufacturer": "Allegion plc",
+                "model": "ND Series",
+                "property": "electrified_lockset_mechanical_warranty_years",
+                "value": 10,
+                "unit": "years",
+                "page": 2,
+                "bbox": null,
+                "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-5",
+                "product": "Schlage ND Series Electrified Cylindrical Lock",
+                "manufacturer": "Allegion plc",
+                "model": "ND Series",
+                "property": "electrified_lockset_electronics_warranty_years",
+                "value": 3,
+                "unit": "years",
+                "page": 2,
+                "bbox": null,
+                "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-10",
+                "product": "Schlage ND Series Electrified Cylindrical Lock",
+                "manufacturer": "Allegion plc",
+                "model": "ND Series",
+                "property": "service_temp_max_f",
+                "value": 120,
+                "unit": "\u00b0F",
+                "page": 3,
+                "bbox": null,
+                "quote": "Operating temperature Maximum +120\u00b0F (+49\u00b0C) Minimum 32\u00b0F (0\u00b0C)",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Operating temperature Maximum +120\u00b0F (+49\u00b0C) Minimum 32\u00b0F (0\u00b0C)",
+                "selection_quote": null
+              }
+            ]
+          },
+          "verification": {
+            "submitted": {
+              "product": "Schlage ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "selection": null,
+              "family": null,
+              "family_quote": null,
+              "document_revision": null,
+              "claims": [
+                {
+                  "id": "clm-2",
+                  "product": "Schlage ND Series",
+                  "manufacturer": "Allegion",
+                  "model": "ND Series",
+                  "property": "cylindrical_lock_series",
+                  "value": "ND Series",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Schlage ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Schlage ND Series",
+                  "selection_quote": null
+                },
+                {
+                  "id": "clm-1",
+                  "product": "Schlage ND Series",
+                  "manufacturer": "Allegion",
+                  "model": "ND Series",
+                  "property": "grade",
+                  "value": "Grade 1",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "The Schlage ND Series is a Grade 1 commercial cylindrical lever lock certified to ANSI/BHMA A156.2.",
+                  "selection_quote": null
+                }
+              ]
+            },
+            "output": {
+              "status": "unknown",
+              "replacement": null,
+              "current_revision": null,
+              "status_date": null,
+              "status_quote": null,
+              "status_family": null,
+              "current_values": [
+                {
+                  "property": "cylindrical_lock_series",
+                  "value": "ND Series",
+                  "unit": null,
+                  "quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "Grade 1",
+                  "unit": null,
+                  "quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_series",
+                  "value": "ND Series",
+                  "unit": null,
+                  "quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "Grade 1",
+                  "unit": null,
+                  "quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_series",
+                  "value": "ND Series",
+                  "unit": null,
+                  "quote": "Grade 1 Cylindrical Locks ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Grade 1 Cylindrical Locks ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks ND Series",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "Grade 1",
+                  "unit": null,
+                  "quote": "All ND Series comply with A156.2-2011, Series 4000 Grade 1 cylindrical locks",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Grade 1 Cylindrical Locks ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "All ND Series comply with A156.2-2011, Series 4000 Grade 1 cylindrical locks",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_series",
+                  "value": "ND Series",
+                  "unit": null,
+                  "quote": "ND Series",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": "ND Series",
+                  "scope": "product_wide",
+                  "scope_quote": "ANSI/BHMA Grade 1 certified\n27 mechanical, cylindrical functions plus eight that feature Vandlgard\u00ae locked lever protection (see catalog for more details)\nThree electrified functions also available (see data sheet for more details)",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "Grade 1",
+                  "unit": null,
+                  "quote": "ANSI/BHMA Grade 1 certified",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": "ANSI/BHMA Grade 1 certified",
+                  "scope": "product_wide",
+                  "scope_quote": "ANSI/BHMA Grade 1 certified\n27 mechanical, cylindrical functions plus eight that feature Vandlgard\u00ae locked lever protection (see catalog for more details)\nThree electrified functions also available (see data sheet for more details)",
+                  "selection_quote": null
+                }
+              ],
+              "source_urls": [
+                "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf"
+              ],
+              "notes": null
+            },
+            "sources": [
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Electrified Data Sheet",
+                "retrieved_at": "2026-10-27T19:18:36+00:00",
+                "sha256": "0834327d8a8f42e7e27e2890b5009180a7d604ba674f528cb83f584c82df2a5f",
+                "excerpt": "Commercial.Schlage.com ND Series Electrified Cylindrical Lock Overview Features & Benefits Many of the most advanced electronic access control systems still rely on the strength and functionality of the mechanical lock hardware on the door. ND Series electrified locks feature Schlage's most robust cylindrical design built for performance, security and durability. It is a \"beyond grade 1\" lock in t",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Mechanical Data Sheet",
+                "retrieved_at": "2026-10-27T19:18:37+00:00",
+                "sha256": "c63d522b8a6235fae71cacb4b6bc9d42d2b0338cce522587568787015b5d519a",
+                "excerpt": "Commercial.Schlage.com\nND Series\nGrade 1 \nCylindrical Locks\nOverview\nFeatures & Benefits\nStrength and durability are more than numbers, you can actually feel it in \nthe lock. ND Series locks significantly exceed BHMA testing requirements. \nSo, whether your application calls for high abuse resistance or just reliable \noperation over millions of cycles, you can be confident ND Series locks will \nlas",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Mechanical Data Sheet",
+                "retrieved_at": "2026-10-27T19:18:36+00:00",
+                "sha256": "d9aaff8597cd064392677fa987ee00490ced26787d255fe5f2dc5ec7a48166f2",
+                "excerpt": "Commercial.Schlage.com ND Series Grade 1 Cylindrical Locks Overview Features & Benefits Strength and durability are more than numbers, you can actually feel it in the lock. ND Series locks significantly exceed BHMA testing requirements. So, whether your application calls for high abuse resistance or just reliable operation over millions of cycles, you can be confident ND Series locks will last and",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Mechanical Data Sheet",
+                "retrieved_at": "2026-10-27T19:27:57+00:00",
+                "sha256": "d9aaff8597cd064392677fa987ee00490ced26787d255fe5f2dc5ec7a48166f2",
+                "excerpt": "Commercial.Schlage.com ND Series Grade 1 Cylindrical Locks Overview Features & Benefits Strength and durability are more than numbers, you can actually feel it in the lock. ND Series locks significantly exceed BHMA testing requirements. So, whether your application calls for high abuse resistance or just reliable operation over millions of cycles, you can be confident ND Series locks will last and",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Cut Sheet",
+                "retrieved_at": "2026-10-27T19:19:14+00:00",
+                "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                "excerpt": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks Beyond Grade 1 performance is the hallmark of the mechanical and electrified ND Series locks. These locks are put through extreme levels of testing and are proven to withstand 3,100 in-lb. of abusive lever torque-more than 2-1/2 times the Grade 1 standard requirement. Offset lever pull testing up to 1,600 lbs. assures you of the l",
+                "archived_path": null,
+                "cache_hit": true
+              }
+            ]
+          },
+          "page_sources": {
+            "1": {
+              "url": "https://www.americanlocksets.com/schlage-nd-series-guide",
+              "tier": "distributor",
+              "title": "https://www.americanlocksets.com/schlage-nd-series-guide",
+              "retrieved_at": "2026-10-27T19:34:46+00:00",
+              "sha256": "7650ed2f10179cfe41aa1d8986261e787a759be62defa4c943cfed9338fdb5d1",
+              "excerpt": "![usa](/Themes/DefaultClean/Content/images/design/general/flag.png) Trusted Since 2001\n\n![](/Themes/DefaultClean/Content/images/design/common/ups.svg)\n\nFree Shipping On All Orders $450 And Up\n\nSame Day Shipping\n\nExpedited delivery available\n\n[![American Locksets](https://americanlocksets.blob.core.windows.net/thumbs/0151389_logo (1).svg)](/)\n\n[Log in](/login?returnUrl=%2Fschlage-nd-series-guide)  ",
+              "archived_path": null,
+              "cache_hit": false
+            },
+            "2": {
+              "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+              "tier": "distributor",
+              "title": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+              "retrieved_at": "2026-10-27T19:19:14+00:00",
+              "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+              "excerpt": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks Beyond Grade 1 performance is the hallmark of the mechanical and electrified ND Series locks. These locks are put through extreme levels of testing and are proven to withstand 3,100 in-lb. of abusive lever torque-more than 2-1/2 times the Grade 1 standard requirement. Offset lever pull testing up to 1,600 lbs. assures you of the l",
+              "archived_path": null,
+              "cache_hit": true
+            },
+            "3": {
+              "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+              "tier": "distributor",
+              "title": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+              "retrieved_at": "2026-10-27T19:18:36+00:00",
+              "sha256": "0834327d8a8f42e7e27e2890b5009180a7d604ba674f528cb83f584c82df2a5f",
+              "excerpt": "Commercial.Schlage.com ND Series Electrified Cylindrical Lock Overview Features & Benefits Many of the most advanced electronic access control systems still rely on the strength and functionality of the mechanical lock hardware on the door. ND Series electrified locks feature Schlage's most robust cylindrical design built for performance, security and durability. It is a \"beyond grade 1\" lock in t",
+              "archived_path": null,
+              "cache_hit": true
+            }
+          },
+          "passes": false
+        }
+      ],
+      "suggest": ""
+    }
+  },
+  "after_finding": {
+    "id": "spec-087100-3.1.7.1",
+    "check": "spec",
+    "verdict": "unverified",
+    "severity": "minor",
+    "title": "Couldn't compare: cylindrical lock series",
+    "detail": "Package states ND Series; allowed: Corbin CL3300 series, Schlage ND series, Sargent 10 line, LSDA-800 series.",
+    "why_it_matters": null,
+    "requirement_id": "087100-3.1.7.1",
+    "claim_id": "cl-2",
+    "claim_ids": [
+      "cl-2"
+    ],
+    "highlights": [],
+    "compare": {
+      "left_label": "Spec requires",
+      "left_value": [
+        "Corbin CL3300 series",
+        "Schlage ND series",
+        "Sargent 10 line",
+        "LSDA-800 series"
+      ],
+      "right_label": "Submitted",
+      "right_value": "ND Series",
+      "verdict": "unverified",
+      "rows": []
+    },
+    "spec_ref": "08 71 00 3.1.7.1",
+    "evidence": [],
+    "quote": null,
+    "decided_by": "code",
+    "fix": null
+  },
+  "before_decision": "send_back",
+  "after_decision": "approve_with_note",
+  "fresh_usd": 0,
+  "fresh_credits": 0
+}

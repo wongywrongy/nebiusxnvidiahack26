@@ -24,6 +24,7 @@ Token Factory credits do not establish a separate AI Cloud grant.
   accuracy benchmark. No passing live replacement or Investigator rescue is claimed.
 - At `574299b`: **723 Python tests passed, 2 skipped**; web production build clean; current raw mock
   panel **6/8, 5/6, 0/2, 0/5**. Mock results are fixture answers and incur no provider spend.
+- Latest follow-up: **748 Python tests passed, 2 skipped**, build clean and raw mock panel unchanged. Live evidence and the offline partial-identifier correction are recorded in [docs/playground](docs/playground/README.md).
 - Playground checks on October 27: **741 Python tests passed, 2 skipped; 12 Chromium journeys passed; presentation checks and production build passed**. The raw mock panel remains unchanged. Draft generation in the browser regression is synthetic, and all provider-adapter tests use intercepted HTTP.
 - [GitHub Actions checks for `40df685`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40562321396) passed, including the mock browser job. PR #13 remains draft: local a–c completed, d hit two provider timeouts, e is pending. [Evidence](docs/playground/README.md).
 - Local image `speccheck:playground-40df685` built with all 13 locked PDFs and the recorded replay.

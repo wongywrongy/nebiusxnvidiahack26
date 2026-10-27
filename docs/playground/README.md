@@ -16,7 +16,7 @@ The historical one-credit Tavily hold was settled at its reserved amount by owne
 
 Final local quality profile: `MAX_OUTPUT_TOKENS=65536`, `FIX_MAX_CANDIDATES=1`, concurrency 2; day/run USD cap 2, daily Tavily cap 150. Local validation uses 60 upload admissions/hour for repeated checks; this does not change the production default.
 
-The successful BYO run returned **valid**, with no diagnostics and five matched rules out of 30. Nemotron drafted 33 rows; three were removed to meet the save limit. The unreviewed named-series rule flags `ND Series` against branded allowed identifiers; that literal comparison is a draft-quality limitation, not a claim that the paired Schlage product violates the original UBC specification.
+The successful BYO run returned **valid**, with no diagnostics and five matched rules out of 30. Nemotron drafted 33 rows; three were removed to meet the save limit. The recorded result flags `ND Series` against a branded allowed identifier. A subsequent general code fix keeps a bare partial identifier **unverified**, rather than asserting a different product. [Offline re-comparison of the preserved actual quotes](categorical-recheck.json) yields `approve_with_note`; this is not a new live run, and fresh c verification is pending with the other paid checks. Unreviewed drafts still require human review.
 
 Fixes discovered live: consistent printed claim identity instructions; product documents preferred over broad price books; native tool calls reserve a finishing slot even for parallel requests. Hard quote, option, spend and decision gates remain active. No passing replacement or Investigator rescue is claimed.
 
@@ -26,6 +26,6 @@ Review/Outcome screenshots for a–c were recaptured by reopening their actual s
 
 [PDF download verification](pdf-links.json): all five links returned plain HTTPS PDFs under 15 MB with extractable page-one text, including UBC (7 pages) and Schlage (14 pages). Raw PDFs remain outside Git.
 
-Regression: **745 passed / 2 skipped**, production build clean; raw mock panel **6/8, 5/6, 0/2, 0/5**, zero fresh provider charges. No eight-case live evaluation was run.
+Regression: **748 passed / 2 skipped**, production build clean; raw mock panel **6/8, 5/6, 0/2, 0/5**, zero fresh provider charges. No eight-case live evaluation was run.
 
 Cloud preparation: Nebius CLI authenticated, selected eu-north1 project; no endpoint, registry or filesystem has been created. Existing GHCR package is publicly readable; final local-image publishing awaits GitHub package-write authorization. No public deployment or cloud job is claimed.

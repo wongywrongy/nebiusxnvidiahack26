@@ -240,6 +240,9 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             allowed = _as_list(r.value)
             ok = any(_mentions(h, a) or (_mentions(a, h) and _mentions(c.quote or "", a))
                      for c in found for h in _as_list(c.value) for a in allowed)
+            if not ok and any(_mentions(a, h) and _text(c.quote or "") == _text(h)
+                              for c in found for h in _as_list(c.value) for a in allowed):
+                ok = None  # A bare partial identifier cannot establish a different named product or listing.
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:
