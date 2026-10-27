@@ -26,7 +26,7 @@ from .. import archive, cache, readiness
 from ..providers import ProviderError, budget, failure_reason
 from ..providers.budget import BudgetExceeded
 from ..schemas import Diagnostic, Event, Investigation, ReportOut, Requirement, Result, Usage
-from . import decide, extract, fix, metrics, spec_check, verify
+from . import checklists, decide, extract, fix, metrics, spec_check, verify
 from .cases import all_specs, get_case
 from .ingest import load_spec_text, load_submittal_pages, submittal_pdfs
 from .render import attach_highlights
@@ -125,7 +125,6 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
         t0 = time.perf_counter()
         queue_ms = int((t0 - run._t0) * 1000)
         stage = "ingest"
-        spec = all_specs()[case["section"]]
         fx = case.get("fixture", case_id)  # which recorded answers mock mode uses; None for an unknown upload
         try:
             run.emit("ingest", "Reading the pages", case_id)
@@ -143,40 +142,54 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
 
             run.emit("extract", "Comparing to the spec", case_id, settings.models["extract"])
             stage = "extract"
-            spec_text = await load_spec_text(case["section"], spec)
-            reqs, u = await extract.requirements_for(case["section"], spec_text)
-            if u:
-                usage.append(u)
-            # Project-specific conditions (e.g. "penetrant is steel pipe") come from the case cover sheet.
-            requirements = reqs.requirements + [Requirement(**c) for c in case.get("conditions", [])]
-            skip = set(case.get("not_applicable", []))
-            requirements = [r for r in requirements if r.property not in skip]
+            if case.get("checklist_id"):
+                if not case.get("upload"):
+                    raise ValueError("Draft checklists can only be used for uploaded PDFs")
+                reqs = checklists.load_upload(case["checklist_id"])
+                spec = {"title": reqs.title}
+                requirements = reqs.requirements
+                case = {**case, "section": reqs.section, "conditions": [], "not_applicable": [], "manufacturer_domains": []}
+            else:
+                spec = all_specs()[case["section"]]
+                spec_text = await load_spec_text(case["section"], spec)
+                reqs, u = await extract.requirements_for(case["section"], spec_text)
+                if u:
+                    usage.append(u)
+                # Project-specific conditions come from the case cover sheet, never a public draft.
+                requirements = reqs.requirements + [Requirement(**c) for c in case.get("conditions", [])]
+                skip = set(case.get("not_applicable", []))
+                requirements = [r for r in requirements if r.property not in skip]
             props = spec_check.properties_for(requirements)
             claims, u = await extract.extract_claims(fx, pages, labels, props)
             usage += u
 
-            run.emit("spec_check", "Checking each requirement", case_id, "code")
             stage = "spec_check"
             roles = {d["role"] for d in case["submittal"]} | {p.kind for p in labels.pages}
             findings = spec_check.check(requirements, claims.claims, roles)
+            matched = sum(bool(f.claim_ids or f.claim_id) for f in findings)
+            run.emit("spec_check", f"Checked against {case['section']}: {matched} of {len(requirements)} rules matched",
+                     case_id, "code", data={"section": case["section"], "title": spec["title"],
+                                           "rules": len(requirements), "matched": matched,
+                                           "checklist_id": case.get("checklist_id")})
             await run.pause()
 
-            tally = {v: sum(f.verdict == v for f in findings) for v in ("pass", "fail", "unverified")}
-            run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
-                     data={"spec": tally})
-            try:
-                stage = "verify"
-                verification = []
-                vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating, on_warning=warn,
-                                                              on_proof=verification.append)
-                usage += u
-                if inv is not None:
-                    investigations.append(inv)
-            except (BudgetExceeded, ProviderError) as e:
-                await warn("verify", failure_reason(e))
-                vf, rows, credits = [verify.unconfirmed(failure_reason(e))], [], run.ledger.credits.get(case_id, 0.0)
-            findings += vf
-            await run.pause()
+            vf, rows, credits, verification = [], [], 0.0, []
+            if decide.decide(findings) != "not_applicable":
+                tally = {v: sum(f.verdict == v for f in findings) for v in ("pass", "fail", "unverified")}
+                run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
+                         data={"spec": tally})
+                try:
+                    stage = "verify"
+                    vf, rows, u, credits, inv = await verify.verify(case, claims, on_step=investigating, on_warning=warn,
+                                                                  on_proof=verification.append)
+                    usage += u
+                    if inv is not None:
+                        investigations.append(inv)
+                except (BudgetExceeded, ProviderError) as e:
+                    await warn("verify", failure_reason(e))
+                    vf, rows, credits = [verify.unconfirmed(failure_reason(e))], [], run.ledger.credits.get(case_id, 0.0)
+                findings += vf
+                await run.pause()
 
             decision = decide.decide(findings)
             ev = next((f.evidence for f in vf if f.evidence), [])
@@ -231,6 +244,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 diagnostics.append(Diagnostic(stage="accounting", kind="provider", message=reason))
             result = Result(
                 case_id=case_id, title=case["title"], decision=decision, summary=rep.summary, findings=findings,
+                spec_section=case["section"], spec_title=spec["title"], spec_rule_count=len(requirements),
+                spec_match_count=matched, checklist_id=case.get("checklist_id"),
                 comparison=rows, claims=claims.claims, selection=claims.selection, document_revision=claims.document_revision,
                 document_roles=sorted(roles),
                 extracted=claims, verification=verification[0] if verification else None,

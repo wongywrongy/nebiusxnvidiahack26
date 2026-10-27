@@ -16,6 +16,10 @@ FLAGGED = ("fail", "outdated")
 
 
 def decide(findings: list[Finding]) -> Decision:
+    requirements = [f for f in findings if f.requirement_id]
+    if requirements and all(not f.claim_ids and not f.claim_id and f.verdict in
+                            ("unverified", "pending", "not_applicable") for f in requirements):
+        return "not_applicable"
     active = [f for f in findings if f.verdict in FLAGGED]
     if any(f.severity in ("critical", "major") for f in active):
         return "send_back"
@@ -39,6 +43,7 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
                     "Respect each coded verdict: unverified or not stated means missing evidence, not a failed requirement. "
                     "Different revision labels alone do not establish which document is newer. "
                     "Do not infer safety or code violations from a documentation difference.\n\n"
+                    + ("This document has no matched checklist values. Write one short sentence saying it does not match this spec; do not approve or reject it.\n" if decision == "not_applicable" else "")
                     + json.dumps({"submittal": title, "decision": decision,
                                   "issues": [{**f.model_dump(include={"id", "title", "detail", "spec_ref", "verdict", "severity"}),
                                               "suggested_fix": f.fix.suggest if f.fix else None} for f in issues]})
@@ -55,8 +60,9 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
     # Verdict and coverage statements are templates: generated prose cannot broaden the review.
     lead = {"approve": "The checked product data can be approved.",
             "approve_with_note": "The product data can be approved with the clarification notes below.",
-            "send_back": "Revise and resubmit to address the findings below."}[decision]
-    if any(f.verdict == "pending" for f in findings):
+            "send_back": "Revise and resubmit to address the findings below.",
+            "not_applicable": "This document does not match this spec; pick a different spec in the Inbox."}[decision]
+    if decision != "not_applicable" and any(f.verdict == "pending" for f in findings):
         lead += " Assembly proof remains pending; confirm the listed assembly separately."
     if settings.live or case_id is not None:
         out.summary = lead
@@ -64,4 +70,7 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
         details += [f.fix.suggest for f in findings if f.fix and any(
             c.passes and c.selection and c.selection.origin == "agent_proposal" for c in f.fix.candidates)]
         out.note_to_subcontractor = lead + ("\n\n" + "\n".join(details) if details else "")
+    if decision == "not_applicable":
+        out.summary = lead + (" Mock mode has no recorded answers for this PDF." if not settings.live and case_id is None else "")
+        out.note_to_subcontractor = ""
     return out, [usage]

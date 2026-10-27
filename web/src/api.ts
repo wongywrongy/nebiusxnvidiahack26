@@ -1,6 +1,6 @@
 // Types mirror api/schemas.py. Keep them in sync by hand (small surface).
 
-export type Decision = 'approve' | 'approve_with_note' | 'send_back'
+export type Decision = 'approve' | 'approve_with_note' | 'send_back' | 'not_applicable'
 export type Stage =
   | 'queued' | 'ingest' | 'triage' | 'extract' | 'spec_check' | 'verify' | 'investigate' | 'fix' | 'report' | 'done' | 'error'
 
@@ -9,15 +9,18 @@ export interface Case {
   id: string; number?: string; title: string; product?: string; from?: string; trade?: string; email?: string
   section: string; received?: string; watch?: { approved: string }; submittal: { role?: string; file: string; url?: string }[]
   pages: number; upload: boolean; ready: boolean
+  checklist_id?: string; scanned_at?: string
 }
 export interface Sender { from: string; trade?: string; email?: string; items: Case[] }
+export interface TryDocument { title: string; kind: 'spec' | 'product'; url: string; fits: string }
 export interface Project {
-  name: string; specs: { section: string; owner: string }[]; tray: Sender[]; watched: Case[]
+  name: string; specs: { section: string; owner: string; title: string }[]; tray: Sender[]; watched: Case[]
   // mock: recorded answers, no API calls (token counts estimated). live: Token Factory and Tavily, cached after the first run.
   mode: 'mock' | 'live'
   // Nightly re-check of approved items (scripts/recheck.py, run as a Nebius Serverless Job): when it last ran, if ever.
   recheck?: Recheck | null
   jobs_available?: boolean
+  try?: TryDocument[]
 }
 export interface Recheck {
   mode: 'mock' | 'live'; job_name?: string | null; duration_ms?: number | null
@@ -85,6 +88,8 @@ export interface Result {
   title: string
   decision: Decision
   summary: string
+  spec_section?: string | null; spec_title?: string | null; spec_rule_count?: number | null
+  spec_match_count?: number | null; checklist_id?: string | null
   findings: Finding[]
   comparison: CompareRow[]
   claims: Claim[]
@@ -114,14 +119,26 @@ export interface Requirement {
   unit?: string | null; severity: string; applies_to: string[]; text: string
 }
 export interface Checklist {
+  section: string; title: string
   requirements: Requirement[]; drafted_by?: string | null; source_name: string; source_url?: string | null
   source_sha256?: string | null; drafted_at?: string | null; reviewed_at?: string | null
+}
+export interface SavedChecklist { id: string; section: string; title: string; n: number }
+export async function saveChecklist(checklist: Checklist): Promise<SavedChecklist> {
+  return ok(await fetch('/api/checklists', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(checklist),
+  }))
+}
+export async function setUploadSpec(id: string, spec: string): Promise<Case> {
+  return ok(await fetch(`/api/inbox/${encodeURIComponent(id)}`, {
+    method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ spec }),
+  }))
 }
 export interface SpecSection {
   section: string; title: string; owner: string; control_version: string; source_url: string
   checklist: Checklist; status: 'reviewed' | 'saved' | 'fixture'; note: string; used_by_scans: 'mock' | 'live'
 }
-export interface Specs { mode: Project['mode']; sections: SpecSection[] }
+export interface Specs { mode: Project['mode']; sections: SpecSection[]; try?: TryDocument[] }
 export async function getSpecs(): Promise<Specs> { return ok(await fetch('/api/specs')) }
 export async function draftSpec(file: File, section: string, title: string): Promise<{ draft: Checklist; usage: Usage }> {
   return ok(await fetch(`/api/specs/draft?section=${encodeURIComponent(section)}&title=${encodeURIComponent(title)}&name=${encodeURIComponent(file.name)}`, {
@@ -176,7 +193,10 @@ export async function getProject(): Promise<Project> {
 }
 
 async function ok<T>(r: Response): Promise<T> {
-  if (!r.ok) throw new Error((await r.json().catch(() => null))?.detail ?? `Request failed (${r.status})`)
+  if (!r.ok) {
+    const detail = (await r.json().catch(() => null))?.detail
+    throw new Error(Array.isArray(detail) ? detail.map((d: { msg: string }) => d.msg).join('; ') : detail ?? `Request failed (${r.status})`)
+  }
   return r.json()
 }
 
@@ -242,9 +262,11 @@ export const DECISION_LABEL: Record<Decision, string> = {
   approve: 'Approve',
   approve_with_note: 'Approve with note',
   send_back: 'Send back',
+  not_applicable: "Doesn't match this spec",
 }
 export const DECISION_COLOR: Record<Decision, string> = {
   approve: '#2e9e68',
   approve_with_note: '#7fa7d9', // FYI blue: approved, with a note
   send_back: '#d9534f',
+  not_applicable: '#8b8f98',
 }

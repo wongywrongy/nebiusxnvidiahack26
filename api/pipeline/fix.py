@@ -65,6 +65,9 @@ def _query(group: str, case: dict, claims: ClaimsOut, flagged: list[Finding], re
     if group == "spec":
         where = case["title"].split(",", 1)[-1].strip()  # "steel pipe through gypsum wall"
         ids = {f.requirement_id for f in flagged}
+        if {r.section for r in requirements} != {"07 84 00"}:
+            needed = "; ".join(f"{spec_check._label(r.property)} {spec_check._wanted(r)}" for r in requirements if r.id in ids)
+            return f"{claims.product} manufacturer product data sheet {needed}"
         tail = "".join(f" {spec_check._label(r.property)} equals {spec_check._label(str(r.value))}"
                        for r in requirements if r.id in ids and r.operator == "eq_ref")
         return f"UL listed firestop system {_penetrant(case, claims)} {where}{tail}"
@@ -78,7 +81,8 @@ def _head(group: str, flagged: list[Finding], case: dict, claims: ClaimsOut, can
     if not ok:
         return "No passing replacement found"
     if group == "spec":
-        return f"Listed systems for {_penetrant(case, claims)}: {ok} of {len(cands)} pass"
+        return (f"Listed systems for {_penetrant(case, claims)}: {ok} of {len(cands)} pass" if case.get("section") == "07 84 00"
+                else f"Checked replacements: {ok} of {len(cands)} pass")
     if any(f.check == "status" for f in flagged):
         return f"Current {_category(case)} found and checked"
     return "Current sheet found and re-checked"

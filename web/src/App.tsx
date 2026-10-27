@@ -1,7 +1,7 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
   DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
-  streamEvents, uploadToInbox, archiveUrl, getJobs, getWatch, type CloudJob,
+  streamEvents, uploadToInbox, setUploadSpec, archiveUrl, getJobs, getWatch, type CloudJob, type SavedChecklist,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
   type Health, type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
@@ -14,13 +14,14 @@ const STEPS: [Step, string][] = [[1, 'Inbox'], [2, 'Scan'], [3, 'Review'], [4, '
 type Row = { stage: Stage; model: string | null; at?: string; reason?: string }
 // docs: page sizes of each downloaded PDF; null when one is missing, then text holds the recorded page text.
 type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null }
-type Act = 'return' | 'approve'
+type Act = 'return' | 'approve' | 'not_checked'
 type Call = { act: Act; message: string }
 
 type Session = {
   version: 1; step: Step; reached: Step; inbox: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>
   calls: Record<string, Call>; current: string | null; checks: Record<string, Row>; checked: Record<string, Result>
   requested: Record<string, boolean>; drafts: Record<string, string>; scanNote: string | null; checkNote: string | null
+  checklists: SavedChecklist[]
 }
 const SESSION_KEY = 'speccheck.session.v1'
 function readSession(): Partial<Session> {
@@ -29,6 +30,7 @@ function readSession(): Partial<Session> {
     const maps = ['rows', 'loaded', 'calls', 'checks', 'checked', 'requested', 'drafts']
     if (saved?.version !== 1 || ![1, 2, 3, 4].includes(saved.step) || ![1, 2, 3, 4].includes(saved.reached)
       || !Array.isArray(saved.inbox) || !saved.inbox.every((c: Case) => typeof c.id === 'string' && Array.isArray(c.submittal))
+      || (saved.checklists !== undefined && (!Array.isArray(saved.checklists) || !saved.checklists.every((c: SavedChecklist) => c && typeof c.id === 'string' && typeof c.section === 'string' && typeof c.title === 'string')))
       || maps.some((key) => !saved[key] || typeof saved[key] !== 'object' || Array.isArray(saved[key]))) return {}
     // shortcut: completed work survives reload; interrupted scans need Retry until SSE resumption is added.
     for (const [id, row] of Object.entries(saved.rows) as [string, Row][]) {
@@ -124,12 +126,14 @@ export default function App() {
   const [checks, setChecks] = useState<Record<string, Row>>(saved.checks ?? {}) // "Check approved now"
   const [checked, setChecked] = useState<Record<string, Result>>(saved.checked ?? {})
   const [requested, setRequested] = useState<Record<string, boolean>>(saved.requested ?? {}) // substitutions requested
+  const [checklists, setChecklists] = useState<SavedChecklist[]>(saved.checklists ?? [])
+  const [changingSpec, setChangingSpec] = useState(false)
 
   useEffect(() => {
-    const session: Session = { version: 1, step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote }
+    const session: Session = { version: 1, step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote, checklists }
     try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)) }
     catch { try { localStorage.removeItem(SESSION_KEY) } catch { /* storage may be disabled */ } }
-  }, [step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote])
+  }, [step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote, checklists])
   useEffect(() => () => { generation.current++; streams.current.forEach((close) => close()); streams.current.clear() }, [])
 
   useEffect(() => { getProject().then(setProject, () => setFailed(true)) }, [])
@@ -178,6 +182,7 @@ export default function App() {
     streams.current.forEach((close) => close()); streams.current.clear()
     setInbox([]); setRows({}); setLoaded({}); setCalls({}); setDrafts({}); setCurrent(null)
     setChecks({}); setChecked({}); setRequested({}); setScanNote(null); setCheckNote(null); setError(null)
+    setChecklists([])
     setReached(1); go(1)
     try { localStorage.removeItem(SESSION_KEY) } catch { /* storage may be disabled */ }
   }
@@ -226,6 +231,16 @@ export default function App() {
     } catch (e) { if (active === generation.current) setError((e as Error).message) }
   }
 
+  async function changeSpec(id: string, spec: string) {
+    const active = generation.current
+    setChangingSpec(true); setError(null)
+    try {
+      const updated = await setUploadSpec(id, spec)
+      if (active === generation.current) setInbox((items) => items.map((c) => c.id === id ? { ...c, ...updated, checklist_id: updated.checklist_id } : c))
+    } catch (e) { if (active === generation.current) setError((e as Error).message) }
+    finally { setChangingSpec(false) }
+  }
+
   const scanned = inbox.filter((c) => rows[c.id])
   const queue = scanned.filter((c) => loaded[c.id])
 
@@ -242,7 +257,7 @@ export default function App() {
     if (after) { setCurrent(after.id); window.scrollTo({ top: 0 }) } else go(4)
   }
 
-  const watchList = [...queue.filter((c) => calls[c.id]?.act === 'approve'), ...(project?.watched ?? [])]
+  const watchList = [...queue.filter((c) => loaded[c.id].result.decision !== 'not_applicable' && calls[c.id]?.act === 'approve'), ...(project?.watched ?? [])]
 
   async function checkApproved() {
     const active = generation.current
@@ -277,13 +292,14 @@ export default function App() {
       </header>
 
       <main className="mx-auto flex max-w-[1120px] flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
-        {secondary === '#specs' ? <SpecsPage back={STEPS[step - 1][1]} />
+        {secondary === '#specs' ? <SpecsPage back={STEPS[step - 1][1]} onUse={(checklist) => setChecklists((items) => [...items, checklist])} />
           : secondary === '#scoreboard' ? <ScoreboardPage back={STEPS[step - 1][1]} /> : null}
         <div hidden={secondary === '#specs' || secondary === '#scoreboard'}
           className={secondary === '#specs' || secondary === '#scoreboard' ? undefined : 'contents'}>
         {failed && <p className="text-muted">Couldn't load the project. Check that the API is running, then reload.</p>}
         {!failed && step === 1 && (
           <InboxStep project={project} health={health} inbox={inbox} rows={rows} error={error} onAdd={add} onUpload={upload}
+            checklists={checklists} changingSpec={changingSpec} onSpec={changeSpec}
             onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={() => startScan()} />
         )}
         {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error}
@@ -371,8 +387,9 @@ function TableRow({ cols, children }: { cols: string; children: ReactNode }) {
 
 // ---------- 1 · Inbox ----------
 
-function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRemove, onScan }: {
+function InboxStep({ project, health, inbox, rows, error, checklists, changingSpec, onSpec, onAdd, onUpload, onRemove, onScan }: {
   project: Project | null; health: Health | null; inbox: Case[]; rows: Record<string, Row>; error: string | null
+  checklists: SavedChecklist[]; changingSpec: boolean; onSpec: (id: string, spec: string) => void
   onAdd: (id: string) => void; onUpload: (f: File[]) => void; onRemove: (id: string) => void; onScan: () => void
 }) {
   const [over, setOver] = useState(false)
@@ -398,7 +415,7 @@ function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRem
   return (
     <>
       <Heading title="Inbox" count={project ? count : NBSP}>
-        <button className={PRIMARY} onClick={onScan} disabled={!fresh.length}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
+        <button className={PRIMARY} onClick={onScan} disabled={!fresh.length || changingSpec}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
       </Heading>
       {!inbox.length && <p className="-mt-3 max-w-3xl leading-6 text-muted">SpecCheck checks each submittal against the project spec and the manufacturer's current documents, then writes what to send back and what to forward.</p>}
       {project?.mode === 'mock' && <p className="-mt-3 text-xs text-muted">Mock mode uses fixture answers. No model calls, live web checks or credits spent.</p>}
@@ -420,6 +437,14 @@ function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRem
                   <span className="flex min-w-0 flex-col">
                     <span className="truncate font-mono text-xs text-ink" title={fileName(c)}>{fileName(c)}</span>
                     <span className="text-xs text-muted">{plural(c.pages, 'page')}</span>
+                    {c.upload && <label className="mt-1 flex min-w-0 flex-col gap-1 text-xs text-muted">Check against
+                      <select aria-label={`Spec for ${fileName(c)}`} value={c.checklist_id ?? c.section}
+                        onChange={(e) => onSpec(c.id, e.target.value)} disabled={!!rows[c.id] || !!c.scanned_at || changingSpec}
+                        className="w-full min-w-0 rounded-md border border-edge bg-well px-2 py-1 text-ink disabled:opacity-50">
+                        {project?.specs.map((s) => <option key={s.section} value={s.section}>{s.title} {s.section}</option>)}
+                        {checklists.map((s) => <option key={s.id} value={s.id}>{s.section} {s.title} · unreviewed draft</option>)}
+                      </select>
+                    </label>}
                   </span>
                   <span className="text-xs text-muted">{c.received}</span>
                   {rows[c.id]
@@ -444,6 +469,16 @@ function InboxStep({ project, health, inbox, rows, error, onAdd, onUpload, onRem
         )}
         {error && <p className="border-t border-line px-4 py-3 text-bad" role="alert">{error}</p>}
       </section>
+
+      {!inbox.some((c) => c.upload) && <div className="flex flex-col gap-2 text-muted">
+        <p>No submittals handy? Try one:</p>
+        <ul className="flex flex-col gap-1 text-xs">
+          {project?.try?.filter((d) => d.kind === 'product').map((d) => <li key={d.url}>
+            <a href={d.url} target="_blank" rel="noreferrer" className="underline underline-offset-4 hover:text-ink">{d.title} ↗</a> · {d.fits}
+          </li>)}
+        </ul>
+        <a href="#specs" className="self-start underline underline-offset-4 hover:text-ink">or check your own spec →</a>
+      </div>}
 
       <section className="flex flex-col gap-3">
         <div className="flex flex-col gap-1">
@@ -513,7 +548,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
   const complete = items.length > 0 && done === items.length
   const n = (...ds: Decision[]) => items.filter((c) => ds.includes(loaded[c.id]?.result.decision as Decision)).length
   const count = complete
-    ? [`${n('send_back')} to send back`, `${n('approve', 'approve_with_note')} to approve`, ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
+    ? [`${n('send_back')} to send back`, `${n('approve', 'approve_with_note')} to approve`, ...(n('not_applicable') ? [`${n('not_applicable')} not checked`] : []), ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
     : `${done} of ${items.length} done`
   const cols = '112px minmax(0,1fr) minmax(0,1.2fr)'
   // What the scan spent, summed over the results so far: the models by name, tokens, Tavily credits, cost, wall time.
@@ -683,7 +718,8 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
   const [textPage, setTextPage] = useState(() => (first && firstMark(first)?.page) || 1)
   const fix = fixOf(result)
   const best = fix?.candidates.find((x) => x.passes)
-  const rec: Act = result.decision === 'send_back' ? 'return' : 'approve'
+  const notApplicable = result.decision === 'not_applicable'
+  const rec: Act = notApplicable ? 'not_checked' : result.decision === 'send_back' ? 'return' : 'approve'
   const who = c.from ?? 'sender'
   const draft = (a: Act) => a === 'return'
     ? returnNote(c, result, best)
@@ -706,8 +742,11 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
         <div className="flex flex-col gap-2">
           <span className="text-xs text-muted"><span className="font-mono">{c.number ?? 'Upload'}</span> · {at} of {of} · from {c.from ?? 'you'}</span>
           <h2 className="text-lg font-semibold leading-tight">{c.title}</h2>
-          <span className="flex items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Saved: {call.act === 'return' ? 'return decision' : 'approval decision'}</span>}</span>
-          <p className="text-base text-soft">{reviewSummary(result)}</p>
+          <span className="flex flex-wrap items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Saved: {call.act === 'not_checked' ? 'not checked' : call.act === 'return' ? 'return decision' : 'approval decision'}</span>}</span>
+          <p className="text-base text-soft">{notApplicable
+            ? `None of the ${result.spec_rule_count ?? result.findings.length} rules in ${result.spec_title ?? c.section} found a value in this document. Pick a different spec for it in the Inbox.`
+            : reviewSummary(result)}</p>
+          {result.checklist_id && <p className="text-muted">Checked against your draft checklist {result.spec_section} {result.spec_title} ({result.spec_rule_count} rules, unreviewed). Drafted by Nemotron 3 Super · edited by you · unreviewed · this browser only.</p>}
         </div>
 
         <div className="flex flex-col gap-2">
@@ -752,7 +791,10 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
           </div>
         )}
 
-        <div className="flex flex-col gap-3 rounded-xl border border-line bg-panel p-4">
+        {notApplicable ? <div className="flex flex-col gap-3">
+          <p className="text-muted">Upload this document again in the Inbox to choose another spec before scanning.</p>
+          <button className={`${PRIMARY} self-start`} onClick={() => onDecide({ act: 'not_checked', message: '' })}>Mark as not checked</button>
+        </div> : <div className="flex flex-col gap-3 rounded-xl border border-line bg-panel p-4">
           <span className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
             <label htmlFor="message" className={CAPS}>{rec === 'return' ? `Draft for ${who}` : 'Draft for architect'}</label>
             {rec === 'return' && c.email && <span className="font-mono text-xs text-muted">{c.email}</span>}
@@ -773,7 +815,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
               </>
             )}
           </div>
-        </div>
+        </div>}
       </aside>
     </div>
   )
@@ -803,6 +845,8 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         {mode === 'live' && <span className="text-faint"> on Nebius Token Factory</span>}
         {result.web_credits > 0 && <> · <span className="text-soft">Tavily</span>{mode === 'mock' ? ' fixture evidence cites ' : ' evidence cites '}{plural(sources, 'source')}</>}
         {' · verdicts by code'}
+        {result.spec_rule_count != null && ` · checked against ${result.spec_section}: ${result.spec_match_count} of ${result.spec_rule_count} rules matched`}
+        {result.checklist_id && ` · your draft checklist ${result.spec_section} ${result.spec_title} (${result.spec_rule_count} rules, unreviewed)`}
         {!!result.ocr_pages && ` · ${plural(result.ocr_pages, 'page')} scanned → OCR (Tesseract), ${mode === 'mock' ? 'mock reading by' : 'read by'} Nemotron 3 Super`}
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
         {result.replayed_from && ' · replayed'}
@@ -868,7 +912,7 @@ function Checks({ head, rows }: { head: string[]; rows: CheckRow[] }) {
         <div key={`${f.id}-${i}`} className="grid items-baseline gap-3 border-b border-line px-3 py-2 last:border-b-0" style={{ gridTemplateColumns: cols }}>
           <span className="flex min-w-0 items-baseline gap-2">
             <span className="h-2 w-2 shrink-0 translate-y-[-1px] rounded-full" style={{ background: TONE_COLOR[toneOf(f)] }} aria-hidden />
-            <span className="min-w-0 break-words">{label}</span>
+            <span className="min-w-0 break-words">{label}{f.spec_ref && <span className="block text-xs text-muted">{f.spec_ref}</span>}</span>
           </span>
           <span className="min-w-0 break-words text-muted">{show(a)}</span>
           <span className="min-w-0 break-words" style={{ color: f.verdict === 'pass' ? undefined : TONE_COLOR[toneOf(f)] }}>{show(b)}</span>
@@ -1153,8 +1197,9 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
   checks: Record<string, Row>; checked: Record<string, Result>; requested: Record<string, boolean>; error: string | null
   recheck?: Recheck | null; jobsAvailable: boolean; onCheck: () => void; onRequest: (id: string) => void
 }) {
-  const returned = queue.filter((c) => calls[c.id]?.act === 'return')
-  const approved = [...queue.filter((c) => calls[c.id]?.act === 'approve'), ...watched]
+  const notChecked = queue.filter((c) => loaded[c.id].result.decision === 'not_applicable')
+  const returned = queue.filter((c) => loaded[c.id].result.decision !== 'not_applicable' && calls[c.id]?.act === 'return')
+  const approved = [...queue.filter((c) => loaded[c.id].result.decision !== 'not_applicable' && calls[c.id]?.act === 'approve'), ...watched]
   const checking = approved.some((c) => checks[c.id] && checks[c.id].stage !== 'error' && !checked[c.id])
   const alerts = approved.filter((c) => discontinued(checked[c.id]))
   const back = 'minmax(0,0.8fr) minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1.4fr)'
@@ -1168,6 +1213,11 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
       </Heading>
       <p className="-mt-3 text-xs text-muted">Decisions and drafts are saved in this browser. No messages have been sent. The watch list includes a sample approval from 2024.</p>
       {error && <p className="text-bad" role="alert">{error}</p>}
+
+      {notChecked.length > 0 && <section className="flex flex-col gap-3">
+        <h2 className="font-semibold">Not checked</h2>
+        {notChecked.map((c) => <p key={c.id} className="text-muted">{c.title} · Doesn't match this spec ({loaded[c.id].result.spec_section ?? c.section}).</p>)}
+      </section>}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-semibold">Marked for return to subcontractors</h2>

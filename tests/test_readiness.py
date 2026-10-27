@@ -182,7 +182,7 @@ def test_runner_uses_observed_assembly_kind_for_uploaded_product_data(monkeypatc
     monkeypatch.setattr(runner.extract, "requirements_for", requirements)
     monkeypatch.setattr(runner.extract, "extract_claims", claims)
     run = asyncio.run(runner.execute(Run(["upload"], delay_ms=0)))
-    assert run.results["upload"].decision == "approve_with_note"
+    assert run.results["upload"].decision == "not_applicable"
     assert run.results["upload"].findings[0].verdict == "unverified"
 
 
