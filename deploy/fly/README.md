@@ -1,6 +1,6 @@
 # Approved Fly fallback
 
-Nebius rejected the requested CPU endpoint because tenant non-GPU CPU quota is zero. The empty filesystem and unused MysteryBox secret created for that attempt have been deleted. No Nebius endpoint was created.
+Fallback is on hold. Nebius rejected the first endpoint in `eu-north1` because that region's non-GPU CPU quota is zero. The tenant has 200 unused vCPUs in `eu-west1`; endpoint creation there passed validation and was accepted. The empty filesystem and unused MysteryBox secret from the first region were deleted. Use Fly only if Nebius cannot serve the app.
 
 The prepared [fly.toml](fly.toml) uses the already published clean image, one always-on shared-CPU Machine with 2 GB RAM in Ashburn, and one 10 GB `speccheck_state` volume mounted at `/state`. Estimated compute plus volume is about $15/month, within Kyle's $25/month ceiling; traffic and snapshots are usage-priced. No paid reservation block, dedicated IPv4 address or extra Machine is requested. [Official pricing](https://docs.fly.io/about/pricing).
 
