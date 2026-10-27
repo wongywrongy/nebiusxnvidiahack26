@@ -1,3 +1,5 @@
+**October 27 follow-up:** [scoped c/e verification, current policy, screenshots and all-attempt spend](local-scoped/README.md) supersede the blocked status below. The earlier failure evidence is retained.
+
 # Playground validation — October 27, 2026
 
 Local browser evidence uses actual live API replies in fresh private Chromium contexts. No routes were intercepted.

@@ -175,27 +175,25 @@ def test_invalid_json_retry_and_cache_settle_every_paid_attempt(campaign_state):
     assert json.loads(budget._day_file().read_text())["usd"] == pytest.approx(opening_usd + 2 * usage.cost_usd)
 
 
-def test_missing_usage_retains_hold_and_cached_reply_stays_invalid(campaign_state):
+def test_missing_usage_settles_reserve_and_cached_reply_stays_honestly_estimated(campaign_state):
     with respx.mock as http:
         route = http.post(settings.nebius_base_url + "chat/completions").mock(return_value=response(usage=False))
         asyncio.run(tokenfactory.chat("triage", [], Answer))
         budget.LEDGER.get().accounting_issues.clear()
         asyncio.run(tokenfactory.chat("triage", [], Answer))
         assert budget.LEDGER.get().accounting_issues["item"]
-        with pytest.raises(BudgetExceeded):
-            asyncio.run(tokenfactory.chat("triage", [{"role": "user", "content": "different"}], Answer))
+        asyncio.run(tokenfactory.chat("triage", [{"role": "user", "content": "different"}], Answer))
     report = campaign.status(campaign_state)
-    assert report["blocked"] and report["held_usd"] > 0 and len(route.calls) == 1
+    assert not report["blocked"] and report["held_usd"] == 0 and len(route.calls) == 2
 
 
-def test_429_cannot_start_another_paid_attempt_with_unknown_billing(campaign_state, monkeypatch):
+def test_429_settles_reserve_before_the_next_paid_attempt(campaign_state, monkeypatch):
     sleep = asyncio.sleep
     monkeypatch.setattr(tokenfactory.asyncio, "sleep", lambda _: sleep(0))
     with respx.mock as http:
         route = http.post(settings.nebius_base_url + "chat/completions").mock(side_effect=[httpx.Response(429), response()])
-        with pytest.raises(BudgetExceeded, match="reconciliation"):
-            asyncio.run(tokenfactory.chat("triage", [], Answer))
-    assert len(route.calls) == 1
+        asyncio.run(tokenfactory.chat("triage", [], Answer))
+    assert len(route.calls) == 2 and not campaign.status(campaign_state)["blocked"]
     assert any("429" in message for message in budget.LEDGER.get().accounting_issues["item"])
 
 
@@ -293,7 +291,7 @@ def test_settlement_write_failure_keeps_known_usage_and_blocks_new_paid_work(cam
 
 
 @pytest.mark.parametrize("failure", [httpx.ReadTimeout("timed out"), asyncio.CancelledError()])
-def test_network_failure_or_cancellation_retains_unknown_hold(campaign_state, failure):
+def test_network_failure_or_cancellation_settles_at_the_reserve(campaign_state, failure):
     attempts = []
     async def fail(request):
         attempts.append(request.url.path)
@@ -302,9 +300,37 @@ def test_network_failure_or_cancellation_retains_unknown_hold(campaign_state, fa
         route = http.post(settings.nebius_base_url + "chat/completions").mock(side_effect=fail)
         with pytest.raises((ProviderError, asyncio.CancelledError)):
             asyncio.run(tokenfactory.chat("triage", [], Answer))
-    assert len(attempts) == 1
+    assert len(attempts) == (2 if isinstance(failure, httpx.TimeoutException) else 1)
     report = campaign.status(campaign_state)
-    assert report["blocked"] and report["held_usd"] > 0
+    assert not report["blocked"] and report["held_usd"] == 0
+    with campaign.transaction(campaign_state) as state:
+        assert all(p.actual == p.held for p in state.payments.values())
+
+
+def test_timeout_settles_reserve_retries_once_and_next_call_proceeds(campaign_state, caplog):
+    with respx.mock as http:
+        route = http.post(settings.nebius_base_url + "chat/completions").mock(side_effect=[
+            httpx.ReadTimeout("timed out"), response(), response()])
+        asyncio.run(tokenfactory.chat("triage", [], Answer))
+        asyncio.run(tokenfactory.chat("triage", [{"role": "user", "content": "next call"}], Answer))
+    assert len(route.calls) == 3
+    with campaign.transaction(campaign_state) as state:
+        payments = list(state.payments.values())
+        assert len(payments) == 3 and payments[0].actual == payments[0].held
+        assert all(p.actual is not None for p in payments)
+        assert budget.LEDGER.get().fresh_usd['item'] == pytest.approx(sum(p.actual.usd_nano for p in payments) / 1e9)
+    assert not campaign.status(campaign_state)["blocked"]
+    assert "worst case" in caplog.text and "retrying once" in caplog.text
+
+
+def test_host_startup_settles_abandoned_request_at_reserve(campaign_state):
+    identifier = reserve(campaign_state)
+    with campaign.transaction(campaign_state) as state:
+        state.payments[identifier].owner = "prior-process"
+    budget.recover_unknown_usage()
+    assert campaign.status(campaign_state)["held_usd"] == 0
+    assert not campaign.status(campaign_state)["blocked"]
+    assert reserve(campaign_state)
 
 
 def test_priced_but_unbounded_model_is_rejected_before_http(campaign_state, monkeypatch):

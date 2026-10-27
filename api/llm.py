@@ -100,6 +100,8 @@ def _default_payload(task: str, ctx: dict) -> dict:
         return {"summary": summary, "note_to_subcontractor": "", "finding_titles": {}, "why_it_matters": {}}
     if task == "verify":
         return {"status": "unknown", "current_values": [], "source_urls": []}
+    if task == "product_type":
+        return {"product_type": None}
     if task == "triage":
         return {"pages": [{"page": n, "kind": "product_data"} for n in ctx.get("pages", [])]}
     if task == "extract_claims":

@@ -43,7 +43,7 @@ def test_domain_mode_is_omitted_without_domains_and_400_is_not_retried(live):
     assert "include_domains_mode" not in json.loads(route.calls[0].request.content)
     with pytest.raises(ProviderError, match="400"):
         asyncio.run(tavily.search("other query", include_domains=["maker.test"], include_domains_mode="prefer"))
-    assert len(route.calls) == 2 and budget.today()["credits"] == 1
+    assert len(route.calls) == 2 and budget.today()["credits"] == 2  # Unknown 400 usage settles its reserved credit.
 
 
 def test_map_once_before_investigator_and_same_quote_comparison(live):

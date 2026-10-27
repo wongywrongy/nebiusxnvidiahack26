@@ -27,6 +27,12 @@ class TriageOut(BaseModel):
     pages: list[PageLabel]
 
 
+class ProductTypeOut(BaseModel):
+    product_type: Optional[str] = None
+    page: Optional[int] = None
+    quote: Optional[str] = None
+
+
 class Requirement(BaseModel):
     id: str
     section: str = Field(description="Spec section, e.g. 07 84 00")
@@ -39,6 +45,8 @@ class Requirement(BaseModel):
     severity: Literal["critical", "major", "minor"] = "major"
     check: Literal["spec", "validity", "completeness"] = "spec"
     applies_to: list[str] = Field(default=[], description="Submittal roles it applies to (product_data, system_drawing); empty = all")
+    product_type: Optional[str] = Field(default=None, min_length=1, max_length=80,
+        description="Plain space-separated singular product type, not snake_case. Every item-specific manufacturer, model or warranty rule needs its type; null only for rules shared by all types.")
 
 
 class RequirementsOut(BaseModel):
@@ -243,6 +251,7 @@ class Finding(BaseModel):
     why_it_matters: Optional[str] = None
     requirement_id: Optional[str] = None
     claim_id: Optional[str] = None
+    product_type: Optional[str] = None
     claim_ids: list[str] = []  # claims on the page that this finding is about
     highlights: list[Highlight] = []
     compare: Optional[Compare] = None
@@ -333,6 +342,7 @@ class Result(BaseModel):
     spec_rule_count: Optional[int] = None
     spec_match_count: Optional[int] = None
     checklist_id: Optional[str] = None
+    product_type: Optional[str] = None
     findings: list[Finding]
     comparison: list[CompareRow] = []
     claims: list[Claim] = []

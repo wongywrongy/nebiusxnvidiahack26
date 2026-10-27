@@ -45,6 +45,29 @@ def upload(client):
     return response.json()
 
 
+@pytest.mark.parametrize('kind,quote,expected', [
+    ('mechanical lock', 'mechanical lock', 'mechanical lock'),
+    ('mechanical lock', 'invented classification', None),
+    ('roofing', 'mechanical lock', None),
+    (None, None, None),
+])
+def test_product_type_reader_requires_an_offered_type_and_real_page_quote(playground, monkeypatch, kind, quote, expected):
+    from api.pipeline import extract
+    monkeypatch.setattr(settings, 'speccheck_mode', 'live')
+    def reply(request):
+        body = json.loads(request.content)
+        assert body['model'] == settings.model_extract and 'tools' not in body
+        schema = body['response_format']['json_schema']['schema']
+        assert schema['properties']['product_type']['anyOf'][0]['enum'] == ['mechanical lock', 'door closer']
+        return httpx.Response(200, json={'choices': [{'finish_reason': 'stop', 'message': {'content': json.dumps(
+            {'product_type': kind, 'page': 1, 'quote': quote})}}], 'usage': {'prompt_tokens': 20, 'completion_tokens': 20}})
+    with respx.mock as http:
+        route = http.post(settings.nebius_base_url+'chat/completions').mock(side_effect=reply)
+        result, usage = asyncio.run(extract.identify_product_type(None,
+            [{'page': 1, 'text': 'Grade 1 mechanical lock.'}], ['mechanical lock', 'door closer']))
+        assert len(route.calls) == 1 and usage.task == 'product_type' and result == expected
+
+
 @pytest.mark.parametrize("fault", ["bad-section", "empty", "too-many", "duplicate", "mismatched", "blank-title", "long-title"])
 def test_checklist_validation(playground, fault):
     data = body()
@@ -124,10 +147,14 @@ def test_draft_assignment_and_expired_scan_are_clear_404s(playground):
 
 @pytest.mark.parametrize("minimum,decision", [(200000, "approve_with_note"), (400000, "send_back")])
 @pytest.mark.parametrize("mode", ["mock", "live"])
-def test_runner_uses_saved_fixture_checklist_without_project_rules(playground, monkeypatch, minimum, decision, mode):
+@pytest.mark.parametrize("typed", [False, True])
+def test_runner_uses_saved_fixture_checklist_without_project_rules(playground, monkeypatch, minimum, decision, mode, typed):
     case = upload(playground)
     checklist = body()
     checklist["requirements"][0]["value"] = minimum
+    if typed:
+        checklist["requirements"][0]["product_type"] = "mechanical lock"
+        checklist["requirements"][1]["product_type"] = "door closer"
     saved = playground.post("/api/checklists", json=checklist).json()
     playground.patch(f"/api/inbox/{case['id']}", json={"spec": saved["id"]})
     stored_case = get_upload(case["id"])
@@ -138,6 +165,7 @@ def test_runner_uses_saved_fixture_checklist_without_project_rules(playground, m
         {"id": "cycle-claim", "product": "Harbor X1", "manufacturer": "Harbor", "property": "cycles", "value": 300000,
          "unit": "cycles", "page": 1, "quote": "Tested for 300000 cycles.",
          "scope": "product_wide", "scope_quote": "Tested for 300000 cycles."}]}}
+    fixture["product_type"] = {"product_type": "mechanical lock", "page": 1, "quote": "mechanical lock"}
     (settings.fixtures_dir / "hardware.json").write_text(json.dumps(fixture))
     (settings.fixtures_dir / "fix").mkdir()
     (settings.fixtures_dir / "fix/hardware.json").write_text("{}")
@@ -161,6 +189,7 @@ def test_runner_uses_saved_fixture_checklist_without_project_rules(playground, m
         else:
             name = data["response_format"]["json_schema"]["name"]
             payload = {"TriageOut": {"pages": [{"page": 1, "kind": "product_data"}]}, "ClaimsRead": fixture["claims"],
+                       "ProductTypeRead": fixture["product_type"],
                        "SourceRead": {"status": "unknown", "current_values": []},
                        "ReportOut": {"summary": "Synthetic test review.", "note_to_subcontractor": ""}}[name]
             message = {"content": json.dumps(payload)}
@@ -175,12 +204,18 @@ def test_runner_uses_saved_fixture_checklist_without_project_rules(playground, m
         if mode == "live":
             assert model.calls and search.calls
             assert all(not json.loads(call.request.content).get("include_domains") for call in search.calls)
+            calls = [json.loads(c.request.content) for c in model.calls if 'response_format' in json.loads(c.request.content)]
+            assert sum(c['response_format']['json_schema']['name'] == 'ProductTypeRead' for c in calls) == int(typed)
         else:
             assert not http.calls
     result = run.results[case["id"]]
     assert result.mode == mode and result.decision == decision
     assert result.checklist_id == saved["id"] and result.spec_title == "Door Hardware"
-    assert result.spec_rule_count == 2 and result.spec_match_count == 1
+    assert result.spec_rule_count == (1 if typed else 2) and result.spec_match_count == 1
+    assert result.product_type == ("mechanical lock" if typed else None)
+    if typed:
+        excluded = next(f for f in result.findings if f.requirement_id == 'grade')
+        assert excluded.verdict == 'not_applicable' and not excluded.claim_ids
     assert result.findings[0].verdict == ("fail" if decision == "send_back" else "pass")
     assert result.findings[0].spec_ref == "08 71 00 2.1.A"
     assert {f.requirement_id for f in result.findings if f.requirement_id} == {"cycles", "grade"}

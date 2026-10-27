@@ -201,6 +201,7 @@ def test_last_tool_slot_is_reserved_for_an_honest_finish(http, monkeypatch):
     assert inv.outcome == "not_found" and [s.tool for s in inv.steps] == ["search", "finish"]
     last = json.loads(route.calls[-1].request.content)
     assert [t["function"]["name"] for t in last["tools"]] == ["finish"]
+    assert last['tool_choice'] == {'type': 'function', 'function': {'name': 'finish'}}
     assert "1 tool calls remain" in last["messages"][0]["content"]
     assert "response_format" not in last
 

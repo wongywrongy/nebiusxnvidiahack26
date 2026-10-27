@@ -70,6 +70,11 @@ async def lifespan(app):
     prune_page_cache()
     prune_runs()
     checklists.prune_uploads()
+    if settings.live:
+        try:
+            budget.recover_unknown_usage()
+        except (OSError, ValueError, budget.BudgetExceeded):
+            logging.getLogger("speccheck.startup").warning("Campaign ledger unavailable; paid calls remain blocked")
     logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on %s; hosted persistence unverified)",
                                                budget.today(), budget.caps(),
                                                "private controller mount" if settings.controller_state_dir else "local disk")

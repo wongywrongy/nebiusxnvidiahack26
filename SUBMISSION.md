@@ -24,9 +24,9 @@ Token Factory credits do not establish a separate AI Cloud grant.
   accuracy benchmark. No passing live replacement or Investigator rescue is claimed.
 - At `574299b`: **723 Python tests passed, 2 skipped**; web production build clean; current raw mock
   panel **6/8, 5/6, 0/2, 0/5**. Mock results are fixture answers and incur no provider spend.
-- Latest follow-up: **748 Python tests passed, 2 skipped**, build clean and raw mock panel unchanged. Live evidence and the offline partial-identifier correction are recorded in [docs/playground](docs/playground/README.md).
+- Latest follow-up: **764 Python tests passed, 2 skipped**, build clean and raw mock panel unchanged. Live evidence and the offline partial-identifier correction are recorded in [docs/playground](docs/playground/README.md).
 - Playground checks on October 27: **741 Python tests passed, 2 skipped; 12 Chromium journeys passed; presentation checks and production build passed**. The raw mock panel remains unchanged. Draft generation in the browser regression is synthetic, and all provider-adapter tests use intercepted HTTP.
-- [GitHub Actions checks for `40df685`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40562321396) passed, including the mock browser job. PR #13 remains draft: local a–c completed, d hit two provider timeouts, e is pending. [Evidence](docs/playground/README.md).
+- [GitHub Actions checks for `40df685`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40562321396) passed, including the mock browser job. Local c/e now pass with typed rules and conservative timeout settlement. Owner authorizes PR #13 merge on these checks. [Evidence](docs/playground/README.md).
 - Local image `speccheck:playground-40df685` built with all 13 locked PDFs and the recorded replay.
   A disposable container with networking disabled passed actual HTTP/static, checklist save/assignment,
   upload scan and native-PDF rendering checks in mock mode, with no configured provider keys and zero
@@ -49,7 +49,7 @@ Token Factory credits do not establish a separate AI Cloud grant.
 | 2. Upload spec choice | Inbox select; upload-only `PATCH /api/inbox/{id}` validates and persists spec before scan | Implemented; persistence and refusal tests pass |
 | 3. Bring your own spec | Draft → edit/delete rows → save unreviewed checklist → assign to upload → full pipeline → Review/Outcome | Implemented; synthetic browser loop checked, live proof pending |
 | 4. Try-one PDFs | 3–4 new manufacturer products plus another-division spec/product pair; HTTPS downloads and readable page counts shown to Kyle | Links verified from this machine; UI checked |
-| GATE 1: local live walkthrough | Screenshots, run IDs, trace and actual cost for a–e; owner authorizes merge after passing checks | a–c completed; d provider timeouts held; e pending |
+| GATE 1: local live walkthrough | [Current c/e evidence](docs/playground/local-scoped/README.md), earlier a/b and mock tray regression | Owner-authorized merge condition satisfied; public a–e still required |
 | Phase 2: one-container public demo | Approved host cost/expiry, judging allowance initialized, live health, smoke and private-window a–e | Pending |
 | GATE 2: public evidence and freeze | Public URL, smoke output, screenshots, spend; hotfixes only afterward | Pending |
 | Phase 3: recording and submission | One deployed tray + BYO run; README first screen; observed feedback; public YouTube video and Devpost | Pending |

@@ -82,7 +82,7 @@ const kTokens = (n: number) => (n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0
 const seconds = (ms: number) => (ms >= 1000 ? `${(ms / 1000).toFixed(ms >= 10000 ? 0 : 1)} s` : `${ms} ms`)
 // What each call did, in the reviewer's words. Fix-step calls come prefixed "fix: ".
 const TASK_LABEL: Record<string, string> = {
-  triage: 'sorted the pages', extract_requirements: 'read the spec', extract_claims: 'read the data sheet',
+  triage: 'sorted the pages', extract_requirements: 'read the spec', extract_claims: 'read the data sheet', product_type: 'identified the product type',
   verify: 'read the web sources', investigate: 'investigated missing documents', report: 'wrote the result',
   'fix: extract_claims': 'read a replacement', 'fix: verify': 'checked a replacement online',
 }
@@ -726,6 +726,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
     : approvalNote(c, result)
   const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
   const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
+  const otherTypes = result.findings.filter((f) => f.verdict === 'not_applicable' && f.product_type && f.detail.startsWith('For other product type:'))
   const web = result.findings.filter((f) => WEB.has(f.check))
   const source = web.flatMap((f) => f.evidence)[0]
 
@@ -747,12 +748,18 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
             ? `None of the ${result.spec_rule_count ?? result.findings.length} rules in ${result.spec_title ?? c.section} found a value in this document. Pick a different spec for it in the Inbox.`
             : reviewSummary(result)}</p>
           {result.checklist_id && <p className="text-muted">Checked against your draft checklist {result.spec_section} {result.spec_title} ({result.spec_rule_count} rules, unreviewed). Drafted by Nemotron 3 Super · edited by you · unreviewed · this browser only.</p>}
+          {result.product_type && <p className="text-muted">Product type: {result.product_type.replace(/_/g, ' ')}.</p>}
         </div>
 
         <div className="flex flex-col gap-2">
           <Checks head={['Check', 'Required', 'Submitted']}
             rows={[...spec.map((f): CheckRow => [f, f.title, f.compare?.left_value, f.compare?.right_value]), ...web.flatMap(webRows)]
               .sort((x, y) => TONE_RANK[toneOf(x[0])] - TONE_RANK[toneOf(y[0])])} />
+          {otherTypes.length > 0 && <details className="text-muted">
+            <summary className="cursor-pointer">{otherTypes.length} rules for other product types</summary>
+            <ul className="mt-2 flex flex-col gap-2 text-xs">{otherTypes.map((f) =>
+              <li key={f.id}>{f.product_type?.replace(/_/g, ' ')}: {f.title} · {f.spec_ref}</li>)}</ul>
+          </details>}
           <span className="text-xs leading-5 text-muted">
             Sources: spec {c.section}{result.document_revision ? ` · submitted sheet ${result.document_revision}` : ''}
             {source && <> · <a href={source.url} target="_blank" rel="noreferrer" className="underline decoration-edge underline-offset-2 hover:text-ink">{source.title || hostOf(source.url)} ↗</a></>}

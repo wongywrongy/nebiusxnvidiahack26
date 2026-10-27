@@ -123,6 +123,7 @@ try {
     const response = await saving
     assert(response.ok(), await response.text())
     evidence.checklist = await response.json()
+    evidence.edited_checklist = response.request().postDataJSON()
     assert(evidence.checklist.n < before)
     save()
     await page.getByRole('link', { name: /Back to Inbox/ }).click()
@@ -130,7 +131,24 @@ try {
     const [result] = await scan()
     assert.equal(result.checklist_id, evidence.checklist.id)
     assert(result.spec_match_count > 0 && result.claims.some(c => c.quote), 'Paired sheet must match at least one draft rule')
-    await screenshot('review'); await decide(); await screenshot('outcome')
+    assert(/cylindrical.*lock/i.test(result.product_type), 'Schlage sheet must be scoped to cylindrical locksets')
+    const otherTypes = result.findings.filter(f => f.verdict === 'not_applicable' && f.product_type)
+    assert(otherTypes.length > 0, 'Other product types must be excluded')
+    assert(result.findings.filter(f => f.requirement_id && f.verdict !== 'not_applicable')
+      .every(f => !f.product_type || f.product_type === result.product_type), 'Only shared and lockset rules may apply')
+    const hardware = evidence.edited_checklist.requirements.filter(r => /hinge|pivot|door_stop|flush_bolt|door_closer|exit_device/.test(r.property))
+    assert(hardware.every(r => result.findings.some(f => f.requirement_id === r.id && f.verdict === 'not_applicable')),
+      'Rules for other physical hardware must not remain in the visible lockset list')
+    const ndRules = evidence.edited_checklist.requirements.filter(r => r.operator === 'any_of' &&
+      /\bND\b/i.test(JSON.stringify(r.value)))
+    assert(ndRules.some(r => result.findings.some(f => f.requirement_id === r.id && f.verdict === 'pass')),
+      'The ND series must pass its allowed-series rule')
+    const disclosure = page.locator('aside details').filter({ hasText: `${otherTypes.length} rules for other product types` })
+    assert.equal(await disclosure.count(), 1)
+    assert.equal(await disclosure.getAttribute('open'), null)
+    await screenshot('review')
+    await disclosure.locator('summary').click(); await screenshot('other-product-types')
+    await disclosure.locator('summary').click(); await decide(); await screenshot('outcome')
   } else if (name === 'd') {
     const project = await get('/api/project')
     const expected = project.tray.flatMap(s => s.items).length

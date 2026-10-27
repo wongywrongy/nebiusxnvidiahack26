@@ -139,11 +139,12 @@ def test_categorical_prefix_can_be_grounded_by_its_exact_quote():
     c.quote = "Group Premium qualified product"
     assert check([r], [c])[0].verdict == "pass"
     c.quote = "Other Premium qualified product"
+    c.value = "Other Premium"
     assert check([r], [c])[0].verdict == "fail"
 
 
 @pytest.mark.parametrize("value,quote,verdict", [
-    ("A12 Series", "A12 Series", "unverified"),
+    ("A12 Series", "A12 Series", "pass"),
     ("A12 Series", "Maker A12 Series", "pass"),
     ("Other B20", "Other B20", "fail"),
 ])
@@ -152,6 +153,30 @@ def test_incomplete_named_identifier_is_unknown_not_a_definite_mismatch(value, q
     c = claim("lock_series", value)
     c.quote = quote
     assert check([r], [c])[0].verdict == verdict
+
+
+@pytest.mark.parametrize("submitted,allowed,verdict", [
+    ("ND Series", "Schlage ND series", "pass"),
+    ("ND Series", "Corbin CL3300", "fail"),
+    ("NDX", "ND", "fail"),
+    ("SCHLAGE ND model", "nd", "pass"),
+    ("series model line", "ND", "fail"),
+])
+def test_named_series_match_distinguishing_tokens_without_prefix_matches(submitted, allowed, verdict):
+    r = req(property="lock_series", operator="any_of", value=[allowed])
+    c = claim("lock_series", submitted)
+    c.quote = submitted
+    assert check([r], [c])[0].verdict == verdict
+
+
+def test_product_type_scope_is_optional_and_preserves_shared_rules():
+    rules = [req(id="lock", property="grade", operator="eq", value=1, product_type="cylindrical lockset"),
+             req(id="closer", property="grade", operator="eq", value=2, product_type="door closer"),
+             req(id="shared", property="grade", operator="eq", value=1)]
+    fs = check(rules, [claim("grade", 1)], product_type="Cylindrical Lockset")
+    assert [f.verdict for f in fs] == ["pass", "not_applicable", "pass"]
+    assert not fs[1].claim_ids and fs[1].product_type == "door closer"
+    assert [f.verdict for f in check(rules, [claim("grade", 1)])] == ["pass", "fail", "pass"]
 
 
 def test_option_value_does_not_fail_an_unspecified_configuration():

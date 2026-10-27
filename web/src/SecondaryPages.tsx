@@ -13,6 +13,7 @@ function provenance(checklist: Checklist) {
 }
 
 function RequirementTable({ checklist, onChange, disabled }: { checklist: Checklist; onChange?: (requirements: Requirement[]) => void; disabled?: boolean }) {
+  const typed = checklist.requirements.some((r) => r.product_type)
   const edit = (id: string, patch: Partial<Requirement>) => onChange?.(checklist.requirements.map((r) => r.id === id ? { ...r, ...patch } : r))
   const input = 'w-full min-w-24 rounded-md border border-edge bg-well px-2 py-1 text-ink disabled:opacity-50'
   return (
@@ -20,6 +21,7 @@ function RequirementTable({ checklist, onChange, disabled }: { checklist: Checkl
       <table className="w-full min-w-[880px] text-xs">
         <thead className="bg-well text-muted"><tr>
           {['Paragraph', 'Property', 'Operator', 'Value', 'Unit', 'Severity', 'Applies to', 'Text'].map((label) => <th scope="col" className={cell} key={label}>{label}</th>)}
+          {typed && <th scope="col" className={cell}>Product type</th>}
           {onChange && <th scope="col" className={cell}>Edit</th>}
         </tr></thead>
         <tbody>{checklist.requirements.map((r) => (
@@ -38,6 +40,7 @@ function RequirementTable({ checklist, onChange, disabled }: { checklist: Checkl
             </select> : r.severity}</td>
             <td className={cell}>{r.applies_to.length ? r.applies_to.join(', ') : 'All submittal roles'}</td>
             <td className={`${cell} min-w-64`}>{r.text}</td>
+            {typed && <td className={cell}>{r.product_type?.replace(/_/g, ' ') || 'All product types'}</td>}
             {onChange && <td className={cell}><button className="btn" disabled={disabled} aria-label={`Delete requirement ${r.id}`}
               onClick={() => onChange(checklist.requirements.filter((rule) => rule.id !== r.id))}>Delete</button></td>}
           </tr>

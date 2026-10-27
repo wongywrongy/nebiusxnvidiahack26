@@ -83,6 +83,15 @@ def _mentions(value: str, wanted: str) -> bool:
     return re.search(pattern, unicodedata.normalize("NFKC", value).casefold()) is not None
 
 
+def _name_tokens(value: str) -> set[str]:
+    return set(re.findall(r"\d+(?:[.,]\d+)+|[^\W_]+", unicodedata.normalize("NFKC", value).casefold())) - {"series", "line", "model"}
+
+
+def _name_matches(value: str, allowed: str) -> bool:
+    left, right = _name_tokens(value), _name_tokens(allowed)
+    return bool(left and right and (left <= right or right <= left))
+
+
 OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}
 
 
@@ -144,7 +153,8 @@ def _wanted(r: Requirement):
     return r.text
 
 
-def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[set[str]] = None) -> list[Finding]:
+def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[set[str]] = None,
+          product_type: Optional[str] = None) -> list[Finding]:
     """roles: the submittal's document roles; a requirement whose applies_to misses them all is not applicable."""
     by_prop: dict[str, list[Claim]] = {}
     for c in claims:
@@ -152,7 +162,8 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
 
     findings: list[Finding] = []
     for r in requirements:
-        scoped = by_prop.get(r.property, [])
+        other_type = product_type and r.product_type and _text(product_type) != _text(r.product_type)
+        scoped = [] if other_type else by_prop.get(r.property, [])
         variants = [c.variant for c in scoped if c.variant]
         found = [c for c in scoped if not c.variant or c.selection_quote]
         claim = found[0] if found else None
@@ -174,6 +185,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                 title=title,
                 detail=detail,
                 requirement_id=r.id,
+                product_type=r.product_type,
                 claim_id=claim.id if claim else None,
                 claim_ids=[claim.id, *related] if claim else [],
                 spec_ref=ref,
@@ -181,6 +193,10 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                                 right_label=right_label, right_value=shown,
                                 verdict="unverified" if verdict in ("unverified", "pending") else "pass" if verdict == "pass" else "fail"),
             )
+
+        if other_type:
+            findings.append(make("not_applicable", _label(r.property), f"For other product type: {r.product_type}."))
+            continue
 
         if r.applies_to and roles and not set(r.applies_to) & roles:
             findings.append(make("not_applicable", _label(r.property), f"Applies to {', '.join(r.applies_to)} only."))
@@ -238,11 +254,8 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             detail = f"Package lists {_fmt(claim.value, None)}; needs {r.value}."
         elif r.operator == "any_of":
             allowed = _as_list(r.value)
-            ok = any(_mentions(h, a) or (_mentions(a, h) and _mentions(c.quote or "", a))
+            ok = any(_mentions(h, a) or _name_matches(h, a)
                      for c in found for h in _as_list(c.value) for a in allowed)
-            if not ok and any(_mentions(a, h) and _text(c.quote or "") == _text(h)
-                              for c in found for h in _as_list(c.value) for a in allowed):
-                ok = None  # A bare partial identifier cannot establish a different named product or listing.
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:

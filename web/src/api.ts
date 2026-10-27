@@ -48,6 +48,7 @@ export interface Finding {
   why_it_matters?: string | null
   spec_ref?: string | null
   requirement_id?: string | null
+  product_type?: string | null
   claim_ids: string[]
   highlights: Mark[]
   compare?: Compare | null
@@ -90,6 +91,7 @@ export interface Result {
   summary: string
   spec_section?: string | null; spec_title?: string | null; spec_rule_count?: number | null
   spec_match_count?: number | null; checklist_id?: string | null
+  product_type?: string | null
   findings: Finding[]
   comparison: CompareRow[]
   claims: Claim[]
@@ -117,6 +119,7 @@ export async function getHealth(): Promise<Health> { return ok(await fetch('/api
 export interface Requirement {
   id: string; section: string; paragraph: string; property: string; operator: string; value: Value
   unit?: string | null; severity: string; applies_to: string[]; text: string
+  product_type?: string | null
 }
 export interface Checklist {
   section: string; title: string
