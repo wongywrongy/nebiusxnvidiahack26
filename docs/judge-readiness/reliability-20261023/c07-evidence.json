@@ -1,0 +1,343 @@
+{
+  "case_id": "c07",
+  "mode": "live",
+  "decision": "send_back",
+  "validity": "valid",
+  "warnings": [],
+  "diagnostics": [],
+  "duration_ms": 6606,
+  "fresh_model_cost_usd": 0.0,
+  "fresh_web_credits": 1.0,
+  "claims_extracted": 19,
+  "claims_kept": 6,
+  "web_values_read": 40,
+  "web_values_kept": 29,
+  "findings": [
+    {
+      "id": "spec-req_t_rating_hr_led",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Rated life (L70) not provided",
+      "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+      "why_it_matters": "Without knowing how long the light will maintain brightness, we risk early replacements and higher long-term costs.",
+      "requirement_id": "req_t_rating_hr_led",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "\u2265 50000 hr",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.3",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_warranty_years_led",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Warranty period not confirmed",
+      "detail": "Warranty Period for LED Luminaires, including LED modules, LED boards, chips, and drivers: Five (5) years from date of Preliminary Acceptance.",
+      "why_it_matters": "A clear warranty protects us if the lights fail prematurely after installation.",
+      "requirement_id": "req_warranty_years_led",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "\u2265 5 yr",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 1.10.B.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-lt-dlc",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "DLC listing not verified",
+      "detail": "Listed as a qualified DLC product, where applicable.",
+      "why_it_matters": "DLC qualification may affect energy rebates and confirms the product meets efficiency standards.",
+      "requirement_id": "lt-dlc",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "dlc standard",
+          "dlc premium"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.H",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_macadam_ellipse",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Color consistency (MacAdam steps) not specified",
+      "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+      "why_it_matters": "Consistent color across fixtures avoids noticeable differences in light appearance that could disturb occupants.",
+      "requirement_id": "req_macadam_ellipse",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "\u2264 3",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.6",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-lt-dim",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Dimming range needs confirmation for submitted setup",
+      "detail": "Quoted values apply only to EZB. Confirm the submitted configuration.",
+      "why_it_matters": "We need to verify the dimming works as expected with your actual setup to ensure lighting control functions properly.",
+      "requirement_id": "lt-dim",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "\u2264 5 %",
+        "right_label": "Submitted",
+        "right_value": "Option dependent",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.05.C.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "status-discontinued",
+      "check": "status",
+      "verdict": "fail",
+      "severity": "major",
+      "title": "Product is discontinued by manufacturer",
+      "detail": "The manufacturer lists it as discontinued.",
+      "why_it_matters": "If we can't buy the product, we can't install it \u2014 using an unavailable item causes delays and requires redesign.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Status",
+        "left_value": null,
+        "right_label": "Manufacturer",
+        "right_value": "Discontinued June 30th, 2024",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+          "tier": "manufacturer",
+          "title": "Discontinuation Notice: Lithonia Lighting\u00ae TL Recessed Luminaire",
+          "retrieved_at": "2026-10-22T22:57:05+00:00",
+          "sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7",
+          "excerpt": "* [English](javascript:void(0))\n  + English\n  + Espa\u00f1ol\n  + Fran\u00e7ais\n\n* [Fran\u00e7ais](javascript:void(0))\n  + English\n  + Espa\u00f1ol\n  + Fran\u00e7ais\n\n* [Espa\u00f1ol](javascript:void(0))\n  + English\n  + Espa\u00f1ol\n  + Fran\u00e7ais\n\n## Welcome to Acuity Brands Insights\n\n* [Home](http://insights.acuitybrands.com)\n* [Industry](javascript:void(0)) \n  + Industry\n  + [Commercial Office](https://insights.acuitybrands.com/com",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://www.acuitybrands.com/products/detail/2115630/lithonia-lighting/lithoniar-frame/led-lay-in-by-lithonia-lightingr",
+          "tier": "manufacturer",
+          "title": "Lithonia\u00ae FRAME - LED Lay-in by Lithonia Lighting\u00ae",
+          "retrieved_at": "2026-10-22T22:57:05+00:00",
+          "sha256": "e2b252bad4ae01a8f00b1101537bb1c9dbd0c8eb0b7f8ea5ac1da89934c093f0",
+          "excerpt": "[Skip to Navigation Content](#nav-content) [Skip to Main Content](#main-content) [Skip to Footer Content](#footer-content)\n\n* [How to Buy](/support/how-to-buy)\n* [Our Newsroom](https://www.acuityinc.com/resources/our-newsroom)\n* [Join Our Team](https://www.acuityinc.com/careers)\n* [Login](/login)\n* United States - English\n\n  + [United States - English](/en/products/detail/2115630/lithonia-lighting",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://www.acuitybrands.com",
+          "tier": "manufacturer",
+          "title": "Acuity Brands Lighting",
+          "retrieved_at": "2026-10-22T22:57:05+00:00",
+          "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+          "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+          "archived_path": null,
+          "cache_hit": true
+        }
+      ],
+      "quote": "As of\u00a0**June 30th, 2024**, the TL family will be discontinued.",
+      "decided_by": "tavily + super",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "Acuity Brands Lighting, Inc. current LED troffer data sheet",
+        "candidates": [
+          {
+            "name": "CPX - LED Panel",
+            "source_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+            "documents": [
+              {
+                "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "tier": "manufacturer",
+                "title": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "retrieved_at": "2026-10-22T22:57:34+00:00",
+                "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+                "archived_path": null,
+                "cache_hit": null
+              }
+            ],
+            "checks": [
+              {
+                "label": "Rated life (L70)",
+                "ok": null,
+                "note": "not stated",
+                "requirement_id": "req_t_rating_hr_led",
+                "evidence": []
+              },
+              {
+                "label": "Warranty",
+                "ok": null,
+                "note": "not stated",
+                "requirement_id": "req_warranty_years_led",
+                "evidence": []
+              },
+              {
+                "label": "DLC listing",
+                "ok": true,
+                "note": "",
+                "requirement_id": "lt-dlc",
+                "evidence": [
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "retrieved_at": "2026-10-22T22:57:34+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "![DLC Standard](/-/media/abl/shared-content/images/labels/dlc-qpl_black.png \"DLC Standard\")",
+                    "archived_path": null,
+                    "cache_hit": null
+                  }
+                ]
+              },
+              {
+                "label": "macadam steps",
+                "ok": null,
+                "note": "not stated",
+                "requirement_id": "req_macadam_ellipse",
+                "evidence": []
+              },
+              {
+                "label": "Dims down to",
+                "ok": null,
+                "note": "not stated",
+                "requirement_id": "lt-dim",
+                "evidence": []
+              },
+              {
+                "label": "Current document",
+                "ok": true,
+                "note": "7/23/2026",
+                "requirement_id": null,
+                "evidence": [
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "CPX - LED Panel",
+                    "retrieved_at": "2026-10-22T22:58:05+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "CRI | 80, 90 |",
+                    "archived_path": null,
+                    "cache_hit": true
+                  },
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "CPX - LED Panel",
+                    "retrieved_at": "2026-10-22T22:58:05+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "Lumens | 2500 LM, 3200 LM, 3400 LM, 4000 LM, 4300 LM, 5000 LM, 6000 LM, Switchable |",
+                    "archived_path": null,
+                    "cache_hit": true
+                  },
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "CPX - LED Panel",
+                    "retrieved_at": "2026-10-22T22:58:05+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "Fixture Wattage | 27.6, 28.3, 29.3, 30.1, 32.5, 33.5, 34.1, 34.5, 34.9, 35.5, 35.7, 36.3, 36.7, 37.5, 42, 47.9, 48, 51 |",
+                    "archived_path": null,
+                    "cache_hit": true
+                  },
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "CPX - LED Panel",
+                    "retrieved_at": "2026-10-22T22:58:05+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "![DLC Standard](/-/media/abl/shared-content/images/labels/dlc-qpl_black.png \"DLC Standard\")",
+                    "archived_path": null,
+                    "cache_hit": true
+                  },
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "CPX - LED Panel",
+                    "retrieved_at": "2026-10-22T22:58:05+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "7/23/2026",
+                    "archived_path": null,
+                    "cache_hit": true
+                  }
+                ]
+              },
+              {
+                "label": "Still made",
+                "ok": null,
+                "note": "No quoted confirmation that this replacement is available",
+                "requirement_id": null,
+                "evidence": []
+              }
+            ],
+            "passes": false
+          }
+        ],
+        "suggest": ""
+      }
+    }
+  ]
+}

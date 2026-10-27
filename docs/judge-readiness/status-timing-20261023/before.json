@@ -1,0 +1,170 @@
+{
+  "scope": "Offline synthetic responses only; no model, HTTP or paid provider request",
+  "observed_at": "2026-10-23T10:19:29.116525+00:00",
+  "code_hash": "3480e5d073f7a58d7fae7317cac2c0a83a3dc880b45e3709e2bec7e9f07f0b45",
+  "observations": [
+    {
+      "name": "future discontinuation",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "As of May 1, 2035, the ZX family will be discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "discontinued",
+        "status_date": "1999-01-01",
+        "replacement": "XR-9",
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "fail",
+            "severity": "major"
+          }
+        ],
+        "decision": "send_back"
+      }
+    },
+    {
+      "name": "undated plan",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family will be discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "discontinued",
+        "status_date": "1999-01-01",
+        "replacement": "XR-9",
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "fail",
+            "severity": "major"
+          }
+        ],
+        "decision": "send_back"
+      }
+    },
+    {
+      "name": "past effective date",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "As of May 1, 2001, the ZX family will be discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "discontinued",
+        "status_date": "1999-01-01",
+        "replacement": "XR-9",
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "fail",
+            "severity": "major"
+          }
+        ],
+        "decision": "send_back"
+      }
+    },
+    {
+      "name": "future availability",
+      "request": {
+        "status": "active",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family is available from May 1, 2035.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "status_date": "1999-01-01",
+        "replacement": "XR-9",
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "pass",
+            "severity": "info"
+          }
+        ],
+        "decision": "approve_with_note"
+      }
+    },
+    {
+      "name": "expired availability",
+      "request": {
+        "status": "active",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family is available until May 1, 2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "status_date": "1999-01-01",
+        "replacement": "XR-9",
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "pass",
+            "severity": "info"
+          }
+        ],
+        "decision": "approve_with_note"
+      }
+    },
+    {
+      "name": "ungrounded metadata",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family is discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "discontinued",
+        "status_date": "1999-01-01",
+        "replacement": "XR-9",
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "fail",
+            "severity": "major"
+          }
+        ],
+        "decision": "send_back"
+      }
+    }
+  ],
+  "release_accepts_future_status": true
+}

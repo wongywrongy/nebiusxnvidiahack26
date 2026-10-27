@@ -1,0 +1,19 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=18999 out=16384 reasoning=0 ms=117618 cost=$0.020445 format=json_schema thinking=off
+
+mode=live  run=20261021-094619-39bd46
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c05   ERROR  (see runs/20261021-094619-39bd46/events.jsonl)
+
+Answer-key panel
+  right call                      0 of 1
+  planted problems caught         0 of 0
+  clean packages wrongly flagged  0 of 1
+  fixes that pass the spec        0 of 0
+  average time per submittal      0.0 s
+  cost per submittal (model+web)  $0.0000
+Quote gate: claims 0/0 kept (n/a dropped); web values 0/0 kept (n/a dropped)
+
+wrote /tmp/speccheck-c05-variant-retry.json
+POST-RUN LEDGER: {"usd": 0.443879, "credits": 160.0}

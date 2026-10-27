@@ -1,0 +1,40 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=13621 out=134 reasoning=0 ms=1964 cost=$0.004207 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=9665 out=561 reasoning=0 ms=3934 cost=$0.003404 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11619 out=491 reasoning=0 ms=4007 cost=$0.003928 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=10243 out=473 reasoning=0 ms=3299 cost=$0.003499 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=634 out=253 reasoning=0 ms=2077 cost=$0.000418 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=5128 out=147 reasoning=0 ms=4953 cost=$0.001671 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11333 out=232 reasoning=0 ms=3505 cost=$0.003609 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11738 out=174 reasoning=0 ms=2273 cost=$0.003678 format=json_schema thinking=off
+
+mode=live  run=20261021-112213-cb4555
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -         74   0.0075       0 ✓
+c02   send_back          send_back          spec                   currency_note,spec         none    6132   0.0731       0 ✓
+c03   send_back          send_back          currency               currency                   none    9434   0.0200       0 ✓
+c04   send_back          send_back          validity               validity                   none    5029   0.0397       0 ✓
+c05   approve            approve_with_note  -                      currency_note              -        133   0.0127       0 ✗
+c06   send_back          approve_with_note  currency               currency_note              none    3672   0.0306       0 ✗
+c07   send_back          send_back          status                 status                     none    2382   0.0796       0 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -         62   0.0057       0 ✓
+
+Answer-key panel
+  right call                      6 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  average time per submittal      3.4 s
+  cost per submittal (model+web)  $0.0336
+Quote gate: claims 149/185 kept (19.5% dropped); web values 27/40 kept (32.5% dropped)
+
+wrote /tmp/speccheck-live-full-fourth.json
+POST-RUN LEDGER: {"usd": 1.005855, "credits": 280.0}

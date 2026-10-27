@@ -1,0 +1,99 @@
+{
+  "observed_at": "2026-10-23T09:16:38.344676+00:00",
+  "scope": "Manual manufacturer-source research only; no application eval, model/Tavily request, candidate selection, recommendation or approval",
+  "sources": [
+    {
+      "observed_at": "2026-10-23T09:11:38.026793+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://hew.com/specifications/LT_quickship.pdf",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://hew.com/specifications/LT_quickship.pdf",
+        "content_type": "application/pdf",
+        "bytes": 579933,
+        "sha256": "1fa5de30199b09115d7c27715b404dbe15ee4fba3b0a2016e9d7b3e96b1a5bf6"
+      },
+      "private_local_file": ".cache/research/williams-quickship-20261023/quickship.pdf",
+      "pdf_pages": 2,
+      "pages_with_native_text": 2
+    },
+    {
+      "observed_at": "2026-10-23T09:11:38.055976+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://hew.com/specifications/LT_led.pdf",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://hew.com/specifications/LT_led.pdf",
+        "content_type": "application/pdf",
+        "bytes": 1043987,
+        "sha256": "a274705c5ef912dd3316a7929e87544c4dd9615ef27378a393715b5dc89b598f"
+      },
+      "private_local_file": ".cache/research/williams-quickship-20261023/general.pdf",
+      "pdf_pages": 4,
+      "pages_with_native_text": 4
+    },
+    {
+      "observed_at": "2026-10-23T09:11:38.292854+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://hew.com/products/quickship",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://hew.com/products/quickship",
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 188236,
+        "sha256": "1005da95bc8e8d4d602587b42a53989b5f513f4712e00fe24a16a9132643eca7"
+      },
+      "private_local_file": ".cache/research/williams-quickship-20261023/program.html"
+    }
+  ],
+  "page_grounded_quotes": [
+    {
+      "source": "quickship",
+      "page": 1,
+      "quote": "Ready to ship in 48 hours with on-hand inventory to support immediate job requirements",
+      "quoted_on_native_page": true
+    },
+    {
+      "source": "general",
+      "page": 1,
+      "quote": "1 % Driver with external 0-10V dimming wires",
+      "quoted_on_native_page": true
+    }
+  ],
+  "catalog_examples_observed_not_selected": [
+    "LT-24-L40/835-AF-QS-DIM-UNV",
+    "LT-24-L40/840-AF-QS-DIM-UNV"
+  ],
+  "findings": {
+    "quickship_inventory_statement_found": true,
+    "quickship_catalog_uses_DIM_not_DIM1": true,
+    "DIM_minimum_output_percent_established": false,
+    "specific_model_DLC_class_established": false,
+    "whole_family_availability_inferred": false,
+    "replacement_passes": false
+  },
+  "latest_live_run": "20261023-084824-7ab49b",
+  "latest_live_candidate_extract_urls": [
+    "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "https://starcous.com/product/sllt-led-troffer",
+    "https://starcous.com/products",
+    "https://starcous.com/products",
+    "https://starcous.com/",
+    "https://hew.com/specifications/LT_led.pdf",
+    "https://hew.com/products/lt"
+  ],
+  "latest_live_investigator_visited_quickship_pdf": false,
+  "visual_table_review": "Both native PDF page-one images inspected; web QuickShip screenshot failed and local PyMuPDF render was used",
+  "selection_policy_changed": false,
+  "provider_spend_added_usd": 0,
+  "provider_credits_added": 0
+}

@@ -1,0 +1,65 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_requirements model=nvidia/nemotron-3-super-120b-a12b in=4955 out=688 reasoning=0 ms=13765 cost=$0.002106 format=json_schema thinking=off
+
+07 84 00  6 requirements  12,428 chars of spec  $0.0021  -> data/requirements/07_84_00.draft.json
+  2.02.B     voc_g_per_l              lte     250.0                major    Products shall have VOC content lower than that required by 
+  2.02.C     astm_g21_rating          eq      0.0                  major    Firestopping materials shall have mold and mildew resistance
+  2.03.D     f_rating_hr              gte     None                 critical Through penetration firestopping systems shall have fire res
+  2.04.A.1   t_rating_hr              gte     None                 major    Minimum T Rating shall be equal to F Rating.
+  1.04.A.1   listing_agency           any_of  ['UL (FRD)', 'FM (AG)', 'ITS (DIR)'] major    Listing in UL (FRD), FM (AG), or ITS (DIR) will be considere
+  1.03.C     warranty_years           gte     1.0                  major    Provide data on product characteristics, performance ratings
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_requirements model=nvidia/nemotron-3-super-120b-a12b in=17996 out=6062 reasoning=0 ms=30504 cost=$0.010855 format=json_schema thinking=off
+
+26 51 00  50 requirements  61,820 chars of spec (truncated at 60,000)  $0.0109  -> data/requirements/26_51_00.draft.json
+  1.04.D.1.a t_rating_hr              gte     50000.0              major    LED Luminaires: Estimated useful life, calculated based on I
+  2.06.B.5   cri                      gte     80.0                 major    Screw-in type LED Lamps: Color Rendering Consistency: All la
+  1.10.B.1   warranty_years           gte     5.0                  major    Warranty Period for LED Luminaires, including LED modules, L
+  1.10.B.2   warranty_years           gte     3.0                  major    Warranty Period for Screw-in type LED Lamps: Three (3) years
+  1.10.C.1   warranty_years           gte     5.0                  major    Warranty Period for Emergency Lighting Unit Batteries: Five 
+  1.10.C.2   warranty_years           gte     5.0                  major    Warranty Period for internal batteries of Exit and Area of R
+  2.02.B.1   listed_ul_1598           eq      yes                  major    Provide products that are listed and labeled as complying wi
+  2.03.A     listed_ul_924            eq      yes                  major    Emergency lighting units complying with NFPA 101 and the Chi
+  2.04.A     listed_ul_924            eq      yes                  major    Internally illuminated exit signs with LEDs unless otherwise
+  2.09.S.1   listed_ul_8750           eq      yes                  major    LED Luminaires: Components: UL 8750 recognized or listed as 
+  1.04.D.1.b tested_ies_lm79          eq      available            major    LED Luminaires: Include IES LM-79 test report upon request.
+  2.09.S.2   tested_ies_lm80          eq      yes                  major    LED Luminaires: Tested in accordance with IES LM-79 and IES 
+  1.04.D.2   photometric_ies_lm63     eq      available            major    Provide electronic files of photometric data certified by a 
+  1.04.F.2   dlc_listed               eq      yes                  major    Include DLC listing status.
+  2.09.S.4   doe_lighting_facts       eq      yes                  major    LED Luminaires: Shall be provided with a U.S. Department of 
+  2.06.B.7   ansi_c78_379_compliant   eq      yes                  major    Reflector Lamp Beam Pattern: ANSI C78.379.
+  2.09.S.5   ansi_nema_c78_377_compliant eq      yes                  major    Chromaticity ranges for "white light" products, with various
+  2.09.S.6   macadam_ellipse_max_step lte     3.0                  major    LEDs shall be binned within a maximum 3-step MacAdam Ellipse
+  2.05.B.2   ansi_c82_ssl1_compliant  eq      yes                  major    Drivers and power supplies shall be provided in accordance w
+  2.05.B.2   ansi_c82_77_compliant    eq      yes                  major    Drivers and power supplies shall be provided in accordance w
+  2.05.C.4   fcc_part18_compliant     eq      yes                  major    LED drivers shall be factory provided by the respective lumi
+  2.05.B.4   driver_temp_rating       eq_ref  fixture_temp_rating  major    Provide UL listed and labeled drivers. Provide drivers with 
+  2.05.C.8   driver_surge_tolerance_aic gte     10000.0              major    Surge Tolerance: Capable of withstanding characteristic surg
+  2.05.C.7   driver_enclosure_type    eq      totally_enclosed_metallic major    Drivers shall be totally enclosed within a metallic enclosur
+  2.05.C.1   driver_dimming_range_min_percent lte     5.0                  major    Dimming Range: Continuous dimming from 100 percent to five p
+  2.05.C.2   driver_control_compat    eq      yes                  major    Control Compatibility: Fixtures intended to be dimmed shall 
+  2.05.C.5   driver_identical_within_type eq      yes                  major    Provide identical drivers within each luminaire type.
+  2.05.C.6   driver_connection_types  eq      both_intgrl_and_remote major    Provide complete connection to LED type luminaires through b
+  2.05.C.9.a remote_driver_location   eq      readily_accessible_dry_indoor_concealed major    Remote drivers are specifically not shown on the drawings. C
+  2.05.C.9.b remote_driver_wiring_in_conduit eq      yes                  major    All wiring to/from remote drivers and their associated LED l
+  2.05.C.9.c remote_driver_enclosure_chicago_plenum_rated eq      yes                  major    Metal Enclosures shall be Chicago Plenum Rated
+  2.05.C.9.d remote_driver_distance_limit eq_ref  manufacturer_specified_limit major    Verify and comply with remote distance limitations specified
+  2.05.C.9.b remote_driver_ventilated_metal_enclosure eq      yes                  major    Provide ventilated metal enclosures for remote drivers furni
+  1.04.D.3   input_watts              exists  None                 major    LED Drivers: Include information as to input watts.
+  1.04.D.3   remote_driver_mount_dist_limit exists  None                 major    LED Drivers: Indicate mounting distance limitation and stand
+  1.04.D.3   remote_driver_wire_size  exists  None                 major    LED Drivers: Indicate mounting distance limitation and stand
+  1.04.D.3   driver_dimming_type_range exists  None                 major    LED Drivers: Indicate dimming type and range.
+  1.04.D.4   led_modules_per_tag      exists  None                 major    LED modules: per luminaire tag, including life, lumen output
+  1.04.D.5   screw_in_lamp_life_hr    gte     20000.0              major    Screw-in type LED Lamps: Include rated life, color temperatu
+  1.04.D.5   screw_in_lamp_color_temp exists  None                 major    Screw-in type LED Lamps: Include rated life, color temperatu
+  1.04.D.5   screw_in_lamp_cri        exists  None                 major    Screw-in type LED Lamps: Include rated life, color temperatu
+  1.04.D.5   screw_in_lamp_lumen_output exists  None                 major    Screw-in type LED Lamps: Include rated life, color temperatu
+  1.04.D.6   battery_charger_info     exists  None                 major    Battery and charger information for emergency lighting units
+  1.04.D.7   remote_driver_mount_dist_limit exists  None                 major    Remote Drivers: Indicate mounting distance limitation and st
+  1.04.D.7   remote_driver_wire_size  exists  None                 major    Remote Drivers: Indicate mounting distance limitation and st
+  1.04.D.8   efficiency_data          exists  None                 major    Efficiency Data: Provide both lumen performance efficiency a
+  1.04.D.9   special_warranty_doc     eq      provided             major    Special Warranty: Provide documentation of compliance with s
+  1.04.F.1   mercury_content_lamp_life exists  None                 major    Include DOE "Lighting Facts" Information
+  1.04.F.2   dlc_listing_status       exists  None                 major    Include DLC listing status.
+  1.04.F.3   efficacy_info            exists  None                 major    Include Efficacy information.
+POST-RUN LEDGER: {"usd": 0.013187, "credits": 6.0}

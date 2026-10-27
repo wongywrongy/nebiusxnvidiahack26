@@ -1,0 +1,11 @@
+{
+  "scope": "Offline actual first-search query replay using reviewed property names; no targets, expected outputs or candidate identifiers",
+  "baseline_commit": "981c8be",
+  "code_hash_after": "d3ec3ac29fdf5768b346c9bc917acdf13eaa97c6bedb4e2c96574e5d3c9a86af",
+  "before": "\"LED troffer\" manufacturer specification sheet",
+  "after": "\"LED troffer\" manufacturer specification sheet Dims down to, DLC listing, Rated life (L70), macadam steps, Warranty",
+  "applies_to": [
+    "product_data"
+  ],
+  "paid_calls": 0
+}

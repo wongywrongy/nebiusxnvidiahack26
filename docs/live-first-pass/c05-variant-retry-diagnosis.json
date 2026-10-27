@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-094619-39bd46",
+  "reproduction": "MAX_OUTPUT_TOKENS=16384 INVESTIGATE_MAX_STEPS=12 .venv/bin/python scripts/eval.py --case c05 --out /tmp/speccheck-c05-variant-retry.json",
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_output_tokens": 16384,
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 12,
+    "map_limit": 20
+  },
+  "ledger_after": {
+    "usd": 0.443879,
+    "credits": 160.0
+  },
+  "items": {},
+  "error_events": [
+    {
+      "run_id": "20261021-094619-39bd46",
+      "case_id": "c05",
+      "t_ms": 117717,
+      "stage": "error",
+      "message": "The reply was cut off at the token limit",
+      "model": null,
+      "data": {
+        "reason": "The reply was cut off at the token limit"
+      }
+    }
+  ],
+  "requests_responses": [
+    {
+      "provider": "api.providers.tokenfactory",
+      "item_id": null,
+      "started_at": null,
+      "latency_ms": 117615,
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "max_tokens": 16384,
+        "chat_template_kwargs": {
+          "enable_thinking": false
+        },
+        "format": "json_schema",
+        "has_tools": false,
+        "messages": [
+          {
+            "role": "system",
+            "instruction_excerpt": "Reply with JSON only. It must match this JSON schema:\n{\"$defs\": {\"Claim\": {\"properties\": {\"id\": {\"title\": \"Id\", \"type\": \"string\"}, \"product\": {\"title\": \"Product\", \"type\": \"string\"}, \"manufacturer\": {\"title\": \"Manufacturer\", \"type\": \"string\"}, \"model\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Model\"}, \"property\": {\"description\": \"snake_case property name matching requirement properties\", \"title\": \"Property\", \"type\": \"string\"}, \"value\": {\"anyOf\": [{\"type\": \"number\"}, {\"type\": \"string\"}, {\"items\": {\"type\": \"string\"}, \"type\": \"array\"}, {\"type\": \"null\"}], \"title\": \"Value\"}, \"unit\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Unit\"}, \"page\": {\"anyOf\": [{\"type\": \"integer\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Page\"}, \"bbox\": {\"anyOf\": [{\"items\": {\"type\": \"number\"}, \"type\": \"array\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Bbox\"}, \"quote\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Short text from the page supporting the claim\", \"title\": \"Quote\"}, \"variant\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Exact phrase in the quote naming the optional model/driver/configuration limiting this value; null for a product-wide statement\", \"title\": \"Variant\"}}, \"required\": [\"id\", \"product\", \"manufacturer\", \"property\", \"value\"], \"title\": \"Claim\", \"type\": \"object\"}}, \"properties\": {\"product\": {\"title\": \"Product\", \"type\": \"string\"}, \"manufacturer\": {\"title\": \"Manufacturer\", \"type\": \"string\"}, \"model\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"title\": \"Model\"}, \"document_revision\": {\"anyOf\": [{\"type\": \"string\"}, {\"type\": \"null\"}], \"default\": null, \"description\": \"Revision or date printed on the sheet\", \"title\": \"Document Revision\"}, \"claims\": {\"items\": {\"$ref\": \"#/$defs/Claim\"}, \"title\": \"Claims\", \"type\": \"array\"}}, \"required\": [\"product\", \"manufacturer\", \"claims\"], \"title\": \"ClaimsOut\", \"type\": \"objec",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          },
+          {
+            "role": "user",
+            "instruction_excerpt": "Extract the product's stated properties from this submittal. Use these property names and meanings where they apply: {\"cri\": \"Color quality (CRI)\", \"dim_min_percent\": \"Dims down to\", \"dlc_listed\": \"DLC listing\", \"document_revision\": \"Data sheet version\", \"efficacy_lm_per_w\": \"Efficiency (lumens per watt)\", \"f_rating_hr\": \"Fire rating (F)\", \"input_watts_120v\": \"Power at 120 V\", \"input_watts_277v\": \"Power at 277 V\", \"l70_hours\": \"Rated life (L70)\", \"lumens\": \"Light output\", \"macadam_steps\": \"macadam steps\", \"max_annular_space_in\": \"Largest gap it can seal\", \"penetrant_types\": \"Pipe types covered\", \"service_temp_max_f\": \"Highest service temperature\", \"service_temp_range_f\": \"Service temperature range\", \"standards\": \"Test standards\", \"t_rating_hr\": \"Temperature rating (T)\", \"voc_g_per_l\": \"VOC (air quality)\", \"warranty_years\": \"Warranty\", \"watts\": \"Power draw\"}. Read every supplied page, including tables and notes. For a listed system, record its system number as model. Keep each test/rating metric distinct; never relabel a different metric to fit a requested name. Do not dump option tables. Omit SKU-dependent table values unless an exact submitted SKU is identified. A blank catalog-number field or an ordering example is not a submitted SKU selection. For other stated alternatives, retain distinct values without repeating the same value for every option. Set variant to the exact quoted option/configuration phrase whenever a value is limited to that option. Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. Copy each quote verbatim as one contiguous substring from that page; never paraphrase or join separate passages. Omit properties that are not stated instead of returning null claims. For lists, put each distinct standard or certification identifier in its own array entry. For covered pipe types, quote the enumerated penetrating-item list, not the wall studs or sleeves.",
+            "source_text": "[omitted; result evidence contains URLs and hashes]"
+          }
+        ]
+      },
+      "response": {
+        "finish_reason": "length",
+        "message": {
+          "content": {
+            "chars": 33362,
+            "sha256": "a88934d61ce0e53ec1c8dd43348167e5831ec094be7495a7d30122abf5f20b43",
+            "prefix": "{\"product\": \"BLT-2X4\", \"manufacturer\": \"Acuity Brands Lighting, Inc.\", \"model\": \"2BLT4\", \"document_revision\": \"Rev. 07/18/24\", \"claims\": [{\"id\": \"cl-1\", \"product\": \"BLT-2X4\", \"manufacturer\": \"Acuity Brands Lighting, Inc.\", \"model\": \"2BLT4\", \"property\": \"lumens\", \"value\": 4000, \"unit\": null, \"page\": 1, \"quote\": \"A typically configured 2BLT4 features a Unified Glare Rating (UGR) starting at 17, UGR data available on page 8. High performance extruded acrylic diffusers conceal LEDs and efficiently deliver light in a volumetric distribution.\"}, {\"id\": \"cl-2\", \"product\": \"BLT-2X4\", \"manufacturer\": \"Acuity Brands Lighting, Inc.\", \"model\": \"2BLT4\", \"property\": \"efficacy_lm_per_w\", \"value\": \">130\", \"unit\": \"LPW\", \"page\": 1, \"quote\": \"Configurable BLT: available in High Efficiency (HE) versions for applications where a lower wattage (over the standard product) is required. The High Efficiency versions deliver >130 LPW and can be specified via the Lumen Package designations in the Ordering Inform",
+            "suffix": ".2\\nStandard\\nP2KKMMVN\"}, {\"id\": \"cl-111, \", \"product\": \"BLT-2X4\", \"manufacturer\": \"Acuity Brands Lighting, Inc.\", \"model\": \"2BLT4\", \"property\": \"watts\", \"value\": 59.2, \"unit\": \"W\", \"page\": 11, \"quote"
+          },
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 16384,
+          "prompt_tokens": 18999,
+          "total_tokens": 35383,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 18999
+        }
+      }
+    }
+  ]
+}

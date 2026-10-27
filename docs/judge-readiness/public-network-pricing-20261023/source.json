@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-10-23T10:57:20.576277+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://nebius.com/prices",
+    "authorization": "none"
+  },
+  "response": {
+    "status_code": 200,
+    "final_url": "https://nebius.com/prices",
+    "body_sha256": "5b521f89c057cc947188a06f0e432b083b5bf4aceae92b97544decaa9480ce8e",
+    "body_bytes": 271766,
+    "quotes": {
+      "network_traffic": "Networking: Egress/Ingress traffic Free",
+      "public_ip": "Networking: Public IP address Free",
+      "taxes": "All prices are shown without any applicable taxes, including VAT."
+    }
+  },
+  "scope": "Public current published rates, not an account quote, future guarantee, tax advice, bill or deployment approval",
+  "object_storage_egress_scope": "Separate Standard Object Storage egress pricing remains distinct; no bucket is proposed for the initial controller trial",
+  "provider_calls_made": false,
+  "resource_mutations_made": false
+}

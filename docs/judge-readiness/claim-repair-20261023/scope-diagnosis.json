@@ -1,0 +1,255 @@
+{
+  "fresh_model_cost_usd": 0.1254984,
+  "fresh_web_credits": 7.0,
+  "items": {
+    "c03": {
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "fresh_model_cost_usd": 0.0477387,
+      "fresh_web_credits": 0.0,
+      "investigations": [],
+      "candidates": [
+        {
+          "name": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Temperature rating (T)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "January / 2026"
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ],
+          "claims": []
+        },
+        {
+          "name": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "model": "IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Temperature rating (T)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "January / 2026"
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ],
+          "claims": []
+        }
+      ]
+    },
+    "c07": {
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "fresh_model_cost_usd": 0.0777597,
+      "fresh_web_credits": 7.0,
+      "investigations": [
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "not_resolved",
+          "steps": 8
+        },
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "revision_only",
+          "steps": 8
+        }
+      ],
+      "candidates": [
+        {
+          "name": "Spec Sheet-LED Troffer",
+          "model": "SLLT",
+          "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "ok": true,
+              "note": "349000 hours"
+            },
+            {
+              "label": "Warranty",
+              "ok": true,
+              "note": "10 years"
+            },
+            {
+              "label": "DLC listing",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "macadam steps",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Dims down to",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ],
+          "claims": [
+            {
+              "property": "l70_hours",
+              "value": 349000.0,
+              "quote": "Reported L70 Lifetime: 349,000 hours @25°C",
+              "variant": null,
+              "scope_quote": "Reported L70 Lifetime: 349,000 hours @25°C",
+              "selection_quote": null
+            }
+          ]
+        },
+        {
+          "name": "LT LED Troffer",
+          "model": "LT",
+          "source_url": "https://hew.com/specifications/LT_led.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Warranty",
+              "ok": true,
+              "note": "5 years"
+            },
+            {
+              "label": "DLC listing",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "macadam steps",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Dims down to",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Current document",
+              "ok": null,
+              "note": "REV.04/12/18"
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ],
+          "claims": [
+            {
+              "property": "dim_min_percent",
+              "value": 1.0,
+              "quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+              "variant": "DIM1",
+              "scope_quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+              "selection_quote": null
+            },
+            {
+              "property": "macadam_steps",
+              "value": 3.0,
+              "quote": "All CCTs are within 3 MacAdam ellipses.",
+              "variant": "All CCTs are within 3 MacAdam ellipses.",
+              "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses.",
+              "selection_quote": null
+            },
+            {
+              "property": "l70_hours",
+              "value": "> 72000",
+              "quote": "L70 > 72,000 hours per IES TM-21.",
+              "variant": "L70 > 72,000 hours per IES TM-21.",
+              "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses.",
+              "selection_quote": null
+            },
+            {
+              "property": "dim_min_percent",
+              "value": 10.0,
+              "quote": "DIM\t\n10% dimming driver prewired for 0-10V low \nvoltage applications",
+              "variant": "DIM\t\n10% dimming driver prewired for 0-10V low \nvoltage applications",
+              "scope_quote": "DIM\t\n10% dimming driver prewired for 0-10V low \nvoltage applications",
+              "selection_quote": null
+            },
+            {
+              "property": "l70_hours",
+              "value": "> 72000",
+              "quote": "■\nELECTRICAL – High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+              "variant": "■\nELECTRICAL – High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+              "scope_quote": "■\nELECTRICAL – High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+              "selection_quote": null
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

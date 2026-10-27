@@ -1,0 +1,17 @@
+{
+  "pytest": {
+    "passed": 602,
+    "skipped": 2,
+    "seconds": 31.93
+  },
+  "startup_tests": 11,
+  "source_reproduced": true,
+  "standalone_synthetic_reproduction_passed": true,
+  "temporary_containers_removed": true,
+  "new_live_validation": false,
+  "real_wallet_transferred": false,
+  "image_published": false,
+  "hosted_persistence_verified": false,
+  "fresh_model_cost_usd": 0,
+  "fresh_tavily_credits": 0
+}

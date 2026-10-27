@@ -1,0 +1,13 @@
+{
+  "scope": "one-item consistency only; not release promotion",
+  "passed": true,
+  "run_id": "20261023-021821-1d7ea1",
+  "right_call": {
+    "n": 1,
+    "of": 1
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 1
+  }
+}

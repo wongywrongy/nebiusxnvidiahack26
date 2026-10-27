@@ -1,0 +1,16 @@
+{
+  "case_id": "c07",
+  "decision": "send_back",
+  "validity": "valid",
+  "warnings": [],
+  "diagnostics": [],
+  "duration_ms": 13439,
+  "fresh_model_cost_usd": 0.0044862,
+  "fresh_web_credits": 2.0,
+  "claims_extracted": 17,
+  "claims_kept": 2,
+  "web_values_read": 4,
+  "web_values_kept": 0,
+  "candidates": [],
+  "investigations": []
+}

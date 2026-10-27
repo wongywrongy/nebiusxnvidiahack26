@@ -1,0 +1,12 @@
+{
+  "checked": true,
+  "method": "Decimal: (2*CPU + 8*RAM)*hours + 32*disk*hours/730 + 32*filesystem*retention/730 + one-hour-job-count*(compute + 32*disk/730)",
+  "source": "deploy/nebius/cost-manifest.json",
+  "resource_subtotals_usd": [
+    1.8810849315068494,
+    12.683808219178083,
+    27.17958904109589,
+    97.8465205479452
+  ],
+  "scope": "forecast self-check only; no actual cloud bill, IAM or quota proof"
+}

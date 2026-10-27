@@ -1,0 +1,298 @@
+{
+  "case_id": "s4",
+  "title": "Firestop sealant, alternate product",
+  "decision": "approve_with_note",
+  "summary": "The firestop sealant submittal can be approved pending clarification on a few missing details that don’t affect performance but are needed for full compliance verification.",
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Not stated: VOC (air quality)",
+      "detail": "VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).",
+      "why_it_matters": "Verifying VOC levels ensures the sealant meets air quality rules and won’t cause issues during indoor installation.",
+      "requirement_id": "req_voc_content",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't compare: ASTM G21 rating",
+      "detail": "Values were not comparable.",
+      "why_it_matters": "Confirming mold resistance helps ensure the sealant will hold up in damp areas over time without degrading.",
+      "requirement_id": "req_mold_resistance",
+      "claim_id": "clm-1",
+      "claim_ids": [
+        "clm-1"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-1",
+          "doc_file": "samples/s4/hilti_fs-one_max_tds.pdf",
+          "page": 1,
+          "quote": "Mold and mildew performance\nClass 0 (ASTM G21-96)",
+          "boxes": [
+            {
+              "x0": 0.5162,
+              "y0": 0.4172,
+              "x1": 0.6707,
+              "y1": 0.4286
+            },
+            {
+              "x0": 0.72,
+              "y0": 0.4173,
+              "x1": 0.8315,
+              "y1": 0.4287
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Class 0",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Not stated: Test standards",
+      "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+      "why_it_matters": "Documenting the correct test standard proves the sealant was evaluated properly for fire containment in wall and floor penetrations.",
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "currency-newer",
+      "check": "currency",
+      "verdict": "note",
+      "severity": "minor",
+      "title": "Different revision found; no quoted values changed",
+      "detail": "Submitted 12/16 DBS, web source DBS • 03/25. The revision labels differ; their age order is not confirmed.",
+      "why_it_matters": "While the revision dates differ, we can’t tell which version is newer without clearer labeling—so we’re noting it for tracking, not rejecting based on age.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "12/16 DBS",
+        "right_label": "Current",
+        "right_value": "DBS • 03/25",
+        "verdict": "changed",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://productdata.hilti.com/APQ_HC_RAW/ASSET_DOC_LOC_4226707.pdf",
+          "tier": "manufacturer",
+          "title": "https://productdata.hilti.com/APQ_HC_RAW/ASSET_DOC_LOC_4226707.pdf",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "5344dfdebd5aea3c1ca2d0f04b57b01b946b182afc38a3d5cd0dfab7e8f632e3",
+          "excerpt": "Product information\nHilti Firestop\nSaving lives\nthrough innovation\nand education\nDBS • 03/25\nHIGH-PERFORMANCE INTUMESCENT \nFIRESTOP SEALANT FS-ONE MAX \nProduct description\n• Intumescent (expands when exposed to fire) firestop sealant that helps protect\ncombustible and non-combustible penetrations for up to 4 hours fire rating\nApplications for use\n• For effectively sealing most common through penet",
+          "archived_path": null
+        },
+        {
+          "url": "https://files-ask.hilti.com/original/jg/jgliffq2dn.pdf",
+          "tier": "manufacturer",
+          "title": "https://files-ask.hilti.com/original/jg/jgliffq2dn.pdf",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "5a41255136b71bbf9c30c7ec6c3542b007669625283c98f4b509c78cc4a34816",
+          "excerpt": " \n \n \nTechnical Data Sheet \n \nDOWSIL™ 791 Silicone Weatherproofing Sealant \n \nPage 1 of 4  \n®™Trademark of The Dow Chemical Company (“Dow”) or an affiliated company of Dow \nForm No. 62-1245-01-0325 S2D \nDOWSIL™ 791 Silicone Weatherproofing Sealant \nDescription \n \nNeutral, one-part silicone sealant \nSustainability Attribute: \n \n \n \n \nUses / \nApplications \n \n \nDOWSIL™ 791 Silicone Weatherproofing \n",
+          "archived_path": null
+        },
+        {
+          "url": "https://files-ask.hilti.com/original/cg/cgixe6rpkj.pdf",
+          "tier": "manufacturer",
+          "title": "https://files-ask.hilti.com/original/cg/cgixe6rpkj.pdf",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "55d72366c12031b800b6f7fc4bcc1a57633469520158b91ddeb3de30b2280bad",
+          "excerpt": "Product Information\nHilti. Outperform. Outlast.\nHilti, Inc. (U.S.) 1-800-879-8000 www.us.hilti.com • www.us.hilti.com/firestop • en español 1-800-879-5000\nFirestop Gun Grade Silicone Sealant  \nCFS-S SIL GG\nProduct description\n■\n■A silicone based firestop sealant that provides maximum movement in \nfire-rated joints, and seals through-penetration applications\nProduct features\n■\n■Halogen and solvent ",
+          "archived_path": null
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": null
+    }
+  ],
+  "comparison": [
+    {
+      "property": "document_revision",
+      "label": "Data sheet version",
+      "submitted": "12/16 DBS",
+      "current": "DBS • 03/25",
+      "changed": true,
+      "source_url": null,
+      "quote": null
+    },
+    {
+      "property": "astm_g21_rating",
+      "label": "astm g21 rating",
+      "submitted": "Class 0",
+      "current": "Class 0",
+      "changed": false,
+      "source_url": "https://productdata.hilti.com/APQ_HC_RAW/ASSET_DOC_LOC_4226707.pdf",
+      "quote": "Mold and mildew performance \nClass 0 (ASTM G21-13)"
+    },
+    {
+      "property": "service_temp_range_f",
+      "label": "Service temperature range",
+      "submitted": "-4 to 212 °F °F",
+      "current": "-4°F to 212°F °F",
+      "changed": false,
+      "source_url": "https://productdata.hilti.com/APQ_HC_RAW/ASSET_DOC_LOC_4226707.pdf",
+      "quote": "Temperature resistance range\n-4°F to 212°F (-20°C to 100°C)"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "FS-ONE MAX",
+      "manufacturer": "Hilti",
+      "model": null,
+      "property": "astm_g21_rating",
+      "value": "Class 0",
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "Mold and mildew performance\nClass 0 (ASTM G21-96)",
+      "variant": null
+    },
+    {
+      "id": "clm-2",
+      "product": "FS-ONE MAX",
+      "manufacturer": "Hilti",
+      "model": null,
+      "property": "service_temp_range_f",
+      "value": "-4 to 212 °F",
+      "unit": "°F",
+      "page": 1,
+      "bbox": null,
+      "quote": "Temperature resistance range\n-4 to 212 °F",
+      "variant": null
+    }
+  ],
+  "document_revision": "12/16 DBS",
+  "note_to_subcontractor": "Please provide documentation confirming VOC content, mold resistance (ASTM G21 rating), and test standards (ASTM E814, E119, or UL 1479) for the alternate sealant. No changes are needed to the product itself—just the paperwork.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 943,
+      "output_tokens": 29,
+      "cost_usd": 0.000064,
+      "latency_ms": 821,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2173,
+      "output_tokens": 211,
+      "cost_usd": 0.000842,
+      "latency_ms": 2079,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8073,
+      "output_tokens": 203,
+      "cost_usd": 0.002605,
+      "latency_ms": 2244,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 727,
+      "output_tokens": 316,
+      "cost_usd": 0.000503,
+      "latency_ms": 4564,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 26,
+  "investigation": null,
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 2,
+  "claims_kept": 2,
+  "web_values_read": 2,
+  "web_values_kept": 2
+}

@@ -1,0 +1,165 @@
+diff --git a/api/pipeline/extract.py b/api/pipeline/extract.py
+index 05b22a9..059a4b7 100644
+--- a/api/pipeline/extract.py
++++ b/api/pipeline/extract.py
+@@ -206,6 +206,8 @@ async def _read_claims(case_id, text, properties):
+                 "the value quote, not just a table heading. Use product_wide only for unqualified product properties, not selectable options. "
+                 "Return selection only when submitted evidence explicitly marks a selected/submitted/specified configuration, with its page and exact quote. "
+                 "Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. "
++                "For every physical quantity, include unit explicitly and copy it from the supporting quote, even when the property name encodes a unit. "
++                "Use null units only for dimensionless or categorical values; omit a physical quantity if its unit is not printed. "
+                 "Copy each quote verbatim as one contiguous substring from that page, including its exact punctuation; "
+                 "never paraphrase, add sentence punctuation or join separate passages. "
+                 "Omit properties that are not stated instead of returning null claims. "
+@@ -220,6 +222,8 @@ async def _read_claims(case_id, text, properties):
+         def model_json_schema(cls, **kwargs):
+             schema = super().model_json_schema(**kwargs)
+             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
++            schema["$defs"]["Claim"]["properties"]["unit"]["description"] = (
++                "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values.")
+             schema["$defs"]["Claim"]["properties"]["scope_quote"]["description"] = (
+                 "Shortest exact complete sentence or clause that contains this value quote and all conditions on this metric. "
+                 "Exclude neighboring metrics and their independent conditions; do not copy a multi-metric paragraph.")
+diff --git a/api/pipeline/verify.py b/api/pipeline/verify.py
+index 8365597..46f594c 100644
+--- a/api/pipeline/verify.py
++++ b/api/pipeline/verify.py
+@@ -193,6 +193,9 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
+     outputs, usage = [], []
+     for batch in chunks or [[]]:
+         out, u = await _read_sources(fx, submitted, batch, investigated, correction, submitted_label=submitted_label)
++        status = out.model_copy(update={"current_values": []})
++        gate(status, pages, measure=False, submitted=submitted)
++        out.status, out.status_quote = status.status, status.status_quote
+         outputs.append(out)
+         usage.append(u)
+     merged = outputs[0].model_copy(deep=True)
+@@ -205,6 +208,8 @@ async def read_sources(fx, submitted: ClaimsOut, pages: list[dict], investigated
+         status = next(out for out in outputs if out.status == merged.status)
+         merged.status_quote, merged.status_date, merged.replacement = status.status_quote, status.status_date, status.replacement
+         merged.status_family = status.status_family
++    else:
++        merged.status_quote = merged.status_date = merged.replacement = merged.status_family = None
+     merged.source_urls = list(dict.fromkeys(url for out in outputs for url in out.source_urls))
+     return merged, usage
+ 
+diff --git a/api/providers/tavily.py b/api/providers/tavily.py
+index 5c5f712..4a2cc8d 100644
+--- a/api/providers/tavily.py
++++ b/api/providers/tavily.py
+@@ -67,6 +67,7 @@ def _document_link(text: str, base: str) -> Optional[str]:
+     links = re.finditer(r'''href\s*=\s*["']([^"']+)["']|(https?://[^\s"'<>()[\]]+)''', text, re.I)
+     candidates = [m[1] or m[2] for m in links]
+     candidates += re.findall(r"\(([^\s)]+\.pdf(?:\?[^\s)]*)?)\)", text, re.I)
++    documents = []
+     for link in candidates:
+         link = urljoin(base, unescape(link))
+         if _full_catalog(link):
+@@ -74,10 +75,13 @@ def _document_link(text: str, base: str) -> Optional[str]:
+         if not re.search(r"\.pdf(?:[?#]|$)|/(?:PDS[_-]|[^/?#]*spec[_-]sheet)", link, re.I):
+             continue
+         try:
+-            return Extract(url=link).url
++            documents.append(Extract(url=link).url)
+         except ValueError:
+             continue
+-    return None
++    # shortcut: prefer explicit sheet paths; opaque document IDs retain page order until link labels are needed.
++    sheet = r"/spec(?:sheet|ification)s?\d*(?:/|[-_])|(?:data|spec)[\W_]*sheet|(?:product|technical)[\W_]*data|/PDS[_-]"
++    return next((url for url in documents if re.search(sheet, unquote(urlparse(url).path), re.I)),
++                documents[0] if documents else None)
+ 
+ 
+ def _pdf_result(requested: str, pages: list[dict]) -> dict:
+diff --git a/tests/test_providers.py b/tests/test_providers.py
+index 8f079d6..f95dbb5 100644
+--- a/tests/test_providers.py
++++ b/tests/test_providers.py
+@@ -351,6 +351,31 @@ def test_document_discovery_uses_public_links_and_resolves_relative_urls():
+     assert tavily._document_link('"https://cdn.test/PDS_Product_English"', "https://maker.test") == "https://cdn.test/PDS_Product_English"
+ 
+ 
++@pytest.mark.parametrize("document", ["/specsheet2/product.pdf", "/docs/product-data-sheet.pdf", "/specifications/product.pdf"])
++def test_product_sheet_precedes_general_resource_pdf(document):
++    html = f'<a href="/resources/lighting-guide.pdf">Lighting guide</a><a href="{document}">Spec sheet</a>'
++    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test" + document
++
++
++def test_preferred_sheet_still_requires_a_public_url():
++    html = '<a href="http://127.0.0.1/specsheet2/private.pdf">Spec</a><a href="/docs/current.pdf">Data</a>'
++    assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
++
++
++def test_direct_fallback_fetches_product_sheet_instead_of_navigation_guide(live):
++    page = "https://maker.test/product"
++    document = "https://maker.test/specsheet2/product.pdf"
++    live[0].get(page).respond(200, text='<a href="/resources/lighting-guide.pdf">Guide</a>'
++                            '<a href="/specsheet2/product.pdf">Spec sheet</a>')
++    wrong = live[0].get("https://maker.test/resources/lighting-guide.pdf").respond(500)
++    pdf = pymupdf.open()
++    pdf.new_page().insert_text((72, 72), "Product model Z technical data")
++    live[0].get(document).respond(200, content=pdf.tobytes())
++    pages = asyncio.run(tavily.fetch_pdf(page))
++    assert pages[0]["source_url"] == document and "Product model Z" in pages[0]["text"]
++    assert not wrong.called
++
++
+ @pytest.mark.parametrize("name", ["FullCatalog_2026.pdf", "MASTER-catalog.pdf", "Complete%20Catalog.pdf"])
+ def test_product_document_discovery_skips_company_catalogs(name):
+     html = f'<a href="/{name}">Catalog</a>'
+diff --git a/tests/test_source_identity.py b/tests/test_source_identity.py
+index b6e3287..d65a94e 100644
+--- a/tests/test_source_identity.py
++++ b/tests/test_source_identity.py
+@@ -98,6 +98,51 @@ def test_family_status_does_not_import_family_values():
+     assert out.status == "discontinued" and not out.current_values
+ 
+ 
++@pytest.mark.parametrize("reverse", [False, True])
++@pytest.mark.parametrize("active_quote", [None, "Model OTHER is available."])
++def test_unsupported_status_cannot_cancel_a_supported_notice(monkeypatch, reverse, active_quote):
++    from api.pipeline import metrics
++    notice = "The LX family is discontinued."
++    pages = [{"url": URL, "raw_content": "Model LX-20. " + notice + " Power 10 W."},
++             {"url": "https://maker.test/other", "raw_content": "Model OTHER is available."}]
++    outputs = [VerifyOut(status="discontinued", status_family="LX", status_quote=notice,
++        current_values=[dict(property="watts", value=10, unit="W", quote="Power 10 W.", source_url=URL,
++            model="LX-20", identity_quote="Model LX-20", scope="product_wide", scope_quote="Power 10 W.")]),
++        VerifyOut(status="active", status_quote=active_quote,
++            current_values=[dict(property="watts", value=999, unit="W", quote="Invented 999 W")])]
++    if reverse:
++        pages.reverse()
++        outputs.reverse()
++    monkeypatch.setattr(verify, "page_batches", lambda pages, limit: [[p] for p in pages])
++    async def read(*args, **kwargs):
++        return outputs.pop(0), Usage(task="verify", tier="verify", model="test")
++    monkeypatch.setattr(verify, "_read_sources", read)
++    counts = dict.fromkeys(metrics.FIELDS, 0)
++    token = metrics.COUNTS.set(counts)
++    try:
++        out, _ = asyncio.run(verify.read_sources(None, submitted(), pages))
++        assert out.status == "discontinued" and out.status_quote == notice
++        assert len(out.current_values) == 2  # Value validation and correction remain the caller's job.
++        verify.gate(out, pages, submitted=submitted())
++        assert len(out.current_values) == 1
++        assert counts["web_values_read"] == 2 and counts["web_values_kept"] == 1
++    finally:
++        metrics.COUNTS.reset(token)
++
++
++def test_genuinely_conflicting_supported_statuses_remain_unknown(monkeypatch):
++    quotes = ["The LX family is discontinued.", "Model LX-20 is available."]
++    outputs = [VerifyOut(status="discontinued", status_family="LX", status_quote=quotes[0]),
++               VerifyOut(status="active", status_quote=quotes[1])]
++    pages = [{"url": f"https://maker.test/{n}", "raw_content": quote} for n, quote in enumerate(quotes)]
++    monkeypatch.setattr(verify, "page_batches", lambda pages, limit: [[p] for p in pages])
++    async def read(*args, **kwargs):
++        return outputs.pop(0), Usage(task="verify", tier="verify", model="test")
++    monkeypatch.setattr(verify, "_read_sources", read)
++    out, _ = asyncio.run(verify.read_sources(None, submitted(), pages))
++    assert out.status == "unknown" and out.status_quote is None and out.status_family is None
++
++
+ @pytest.mark.parametrize("descriptor", ["LX", "LX family", "LX series", "LX range"])
+ @pytest.mark.parametrize("model,accepted", [("2LX-2X4", True), ("2LXX-2X4", False)])
+ def test_family_descriptor_and_markdown_do_not_hide_a_family_wide_notice(descriptor, model, accepted):

@@ -1,0 +1,37 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+Inbox
+2
+Scan
+3
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Start over
+Scan complete
+1 to send back · 2 to approve
+Start review
+
+Nemotron 3 Nano and Nemotron 3 Super on Nebius Token Factory read 3 submittals; Tavily checked the manufacturers' sites (3 credits). 99k tokens · $0.03 model cost · 20 s for the longest item · includes cached usage; cached cost and credits are usage equivalents, not fresh charges · Scoreboard
+
+NUMBER
+SUBMITTAL
+RESULT
+07 84 00-01
+Firestop sealant, through-penetrations
+STI SpecSeal LCI · Coastline Firestop
+Approve
+The firestop sealant submittal meets all requirements and can be approved as submitted.
+07 84 00-03
+Firestop sealant, cable penetrations
+3M IC 15WB+ · Coastline Firestop
+Send back
+We need more information about the firestop sealant's mold resistance and test standards before we can approve it, and the data sheet provided is outdated.
+Upload
+sti-sss-new-upload.pdf
+You
+Approve with note
+The fire stopping submittal looks good overall but needs clarification on test standards and confirmation about which document version is current.

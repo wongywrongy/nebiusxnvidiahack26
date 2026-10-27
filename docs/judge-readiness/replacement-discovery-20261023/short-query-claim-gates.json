@@ -1,0 +1,116 @@
+[
+  {
+    "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "property": "dim_min_percent",
+    "value": null,
+    "unit": null,
+    "quote": "The LED troffer are fully dimmable, and are compatible with building controls, motion sensors, timers, and daylight harvesting systems.\n0-10V Continuous dimming",
+    "page_quote": false,
+    "value_quote": false,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "property": "dlc_listed",
+    "value": [
+      "DLC Premium"
+    ],
+    "unit": null,
+    "quote": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "property": "l70_hours",
+    "value": 349000.0,
+    "unit": "hours",
+    "quote": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "property": "macadam_steps",
+    "value": null,
+    "unit": null,
+    "quote": "",
+    "page_quote": false,
+    "value_quote": false,
+    "metric_quote": false,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "property": "warranty_years",
+    "value": 10.0,
+    "unit": "years",
+    "quote": "Warranty 10 Years",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://hew.com/specifications/LT_led.pdf",
+    "property": "dim_min_percent",
+    "value": 1.0,
+    "unit": "%",
+    "quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://hew.com/specifications/LT_led.pdf",
+    "property": "dlc_listed",
+    "value": [
+      "DesignLights Consortium qualified product"
+    ],
+    "unit": null,
+    "quote": "DesignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://hew.com/specifications/LT_led.pdf",
+    "property": "l70_hours",
+    "value": 72000.0,
+    "unit": "hours",
+    "quote": "L70 > 72,000 hours per IES TM-21",
+    "page_quote": true,
+    "value_quote": false,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://hew.com/specifications/LT_led.pdf",
+    "property": "macadam_steps",
+    "value": 3.0,
+    "unit": null,
+    "quote": "All CCTs are within 3 MacAdam ellipses.",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": true
+  },
+  {
+    "source_url": "https://hew.com/specifications/LT_led.pdf",
+    "property": "warranty_years",
+    "value": 5.0,
+    "unit": "years",
+    "quote": "5-year limited warranty, see hew.com/warranty",
+    "page_quote": true,
+    "value_quote": true,
+    "metric_quote": true,
+    "unit_quote": false
+  }
+]

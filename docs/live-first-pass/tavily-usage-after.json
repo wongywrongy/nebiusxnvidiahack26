@@ -1,0 +1,35 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.tavily.com/usage",
+    "authorization": "[REDACTED]"
+  },
+  "status": 200,
+  "response": {
+    "key": {
+      "usage": 5,
+      "limit": null,
+      "search_usage": 3,
+      "crawl_usage": 0,
+      "extract_usage": 0,
+      "map_usage": 2,
+      "research_usage": 0
+    },
+    "account": {
+      "current_plan": "Researcher",
+      "plan_usage": 5,
+      "plan_limit": 1000,
+      "search_usage": 3,
+      "crawl_usage": 0,
+      "extract_usage": 0,
+      "map_usage": 2,
+      "research_usage": 0,
+      "paygo_usage": 0,
+      "paygo_limit": null
+    }
+  },
+  "ledger": {
+    "usd": 0.000226,
+    "credits": 6.0
+  }
+}

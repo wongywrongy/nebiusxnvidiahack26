@@ -1,0 +1,1143 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-081707-7f718a",
+  "reproduction": ".venv/bin/python scripts/eval.py --case c07 --out /tmp/speccheck-c07-status-source.json",
+  "warnings": [],
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "Texas Instruments LM35 datasheet",
+          "include_domains": [
+            "ti.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 3723
+      },
+      {
+        "n": 2,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 1.0,
+        "ms": 427
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf"
+        },
+        "summary": "credit cap reached; couldn't confirm",
+        "credits": 0.0,
+        "ms": 0
+      }
+    ],
+    "outcome": "capped"
+  },
+  "counts": {
+    "claims_extracted": 5,
+    "claims_kept": 1,
+    "web_values_read": 0,
+    "web_values_kept": 0
+  },
+  "fixes": [
+    {
+      "head": "No passing replacement found",
+      "query": "Acuity Brands Lighting, Inc. current LED troffer data sheet",
+      "candidates": [
+        {
+          "name": "CP2102N Datasheet (PDF)",
+          "source_url": "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf",
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Warranty",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "DLC listing",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "macadam steps",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Dims down to",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "Rev. 1.5"
+            }
+          ],
+          "passes": false
+        },
+        {
+          "name": "LM35 Precision Centigrade Temperature Sensors",
+          "source_url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Warranty",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "DLC listing",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "macadam steps",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Dims down to",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Current document",
+              "ok": null,
+              "note": "not stated"
+            }
+          ],
+          "passes": false
+        }
+      ],
+      "suggest": ""
+    }
+  ],
+  "requests_responses": [
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+            "title": "Discontinuation Notice: Lithonia Lighting\u00ae TL Recessed Luminaire",
+            "chars": 19301
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"status\": \"discontinued\", \"replacement\": null, \"current_revision\": null, \"status_date\": \"June 30th, 2024\", \"status_quote\": \"As of\\u00a0**June 30th, 2024**, the TL family will be discontinued.\", \"current_values\": [], \"source_urls\": [\"https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2\"], \"notes\": \"No warranty information found in the provided source.\"}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 133,
+          "prompt_tokens": 4834,
+          "total_tokens": 4967,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 4834
+        }
+      },
+      "latency_ms": 2121
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Acuity Brands Lighting, Inc. current LED troffer data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf",
+            "title": "CP2102N Datasheet (PDF)",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          },
+          {
+            "url": "https://pip.raspberrypi.com/documents/RP-008371-DS-rp2040-datasheet.pdf",
+            "title": "[PDF] RP2040 Datasheet: A microcontroller by Raspberry Pi.",
+            "chars": 0
+          },
+          {
+            "url": "https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bme280-ds002.pdf",
+            "title": "BME280 Combined humidity and pressure sensor",
+            "chars": 0
+          },
+          {
+            "url": "https://dl.ubnt.com/datasheets/unifi/UniFi_AC_APs_DS.pdf",
+            "title": "UniFi AC AP Datasheet",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf",
+            "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "https://pip.raspberrypi.com/documents/RP-008371-DS-rp2040-datasheet.pdf"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 0
+        },
+        "results": [
+          {
+            "url": "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf",
+            "title": "CP2102N Datasheet (PDF)",
+            "chars": 71958
+          },
+          {
+            "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 56981
+          },
+          {
+            "url": "https://pip.raspberrypi.com/documents/RP-008371-DS-rp2040-datasheet.pdf",
+            "title": "[PDF] RP2040 Datasheet: A microcontroller by Raspberry Pi.",
+            "chars": 1315825
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"product\": \"CP2102N\", \"manufacturer\": \"Silicon Labs\", \"document_revision\": \"Rev. 1.5\", \"claims\": []}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 40,
+          "prompt_tokens": 3398,
+          "total_tokens": 3438,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 3398
+        }
+      },
+      "latency_ms": 1543
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Silicon Labs CP2102N data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.alldatasheet.com/datasheet-pdf/pdf/851451/SILABS/CP2102N-A02-GQFN24.html",
+            "title": "CP2102N-A02-GQFN24 Datasheet(PDF) - Silicon Laboratories",
+            "chars": 0
+          },
+          {
+            "url": "https://datasheet4u.com/datasheets/Silicon-Laboratories/CP2102/605381",
+            "title": "CP2102 Datasheet PDF - BRIDGE | Silicon Labs",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf",
+            "title": "CP2102N Datasheet (PDF)",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/interface/usb-bridges/usbxpress/device.cp2102n-gqfn20",
+            "title": "CP2102N-GQFN20 USBXpress USB Bridge - Silicon Labs",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/interface/usb-bridges/usbxpress/device.cp2102n-gqfn28",
+            "title": "CP2102N-GQFN28 USBXpress USB Bridge - Silicon Labs",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Silicon Labs CP2102N discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://theobsolescencebrief.com/ft232rl-replacement-usb-uart-bridge",
+            "title": "FT232RL replacement: FT232RNL, CP2102N, CH340 (2026)",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/interface/usb-bridges/usbxpress/device.cp2102n-gqfn28",
+            "title": "CP2102N-GQFN28 USBXpress USB Bridge - Silicon Labs",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/interface/usb-bridges/usbxpress/device.cp2102n-gqfn24",
+            "title": "CP2102N-GQFN24 USBXpress USB Bridge - Silicon Labs",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/interface/usb-bridges/usbxpress",
+            "title": "USBXpress USB Bridges - USB-to-UART bridge controllers - Silicon Labs",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/development-tools/interface/cp2102n-development-kit",
+            "title": "CP2102N USBXpress Bridge Development Kit - Silicon Labs",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Silicon Labs CP2102N discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "news",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.allaboutcircuits.com/technical-articles/project-troubleshooting-solutions-from-a-problem-magnet",
+            "title": "Tales of Project Troubleshooting: Solutions from a Problem-Magnet",
+            "chars": 0
+          },
+          {
+            "url": "https://www.allaboutcircuits.com/projects/how-to-add-BLE5-custom-project-gt-tronics-ble5-module-CC264BNA-S",
+            "title": "How to Add Bluetooth 5 to a Project with a GT-tronics BLE5 Module",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Silicon Labs CP2102N discontinuation notice",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.silabs.com/documents/public/pcns/191204684-CP2102N-Revision-A01-End-of-Life.pdf",
+            "title": "191204684 CP2102N Revision A01 End of Life",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/interface/usb-bridges/usbxpress/device.cp2102n-gqfn24",
+            "title": "CP2102N-GQFN24 USBXpress USB Bridge - Silicon Labs",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/documents/public/pcns/2604081795-End-of-Life-Notification-for-Select-EFM8BB1-2-3-Devices.pdf",
+            "title": "2604081795 End of Life Notification for Select EFM8BB1/2/ ...",
+            "chars": 0
+          },
+          {
+            "url": "https://www.farnell.com/datasheets/4726665.pdf",
+            "title": "[PDF] 2509171712 End of Life Notification for Select Si4x3x-B1 ... - Farnell",
+            "chars": 0
+          },
+          {
+            "url": "https://www.silabs.com/documents/public/pcns/2405221535-End-of-Life-Notification-for-Select-EFM32LG-and-EFM32WG-MCUs.pdf",
+            "title": "2405221535 End of Life Notification for Select EFM32LG ...",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/map",
+        "body": {
+          "url": "https://acuitybrands.com",
+          "limit": 20,
+          "max_depth": 1,
+          "include_usage": true,
+          "instructions": "Find the current PDF data sheet for Silicon Labs CP2102N"
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 0
+        },
+        "results": []
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://www.alldatasheet.com/datasheet-pdf/pdf/851451/SILABS/CP2102N-A02-GQFN24.html",
+            "https://datasheet4u.com/datasheets/Silicon-Laboratories/CP2102/605381",
+            "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.alldatasheet.com/datasheet-pdf/pdf/851451/SILABS/CP2102N-A02-GQFN24.html",
+            "title": "CP2102N-A02-GQFN24 Datasheet(PDF) - Silicon Laboratories",
+            "chars": 14078
+          },
+          {
+            "url": "https://datasheet4u.com/datasheets/Silicon-Laboratories/CP2102/605381",
+            "title": "CP2102 Datasheet PDF - BRIDGE | Silicon Labs",
+            "chars": 2199
+          },
+          {
+            "url": "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf",
+            "title": "CP2102N Datasheet (PDF)",
+            "chars": 71958
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"Rev. 1.5\", \"status_date\": null, \"status_quote\": \"Rev. 1.5\", \"current_values\": [], \"source_urls\": [\"https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf\"], \"notes\": null}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 86,
+          "prompt_tokens": 13317,
+          "total_tokens": 13403,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 13317
+        }
+      },
+      "latency_ms": 1759
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"product\": \"LM35\", \"manufacturer\": \"Texas Instruments Incorporated\", \"model\": null, \"document_revision\": \"SNIS159H \u2013 AUGUST 1999 \u2013 REVISED DECEMBER 2017\", \"claims\": []}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 65,
+          "prompt_tokens": 2512,
+          "total_tokens": 2577,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2512
+        }
+      },
+      "latency_ms": 1344
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Texas Instruments Incorporated LM35 data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.egmont.com.pl/labjack/katalog/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          },
+          {
+            "url": "https://www.scribd.com/doc/127693791/lm35-pdf",
+            "title": "lm35 PDF | PDF | Technology & Engineering",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/life-safety/new-iota-micro-inverter-sell-sheet",
+            "title": "New IOTA\u00ae Micro Inverter Sell Sheet!",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/life-safety/new-iota-ets-dr-sell-sheet",
+            "title": "New IOTA\u00ae ETS DR Sell Sheet!",
+            "chars": 0
+          },
+          {
+            "url": "https://www.acuitybrands.com/products/detail/3852234/lithonia-lighting/bltdtc/recessed-led-data-center-troffer",
+            "title": "BLTDTC - Recessed LED Data Center Troffer",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Texas Instruments Incorporated LM35 discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1637963/lm35-please-confirm-the-part-lm35dz-is-obsolete-or-not",
+            "title": "LM35: Please confirm the part LM35DZ is Obsolete or Not - TI E2E",
+            "chars": 0
+          },
+          {
+            "url": "https://www.mouser.com/datasheet/2/405/lm35-405920.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          },
+          {
+            "url": "https://e2e.ti.com/support/sensors-group/sensors/f/sensors-forum/1491474/lm35-replacement",
+            "title": "LM35: Replacement - Sensors forum - TI E2E",
+            "chars": 0
+          },
+          {
+            "url": "https://www.utmel.com/components/a-comprehension-introduction-of-lm35?id=2119",
+            "title": "A Comprehensive Introduction of LM35",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Texas Instruments Incorporated LM35 discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "news",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.arduinolibraries.info/libraries",
+            "title": "All Libraries - Arduino Libraries",
+            "chars": 0
+          },
+          {
+            "url": "https://www.researchgate.net/publication/260303884_Automated_Irrigation_System_Using_a_Wireless_Sensor_Network_and_GPRS_Module",
+            "title": "Automated Irrigation System Using a Wireless Sensor ...",
+            "chars": 0
+          },
+          {
+            "url": "https://www.facebook.com/mbeabari.deebom.5/posts/-why-does-temperature-measurement-lag-behind-the-process-process-temperature-cha/2338221400076027",
+            "title": "Why temperature measurement lags behind the process",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Texas Instruments Incorporated LM35 discontinuation notice",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "acuitybrands.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/8921/PDN20260423002.3.pdf",
+            "title": "Product Discontinuance Notification Details",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          },
+          {
+            "url": "https://www.farnell.com/datasheets/4016093.pdf",
+            "title": "PDN# 20231004006.3 Discontinuance of Select Devices ...",
+            "chars": 0
+          },
+          {
+            "url": "https://insights.acuitybrands.com/pathway-connectivity-blog/product-discontinuation-notice-2",
+            "title": "Product Discontinuation Notice",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/video/5609684843001",
+            "title": "How to Interface the LM35 Analog Temperature Sensor with Arduino | Video | TI.com",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://insights.acuitybrands.com/life-safety/new-iota-micro-inverter-sell-sheet",
+            "https://insights.acuitybrands.com/life-safety/new-iota-ets-dr-sell-sheet",
+            "https://insights.acuitybrands.com/pathway-connectivity-blog/product-discontinuation-notice-2"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 0
+        },
+        "results": [
+          {
+            "url": "https://insights.acuitybrands.com/life-safety/new-iota-micro-inverter-sell-sheet",
+            "title": "New IOTA\u00ae Micro Inverter Sell Sheet!",
+            "chars": 24963
+          },
+          {
+            "url": "https://insights.acuitybrands.com/life-safety/new-iota-ets-dr-sell-sheet",
+            "title": "New IOTA\u00ae ETS DR Sell Sheet!",
+            "chars": 24673
+          },
+          {
+            "url": "https://insights.acuitybrands.com/pathway-connectivity-blog/product-discontinuation-notice-2",
+            "title": "Product Discontinuation Notice",
+            "chars": 24034
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"status\": \"unknown\", \"replacement\": null, \"current_revision\": null, \"status_date\": null, \"status_quote\": null, \"current_values\": [], \"source_urls\": [], \"notes\": \"No claims were submitted to verify.\"}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 56,
+          "prompt_tokens": 15704,
+          "total_tokens": 15760,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 15704
+        }
+      },
+      "latency_ms": 1836
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": null,
+        "has_tools": true
+      },
+      "response": {
+        "message": {
+          "content": "I need to search for Texas Instruments LM35 documentation on their official site (ti.com), despite the provided domain being acuitybrands.com which seems incorrect for TI products. Let me start by searching for the LM35 datasheet on ti.com.",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-b20cf959373c4355",
+              "function": {
+                "arguments": "{\"query\": \"Texas Instruments LM35 datasheet\", \"include_domains\": [\"ti.com\"]}",
+                "name": "search"
+              },
+              "type": "function"
+            }
+          ],
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 97,
+          "prompt_tokens": 1262,
+          "total_tokens": 1359,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 1262
+        }
+      },
+      "latency_ms": 1212
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "Texas Instruments LM35 datasheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "ti.com"
+          ],
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.ti.com/product/LM35?bm-verify=AAQAAAAL_____6SVf2og6Rq3JTBAnX_9-M_5_wGAD25VoQWPJD1rmcbWYjoC-brcmdYALLJNVktmyHviXIUNxlpl9d2l9T4yhXo1mk1XOX1yLaPBnow4P-lJt4pVQ4g3-mxSX3kjax0B2GKvEbc-qQLsf5MkbruzgT5yl_x2PO2oa9wgDjUN7kuVpdC-4u6yxGqD143XPfBc_mB1kB2A6U1_oZBhfCrQAMJ0vzXB_ke4l0Q8IoqDFsgvPO2WQF5RvQ",
+            "title": "LM35 data sheet, product information and support | TI.com",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/product/LM35",
+            "title": "LM35 data sheet, product information and support | TI.com",
+            "chars": 0
+          },
+          {
+            "url": "http://www.ti.com/product/lm35",
+            "title": "LM35 data sheet, product information and support | TI.com",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/lit/gpn/LM35",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          },
+          {
+            "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": null,
+        "has_tools": true
+      },
+      "response": {
+        "message": {
+          "content": "Now I'll extract the actual datasheet PDF to get the exact revision and check if there's any status information about whether it's still made. Let me extract the datasheet URL.",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-a6e3d2b1466cb7aa",
+              "function": {
+                "arguments": "{\"url\": \"https://www.ti.com/lit/ds/symlink/lm35.pdf\"}",
+                "name": "extract"
+              },
+              "type": "function"
+            }
+          ],
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 77,
+          "prompt_tokens": 3139,
+          "total_tokens": 3216,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 3139
+        }
+      },
+      "latency_ms": 1126
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://www.ti.com/lit/ds/symlink/lm35.pdf"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.ti.com/lit/ds/symlink/lm35.pdf",
+            "title": "LM35 Precision Centigrade Temperature Sensors",
+            "chars": 56981
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": null,
+        "has_tools": true
+      },
+      "response": {
+        "message": {
+          "content": "Let me look for the revision history section and any status/production information in the datasheet.",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": [
+            {
+              "id": "chatcmpl-tool-bb27c24c527ae72e",
+              "function": {
+                "arguments": "{\"url\": \"https://www.ti.com/lit/ds/symlink/lm35.pdf\"}",
+                "name": "extract"
+              },
+              "type": "function"
+            }
+          ],
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 59,
+          "prompt_tokens": 4998,
+          "total_tokens": 5057,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 4998
+        }
+      },
+      "latency_ms": 3607
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"summary\": \"This LED fixture submission needs more details before we can approve it\u2014key performance specs are missing and the product may no longer be available.\", \"note_to_subcontractor\": \"Please provide documentation showing rated life (L70), DLC qualification, color binning within 3-step MacAdam ellipse, and dimming performance down to 5% without flicker. Also confirm if an alternate, currently available fixture should be used since this model is discontinued.\", \"finding_titles\": {\"spec-req_t_rating_hr_led\": \"Missing rated life info\", \"spec-lt-dlc\": \"Missing DLC listing\", \"spec-req_macadam_ellipse\": \"Missing color consistency detail\", \"spec-lt-dim\": \"Missing dimming performance\", \"status-discontinued\": \"Product no longer made\"}, \"why_it_matters\": {\"spec-req_t_rating_hr_led\": \"Without knowing how long the light will maintain brightness, we risk early replacements and higher maintenance costs.\", \"spec-lt-dlc\": \"DLC listing affects eligibility for energy rebates and confirms the fixture meets efficiency standards.\", \"spec-req_macadam_ellipse\": \"Poor color control can cause visible differences between fixtures, making lighting look uneven in offices.\", \"spec-lt-dim\": \"If the lights can\u2019t dim smoothly or flicker at low levels, it will cause discomfort and complaints from occupants.\", \"status-discontinued\": \"We can\u2019t install a product that\u2019s no longer made\u2014future repairs or replacements won\u2019t be possible.\"}}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 321,
+          "prompt_tokens": 645,
+          "total_tokens": 966,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 645
+        }
+      },
+      "latency_ms": 2978
+    }
+  ]
+}

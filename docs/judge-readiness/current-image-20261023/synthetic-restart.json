@@ -1,0 +1,19 @@
+{
+  "synthetic_only": true,
+  "before": {
+    "blocked_without_wallet": true,
+    "wallet_created": false
+  },
+  "imported": {
+    "synthetic_only": true,
+    "source_retired": true,
+    "state_sha256": "8eb828120cf783452834e7a43a8d4653f47fe293dae8f5b5533eba3857541c56",
+    "authority_sha256": "67dad09285d06628d82fa6ceac6992ca9a1afb255e8347fb4a1248536737565b"
+  },
+  "restarted": {
+    "state_preserved": true,
+    "authority_preserved": true,
+    "app_files_preserved": true,
+    "accounting_available": true
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "observed_at": "2026-10-23T11:03:27.004619+00:00",
+  "scope": "Nonsecret unapproved candidate profile; no active environment, provider, job or resource mutation",
+  "template": "deploy/nebius/controller.env.example",
+  "previous_template_sha256": "a45ea8810ab3b6eb6e697fadbdc565e9e23f3ea2241905e2b9c88790525a2fc8",
+  "candidate_template_sha256": "c8644f254b81ab4b466b4bd8299b38e9fd41fdb6c9fee29f6a41969257a6745e",
+  "local_settings_before": {
+    "max_output_tokens": 8192,
+    "max_concurrency": 2,
+    "thinking": "off",
+    "investigate_max_steps": 6,
+    "investigate_credit_cap": 8.0,
+    "fix_credit_cap": 12.0,
+    "budget_usd_per_run": 3.0,
+    "budget_usd_per_day": 8.0,
+    "budget_tavily_credits_per_item": 60.0,
+    "budget_tavily_credits_per_day": 600.0
+  },
+  "local_settings_after": {
+    "max_output_tokens": 8192,
+    "max_concurrency": 2,
+    "thinking": "off",
+    "investigate_max_steps": 6,
+    "investigate_credit_cap": 8.0,
+    "fix_credit_cap": 12.0,
+    "budget_usd_per_run": 3.0,
+    "budget_usd_per_day": 8.0,
+    "budget_tavily_credits_per_item": 60.0,
+    "budget_tavily_credits_per_day": 600.0
+  },
+  "candidate_template": {
+    "max_output_tokens": 65536,
+    "max_concurrency": 1,
+    "thinking": "off",
+    "investigate_max_steps": 24,
+    "investigate_credit_cap": 30.0,
+    "fix_credit_cap": 40.0,
+    "budget_usd_per_run": 3.0,
+    "budget_usd_per_day": 8.0,
+    "budget_tavily_credits_per_item": 60.0,
+    "budget_tavily_credits_per_day": 600.0
+  },
+  "matches_last_valid_targeted_profile": true,
+  "targeted_run_id": "20261023-095053-630ac4",
+  "release_profile_validated": false,
+  "rollout_approved": false
+}

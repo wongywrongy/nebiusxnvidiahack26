@@ -1,0 +1,95 @@
+{
+  "hosts": [
+    {
+      "label": "Hilti old asset",
+      "url": "https://hilti.ca/media-canonical/ASSET_DOC_LOC_4226707_APC_RAW",
+      "tavily_chars": 0,
+      "keywords": {
+        "FS-ONE": false,
+        "ASTM": false
+      },
+      "httpx": {
+        "status": 404,
+        "pdf": false,
+        "bytes": 148499,
+        "content_type": "text/html;charset=UTF-8",
+        "cloudflare": false
+      }
+    },
+    {
+      "label": "Hilti sample TDS",
+      "url": "https://files-ask.hilti.com/original/vm/vm8lukxnls.pdf",
+      "tavily_chars": 2315,
+      "keywords": {
+        "FS-ONE": true,
+        "ASTM": true
+      },
+      "httpx": {
+        "status": 200,
+        "pdf": true,
+        "bytes": 271794,
+        "content_type": "application/pdf",
+        "cloudflare": false
+      },
+      "sha256": "75259759c104b6fd609ebba90a3bd2770bcd33684b43b80e992dc88a752911a9"
+    },
+    {
+      "label": "Acuity TL notice",
+      "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+      "tavily_chars": 19301,
+      "keywords": {
+        "June 30, 2024": false,
+        "TL": true
+      },
+      "httpx": {
+        "status": 200,
+        "pdf": false,
+        "bytes": 296743,
+        "content_type": "text/html; charset=UTF-8",
+        "cloudflare": false
+      },
+      "sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7",
+      "status_quote": "As of\u00a0**June 30th, 2024**, the TL family will be discontinued."
+    },
+    {
+      "label": "HD Supply LQM",
+      "url": "https://hdsupplysolutions.com/wcsstore/ExtendedSitesCatalogAssetStore/product/fm/additional/32/324751_Specification-PDF.pdf",
+      "tavily_chars": 4389,
+      "keywords": {
+        "LQM": true,
+        "0.62": true
+      },
+      "httpx": {
+        "status": 200,
+        "pdf": true,
+        "bytes": 681681,
+        "content_type": "application/pdf",
+        "cloudflare": false
+      },
+      "sha256": "48b9d4e0506b7ccbff0ccb9dc05ae424a2c80851f1b3cab754697402ad6b19f9"
+    },
+    {
+      "label": "Acuity LQM PDF",
+      "url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+      "tavily_chars": 4836,
+      "keywords": {
+        "LQM": true,
+        "0.62": true
+      },
+      "httpx": {
+        "status": 403,
+        "pdf": false,
+        "bytes": 4912,
+        "content_type": "text/html; charset=UTF-8",
+        "cloudflare": true
+      },
+      "sha256": "5a386246e0d84be12ea11e6172409dca07de827fd7ef4caa87af552f6aac0b6d"
+    }
+  ],
+  "map_links": 20,
+  "map_credits_counted": 2,
+  "ledger": {
+    "usd": 0.000226,
+    "credits": 6.0
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "cases": "../../../runs/20261023-015625-fce412",
+  "samples": "../../../runs/pending-samples",
+  "blind": "../../../runs/pending-blind",
+  "recording": "../../../runs/recorded/20261022-181611-a9d0b5",
+  "blind_set": "../blind-set-pending",
+  "review": "../owner-release-review-pending.json"
+}

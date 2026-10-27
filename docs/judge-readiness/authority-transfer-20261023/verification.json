@@ -1,0 +1,106 @@
+{
+  "recorded_at": "2026-10-23T04:30:21.097470+00:00",
+  "current_code_manifest": {
+    "version": 1,
+    "commit": null,
+    "config": {
+      "thinking": "off",
+      "thinking_tasks": "",
+      "max_output_tokens": 8192,
+      "max_page_chars": 6000,
+      "web_source_chars": 12000,
+      "search_depth": "basic",
+      "extract_depth": "basic",
+      "search_max_results": 5,
+      "investigate_credit_cap": 8.0,
+      "investigate_max_steps": 6,
+      "map_limit": 20,
+      "map_max_depth": 1,
+      "fix_credit_cap": 12.0,
+      "fix_max_candidates": 3,
+      "budget_usd_per_run": 3.0,
+      "budget_usd_per_day": 8.0,
+      "budget_tavily_credits_per_item": 60.0,
+      "budget_tavily_credits_per_day": 600.0,
+      "max_concurrency": 2,
+      "public_uploads_live": true,
+      "nebius_base_url": "https://api.tokenfactory.nebius.com/v1/",
+      "tavily_credit_usd": 0.008,
+      "models": {
+        "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "extract": "nvidia/nemotron-3-super-120b-a12b",
+        "verify": "nvidia/nemotron-3-super-120b-a12b",
+        "write": "nvidia/nemotron-3-super-120b-a12b"
+      },
+      "prices": {
+        "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": [
+          0.06,
+          0.24
+        ],
+        "nvidia/nemotron-3-super-120b-a12b": [
+          0.3,
+          0.9
+        ]
+      }
+    },
+    "config_hash": "be3cb9a47849d6fe262a339e6d6ed46c8bbfe0c9c97968d4765c0fbcb32f4c0d",
+    "code_hash": "477e0f39b7fb42948f632a38fdbdef2e94312e528f17df4ee256e6a879707ccc",
+    "checklists": {
+      "07_84_00.json": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+      "26_51_00.json": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1"
+    },
+    "inputs": {
+      "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+      "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+      "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+      "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+      "document_lock": "97cd7c956dda3fa5875426400ae081e8c3853f4da7787f28a0338efb9cad13df"
+    }
+  },
+  "pytest": {
+    "passed": 560,
+    "skipped": 2,
+    "seconds": 30.79,
+    "sandboxed": false
+  },
+  "new_transfer_test_cases": 28,
+  "mock_run": "20261023-042244-894557",
+  "mock_raw_panel": {
+    "right_call": "6/8",
+    "caught": "5/6",
+    "false_alarms": "0/2",
+    "passing_fixes": "0/5",
+    "invalid_items": 0,
+    "unnecessary_notes": 1
+  },
+  "added_usd": 0,
+  "added_tavily_credits": 0,
+  "campaign": {
+    "day": "2026-10-23",
+    "usd": 0.4834926,
+    "credits": 33,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 1.9702294,
+    "total_credits": 391,
+    "phase": "engineering",
+    "phase_usd": 0.9116244,
+    "phase_credits": 93,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "real_source_active": true,
+  "real_wallet_exported": false,
+  "real_owner_approval_created": false,
+  "cloud_resources_created": false,
+  "hosted_proof": false,
+  "new_frontend_changes": false,
+  "local_docker_server_version": "29.9.2",
+  "release_image_built": false,
+  "preceding_ci_commit": "c97f1f8a707adfac77038070605b0902b2970c31",
+  "preceding_ci_run": 39898618244,
+  "preceding_ci_conclusion": "success"
+}

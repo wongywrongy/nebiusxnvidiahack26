@@ -1,0 +1,200 @@
+{
+  "c03": {
+    "validity": "valid",
+    "warnings": [],
+    "diagnostics": [],
+    "decision": "send_back",
+    "investigations": [
+      {
+        "outcome": "found",
+        "purpose": "replacement",
+        "resolution": "revision_only",
+        "steps": 5
+      },
+      {
+        "outcome": "found",
+        "purpose": "replacement",
+        "resolution": "not_resolved",
+        "steps": 5
+      }
+    ],
+    "candidates": [
+      {
+        "name": "Fire Protection Products - 3M\u2122 Fire Barrier Sealant IC 15WB+",
+        "passes": false,
+        "checks": [
+          {
+            "label": "VOC (air quality)",
+            "ok": true,
+            "note": "<250 g/L"
+          },
+          {
+            "label": "astm g21 rating",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Temperature rating (T)",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Test standards",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22"
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      },
+      {
+        "name": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+        "passes": false,
+        "checks": [
+          {
+            "label": "VOC (air quality)",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "astm g21 rating",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Temperature rating (T)",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Test standards",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      }
+    ]
+  },
+  "c07": {
+    "validity": "valid",
+    "warnings": [],
+    "diagnostics": [],
+    "decision": "send_back",
+    "investigations": [
+      {
+        "outcome": "not_found",
+        "purpose": "replacement",
+        "resolution": "not_resolved",
+        "steps": 9
+      },
+      {
+        "outcome": "found",
+        "purpose": "replacement",
+        "resolution": "values_confirmed",
+        "steps": 6
+      }
+    ],
+    "candidates": [
+      {
+        "name": "Spec Sheet-LED Troffer",
+        "passes": false,
+        "checks": [
+          {
+            "label": "Rated life (L70)",
+            "ok": true,
+            "note": "349000 hours"
+          },
+          {
+            "label": "Warranty",
+            "ok": true,
+            "note": "10 years"
+          },
+          {
+            "label": "DLC listing",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "macadam steps",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Dims down to",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      },
+      {
+        "name": "LT LED Troffer",
+        "passes": false,
+        "checks": [
+          {
+            "label": "Rated life (L70)",
+            "ok": true,
+            "note": "> 72000 hours"
+          },
+          {
+            "label": "Warranty",
+            "ok": true,
+            "note": "5 years"
+          },
+          {
+            "label": "DLC listing",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "macadam steps",
+            "ok": true,
+            "note": "3"
+          },
+          {
+            "label": "Dims down to",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "REV.01/21/26.LM"
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      }
+    ]
+  }
+}

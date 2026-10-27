@@ -1,0 +1,82 @@
+{
+  "scope": "unauthenticated public documentation only; no resource mutation or account lookup",
+  "sources": [
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/serverless/endpoints/manage",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.638473+00:00",
+      "body_sha256": "4b4a8c7e313ad5b840a9f194b9db2bdd1055364d93f389de5cbbc0acbd2103fe",
+      "body_bytes": 662377
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/compute/resources/pricing",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.588059+00:00",
+      "body_sha256": "52c3fb9c4996c8af8d1d3397202aadf433d3dffceda53ff4ad85ceb6c2aac519",
+      "body_bytes": 507024
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/compute/storage/types",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.577002+00:00",
+      "body_sha256": "563aa1ee910c7f9dfe6c19f8dbd6a295553eef2cc5ae4a3a4ab29cf3279b0c0d",
+      "body_bytes": 441302
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/compute/storage/manage",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.665765+00:00",
+      "body_sha256": "c8aafe4580ea1004ad85227074f0230e65ea0a9a4b82747dc849c509a26f0fb3",
+      "body_bytes": 1274259
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/iam/authorization/roles",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.618342+00:00",
+      "body_sha256": "7bac1d7f1c131329500aecd3a8ae01449936fdfe87cfb5d0424e1c98aad8bbdd",
+      "body_bytes": 422224
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/vpc/resources/pricing",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.578762+00:00",
+      "body_sha256": "8aaba00ec66e4a6eecacd21ce58859b5e3c1878474cacd099f999974f7e90319",
+      "body_bytes": 271623
+    },
+    {
+      "request": {
+        "method": "GET",
+        "url": "https://docs.nebius.com/compute/virtual-machines/types",
+        "authorization": null
+      },
+      "status": 200,
+      "observed_at": "2026-10-23T07:23:30.574337+00:00",
+      "body_sha256": "3deaf566b54853da89629488b525e81f2e05aa48178d9ad1601b6199080fd78a",
+      "body_bytes": 403002
+    }
+  ]
+}

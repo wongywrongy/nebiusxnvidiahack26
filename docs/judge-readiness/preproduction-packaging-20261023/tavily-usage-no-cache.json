@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-10-23T07:46:54.133551+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://api.tavily.com/usage",
+    "authorization": "[REDACTED]",
+    "cache_control": "no-cache",
+    "pragma": "no-cache"
+  },
+  "status": 200,
+  "response": {
+    "key": {
+      "usage": 421,
+      "limit": null,
+      "search_usage": 368,
+      "crawl_usage": 0,
+      "extract_usage": 49,
+      "map_usage": 4,
+      "research_usage": 0
+    },
+    "account": {
+      "current_plan": "Researcher",
+      "plan_usage": 421,
+      "plan_limit": 1000,
+      "search_usage": 368,
+      "crawl_usage": 0,
+      "extract_usage": 49,
+      "map_usage": 4,
+      "research_usage": 0,
+      "paygo_usage": 0,
+      "paygo_limit": null
+    }
+  },
+  "response_headers": {
+    "date": "Fri, 23 Oct 2026 07:46:54 GMT"
+  },
+  "campaign_before": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 84,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 442,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 144,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "campaign_after": {
+    "day": "2026-10-23",
+    "usd": 1.1483655,
+    "credits": 84,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.6351023,
+    "total_credits": 442,
+    "phase": "engineering",
+    "phase_usd": 1.5764973,
+    "phase_credits": 144,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "limits": "Read-only observation, not a synchronized owner dashboard read or a proven explanation of the discrepancy. No accounting mutation or inference/search/extract request."
+}

@@ -1,0 +1,52 @@
+{
+  "scope": "Observed log/counter scope comparison only, not invoice settlement or root-cause attribution",
+  "observed_at": "2026-10-23T11:00:52.648719+00:00",
+  "key_filtered": true,
+  "requested_limit": 10000,
+  "returned_logs": 630,
+  "returned_mask_suffixes_consistent_with_current_key": true,
+  "days": [
+    {
+      "utc_day": "2026-10-21",
+      "local_settled": 291,
+      "provider_logged": 283.0,
+      "local_minus_logged": 8.0
+    },
+    {
+      "utc_day": "2026-10-22",
+      "local_settled": 67,
+      "provider_logged": 66.0,
+      "local_minus_logged": 1.0
+    },
+    {
+      "utc_day": "2026-10-23",
+      "local_settled": 132,
+      "provider_logged": 131.0,
+      "local_minus_logged": 1.0
+    }
+  ],
+  "campaign": {
+    "local_settled": 490,
+    "provider_logged": 480.0,
+    "difference": 10.0
+  },
+  "outside_campaign_dates": {
+    "2026-10-08": 5.0
+  },
+  "month_logged_total": 485.0,
+  "key_counter": 485,
+  "account_counter": 485,
+  "failed_request_window": {
+    "start": "2026-10-23T10:36:00+00:00",
+    "end": "2026-10-23T10:38:00+00:00"
+  },
+  "returned_records_in_failed_window": 0,
+  "hold_credits": 1,
+  "hold_settled": false,
+  "limitations": [
+    "No server receipt identifies the failed request; absence of a row is not a confirmed zero charge.",
+    "The per-day differences do not identify the responsible individual ledger entries.",
+    "The October 8 log rows are outside the campaign dates; their originating application is not established.",
+    "Token Factory invoice reconciliation remains dependent on private billing evidence."
+  ]
+}

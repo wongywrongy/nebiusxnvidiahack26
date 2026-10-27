@@ -1,0 +1,347 @@
+{
+  "status": "draft; not owner-reviewed; not evaluated",
+  "labels": [
+    {
+      "id": "b01",
+      "scope": "Product data only; review product-wide VOC, G21 and standards. No submitted listed assembly or installed penetrant is selected. F/T remains pending, never certified from up-to-four-hours marketing.",
+      "expected": {
+        "decision": "approve",
+        "problems": []
+      },
+      "requirement_review": [
+        {
+          "property": "voc_g_per_l",
+          "draft_verdict": "pass",
+          "reason": "29.2 g/L is below the reviewed 250 g/L limit.",
+          "page": 2,
+          "quote": "VOC Content**\n29.2 g/L"
+        },
+        {
+          "property": "astm_g21_rating",
+          "draft_verdict": "pass",
+          "reason": "Explicit ASTM G21 rating is zero.",
+          "page": 2,
+          "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0"
+        },
+        {
+          "property": "standards",
+          "draft_verdict": "pass",
+          "reason": "The printed test standard matches the reviewed alternatives.",
+          "page": 1,
+          "quote": "tested to the requirements of ASTM E814 (UL1479) and CAN/ULC-S115."
+        },
+        {
+          "property": "t_rating_hr",
+          "draft_verdict": "pending",
+          "reason": "No specific assembly is submitted. Product-wide up-to ratings do not establish T = F.",
+          "page": 2,
+          "quote": "Systems have been tested for all common\nforms of construction and most common penetrants with ratings up to 4 hours."
+        }
+      ],
+      "sources": [
+        {
+          "file": "blind/20261023/sti-sss.pdf",
+          "url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_SSS%20Intumescent%20Sealant.pdf",
+          "sha256": "4e918dbb57da12ca8258fa4221f744eeb1e9447844cd876d5d29920c1677deaf",
+          "role": "product_data",
+          "quotes": [
+            {
+              "page": 2,
+              "text": "VOC Content**\n29.2 g/L"
+            },
+            {
+              "page": 2,
+              "text": "Mold & Fungus Growth Rating (ASTM G21)\n0"
+            },
+            {
+              "page": 1,
+              "text": "tested to the requirements of ASTM E814 (UL1479) and CAN/ULC-S115."
+            },
+            {
+              "page": 2,
+              "text": "Systems have been tested for all common\nforms of construction and most common penetrants with ratings up to 4 hours."
+            }
+          ]
+        }
+      ],
+      "web_label_scope": "No outdated or discontinued condition is planted or inferred from document age. A later live source contradiction requires Kyle review, never automatic relabelling."
+    },
+    {
+      "id": "b02",
+      "scope": "Sprayable Acrylic SP, not the gun-grade Acrylic product. Product data only; antifungal additive does not establish an ASTM G21 zero rating. No assembly or field configuration is selected.",
+      "expected": {
+        "decision": "approve_with_note",
+        "problems": []
+      },
+      "requirement_review": [
+        {
+          "property": "voc_g_per_l",
+          "draft_verdict": "pass",
+          "reason": "The sheet reports 40 g/L.",
+          "page": 2,
+          "quote": "VOC Content\n40 g/L"
+        },
+        {
+          "property": "standards",
+          "draft_verdict": "pass",
+          "reason": "UL 1479 / ASTM E814 appears explicitly.",
+          "page": 1,
+          "quote": "UL 1479 (ASTM E814)"
+        },
+        {
+          "property": "astm_g21_rating",
+          "draft_verdict": "unverified",
+          "reason": "An additive claim does not give a numeric G21 test result.",
+          "page": 2,
+          "quote": "Antifungal\nContains an antifungal additive"
+        },
+        {
+          "property": "t_rating_hr",
+          "draft_verdict": "pending",
+          "reason": "Product data alone does not select an assembly."
+        }
+      ],
+      "sources": [
+        {
+          "file": "blind/20261023/tremstop-acrylic.pdf",
+          "url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_SP_DS.pdf",
+          "sha256": "011a230b8d5c1eb3dbea3ab939b7276dbc50c9bdea13d17c0510ce2698759604",
+          "role": "product_data",
+          "quotes": [
+            {
+              "page": 2,
+              "text": "VOC Content\n40 g/L"
+            },
+            {
+              "page": 1,
+              "text": "UL 1479 (ASTM E814)"
+            },
+            {
+              "page": 2,
+              "text": "Antifungal\nContains an antifungal additive"
+            }
+          ]
+        }
+      ],
+      "web_label_scope": "No outdated or discontinued condition is planted or inferred from document age. A later live source contradiction requires Kyle review, never automatic relabelling."
+    },
+    {
+      "id": "b03",
+      "scope": "Review only the submitted listing ratings, not actual installation suitability. Every listed F-rating is positive while T is zero, so no choice among its listed F ratings can satisfy T = F. No project wall thickness or field selection is invented.",
+      "expected": {
+        "decision": "send_back",
+        "problems": [
+          "spec"
+        ]
+      },
+      "requirement_review": [
+        {
+          "property": "t_rating_hr",
+          "draft_verdict": "fail",
+          "reason": "T = 0 is unequal to each listed F rating (2, 3 or 4 hr); this is a cited critical specification mismatch.",
+          "page": 1,
+          "quote": "F Ratings - 2, 3 and 4 Hr (See Items 1 and 3)\nT Rating - 0 Hr"
+        },
+        {
+          "property": "product_data_rows",
+          "draft_verdict": "not_applicable",
+          "reason": "VOC, G21 and product-data standards rows do not apply to a listing-only package."
+        }
+      ],
+      "sources": [
+        {
+          "file": "blind/20261023/sti-caj0113.pdf",
+          "url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Fcaj0113_dl.pdf",
+          "sha256": "de359ea0a878b692b3182c40b40822c134f45ace8c4a9f4bdd085d5192bda9d2",
+          "role": "listing",
+          "quotes": [
+            {
+              "page": 1,
+              "text": "F Ratings - 2, 3 and 4 Hr (See Items 1 and 3)\nT Rating - 0 Hr"
+            }
+          ]
+        }
+      ],
+      "web_label_scope": "No outdated or discontinued condition is planted or inferred from document age. A later live source contradiction requires Kyle review, never automatic relabelling."
+    },
+    {
+      "id": "b04",
+      "scope": "Review the listed two-hour F/T equality only. This is not approval of a field installation, device size, penetrant or application. No product data is submitted; those rows are outside this package.",
+      "expected": {
+        "decision": "approve",
+        "problems": []
+      },
+      "requirement_review": [
+        {
+          "property": "t_rating_hr",
+          "draft_verdict": "pass",
+          "reason": "The listing states F = 2 hr and T = 2 hr without selecting a device/pipe option.",
+          "page": 1,
+          "quote": "F Rating - 2 Hr\nT Rating - 2 Hr"
+        },
+        {
+          "property": "product_data_rows",
+          "draft_verdict": "not_applicable",
+          "reason": "Product-data rows are not applicable to the listing-only package."
+        }
+      ],
+      "sources": [
+        {
+          "file": "blind/20261023/sti-fa1118.pdf",
+          "url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Ffa1118_dl.pdf",
+          "sha256": "e82a38eb68963ce504ef199f117a62f03fe1b8a09fc9264254fedd0e5482b20c",
+          "role": "listing",
+          "quotes": [
+            {
+              "page": 1,
+              "text": "F Rating - 2 Hr\nT Rating - 2 Hr"
+            }
+          ]
+        }
+      ],
+      "web_label_scope": "No outdated or discontinued condition is planted or inferred from document age. A later live source contradiction requires Kyle review, never automatic relabelling."
+    },
+    {
+      "id": "b05",
+      "scope": "Family sheet with blank project/type fields, optional controls and multiple sizes. No SKU, power, CCT or sensor is selected. A 0-10 V control signal is not a minimum dim percentage; standby/sensor levels are not the luminaire minimum. ANSI color compliance is not a numeric MacAdam result.",
+      "expected": {
+        "decision": "approve_with_note",
+        "problems": []
+      },
+      "requirement_review": [
+        {
+          "property": "warranty_years",
+          "draft_verdict": "pass",
+          "reason": "Five years is printed for the family.",
+          "page": 1,
+          "quote": "5-year, limited warranty"
+        },
+        {
+          "property": "dlc_listed",
+          "draft_verdict": "pass",
+          "reason": "The sheet explicitly calls the product DLC premium; its three base models have IDs on page 1. No optional SKU is selected.",
+          "page": 1,
+          "quote": "This product is listed by Design Lights Consortium (DLC) as an ultra-efficient\npremium product"
+        },
+        {
+          "property": "l70_hours",
+          "draft_verdict": "unverified",
+          "reason": "100,000-hour lifespan does not explicitly state the 70 percent maintenance endpoint.",
+          "page": 2,
+          "quote": "100,000-Hour LED lifespan based on IES LM-80 results and TM-21\ncalculations"
+        },
+        {
+          "property": "macadam_steps",
+          "draft_verdict": "unverified",
+          "reason": "ANSI C78.377-2017 is stated, but no numeric MacAdam limit is printed.",
+          "page": 1,
+          "quote": "ANSI C78.377-2017."
+        },
+        {
+          "property": "dim_min_percent",
+          "draft_verdict": "unverified",
+          "reason": "The quote states a control interface; no product-wide minimum percent is given.",
+          "page": 2,
+          "quote": "Driver includes dimming control wiring for 0-10V dimming systems.\nRequires separate 0-10V DC dimming circuit."
+        }
+      ],
+      "sources": [
+        {
+          "file": "blind/20261023/rab-rpled.pdf",
+          "url": "https://www.rablighting.com/sites/default/files/downloads/RPLED_Family_Spec_Sheet.pdf",
+          "sha256": "b54270043c00e2c66fa4145e3b6c01b0b8f0f779e79417fe22af778eb18a3ae1",
+          "role": "product_data",
+          "quotes": [
+            {
+              "page": 1,
+              "text": "5-year, limited warranty"
+            },
+            {
+              "page": 1,
+              "text": "This product is listed by Design Lights Consortium (DLC) as an ultra-efficient\npremium product"
+            },
+            {
+              "page": 2,
+              "text": "100,000-Hour LED lifespan based on IES LM-80 results and TM-21\ncalculations"
+            },
+            {
+              "page": 1,
+              "text": "ANSI C78.377-2017."
+            },
+            {
+              "page": 2,
+              "text": "Driver includes dimming control wiring for 0-10V dimming systems.\nRequires separate 0-10V DC dimming circuit."
+            }
+          ]
+        }
+      ],
+      "web_label_scope": "No outdated or discontinued condition is planted or inferred from document age. A later live source contradiction requires Kyle review, never automatic relabelling."
+    },
+    {
+      "id": "b06",
+      "scope": "Family sheet without selected size, wattage, CCT or optional sensor. The main driver section gives a family-wide 10 percent dimming minimum, separately from sensor commissioning settings. Review that printed limitation; do not infer a selected option.",
+      "expected": {
+        "decision": "send_back",
+        "problems": [
+          "spec"
+        ]
+      },
+      "requirement_review": [
+        {
+          "property": "dim_min_percent",
+          "draft_verdict": "fail",
+          "reason": "The family driver dims to 10 percent, exceeding the reviewed maximum of 5 percent.",
+          "page": 2,
+          "quote": "Requires separate 0-10V DC dimming circuit. Dims down to 10%"
+        },
+        {
+          "property": "warranty_years",
+          "draft_verdict": "pass",
+          "reason": "The family warranty is five years.",
+          "page": 1,
+          "quote": "5-year, limited warranty"
+        },
+        {
+          "property": "dlc_listed",
+          "draft_verdict": "pass",
+          "reason": "DLC premium is explicitly stated for the product.",
+          "page": 1,
+          "quote": "This product is listed by Design Lights Consortium (DLC) as an ultra-\nefficient premium product"
+        },
+        {
+          "property": "l70_hours",
+          "draft_verdict": "unverified",
+          "reason": "Lifespan alone does not establish an L70 endpoint."
+        },
+        {
+          "property": "macadam_steps",
+          "draft_verdict": "unverified",
+          "reason": "No numeric MacAdam result is stated; the 200 K color-shift warranty is a different metric."
+        }
+      ],
+      "sources": [
+        {
+          "file": "blind/20261023/rab-rtled.pdf",
+          "url": "https://www.rablighting.com/sites/default/files/downloads/RTLED_Field_Adjustable_Family_Spec_Sheet_2.pdf",
+          "sha256": "0bfc8844c42ccd3a9db3a5dc0a26a308f02ead29a9082e30e3df2545518fcd45",
+          "role": "product_data",
+          "quotes": [
+            {
+              "page": 2,
+              "text": "Requires separate 0-10V DC dimming circuit. Dims down to 10%"
+            },
+            {
+              "page": 1,
+              "text": "5-year, limited warranty"
+            },
+            {
+              "page": 1,
+              "text": "This product is listed by Design Lights Consortium (DLC) as an ultra-\nefficient premium product"
+            }
+          ]
+        }
+      ],
+      "web_label_scope": "No outdated or discontinued condition is planted or inferred from document age. A later live source contradiction requires Kyle review, never automatic relabelling."
+    }
+  ]
+}

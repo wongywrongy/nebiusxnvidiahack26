@@ -123,11 +123,16 @@ export function ScoreboardPage({ back }: { back: string }) {
       {!scores && !error && <p className="text-muted" role="status">Loading scores…</p>}
       {scores && <>
         <p className="-mt-3 text-muted">{scores.mode === 'live' ? `Live run recorded ${date(scores.generated_at)}` : `Mock · ${date(scores.generated_at)} · fixture answers, estimated token counts and cost`}</p>
+        <p className="text-muted">{scores.validity
+          ? `${scores.validity.invalid_items} of ${scores.validity.requested_items} items invalid for acceptance. ${scores.unnecessary_notes?.n ?? 0} unnecessary notes.`
+          : 'Legacy recording: acceptance validity was not recorded.'}</p>
+        {scores.release_gate && <p className="text-muted">Case evidence: {scores.release_gate.passed ? 'prerequisites passed; full release review still required' : scores.release_gate.issues.join('; ')}.</p>}
+        {scores.fresh_model_cost_usd !== undefined && <p className="text-muted">Fresh charges for scored items: ${scores.fresh_model_cost_usd.toFixed(6)} model usage · {scores.fresh_web_credits ?? 0} Tavily credits. Incomplete accounting is marked invalid.</p>}
         {scores.job_name && <p className="text-muted">Evaluated on {scores.runner || 'Nebius Serverless Job'} {scores.job_name}, {date(scores.generated_at)}.</p>}
         <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
           {([
             ['Right call', scores.right_call], ['Planted problems caught', scores.caught],
-            ['Clean packages wrongly flagged', scores.false_alarms], ['Fixes that pass the spec', scores.fixes_passing],
+            ['Major false alarms on clean packages', scores.false_alarms], ['Fixes that pass the spec', scores.fixes_passing],
           ] as const).map(([label, score]) => (
             <div key={label} className="flex flex-col gap-2 border-t border-line py-4">
               <dt className="text-muted">{label}</dt><dd className="font-mono text-2xl">{score.n} <span className="text-sm text-muted">of {score.of}</span></dd>
@@ -148,7 +153,8 @@ export function ScoreboardPage({ back }: { back: string }) {
             <tbody>{scores.rows.map((r) => <tr key={r.id}>
               <th className={`${cell} min-w-40 font-normal`} scope="row"><span className="font-mono text-muted">{r.id}</span><br />{r.product || r.title}</th>
               <td className={cell}>{DECISION_LABEL[r.expected]}</td>
-              <td className={cell}>{r.error ? "Couldn't scan" : r.decision ? DECISION_LABEL[r.decision] : '—'}</td>
+              <td className={cell}>{r.error ? "Couldn't scan" : r.decision ? DECISION_LABEL[r.decision] : '—'}
+                {r.valid === false && <p className="mt-1 text-muted">Invalid evidence: {r.diagnostics?.map(d => `${d.stage}: ${d.message}`).join('; ') || 'Incomplete item'}</p>}</td>
               <td className={cell}>{r.expected_problems.join(', ') || 'None'}</td>
               <td className={cell}>{r.error ? '—' : r.found_problems?.join(', ') || 'None'}</td>
               <td className={`${cell} min-w-40`}>{r.fix ? r.fix.passes ? r.fix.suggest : `None passed (${r.fix.candidates} checked)` : '—'}</td>
@@ -157,7 +163,7 @@ export function ScoreboardPage({ back }: { back: string }) {
             </tr>)}</tbody>
           </table>
         </div>
-        <p className="text-xs text-muted">Cost includes model usage and Tavily credits. {scores.mode === 'mock' ? 'Mock values are estimates; no tokens or credits were spent.' : 'Usage and time belong to the recorded run.'}</p>
+        <p className="text-xs text-muted">Cost includes model usage and Tavily credits. {scores.mode === 'mock' ? 'Mock values are estimates; no tokens or credits were spent.' : 'Usage and time belong to the recorded run. Cached cost and credits are usage equivalents, not fresh charges; warm-cache times are not uncached provider latency. Unnecessary notes still count as wrong calls.'}</p>
       </>}
     </>
   )

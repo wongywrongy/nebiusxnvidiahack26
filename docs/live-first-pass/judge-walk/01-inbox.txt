@@ -1,0 +1,53 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+1
+Inbox
+2
+Scan
+3
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Inbox
+No submittals
+Scan
+
+SpecCheck checks each submittal against the project spec and the manufacturer's current documents, then writes what to send back and what to forward.
+
+Drop PDF files here
+or browse
+Sample submittals
+Public manufacturer documents, as two subcontractors would send them. Drag into the inbox.
+Coastline Firestop · Firestopping subcontractor
+PDF
+STI SpecSeal LCI
+sti_specseal_lci_tds_2025.pdf
+07 84 00-01 · Product data
+PDF
+3M C-AJ-2738
+3m_c-aj-2738.pdf
+07 84 00-02 · System drawing
+PDF
+3M IC 15WB+
+3m_ic15wb_2005.pdf
+07 84 00-03 · Product data
+PDF
+Hilti W-L-2078
+hilti_w-l-2078.pdf
+07 84 00-04 · System drawing
+PDF
+Hilti FS-ONE MAX
+hilti_fs-one_max_tds.pdf
+07 84 00-05 · Product data
+Northgate Electric · Electrical subcontractor
+PDF
+Lithonia LDN6
+lithonia_ldn6_2017-10.pdf
+26 51 00-02 · Product data
+PDF
+Lithonia 2BLT4 ADP
+lithonia_2blt4_adp_2019-07.pdf
+26 51 00-05 · Product data

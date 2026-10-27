@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-23T04:41:23.813338+00:00",
+  "source_commit": "b9de109842e9d5bcbcd48e11bc27d3419ec0c761",
+  "code_hash": "477e0f39b7fb42948f632a38fdbdef2e94312e528f17df4ee256e6a879707ccc",
+  "local_image_id": "sha256:653211984dbebafe719ad79b666043f0db0aeddace2f9b1b12392a4c496dd528",
+  "build_log_sha256": "7217e2322d5c9b9095812744bb0fdda69ac17c54671ef346475271d3da8ed7a9",
+  "dockerfile_sha256": "8c08579f0ff8d1d69b455416fe24ef9d2646a6240c3c93713955e92f736d56e6",
+  "dockerignore_sha256": "9e7cd2e1f53ff33a5bbc50460bb28bda5f5bec6728443d0d71133c9d443883a1",
+  "published": false,
+  "release_approved": false,
+  "temporary_containers_remaining": false,
+  "added_usd": 0,
+  "added_tavily_credits": 0,
+  "campaign": {
+    "day": "2026-10-23",
+    "usd": 0.4834926,
+    "credits": 33,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 1.9702294,
+    "total_credits": 391,
+    "phase": "engineering",
+    "phase_usd": 0.9116244,
+    "phase_credits": 93,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "cloud_resources_created": false,
+  "probe_note": "Initial nebius --version was rejected; supported nebius version returned 0.12.289. HTTP probe requested keys_present instead of keys; direct settings.keys_present is separately recorded in image-secret-scan.json."
+}

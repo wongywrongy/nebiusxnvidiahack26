@@ -1,0 +1,77 @@
+{
+  "scope": "actual-archive scope check only; no provider request or historical-result upgrade",
+  "rows": [
+    {
+      "property": "dim_min_percent",
+      "value": 1.0,
+      "quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+      "scope_quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+      "source_url": "https://hew.com/specifications/LT_led.pdf",
+      "source_sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+      "quote_on_cited_page": true,
+      "scope_on_cited_page": true,
+      "before": false,
+      "after": false
+    },
+    {
+      "property": "dlc_listed",
+      "value": "DesignLights Consortium qualified product",
+      "quote": "DesignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL",
+      "scope_quote": "DesignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL",
+      "source_url": "https://hew.com/specifications/LT_led.pdf",
+      "source_sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+      "quote_on_cited_page": true,
+      "scope_on_cited_page": true,
+      "before": false,
+      "after": false
+    },
+    {
+      "property": "macadam_steps",
+      "value": 3.0,
+      "quote": "All CCTs are within 3 MacAdam ellipses.",
+      "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses.",
+      "source_url": "https://hew.com/specifications/LT_led.pdf",
+      "source_sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+      "quote_on_cited_page": true,
+      "scope_on_cited_page": true,
+      "before": false,
+      "after": true
+    },
+    {
+      "property": "l70_hours",
+      "value": "> 72000",
+      "quote": "L70 > 72,000 hours per IES TM-21.",
+      "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option. 50/60 Hz constant current driver. Tunable White products use LEDs of multiple shades of white from single-CCT products at the same CCT. All CCTs are within 3 MacAdam ellipses.",
+      "source_url": "https://hew.com/specifications/LT_led.pdf",
+      "source_sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+      "quote_on_cited_page": true,
+      "scope_on_cited_page": true,
+      "before": false,
+      "after": true
+    },
+    {
+      "property": "dim_min_percent",
+      "value": 10.0,
+      "quote": "DIM\t\n10% dimming driver prewired for 0-10V low \nvoltage applications",
+      "scope_quote": "DIM\t\n10% dimming driver prewired for 0-10V low \nvoltage applications",
+      "source_url": "https://rexel-cdn.com/products/willt22pdf.pdf?i=70C8662F-1605-493A-9A82-F04E87DF67E7",
+      "source_sha256": "77fe8f6acf3924e3c71e208522c23711106e4687e204ba11c25358dba4b92402",
+      "quote_on_cited_page": true,
+      "scope_on_cited_page": true,
+      "before": false,
+      "after": false
+    },
+    {
+      "property": "l70_hours",
+      "value": "> 72000",
+      "quote": "■\nELECTRICAL – High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+      "scope_quote": "■\nELECTRICAL – High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+      "source_url": "https://hew.com/specifications/LT_quickship.pdf",
+      "source_sha256": "2bd4b192334895b44fd38ae12a90246061948f509e2b87a71ed9fa7e35b3a0f5",
+      "quote_on_cited_page": true,
+      "scope_on_cited_page": true,
+      "before": false,
+      "after": false
+    }
+  ]
+}

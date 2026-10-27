@@ -1,0 +1,106 @@
+{
+  "observed_at": "2026-10-23T10:46:53.800462+00:00",
+  "scope": "Configured secret-byte scan only; values never printed",
+  "files": {
+    "FEEDBACK.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/README.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/accounting.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/budget-before.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/focused.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/history-restoration.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/integration.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/manufacturer-observations.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/mock-eval.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/mock-score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/pytest.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/query-before-after.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/rollback-check.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/rollback-mock-eval.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/rollback-mock-score.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/rollback-pytest.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/rollback-source-check.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/source.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/test-before.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/live-first-pass.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    }
+  }
+}

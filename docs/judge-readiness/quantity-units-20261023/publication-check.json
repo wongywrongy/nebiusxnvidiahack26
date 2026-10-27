@@ -1,0 +1,69 @@
+{
+  "checked_at": "2026-10-23T09:08:23.721412+00:00",
+  "scope": "Local documentation/source/approval/link/secret checks only; no provider calls, new image build or cloud operation",
+  "runtime_code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
+  "recorded_head_before_doc_commit": "256bc6718b0a10ae66f5e28f7ba7be5a5d5825ff",
+  "keys_present": {
+    "NEBIUS_API_KEY": true,
+    "TAVILY_API_KEY": true,
+    "ADMIN_TOKEN": true
+  },
+  "files": [
+    {
+      "file": "README.md",
+      "configured_secret_present": false,
+      "sha256": "f092d4418087996c5b565d02b80b9beef0c06e7449ec301d608ed2b569688368"
+    },
+    {
+      "file": "SUBMISSION.md",
+      "configured_secret_present": false,
+      "sha256": "09030628f5f5dbbb3c49c8409d57fff635ff9c5c66d0a2b2d9f9ebb544753aa6"
+    },
+    {
+      "file": "FEEDBACK.md",
+      "configured_secret_present": false,
+      "sha256": "7fd0a98b99e2ba599008009a9e717bc6ea037decbe614618fdbc3cfafd10a28c"
+    },
+    {
+      "file": "deploy/nebius/README.md",
+      "configured_secret_present": false,
+      "sha256": "3f922502011a662e0e1aa90cda177a918402c12aa9414edec6c1121ce7e4d21c"
+    },
+    {
+      "file": "deploy/nebius/cost-manifest.json",
+      "configured_secret_present": false,
+      "sha256": "aaec76ec4c879ec69df951546acbed5eb75b5bcc34fddb1a4d944c0cd731f6b2"
+    },
+    {
+      "file": "docs/judge-readiness/ownership.md",
+      "configured_secret_present": false,
+      "sha256": "ebdfc1544b3f22a9fa6a0e9f326be900dd61a7a04717abade7d541303d12ce49"
+    },
+    {
+      "file": "docs/judge-readiness/quantity-units-20261023/README.md",
+      "configured_secret_present": false,
+      "sha256": "c5e92d1e044155c59e31f49341432bf86d0f7febfe1826f1738a94011b5daa4e"
+    },
+    {
+      "file": "docs/judge-readiness/quantity-units-20261023/ci.json",
+      "configured_secret_present": false,
+      "sha256": "883a62d1ed8afa2a6e1825593c065a812029c72006f665c5735e780231ca3b48"
+    },
+    {
+      "file": "docs/judge-readiness.md",
+      "configured_secret_present": false,
+      "sha256": "0467968a5a5909ac31025b155ce562800d5a5108fa8b4cc6dd6b7b388e228137"
+    },
+    {
+      "file": "docs/live-first-pass.md",
+      "configured_secret_present": false,
+      "sha256": "f7afefbae34f3d742b8514e506124126e82551c69a71473d9bb5ff83fcb7d219"
+    }
+  ],
+  "local_links_exist": true,
+  "original_case_and_reviewed_requirement_files_unchanged_since_unit_checkpoint": true,
+  "cloud_approval_or_final_registry_digest_set": false,
+  "blind_review_self_approved": false,
+  "frozen_local_image_predates_current_runtime": true,
+  "nebius_cli_authenticated_profile_available": false
+}

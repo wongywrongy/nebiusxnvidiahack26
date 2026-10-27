@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-10-21T08:18:01+00:00",
+  "mode": "live",
+  "run_id": "20261021-081707-7f718a",
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "quote_gate": {
+    "claims_extracted": 5,
+    "claims_kept": 1,
+    "web_values_read": 0,
+    "web_values_kept": 0,
+    "claims_drop_rate": 0.8,
+    "web_values_drop_rate": null
+  },
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 6,
+    "map_limit": 20
+  },
+  "right_call": {
+    "n": 1,
+    "of": 1
+  },
+  "caught": {
+    "n": 1,
+    "of": 1
+  },
+  "false_alarms": {
+    "n": 0,
+    "of": 0
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 1
+  },
+  "time_ms_per_item": 54134,
+  "cost_usd_per_item": 0.121726,
+  "rows": [
+    {
+      "id": "c07",
+      "title": "LED troffer, offices",
+      "product": "Lithonia 2TL4",
+      "expected": "send_back",
+      "expected_problems": [
+        "status"
+      ],
+      "decision": "send_back",
+      "found_problems": [
+        "status"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 2
+      },
+      "time_ms": 54134,
+      "model_cost_usd": 0.017726,
+      "web_credits": 13.0,
+      "cost_usd": 0.121726,
+      "claims_extracted": 5,
+      "claims_kept": 1,
+      "web_values_read": 0,
+      "web_values_kept": 0
+    }
+  ],
+  "runner": "local",
+  "job_name": null
+}

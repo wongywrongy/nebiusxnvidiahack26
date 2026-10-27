@@ -9,17 +9,22 @@ from typing import Any, Optional
 from .config import settings
 from . import archive
 from .llm import load_fixture
-from .providers import budget, tavily
+from .providers import budget, tavily, failure_reason
 
 
 class WebClient:
     """Mock answers from the case fixture; live goes to providers.tavily. Both charge the run's budget."""
 
-    def __init__(self, case_id: Optional[str], on_step=None) -> None:  # which fixture answers in mock mode
+    def __init__(self, case_id: Optional[str], on_step=None, on_warning=None) -> None:  # which fixture answers in mock mode
         self.case_id = case_id
         self.credits = 0.0
         self.on_step = on_step
+        self.on_warning = on_warning
         self.investigation_step: Optional[int] = None
+
+    async def warn(self, stage: str, error: Exception) -> None:
+        if self.on_warning:
+            await self.on_warning(stage, failure_reason(error))
 
     def _investigation_result(self):
         if self.investigation_step is None:
@@ -66,7 +71,7 @@ class WebClient:
             self.credits += spent
         sources = []
         for page in results:
-            meta = snapshot(page["url"], page.get("raw_content", ""))
+            meta = snapshot(page["url"], page.get("raw_content", ""), page.get("retrieved_at"))
             meta["archived_path"] = archive.save(budget.ITEM.get() or self.case_id or "unknown",
                                                 page.get("raw_content", "").encode(), "txt", meta["retrieved_at"])
             sources.append({**page, **meta})
@@ -84,11 +89,11 @@ class WebClient:
         return links
 
 
-def snapshot(url: str, text: str) -> dict[str, Any]:
+def snapshot(url: str, text: str, retrieved_at: Optional[str] = None) -> dict[str, Any]:
     """Evidence record for a fetched page: what we saw, when, and a hash of it."""
     return {
         "url": url,
-        "retrieved_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "retrieved_at": retrieved_at or datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "sha256": hashlib.sha256(text.encode()).hexdigest(),
         "excerpt": text[:400],
     }

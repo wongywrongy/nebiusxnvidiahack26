@@ -4,7 +4,7 @@
   "triage": {"pages": [{"page": 1, "kind": "product_data"}]},
   "claims": {
     "product": "FS-ONE MAX", "manufacturer": "Hilti", "model": "FS-ONE MAX", "document_revision": "12/16 DBS",
-    "claims": [{"id": "s4-standards", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "standards", "value": ["ul 1479", "astm e814", "can/ulc-s115"], "page": 1, "quote": "UL 1479, ASTM E814, CAN/ULC-S115"}]
+    "claims": [{"id": "s4-standards", "product": "FS-ONE MAX", "manufacturer": "Hilti", "property": "standards", "value": ["ul 1479", "astm e814", "can/ulc-s115"], "page": 1, "quote": "UL 1479, ASTM E814, CAN/ULC-S115", "scope": "product_wide", "scope_quote": "UL 1479, ASTM E814, CAN/ULC-S115"}]
   },
   "web": {"search": [], "extract": {}},
   "verify": {"status": "unknown", "current_values": []},

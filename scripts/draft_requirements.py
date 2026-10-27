@@ -34,6 +34,7 @@ from api.providers import budget  # noqa: E402
 async def main() -> None:
     budget.LEDGER.set(budget.Ledger())
     for section, spec in all_specs().items():
+        budget.ITEM.set(f"requirements-{section}")
         text = await load_spec_text(section, spec)
         if not text.strip():
             print(f"skip  {section}: no spec PDF in data/raw/ (run scripts/fetch_docs.py)")

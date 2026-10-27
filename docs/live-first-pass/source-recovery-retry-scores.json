@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-10-21T09:08:54+00:00",
+  "mode": "live",
+  "run_id": "20261021-090608-c1f902",
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "quote_gate": {
+    "claims_extracted": 31,
+    "claims_kept": 31,
+    "web_values_read": 24,
+    "web_values_kept": 16,
+    "claims_drop_rate": 0.0,
+    "web_values_drop_rate": 0.33333333333333337
+  },
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 12,
+    "map_limit": 20
+  },
+  "right_call": {
+    "n": 2,
+    "of": 3
+  },
+  "caught": {
+    "n": 2,
+    "of": 2
+  },
+  "false_alarms": {
+    "n": 0,
+    "of": 1
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 2
+  },
+  "time_ms_per_item": 83342,
+  "cost_usd_per_item": 0.075744,
+  "rows": [
+    {
+      "id": "c04",
+      "title": "Firestop system, steel pipe through gypsum wall",
+      "product": "Hilti W-L-2078",
+      "expected": "send_back",
+      "expected_problems": [
+        "validity"
+      ],
+      "decision": "send_back",
+      "found_problems": [
+        "currency",
+        "validity"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 1
+      },
+      "time_ms": 49143,
+      "model_cost_usd": 0.032883,
+      "web_credits": 3.0,
+      "cost_usd": 0.056883,
+      "claims_extracted": 15,
+      "claims_kept": 15,
+      "web_values_read": 15,
+      "web_values_kept": 13
+    },
+    {
+      "id": "c05",
+      "title": "LED troffer, classrooms",
+      "product": "Lithonia BLT 2x4",
+      "expected": "approve",
+      "expected_problems": [],
+      "error": true
+    },
+    {
+      "id": "c06",
+      "title": "LED downlight, corridors",
+      "product": "Lithonia LDN6",
+      "expected": "send_back",
+      "expected_problems": [
+        "currency"
+      ],
+      "decision": "send_back",
+      "found_problems": [
+        "currency"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 0
+      },
+      "time_ms": 117542,
+      "model_cost_usd": 0.038605,
+      "web_credits": 7.0,
+      "cost_usd": 0.094605,
+      "claims_extracted": 16,
+      "claims_kept": 16,
+      "web_values_read": 9,
+      "web_values_kept": 3
+    }
+  ],
+  "runner": "local",
+  "job_name": null
+}

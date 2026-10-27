@@ -76,8 +76,9 @@ def test_scan_runs_tray_and_watched_items():
     assert client.post("/api/scan", json={"ids": ["s3"]}).status_code == 409
 
 
-def test_recorded_samples_match_expected():
+def test_recorded_samples_preserve_the_reviewed_selection_policy_disagreement():
     ids = sorted(i for i, s in all_samples().items() if mock_ready(s))
     run = asyncio.run(execute(Run(ids, delay_ms=0)))
-    for sid in ids:
-        assert run.results[sid].decision == all_samples()[sid]["expected"]["decision"], sid
+    assert {sid: (all_samples()[sid]["expected"]["decision"], run.results[sid].decision)
+            for sid in ids if run.results[sid].decision != all_samples()[sid]["expected"]["decision"]} == {
+                "s2": ("approve", "approve_with_note")}

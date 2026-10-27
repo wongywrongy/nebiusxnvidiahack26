@@ -1,0 +1,215 @@
+
+  NAME
+
+      nebius ai endpoint create
+        Creates an endpoint.
+
+        This command is deterministic and non-interactive. Use it for scripts, config-driven workflows, CI, and agents.
+
+        For human first-time setup, use the guided ai create wizard. Static create commands report validation errors with recovery hints instead of
+  switching into prompt mode.
+
+        With --async, explicit --format json or yaml returns the full Operation on stdout. Its id identifies the operation; resource_id identifies the
+  created resource. Use --format 'jsonpath={.resource_id}' to extract the ID. Submission does not wait for the resource to become ready or finish.
+
+        Exposed ports are reachable over managed URLs (no public IP required), surfaced in the endpoint's status.public_endpoints:
+          - an HTTP port (--container-port 8080, or .../http) is served over https://HOST (gRPC works over the same URL);
+          - a TCP port (--container-port 6379/tcp) is served over tls://HOST:443 (connect with a direct-TLS client);
+          - a UDP port gets no managed URL.
+
+        Example (two HTTP ports plus one TLS-TCP port):
+          nebius ai endpoint create --image IMAGE --parent-id PROJECT_ID \
+            --container-port 8080 --container-port 8081/http --container-port 6379/tcp
+          -> two https:// URLs and one tls://HOST:443 URL in status.public_endpoints.
+
+  SYNOPSIS
+
+      nebius ai endpoint create
+        --args
+        --async
+        --auth
+        --container-command
+        --container-port
+        --disk-size
+        --dry-run
+        --env
+        --env-secret
+        --follows-spot-price
+        --image
+        --inject-file
+        --name
+        --on-demand
+        --parent-id
+        --platform
+        --preemptible
+        --preset
+        --public
+        --registry-password
+        --registry-secret
+        --registry-username
+        --shm-size
+        --spot-pricing-policy-id
+        --ssh-key
+        --subnet-id
+        --token
+        --token-secret
+        --volume
+        --working-dir
+
+  OPTIONS
+
+      --args (string)
+         Override container arguments.
+
+      --async (bool)
+         Return immediately after starting the create operation.
+
+      --auth (string)
+         Authentication method, default is none.
+         A value must be one of:
+          • none
+          • token
+
+      --container-command (string)
+         Override container entrypoint command.
+
+      --container-port (string array)
+         Port to expose as HOST[:CONTAINER][/http|tcp|udp] (default protocol http; repeatable). For endpoints, each HTTP port is reachable
+         over a managed https:// URL (gRPC works over the same URL) and each TCP port over a tls://HOST:443 URL; UDP ports get no managed URL.
+
+      --disk-size (string)
+         Disk size (e.g., 100Gi, 500Gi, 1Ti), default is 250Gi.
+
+      --dry-run (bool)
+         Validate the request without creating a resource.
+
+      --env (string array)
+         Environment variable in KEY=VALUE format (repeatable).
+
+      --env-secret (string array)
+         Environment variable from MysteryBox in KEY=SECRET_SELECTOR format (repeatable). SECRET_SELECTOR can be a secret name, secret ID,
+         version ID, or SECRET_ID@VERSION_ID.
+
+      --follows-spot-price (bool)
+         The preemptible VM accepts the current spot price. Requires --preemptible.
+         Mutually exclusive with: --on-demand, --spot-pricing-policy-id
+
+      --image (string)
+         Container image reference in the registry/path:tag or registry/path@digest format.
+
+      --inject-file (string array)
+         Inject a local config file into the container at LOCAL_PATH:CONTAINER_PATH (repeatable). CONTAINER_PATH must be an absolute path; the
+         file is read-only inside the container and limited to 64 KiB.
+
+      --name (string)
+         Application name.
+
+      --on-demand (bool)
+         A regular, non-preemptible VM. Cannot be combined with --preemptible.
+         Mutually exclusive with: --follows-spot-price, --spot-pricing-policy-id
+
+      --parent-id (string)
+         Parent ID (if not specified, it will be taken from the CLI profile).
+
+      --platform (string)
+         Platform of compute resources (e.g. gpu-h100-sxm, gpu-l40s-d), default is gpu-h100-sxm in eu-north1 and gpu-h200-sxm elsewhere.
+
+      --preemptible (bool)
+         Use a preemptible VM (cheaper but can be stopped by the platform at any time). Requires --follows-spot-price or
+         --spot-pricing-policy-id.
+
+      --preset (string)
+         Preset for selected platform (e.g. 1gpu-16vcpu-200gb), default is minimum available preset for the platform.
+
+      --public (bool)
+         Assign a public IP to the workload (default false). For endpoints this is independent of the managed https:// and tls:// URLs, which
+         are provided regardless of this flag.
+
+      --registry-password (string)
+         Container registry password.
+
+      --registry-secret (string)
+         MysteryBox secret selector with REGISTRY_USERNAME and REGISTRY_PASSWORD payload keys. Selector can be a secret name, secret ID,
+         version ID, or SECRET_ID@VERSION_ID.
+
+      --registry-username (string)
+         Container registry username.
+
+      --shm-size (string)
+         Size of /dev/shm (e.g., 64Mi, 128Mi, 1Gi), default - 16Gi for GPU platforms, 0 for CPU.
+
+      --spot-pricing-policy-id (string)
+         PricingPolicy ID used as the maximum agreed price for the preemptible VM. Requires --preemptible.
+         Mutually exclusive with: --on-demand, --follows-spot-price
+
+      --ssh-key (string array)
+         Configure ssh_authorized_keys for creating VM.
+
+      --subnet-id (string)
+         Subnet ID (default: the project's default subnet in the workload region).
+
+      --token (string)
+         Token used for endpoint authentication (if --auth=token and neither --token nor --token-secret is set, a random token is generated).
+
+      --token-secret (string)
+         MysteryBox secret selector with AUTH_TOKEN payload key. Selector can be a secret name, secret ID, version ID, or
+         SECRET_ID@VERSION_ID.
+
+      --volume (string array)
+         Volume mount in SOURCE:CONTAINER_PATH[:MODE] or s3://BUCKET:/container_path[:MODE[:PROFILE]] format. MODE: rw, ro (default: rw).
+         PROFILE: AWS credentials profile (default: 'default'). For S3 MysteryBox auth use PROFILE@SECRET_SELECTOR, where SECRET_SELECTOR can
+         be a secret name, secret ID, version ID, or SECRET_ID@VERSION_ID (repeatable).
+
+      --working-dir (string)
+         Working directory (absolute path).
+
+  GLOBAL OPTIONS
+
+      -h, --help (bool)
+         Show this message.
+
+      -p, --profile (string)
+         Set a profile for interacting with the cloud.
+
+      --format (string)
+         Output format. Supported values: yaml|json|jsonpath|table|text.
+
+      -f, --file (string)
+         Input file. For 'update' commands automatically set --full=true.
+
+      -c, --config (string)
+         Provide path to config file.
+
+      --debug (bool)
+         Enable debug logs.
+
+      -I, --impersonate-service-account-id (string)
+         Impersonate into the service account and use its token for a command.
+
+      --color (bool)
+         Enable colored output.
+
+      --no-browser (bool)
+         Do not open browser automatically on auth.
+
+      --insecure (bool)
+         Disable transport security.
+
+      --auth-timeout (duration: 2h30m10s)
+         Set the timeout for the request including authentication process, default is 15m0s.
+
+      --per-retry-timeout (duration: 2h30m10s)
+         Set the timeout for each retry attempt, default is 20s.
+
+      --retries (uint)
+         Set the number of retry attempts, 1 is disable retries, default is 3.
+
+      --timeout (duration: 2h30m10s)
+         Set the timeout for the main request, default is 1m0s.
+
+      --no-check-update (bool)
+         Suppress check for updates.
+
+      --no-progress (bool)
+         Suppress progress indicators and spinners.
+

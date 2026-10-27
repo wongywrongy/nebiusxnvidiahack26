@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-21",
+  "method": "httpx GET with api.providers.tavily.BROWSER_HEADERS; no API key",
+  "results": [
+    {
+      "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6.pdf",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 4912,
+      "pdf": false,
+      "pages": 0,
+      "text_chars": 0
+    },
+    {
+      "url": "https://img.acuitybrands.com/public-assets/catalog/664095/wrtl.pdf",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 4912,
+      "pdf": false,
+      "pages": 0,
+      "text_chars": 0
+    }
+  ],
+  "ledger": {
+    "usd": 0.283279,
+    "credits": 138.0
+  }
+}

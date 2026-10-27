@@ -1,0 +1,1078 @@
+{
+  "run_id": "20261023-071700-8a9e33",
+  "fresh_model_cost_usd": "0.0671367",
+  "fresh_web_credits": 12,
+  "items": {
+    "c03": {
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "investigations": [
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "revision_only",
+          "steps": [
+            {
+              "n": 1,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0,
+              "succeeded": true,
+              "source_urls": [
+                "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+              ]
+            },
+            {
+              "n": 2,
+              "tool": "search",
+              "args": {
+                "query": "3M Fire Barrier Sealant IC 15WB+ discontinued or still available",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "1 result",
+              "credits": 1.0,
+              "ms": 2907,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 3,
+              "tool": "search",
+              "args": {
+                "query": "\"IC 15WB+\" site:3m.com",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 3147,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 4,
+              "tool": "search",
+              "args": {
+                "query": "\"IC 15WB+\" discontinued 3M",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "1 result",
+              "credits": 0.0,
+              "ms": 0,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 5,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "document_title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                "revision_quote": "\u00a9 3M 2018. All rights reserved.",
+                "evidence_quote": "Designed to prevent the spread of fire, smoke and noxious gas, 3M\u2122 Fire Barrier Sealant IC 15WB+ is a one-part, gun-grade, latex-based, intumescent firestop sealant. This firestop sealant provides up to 3-hour fire protection in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115.",
+                "status": "active",
+                "status_quote": "Current product 3M(TM) Fire Barrier Sealant CP 25WBplus family3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M(TM) Fire Barrier Water Tight Sealant 3000 WT family3M\u2122 Fire Barrier Water Tight Sealant 3000 WT | 3M(TM) Fire Barrier Sealant IC 15WBplus family3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "note": "The product is confirmed active based on 3M's current product listing showing IC 15WB+ as part of their current product family. The technical data sheet shows revision \u00a9 3M 2018. The unconfirmed properties (ASTM G21 rating, F rating hr, T rating hr) were not found in the available documentation."
+              },
+              "summary": "\u00a9 3M 2018. All rights reserved., unknown",
+              "credits": 0.0,
+              "ms": 18,
+              "succeeded": true,
+              "source_urls": []
+            }
+          ]
+        },
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "not_resolved",
+          "steps": [
+            {
+              "n": 1,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0,
+              "succeeded": true,
+              "source_urls": [
+                "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf"
+              ]
+            },
+            {
+              "n": 2,
+              "tool": "search",
+              "args": {
+                "query": "\"IC 15WB+\" discontinued 3M fire barrier sealant",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "1 result",
+              "credits": 1.0,
+              "ms": 1389,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 3,
+              "tool": "search",
+              "args": {
+                "query": "\"3M\u2122 Fire Barrier Sealant IC 15WB+\" site:3m.com",
+                "include_domains": [
+                  "3m.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 2067,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 4,
+              "tool": "extract",
+              "args": {
+                "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 2,
+              "succeeded": true,
+              "source_urls": [
+                "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--"
+              ]
+            },
+            {
+              "n": 5,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "document_title": "Technical Data Sheet",
+                "revision_quote": "January / 2026",
+                "evidence_quote": "Document Group: 19-9776-6 Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22",
+                "status": "active",
+                "status_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+                "note": "Found exact product match for 3M\u2122 Fire Barrier Sealant IC 15WB+. Technical data sheet shows revision date of January 2026. Safety Data Sheet confirms Version 9.00 issued 02/06/24. Product remains active on 3M website with no discontinuation notices found."
+              },
+              "summary": "January / 2026, unknown",
+              "credits": 0.0,
+              "ms": 26,
+              "succeeded": true,
+              "source_urls": []
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "name": "Fire Protection Products - 3M\u2122 Fire Barrier Sealant IC 15WB+",
+          "model": "IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "check": "spec",
+              "ok": true,
+              "note": "<250 g/L",
+              "requirement_id": "req_voc_content",
+              "claim_ids": [
+                "cl-17"
+              ],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "astm g21 rating",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_mold_resistance",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Temperature rating (T)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Test standards",
+              "check": "spec",
+              "ok": true,
+              "note": "",
+              "requirement_id": "fs-std",
+              "claim_ids": [
+                "cl-15"
+              ],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Service Temperature Range: -20\u00b0 to 180\u00b0F (-28\u00b0 to 82\u00b0C)",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                  "tier": "manufacturer",
+                  "title": "3M FireBarrier\u2122 Sealant IC 15 WB+ - mu ltime dia",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1",
+                  "excerpt": "Version Number: 9.00 Issue Date: 02/06/24 Supercedes Date: 11/15/22",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Service Temperature Range: -20\u00b0 to 180\u00b0F (-28\u00b0 to 82\u00b0C)",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "name": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "model": "IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_voc_content",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "astm g21 rating",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_mold_resistance",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Temperature rating (T)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Test standards",
+              "check": "spec",
+              "ok": true,
+              "note": "",
+              "requirement_id": "fs-std",
+              "claim_ids": [
+                "clm-2"
+              ],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "Technical Data Sheet",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "Technical Data Sheet",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ]
+        }
+      ]
+    },
+    "c07": {
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "investigations": [
+        {
+          "outcome": "not_found",
+          "purpose": "replacement",
+          "resolution": "not_resolved",
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "Starco Lighting SLLT LED troffer luminaire model SLLT specification sheet",
+                "include_domains": [
+                  "starcous.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 3218,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 2,
+              "tool": "extract",
+              "args": {
+                "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0,
+              "succeeded": true,
+              "source_urls": [
+                "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf"
+              ]
+            },
+            {
+              "n": 3,
+              "tool": "search",
+              "args": {
+                "query": "Starco Lighting SLLT discontinued end of life EOL discontinuation notice",
+                "include_domains": [
+                  "starcous.com"
+                ]
+              },
+              "summary": "0 results",
+              "credits": 1.0,
+              "ms": 6362,
+              "succeeded": false,
+              "source_urls": []
+            },
+            {
+              "n": 4,
+              "tool": "search",
+              "args": {
+                "query": "Starco Lighting product discontinuation SLLT LED troffer",
+                "topic": "news"
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 5183,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 5,
+              "tool": "search",
+              "args": {
+                "query": "Starco Lighting Inc. SLLT LED troffer current product",
+                "include_domains": [
+                  "starcous.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 1533,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 6,
+              "tool": "extract",
+              "args": {
+                "url": "https://starcous.com/news-updates"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 1,
+              "succeeded": true,
+              "source_urls": [
+                "https://starcous.com/news-updates"
+              ]
+            },
+            {
+              "n": 7,
+              "tool": "extract",
+              "args": {
+                "url": "https://starcous.com/product/sllt-led-troffer"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 1,
+              "succeeded": true,
+              "source_urls": [
+                "https://starcous.com/product/sllt-led-troffer"
+              ]
+            },
+            {
+              "n": 8,
+              "tool": "search",
+              "args": {
+                "query": "\"SLLT LED Troffer\" \"still available\" \"currently manufactured\" Starco",
+                "include_domains": [
+                  "starcous.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 2235,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 9,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "document_title": "Spec Sheet-LED Troffer",
+                "revision_quote": "No revision number found in document",
+                "evidence_quote": "The SLLT LED Troffer is a versatile and energy-efficient lighting solution, specifically designed to replace traditional 1\u2019x4\u2019, 2\u2019x2\u2019, and 2\u2019x4\u2019 fluorescent fixtures in commercial and institutional settings. Ideal for use in offices, schools, and healthcare environments, the SLLT LED Troffer integrates seamlessly into drop ceilings, offering enhanced control and flexibility. Fully dimmable and white-tunable, the SLLT LED Troffer provides customizable lighting options. Its advanced wireless Bluetooth mesh control allows for effortless integration into modern building management systems, while its compatibility with motion sensors, timers, and daylight harvesting systems ensures optimal energy efficiency.",
+                "status": "active",
+                "status_quote": "No discontinuation notices found for SLLT LED Troffer Luminaire; product actively featured on manufacturer website with recent updates (March 20, 2026)",
+                "note": "Found manufacturer specification sheet for SLLT LED Troffer Luminaire (model SLLT). No explicit revision number found in the PDF document. No discontinuation notices or end-of-life announcements found for the SLLT product line. Product remains actively listed on Starco Lighting's website with full specifications, downloads, and recent website activity indicating ongoing manufacture and availability."
+              },
+              "summary": "couldn't confirm the quotes",
+              "credits": 0.0,
+              "ms": 31,
+              "succeeded": false,
+              "source_urls": []
+            }
+          ]
+        },
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "values_confirmed",
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "H.E. Williams LT LED Troffer LT model specifications datasheet",
+                "include_domains": [
+                  "hew.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 1824,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 2,
+              "tool": "extract",
+              "args": {
+                "url": "https://hew.com/specifications/LT_led.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 0,
+              "succeeded": true,
+              "source_urls": [
+                "https://hew.com/specifications/LT_led.pdf"
+              ]
+            },
+            {
+              "n": 3,
+              "tool": "search",
+              "args": {
+                "query": "H.E. Williams LT LED Troffer discontinued end of life LT series announcement",
+                "include_domains": [
+                  "hew.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 1316,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 4,
+              "tool": "search",
+              "args": {
+                "query": "H.E. Williams product discontinuation LT LED Troffer 2024 2025",
+                "topic": "news"
+              },
+              "summary": "4 results",
+              "credits": 1.0,
+              "ms": 4432,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 5,
+              "tool": "extract",
+              "args": {
+                "url": "https://hew.com/products/lt"
+              },
+              "summary": "1 extracted source",
+              "credits": 0.0,
+              "ms": 1151,
+              "succeeded": true,
+              "source_urls": [
+                "https://hew.com/specifications/LT_led.pdf"
+              ]
+            },
+            {
+              "n": 6,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://hew.com/specifications/LT_led.pdf",
+                "document_title": "LT LED Troffer",
+                "revision_quote": "REV.01/21/26.LM",
+                "evidence_quote": "H.E. Williams, Inc. Carthage, Missouri www.hew.com 417-358-4065 Designed and Manufactured in the USA REV.01/21/26.LM",
+                "status": "active",
+                "note": "The LT LED Troffer (model LT) specification document shows revision REV.01/21/26.LM and is actively listed on H.E. Williams' website with current specifications, ordering information, and features including QuickShip availability. No discontinuation notices were found in searches of the manufacturer's domain."
+              },
+              "summary": "REV.01/21/26.LM, unknown",
+              "credits": 0.0,
+              "ms": 16,
+              "succeeded": true,
+              "source_urls": []
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "name": "Spec Sheet-LED Troffer",
+          "model": "SLLT",
+          "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "check": "spec",
+              "ok": true,
+              "note": "349000 hours",
+              "requirement_id": "req_t_rating_hr_led",
+              "claim_ids": [
+                "cl-8"
+              ],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Warranty",
+              "check": "spec",
+              "ok": true,
+              "note": "10 years",
+              "requirement_id": "req_warranty_years_led",
+              "claim_ids": [
+                "cl-18"
+              ],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Warranty 10 Years",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "DLC listing",
+              "check": "spec",
+              "ok": true,
+              "note": "",
+              "requirement_id": "lt-dlc",
+              "claim_ids": [
+                "cl-3"
+              ],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "macadam steps",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_macadam_ellipse",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Dims down to",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "lt-dim",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Certification UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "SE=Standard Efficacy 130 LPW HE=High Efficacy 150 LPW",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Operating Temperature: -20\u00b0C (-4\u00b0F) to 50\u00b0C (122\u00b0F)",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "tested in accordance to IESNA LM-79",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "Spec Sheet-LED Troffer",
+                  "retrieved_at": "2026-10-23T05:06:47+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Warranty 10 Years",
+                  "archived_path": "c07/2026-10-23T05_06_47+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ]
+        },
+        {
+          "name": "LT LED Troffer",
+          "model": "LT",
+          "source_url": "https://hew.com/specifications/LT_led.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "check": "spec",
+              "ok": true,
+              "note": "> 72000 hours",
+              "requirement_id": "req_t_rating_hr_led",
+              "claim_ids": [
+                "cl-9"
+              ],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "https://hew.com/specifications/LT_led.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "L70 > 72,000 hours per IES TM-21.",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Warranty",
+              "check": "spec",
+              "ok": true,
+              "note": "5 years",
+              "requirement_id": "req_warranty_years_led",
+              "claim_ids": [
+                "cl-19"
+              ],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "https://hew.com/specifications/LT_led.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "WARRANTY \u2013 5-year limited warranty, see hew.com/warranty",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "DLC listing",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "lt-dlc",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "macadam steps",
+              "check": "spec",
+              "ok": true,
+              "note": "3",
+              "requirement_id": "req_macadam_ellipse",
+              "claim_ids": [
+                "cl-11"
+              ],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "https://hew.com/specifications/LT_led.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "All CCTs are within 3 MacAdam ellipses.",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Dims down to",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "lt-dim",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "REV.01/21/26.LM",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "Results based on 80 CRI, 3500K for single CCT and 4000K for tunable white, wattage for 120V through 277V input, and 25\u00b0C ambient temperature.",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "All CCTs are within 3 MacAdam ellipses.",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "5-year limited warranty, see hew.com/warranty",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "L70 > 72,000 hours per IES TM-21.",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "REV.01/21/26.LM",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "Results based on 80 CRI, 3500K for single CCT and 4000K for tunable white, wattage for 120V through 277V input, and 25\u00b0C ambient temperature.",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "All CCTs are within 3 MacAdam ellipses.",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "5-year limited warranty, see hew.com/warranty",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "L70 > 72,000 hours per IES TM-21.",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "REV.01/21/26.LM",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": null
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

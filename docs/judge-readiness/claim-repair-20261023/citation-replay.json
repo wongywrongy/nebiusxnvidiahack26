@@ -1,0 +1,25 @@
+{
+  "scope": "cache/archive-only comparison replay, no new provider call or release pass",
+  "before": [
+    {
+      "property": "service_temp_max_f",
+      "label": "Highest service temperature",
+      "submitted": "120 °F",
+      "current": "180 °F",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+      "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)"
+    }
+  ],
+  "after": [
+    {
+      "property": "service_temp_max_f",
+      "label": "Highest service temperature",
+      "submitted": "120 °F",
+      "current": "180 °F",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)"
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "scope": "c07 only; submitted-page/web/archive/trace consistency, not full promotion",
+  "passed": true,
+  "run_id": "20261023-102055-14f173",
+  "started_at": "2026-10-23T10:20:55.757745+00:00",
+  "checked_at": "2026-10-23T10:22:07.410495+00:00",
+  "panel": {
+    "generated_at": "2026-10-23T10:20:56+00:00",
+    "mode": "live",
+    "run_id": "20261023-102055-14f173",
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "quote_gate": {
+      "claims_extracted": 262,
+      "claims_kept": 109,
+      "web_values_read": 60,
+      "web_values_kept": 19,
+      "claims_drop_rate": 0.583969465648855,
+      "web_values_drop_rate": 0.6833333333333333
+    },
+    "tuning": {
+      "thinking": "off",
+      "thinking_tasks": "",
+      "max_output_tokens": 65536,
+      "max_page_chars": 6000,
+      "web_source_chars": 12000,
+      "search_depth": "basic",
+      "extract_depth": "basic",
+      "search_max_results": 5,
+      "investigate_credit_cap": 30.0,
+      "investigate_max_steps": 24,
+      "map_limit": 20
+    },
+    "right_call": {
+      "n": 1,
+      "of": 1
+    },
+    "caught": {
+      "n": 1,
+      "of": 1
+    },
+    "false_alarms": {
+      "n": 0,
+      "of": 0
+    },
+    "fixes_passing": {
+      "n": 0,
+      "of": 1
+    },
+    "unnecessary_notes": {
+      "n": 0,
+      "of": 0
+    },
+    "validity": {
+      "invalid_items": 0,
+      "requested_items": 1
+    },
+    "fresh_model_cost_usd": 0.0,
+    "fresh_web_credits": 0.0,
+    "run_fresh_spend": {
+      "usd": 0.0,
+      "credits": 0.0
+    },
+    "investigations": {
+      "scripted_unconfirmed_items": 0,
+      "primary_runs": 0,
+      "resolved": 0,
+      "revision_only": 0,
+      "capped": 0,
+      "replacement_runs": 2,
+      "replacement_capped": 0
+    },
+    "manifest": {
+      "version": 1,
+      "commit": null,
+      "config": {
+        "thinking": "off",
+        "thinking_tasks": "",
+        "max_output_tokens": 65536,
+        "max_page_chars": 6000,
+        "web_source_chars": 12000,
+        "search_depth": "basic",
+        "extract_depth": "basic",
+        "search_max_results": 5,
+        "investigate_credit_cap": 30.0,
+        "investigate_max_steps": 24,
+        "map_limit": 20,
+        "map_max_depth": 1,
+        "fix_credit_cap": 40.0,
+        "fix_max_candidates": 3,
+        "budget_usd_per_run": 3.0,
+        "budget_usd_per_day": 8.0,
+        "budget_tavily_credits_per_item": 60.0,
+        "budget_tavily_credits_per_day": 600.0,
+        "max_concurrency": 1,
+        "public_uploads_live": true,
+        "nebius_base_url": "https://api.tokenfactory.nebius.com/v1/",
+        "tavily_credit_usd": 0.008,
+        "models": {
+          "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "extract": "nvidia/nemotron-3-super-120b-a12b",
+          "verify": "nvidia/nemotron-3-super-120b-a12b",
+          "write": "nvidia/nemotron-3-super-120b-a12b"
+        },
+        "prices": {
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": [
+            0.06,
+            0.24
+          ],
+          "nvidia/nemotron-3-super-120b-a12b": [
+            0.3,
+            0.9
+          ]
+        }
+      },
+      "config_hash": "3aac79ffa63afaa06238ddd77cf42cda8872c0f0e075f69b7cadc432d4d25270",
+      "code_hash": "1bd1495a7fe75c733886cb4d471371b264657fccad5f2d03e0e260da02c52a8d",
+      "checklists": {
+        "07_84_00.json": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+        "26_51_00.json": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1"
+      },
+      "inputs": {
+        "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+        "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+        "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+        "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+        "document_lock": "97cd7c956dda3fa5875426400ae081e8c3853f4da7787f28a0338efb9cad13df"
+      },
+      "refresh_web": false,
+      "run_id": "20261023-102055-14f173",
+      "requested_ids": [
+        "c07"
+      ],
+      "started_at": "2026-10-23T10:20:55.757745+00:00"
+    },
+    "time_ms_per_item": 1129,
+    "cost_usd_per_item": 0.174062,
+    "rows": [
+      {
+        "id": "c07",
+        "title": "LED troffer, offices",
+        "product": "Lithonia 2TL4",
+        "expected": "send_back",
+        "expected_problems": [
+          "status"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 6,
+        "fresh_model_cost_usd": 0.0,
+        "fresh_web_credits": 0.0,
+        "decision": "send_back",
+        "found_problems": [
+          "status"
+        ],
+        "right_call": true,
+        "caught": 1,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": {
+          "suggest": null,
+          "passes": false,
+          "candidates": 2
+        },
+        "time_ms": 1129,
+        "model_cost_usd": 0.174062,
+        "web_credits": 0.0,
+        "cost_usd": 0.174062,
+        "claims_extracted": 262,
+        "claims_kept": 109,
+        "web_values_read": 60,
+        "web_values_kept": 19
+      }
+    ],
+    "release_gate": {
+      "scope": "cases",
+      "passed": false,
+      "issues": [
+        "Full scoring set required",
+        "No evidenced passing replacement",
+        "No demonstrated Investigator rescue"
+      ]
+    }
+  }
+}

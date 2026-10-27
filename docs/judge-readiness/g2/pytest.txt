@@ -1,0 +1,94 @@
+.........................................................FF.F...FFF..... [ 20%]
+.s..........................................................sF.......... [ 40%]
+........................................................................ [ 60%]
+........F.........................F..................................... [ 81%]
+...................................................................      [100%]
+=================================== FAILURES ===================================
+_________________________ test_fix_only_on_send_backs __________________________
+tests/test_fix_upload_scores.py:48: in test_fix_only_on_send_backs
+    assert bool(fixes(res)) == (cid in SEND_BACK), cid
+E   AssertionError: c06
+E   assert False == ('c06' in ['c02', 'c03', 'c04', 'c06', 'c07'])
+E    +  where False = bool([])
+E    +    where [] = fixes(Result(case_id='c06', title='LED downlight, corridors', decision='approve_with_note', summary='The product data can be...archived_submittals=[], evidence_label=None, claims_extracted=12, claims_kept=12, web_values_read=4, web_values_kept=4))
+___________________ test_passes_only_with_every_check_passed ___________________
+tests/test_fix_upload_scores.py:54: in test_passes_only_with_every_check_passed
+    (f,) = fixes(run.results[cid])
+    ^^^^
+E   ValueError: not enough values to unpack (expected 1, got 0)
+_____________________ test_fix_names_the_current_documents _____________________
+tests/test_fix_upload_scores.py:78: in test_fix_names_the_current_documents
+    assert "BLT 2x4" in fixes(run.results["c07"])[0].suggest
+E   AssertionError: assert 'BLT 2x4' in ''
+E    +  where '' = Fix(head='No passing replacement found', query='Lithonia Lighting (Acuity Brands) current LED troffer data sheet', can...uoted confirmation that this replacement is available', requirement_id=None, evidence=[])], passes=False)], suggest='').suggest
+__________ test_scores_endpoint_computes_mock_on_clean_install[mock] ___________
+tests/test_fix_upload_scores.py:165: in test_scores_endpoint_computes_mock_on_clean_install
+    assert scores["mode"] == "mock" and scores["right_call"] == {"n": 8, "of": 8}
+E   AssertionError: assert ('mock' == 'mock'
+E
+E       mock and {'n': 6, 'of': 8} == {'n': 8, 'of': 8}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'n': 6} != {'n': 8}
+E     Use -v to get more diff)
+__________ test_scores_endpoint_computes_mock_on_clean_install[live] ___________
+tests/test_fix_upload_scores.py:165: in test_scores_endpoint_computes_mock_on_clean_install
+    assert scores["mode"] == "mock" and scores["right_call"] == {"n": 8, "of": 8}
+E   AssertionError: assert ('mock' == 'mock'
+E
+E       mock and {'n': 6, 'of': 8} == {'n': 8, 'of': 8}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'n': 6} != {'n': 8}
+E     Use -v to get more diff)
+________________________ test_run_scoring_set_endpoint _________________________
+tests/test_fix_upload_scores.py:175: in test_run_scoring_set_endpoint
+    assert s["right_call"] == {"n": 8, "of": 8} and s["false_alarms"]["n"] == 0
+E   AssertionError: assert ({'n': 6, 'of': 8} == {'n': 8, 'of': 8}
+E
+E     Omitting 1 identical items, use -vv to show
+E     Differing items:
+E     {'n': 6} != {'n': 8}
+E     Use -v to get more diff)
+_______________________ test_all_cases_match_answer_key ________________________
+tests/test_pipeline_mock.py:21: in test_all_cases_match_answer_key
+    assert res.decision == all_cases()[cid]["expected"]["decision"], cid
+E   AssertionError: c05
+E   assert 'approve_with_note' == 'approve'
+E
+E     - approve
+E     + approve_with_note
+___________________ test_recheck_summarizes_the_watched_item ___________________
+tests/test_recheck.py:41: in test_recheck_summarizes_the_watched_item
+    assert by["c07"]["replacement"]  # the fix step found a passing troffer
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   assert None
+----------------------------- Captured stdout call -----------------------------
+
+mode=mock  run=20261022-210542-192fdd  runner=local
+
+  discontinued  26 51 00-03    Lithonia 2TL4                The manufacturer lists it as discontinued.
+  no_change     07 84 00-01    STI SpecSeal LCI             Matches the manufacturer's current documents.
+
+wrote /tmp/pytest-of-kyle/pytest-12303/test_recheck_summarizes_the_wa0/watch/latest.json
+_____________________ test_recorded_samples_match_expected _____________________
+tests/test_samples.py:83: in test_recorded_samples_match_expected
+    assert run.results[sid].decision == all_samples()[sid]["expected"]["decision"], sid
+E   AssertionError: s2
+E   assert 'approve_with_note' == 'approve'
+E
+E     - approve
+E     + approve_with_note
+=========================== short test summary info ============================
+FAILED tests/test_fix_upload_scores.py::test_fix_only_on_send_backs - Asserti...
+FAILED tests/test_fix_upload_scores.py::test_passes_only_with_every_check_passed
+FAILED tests/test_fix_upload_scores.py::test_fix_names_the_current_documents
+FAILED tests/test_fix_upload_scores.py::test_scores_endpoint_computes_mock_on_clean_install[mock]
+FAILED tests/test_fix_upload_scores.py::test_scores_endpoint_computes_mock_on_clean_install[live]
+FAILED tests/test_fix_upload_scores.py::test_run_scoring_set_endpoint - Asser...
+FAILED tests/test_pipeline_mock.py::test_all_cases_match_answer_key - Asserti...
+FAILED tests/test_recheck.py::test_recheck_summarizes_the_watched_item - asse...
+FAILED tests/test_samples.py::test_recorded_samples_match_expected - Assertio...
+9 failed, 344 passed, 2 skipped in 14.93s

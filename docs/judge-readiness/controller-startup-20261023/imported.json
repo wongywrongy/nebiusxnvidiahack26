@@ -1,0 +1,9 @@
+{
+  "stage": "after explicit synthetic transfer",
+  "synthetic_only": true,
+  "source_retired": true,
+  "accounting_available": true,
+  "synthetic_seed_preserved": true,
+  "state_sha256": "85ac376ebe1c44162c58f376ba67436703f0314c04fbb5ca9cff6fde64d902fa",
+  "authority_sha256": "d2151d01df80e7907f2ee3771c3076aef5c30dd9432bd54b4c8fae52a3665a03"
+}

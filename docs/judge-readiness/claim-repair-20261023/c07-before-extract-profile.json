@@ -1,0 +1,30 @@
+{
+  "claims": 87,
+  "null_values": 0,
+  "by_property": {
+    "lumens": 20,
+    "input_watts_120v": 20,
+    "input_watts_277v": 20,
+    "efficacy_lm_per_w": 20,
+    "l70_hours": 1,
+    "cri": 1,
+    "warranty_years": 1,
+    "standards": 1,
+    "dim_min_percent": 3
+  },
+  "variant_rows": 83,
+  "usage": {
+    "task": "extract_claims",
+    "tier": "extract",
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "input_tokens": 5844,
+    "output_tokens": 13496,
+    "cost_usd": 0.0138996,
+    "latency_ms": 58263,
+    "cached": false,
+    "format": "json_schema",
+    "reasoning_tokens": 0,
+    "thinking": "off",
+    "finish_reason": null
+  }
+}

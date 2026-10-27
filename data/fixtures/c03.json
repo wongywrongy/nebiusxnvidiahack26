@@ -51,7 +51,9 @@
         "value": "0",
         "unit": "g/L",
         "page": 2,
-        "quote": "VOC:"
+        "quote": "VOC:",
+        "scope": "product_wide",
+        "scope_quote": "VOC:"
       },
       {
         "id": "k2",
@@ -61,7 +63,9 @@
         "value": 120,
         "unit": "F",
         "page": 1,
-        "quote": "not to exceed 120°F (48°C)."
+        "quote": "not to exceed 120°F (48°C).",
+        "scope": "product_wide",
+        "scope_quote": "not to exceed 120°F (48°C)."
       },
       {
         "id": "k3",
@@ -73,7 +77,9 @@
           "UL 1479"
         ],
         "page": 2,
-        "quote": "ASTM E 814  (UL 1479)"
+        "quote": "ASTM E 814  (UL 1479)",
+        "scope": "product_wide",
+        "scope_quote": "ASTM E 814  (UL 1479)"
       }
     ]
   },
@@ -101,13 +107,23 @@
         "property": "voc_g_per_l",
         "value": "<2",
         "unit": "g/L",
-        "quote": "VOC Less H2O and Exempt Solvents: <2 g/L"
+        "quote": "VOC Less H2O and Exempt Solvents: <2 g/L",
+        "scope": "product_wide",
+        "scope_quote": "VOC Less H2O and Exempt Solvents: <2 g/L",
+        "model": "Fire Barrier Sealant IC 15WB+",
+        "identity_quote": "Fire Barrier Sealant IC 15WB+",
+        "source_url": "https://www.farnell.com/datasheets/2165365.pdf"
       },
       {
         "property": "service_temp_max_f",
         "value": 180,
         "unit": "F",
-        "quote": "Service Temperature Range: -20° to 180°F"
+        "quote": "Service Temperature Range: -20° to 180°F",
+        "scope": "product_wide",
+        "scope_quote": "Service Temperature Range: -20° to 180°F",
+        "model": "Fire Barrier Sealant IC 15WB+",
+        "identity_quote": "Fire Barrier Sealant IC 15WB+",
+        "source_url": "https://www.farnell.com/datasheets/2165365.pdf"
       }
     ],
     "source_urls": [

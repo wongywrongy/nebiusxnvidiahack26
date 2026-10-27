@@ -1,0 +1,70 @@
+{
+  "source_commit": "061cf9d2fcb4eb68729eb2961f6f4a8758e24e55",
+  "runtime_code_hash": "3480e5d073f7a58d7fae7317cac2c0a83a3dc880b45e3709e2bec7e9f07f0b45",
+  "isolated_context": "/tmp/speccheck-validated-image-yz2go3zj",
+  "locked_public_pdfs_copied": 13,
+  "private_paths_copied": false,
+  "shared_uncommitted_changes_included": false,
+  "image_index": "sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7",
+  "image_config_id": "sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7",
+  "default_command": [
+    "python",
+    "scripts/serve.py"
+  ],
+  "published": false,
+  "registry_reference_verified": false,
+  "buildkit_metadata": {
+    "buildx.build.provenance": {
+      "builder": {
+        "id": ""
+      },
+      "buildType": "https://mobyproject.org/buildkit@v1",
+      "materials": [
+        {
+          "uri": "pkg:docker/node@22-slim?platform=linux%2Famd64",
+          "digest": {
+            "sha256": "de170b39439eb0e5a3444ad7d60b015614a381e10fecae2e30ec9e735122f38d"
+          }
+        },
+        {
+          "uri": "pkg:docker/python@3.12-slim?platform=linux%2Famd64",
+          "digest": {
+            "sha256": "78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea"
+          }
+        }
+      ],
+      "invocation": {
+        "configSource": {
+          "entryPoint": "Dockerfile"
+        },
+        "parameters": {
+          "frontend": "dockerfile.v0",
+          "locals": [
+            {
+              "name": "context"
+            },
+            {
+              "name": "dockerfile"
+            }
+          ],
+          "compatibilityVersion": 30
+        },
+        "environment": {
+          "dockerfileVersion": "1.28.0",
+          "platform": "linux/amd64"
+        }
+      }
+    },
+    "buildx.build.ref": "default/default/xfngzl7plddkykqefey5x5ikz",
+    "containerimage.descriptor": {
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "digest": "sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7",
+      "size": 856
+    },
+    "containerimage.digest": "sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7",
+    "image.name": "docker.io/library/speccheck:validated-source-local"
+  },
+  "build_log_sha256": "4655b904cf7b1b169223cb9c6b39a63c6c31d136b592751ac6f3a8671565f526",
+  "build_log_private_path": "/tmp/speccheck-validated-image-build.log",
+  "dependency_and_frontend_layers": "Reused cached layers; no uncached-build claim"
+}

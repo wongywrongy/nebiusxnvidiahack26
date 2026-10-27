@@ -1,0 +1,198 @@
+{
+  "run_id": "20261023-064841-187b83",
+  "fresh_model_cost_usd": 0.0424338,
+  "fresh_web_credits": 7.0,
+  "items": {
+    "c03": {
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "investigations": [],
+      "candidates": [
+        {
+          "name": "Fire Protection Products - 3M™ Fire Barrier Sealant IC 15WB+",
+          "model": "IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": true,
+              "note": "<250 g/L"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Temperature rating (T)",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Test standards",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ]
+        },
+        {
+          "name": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "model": "IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Temperature rating (T)",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Test standards",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "January / 2026"
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ]
+        }
+      ]
+    },
+    "c07": {
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "investigations": [
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "not_resolved",
+          "step_count": 8
+        },
+        {
+          "outcome": "found",
+          "purpose": "replacement",
+          "resolution": "values_confirmed",
+          "step_count": 10
+        }
+      ],
+      "candidates": [
+        {
+          "name": "Spec Sheet-LED Troffer",
+          "model": "SLLT",
+          "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "ok": true,
+              "note": "349000 hours"
+            },
+            {
+              "label": "Warranty",
+              "ok": true,
+              "note": "10 years"
+            },
+            {
+              "label": "DLC listing",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "macadam steps",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Dims down to",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ]
+        },
+        {
+          "name": "LT LED Troffer",
+          "model": "LT",
+          "source_url": "https://hew.com/specifications/LT_led.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "ok": true,
+              "note": "> 72000 hours"
+            },
+            {
+              "label": "Warranty",
+              "ok": true,
+              "note": "5 years"
+            },
+            {
+              "label": "DLC listing",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "macadam steps",
+              "ok": true,
+              "note": "3"
+            },
+            {
+              "label": "Dims down to",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Still made",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

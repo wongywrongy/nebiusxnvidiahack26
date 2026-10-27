@@ -1,0 +1,1336 @@
+{
+  "run_id": "20261023-084824-7ab49b",
+  "source_commit": "a9df48cffc9dadd157c43145df28add595f44feb",
+  "code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
+  "scope": "Actual affected-case validation; unchanged original expectations; no complete release",
+  "prior_run_id": "20261023-081257-c725cf",
+  "before_panel": {
+    "right_call": {
+      "n": 2,
+      "of": 2
+    },
+    "caught": {
+      "n": 2,
+      "of": 2
+    },
+    "fixes_passing": {
+      "n": 0,
+      "of": 2
+    },
+    "quote_gate": {
+      "claims_extracted": 209,
+      "claims_kept": 56,
+      "web_values_read": 124,
+      "web_values_kept": 61,
+      "claims_drop_rate": 0.7320574162679425,
+      "web_values_drop_rate": 0.5080645161290323
+    }
+  },
+  "after_panel": {
+    "right_call": {
+      "n": 2,
+      "of": 2
+    },
+    "caught": {
+      "n": 2,
+      "of": 2
+    },
+    "fixes_passing": {
+      "n": 0,
+      "of": 2
+    },
+    "quote_gate": {
+      "claims_extracted": 209,
+      "claims_kept": 50,
+      "web_values_read": 100,
+      "web_values_kept": 54,
+      "claims_drop_rate": 0.7607655502392344,
+      "web_values_drop_rate": 0.45999999999999996
+    },
+    "investigations": {
+      "scripted_unconfirmed_items": 0,
+      "primary_runs": 0,
+      "resolved": 0,
+      "revision_only": 0,
+      "capped": 0,
+      "replacement_runs": 4,
+      "replacement_capped": 0
+    }
+  },
+  "items": {
+    "c03": {
+      "decision": "send_back",
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "fresh_model_cost_usd": 0.0905193,
+      "fresh_web_credits": 6.0,
+      "claims_extracted": 78,
+      "claims_kept": 16,
+      "web_values_read": 50,
+      "web_values_kept": 28,
+      "investigations": [
+        {
+          "purpose": "replacement",
+          "outcome": "found",
+          "resolution": "not_resolved",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": "January / 2026",
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "ASTM E 1966 (UL 2079)",
+                  "CAN/ULC-S115",
+                  "IBC",
+                  "IRC",
+                  "NBCC",
+                  "IFC",
+                  "IPC",
+                  "IMC",
+                  "NFPA 5000",
+                  "NEC (NFPA 70)",
+                  "NFPA 101"
+                ],
+                "unit": null,
+                "quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "selection_quote": null
+              },
+              {
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "selection_quote": null
+              },
+              {
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "ASTM E 1966 (UL 2079)",
+                  "CAN/ULC-S115",
+                  "IBC",
+                  "IRC",
+                  "NBCC",
+                  "IFC",
+                  "IPC",
+                  "IMC",
+                  "NFPA 5000",
+                  "NEC (NFPA 70)",
+                  "NFPA 101"
+                ],
+                "unit": null,
+                "quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "selection_quote": null
+              },
+              {
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "quote": "contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "selection_quote": null
+              },
+              {
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "ASTM E 1966 (UL 2079)",
+                  "CAN/ULC-S115",
+                  "IBC",
+                  "IRC",
+                  "NBCC",
+                  "IFC",
+                  "IPC",
+                  "IMC",
+                  "NFPA 5000",
+                  "NEC (NFPA 70)",
+                  "NFPA 101"
+                ],
+                "unit": null,
+                "quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "selection_quote": null
+              },
+              {
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "quote": "contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Halogen-free, low VOC \u2014 Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "selection_quote": null
+              },
+              {
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "ASTM E 1966 (UL 2079)",
+                  "CAN/ULC-S115",
+                  "IBC",
+                  "IRC",
+                  "NBCC",
+                  "IFC",
+                  "IPC",
+                  "IMC",
+                  "NFPA 5000",
+                  "NEC (NFPA 70)",
+                  "NFPA 101"
+                ],
+                "unit": null,
+                "quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                "selection_quote": null
+              },
+              {
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "quote": "contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "selection_quote": null
+              },
+              {
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "quote": "3M\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "property": "service_temp_max_f",
+                "value": 180.0,
+                "unit": "\u00b0F",
+                "quote": "Service Temperature Range -20\u00b0 to 180\u00b0F (-28\u00b0 to 82\u00b0C)",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": "Service Temperature Range -20\u00b0 to 180\u00b0F (-28\u00b0 to 82\u00b0C)",
+                "scope": "product_wide",
+                "scope_quote": "Performance and Typical Physical Properties ... Service Temperature Range -20\u00b0 to 180\u00b0F (-28\u00b0 to 82\u00b0C)",
+                "selection_quote": null
+              },
+              {
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "quote": "Halogen-free, low VOC \u2014 Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115 \u2022 Expanded fire protection systems \u2022 Helps minimize sound transfer \u2014STC-Rating of 54 when tested in STC 54-rated wall assembly \u2022 Sag-resistant \u2022 Excellent adhesion \u2022 Re-enterable/repairable \u2022 Excellent caulk rate \u2022 Paintable \u2022 Water clean up \u2022 Halogen-free, low VOC \u2014 Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "https://multimedia.3m.com/mws/media/webserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+              "https://www.3m.com/3M/en_US/p/d/b40065443",
+              "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf"
+            ],
+            "notes": null
+          }
+        },
+        {
+          "purpose": "replacement",
+          "outcome": "found",
+          "resolution": "not_resolved",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": "January / 2026",
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "UL 2079 (ASTM E 1966)",
+                  "CAN/ULC-S115"
+                ],
+                "unit": null,
+                "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "Fire Protection Products 3M\u2122 Fire Barrier Sealant IC 15WB+ Page 1 of 4 Technical Data Sheet January / 2026 Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115 \u2022 Expanded fire protection systems \u2022 Helps minimize sound transfer \u2014STC-Rating of 54 when tested in STC 54-rated wall assembly \u2022 Sag-resistant \u2022 Excellent adhesion \u2022 Re-enterable/repairable \u2022 Excellent caulk rate \u2022 Paintable \u2022 Water clean up \u2022 Halogen-free, low VOC \u2014 Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "UL 2079 (ASTM E 1966)",
+                  "CAN/ULC-S115"
+                ],
+                "unit": null,
+                "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "Fire Protection Products 3M\u2122 Fire Barrier Sealant IC 15WB+ Page 1 of 4 Technical Data Sheet January / 2026 Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115 \u2022 Expanded fire protection systems \u2022 Helps minimize sound transfer \u2014STC-Rating of 54 when tested in STC 54-rated wall assembly \u2022 Sag-resistant \u2022 Excellent adhesion \u2022 Re-enterable/repairable \u2022 Excellent caulk rate \u2022 Paintable \u2022 Water clean up \u2022 Halogen-free, low VOC \u2014 Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "UL 2079 (ASTM E 1966)",
+                  "CAN/ULC-S115"
+                ],
+                "unit": null,
+                "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                "model": "IC 15WB+",
+                "identity_quote": "Fire Protection Products 3M\u2122 Fire Barrier Sealant IC 15WB+ Page 1 of 4 Technical Data Sheet January / 2026 Product Description 3M\u2122 Fire Barrier Sealant IC 15WB+",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115 \u2022 Expanded fire protection systems \u2022 Helps minimize sound transfer \u2014STC-Rating of 54 when tested in STC 54-rated wall assembly \u2022 Sag-resistant \u2022 Excellent adhesion \u2022 Re-enterable/repairable \u2022 Excellent caulk rate \u2022 Paintable \u2022 Water clean up \u2022 Halogen-free, low VOC \u2014 Complies with the intent of LEED\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168)",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+              "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+              "https://www.3m.com/3M/en_US/p/d/b40065443"
+            ],
+            "notes": null
+          }
+        }
+      ],
+      "fixes": [
+        {
+          "name": "Fire Protection Products - 3M\u2122 Fire Barrier Sealant IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "check": "spec",
+              "ok": true,
+              "note": "<250 g/L",
+              "requirement_id": "req_voc_content",
+              "claim_ids": [
+                "cl-17"
+              ],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "astm g21 rating",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_mold_resistance",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Temperature rating (T)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Test standards",
+              "check": "spec",
+              "ok": true,
+              "note": "",
+              "requirement_id": "fs-std",
+              "claim_ids": [
+                "cl-15"
+              ],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "January / 2026",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:45:18+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_45_18+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "January / 2026",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "January / 2026",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "3M\\u2122 Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standar d Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1 966 (U L2079) St andar d Test Meth od fo r Fire Res istive Joint S yste ms a nd CAN/ULC-S115 Standard Method of Fire Tests of Firestop Syst ems. 3 M\\u2122 Fire Barrier Sealant IC 15WB+ meets the requirements of the IBC, IR C, NBCC,IFC, IPC, IMC, NFPA 5000, NEC (NFPA 70) and NFPA 101.",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-22T22:33:57+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "archived_path": "c03/2026-10-22T22_33_57+00_00/e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "name": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_voc_content",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "astm g21 rating",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_mold_resistance",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Temperature rating (T)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Test standards",
+              "check": "spec",
+              "ok": true,
+              "note": "",
+              "requirement_id": "fs-std",
+              "claim_ids": [
+                "clm-2"
+              ],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "January / 2026",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "Technical Data Sheet",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "Technical Data Sheet",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "January / 2026",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "Technical Data Sheet",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Product Features \u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (UL 1479), UL 2079 (ASTM E 1966) and CAN/ULC-S115",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "Technical Data Sheet",
+                  "retrieved_at": "2026-10-23T02:22:06+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "January / 2026",
+                  "archived_path": "c03/2026-10-23T02_22_06+00_00/0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    },
+    "c07": {
+      "decision": "send_back",
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "fresh_model_cost_usd": 0.0589233,
+      "fresh_web_credits": 4.0,
+      "claims_extracted": 131,
+      "claims_kept": 34,
+      "web_values_read": 50,
+      "web_values_kept": 26,
+      "investigations": [
+        {
+          "purpose": "replacement",
+          "outcome": "found",
+          "resolution": "not_resolved",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": null,
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "cri",
+                "value": "80+, 90+",
+                "unit": null,
+                "quote": "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                "selection_quote": null
+              },
+              {
+                "property": "dlc_listed",
+                "value": [
+                  "DLC Premium"
+                ],
+                "unit": null,
+                "quote": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                "selection_quote": null
+              },
+              {
+                "property": "l70_hours",
+                "value": 349000.0,
+                "unit": "hours",
+                "quote": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+                "selection_quote": null
+              },
+              {
+                "property": "service_temp_max_f",
+                "value": 122.0,
+                "unit": "\u00b0F",
+                "quote": "Operating Temperature: -20\u00b0C (-4\u00b0F) to 50\u00b0C (122\u00b0F)",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "Operating Temperature: -20\u00b0C (-4\u00b0F) to 50\u00b0C (122\u00b0F)",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... Operating Temperature: -20\u00b0C (-4\u00b0F) to 50\u00b0C (122\u00b0F)",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "IESNA LM-79"
+                ],
+                "unit": null,
+                "quote": "tested in accordance to IESNA LM-79",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "tested in accordance to IESNA LM-79",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... SLLT-24-40-35-80-SD-SE 4940 delivered lumens, tested in accordance to IESNA LM-79",
+                "selection_quote": null
+              },
+              {
+                "property": "warranty_years",
+                "value": 10.0,
+                "unit": "years",
+                "quote": "Warranty 10 Years",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "Warranty 10 Years",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... Warranty 10 Years",
+                "selection_quote": null
+              },
+              {
+                "property": "cri",
+                "value": "80+, 90+",
+                "unit": null,
+                "quote": "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... DIMENSION LED CRI: 80+, 90+ Color Selectable 3000K/3500K/4000K/5000K Color Tunable Range: 3000K to 5000K",
+                "selection_quote": null
+              },
+              {
+                "property": "dlc_listed",
+                "value": [
+                  "DLC Premium"
+                ],
+                "unit": null,
+                "quote": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "IESNA LM-79"
+                ],
+                "unit": null,
+                "quote": "tested in accordance to IESNA LM-79",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "tested in accordance to IESNA LM-79",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... SLLT-24-40-35-80-SD-SE 4940 delivered lumens, tested in accordance to IESNA LM-79",
+                "selection_quote": null
+              },
+              {
+                "property": "warranty_years",
+                "value": 10.0,
+                "unit": "years",
+                "quote": "Warranty 10 Years",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "Warranty 10 Years",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... Warranty 10 Years",
+                "selection_quote": null
+              },
+              {
+                "property": "standards",
+                "value": [
+                  "IESNA LM-79"
+                ],
+                "unit": null,
+                "quote": "tested in accordance to IESNA LM-79",
+                "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                "model": "SLLT",
+                "identity_quote": "SLLT LED TROFFER LUMINAIRE",
+                "variant": "tested in accordance to IESNA LM-79",
+                "scope": "product_wide",
+                "scope_quote": "Typically used to replace 2\u2019x2\u2019 and 2\u2019x4\u2019 \ufb02uorescent \ufb01xtures, the LED troffer is designed to lay in drop ceilings in of\ufb01ces, schools, and healthcare applications. ... SLLT-24-40-35-80-SD-SE 4940 delivered lumens, tested in accordance to IESNA LM-79",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+              "https://starcous.com/product/sllt-led-troffer",
+              "https://starcous.com/wp-content/uploads/2025/01/Spec-Sheet-SLTR-Troffer-Kit-V2026.pdf"
+            ],
+            "notes": null
+          }
+        },
+        {
+          "purpose": "replacement",
+          "outcome": "found",
+          "resolution": "values_confirmed",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": null,
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "warranty_years",
+                "value": 5.0,
+                "unit": "years",
+                "quote": "5-year limited warranty",
+                "source_url": "https://hew.com/specifications/LT_quickship.pdf",
+                "model": "LT",
+                "identity_quote": "LT\n\tLED \n\tQuickShip Troffer",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "WARRANTY \u2013 5-year limited warranty, see hew.com/warranty",
+                "selection_quote": null
+              },
+              {
+                "property": "l70_hours",
+                "value": "> 72000",
+                "unit": "hours",
+                "quote": "L70 > 72,000 hours per IES TM-\n21",
+                "source_url": "https://hew.com/specifications/LT_quickship.pdf",
+                "model": "LT",
+                "identity_quote": "LT\n\tLED \n\tQuickShip Troffer",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "ELECTRICAL \u2013 High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+                "selection_quote": null
+              },
+              {
+                "property": "warranty_years",
+                "value": 5.0,
+                "unit": "years",
+                "quote": "5-year limited warranty",
+                "source_url": "https://hew.com/specifications/LT_quickship.pdf",
+                "model": "LT",
+                "identity_quote": "LT\n\tLED \n\tQuickShip Troffer",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "WARRANTY \u2013 5-year limited warranty, see hew.com/warranty",
+                "selection_quote": null
+              },
+              {
+                "property": "l70_hours",
+                "value": "> 72000",
+                "unit": "hours",
+                "quote": "L70 > 72,000 hours per IES TM-21",
+                "source_url": "https://hew.com/specifications/LT_quickship.pdf",
+                "model": "LT",
+                "identity_quote": "LT\n\tLED \n\tQuickShip Troffer",
+                "variant": "L70 > 72,000 hours per IES TM-21",
+                "scope": "product_wide",
+                "scope_quote": "ELECTRICAL \u2013 High-quality mid-power LED boards. L70 > 72,000 hours per IES TM-\n21. 50/60 Hz constant current driver.",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://hew.com/specifications/LT_quickship.pdf"
+            ],
+            "notes": null
+          }
+        }
+      ],
+      "fixes": [
+        {
+          "name": "Spec Sheet-LED Troffer",
+          "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "check": "spec",
+              "ok": true,
+              "note": "349000 hours",
+              "requirement_id": "req_t_rating_hr_led",
+              "claim_ids": [
+                "cl-8"
+              ],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Warranty",
+              "check": "spec",
+              "ok": true,
+              "note": "10 years",
+              "requirement_id": "req_warranty_years_led",
+              "claim_ids": [
+                "cl-18"
+              ],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Warranty 10 Years",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "DLC listing",
+              "check": "spec",
+              "ok": true,
+              "note": "",
+              "requirement_id": "lt-dlc",
+              "claim_ids": [
+                "cl-3"
+              ],
+              "evidence": [
+                {
+                  "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "tier": "distributor",
+                  "title": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+                  "excerpt": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "macadam steps",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "req_macadam_ellipse",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Dims down to",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "lt-dim",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ],
+          "selection": null
+        },
+        {
+          "name": "LT LED Troffer",
+          "source_url": "https://hew.com/specifications/LT_led.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "Rated life (L70)",
+              "check": "spec",
+              "ok": true,
+              "note": "> 72000 hours",
+              "requirement_id": "req_t_rating_hr_led",
+              "claim_ids": [
+                "cl-9"
+              ],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "https://hew.com/specifications/LT_led.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "L70 > 72,000 hours per IES TM-21.",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Warranty",
+              "check": "spec",
+              "ok": true,
+              "note": "5 years",
+              "requirement_id": "req_warranty_years_led",
+              "claim_ids": [
+                "cl-19"
+              ],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "https://hew.com/specifications/LT_led.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "WARRANTY \u2013 5-year limited warranty, see hew.com/warranty",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "DLC listing",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "lt-dlc",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "macadam steps",
+              "check": "spec",
+              "ok": true,
+              "note": "3",
+              "requirement_id": "req_macadam_ellipse",
+              "claim_ids": [
+                "cl-11"
+              ],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "https://hew.com/specifications/LT_led.pdf",
+                  "retrieved_at": "2026-10-23T02:07:45+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "All CCTs are within 3 MacAdam ellipses.",
+                  "archived_path": "c07/2026-10-23T02_07_45+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Dims down to",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed",
+              "requirement_id": "lt-dim",
+              "claim_ids": [],
+              "evidence": []
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "REV.01/21/26.LM",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": [
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "All CCTs are within 3 MacAdam ellipses.",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "5-year limited warranty, see hew.com/warranty",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "L70 > 72,000 hours per IES TM-21.",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T02:33:09+00:00",
+                  "sha256": "147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50",
+                  "excerpt": "REV.01/21/26.LM",
+                  "archived_path": "c07/2026-10-23T02_33_09+00_00/147dbdf0133abb25a3744203dbb7bd24d068f0058141e0c7ec5740b1ca0d1c50.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "All CCTs are within 3 MacAdam ellipses.",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "5-year limited warranty, see hew.com/warranty",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "L70 > 72,000 hours per IES TM-21.",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://hew.com/specifications/LT_led.pdf",
+                  "tier": "distributor",
+                  "title": "LT LED Troffer",
+                  "retrieved_at": "2026-10-23T07:18:06+00:00",
+                  "sha256": "647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d",
+                  "excerpt": "REV.01/21/26.LM",
+                  "archived_path": "c07/2026-10-23T07_18_06+00_00/647c55f0bb124f52e3dce3ff8e979c5da9324dfc5a7a0e6e06a9c53de86df25d.txt",
+                  "cache_hit": true
+                }
+              ]
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available",
+              "requirement_id": null,
+              "claim_ids": [],
+              "evidence": []
+            }
+          ],
+          "selection": null
+        }
+      ]
+    }
+  }
+}

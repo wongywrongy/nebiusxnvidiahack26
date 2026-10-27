@@ -1,0 +1,60 @@
+Estimated Tavily cost:
+  search 3  +  extract 1  +  map <= 6  =  <= 10 credits  (~$0.08 at $0.008/credit)
+Run live? [y/N] 
+### extract (one call, basic)
+
+== c01 Hilti FS-ONE MAX TDS (PDF)
+   FAILED (not returned by Tavily)
+
+== CPS 07 84 00 spec (PDF)
+   usable (11,687 chars, found ['FIRESTOPPING', 'UL 1479'])
+   CPS Control: 02_07/01/2025 AOR Project Issue: A_00/00/0000 NAME OF SCHOOL PROJECT NUMBER 07 84 00 - 1 FIRESTOPPING ~~~~~ PROJECT NOTE ~~~~~~ AOR/EOR IS RESPONSIBLE FOR REVIEWING THIS SPECIFICATION SECTION IN DETAIL FOR COORDINATION WITH THE PROJECT SCOPE OF WORK. ALL “PROJECT NOTE” TEXT IS TO BE REM
+
+== c07 Acuity TL discontinuation (HTML)
+   usable (25,977 chars, found ['TL', 'discontinu'])
+   * [English](javascript:void(0)) + English + Español + Français [![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/) * [Français](javascript:void(0)) + English + Español + Français [![](https://res.cloudinary.com/uf-550569/image/uploa
+
+### search (basic)
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+
+== c01 Hilti FS-ONE MAX TDS (PDF): 'Hilti FS-ONE MAX intumescent firestop sealant technical data sheet' in ['hilti.com', 'hilti.ca']
+   https://www.hilti.com/c/CLS_FIRESTOP_PROTECTION_7131/CLS_FIRESTOP_SEALANTS_SPRAY_7131/r3859360
+   https://www.hilti.com/c/CLS_FIRESTOP_PROTECTION_7131/CLS_FIRESTOP_SEALANTS_SPRAY_7131
+   https://www.hilti.com/content/hilti/W1/US/en/business/business/trends/mass-timber.html
+   https://www.hilti.com/c/CLS_FIRESTOP_PROTECTION_7131/CLS_FIRESTOP_SEALANTS_SPRAY_7131/r361
+   https://www.hilti.com/content/hilti/W1/US/en/business/business/engineering/fire-protection.html
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+
+== CPS 07 84 00 spec (PDF): 'Chicago Public Schools 07 84 00 firestopping specification' in ['cps.edu']
+   https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/electrical/260533-13_conduit-for-electrical-systems.pdf
+   https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-13-13-communications-copper-backbone-cabling.pdf
+   https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-05-38-cable-trays-for-structured-cabling-systems.pdf
+   https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-53-14-wireless-clock-systems.pdf
+   https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/communications-new/27-11-16-communications-cabinets-racks-and-enclosures.pdf
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+
+== c07 Acuity TL discontinuation (HTML): 'Lithonia TL recessed troffer discontinued' in ['acuitybrands.com']
+   https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-breeze-bzl-2
+   https://lithonia.acuitybrands.com
+   https://lithonia.acuitybrands.com/products
+   https://lithonia.acuitybrands.com/products/family/led-high-bays
+   https://www.acuitybrands.com/search
+
+### map (limit 20, depth 1)
+
+== c01 Hilti FS-ONE MAX TDS (PDF): 0 links
+
+== CPS 07 84 00 spec (PDF): 0 links
+
+== c07 Acuity TL discontinuation (HTML): 20 links
+   https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2
+   https://insights.acuitybrands.com/product-updates-blog
+   https://insights.acuitybrands.com/lighting-controls
+   https://insights.acuitybrands.com/product-updates-blog/the-lithonia-lighting-csvt-just-got-an-update-2
+   https://insights.acuitybrands.com/videos
+
+Credits counted by WebClient: 3.0
+POST-RUN LEDGER: {"usd": 0.000226, "credits": 3.0}

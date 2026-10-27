@@ -1,0 +1,171 @@
+{
+  "scope": "Official public submission requirements read; no private account, submission, deployment or paid-provider action",
+  "observed_at": "2026-10-23T09:28:47.164496+00:00",
+  "sources": [
+    {
+      "name": "rules",
+      "observed_at": "2026-10-23T09:28:45.695182+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://nebiusglobalaihackathon.devpost.com/rules",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://nebiusglobalaihackathon.devpost.com/rules",
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 171085,
+        "body_sha256": "d85884e09f1d9e6dd24521b47c89f948bcedc9e9ea5da15eee3106c1c9f36131"
+      },
+      "direct_http_success": true,
+      "web_reader_official_text_read": true,
+      "stored_body_scope": "Official HTML"
+    },
+    {
+      "name": "overview",
+      "observed_at": "2026-10-23T09:28:45.895603+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://nebiusglobalaihackathon.devpost.com/",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://nebiusglobalaihackathon.devpost.com/",
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 163788,
+        "body_sha256": "da7b4065d5391286e4920a06834496802e078cb065821acf8f99ea427030e38a"
+      },
+      "direct_http_success": true,
+      "web_reader_official_text_read": true,
+      "stored_body_scope": "Official HTML"
+    },
+    {
+      "name": "faq",
+      "observed_at": "2026-10-23T09:28:46.081459+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://nebiusglobalaihackathon.devpost.com/details/faqs",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://nebiusglobalaihackathon.devpost.com/details/faqs",
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 121537,
+        "body_sha256": "f3870dd9148f1a886fe3fb75e6d2f8b55d7dbac37af9ec754b96c57c33560174"
+      },
+      "direct_http_success": true,
+      "web_reader_official_text_read": true,
+      "stored_body_scope": "Official HTML"
+    },
+    {
+      "name": "judging",
+      "observed_at": "2026-10-23T09:28:46.829613+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://nebiusglobalaihackathon.devpost.com/updates/46204-here-s-how-judging-works",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://nebiusglobalaihackathon.devpost.com/updates/46204-here-s-how-judging-works",
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 121763,
+        "body_sha256": "b92e9fa210ff200de993398c44f620dfa46116074af18ab7ca0c78b35416d798"
+      },
+      "direct_http_success": true,
+      "web_reader_official_text_read": true,
+      "stored_body_scope": "Official HTML"
+    },
+    {
+      "name": "feedback",
+      "observed_at": "2026-10-23T09:28:47.163552+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://nebiusglobalaihackathon.devpost.com/updates/46205-how-to-build-a-winning-project",
+        "authorization": null
+      },
+      "response": {
+        "status": 200,
+        "final_url": "https://nebiusglobalaihackathon.devpost.com/updates/46205-how-to-build-a-winning-project",
+        "content_type": "text/html; charset=utf-8",
+        "bytes": 121504,
+        "body_sha256": "a8226e1c5b8a9b5d8b3571854e67c0b1e136bb526021ebc1231d954bdf53503b"
+      },
+      "direct_http_success": true,
+      "web_reader_official_text_read": true,
+      "stored_body_scope": "Official HTML"
+    }
+  ],
+  "official_dates_timezone_conversion": {
+    "submission_deadline": {
+      "pacific": "2026-10-30T10:00:00-07:00",
+      "utc": "2026-10-30T17:00:00+00:00"
+    },
+    "judging_starts": {
+      "pacific": "2026-12-01T09:00:00-08:00",
+      "utc": "2026-12-01T17:00:00+00:00"
+    },
+    "judging_ends": {
+      "pacific": "2026-12-15T12:00:00-08:00",
+      "utc": "2026-12-15T20:00:00+00:00"
+    }
+  },
+  "limits": "Direct HTTP and the web reader are distinct observations. Full source bodies remain ignored; no personal eligibility, resource allowance, grant entitlement or rule acceptance is inferred.",
+  "local_source_and_input_observation": {
+    "checked_at": "2026-10-23T09:30:31.370099+00:00",
+    "scope": "Local immutable input/license/source observation only; not a validation of concurrent runtime edits",
+    "committed_head": "189ad426287e61b934d567ee574ed004ee7d680f",
+    "working_tree_runtime_code_hash": "a17778ef17694b9df24f01f717ffa7edcab2db1344bd527143be5811894fb767",
+    "last_tested_unit_runtime_code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
+    "pending_tracked_changes": [
+      "api/providers/tavily.py",
+      "tests/test_providers.py"
+    ],
+    "inputs": [
+      {
+        "path": "data/cases/cases.json",
+        "sha256": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+        "unchanged_from_9568d1c": true
+      },
+      {
+        "path": "data/cases/samples.json",
+        "sha256": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+        "unchanged_from_9568d1c": true
+      },
+      {
+        "path": "data/cases/documents.json",
+        "sha256": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+        "unchanged_from_9568d1c": true
+      },
+      {
+        "path": "data/cases/specs.json",
+        "sha256": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+        "unchanged_from_9568d1c": true
+      }
+    ],
+    "reviewed_requirements": [
+      {
+        "path": "data/requirements/07_84_00.json",
+        "reviewed_at": "2026-10-21",
+        "rows": 4,
+        "sha256": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+        "unchanged_since_unit_checkpoint": true
+      },
+      {
+        "path": "data/requirements/26_51_00.json",
+        "reviewed_at": "2026-10-21",
+        "rows": 5,
+        "sha256": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1",
+        "unchanged_since_unit_checkpoint": true
+      }
+    ],
+    "license_file_sha256": "8a26a162bd2bef535e78990e9c2dfe153cd253e9c2fa5213e0cd98a3dfe332c4",
+    "configured_models": [
+      "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "nvidia/nemotron-3-super-120b-a12b"
+    ],
+    "no_paid_provider_call_by_this_audit": true
+  }
+}

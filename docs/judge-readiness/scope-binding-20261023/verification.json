@@ -1,0 +1,19 @@
+{
+  "runtime_code_hash": "fb8286db4c960c17e5cb6d1613d4a62e05e92eb652c01f3c5edeeafe30fa1337",
+  "matches_actual_live_run": true,
+  "suite": {
+    "passed": 615,
+    "skipped": 2,
+    "seconds": 31.2,
+    "source": "pytest.txt"
+  },
+  "raw_mock_panel_source": "mock-score.json",
+  "original_inputs_and_checklists_unchanged": true,
+  "source_reconstructed": true,
+  "two_item_consistency": true,
+  "secrets_absent": true,
+  "frontend_touched": false,
+  "no_new_frontend_verification_claimed": true,
+  "promotion_passed": false,
+  "live_run_id": "20261023-064841-187b83"
+}

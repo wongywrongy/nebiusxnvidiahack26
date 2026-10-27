@@ -1,0 +1,12 @@
+{
+  "base_commit": "981c8be440042456bc88293a6f49b005e98ac191",
+  "parent_at_integration": "981c8be440042456bc88293a6f49b005e98ac191",
+  "commit": "ba1a050d41823816410abae49ce2e97f792afd19",
+  "scope": "Owned fix query and tests only; concurrent timing guard and all untracked owner files preserved",
+  "preimages_match": true,
+  "paths": {
+    "api/pipeline/fix.py": "72ec8e77ffc193ca0e19bda41a7ca8ab3c2abe13835919989f9810ce420dfb9d",
+    "tests/test_investigate.py": "4345b666150e29587fdf94cda422cab3e7ada42c6be2ac5c1000318756c6121c",
+    "tests/test_replacement_bundle.py": "71c7fdbf3b5a82666423d45f7d511cc9785a63f5f053a9c5a11c3a4b76af53c6"
+  }
+}

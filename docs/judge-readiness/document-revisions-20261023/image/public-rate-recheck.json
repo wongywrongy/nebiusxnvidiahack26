@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://docs.nebius.com/container-registry/resources/pricing.md",
+    "status": 200,
+    "observed_at": "2026-10-23T08:53:35.910182+00:00",
+    "body_sha256": "c4cd96e4cead2615936116004eba9b5b66a18aa451532c0a169700bf89a57586",
+    "free_statement_excerpt": "The Container Registry service in Nebius AI Cloud is provided free of charge.",
+    "authorization": null
+  },
+  {
+    "url": "https://docs.nebius.com/mysterybox/resources/pricing.md",
+    "status": 200,
+    "observed_at": "2026-10-23T08:53:35.431107+00:00",
+    "body_sha256": "1ae17c31018c9fd3ea28d5c63ae77f666dbbfe194c69b796282533acbb9d8851",
+    "free_statement_excerpt": "The SecretStash service in Nebius AI Cloud is in [preview](/overview/services.md#service-and-application-stages) and provided free of charge.",
+    "authorization": null
+  },
+  {
+    "url": "https://docs.nebius.com/vpc/resources/pricing.md",
+    "status": 200,
+    "observed_at": "2026-10-23T08:53:35.348030+00:00",
+    "body_sha256": "9e1c8b8fe89b2c5fec407c82a1ab391151fffa4918e2bf5d712fcd5f4c0e8c66",
+    "free_statement_excerpt": "The Virtual Networks service in Nebius AI Cloud is provided free of charge.",
+    "authorization": null
+  }
+]

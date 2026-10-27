@@ -1,0 +1,5 @@
+{
+  "passed": false,
+  "scope": "two-item evidence consistency only, not release promotion",
+  "reason": "Web verdicts require fresh quoted archived evidence"
+}

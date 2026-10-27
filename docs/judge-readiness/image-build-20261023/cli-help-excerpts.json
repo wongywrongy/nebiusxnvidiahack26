@@ -1,0 +1,25 @@
+{
+  "job_create_help": {
+    "sha256": "56197094c0c22dc75724d481204b4abbcb6d4008b6a37e5a250505b0efaaf44e",
+    "excerpts": [
+      "--args (string)\nOverride container arguments.",
+      "--async (bool)\nReturn immediately after starting the create operation.",
+      "--env-secret (string array)\nEnvironment variable from MysteryBox in KEY=SECRET_SELECTOR format (repeatable). SECRET_SELECTOR can be a secret name, secret ID,\nversion ID, or SECRET_ID@VERSION_ID.",
+      "--on-demand (bool)\nA regular, non-preemptible VM. Cannot be combined with --preemptible.\nMutually exclusive with: --follows-spot-price, --spot-pricing-policy-id",
+      "--platform (string)\nPlatform of compute resources (e.g. gpu-h100-sxm, gpu-l40s-d), default is gpu-h100-sxm in eu-north1 and gpu-h200-sxm elsewhere.",
+      "--preset (string)\nPreset for selected platform (e.g. 1gpu-16vcpu-200gb), default is minimum available preset for the platform.",
+      "--restart-policy (string)\nRestart policy, default is never.\nA value must be one of:\n\u2022 never\n\u2022 on-failure",
+      "--timeout (duration: 2h30m10s)\nJob timeout in hours (min - 1h, max - 168h), default is 24h."
+    ]
+  },
+  "endpoint_create_help": {
+    "sha256": "fa2ec453eb380e535120adf5cfc2feec2677cd595e5a41500837168bbbe5162f",
+    "excerpts": [
+      "--args (string)\nOverride container arguments.",
+      "--container-port (string array)\nPort to expose as HOST[:CONTAINER][/http|tcp|udp] (default protocol http; repeatable). For endpoints, each HTTP port is reachable\nover a managed https:// URL (gRPC works over the same URL) and each TCP port over a tls://HOST:443 URL; UDP ports get no managed URL.",
+      "--env-secret (string array)\nEnvironment variable from MysteryBox in KEY=SECRET_SELECTOR format (repeatable). SECRET_SELECTOR can be a secret name, secret ID,\nversion ID, or SECRET_ID@VERSION_ID.",
+      "--ssh-key (string array)\nConfigure ssh_authorized_keys for creating VM.",
+      "--volume (string array)\nVolume mount in SOURCE:CONTAINER_PATH[:MODE] or s3://BUCKET:/container_path[:MODE[:PROFILE]] format. MODE: rw, ro (default: rw).\nPROFILE: AWS credentials profile (default: 'default'). For S3 MysteryBox auth use PROFILE@SECRET_SELECTOR, where SECRET_SELECTOR can\nbe a secret name, secret ID, version ID, or SECRET_ID@VERSION_ID (repeatable)."
+    ]
+  }
+}

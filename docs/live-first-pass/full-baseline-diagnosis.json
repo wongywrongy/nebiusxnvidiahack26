@@ -1,0 +1,848 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-082858-431567",
+  "reproduction": ".venv/bin/python scripts/eval.py --out /tmp/speccheck-live-full-baseline.json",
+  "ledger_after": {
+    "usd": 0.249081,
+    "credits": 114.0
+  },
+  "items": {
+    "c02": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "claim-t-rating-0-hr",
+          "product": "Through Penetrations 2000 Series",
+          "manufacturer": "3M Company",
+          "model": "C-AJ-2738",
+          "property": "t_rating_hr",
+          "value": 0.0,
+          "unit": "Hr",
+          "page": 1,
+          "bbox": null,
+          "quote": "T Rating \u2014 0 Hr"
+        }
+      ],
+      "comparison": [
+        {
+          "property": "document_revision",
+          "label": "Data sheet version",
+          "submitted": "July 30, 2015",
+          "current": "Issue Date 2020-December-15",
+          "changed": true,
+          "source_url": null,
+          "quote": null
+        }
+      ],
+      "warnings": [],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "Through Penetrations 2000 Series C-AJ-2738",
+              "include_domains": [
+                "3m.com"
+              ]
+            },
+            "summary": "0 results",
+            "credits": 1.0,
+            "ms": 3298
+          },
+          {
+            "n": 2,
+            "tool": "search",
+            "args": {
+              "query": "\"C-AJ-2738\" 3M Through Penetrations 2000 Series"
+            },
+            "summary": "5 results",
+            "credits": 1.0,
+            "ms": 2157
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://multimedia.3m.com/mws/media/645454O/ul-certificate-of-compliance-cp25wb-sealant.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 1.0,
+            "ms": 275
+          },
+          {
+            "n": 4,
+            "tool": "finish",
+            "args": {
+              "found": true,
+              "document_url": "https://multimedia.3m.com/mws/media/645454O/ul-certificate-of-compliance-cp25wb-sealant.pdf",
+              "document_title": "CERTIFICATE OF COMPLIANCE",
+              "revision_quote": "Issue Date 2020-December-15",
+              "status": "active",
+              "status_quote": "CP 25WB+ Caulk for use in Through-Penetration Firestop System Nos. ... C-AJ-2738 ...",
+              "note": "Found UL Certificate of Compliance dated December 15, 2020 issued to 3M Company showing C-AJ-2738 is included in the list of certified Through-Penetration Firestop System Nos. for CP 25WB+ Caulk, indicating the product is still active."
+            },
+            "summary": "Issue Date 2020-December-15, unknown",
+            "credits": 0.0,
+            "ms": 2
+          }
+        ],
+        "outcome": "found"
+      },
+      "claims_extracted": 1,
+      "claims_kept": 1,
+      "web_values_read": 2,
+      "web_values_kept": 0
+    },
+    "c04": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "Hilti Firestop System UL W-L-2078",
+          "manufacturer": "HILTI, Inc.",
+          "model": null,
+          "property": "t_rating_hr",
+          "value": "0-HR., 1-HR., OR 2-HR.",
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR."
+        }
+      ],
+      "comparison": [
+        {
+          "property": "document_revision",
+          "label": "Data sheet version",
+          "submitted": "Apr. 17, 2018",
+          "current": "June 03, 2021",
+          "changed": true,
+          "source_url": null,
+          "quote": null
+        },
+        {
+          "property": "t_rating_hr",
+          "label": "Temperature rating (T)",
+          "submitted": "0-HR., 1-HR., OR 2-HR.",
+          "current": "0-HR., 1-HR., OR 2-HR.",
+          "changed": false,
+          "source_url": "https://files-ask.hilti.com/original/wj/wjqys9amha.pdf",
+          "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR."
+        }
+      ],
+      "warnings": [],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "Hilti Firestop System UL W-L-2078",
+              "include_domains": [
+                "hilti.com",
+                "hilti.ca"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1.0,
+            "ms": 3639
+          },
+          {
+            "n": 2,
+            "tool": "search",
+            "args": {
+              "query": "\"UL W-L-2078\" Hilti",
+              "include_domains": [
+                "hilti.com",
+                "hilti.ca"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1.0,
+            "ms": 1960
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.hilti.com/engineering/question/3-pvc-pipe-wall-penetration/hmo9me"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 279
+          },
+          {
+            "n": 4,
+            "tool": "extract",
+            "args": {
+              "url": "https://files-ask.hilti.com/original/wj/wjqys9amha.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 901
+          },
+          {
+            "n": 5,
+            "tool": "finish",
+            "args": {
+              "found": true,
+              "document_url": "https://files-ask.hilti.com/original/wj/wjqys9amha.pdf",
+              "document_title": "Hilti Firestop Systems 2078r",
+              "revision_quote": "June 03, 2021",
+              "status": "active",
+              "status_quote": "Saving Lives through Innovation and Education",
+              "note": "The document shows the Hilti Firestop System UL W-L-2078 (WL 2078) plastic pipe through gypsum wall assembly. The revision is clearly marked as \"June 03, 2021\" and appears in the filename as \"WL2078r.060321\". The document contains current technical specifications and installation details without any discontinuation notices, indicating it is still active."
+            },
+            "summary": "June 03, 2021, active",
+            "credits": 0.0,
+            "ms": 2
+          }
+        ],
+        "outcome": "found"
+      },
+      "claims_extracted": 2,
+      "claims_kept": 1,
+      "web_values_read": 1,
+      "web_values_kept": 1
+    },
+    "c01": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "astm-g21-rating-page-2",
+          "product": "SpecSeal\u00ae LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": null,
+          "property": "astm_g21_rating",
+          "value": "0",
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "Mold & Fungus Growth Rating (ASTM G21)\\n0"
+        },
+        {
+          "id": "standards-page-1",
+          "product": "SpecSeal\u00ae LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": null,
+          "property": "standards",
+          "value": [
+            "ASTM E814 (UL1479)",
+            "CAN/ULC-S115",
+            "ASTM E1966 (UL2079)",
+            "ASTM E119 (UL263)",
+            "ASTM E84 (UL723)"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "tested to the requirements of ASTM E814 (UL1479), CAN/ULC-S115 and shall\\nmeet Class A finish requirements when tested in accordance with ASTM E84 (UL723).\\n\\t\\nSpecified Divisions\\n\\t\\nDivision 7\\t\\t\\n07 84 13\\t \\t\\nPenetration Firestopping\\n\\t\\nDivision 7\\t\\t\\n07 84 43\\t \\t\\nJoint Firestopping\\n\\t\\nDivision 22\\t\\n22 00 00\\t \\t\\nPlumbing\\n\\t\\nDivision 23\\t\\n23 00 00\\t \\t\\nHVAC\\n\\t\\nDivision 26\\t\\n26 00 00\\t \\t\\nElectrical\\nPerformance\\nSpecSeal\u00ae LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature \\nrequirements of ASTM E119 (UL263)."
+        },
+        {
+          "id": "standards-page-2",
+          "product": "SpecSeal\u00ae LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": null,
+          "property": "standards",
+          "value": [
+            "ASTM E84 (UL723)",
+            "SCAQMD Rule 1168 (EPA Method 24)"
+          ],
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "*Tested to ASTM E84 (UL723) at 14% surface coverage (modified test for sealants and caulks)       **Per SCAQMD Rule 1168 (EPA Method 24)"
+        },
+        {
+          "id": "t-rating-hr-page-1",
+          "product": "SpecSeal\u00ae LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": null,
+          "property": "t_rating_hr",
+          "value": 4.0,
+          "unit": "hr",
+          "page": 1,
+          "bbox": null,
+          "quote": "LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as \\ngypsum board walls."
+        },
+        {
+          "id": "voc-g-per-l-page-2",
+          "product": "SpecSeal\u00ae LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": null,
+          "property": "voc_g_per_l",
+          "value": 26.0,
+          "unit": "g/L",
+          "page": 2,
+          "bbox": null,
+          "quote": "VOC Content**\\n26 g/L"
+        }
+      ],
+      "comparison": [
+        {
+          "property": "document_revision",
+          "label": "Data sheet version",
+          "submitted": "ZSFOD5062 25171",
+          "current": "ZSFOD5062 22326",
+          "changed": true,
+          "source_url": null,
+          "quote": null
+        },
+        {
+          "property": "astm_g21_rating",
+          "label": "astm g21 rating",
+          "submitted": "0",
+          "current": "0",
+          "changed": false,
+          "source_url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf",
+          "quote": "Mold & Fungus Growth Rating (ASTM G21) 0"
+        },
+        {
+          "property": "standards",
+          "label": "Test standards",
+          "submitted": "ASTM E84 (UL723), SCAQMD Rule 1168 (EPA Method 24)",
+          "current": "ASTM E84 (UL723), SCAQMD Rule 1168 (EPA Method 24)",
+          "changed": false,
+          "source_url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf",
+          "quote": "*Tested to ASTM E84 (UL723) at 14% surface coverage (modified test for sealants and caulks) **Per SCAQMD Rule 1168 (EPA Method 24)"
+        },
+        {
+          "property": "t_rating_hr",
+          "label": "Temperature rating (T)",
+          "submitted": "4 hr",
+          "current": "4 hr",
+          "changed": false,
+          "source_url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf",
+          "quote": "LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls."
+        },
+        {
+          "property": "voc_g_per_l",
+          "label": "VOC (air quality)",
+          "submitted": "26 g/L",
+          "current": "26 g/L",
+          "changed": false,
+          "source_url": "https://files.stifirestop.com/5.%20Safety%20Data%20Sheet/1.%20English/SDS_LCI%20Intumescent%20Sealant.pdf",
+          "quote": "VOC (U.S. EPA Method 24): 26 gm/L"
+        }
+      ],
+      "warnings": [],
+      "investigation": null,
+      "claims_extracted": 5,
+      "claims_kept": 5,
+      "web_values_read": 5,
+      "web_values_kept": 4
+    },
+    "c07": {
+      "decision": "send_back",
+      "claims": [
+        {
+          "id": "4",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": null,
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "WARRANTY \u2014 5-year limited warranty."
+        }
+      ],
+      "comparison": [],
+      "warnings": [],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "WRTL LED troffer wet location recessed led troffer datasheet specification acuity brands",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 2,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/664095/wrtl.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 6
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/664095/lithonia-lighting/wrtl-led-troffer/wet-location-recessed-led-troffer"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 4,
+            "tool": "search",
+            "args": {
+              "query": "WRTL LED troffer technical data sheet specification acuity brands wet location recessed",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 5,
+            "tool": "extract",
+            "args": {
+              "url": "https://insights.acuitybrands.com/new-products-blog/new-and-improved-demanding-led-troffers-by-lithonia-lighting-srtl-vrtl-and-wrtl"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 6,
+            "tool": "extract",
+            "args": {
+              "url": "https://insights.acuitybrands.com/new-products-blog/new-and-improved-demanding-led-troffers-by-lithonia-lighting-srtl-vrtl-and-wrtl"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 7,
+            "tool": "search",
+            "args": {
+              "query": "VTL VT Series LED Troffer datasheet specification sheet",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 8,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/229368/2vtl2-2x4.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 9,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 10,
+            "tool": "map",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer",
+              "instructions": "Find links to spec sheets, technical documents, data sheets, or installation guides for the VTL VT Series LED Troffer"
+            },
+            "summary": "0 pages",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 11,
+            "tool": "search",
+            "args": {
+              "query": "VTL VT Series LED Troffer spec sheet site:acuitybrands.com filetype:pdf",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "4 results",
+            "credits": 0.0,
+            "ms": 0
+          },
+          {
+            "n": 12,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/229368/vtl-1x4.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 2
+          }
+        ],
+        "outcome": "capped"
+      },
+      "claims_extracted": 5,
+      "claims_kept": 1,
+      "web_values_read": 0,
+      "web_values_kept": 0
+    },
+    "c08": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "clm-warranty-years-lqm-001",
+          "product": "LQM Quantum LED Exit Sign",
+          "manufacturer": "Lithonia Lighting",
+          "model": null,
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 2,
+          "bbox": null,
+          "quote": "5-year limited warranty."
+        }
+      ],
+      "comparison": [
+        {
+          "property": "document_revision",
+          "label": "Data sheet version",
+          "submitted": "Rev. 09/05/19",
+          "current": "Rev. 08/07/24",
+          "changed": true,
+          "source_url": null,
+          "quote": null
+        },
+        {
+          "property": "warranty_years",
+          "label": "Warranty",
+          "submitted": "5 years",
+          "current": "5 years",
+          "changed": false,
+          "source_url": "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf",
+          "quote": "WARRANTY: 5-year limited warranty."
+        }
+      ],
+      "warnings": [],
+      "investigation": null,
+      "claims_extracted": 1,
+      "claims_kept": 1,
+      "web_values_read": 1,
+      "web_values_kept": 1
+    },
+    "c03": {
+      "decision": "send_back",
+      "claims": [
+        {
+          "id": "standards-1",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": null,
+          "property": "standards",
+          "value": [
+            "ASTM E 814 (UL 1479)",
+            "ASTM E 1966 (UL 2079)"
+          ],
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "Meets the criteria of ASTM E 814  (UL 1479) standard test method for fire tests of through-penetration fire stops tested\nunder positive pressure, and ASTM E 1966 (UL 2079) standard test for fire-resistive joint systems."
+        },
+        {
+          "id": "voc-g-per-l-1",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": null,
+          "property": "voc_g_per_l",
+          "value": 0.0,
+          "unit": "g/L",
+          "page": 2,
+          "bbox": null,
+          "quote": "VOC:\n0"
+        }
+      ],
+      "comparison": [
+        {
+          "property": "document_revision",
+          "label": "Data sheet version",
+          "submitted": "98-0400-5077-9 \u00a9 3M 2005",
+          "current": "\u00a9 3M 2018",
+          "changed": true,
+          "source_url": null,
+          "quote": null
+        },
+        {
+          "property": "standards",
+          "label": "Test standards",
+          "submitted": "ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079)",
+          "current": "ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079)",
+          "changed": false,
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115"
+        },
+        {
+          "property": "voc_g_per_l",
+          "label": "VOC (air quality)",
+          "submitted": "0 g/L",
+          "current": "<2 g/L",
+          "changed": true,
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "quote": "VOC Less H2O and Exempt Solvents: <2 g/L"
+        }
+      ],
+      "warnings": [],
+      "investigation": null,
+      "claims_extracted": 15,
+      "claims_kept": 9,
+      "web_values_read": 9,
+      "web_values_kept": 9
+    },
+    "c06": {
+      "decision": "approve_with_note",
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": null,
+          "property": "l70_hours",
+          "value": 50000.0,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "70% lumen maintenance at 50,000 hours."
+        },
+        {
+          "id": "clm-3",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": null,
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "5-year limited warranty."
+        }
+      ],
+      "comparison": [],
+      "warnings": [],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "ACUITY BRANDS LDN6 specification datasheet pdf",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1.0,
+            "ms": 2633
+          },
+          {
+            "n": 2,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 552
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6-sww.pdf"
+            },
+            "summary": "1 extracted source",
+            "credits": 0.0,
+            "ms": 578
+          },
+          {
+            "n": 4,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash"
+            },
+            "summary": "0 extracted sources",
+            "credits": 1.0,
+            "ms": 608
+          },
+          {
+            "n": 5,
+            "tool": "extract",
+            "args": {
+              "url": "https://lithonia.acuitybrands.com/resources/technical-downloads"
+            },
+            "summary": "1 extracted source",
+            "credits": 1.0,
+            "ms": 301
+          },
+          {
+            "n": 6,
+            "tool": "search",
+            "args": {
+              "query": "LDN6 round series Lithonia lighting specification sheet acuity brands",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1.0,
+            "ms": 2115
+          }
+        ],
+        "outcome": "capped"
+      },
+      "claims_extracted": 3,
+      "claims_kept": 2,
+      "web_values_read": 2,
+      "web_values_kept": 0
+    },
+    "c05": {
+      "decision": "send_back",
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "dlc_listed",
+          "value": [
+            "DesignLights Consortium\u00ae (DLC) Premium qualified product"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "DesignLights Consortium\u00ae (DLC) Premium qualified product a"
+        },
+        {
+          "id": "clm-2",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "l70_hours",
+          "value": 60000.0,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000)"
+        },
+        {
+          "id": "clm-3",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "macadam_steps",
+          "value": 3.0,
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "Color Variation within 3-step MacAdam ellipse (3SDCM)."
+        },
+        {
+          "id": "clm-4",
+          "product": "BLT-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2BLT4",
+          "property": "dim_min_percent",
+          "value": 10.0,
+          "unit": "%",
+          "page": 1,
+          "bbox": null,
+          "quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%"
+        }
+      ],
+      "comparison": [],
+      "warnings": [],
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "ACUITY BRANDS BLT-2X4 2BLT4 specification datasheet site:acuitybrands.com filetype:pdf",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "3 results",
+            "credits": 1.0,
+            "ms": 1306
+          },
+          {
+            "n": 2,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/1603253/lithonia-blt-series-2blt2-2blt4-troffer-----care-222.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 1.0,
+            "ms": 736
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 1.0,
+            "ms": 625
+          },
+          {
+            "n": 4,
+            "tool": "map",
+            "args": {
+              "url": "https://www.acuitybrands.com",
+              "instructions": "Find documentation for BLT-2X4 or 2BLT4 products"
+            },
+            "summary": "0 pages",
+            "credits": 0.0,
+            "ms": 10737
+          },
+          {
+            "n": 5,
+            "tool": "search",
+            "args": {
+              "query": "\"2BLT4\" specification sheet site:acuitybrands.com",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1.0,
+            "ms": 1920
+          },
+          {
+            "n": 6,
+            "tool": "map",
+            "args": {
+              "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+              "instructions": "Search for BLT-2X4 or 2BLT4 documentation"
+            },
+            "summary": "0 pages",
+            "credits": 0.0,
+            "ms": 10744
+          }
+        ],
+        "outcome": "capped"
+      },
+      "claims_extracted": 4,
+      "claims_kept": 4,
+      "web_values_read": 4,
+      "web_values_kept": 0
+    }
+  },
+  "provider_errors": []
+}

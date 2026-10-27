@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import re
+import math
+import unicodedata
 from typing import Optional
 
 from ..schemas import Claim, Compare, Finding, Requirement
@@ -19,21 +21,26 @@ UNIT_TO_BASE = {
 def to_number(value) -> Optional[float]:
     """Parse 2, '2', '3/4', '1-1/8', '<2', '1/2 hr' into a float. None if not numeric."""
     if isinstance(value, (int, float)):
-        return float(value)
+        return float(value) if math.isfinite(value) else None
     if not isinstance(value, str):
         return None
     s = value.strip().lower().lstrip("<>~≤≥= ")
+    ordinal = re.fullmatch(r"(?:class|rating|grade)\s*:?\s*(-?\d+(?:\.\d+)?)", s)
+    if ordinal:
+        return float(ordinal[1])
     m = re.match(r"^(\d+)[-\s](\d+)/(\d+)", s)
     if m:
-        return int(m.group(1)) + int(m.group(2)) / int(m.group(3))
+        return int(m.group(1)) + int(m.group(2)) / int(m.group(3)) if int(m.group(3)) else None
     m = re.match(r"^(\d+)/(\d+)", s)
     if m:
-        return int(m.group(1)) / int(m.group(2))
+        return int(m.group(1)) / int(m.group(2)) if int(m.group(2)) else None
     m = re.match(r"^-?\d+(\.\d+)?", s.replace(",", ""))
     return float(m.group(0)) if m else None
 
 
 def normalize(value, unit: Optional[str]) -> Optional[float]:
+    if isinstance(value, str) and re.search(r"\b(or|to)\b", value, re.I):
+        return None  # a range or alternatives cannot be treated as the first number
     n = to_number(value)
     if n is None:
         return None
@@ -42,12 +49,38 @@ def normalize(value, unit: Optional[str]) -> Optional[float]:
     return n
 
 
+def numeric_compare(value, unit, target, target_unit, operator):
+    if unit and target_unit and UNIT_TO_BASE.get(unit.lower(), (unit.lower(),))[0] != UNIT_TO_BASE.get(target_unit.lower(), (target_unit.lower(),))[0]:
+        return None
+    a, b = normalize(value, unit or target_unit), normalize(target, target_unit)
+    if a is None or b is None or str(value).strip().startswith("~"):
+        return None
+    bound = re.match(r"[<>]=?|[≤≥]", str(value).strip())
+    symbol = {"≤": "<=", "≥": ">="}.get(bound[0], bound[0]) if bound else ""
+    lower, upper = (float("-inf"), a) if symbol.startswith("<") else (a, float("inf")) if symbol.startswith(">") else (a, a)
+    if operator == "gte":
+        return True if lower >= b else False if upper < b or upper == b and symbol == "<" else None
+    if operator == "lte":
+        return True if upper <= b else False if lower > b or lower == b and symbol == ">" else None
+    return True if lower == upper == b else False if b < lower or b > upper or b == lower and symbol == ">" or b == upper and symbol == "<" else None
+
+
+def _text(value) -> str:
+    return re.sub(r"[\W_]+", "", unicodedata.normalize("NFKC", str(value)).casefold())
+
+
 def _as_list(value) -> list[str]:
     if value is None:
         return []
-    if isinstance(value, list):
-        return [str(v).lower() for v in value]
-    return [str(value).lower()]
+    return [str(v) for v in value] if isinstance(value, list) else [str(value)]
+
+
+def _mentions(value: str, wanted: str) -> bool:
+    wanted = _text(wanted)
+    if not wanted:
+        return False
+    pattern = r"(?<![\w.])" + r"[\W_]*".join(map(re.escape, wanted)) + r"(?!\w|[.,]\d)"
+    return re.search(pattern, unicodedata.normalize("NFKC", value).casefold()) is not None
 
 
 OPERATOR_WORDS = {"gte": "at least", "lte": "at most", "eq": "exactly"}
@@ -74,6 +107,12 @@ LABELS = {
     "penetrant_types": "Pipe types covered",
     "document_revision": "Data sheet version",
 }
+
+
+def properties_for(requirements: list[Requirement]) -> list[str]:
+    """Spec dependencies plus known performance properties used to compare revisions."""
+    return sorted(set(LABELS) | {r.property for r in requirements} |
+                  {str(r.value) for r in requirements if r.operator == "eq_ref"})
 
 
 def _label(prop: str) -> str:
@@ -113,20 +152,25 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
 
     findings: list[Finding] = []
     for r in requirements:
-        found = by_prop.get(r.property, [])
+        scoped = by_prop.get(r.property, [])
+        variants = [c.variant for c in scoped if c.variant]
+        found = [c for c in scoped if not c.variant or c.selection_quote]
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
         related: list[str] = []  # other claims the comparison used (eq_ref)
+        alternatives = None
         left_label, right_label = ("Job needs", "Listing covers") if r.check == "validity" else ("Spec requires", "Submitted")
 
         def make(verdict: str, title: str, detail: str = "", severity: Optional[str] = None,
                  left=None, right=None) -> Finding:
-            shown = right if right is not None else (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not stated"
+            shown = right if right is not None else alternatives
+            if shown is None:
+                shown = (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not confirmed"
             return Finding(
                 id=f"{r.check}-{r.id}",
                 check=r.check,
                 verdict=verdict,
-                severity="info" if verdict in ("pass", "not_applicable") else (severity or r.severity),
+                severity="info" if verdict in ("pass", "not_applicable", "pending") else (severity or r.severity),
                 title=title,
                 detail=detail,
                 requirement_id=r.id,
@@ -134,55 +178,72 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                 claim_ids=[claim.id, *related] if claim else [],
                 spec_ref=ref,
                 compare=Compare(left_label=left_label, left_value=left if left is not None else _wanted(r),
-                                right_label=right_label, right_value=shown, verdict="pass" if verdict == "pass" else "fail"),
+                                right_label=right_label, right_value=shown,
+                                verdict="unverified" if verdict in ("unverified", "pending") else "pass" if verdict == "pass" else "fail"),
             )
 
         if r.applies_to and roles and not set(r.applies_to) & roles:
             findings.append(make("not_applicable", _label(r.property), f"Applies to {', '.join(r.applies_to)} only."))
             continue
 
-        if r.operator == "exists":
-            findings.append(make("pass", _label(r.property), right="Included") if found
-                            else make("fail", f"Missing: {_label(r.property)}", "Not found in the package.", right="Not found"))
+        if r.operator == "exists" and found:
+            findings.append(make("pass", _label(r.property), right="Included"))
             continue
 
         if r.operator == "eq_ref" and (claim is None or not by_prop.get(str(r.value))):
-            continue  # rule only applies when both values are present (e.g. T = F applies to systems, not sealant sheets)
+            assembly = {r.property, str(r.value)} == {"t_rating_hr", "f_rating_hr"}
+            product_only = roles and "product_data" in roles and not roles & {"system_drawing", "listing", "test_report"}
+            if assembly and product_only:
+                findings.append(make("pending", "Pending assembly proof",
+                                     "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately."))
+            else:
+                findings.append(make("unverified", f"Couldn't confirm: {_label(r.property)}",
+                                     "Both quoted ratings are needed for this comparison.", severity="minor"))
+            continue
 
         if claim is None:
-            findings.append(make("unverified", f"Not stated: {_label(r.property)}", r.text, severity="minor"))
+            if variants:
+                findings.append(make("unverified", f"Option not confirmed: {_label(r.property)}",
+                                     f"Quoted values apply only to {', '.join(dict.fromkeys(variants))}. Confirm the submitted configuration.",
+                                     severity="minor", right="Option dependent"))
+            else:
+                findings.append(make("unverified", f"Couldn't confirm: {_label(r.property)}", r.text, severity="minor"))
             continue
 
         ok: Optional[bool] = None
         detail = ""
         left = None
         if r.operator in ("gte", "lte", "eq"):
-            a, b = normalize(claim.value, claim.unit), normalize(r.value, r.unit)
-            if a is not None and b is not None:
-                ok = {"gte": a >= b, "lte": a <= b, "eq": abs(a - b) < 1e-9}[r.operator]
-                detail = f"Package states {_fmt(claim.value, claim.unit)}; spec requires {OPERATOR_WORDS[r.operator]} {_fmt(r.value, r.unit)}."
+            outcomes = [numeric_compare(c.value, c.unit, r.value, r.unit, r.operator) for c in found]
+            if all(o is not None for o in outcomes):
+                ok = outcomes[0] if len(set(outcomes)) == 1 else None
+                if len(found) > 1:
+                    alternatives = [_fmt(c.value, c.unit) for c in found]
+                    related = [c.id for c in found[1:]]
+                detail = ("Stated alternatives give different outcomes; confirm the submitted configuration." if ok is None else
+                          f"Package states {alternatives or _fmt(claim.value, claim.unit)}; spec requires {OPERATOR_WORDS[r.operator]} {_fmt(r.value, r.unit)}.")
         elif r.operator == "eq_ref":
-            other = by_prop.get(str(r.value), [])
-            if other:
+            other = [c for c in by_prop.get(str(r.value), []) if not c.variant or c.selection_quote]
+            if len(found) == len(other) == 1:
                 related = [other[0].id]
                 a, b = normalize(claim.value, claim.unit), normalize(other[0].value, other[0].unit)
-                if a is not None and b is not None:
+                if a is not None and b is not None and not any(re.match(r"[<>~≤≥]", str(c.value).strip()) for c in (claim, other[0])):
                     ok = abs(a - b) < 1e-9
                     left = f"{_wanted(r)} ({_fmt(other[0].value, other[0].unit)})"  # "T = F (2 hr)"
                     detail = (f"{_label(r.property)} is {_fmt(claim.value, claim.unit)} but "
                               f"{_label(str(r.value))} is {_fmt(other[0].value, other[0].unit)}.")
         elif r.operator == "contains":
             have = _as_list(claim.value)
-            want = str(r.value).lower()
-            ok = any(want in h for h in have)
+            ok = r.value is not None and any(_mentions(h, str(r.value)) for h in have)
             detail = f"Package lists {_fmt(claim.value, None)}; needs {r.value}."
         elif r.operator == "any_of":
             allowed = _as_list(r.value)
-            ok = any(h in allowed for h in _as_list(claim.value))
+            ok = any(_mentions(h, a) or (_mentions(a, h) and _mentions(c.quote or "", a))
+                     for c in found for h in _as_list(c.value) for a in allowed)
             detail = f"Package states {_fmt(claim.value, None)}; allowed: {_fmt(r.value, None)}."
 
         if ok is None:
-            findings.append(make("unverified", f"Couldn't compare: {_label(r.property)}", "Values were not comparable.", severity="minor", left=left))
+            findings.append(make("unverified", f"Couldn't compare: {_label(r.property)}", detail or "Values were not comparable.", severity="minor", left=left))
         elif ok:
             findings.append(make("pass", _label(r.property), detail, left=left))
         else:

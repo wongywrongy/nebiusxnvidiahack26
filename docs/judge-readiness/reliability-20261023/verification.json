@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-23",
+  "pytest": {
+    "passed": 399,
+    "skipped": 2,
+    "seconds": 15.96
+  },
+  "browser": {
+    "passed": 8,
+    "seconds": 5.4,
+    "mode": "mock"
+  },
+  "presentation": "passed",
+  "web_build": "passed",
+  "document_preflight": "13 required documents, hashes/readability passed, no low-text pages",
+  "live_c07_run": "20261023-000514-d915c4"
+}

@@ -1,0 +1,355 @@
+{
+  "verified_date": "2026-10-23",
+  "approved": false,
+  "currency": "USD",
+  "rates": {
+    "cpu_d3_vcpu_per_hour": 0.015,
+    "cpu_e2_vcpu_per_hour": 0.012,
+    "ram_gib_per_hour": 0.0045,
+    "network_ssd_gib_per_730_hours": 0.071,
+    "object_standard_gib_per_730_hours": 0.0147,
+    "object_class_a_per_1000": 0.0034,
+    "object_class_b_per_1000": 0.00028,
+    "object_egress_per_gib": 0.015,
+    "shared_filesystem_gib_per_730_hours": 0.08
+  },
+  "sources": {
+    "https://docs.nebius.com/compute/resources/pricing": {
+      "body_sha256": "164ad546cb024de75ed9b57bf9950c6a03410ed577e20fb7b2e6640fb4a81fe3",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/object-storage/resources/pricing": {
+      "body_sha256": "690cca0134ae1494380aa3aa47d83b9dd477fbd55609ce4ed1d023899e1d4264",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/serverless/overview": {
+      "body_sha256": "2ec736df38433d94f4bc9eaa62513a6354d1382da0c4d645e35426ef22b34bb4",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/serverless/pricing-quotas": {
+      "body_sha256": "1a11cd6da0fe3f691dab061f08702114a9bb946bad9f50bf4112bf3759320cae",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/compute/storage/types": {
+      "body_sha256": "9ab807aded23d0b77dbd2f7a0766a1ea14d8a6548587612034da588cf55f3885",
+      "recorded_at": "2026-10-23T00:15:53+00:00"
+    },
+    "https://docs.nebius.com/container-registry/resources/pricing.md": {
+      "body_sha256": "c4cd96e4cead2615936116004eba9b5b66a18aa451532c0a169700bf89a57586",
+      "recorded_at": "2026-10-23T07:50:35.825690+00:00"
+    },
+    "https://docs.nebius.com/mysterybox/resources/pricing.md": {
+      "body_sha256": "1ae17c31018c9fd3ea28d5c63ae77f666dbbfe194c69b796282533acbb9d8851",
+      "recorded_at": "2026-10-23T07:50:35.728039+00:00"
+    },
+    "https://docs.nebius.com/vpc/resources/pricing.md": {
+      "body_sha256": "9e1c8b8fe89b2c5fec407c82a1ab391151fffa4918e2bf5d712fcd5f4c0e8c66",
+      "recorded_at": "2026-10-23T07:49:34.106292+00:00"
+    },
+    "https://nebius.com/prices": {
+      "body_sha256": "5b521f89c057cc947188a06f0e432b083b5bf4aceae92b97544decaa9480ce8e",
+      "recorded_at": "2026-10-23T10:57:20.576277+00:00"
+    }
+  },
+  "forecasts": [
+    {
+      "platform": "cpu-d3",
+      "hours": 24,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.066,
+      "compute_usd": 1.584,
+      "disk_32gib_usd": 0.074696,
+      "archive_10gib_usd": 0.004833,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-e2",
+      "hours": 24,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.06,
+      "compute_usd": 1.44,
+      "disk_32gib_usd": 0.074696,
+      "archive_10gib_usd": 0.004833,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-d3",
+      "hours": 168,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.066,
+      "compute_usd": 11.088,
+      "disk_32gib_usd": 0.522871,
+      "archive_10gib_usd": 0.03383,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-e2",
+      "hours": 168,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.06,
+      "compute_usd": 10.08,
+      "disk_32gib_usd": 0.522871,
+      "archive_10gib_usd": 0.03383,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-d3",
+      "hours": 1296,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.066,
+      "compute_usd": 85.536,
+      "disk_32gib_usd": 4.033578,
+      "archive_10gib_usd": 0.260975,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    },
+    {
+      "platform": "cpu-e2",
+      "hours": 1296,
+      "vcpu": 2,
+      "ram_gib": 8,
+      "hourly_compute_usd": 0.06,
+      "compute_usd": 77.76,
+      "disk_32gib_usd": 4.033578,
+      "archive_10gib_usd": 0.260975,
+      "excludes": [
+        "job compute",
+        "durable accounting storage",
+        "requests",
+        "egress",
+        "taxes",
+        "Token Factory",
+        "Tavily"
+      ]
+    }
+  ],
+  "region_limit": "cpu-e2 only eu-north1; confirm preset/quotas in owner account",
+  "credit_expiry": "owner must read account grant terms; public program terms do not establish this grant expiry",
+  "image_digest": null,
+  "durable_authority": "proposed private 32-GiB network_ssd filesystem at /controller, exactly one controller VM; public platform support verified, hosted proof and IAM/account approval pending",
+  "resource_mutations_made": false,
+  "local_packaging_checkpoint": {
+    "source_commit": "b9de109842e9d5bcbcd48e11bc27d3419ec0c761",
+    "local_image_id": "sha256:653211984dbebafe719ad79b666043f0db0aeddace2f9b1b12392a4c496dd528",
+    "published": false,
+    "release_approved": false,
+    "evidence": "../../docs/judge-readiness/image-build-20261023/README.md"
+  },
+  "controller_startup_checkpoint": {
+    "source_base_commit": "23028a0042d1a8768af9f4d7548706a3fd0aa499",
+    "code_hash": "45fdc999fb46316773de81ed1e41127f1f1e358adbf725ef8660cd3313bdeba1",
+    "local_image_id": "sha256:aa8292661e33256a99aa3758105ec484c2fd20faac291e69e12ae94ae60e6a7f",
+    "command": [
+      "python",
+      "scripts/serve.py"
+    ],
+    "evidence": "docs/judge-readiness/controller-startup-20261023/README.md",
+    "published": false,
+    "hosted_persistence_verified": false
+  },
+  "controller_storage_forecasts": {
+    "status": "unapproved published-rate estimates, not actual charges",
+    "platform": "cpu-d3",
+    "preset": "2vcpu-8gb",
+    "endpoint_boot_disk_gib": 32,
+    "private_filesystem_gib": 32,
+    "filesystem_type": "network_ssd",
+    "filesystem_block_size_bytes": 4096,
+    "controller_mount": "/controller",
+    "concurrent_controller_writers": 1,
+    "workers_attach_controller_filesystem": false,
+    "rates_source": "https://docs.nebius.com/compute/resources/pricing",
+    "rows": [
+      {
+        "endpoint_hours": 24,
+        "filesystem_retention_hours": 24,
+        "jobs_max_count": 2,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 1.584,
+        "endpoint_boot_disk_usd": 0.0746958904109589,
+        "private_filesystem_usd": 0.08416438356164384,
+        "job_compute_and_boot_disk_usd": 0.13822465753424656,
+        "subtotal_usd": 1.8810849315068494
+      },
+      {
+        "endpoint_hours": 168,
+        "filesystem_retention_hours": 168,
+        "jobs_max_count": 7,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 11.088,
+        "endpoint_boot_disk_usd": 0.5228712328767123,
+        "private_filesystem_usd": 0.5891506849315068,
+        "job_compute_and_boot_disk_usd": 0.483786301369863,
+        "subtotal_usd": 12.683808219178083
+      },
+      {
+        "endpoint_hours": 360,
+        "filesystem_retention_hours": 360,
+        "jobs_max_count": 15,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 23.76,
+        "endpoint_boot_disk_usd": 1.1204383561643836,
+        "private_filesystem_usd": 1.2624657534246575,
+        "job_compute_and_boot_disk_usd": 1.0366849315068494,
+        "subtotal_usd": 27.17958904109589
+      },
+      {
+        "endpoint_hours": 1296,
+        "filesystem_retention_hours": 1296,
+        "jobs_max_count": 54,
+        "job_max_hours_each": 1,
+        "endpoint_compute_usd": 85.536,
+        "endpoint_boot_disk_usd": 4.033578082191781,
+        "private_filesystem_usd": 4.544876712328767,
+        "job_compute_and_boot_disk_usd": 3.7320657534246577,
+        "subtotal_usd": 97.8465205479452
+      }
+    ],
+    "excludes": [
+      "account-specific price overrides or later rate changes",
+      "taxes",
+      "Token Factory",
+      "Tavily"
+    ],
+    "account_region_quota_iam_verified": false,
+    "grant_expiry_verified": false,
+    "cloud_resources_created": false,
+    "published_networking_charge_usd": 0,
+    "networking_price_source": "https://nebius.com/prices",
+    "networking_price_evidence": "docs/judge-readiness/public-network-pricing-20261023/source.json"
+  },
+  "rollout_plan": "deploy/nebius/rollout.pending.md",
+  "pending_approval_inputs": {
+    "final_source_commit": null,
+    "final_registry_image_digest": null,
+    "tenant_id": null,
+    "controller_project_id": null,
+    "worker_project_id": null,
+    "subnet_id": null,
+    "launcher_sa_id": null,
+    "launcher_public_key_id": null,
+    "secret_version_selectors": null,
+    "ssh_key_fingerprint": null,
+    "confirmed_quotas": null,
+    "cloud_grant_balance_usd": null,
+    "cloud_grant_expires_at": null,
+    "provider_grant_expiries": null,
+    "initial_start_at_utc": null,
+    "initial_stop_at_utc": null,
+    "private_filesystem_retention_until_utc": null,
+    "maximum_approved_cloud_usd": null,
+    "owner_approval": null,
+    "public_ip_egress_tax_price_bound": null,
+    "judge_access_and_funding_plan": null
+  },
+  "tested_local_candidate_image": {
+    "tag": "speccheck:validated-source-local",
+    "local_image_id": "sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7",
+    "source_commit": "061cf9d2fcb4eb68729eb2961f6f4a8758e24e55",
+    "runtime_code_hash": "3480e5d073f7a58d7fae7317cac2c0a83a3dc880b45e3709e2bec7e9f07f0b45",
+    "default_command": [
+      "python",
+      "scripts/serve.py"
+    ],
+    "published": false,
+    "repo_digests": [
+      "speccheck@sha256:df552ebeb449d0a174f8493fc7fd72f6a6c597794b69e5ede1b969cc14b084f7"
+    ],
+    "evidence": "docs/judge-readiness/document-links-20261023/image/README.md",
+    "registry_reference_verified": false,
+    "release_approved": false,
+    "scope": "Frozen validated commit 061cf9d; isolated source excludes later shared status-timing work. Final validated source/configuration, registry identity and owner approval remain pending."
+  },
+  "published_free_services": {
+    "virtual_networks": {
+      "usd": 0,
+      "condition": "Published current service price; public IP and traffic pricing are separate"
+    },
+    "container_registry": {
+      "usd": 0,
+      "condition": "Published current service price"
+    },
+    "secretstash": {
+      "usd": 0,
+      "condition": "Published preview service price; recheck before operating beyond preview"
+    },
+    "evidence": "docs/judge-readiness/preproduction-packaging-20261023/public-cost-addendum.json",
+    "network_traffic": {
+      "usd": 0,
+      "condition": "Current published networking price; private account overrides and future rate changes not verified; Standard Object Storage egress is separate",
+      "source": "https://nebius.com/prices",
+      "evidence": "docs/judge-readiness/public-network-pricing-20261023/source.json"
+    },
+    "public_ip": {
+      "usd": 0,
+      "condition": "Current published networking price; private account overrides and future rate changes not verified; Standard Object Storage egress is separate",
+      "source": "https://nebius.com/prices",
+      "evidence": "docs/judge-readiness/public-network-pricing-20261023/source.json"
+    }
+  },
+  "blind_asset_exclusion_checkpoint": {
+    "source_base_commit": "1c3c7fe",
+    "runtime_code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
+    "local_image_id": "sha256:60c7b9f12562ef1db4210c7a651b9ae6dc5aa9cdbcadd5337aa2e893b3e56ad1",
+    "evidence": "docs/judge-readiness/preproduction-packaging-20261023/README.md",
+    "published": false,
+    "release_approved": false,
+    "scope": "13 locked public PDFs retained; unreviewed blind PDFs excluded; predates later runtime corrections"
+  },
+  "submission_delivery": {
+    "official_requirements_checked_on": "2026-10-23",
+    "required_judge_access_until_utc": "2026-12-15T20:00:00+00:00",
+    "initial_trial_establishes_judging_access": false,
+    "demo_or_test_build_url": null,
+    "public_youtube_url": null,
+    "approved_access_and_funding_plan": null,
+    "published_credit_scope": "Official FAQ describes promotional Token Factory credits; private AI Cloud funding remains unverified",
+    "rules_source": "https://nebiusglobalaihackathon.devpost.com/rules",
+    "faq_source": "https://nebiusglobalaihackathon.devpost.com/details/faqs",
+    "evidence": "docs/judge-readiness/submission-requirements-20261023.md"
+  }
+}

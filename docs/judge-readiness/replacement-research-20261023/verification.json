@@ -1,0 +1,23 @@
+{
+  "runtime_code_hash": "c3c5ed3a0263d3b606584abc6d81410a4866a21596efeb9222907cc54adc463f",
+  "actual_run": "20261023-071700-8a9e33",
+  "runtime_identity_matches": true,
+  "pytest": {
+    "passed": 621,
+    "skipped": 2,
+    "seconds": 31.67
+  },
+  "post_edit_caller_tests": {
+    "passed": 38,
+    "seconds": 0.2
+  },
+  "raw_mock_unchanged": true,
+  "fresh_provider_charges_for_mock": 0,
+  "inputs_and_reviewed_requirements_unchanged": true,
+  "two_item_consistency_passed": true,
+  "secret_scan_all_absent": true,
+  "frontend_touched": false,
+  "no_current_frontend_verification_claimed": true,
+  "release_promoted": false,
+  "cloud_resources_created": false
+}

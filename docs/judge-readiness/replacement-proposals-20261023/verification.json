@@ -1,0 +1,75 @@
+{
+  "observed_at": "2026-10-23T21:38:03.543640+00:00",
+  "code_hash": "0cb242eda7b7a8d599741f074c98eaf44aebd24ccc1e48bf99d95426724e8688",
+  "mock_run": "20261023-213704-979880",
+  "wallet": {
+    "day": "2026-10-23",
+    "usd": 1.87975302,
+    "credits": 132,
+    "held_usd": 0.0,
+    "held_credits": 1,
+    "total_usd": 3.36648982,
+    "total_credits": 491,
+    "phase": "engineering",
+    "phase_usd": 2.30788482,
+    "phase_credits": 193,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": true
+  },
+  "daily_mirror": {
+    "day": "2026-10-23",
+    "usd": 1.87975302,
+    "credits": 132,
+    "held_usd": 0.0,
+    "held_credits": 1,
+    "total_usd": 3.36648982,
+    "total_credits": 491,
+    "phase": "engineering",
+    "phase_usd": 2.30788482,
+    "phase_credits": 193,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": true
+  },
+  "fresh_paid_usd": 0,
+  "fresh_paid_credits": 0,
+  "checklists": {
+    "07_84_00.json": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+    "26_51_00.json": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1"
+  },
+  "inputs": {
+    "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+    "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+    "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+    "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+    "document_lock": "97cd7c956dda3fa5875426400ae081e8c3853f4da7787f28a0338efb9cad13df"
+  },
+  "screenshots": {
+    "proposal-desktop.png": "21332f7201401417d06a40bc319a40e61512b1aa6c8d17e8448782164cea0c8f",
+    "proposal-mobile.png": "1f763a31d9f0c9025aa13c6aa9b2aeaed8430ba4f69ebb9e50198608b8f49a4e"
+  },
+  "new_test_sha256": "f35601fa0cb443ae09100a69318f799d6242824c3f573f35fdf825c291070abe",
+  "web_sources": [
+    {
+      "file": "web/src/App.tsx",
+      "sha256": "9529dbc73adba68d46f249d7ea149121732df82d4dd72ca6759cbcb7fb21b2cf"
+    },
+    {
+      "file": "web/src/api.ts",
+      "sha256": "ac146c7c708db324a632a2d5315bc2671013d9d8996216995bffea84b18e14be"
+    },
+    {
+      "file": "web/test/browser/journey.spec.ts",
+      "sha256": "87ee2b87659bde3dcebfa588c616932295dd7c0be918cbb1c84b498849d3e8a5"
+    },
+    {
+      "file": "web/test/presentation.mjs",
+      "sha256": "08919ecbc9b4db3a65009455d280eb033dfa4489be229e9729e2d3e9cdd57946"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "base_commit": "981c8be440042456bc88293a6f49b005e98ac191",
+  "isolated_source": "/tmp/speccheck-status-bounds-mirtqcee/source",
+  "code_hash": "c96827f71513da92c346679ec0cbc87ba9f021a144227f0b52452716be4dd7c2",
+  "patch_sha256": "4ef846660d2c004c2e0e422bcb730b4360d845e889630cc29f1f3bca1d5db9aa",
+  "scope": "Base commit plus only the status-bound runtime/test diff; excludes concurrent replacement changes"
+}

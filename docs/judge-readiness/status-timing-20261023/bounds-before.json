@@ -1,0 +1,128 @@
+{
+  "scope": "Offline synthetic responses; no model, HTTP or provider request",
+  "observed_at": "2026-10-23T10:34:21.961459+00:00",
+  "evaluated_at": "2030-06-01T00:00:00+00:00",
+  "code_hash": "1bd1495a7fe75c733886cb4d471371b264657fccad5f2d03e0e260da02c52a8d",
+  "observations": [
+    {
+      "request": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available until Q4 2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available until Q4 2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    },
+    {
+      "request": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available through FY2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available through FY2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    },
+    {
+      "request": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available until end of 2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available until end of 2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    },
+    {
+      "request": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available through distributors.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available through distributors.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    },
+    {
+      "request": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available until further notice.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "active",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": "The ZX family is available until further notice.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    }
+  ]
+}

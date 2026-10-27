@@ -1,0 +1,221 @@
+{
+  "c03": {
+    "decision": "send_back",
+    "validity": "valid",
+    "diagnostics": [],
+    "warnings": [],
+    "fresh_usage": [
+      {
+        "task": "report",
+        "tier": "write",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "input_tokens": 823,
+        "output_tokens": 399,
+        "cost_usd": 0.000606,
+        "latency_ms": 2741,
+        "cached": false,
+        "format": "json_schema",
+        "reasoning_tokens": 0,
+        "thinking": "off",
+        "finish_reason": null
+      }
+    ],
+    "investigations": [
+      {
+        "purpose": "replacement",
+        "outcome": "found",
+        "resolution": "not_resolved",
+        "steps": 5
+      },
+      {
+        "purpose": "replacement",
+        "outcome": "found",
+        "resolution": "not_resolved",
+        "steps": 5
+      }
+    ],
+    "candidates": [
+      {
+        "name": "Fire Protection Products - 3M\u2122 Fire Barrier Sealant IC 15WB+",
+        "passes": false,
+        "current_revision": null,
+        "checks": [
+          {
+            "label": "VOC (air quality)",
+            "ok": true,
+            "note": "<250 g/L"
+          },
+          {
+            "label": "astm g21 rating",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Temperature rating (T)",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Test standards",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      },
+      {
+        "name": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+        "passes": false,
+        "current_revision": null,
+        "checks": [
+          {
+            "label": "VOC (air quality)",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "astm g21 rating",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Temperature rating (T)",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Test standards",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      }
+    ]
+  },
+  "c07": {
+    "decision": "send_back",
+    "validity": "valid",
+    "diagnostics": [],
+    "warnings": [],
+    "fresh_usage": [],
+    "investigations": [
+      {
+        "purpose": "replacement",
+        "outcome": "not_found",
+        "resolution": "not_resolved",
+        "steps": 9
+      },
+      {
+        "purpose": "replacement",
+        "outcome": "found",
+        "resolution": "values_confirmed",
+        "steps": 6
+      }
+    ],
+    "candidates": [
+      {
+        "name": "Spec Sheet-LED Troffer",
+        "passes": false,
+        "current_revision": null,
+        "checks": [
+          {
+            "label": "Rated life (L70)",
+            "ok": true,
+            "note": "349000 hours"
+          },
+          {
+            "label": "Warranty",
+            "ok": true,
+            "note": "10 years"
+          },
+          {
+            "label": "DLC listing",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "macadam steps",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Dims down to",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": ""
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      },
+      {
+        "name": "LT LED Troffer",
+        "passes": false,
+        "current_revision": "REV.01/21/26.LM",
+        "checks": [
+          {
+            "label": "Rated life (L70)",
+            "ok": true,
+            "note": "> 72000 hours"
+          },
+          {
+            "label": "Warranty",
+            "ok": true,
+            "note": "5 years"
+          },
+          {
+            "label": "DLC listing",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "macadam steps",
+            "ok": true,
+            "note": "3"
+          },
+          {
+            "label": "Dims down to",
+            "ok": null,
+            "note": "not confirmed"
+          },
+          {
+            "label": "Current document",
+            "ok": true,
+            "note": "REV.01/21/26.LM"
+          },
+          {
+            "label": "Still made",
+            "ok": null,
+            "note": "No quoted confirmation that this replacement is available"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -3,7 +3,7 @@
   "claims": {
     "product": "BLT Series 2x4 LED troffer",
     "manufacturer": "Lithonia Lighting (Acuity Brands)",
-    "model": "2BLT4 40L ADP EZ1 LP835",
+    "model": "2BLT4",
     "document_revision": "Rev. 07/18/24",
     "claims": [
       {
@@ -12,8 +12,10 @@
         "manufacturer": "Lithonia Lighting (Acuity Brands)",
         "property": "cri",
         "value": 82,
-        "page": 2,
-        "quote": "82CRI, 3500 K"
+        "page": 1,
+        "quote": "82CRI, 3500 K",
+        "scope": "unknown",
+        "scope_quote": "82CRI, 3500 K"
       },
       {
         "id": "k2",
@@ -22,8 +24,11 @@
         "property": "dim_min_percent",
         "value": 1,
         "unit": "%",
-        "page": 2,
-        "quote": "1% (0-10 volt "
+        "page": 1,
+        "quote": "EZ1 eldoLED dims to 1% (0-10 volt dimming)",
+        "variant": "EZ1",
+        "scope": "option",
+        "scope_quote": "EZ1 eldoLED dims to 1% (0-10 volt dimming)"
       },
       {
         "id": "k3",
@@ -33,7 +38,9 @@
         "value": 5,
         "unit": "yr",
         "page": 1,
-        "quote": "WARRANTY — 5-year limited warranty."
+        "quote": "WARRANTY — 5-year limited warranty.",
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY — 5-year limited warranty."
       },
       {
         "id": "k4",
@@ -42,7 +49,9 @@
         "property": "dlc_listed",
         "value": "DLC Premium",
         "page": 1,
-        "quote": "DesignLights Consortium® (DLC) Premium qualified product"
+        "quote": "DesignLights Consortium® (DLC) Premium qualified product",
+        "scope": "product_wide",
+        "scope_quote": "DesignLights Consortium® (DLC) Premium qualified product"
       },
       {
         "id": "k5",
@@ -51,8 +60,10 @@
         "property": "lumens",
         "value": 4197,
         "unit": "lm",
-        "page": 11,
-        "quote": "4197"
+        "page": 1,
+        "quote": "4197",
+        "scope": "unknown",
+        "scope_quote": "4197"
       },
       {
         "id": "k6",
@@ -61,8 +72,10 @@
         "property": "efficacy_lm_per_w",
         "value": 137.81,
         "unit": "lm/W",
-        "page": 11,
-        "quote": "137.81"
+        "page": 1,
+        "quote": "137.81",
+        "scope": "unknown",
+        "scope_quote": "137.81"
       },
       {
         "id": "k7",
@@ -71,10 +84,14 @@
         "property": "watts",
         "value": 30.5,
         "unit": "W",
-        "page": 11,
-        "quote": "30.5"
+        "page": 1,
+        "quote": "30.5",
+        "scope": "unknown",
+        "scope_quote": "30.5"
       }
-    ]
+    ],
+    "family": "2BLT4",
+    "family_quote": "\t\nBLT-2X4\nBLT Series LED\n2BLT4\n2' x 4'\nLED\nCatalog  \nNumber\n"
   },
   "web": {
     "search": [
@@ -95,19 +112,34 @@
         "property": "lumens",
         "value": 4197,
         "unit": "lm",
-        "quote": "4197 137.81 30.5"
+        "quote": "4197 137.81 30.5",
+        "scope": "unknown",
+        "scope_quote": "4197 137.81 30.5",
+        "model": "2BLT4",
+        "identity_quote": "2BLT4",
+        "source_url": "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf"
       },
       {
         "property": "efficacy_lm_per_w",
         "value": 137.81,
         "unit": "lm/W",
-        "quote": "4197 137.81 30.5"
+        "quote": "4197 137.81 30.5",
+        "scope": "unknown",
+        "scope_quote": "4197 137.81 30.5",
+        "model": "2BLT4",
+        "identity_quote": "2BLT4",
+        "source_url": "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf"
       },
       {
         "property": "watts",
         "value": 30.5,
         "unit": "W",
-        "quote": "4197 137.81 30.5"
+        "quote": "4197 137.81 30.5",
+        "scope": "unknown",
+        "scope_quote": "4197 137.81 30.5",
+        "model": "2BLT4",
+        "identity_quote": "2BLT4",
+        "source_url": "https://michaelsforms.eastus2.cloudapp.azure.com/prod_image/blt-2x4.pdf"
       }
     ],
     "source_urls": [
