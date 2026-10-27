@@ -25,6 +25,11 @@ Token Factory credits do not establish a separate AI Cloud grant.
 - At `574299b`: **723 Python tests passed, 2 skipped**; web production build clean; current raw mock
   panel **6/8, 5/6, 0/2, 0/5**. Mock results are fixture answers and incur no provider spend.
 - Playground checks on October 27: **741 Python tests passed, 2 skipped; 12 Chromium journeys passed; presentation checks and production build passed**. The raw mock panel remains unchanged. Draft generation in the browser regression is synthetic, and all provider-adapter tests use intercepted HTTP.
+- [GitHub Actions checks for `40df685`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40562321396) passed, including the mock browser job. PR #13 remains draft pending GATE 1.
+- Local image `speccheck:playground-40df685` built with all 13 locked PDFs and the recorded replay.
+  A disposable container with networking disabled passed actual HTTP/static, checklist save/assignment,
+  upload scan and native-PDF rendering checks in mock mode, with no configured provider keys and zero
+  fresh charges. This is packaging evidence, not public deployment or live GATE 1 evidence.
 - PR #12 is merged. Playground implementation is on `feat/playground`; its live walkthrough, public deployment and final video are still pending.
 - Local cumulative accounting: **$3.36648982 model spend, 490 settled Tavily credits, one held credit**.
   Kyle reported dashboard totals of 485 credits and approximately $3; those totals do not identify the
@@ -115,7 +120,7 @@ No controller/authority topology. Do not assume Token Factory credits cover host
 
 Add `campaign_budget.py init-judging --usd X --credits N`: create an allowance-only database only when
 none exists; refuse replacement. Run at startup when JUDGING_USD/JUDGING_CREDITS are set. Proposed
-allowance **$60 / 4,000 credits**, awaiting Kyle’s confirmation. Set daily caps **$8 / 600 credits**, run
+allowance **$75 / 6,000 credits**, confirmed by Kyle on October 27 as a ceiling, not a spending target. Set daily caps **$8 / 600 credits**, run
 cap **$3**, concurrency **2**. Put state on persistent disk. If the host has none, README must explain that
 a replacement container resets the allowance, with daily caps still configured; do not claim durable
 campaign limits in that configuration.
@@ -184,8 +189,9 @@ Kyle confirms San Francisco attendance for the City field, reviews feedback in h
 
 ## Last actions for Kyle
 
-1. Resolve the held request from individual usage if available; approve the concrete host cost and credit
-   expiry, then the proposed judging allowance. Review local/public gate evidence at each stop.
+1. Resolve the held request from individual usage if available; approve the concrete host cost. Kyle has
+   confirmed sufficient funding and the $75 / 6,000-credit judging ceiling; exact grant expiry has not
+   been independently checked. Review local/public gate evidence at each stop.
 2. Record the deployed browser workflow and narration using the storyboard; upload the public YouTube video.
 3. Complete Devpost: description, track, public demo/repo/video URLs, Built With and feedback fields.
 4. Open all links signed out, ensure the public repository has its MIT license/setup instructions, and
