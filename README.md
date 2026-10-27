@@ -2,7 +2,7 @@
 
 SpecCheck reads construction product submittals and checks their quoted claims against a project spec and current manufacturer documents. NVIDIA Nemotron models read and quote; code decides whether each check passes, fails or cannot be confirmed. A reviewer follows **Inbox → Scan → Review → Outcome**, with the source PDF beside every finding.
 
-**[Open the live demo](https://port8000-ddh028qg63p3bzj.tunnel.applications.eu-west1.nebius.cloud)** · [MIT license](LICENSE) · Solo entry, Nebius x NVIDIA Global AI Hackathon
+**[Open the live demo](https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud)** · [MIT license](LICENSE) · Solo entry, Nebius x NVIDIA Global AI Hackathon
 
 ## Try it
 

@@ -6,14 +6,14 @@ Kyle submits **Thursday October 29**. The [official deadline](https://nebiusglob
 
 - PR #12 and playground PR #13 are merged into `master`. Historical G2–G5, controller/authority and blind-package work is closed.
 - One-container Nebius endpoint in eu-west1 is live with persistent state. The eu-north1 attempt failed only on regional CPU quota (0 versus 2 requested); eu-west1 has capacity. Fly login is stopped.
-- [No-admin smoke](docs/deployment/smoke.txt) and [all five public private-browser workflows](docs/playground/public/README.md) passed. The approved UI polish is being redeployed; final URL/evidence will be recorded after that replacement.
+- [No-admin smoke](docs/deployment/smoke.txt) and [all five public private-browser workflows](docs/playground/public-final/README.md) passed. The approved UI polish is deployed and code is frozen at `eea71cf`. [Final public URL and screenshots](docs/playground/public-final/README.md).
 - Judging allowance $75 / 6,000 credits; daily $8 / 600, run $3, concurrency 2. [Accounting and evidence](docs/deployment/README.md).
 - 767 Python tests passed / 2 skipped; unchanged raw mock panel and clean production build. Presentation and browser checks cover the three polish items.
 - Recorded October 22 live panel remains **6/8 right calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, run `20261022-181611-a9d0b5`. This is a small known set, partly cached. Public workflow runs are not a new eight-case accuracy benchmark.
 
 ## Kyle's 2:45 video
 
-Use the actual public app. Show its Live label and source quotes; keep cached calls/replay labels visible when relevant. [Public tray and UBC/Schlage run IDs](docs/playground/public/README.md) are the real run references.
+Use the actual public app. Show its Live label and source quotes; keep cached calls/replay labels visible when relevant. [Public tray and UBC/Schlage run IDs](docs/playground/public-final/README.md) are the real run references.
 
 | Time | Footage / narration |
 | --- | --- |
