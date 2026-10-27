@@ -69,6 +69,7 @@ const fixOf = (r?: Result) => r?.findings.find((f) => f.fix)?.fix ?? null
 const ACRONYM = /\b(astm|ul|ulc|can|dlc|cri|voc|fm|its|ic|cpvc|pvc|abs|pex|frpp|pvdf)\b/gi
 const show = (v: Value | undefined) => (v === null || v === undefined || v === '' ? '—'
   : (Array.isArray(v) ? v.join(', ') : String(v)).replace(ACRONYM, (m) => m.toUpperCase()).replace(/\b([a-z])(\d{3,})\b/g, (_, a: string, n: string) => a.toUpperCase() + n))
+const displayQuote = (quote: string) => quote.replace(/\*\*|__/g, '')
 const hostOf = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, '') } catch { return url } }
 const discontinued = (r?: Result) => r?.findings.find((f) => f.check === 'status' && f.verdict === 'fail')
 // "tavily + nvidia/nemotron-3-super-120b-a12b" -> "Tavily + Nemotron 3 Super"
@@ -390,14 +391,16 @@ function TableRow({ cols, children }: { cols: string; children: ReactNode }) {
 function InboxStep({ project, health, inbox, rows, error, checklists, changingSpec, onSpec, onAdd, onUpload, onRemove, onScan }: {
   project: Project | null; health: Health | null; inbox: Case[]; rows: Record<string, Row>; error: string | null
   checklists: SavedChecklist[]; changingSpec: boolean; onSpec: (id: string, spec: string) => void
-  onAdd: (id: string) => void; onUpload: (f: File[]) => void; onRemove: (id: string) => void; onScan: () => void
+  onAdd: (id: string) => Promise<void>; onUpload: (f: File[]) => void; onRemove: (id: string) => void; onScan: () => void
 }) {
   const [over, setOver] = useState(false)
+  const [addingSamples, setAddingSamples] = useState(false)
   const fresh = inbox.filter((c) => !rows[c.id])
   const senders = new Set(fresh.map((c) => c.from ?? 'You')).size
   const count = fresh.length ? `${plural(fresh.length, 'submittal')} from ${plural(senders, 'subcontractor')}, not scanned`
     : inbox.length ? `${plural(inbox.length, 'submittal')}, all scanned` : 'No submittals'
   const inside = new Set(inbox.map((c) => c.id))
+  const samples = (project?.tray ?? []).flatMap((g) => g.items).filter((c) => c.ready && !inside.has(c.id))
 
   function drop(e: DragEvent) {
     e.preventDefault()
@@ -415,7 +418,7 @@ function InboxStep({ project, health, inbox, rows, error, checklists, changingSp
   return (
     <>
       <Heading title="Inbox" count={project ? count : NBSP}>
-        <button className={PRIMARY} onClick={onScan} disabled={!fresh.length || changingSpec}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
+        <button className={PRIMARY} onClick={onScan} disabled={!fresh.length || changingSpec || addingSamples}>{fresh.length ? `Scan ${plural(fresh.length, 'submittal')}` : 'Scan'}</button>
       </Heading>
       {!inbox.length && <p className="-mt-3 max-w-3xl leading-6 text-muted">SpecCheck checks each submittal against the project spec and the manufacturer's current documents, then writes what to send back and what to forward.</p>}
       {project?.mode === 'mock' && <p className="-mt-3 text-xs text-muted">Mock mode uses fixture answers. No model calls, live web checks or credits spent.</p>}
@@ -484,6 +487,12 @@ function InboxStep({ project, health, inbox, rows, error, checklists, changingSp
         <div className="flex flex-col gap-1">
           <h2 className="font-semibold">Sample submittals</h2>
           <span className="text-muted">Public manufacturer documents, as two subcontractors would send them. Drag into the inbox.</span>
+          <button className="self-start text-muted underline underline-offset-4 enabled:hover:text-ink disabled:opacity-40"
+            disabled={addingSamples || !samples.length} onClick={async () => {
+              setAddingSamples(true)
+              try { await Promise.all(samples.map((c) => onAdd(c.id))) }
+              finally { setAddingSamples(false) }
+            }}>{addingSamples ? 'Adding samples…' : 'Add all samples'}</button>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {(project?.tray ?? []).map((g) => (
@@ -782,14 +791,14 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
                 {best.selection?.origin === 'agent_proposal' && <li>
                   <span className="font-medium">Proposed configuration · page {best.selection.page}</span>
                   <blockquote className="mt-1 border-l-2 border-edge pl-3 text-muted">
-                    <p>“{best.selection.quote}”</p>
+                    <p>“{displayQuote(best.selection.quote)}”</p>
                     <a href={best.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(best.source_url)} ↗</a>
                   </blockquote>
                 </li>}
                 {best.checks.map((check, n) => <li key={n}>
                   <span className="font-medium">{check.label}</span>
                   {check.evidence?.map((e, i) => <blockquote key={i} className="mt-1 border-l-2 border-edge pl-3 text-muted">
-                    {e.excerpt && <p>“{e.excerpt}”</p>}
+                    {e.excerpt && <p>“{displayQuote(e.excerpt)}”</p>}
                     <a href={e.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(e.url)} ↗</a>
                   </blockquote>)}
                 </li>)}
@@ -1136,7 +1145,7 @@ function TextPages({ pages, marks, selId, result, page, onPage, name, href, prod
                 <span className={`-mx-2 flex flex-wrap items-baseline justify-between gap-x-3 rounded-sm px-2 py-1 leading-6 ${m ? 'font-semibold' : ''}`}
                   style={m ? { background: `${c}${m.finding.id === selId ? '40' : '26'}`, boxShadow: `inset 3px 0 0 ${c}` } : undefined}
                   title={m ? `${m.kind === 'checked' ? 'Checked' : 'Problem'}: ${m.finding.title}` : undefined}>
-                  <span className="min-w-0">{lines[k]}</span>
+                  <span className="min-w-0">{displayQuote(lines[k])}</span>
                   {row && <span className="shrink-0 rounded px-2 py-0.5 font-sans text-xs font-semibold text-on-accent" style={{ background: c }}>now {row.current}</span>}
                 </span>
               </Fragment>
@@ -1164,8 +1173,7 @@ function replacement(fix: Fix | null): [string, boolean] {
 }
 
 // When the nightly re-check (scripts/recheck.py as a Nebius Serverless Job) last ran, in one line.
-const recheckLine = (r: Recheck | null | undefined) => {
-  if (!r) return 'No nightly re-check has reported yet'
+const recheckLine = (r: Recheck) => {
   const flagged = r.items.filter((i) => i.status !== 'no_change').length
   const when = new Date(r.checked_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
   return `${r.mode === 'mock' ? 'Mock · ' : ''}Nightly re-check · last ran ${when} (${r.runner}${r.job_name ? ` ${r.job_name}` : ''}${r.duration_ms != null ? `, ${seconds(r.duration_ms)}` : ''}): ${plural(r.items.length, 'item')}, ${flagged} flagged`
@@ -1190,7 +1198,7 @@ function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck 
   }, [enabled])
   const current = jobs.find((job) => !['done', 'failed'].includes(job.state))
   return <div className="flex flex-col items-start gap-1 break-words text-xs text-muted">
-    <span>{recheckLine(report)}</span>
+    {report && <span>{recheckLine(report)}</span>}
     {current && <span role="status">{current.name} · {current.state_known === false ? 'Unmapped state' : current.state}
       {current.raw_state ? ` (${current.raw_state})` : ''}. Waiting for confirmed job status.
       {current.poll_error ? ` ${current.poll_error}` : ''}</span>}
@@ -1329,7 +1337,7 @@ function Alert({ c, result, sent, onRequest }: { c: Case; result: Result; sent: 
       </ol>
       {f.quote && (
         <blockquote className="flex flex-col gap-1 border-l-2 border-edge pl-3">
-          <span className="text-base text-soft">“{f.quote}”</span>
+          <span className="text-base text-soft">“{displayQuote(f.quote)}”</span>
           {src && <a href={src.url} target="_blank" rel="noreferrer" className="truncate text-xs text-muted underline decoration-edge underline-offset-2 hover:text-ink">{src.title || hostOf(src.url)} ↗</a>}
         </blockquote>
       )}
