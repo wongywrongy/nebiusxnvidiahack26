@@ -1,0 +1,67 @@
+[
+  {
+    "title": "RectorSeal Metacaulk 1000",
+    "kind": "product",
+    "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+    "fits": "07 84 00",
+    "status": 200,
+    "final_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+    "bytes": 186421,
+    "pages": 3,
+    "page_1_text_chars": 2196,
+    "sha256": "8e6d333df16e652b647fd978bd3bf45709fbaf231dd03f524841697871832dde",
+    "verified_at": "2026-10-27T19:02:37.713312+00:00"
+  },
+  {
+    "title": "Tremco TREMstop Acrylic",
+    "kind": "product",
+    "url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf",
+    "fits": "07 84 00",
+    "status": 200,
+    "final_url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf",
+    "bytes": 209398,
+    "pages": 2,
+    "page_1_text_chars": 1865,
+    "sha256": "98445401af202dd3537b8297dbf4e622ffebcc6eb231d4f1ec72aea81dc030d7",
+    "verified_at": "2026-10-27T19:02:38.247792+00:00"
+  },
+  {
+    "title": "Keystone KT-BPLED40 LED panel",
+    "kind": "product",
+    "url": "https://keystonetech.widen.net/content/817ljcfqbn/pdf/KT-BPLED40-22-8XX-VDIM.pdf?u=xq6wdp",
+    "fits": "26 51 00",
+    "status": 200,
+    "final_url": "https://keystonetech.widen.net/content/817ljcfqbn/pdf/KT-BPLED40-22-8XX-VDIM.pdf?u=xq6wdp",
+    "bytes": 1413071,
+    "pages": 6,
+    "page_1_text_chars": 2105,
+    "sha256": "e5c04f35b7cf65241b91b114baa9ebbfa5b5d5b722358f973291a5e263217d6f",
+    "verified_at": "2026-10-27T19:02:37.726001+00:00"
+  },
+  {
+    "title": "UBC Door Hardware 08 71 00",
+    "kind": "spec",
+    "url": "https://www.technicalguidelines.ubc.ca/guidelines/087100-Door_Hardware_UBCV.pdf",
+    "fits": "08 71 00",
+    "status": 200,
+    "final_url": "https://www.technicalguidelines.ubc.ca/guidelines/087100-Door_Hardware_UBCV.pdf",
+    "bytes": 142071,
+    "pages": 7,
+    "page_1_text_chars": 3180,
+    "sha256": "2116d555cae1f485f70d336fdf356fca389bd022fe13c2c4e423bb7290758af2",
+    "verified_at": "2026-10-27T19:02:37.922382+00:00"
+  },
+  {
+    "title": "Schlage ND Series Grade 1 locks",
+    "kind": "product",
+    "url": "https://allegion.ca/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+    "fits": "pair with UBC Door Hardware 08 71 00",
+    "status": 200,
+    "final_url": "https://allegion.ca/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+    "bytes": 2175197,
+    "pages": 14,
+    "page_1_text_chars": 1162,
+    "sha256": "961578954ffee3a555c8ea55c3173a31aeecf32e07df385a1125678356b61ece",
+    "verified_at": "2026-10-27T19:02:37.784287+00:00"
+  }
+]

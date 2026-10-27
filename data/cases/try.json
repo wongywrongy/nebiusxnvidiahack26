@@ -1,0 +1,32 @@
+[
+  {
+    "title": "RectorSeal Metacaulk 1000",
+    "kind": "product",
+    "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+    "fits": "07 84 00"
+  },
+  {
+    "title": "Tremco TREMstop Acrylic",
+    "kind": "product",
+    "url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf",
+    "fits": "07 84 00"
+  },
+  {
+    "title": "Keystone KT-BPLED40 LED panel",
+    "kind": "product",
+    "url": "https://keystonetech.widen.net/content/817ljcfqbn/pdf/KT-BPLED40-22-8XX-VDIM.pdf?u=xq6wdp",
+    "fits": "26 51 00"
+  },
+  {
+    "title": "UBC Door Hardware 08 71 00",
+    "kind": "spec",
+    "url": "https://www.technicalguidelines.ubc.ca/guidelines/087100-Door_Hardware_UBCV.pdf",
+    "fits": "08 71 00"
+  },
+  {
+    "title": "Schlage ND Series Grade 1 locks",
+    "kind": "product",
+    "url": "https://allegion.ca/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+    "fits": "pair with UBC Door Hardware 08 71 00"
+  }
+]

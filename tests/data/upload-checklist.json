@@ -1,0 +1,10 @@
+{
+  "section": "08 71 00",
+  "title": "Door Hardware",
+  "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+  "source_name": "synthetic-test-spec.pdf",
+  "requirements": [
+    {"id": "cycles", "section": "08 71 00", "paragraph": "2.1.A", "property": "cycles", "operator": "gte", "value": 200000, "unit": "cycles", "text": "At least 200000 cycles.", "severity": "major"},
+    {"id": "grade", "section": "08 71 00", "paragraph": "2.1.B", "property": "grade", "operator": "eq", "value": 1, "text": "Grade 1 mechanical lock.", "severity": "major"}
+  ]
+}

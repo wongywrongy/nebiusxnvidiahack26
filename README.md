@@ -1,5 +1,8 @@
 # SpecCheck
 
+Current work: [judge playground, public demo and 2:45 video plan](SUBMISSION.md).
+The G2–G5 readiness process is closed. Historical checkpoints below are evidence, not additional release work.
+
 **A rejected submittal can delay a construction project for weeks.** SpecCheck reads a subcontractor's product
 submittal, checks it against the project spec, checks the product against the manufacturer's *current* documents on
 the live web, searches for checked replacements, and can re-check approved items for manufacturer changes.
@@ -11,8 +14,7 @@ document pipelines for a general contractor and has watched this problem cost re
 - **Demo/test-build link:** pending · **Public YouTube link:** pending · **License:** [MIT](LICENSE)
 - **Models:** NVIDIA **Nemotron 3 Nano** and **Nemotron 3 Super**, served by **Nebius Token Factory**
 - **Web:** **Tavily** Search, Extract and bounded Map for the manufacturer's current documents
-- **Cloud:** deployment configuration for a **Nebius Serverless Endpoint** and a nightly **Nebius Serverless Job**;
-  deployment remains unverified; the first live provider results are recorded below
+- **Hosting:** one-container public deployment is pending; cloud jobs are optional and execution remains unverified
 
 **What is implemented:** quoted extraction, deterministic checks, bounded web investigation, checked replacement
 candidates, message drafts, browser-saved review decisions, and the cloud job/archive integrations below.
@@ -100,12 +102,12 @@ product, and one newer sheet with unchanged values (a note, not a send-back).
 | Major false alarms on clean packages | 0/2 | **0/2** |
 | Passing fixes | 2/5 | **0/5** |
 
-The table preserves the dated first-pass baseline. The current G2 policy checkpoint scores **6/8 mock
+The table preserves the dated first-pass baseline. The current selection-policy checkpoint scores **6/8 mock
 decisions, 5/6 problems, 0/2 major false alarms and 0/5 passing fixes** against the unchanged key. Missing
 configuration selections now stay unconfirmed; a replacement also needs cited availability and assembly proof.
 Kyle authorized the disclosed selection-policy exceptions and live validation on October 22. Regression
 checks enforce the exact disagreements; the raw scoreboard and strict release gate still fail. See the
-[readiness implementation ledger](docs/judge-readiness.md) for the evidence and open acceptance checkpoint.
+[historical readiness implementation ledger](docs/judge-readiness.md) for the evidence.
 
 On October 23 Kyle approved [source-backed replacement proposals](docs/judge-readiness/replacement-proposals-20261023/README.md).
 SpecCheck may propose one printed catalog SKU, labelled as its own choice with quoted configuration/check
@@ -123,7 +125,7 @@ Both [CI workflows for tested source `e1a4c2e`](docs/judge-readiness/document-li
 pass Python/mock, presentation/build and mock browser checks. Engineering spend is **$2.30788482 /
 192 credits**, cumulative local accounting **$3.36648982 / 490**.
 
-G2 remains open. The [latest actual before/after evidence](docs/judge-readiness/document-links-20261023/README.md)
+The former G2 process is superseded by the [submission plan](SUBMISSION.md). Historical [before/after evidence](docs/judge-readiness/document-links-20261023/README.md)
 records a navigation PDF selected instead of product data, null units in model claims, and unsupported
 active status erasing a valid discontinuation during merging. General corrections prefer technical-sheet
 paths, explicitly request printed units, and validate status before merging. Existing quote, identity,
@@ -243,9 +245,11 @@ Secret scan: `pip install pre-commit && pre-commit install` (gitleaks on every c
 The header's **Specs** page shows each project source, control version and checklist. Bundled fixture checklists
 are labelled mock stand-ins; missing draft/review dates are never invented. In live mode, dropping a spec PDF
 drafts a checklist with Nemotron 3 Super, under the same public rate/size and model-budget limits. The response
-includes its model, source name/hash and draft date. It is not saved as a project checklist or used by scans;
-normal model response caching still applies. Only an admin can save it after reviewing the requirements and
-setting `reviewed_at`, and admin saves stay limited to the two known project sections. Public drafts accept any
+includes its model, source name/hash and draft date. Edit or delete draft rows, then choose **Use this checklist
+for my uploads**. Saved drafts remain unreviewed, expire after 14 days, and can only be assigned to uploads
+before scanning. Their IDs stay in this browser's session; they never overwrite reviewed project rules or
+apply to the sample tray. Mock mode cannot draft checklists. Only an admin can save a reviewed project checklist
+with `reviewed_at`, and admin saves stay limited to the two known project sections. Public drafts accept any
 section formatted `00 00 00` plus a title; the two known sections are suggestions. `scripts/draft_requirements.py`
 writes the same provenance fields.
 
@@ -314,7 +318,8 @@ the sealed usage report and independently observed cloud completion.
 
 These cloud paths and the [explicit authority transfer/cutover tools](docs/judge-readiness/authority-transfer-20261023/README.md)
 are tested with a fake CLI, synthetic wallets and local disk. No real wallet has moved; remote execution and
-hosted durability remain release blockers. See [the Nebius guide](deploy/nebius/README.md); its commands are gated preparation.
+hosted durability are unverified. These optional paths are outside the current one-container deployment plan.
+The [Nebius guide](deploy/nebius/README.md) retains historical preparation; follow [SUBMISSION.md](SUBMISSION.md) for current scope.
 A [local image packaging check](docs/judge-readiness/image-build-20261023/README.md) passes required PDFs,
 the pinned CLI, mock evaluation and an isolated API/assets smoke; the image remains unpublished.
 Scheduled jobs stay disabled pending hosted verification and owner approval.
@@ -403,8 +408,9 @@ sha256, so an uploaded copy of a known document is recognised.
 
 ## What's next
 
-Add product-type scoping for requirements so emergency units, exit signs, screw-in lamps and remote drivers
-can have their own checks without applying them to every luminaire. Resolve selected configurations, exact current-document identity, missing F/T applicability, and live replacement retrieval before deployment.
+Finish the playground's live a–e walkthrough, publish the one-container demo after host-cost approval,
+record the deployed tray and bring-your-own-spec loop, then submit Thursday October 29.
+The [current plan and storyboard](SUBMISSION.md) define the remaining work; no further features are in scope.
 
 ## License
 

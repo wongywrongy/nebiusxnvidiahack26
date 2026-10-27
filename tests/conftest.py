@@ -4,7 +4,9 @@ import os
 import json
 import math
 import uuid
+from contextlib import contextmanager
 from datetime import datetime, timezone
+from types import SimpleNamespace
 
 import httpx
 import pytest
@@ -19,12 +21,22 @@ def pytest_configure(config):
 
 
 @pytest.fixture(autouse=True)
-def protocol_billing_fixtures(request, monkeypatch):
+def protocol_billing_fixtures(request, monkeypatch, tmp_path):
     """Legacy protocol tests use isolated payment doubles; campaign tests exercise durable admission."""
     if request.node.get_closest_marker("campaign"):
         return
     from api.config import settings
     from api.providers import budget, campaign
+    monkeypatch.setattr(settings, 'cache_dir', tmp_path / 'protocol-cache')
+    monkeypatch.setattr(settings, 'campaign_budget_file', tmp_path / 'protocol.sqlite3')
+    payments = {}
+    def reserve(path, held, **kwargs):
+        identifier = uuid.uuid4().hex
+        payments[identifier] = SimpleNamespace(held=held, actual=None, unknown=False, owner=campaign.SESSION, kind='request')
+        return identifier
+    @contextmanager
+    def transaction(_):
+        yield SimpleNamespace(payments=payments)
     def status(_):
         path = budget._day_file()
         return json.loads(path.read_text()) if path.exists() else {"usd": 0.0, "credits": 0}
@@ -33,7 +45,8 @@ def protocol_billing_fixtures(request, monkeypatch):
         return {"day": datetime.now(timezone.utc).date().isoformat(),
                 "usd": round(current["usd"] + (actual.usd_nano / 1e9 if actual else 0), 9),
                 "credits": current["credits"] + (actual.credits if actual else 0), "blocked": actual is None}, True
-    monkeypatch.setattr(campaign, "reserve", lambda *args, **kwargs: uuid.uuid4().hex)
+    monkeypatch.setattr(campaign, "reserve", reserve)
+    monkeypatch.setattr(campaign, "transaction", transaction)
     monkeypatch.setattr(campaign, "settle", settle)
     monkeypatch.setattr(campaign, "status", status)
     if request.node.get_closest_marker("unreported_usage"):

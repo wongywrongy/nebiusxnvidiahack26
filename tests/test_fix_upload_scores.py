@@ -151,7 +151,7 @@ def test_upload_rejects_non_pdf_and_unknown_pdf_runs_on_defaults(cleanup):
     cleanup.append(case["id"])
     assert case["mock_fixture"] is None and case["section"] == "26 51 00"
     res = _wait_result(scan["run_id"], case["id"])
-    assert res["decision"] == "approve_with_note"  # nothing could be read in mock mode: everything is "not stated"
+    assert res["decision"] == "not_applicable"  # no quoted values were read in mock mode
     assert "Mock mode" in res["summary"]
 
 

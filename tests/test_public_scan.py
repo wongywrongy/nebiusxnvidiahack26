@@ -75,18 +75,21 @@ def test_spent_budget_refuses_uploads_and_missing_recordings(isolated, monkeypat
 
 
 def test_public_upload_is_live_by_default_with_rate_limit_and_admin_bypass(isolated, monkeypatch):
+    from pathlib import Path
+    data = (Path(__file__).parent / "data/off-topic.pdf").read_bytes()
+    case_id = isolated.post("/api/inbox", content=data).json()["id"]
+    main._uploads_by_ip.clear()
     assert settings.public_uploads_live
     monkeypatch.setattr(settings, "speccheck_mode", "live")
     monkeypatch.setattr(settings, "admin_token", SecretStr("test-admin"))
     monkeypatch.setattr(settings, "uploads_per_ip_per_hour", 1)
-    monkeypatch.setattr(main, "_scannable", lambda i: {"upload": True})
     pending = defer(monkeypatch)
     try:
-        public = isolated.post("/api/scan", json={"ids": ["upload-test"]})
+        public = isolated.post("/api/scan", json={"ids": [case_id]})
         assert public.status_code == 200 and public.json()["mock"] == []
         assert not main.RUNS[public.json()["run_id"]].mock
-        assert isolated.post("/api/scan", json={"ids": ["upload-test"]}).status_code == 429
-        admin = isolated.post("/api/scan", json={"ids": ["upload-test"]}, headers={"X-Admin-Token": "test-admin"})
+        assert isolated.post("/api/scan", json={"ids": [case_id]}).status_code == 429
+        admin = isolated.post("/api/scan", json={"ids": [case_id]}, headers={"X-Admin-Token": "test-admin"})
         assert admin.status_code == 200 and admin.json()["mock"] == []
     finally:
         for task in pending:

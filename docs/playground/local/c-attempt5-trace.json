@@ -1,0 +1,106 @@
+{
+  "case": "c",
+  "url": "http://127.0.0.1:8009",
+  "captured_at": "2026-10-27T19:31:54.999Z",
+  "runs": [],
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.36586416,
+      "credits": 24,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 3.73235398,
+      "total_credits": 515,
+      "phase": "engineering",
+      "phase_usd": 2.67374898,
+      "phase_credits": 217,
+      "usd_limit": 20,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10,
+      "phase_credit_limit": 1000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 1.63413584,
+      "credits_left": 126
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 2,
+      "budget_usd_per_day": 2,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 150,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 20,
+    "disk_free_gb": 909.62
+  },
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: {\"detail\":\"The reply was cut off at the token limit\"}",
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.37520616,
+      "credits": 24,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 3.74169598,
+      "total_credits": 515,
+      "phase": "engineering",
+      "phase_usd": 2.68309098,
+      "phase_credits": 217,
+      "usd_limit": 20,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10,
+      "phase_credit_limit": 1000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 1.62479384,
+      "credits_left": 126
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 2,
+      "budget_usd_per_day": 2,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 150,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 61.3,
+    "disk_free_gb": 909.54
+  },
+  "cost": {
+    "usd": 0.009342,
+    "credits": 0
+  }
+}

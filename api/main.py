@@ -44,11 +44,11 @@ from typing import Literal, Optional
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse, Response, StreamingResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 from .config import settings, redact
 from . import cloud_jobs, watch_store, job_control
-from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
+from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, save_upload, senders, try_documents
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
 from .pipeline import checklists
@@ -57,7 +57,7 @@ from .pipeline.render import page_count, page_sizes, prune_page_cache, render_pa
 from .pipeline.runner import Run, execute, list_runs, load_result, prune_runs, recorded_runs, replay, run_dir
 from .pipeline.scores import run_scoring_set
 from .providers import ProviderError, budget, failure_reason
-from .schemas import Event, ReviewedChecklist
+from .schemas import Event, ReviewedChecklist, UploadChecklist
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(name)s %(message)s")
 STARTED = time.monotonic()
@@ -69,6 +69,12 @@ async def lifespan(app):
     settings.runs_dir.mkdir(parents=True, exist_ok=True)
     prune_page_cache()
     prune_runs()
+    checklists.prune_uploads()
+    if settings.live:
+        try:
+            budget.recover_unknown_usage()
+        except (OSError, ValueError, budget.BudgetExceeded):
+            logging.getLogger("speccheck.startup").warning("Campaign ledger unavailable; paid calls remain blocked")
     logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on %s; hosted persistence unverified)",
                                                budget.today(), budget.caps(),
                                                "private controller mount" if settings.controller_state_dir else "local disk")
@@ -95,6 +101,7 @@ class StartRun(BaseModel):
 
 
 class Scan(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     ids: list[str]
     delay_ms: Optional[int] = None
     shared_item_budget: bool = False
@@ -104,6 +111,11 @@ class Scan(BaseModel):
 class StartReplay(BaseModel):
     source_run_id: str
     speed: float = Field(default=1.0, gt=0, le=1000)
+
+
+class UploadSpec(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    spec: str = Field(min_length=1, max_length=80)
 
 
 def _spawn(coro) -> None:
@@ -167,6 +179,7 @@ def project():
     return {
         "name": data["project"],
         "specs": list(all_specs().values()),
+        "try": try_documents(),
         "tray": [{"from": name, **senders().get(name, {}), "items": items} for name, items in groups.items()],
         "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
         "mode": settings.mode,
@@ -222,6 +235,8 @@ async def inbox(request: Request, name: str = "upload.pdf"):
         case = {**all_cases(), **all_samples()}.get(body.get("id", "") if isinstance(body, dict) else "")
         if not case or not case.get("tray"):
             raise HTTPException(404, "No such tray item")
+        if "checklist_id" in body or "spec" in body:
+            raise HTTPException(422, "Only uploaded PDFs can use a different spec or draft checklist")
         if not (settings.live or mock_ready(case)):
             raise HTTPException(409, "Available in live mode")
         return _public(case)
@@ -234,9 +249,36 @@ async def inbox(request: Request, name: str = "upload.pdf"):
     return _public(add_upload(name, pdf, text))
 
 
+@app.patch("/api/inbox/{case_id}")
+async def set_upload_spec(case_id: str, body: UploadSpec):
+    case = get_upload(case_id)
+    if case is None:
+        raise HTTPException(422, "Only uploaded PDFs can use a different spec or draft checklist")
+    if case.get("scanned_at"):
+        raise HTTPException(409, "This upload has already been scanned. Upload it again to choose a different spec.")
+    if body.spec in all_specs():
+        case["section"] = body.spec
+        case.pop("checklist_id", None)
+    else:
+        if not body.spec.startswith("ck-"):
+            raise HTTPException(422, "Choose a known spec section or a saved draft checklist")
+        checklist = checklists.load_upload(body.spec)
+        case.update(section=checklist.section, checklist_id=body.spec)
+    case.update(conditions=[], not_applicable=[])
+    save_upload(case)
+    return _public(case)
+
+
+@app.post("/api/checklists")
+async def save_upload_checklist(body: UploadChecklist, request: Request):
+    if not _is_admin(request):
+        _rate_limit(request)
+    return checklists.save_upload(body)
+
+
 @app.get("/api/specs")
 def specs():
-    return {"mode": settings.mode, "sections": checklists.sections()}
+    return {"mode": settings.mode, "sections": checklists.sections(), "try": try_documents()}
 
 
 @app.post("/api/specs/draft")
@@ -295,6 +337,11 @@ async def scan(body: Scan, request: Request):
     unknown = [i for i, c in cases.items() if c is None]
     if not ids or unknown:
         raise HTTPException(400, f"Unknown items: {unknown}" if unknown else "Nothing to scan")
+    for case in cases.values():
+        if case.get("checklist_id"):
+            if not case.get("upload"):
+                raise HTTPException(422, "Draft checklists can only be used for uploaded PDFs")
+            checklists.load_upload(case["checklist_id"])
     if not settings.live and any(not (c.get("upload") or mock_ready(c)) for c in cases.values()):
         raise HTTPException(409, "Available in live mode")
     admin = _is_admin(request)
@@ -319,6 +366,10 @@ async def scan(body: Scan, request: Request):
             if settings.live and not admin and not settings.public_uploads_live else [])
     run = _new_run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget,
                    refresh_web=body.refresh_web)
+    for case in cases.values():
+        if case.get("upload"):
+            case["scanned_at"] = datetime.now().isoformat()
+            save_upload(case)
     _spawn(execute(run))
     note = "Uploads ran in mock mode: public live uploads are disabled; live checks need the admin token." if mock else None
     return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note,
@@ -436,7 +487,7 @@ async def scores():
 
 def _public(case: dict) -> dict:
     """What the app shows of an item: no answer key."""
-    return {**{k: case[k] for k in ("id", "number", "title", "product", "from", "section", "received", "watch") if k in case},
+    return {**{k: case[k] for k in ("id", "number", "title", "product", "from", "section", "received", "watch", "checklist_id", "scanned_at") if k in case},
             **senders().get(case.get("from", ""), {}),
             "submittal": [{k: d[k] for k in ("role", "file", "url") if k in d} for d in case["submittal"]],
             "pages": _pages(case), "upload": bool(case.get("upload")), "mock_fixture": case.get("fixture"),

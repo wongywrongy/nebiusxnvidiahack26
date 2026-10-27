@@ -106,7 +106,7 @@ def test_investigation_knobs_cap_tool_calls_and_credits(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "investigate_max_steps", 1)
     run = asyncio.run(execute(Run(["s4"], delay_ms=0)))
     inv = run.results["s4"].investigation
-    assert inv.outcome == "capped" and len(inv.steps) == 1
+    assert inv.outcome == "capped" and len(inv.steps) == 0  # The only slot permits finish; the fixture asks to search.
     monkeypatch.setattr(settings, "investigate_max_steps", 6)
     monkeypatch.setattr(settings, "investigate_credit_cap", 0)
     run = asyncio.run(execute(Run(["s4"], delay_ms=0)))

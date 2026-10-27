@@ -76,6 +76,8 @@ PROMPT = (
     "Check product status separately from finding its data sheet: search for family/brand discontinuation notices. "
     "If manufacturer documents cannot be read, search distributor or agency copies of the same exact product/model. "
     "Do not repeat an extract that returned no readable text. "
+    "Use URLs provided by the task or returned by search, map, or extract; never invent document paths or placeholder asset IDs. "
+    "Seek product-specific data sheets, not company price books or full catalogs; leave missing properties unconfirmed. "
     "Extract the document before finishing. Quote the revision and status exactly, never infer them. "
     "A catalog's Updated timestamp or a certification code is not a printed document revision. "
     "When unconfirmed_properties are supplied, seek evidence for those properties; a revision alone does not resolve them. "
@@ -157,13 +159,27 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
     try:
         with budget.credit_scope(settings.investigate_credit_cap - spent):
             while len(result.steps) < settings.investigate_max_steps:
+                remaining = settings.investigate_max_steps - len(result.steps)
+                credits_left = max(0, settings.investigate_credit_cap - spent - (web.credits - start_credits))
+                messages[0]["content"] = allowance + PROMPT + f"\n{credits_left:g} shared credits remain. {remaining} tool calls remain, including finish. " + (
+                    "Call finish now with supported evidence, or found=false." if remaining == 1 else
+                    "Reserve the last call for finish; stop early when no useful source remains.")
+                tools = TOOLS if remaining > 1 else [t for t in TOOLS if t["function"]["name"] == "finish"]
                 message, usage = await router.call("investigate", ToolMessage, messages,
-                                                   {"case_id": web.case_id, "tools": TOOLS})
+                                                   {"case_id": web.case_id, "tools": tools})
                 result._usage.append(usage)
                 if not message.tool_calls:
                     return result
+                if remaining == 1 and any(call.function.name != "finish" for call in message.tool_calls):
+                    await web.warn("investigate", budget.BudgetExceeded("Investigator tool-call cap reached; final slot requires finish"))
+                    result.outcome = "capped"
+                    return result
                 messages.append(message.model_dump(exclude_none=True))
                 for call in message.tool_calls:
+                    if len(result.steps) == settings.investigate_max_steps - 1 and call.function.name != "finish" and remaining > 1:
+                        messages.append({"role": "tool", "tool_call_id": call.id,
+                                         "content": "Not executed: the last tool slot is reserved for finish."})
+                        continue
                     if len(result.steps) >= settings.investigate_max_steps:
                         await web.warn("investigate", budget.BudgetExceeded("Investigator tool-call cap reached"))
                         result.outcome = "capped"
