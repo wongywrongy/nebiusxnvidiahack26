@@ -1,0 +1,460 @@
+{
+  "case": "a",
+  "url": "https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud",
+  "captured_at": "2026-10-27T22:05:09.824Z",
+  "runs": [
+    {
+      "run_id": "20261027-220512-ad3554",
+      "mode": "live",
+      "mock": [],
+      "note": null,
+      "shared_item_budget": false,
+      "results": [
+        {
+          "case_id": "u-34abb63a",
+          "title": "off-topic.pdf",
+          "decision": "not_applicable",
+          "summary": "This document does not match this spec; pick a different spec in the Inbox.",
+          "spec_section": "07 84 00",
+          "spec_title": "Firestopping",
+          "spec_rule_count": 4,
+          "spec_match_count": 0,
+          "checklist_id": null,
+          "product_type": null,
+          "findings": [
+            {
+              "id": "spec-req_voc_content",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "VOC content check",
+              "detail": "VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).",
+              "why_it_matters": "High VOC levels can affect indoor air quality and worker health during installation.",
+              "requirement_id": "req_voc_content",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≤ 250 g/L",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.02.B",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-req_mold_resistance",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Mold resistance verification",
+              "detail": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+              "why_it_matters": "Without mold resistance, the sealant could degrade over time in damp areas, reducing its effectiveness.",
+              "requirement_id": "req_mold_resistance",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= 0",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.02.C",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-req_t_rating_min_equal_f",
+              "check": "spec",
+              "verdict": "pending",
+              "severity": "info",
+              "title": "Assembly fire/time rating proof",
+              "detail": "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.",
+              "why_it_matters": "We need confirmed fire and temperature ratings to ensure the seal will perform as required in a fire event.",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "T = F",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.04.A.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-fs-std",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Test standard confirmation",
+              "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+              "why_it_matters": "Proper testing to recognized standards ensures the product will work as intended in real-world conditions.",
+              "requirement_id": "fs-std",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "astm e814",
+                  "astm e119",
+                  "ul 1479"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.04.A.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            }
+          ],
+          "comparison": [],
+          "claims": [],
+          "selection": null,
+          "document_roles": [
+            "product_data"
+          ],
+          "extracted": {
+            "product": "Harbor X1 door hardware",
+            "manufacturer": "",
+            "model": "X1",
+            "selection": null,
+            "family": null,
+            "family_quote": null,
+            "document_revision": null,
+            "claims": []
+          },
+          "verification": null,
+          "document_revision": null,
+          "note_to_subcontractor": "",
+          "usage": [
+            {
+              "task": "triage",
+              "tier": "triage",
+              "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+              "input_tokens": 265,
+              "output_tokens": 29,
+              "cost_usd": 0.00002286,
+              "latency_ms": 682,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 2014,
+              "output_tokens": 54,
+              "cost_usd": 0.0006528,
+              "latency_ms": 970,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "report",
+              "tier": "write",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 769,
+              "output_tokens": 257,
+              "cost_usd": 0.000462,
+              "latency_ms": 2004,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            }
+          ],
+          "web_credits": 0,
+          "duration_ms": 42,
+          "investigation": null,
+          "investigations": [],
+          "mode": "live",
+          "replayed_from": null,
+          "warnings": [],
+          "diagnostics": [],
+          "validity": "valid",
+          "config_hash": "a5b7ce0400f35d0d2648c693f7ebb5b735c1b72f2e13f8e002cb277aaee5afba",
+          "fresh_model_cost_usd": 0,
+          "fresh_web_credits": 0,
+          "queue_ms": 21,
+          "ocr_pages": 0,
+          "archived_submittals": [],
+          "evidence_label": null,
+          "claims_extracted": 0,
+          "claims_kept": 0,
+          "web_values_read": 0,
+          "web_values_kept": 0
+        }
+      ],
+      "events": [
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 15,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 21,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 26,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 32,
+          "stage": "extract",
+          "message": "Comparing to the spec",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 54,
+          "stage": "spec_check",
+          "message": "Checked against 07 84 00: 0 of 4 rules matched",
+          "model": "code",
+          "data": {
+            "section": "07 84 00",
+            "title": "Firestopping",
+            "rules": 4,
+            "matched": 0,
+            "product_type": null,
+            "other_product_type_rules": 0,
+            "checklist_id": null
+          }
+        },
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 56,
+          "stage": "report",
+          "message": "Writing the result",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "web": {
+              "sheet": "",
+              "verdict": "",
+              "sources": []
+            }
+          }
+        },
+        {
+          "run_id": "20261027-220512-ad3554",
+          "case_id": "u-34abb63a",
+          "t_ms": 68,
+          "stage": "done",
+          "message": "not_applicable",
+          "model": null,
+          "data": {
+            "decision": "not_applicable",
+            "summary": "This document does not match this spec; pick a different spec in the Inbox.",
+            "usage": [
+              {
+                "task": "triage",
+                "tier": "triage",
+                "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+                "input_tokens": 265,
+                "output_tokens": 29,
+                "cost_usd": 0.00002286,
+                "latency_ms": 682,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 2014,
+                "output_tokens": 54,
+                "cost_usd": 0.0006528,
+                "latency_ms": 970,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "report",
+                "tier": "write",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 769,
+                "output_tokens": 257,
+                "cost_usd": 0.000462,
+                "latency_ms": 2004,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              }
+            ],
+            "web_credits": 0
+          }
+        },
+        {}
+      ]
+    }
+  ],
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.5577492,
+      "credits": 80,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 0.5577492,
+      "total_credits": 80,
+      "phase": "engineering",
+      "phase_usd": 0.5577492,
+      "phase_credits": 80,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.4422508,
+      "credits_left": 520
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 71.2,
+    "disk_free_gb": 9.98
+  },
+  "inputs": [
+    {
+      "id": "u-34abb63a",
+      "filename": "off-topic.pdf",
+      "spec": "07 84 00",
+      "input": "off-topic"
+    }
+  ],
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.5577492,
+      "credits": 80,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 0.5577492,
+      "total_credits": 80,
+      "phase": "engineering",
+      "phase_usd": 0.5577492,
+      "phase_credits": 80,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.4422508,
+      "credits_left": 520
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 75.1,
+    "disk_free_gb": 9.98
+  },
+  "cost": {
+    "usd": 0,
+    "credits": 0
+  }
+}

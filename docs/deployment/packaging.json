@@ -1,0 +1,13 @@
+{
+  "image": "speccheck:judging-7dce26a",
+  "commit": "7dce26afe0862b8d8aa39c756ba5c5ba6cb0a390",
+  "network": "none",
+  "provider_keys_present": false,
+  "native_pages": true,
+  "recording_present": true,
+  "replacement_preserved_state": true,
+  "fresh_provider_spend": 0,
+  "image_id": "sha256:25192e801f92f1f84ac1aa0841b897674e6c1fa036a20054fe13b51db778ccb2",
+  "locked_public_pdfs": 13,
+  "recording": "20261022-181611-a9d0b5"
+}
