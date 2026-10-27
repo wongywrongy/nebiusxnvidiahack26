@@ -1,0 +1,10 @@
+{
+  "result": "quota prevented endpoint creation",
+  "quota": "compute.instance.non-gpu.vcpu",
+  "limit": 0,
+  "requested": 2,
+  "endpoint_created": false,
+  "fallback": "Fly.io, owner-approved <= $25/month",
+  "unused_filesystem_deleted": true,
+  "unused_secret_deleted": true
+}
