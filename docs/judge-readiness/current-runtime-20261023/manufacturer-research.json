@@ -1,0 +1,97 @@
+{
+  "scope": "Manual primary-source research; no SpecCheck pipeline/model/Tavily request or selection change",
+  "provider_charges": {
+    "token_factory_usd": 0,
+    "tavily_credits": 0
+  },
+  "sources": [
+    {
+      "name": "williams-quickship",
+      "observed_at": "2026-10-23T09:10:48.159141+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://hew.com/specifications/LT_quickship.pdf",
+        "authentication": "none"
+      },
+      "response": {
+        "http_status": 200,
+        "final_url": "https://hew.com/specifications/LT_quickship.pdf",
+        "content_type": "application/pdf",
+        "sha256": "1fa5de30199b09115d7c27715b404dbe15ee4fba3b0a2016e9d7b3e96b1a5bf6",
+        "bytes": 579933,
+        "page_count": 2
+      },
+      "private_cache_path": ".cache/replacement-research/1fa5de30199b09115d7c27715b404dbe15ee4fba3b0a2016e9d7b3e96b1a5bf6.pdf",
+      "observations": {
+        "availability_quote": "Ready to ship in 48 hours with on-hand inventory to support immediate job requirements",
+        "page": 1,
+        "listed_configurations": [
+          "LT-22-L39/835-AF-QS-DIM-UNV",
+          "LT-22-L39/840-AF-QS-DIM-UNV",
+          "LT-24-L40/835-AF-QS-DIM-UNV",
+          "LT-24-L40/840-AF-QS-DIM-UNV",
+          "LT-24-L64/835-AF-QS-DIM-UNV",
+          "LT-24-L64/840-AF-QS-DIM-UNV"
+        ],
+        "blank_catalog_field": true,
+        "printed_revision": [
+          "REV.07/30/26.LM"
+        ],
+        "owner_selection": null,
+        "conclusion": "Stock wording is limited to listed QuickShip configurations; no submitted selection or whole-family availability is established."
+      }
+    },
+    {
+      "name": "elite-troffer",
+      "observed_at": "2026-10-23T09:10:48.706082+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://media.iuseelite.com/specsheet2/24-lite-led-7-ml-cct.pdf",
+        "authentication": "none"
+      },
+      "response": {
+        "http_status": 200,
+        "final_url": "https://media.iuseelite.com/specsheet2/24-lite-led-7-ml-cct.pdf",
+        "content_type": "application/pdf",
+        "sha256": "66dd29a4421444151d881123294b0e5c501d82bb01d0b8f618996657036da266",
+        "bytes": 3492235,
+        "page_count": 4
+      },
+      "private_cache_path": ".cache/replacement-research/66dd29a4421444151d881123294b0e5c501d82bb01d0b8f618996657036da266.pdf",
+      "observations": {
+        "conflicting_quotes": [
+          {
+            "page": 1,
+            "quote": "0-10V Flicker Free 1% Dimming Standard (DIM10)"
+          },
+          {
+            "page": 2,
+            "quote": "DIM10 - Flicker Free 10% Dimming Standard (DIM10)"
+          }
+        ],
+        "conclusion": "The same manufacturer PDF states conflicting dimming minima; no passing replacement is inferred."
+      }
+    },
+    {
+      "name": "utopia-troffer",
+      "observed_at": "2026-10-23T09:10:48.528982+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://prod.utopialighting.com/product/rshl-c-recessed-lay-in-light",
+        "authentication": "none"
+      },
+      "response": {
+        "http_status": 200,
+        "final_url": "https://prod.utopialighting.com/product/rshl-c-recessed-lay-in-light",
+        "content_type": "text/html; charset=UTF-8",
+        "sha256": "945c6c91fde8e5263e1c39d0fbf523a890ee47c472194aa3e95e6e830c3ac4f5",
+        "bytes": 116813
+      },
+      "private_cache_path": ".cache/replacement-research/945c6c91fde8e5263e1c39d0fbf523a890ee47c472194aa3e95e6e830c3ac4f5.html",
+      "observations": {
+        "availability_quote": "Contact us for availability and pricing information.",
+        "conclusion": "Manufacturer asks for an availability inquiry; this is not an affirmative stock statement."
+      }
+    }
+  ]
+}

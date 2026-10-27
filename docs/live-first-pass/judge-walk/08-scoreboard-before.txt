@@ -1,0 +1,50 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+Inbox
+Scan
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Start over
+← Back to Outcome
+Scoreboard
+
+Live run recorded Oct 22, 2026
+
+Right call
+6 of 8
+Planted problems caught
+5 of 6
+Clean packages wrongly flagged
+0 of 2
+Fixes that pass the spec
+0 of 5
+
+Models on Nebius Token Factory: Nemotron 3 Nano · Nemotron 3 Super.
+
+Quote gate: 149 of 185 extracted claims kept (19.5% dropped); 27 of 40 web values kept (32.5% dropped). Includes replacement candidates and investigated value reads.
+
+The answer key is the hand-authored expected decision and problem types for each bundled case. It includes clean packages, outdated documents, a discontinued product and spec mismatches. Scores compare the pipeline's computed findings with that fixed key; they measure this small demonstration set, not performance on unseen submittals.
+
+Case	Expected	Got	Problems expected	Problems found	Fix	Time	Cost
+c01
+STI SpecSeal LCI	Approve	Approve	None	None	—	0.1 s	$0.0075
+c02
+3M C-AJ-2738	Send back	Send back	spec	currency_note, spec	None passed (1 checked)	0.1 s	$0.0731
+c03
+3M IC 15WB+	Send back	Send back	currency	currency	None passed (2 checked)	0.1 s	$0.0200
+c04
+Hilti W-L-2078	Send back	Send back	validity	validity	None passed (1 checked)	0.1 s	$0.0397
+c05
+Lithonia BLT 2x4	Approve	Approve with note	None	currency_note	—	0.1 s	$0.0127
+c06
+Lithonia LDN6	Send back	Approve with note	currency	currency_note	None passed (0 checked)	0.2 s	$0.0306
+c07
+Lithonia 2TL4	Send back	Send back	status	status	None passed (0 checked)	0.1 s	$0.0796
+c08
+Lithonia LQM	Approve with note	Approve with note	currency_note	currency_note	—	0.1 s	$0.0057
+
+Cost includes model usage and Tavily credits. Usage and time belong to the recorded run.

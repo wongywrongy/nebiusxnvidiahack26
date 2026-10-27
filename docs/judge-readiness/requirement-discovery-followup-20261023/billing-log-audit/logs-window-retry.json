@@ -1,0 +1,48 @@
+{
+  "scope": "Read-only log-window retry after same-day validation error; no paid endpoint or settlement",
+  "observed_at": "2026-10-23T10:50:33.095563+00:00",
+  "request": {
+    "method": "POST",
+    "url": "https://api.tavily.com/logs",
+    "authorization": "REDACTED",
+    "body": {
+      "limit": 100,
+      "start_date": "2026-10-22",
+      "end_date": "2026-10-23",
+      "endpoints": [
+        "search",
+        "extract",
+        "map"
+      ],
+      "filter_by_api_key": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "count": 100,
+    "response_time": 1.51,
+    "error": null,
+    "retained_rows": 100,
+    "latest_sample": [
+      {
+        "timestamp": "2026-10-23T09:52:39.055891+00:00",
+        "endpoint": "search",
+        "depth": "basic",
+        "response_time": 1.5,
+        "credits": 1.0,
+        "request_id": "c2476255-65ca-420a-8534-ca7550545bbd"
+      },
+      {
+        "timestamp": "2026-10-23T09:52:35.488118+00:00",
+        "endpoint": "search",
+        "depth": "basic",
+        "response_time": 1.23,
+        "credits": 1.0,
+        "request_id": "a27e9eb6-af18-46f9-9239-ef28d04829a9"
+      }
+    ]
+  },
+  "wallet_semantically_unchanged": true,
+  "complete_snapshot_sha256": "5b180a75d68169ec192f6b6852dd1c8a2504310ac1d89bf768b61eaba0ce0b32",
+  "complete_snapshot_ignored_path": ".cache/reconciliation/tavily-20261023/logs-window-retry.json"
+}

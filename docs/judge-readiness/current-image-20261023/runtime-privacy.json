@@ -1,0 +1,14 @@
+{
+  "code_hash": "f96aca7736fbc9f8730b7e51ba197a7cfdfe23913841286775cb4bc6fa3e212a",
+  "keys_present": {
+    "NEBIUS_API_KEY": false,
+    "TAVILY_API_KEY": false,
+    "ADMIN_TOKEN": false
+  },
+  "excluded_app_paths_present": {
+    ".env": false,
+    ".cache": false,
+    "evidence": false,
+    "data/raw/uploads": false
+  }
+}

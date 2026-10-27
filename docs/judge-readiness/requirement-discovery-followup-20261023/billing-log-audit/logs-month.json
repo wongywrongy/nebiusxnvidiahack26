@@ -1,0 +1,77 @@
+{
+  "scope": "Read-only billing-month logs, key-filtered, all endpoints, no settlement",
+  "observed_at": "2026-10-23T10:53:21.006890+00:00",
+  "request": {
+    "method": "POST",
+    "url": "https://api.tavily.com/logs",
+    "authorization": "REDACTED",
+    "body": {
+      "limit": 10000,
+      "start_date": "2026-10-01",
+      "end_date": "2026-10-23",
+      "filter_by_api_key": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "count": 630,
+    "retained_rows": 630,
+    "latest_sample": [
+      {
+        "timestamp": "2026-10-23T09:52:39.055891+00:00",
+        "endpoint": "search",
+        "depth": "basic",
+        "response_time": 1.5,
+        "credits": 1.0,
+        "request_id": "c2476255-65ca-420a-8534-ca7550545bbd"
+      },
+      {
+        "timestamp": "2026-10-23T09:52:35.488118+00:00",
+        "endpoint": "search",
+        "depth": "basic",
+        "response_time": 1.23,
+        "credits": 1.0,
+        "request_id": "a27e9eb6-af18-46f9-9239-ef28d04829a9"
+      }
+    ]
+  },
+  "summary": {
+    "rows": 630,
+    "requested_limit": 10000,
+    "credit_sum": 485.0,
+    "by_day_endpoint": {
+      "2026-10-23": {
+        "search": 120.0,
+        "extract": 11.0
+      },
+      "2026-10-22": {
+        "extract": 8.0,
+        "search": 58.0
+      },
+      "2026-10-21": {
+        "extract": 34.0,
+        "search": 247.0,
+        "map": 2.0
+      },
+      "2026-10-08": {
+        "map": 2.0,
+        "search": 3.0,
+        "extract": 0.0
+      }
+    },
+    "local_settled_by_day": {
+      "2026-10-21": 291,
+      "2026-10-22": 67,
+      "2026-10-23": 132
+    },
+    "returned_key_suffix_match_counts": {
+      "True": 630
+    },
+    "first": "2026-10-08T02:41:56.711128+00:00",
+    "last": "2026-10-23T09:52:39.055891+00:00",
+    "fractional_credit_rows": 0
+  },
+  "wallet_semantically_unchanged": true,
+  "complete_snapshot_sha256": "3962cea3064e9604969d6619d57dcdf8b4d422f949959d0449678a69caa5df50",
+  "complete_snapshot_ignored_path": ".cache/reconciliation/tavily-20261023/logs-month.json"
+}

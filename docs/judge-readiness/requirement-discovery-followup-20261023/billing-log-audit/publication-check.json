@@ -1,0 +1,81 @@
+{
+  "observed_at": "2026-10-23T11:05:34.216320+00:00",
+  "scope": "Configured secret-byte presence only; no values printed",
+  "files": {
+    "FEEDBACK.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "deploy/nebius/controller.env.example": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "deploy/nebius/rollout.pending.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/README.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/logs-complete-window.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/logs-month.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/logs-observation.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/logs-window-retry.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/profile-check.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/reconciliation.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/reproduce.py": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/reproducer-check.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/support-inquiry.txt": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/judge-readiness/requirement-discovery-followup-20261023/billing-log-audit/usage-after-logs.json": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    },
+    "docs/live-first-pass.md": {
+      "nebius_api_key": false,
+      "tavily_api_key": false,
+      "admin_token": false
+    }
+  }
+}

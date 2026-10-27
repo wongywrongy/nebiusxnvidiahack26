@@ -27,7 +27,9 @@
         "value": 2,
         "unit": "hr",
         "page": 1,
-        "quote": "F Rating — 2 Hr"
+        "quote": "F Rating — 2 Hr",
+        "scope": "product_wide",
+        "scope_quote": "F Rating — 2 Hr"
       },
       {
         "id": "k2",
@@ -37,7 +39,9 @@
         "value": 0,
         "unit": "hr",
         "page": 1,
-        "quote": "T Rating — 0 Hr"
+        "quote": "T Rating — 0 Hr",
+        "scope": "product_wide",
+        "scope_quote": "T Rating — 0 Hr"
       },
       {
         "id": "k3",
@@ -51,7 +55,9 @@
           "PEX tubing (SDR 9, up to 1 in)"
         ],
         "page": 1,
-        "quote": "Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe"
+        "quote": "Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe",
+        "scope": "product_wide",
+        "scope_quote": "Nom 2 in. (51 mm) diam (or smaller) Schedule 40 solid core PVC pipe"
       }
     ]
   },
@@ -74,13 +80,17 @@
         "property": "f_rating_hr",
         "value": 2,
         "unit": "hr",
-        "quote": "F Rating — 2 Hr"
+        "quote": "F Rating — 2 Hr",
+        "scope": "product_wide",
+        "scope_quote": "F Rating — 2 Hr"
       },
       {
         "property": "t_rating_hr",
         "value": 0,
         "unit": "hr",
-        "quote": "T Rating — 0 Hr"
+        "quote": "T Rating — 0 Hr",
+        "scope": "product_wide",
+        "scope_quote": "T Rating — 0 Hr"
       }
     ],
     "source_urls": [

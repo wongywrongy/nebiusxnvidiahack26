@@ -1,0 +1,403 @@
+{
+  "item": {
+    "id": "u-ccb0ffe5",
+    "title": "sti-sss-new-upload.pdf",
+    "section": "07 84 00",
+    "submittal": [
+      {
+        "role": "product_data",
+        "file": "uploads/u-ccb0ffe5/sti-sss-new-upload.pdf"
+      }
+    ],
+    "pages": 3,
+    "upload": true,
+    "mock_fixture": null,
+    "ready": true
+  },
+  "scan": {
+    "run_id": "20261022-182646-82d7ff",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "admin_header_present": false,
+  "result": {
+    "case_id": "u-ccb0ffe5",
+    "title": "sti-sss-new-upload.pdf",
+    "decision": "approve_with_note",
+    "summary": "The fire stopping submittal looks good overall but needs clarification on test standards and confirmation about which document version is current.",
+    "findings": [
+      {
+        "id": "spec-req_voc_content",
+        "check": "spec",
+        "verdict": "pass",
+        "severity": "info",
+        "title": "VOC (air quality)",
+        "detail": "Package states 29.2 g/L; spec requires at most 250 g/L.",
+        "why_it_matters": null,
+        "requirement_id": "req_voc_content",
+        "claim_id": "claim-3",
+        "claim_ids": [
+          "claim-3"
+        ],
+        "highlights": [
+          {
+            "claim_id": "claim-3",
+            "doc_file": "uploads/u-ccb0ffe5/sti-sss-new-upload.pdf",
+            "page": 2,
+            "quote": "VOC Content**\n29.2 g/L",
+            "boxes": [
+              {
+                "x0": 0.2175,
+                "y0": 0.4178,
+                "x1": 0.3119,
+                "y1": 0.432
+              },
+              {
+                "x0": 0.7098,
+                "y0": 0.4178,
+                "x1": 0.7608,
+                "y1": 0.432
+              }
+            ],
+            "kind": "checked"
+          }
+        ],
+        "compare": {
+          "left_label": "Spec requires",
+          "left_value": "≤ 250 g/L",
+          "right_label": "Submitted",
+          "right_value": "29.2 g/L",
+          "verdict": "pass",
+          "rows": []
+        },
+        "spec_ref": "07 84 00 2.02.B",
+        "evidence": [],
+        "quote": null,
+        "decided_by": "code",
+        "fix": null
+      },
+      {
+        "id": "spec-req_mold_resistance",
+        "check": "spec",
+        "verdict": "pass",
+        "severity": "info",
+        "title": "astm g21 rating",
+        "detail": "Package states 0; spec requires exactly 0.",
+        "why_it_matters": null,
+        "requirement_id": "req_mold_resistance",
+        "claim_id": "claim-1",
+        "claim_ids": [
+          "claim-1"
+        ],
+        "highlights": [
+          {
+            "claim_id": "claim-1",
+            "doc_file": "uploads/u-ccb0ffe5/sti-sss-new-upload.pdf",
+            "page": 2,
+            "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+            "boxes": [
+              {
+                "x0": 0.1315,
+                "y0": 0.2869,
+                "x1": 0.3979,
+                "y1": 0.3011
+              },
+              {
+                "x0": 0.7315,
+                "y0": 0.2869,
+                "x1": 0.7392,
+                "y1": 0.3011
+              }
+            ],
+            "kind": "checked"
+          }
+        ],
+        "compare": {
+          "left_label": "Spec requires",
+          "left_value": "= 0",
+          "right_label": "Submitted",
+          "right_value": "0",
+          "verdict": "pass",
+          "rows": []
+        },
+        "spec_ref": "07 84 00 2.02.C",
+        "evidence": [],
+        "quote": null,
+        "decided_by": "code",
+        "fix": null
+      },
+      {
+        "id": "spec-fs-std",
+        "check": "spec",
+        "verdict": "unverified",
+        "severity": "minor",
+        "title": "Missing test standard confirmation",
+        "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+        "why_it_matters": "Without knowing the test standard used, we can’t verify the product meets fire rating requirements on site.",
+        "requirement_id": "fs-std",
+        "claim_id": null,
+        "claim_ids": [],
+        "highlights": [],
+        "compare": {
+          "left_label": "Spec requires",
+          "left_value": [
+            "astm e814",
+            "astm e119",
+            "ul 1479"
+          ],
+          "right_label": "Submitted",
+          "right_value": "Not stated",
+          "verdict": "fail",
+          "rows": []
+        },
+        "spec_ref": "07 84 00 2.04.A.1",
+        "evidence": [],
+        "quote": null,
+        "decided_by": "code",
+        "fix": null
+      },
+      {
+        "id": "currency-newer",
+        "check": "currency",
+        "verdict": "note",
+        "severity": "minor",
+        "title": "Unclear document revision date",
+        "detail": "Submitted ZSFOD5001 22325, web source ZSFOD5001 25192. The revision labels differ; their age order is not confirmed.",
+        "why_it_matters": "Using an outdated document could lead to installing materials that don’t match current approvals.",
+        "requirement_id": null,
+        "claim_id": null,
+        "claim_ids": [],
+        "highlights": [],
+        "compare": {
+          "left_label": "Submitted",
+          "left_value": "ZSFOD5001 22325",
+          "right_label": "Current",
+          "right_value": "ZSFOD5001 25192",
+          "verdict": "changed",
+          "rows": []
+        },
+        "spec_ref": null,
+        "evidence": [
+          {
+            "url": "https://www.generalinsulation.com/wp-content/uploads/2020/04/SSS-Intumescent-Firestop-Sealant-Product-Data-Sheet.pdf",
+            "tier": "distributor",
+            "title": "SpecSeal® SSS Intumescent Sealant",
+            "retrieved_at": "2026-10-22T18:27:02+00:00",
+            "sha256": "ba90f60fa09b4035dc1ee72fb66640921c2106ad274515af199573773eae5ea8",
+            "excerpt": "P R O D U C T D A T A S H E E T 1 of 3 Specified Technologies Inc. • Somerville, NJ 08876 • Technical Service 1-800-992-1180 • www.stifirestop.com Specseal® SSS Intumescent Sealant • ZSFOD5001 09120 SpecSeal® SSS Intumescent Sealant SpecSeal® SSS Sealant is a latex based, high solids firestop compound. This material, when properly installed, will effectively seal penetration openings against the s",
+            "archived_path": null
+          },
+          {
+            "url": "https://cdn.bfldr.com/97UPJRLN/at/54jgszjfcchbxnbvg73hkv6x/PDS_SSS_Intumescent_Sealant_English",
+            "tier": "distributor",
+            "title": "https://cdn.bfldr.com/97UPJRLN/at/54jgszjfcchbxnbvg73hkv6x/PDS_SSS_Intumescent_Sealant_English",
+            "retrieved_at": "2026-10-22T18:27:02+00:00",
+            "sha256": "5e58e9d5b559032b8d20e1b1d89fdd0c50860226e64821b5b1014dcee68e8384",
+            "excerpt": "P\nR\nO\nD\nU\nC\nT\n \nD\nA\nT\nA\n \nS\nH\nE\nE\nT\n1 of 3\nSpecified Technologies Inc.  •  Somerville, NJ 08876   •  Technical Service 1-800-992-1180  •  www.stifirestop.com\nSpecseal® SSS Intumescent Sealant  •  ZSFOD5001 25192\nSpecSeal® SSS Premium Grade Intumescent Firestop Sealant\nSpecSeal® SSS Sealant is a latex based, high solids firestop compound. This \nmaterial, when properly installed, will effectively se",
+            "archived_path": null
+          },
+          {
+            "url": "https://in.stifirestop.com/me/en/products/sss-intumescent-firestop-sealant",
+            "tier": "distributor",
+            "title": "SSS Intumescent Firestop Sealant | STI Firestop",
+            "retrieved_at": "2026-10-22T18:27:02+00:00",
+            "sha256": "ffb530836849cadf942cbd75963bff461e690a3351d4cbbf400bf4ff2b9a1254",
+            "excerpt": "* [Contact Us](/me/en/contact-us) |\n* [Careers](/me/en/about#careers) |\n* [Find Firestop Systems](https://systems.stifirestop.com)|\n* [News](https://www.stifirestop.com/news)\n\n![SSS Slider](https://api.stifirestop.com/storage/products/sss/images/sss-slider.jpg)\n\n![SSS Slider](https://api.stifirestop.com/storage/products/sss/images/sss-slider-1.jpg)\n\n![SSS Slider](https://api.stifirestop.com/storag",
+            "archived_path": null
+          }
+        ],
+        "quote": null,
+        "decided_by": "tavily + super",
+        "fix": null
+      }
+    ],
+    "comparison": [
+      {
+        "property": "document_revision",
+        "label": "Data sheet version",
+        "submitted": "ZSFOD5001 22325",
+        "current": "ZSFOD5001 25192",
+        "changed": true,
+        "source_url": null,
+        "quote": null
+      },
+      {
+        "property": "astm_g21_rating",
+        "label": "astm g21 rating",
+        "submitted": "0",
+        "current": "0",
+        "changed": false,
+        "source_url": "https://www.generalinsulation.com/wp-content/uploads/2020/04/SSS-Intumescent-Firestop-Sealant-Product-Data-Sheet.pdf",
+        "quote": "Mold & Fungus Growth Rating (ASTM G21) 0"
+      },
+      {
+        "property": "service_temp_range_f",
+        "label": "Service temperature range",
+        "submitted": "-10°F to 185°F",
+        "current": "-10°F to 185°F",
+        "changed": false,
+        "source_url": "https://www.generalinsulation.com/wp-content/uploads/2020/04/SSS-Intumescent-Firestop-Sealant-Product-Data-Sheet.pdf",
+        "quote": "In Service Temperature -10°F (-23°C) to 185°F (85°C)"
+      },
+      {
+        "property": "voc_g_per_l",
+        "label": "VOC (air quality)",
+        "submitted": "29.2 g/L",
+        "current": "29.2 g/L",
+        "changed": false,
+        "source_url": "https://www.generalinsulation.com/wp-content/uploads/2020/04/SSS-Intumescent-Firestop-Sealant-Product-Data-Sheet.pdf",
+        "quote": "VOC Content** 29.2 g/L"
+      }
+    ],
+    "claims": [
+      {
+        "id": "claim-1",
+        "product": "SpecSeal® SSS Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": null,
+        "property": "astm_g21_rating",
+        "value": "0",
+        "unit": null,
+        "page": 2,
+        "bbox": null,
+        "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+        "variant": null
+      },
+      {
+        "id": "claim-2",
+        "product": "SpecSeal® SSS Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": null,
+        "property": "service_temp_range_f",
+        "value": "-10°F to 185°F",
+        "unit": null,
+        "page": 2,
+        "bbox": null,
+        "quote": "In Service Temperature\n-10°F (-23°C) to 185°F (85°C)",
+        "variant": null
+      },
+      {
+        "id": "claim-3",
+        "product": "SpecSeal® SSS Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": null,
+        "property": "voc_g_per_l",
+        "value": "29.2",
+        "unit": "g/L",
+        "page": 2,
+        "bbox": null,
+        "quote": "VOC Content**\n29.2 g/L",
+        "variant": null
+      }
+    ],
+    "document_revision": "ZSFOD5001 22325",
+    "note_to_subcontractor": "Please confirm that testing followed ASTM E814, ASTM E119, or UL 1479 as noted in your submission, and clarify whether ZSFOD5001 25192 is the newer version than 22325 so we can close out the review.",
+    "usage": [
+      {
+        "task": "triage",
+        "tier": "triage",
+        "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "input_tokens": 2180,
+        "output_tokens": 65,
+        "cost_usd": 0.000146,
+        "latency_ms": 1259,
+        "cached": false,
+        "format": "json_schema",
+        "reasoning_tokens": 0,
+        "thinking": "off",
+        "finish_reason": null
+      },
+      {
+        "task": "extract_claims",
+        "tier": "extract",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "input_tokens": 4718,
+        "output_tokens": 431,
+        "cost_usd": 0.001803,
+        "latency_ms": 2866,
+        "cached": false,
+        "format": "json_schema",
+        "reasoning_tokens": 0,
+        "thinking": "off",
+        "finish_reason": null
+      },
+      {
+        "task": "verify",
+        "tier": "verify",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "input_tokens": 10566,
+        "output_tokens": 260,
+        "cost_usd": 0.003404,
+        "latency_ms": 2438,
+        "cached": false,
+        "format": "json_schema",
+        "reasoning_tokens": 0,
+        "thinking": "off",
+        "finish_reason": null
+      },
+      {
+        "task": "report",
+        "tier": "write",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "input_tokens": 532,
+        "output_tokens": 193,
+        "cost_usd": 0.000333,
+        "latency_ms": 2029,
+        "cached": false,
+        "format": "json_schema",
+        "reasoning_tokens": 0,
+        "thinking": "off",
+        "finish_reason": null
+      }
+    ],
+    "web_credits": 3,
+    "duration_ms": 20434,
+    "investigation": null,
+    "mode": "live",
+    "replayed_from": null,
+    "warnings": [],
+    "ocr_pages": 0,
+    "archived_submittals": [],
+    "evidence_label": null,
+    "claims_extracted": 4,
+    "claims_kept": 3,
+    "web_values_read": 3,
+    "web_values_kept": 3
+  },
+  "health": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "usd": 0.009703,
+      "credits": 7
+    },
+    "budget": {
+      "usd_left": 7.990297,
+      "credits_left": 593
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 426,
+    "disk_free_gb": 695.44
+  }
+}

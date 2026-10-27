@@ -1,0 +1,27 @@
+
+mode=mock  run=20261023-101832-309880
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -         58   0.0455       5 ✓
+c02   send_back          send_back          spec                   spec                       none      35   0.0508       6 ✓
+c03   send_back          send_back          currency               currency                   none      81   0.1178      14 ✓
+c04   send_back          send_back          validity               validity                   none      29   0.0919      11 ✓
+c05   approve            approve_with_note  -                      -                          -         84   0.0649       7 ✗
+c06   send_back          approve_with_note  currency               currency_note              none      70   0.0648       7 ✗
+c07   send_back          send_back          status                 status                     none     136   0.1228      14 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -         54   0.0463       5 ✓
+
+Answer-key panel
+  right call                      6 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        0 of 8
+  unnecessary notes               1
+  fresh model spend / web credits $0.000000 / 0
+  case evidence gate              Live evidence required; Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      0.1 s
+  cost per submittal (model+web)  $0.0756   (mock: estimated token counts)
+Quote gate: claims 46/65 kept (29.2% dropped); web values 8/20 kept (60.0% dropped)
+
+wrote /tmp/speccheck-status-time-ege6ow04/integrated-final-mock-score.json

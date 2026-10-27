@@ -1,0 +1,173 @@
+diff --git a/Dockerfile b/Dockerfile
+index afb6fdd..1aeb841 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -34,4 +34,4 @@ COPY --from=web /web/dist web/dist
+ # Defaults for a public demo. Set SPECCHECK_MODE=live, the keys and ADMIN_TOKEN in the deployment's environment.
+ ENV SPECCHECK_MODE=mock MOCK_STAGE_DELAY_MS=700 THINKING=off
+ EXPOSE 8000
+-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
++CMD ["python", "scripts/serve.py"]
+diff --git a/api/pipeline/fix.py b/api/pipeline/fix.py
+index 1a98a01..6979092 100644
+--- a/api/pipeline/fix.py
++++ b/api/pipeline/fix.py
+@@ -98,7 +98,7 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
+     r = reqs.get(f.requirement_id or "")
+     right = f.compare.right_value if f.compare else None
+     if f.verdict in ("unverified", "pending"):
+-        note = "not stated"
++        note = "not confirmed"
+     elif f.id == "status-discontinued":
+         note = "discontinued"
+     elif isinstance(right, list):
+diff --git a/api/pipeline/spec_check.py b/api/pipeline/spec_check.py
+index 8aaaafc..303fa34 100644
+--- a/api/pipeline/spec_check.py
++++ b/api/pipeline/spec_check.py
+@@ -165,7 +165,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
+                  left=None, right=None) -> Finding:
+             shown = right if right is not None else alternatives
+             if shown is None:
+-                shown = (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not stated"
++                shown = (claim.value if isinstance(claim.value, list) else _fmt(claim.value, claim.unit)) if claim else "Not confirmed"
+             return Finding(
+                 id=f"{r.check}-{r.id}",
+                 check=r.check,
+@@ -197,7 +197,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
+                 findings.append(make("pending", "Pending assembly proof",
+                                      "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately."))
+             else:
+-                findings.append(make("unverified", f"Not stated: {_label(r.property)}",
++                findings.append(make("unverified", f"Couldn't confirm: {_label(r.property)}",
+                                      "Both quoted ratings are needed for this comparison.", severity="minor"))
+             continue
+
+@@ -207,7 +207,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
+                                      f"Quoted values apply only to {', '.join(dict.fromkeys(variants))}. Confirm the submitted configuration.",
+                                      severity="minor", right="Option dependent"))
+             else:
+-                findings.append(make("unverified", f"Not stated: {_label(r.property)}", r.text, severity="minor"))
++                findings.append(make("unverified", f"Couldn't confirm: {_label(r.property)}", r.text, severity="minor"))
+             continue
+
+         ok: Optional[bool] = None
+diff --git a/api/pipeline/verify.py b/api/pipeline/verify.py
+index 46d193d..5b4f18b 100644
+--- a/api/pipeline/verify.py
++++ b/api/pipeline/verify.py
+@@ -390,7 +390,7 @@ def compare(submitted: ClaimsOut, out: VerifyOut, confirmed: dict, evidence: lis
+             id="currency-unverified", check="currency", verdict="unverified", severity="minor",
+             title="Couldn't confirm the current documents",
+             detail="No source quoted a revision or a value; check manually.", decided_by="tavily",
+-            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value="Not found", verdict="fail"),
++            compare=Compare(left_label="Submitted", left_value=sent, right_label="Current", right_value="Not confirmed", verdict="unverified"),
+         ))
+     if not findings:
+         proof = []
+@@ -420,5 +420,5 @@ def unconfirmed(reason: str) -> Finding:
+         id="currency-unverified", check="currency", verdict="unverified", severity="minor",
+         title="Couldn't confirm the current documents", detail=f"Web check skipped: {reason}. Check manually.",
+         decided_by="code",
+-        compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="fail"),
++        compare=Compare(left_label="Submitted", right_label="Current", right_value="Not checked", verdict="unverified"),
+     )
+diff --git a/api/schemas.py b/api/schemas.py
+index bb452f3..86ef6ff 100644
+--- a/api/schemas.py
++++ b/api/schemas.py
+@@ -186,7 +186,7 @@ class Compare(BaseModel):
+ class FixCheck(BaseModel):
+     label: str
+     check: Optional[Check] = None
+-    ok: Optional[bool]  # None: not stated in the candidate's document
++    ok: Optional[bool]  # None: not confirmed by accepted evidence
+     note: str = ""
+     requirement_id: Optional[str] = None
+     claim_ids: list[str] = []
+diff --git a/api/controller_startup.py b/api/controller_startup.py
+new file mode 100644
+index 0000000..f39676c
+--- /dev/null
++++ b/api/controller_startup.py
+@@ -0,0 +1,47 @@
++"""Prepare persistent application paths without creating or importing an accounting authority."""
++
++import json
++
++from . import authority
++from .authority_transfer import digest, publish
++from .config import settings
++from .providers.budget import BudgetExceeded
++from scripts.check_pdfs import required_documents
++
++
++def prepare() -> None:
++    directory = settings.controller_state_dir
++    if directory is None:
++        raise BudgetExceeded("Controller state needs its private mounted filesystem")
++    authority.location(directory)
++    if settings.campaign_budget_file.resolve() != directory.resolve() / "campaign.sqlite3":
++        raise BudgetExceeded("Controller wallet must remain at the private mount root")
++    source = settings.data_dir / "raw"
++    paths = {"raw_dir": directory / "app/raw", "uploads_dir": directory / "app/raw/uploads",
++             "cache_dir": directory / "app/cache", "runs_dir": directory / "app/runs",
++             "scores_file": directory / "app/runs/scores.json", "evidence_dir": directory / "app/evidence"}
++    if any(not path.resolve().is_relative_to(directory.resolve()) for path in paths.values()):
++        raise BudgetExceeded("Controller application paths must stay on the private mount")
++    for name, path in paths.items():
++        setattr(settings, name, path)
++        if name != "scores_file":
++            path.mkdir(parents=True, exist_ok=True, mode=0o700)
++    locked = json.loads((settings.data_dir / "documents.lock.json").read_text())["documents"]
++    for relative, expected in locked.items():
++        original, target = source / relative, settings.raw_dir / relative
++        if (not original.resolve().is_relative_to(source.resolve())
++                or not target.resolve().is_relative_to(settings.raw_dir.resolve())):
++            raise ValueError("Locked document path leaves its data directory")
++        data = original.read_bytes()
++        if digest(data) != expected["sha256"]:
++            raise ValueError("Bundled document differs from its reviewed lock")
++        publish(target, data)
++    manifest = settings.raw_dir / "manifest.json"
++    if manifest.exists():
++        existing = json.loads(manifest.read_text())
++        if any(existing.get(name, {}).get("sha256") != row["sha256"] for name, row in locked.items()):
++            raise ValueError("Stored document manifest differs; no replacement or reset allowed")
++    else:
++        publish(manifest, json.dumps(locked, sort_keys=True).encode())
++    if not required_documents()["passed"]:
++        raise ValueError("Persistent required documents failed their release checks")
+diff --git a/scripts/serve.py b/scripts/serve.py
+new file mode 100644
+index 0000000..1c7baed
+--- /dev/null
++++ b/scripts/serve.py
+@@ -0,0 +1,27 @@
++"""Serve the API, preparing private persistent application storage for a configured controller."""
++
++import sys
++from pathlib import Path
++
++sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
++
++import uvicorn
++
++from api.config import settings
++from api.controller_startup import prepare
++from api.providers.budget import BudgetExceeded
++
++
++def main() -> int:
++    try:
++        if settings.controller_state_dir:
++            prepare()
++    except (OSError, ValueError, KeyError, TypeError, BudgetExceeded):
++        print("Controller storage preparation refused; preserve its mounted state and inspect the deployment configuration.", file=sys.stderr)
++        return 2
++    uvicorn.run("api.main:app", host="0.0.0.0", port=8000)
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())

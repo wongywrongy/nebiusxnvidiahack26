@@ -1,0 +1,117 @@
+# Who does what — 2026-10-23
+
+The agent owns implementation, execution and evidence. Kyle owns domain judgments, gate acceptance,
+private account access and release approval. Approval does not transfer the engineering work to Kyle.
+The active readiness goal is **not complete**; the following unfinished implementation remains agent-owned.
+
+## Completed and recorded
+
+| Work | Evidence |
+| --- | --- |
+| Official submission requirements, public repo/license, UTC dates and explicit delivery gaps | [Official source audit](submission-requirements-20261023.md); demo/video links and funded judge access remain unverified, no submission or owner attestation |
+| First provider spikes and first-pass cases/samples, original recording and local judge walk | [First-pass audit](../live-first-pass/completion.md); original recording unchanged |
+| Reviewed requirements and strict unselected-configuration policy | [Dated policy/gate ledger](../judge-readiness.md); original keys/checklists unchanged |
+| General chunk, identity, quote/value, source freshness, replacement citation and Investigator attribution guards | [G2 before/after evidence](g2/live-validation.md) |
+| Local campaign reservations, failed/retried usage, unknown-usage holds and UTC-crossing admission | [Current verification](reliability-20261023/verification.json); local disk only |
+| Linked-PDF Tavily fallback, independent document cache age/credits, one-hop bound | [c07 retry](reliability-20261023/c07-score.json): correct call, no passing replacement, fresh $0 / 1 credit |
+| Invalid watch result cannot claim no change | Regression in `tests/test_recheck.py` |
+| Browser upload/review/edit/outcome/re-check/reload/reset and failure tests | Eight real Chromium tests against mock API; no new live-browser proof |
+| Required PDF lock/readability preflight and fail-closed Docker build | [13-document report](reliability-20261023/document-preflight.json); all have native text |
+| Authenticated, idempotent controller launch, full history, mandatory secret selectors and quality forwarding | Fake CLI tests; nightly workflow uses controller and remains disabled |
+| Controller job allowances, one-session claims, sealed child wallets and guarded settlement/publication | [Offline protocol checkpoint](controller-20261023/README.md); no shared job write path or hosted proof |
+| Read-only smoke mode; invalid/replayed evidence rejected as fresh deployment proof | `tests/test_smoke.py`; hosted smoke remains pending |
+| Separate release promotion check across cases, samples, frozen blind set and full public recording | [Offline release preflight](release-preflight-20261023/README.md); submitted-page and web quote gates replayed; no actual blind review or promotion |
+| Six new source-labelled packages and a label-isolated eval runner | [Frozen draft review table](blind-20261023/README.md); six downloaded native PDFs, hashes and page quotes checked; owner review pending, no pipeline evaluation |
+| Explicit private wallet export/import, interrupted-transfer recovery and approved writer-cutover tools | [Local transfer evidence](authority-transfer-20261023/README.md); synthetic wallets/mounts only, no real transfer or approval |
+| Local container packaging and pinned CLI verification | [Image build evidence](image-build-20261023/README.md); 13 locked PDFs, source hash, CLI/help, mock eval and network-disabled API/assets pass; keys/private paths absent; image unpublished |
+| Bounded numeric qualifier repair, Unicode quote matching, retained bundle claims and agreeing-source citations | [Actual before/after and verification](claim-repair-20261023/README.md); same magnitude/quote/identity/selection gates; coded-driver evidence remains scoped |
+| Independent lifetime-clause scope binding | [Actual two-item before/after](scope-binding-20261023/README.md); L70/MacAdam accepted, unselected driver/DLC still unknown |
+| Required-gap and availability research for replacements | [Targeted evidence](replacement-research-20261023/README.md); newly discovered sources retained, unsupported active status still rejected, no complete replacement |
+| Company-catalog fallback and affected legacy cache repair | [Actual product-page before/after](catalog-fallback-20261023/README.md); direct catalog requests remain valid, quote/selection gates unchanged |
+| Technical-sheet revision attribution and bounded comparison wording | [Actual replay and live prompt/gate check](document-revisions-20261023/README.md); SDS revisions rejected, supported property quotes preserved |
+| Public storage/IAM/cost/expiry/rollback preparation | [Unapproved bounded plan](../../deploy/nebius/rollout.pending.md); private inputs/final image/approval/hosted proof pending |
+| Frozen revision-source local image | [Source `2ac6f89`, blind exclusion, mock/privacy/capped replay/restart and CI](document-revisions-20261023/README.md); predates the unit correction, unpublished, no real authority transfer or hosted proof |
+| Unit-runtime local image and further primary-source research | [Unit runtime, mock, privacy and synthetic replay/restart](current-runtime-20261023/README.md); predates latest source corrections, unpublished, no hosted proof |
+| Product-sheet selection, printed-unit instructions and status validation before merging | [Actual diagnostics, intermediate failures and final affected-case check](document-links-20261023/README.md); existing evidence gates preserved |
+| Frozen validated-source image | [Commit `061cf9d`, 13 native PDFs, mock/unit/privacy and synthetic capped replay/restart](document-links-20261023/image/README.md); unpublished, excludes newer shared status-timing work |
+| Quoted lifecycle timing and status metadata | [Synthetic before/after and cached-live c07](status-timing-20261023/README.md); [unsupported bounds](status-timing-20261023/bounds.md) stay unknown; the subsequent affected-case attempt is invalid and its one-credit usage hold requires reconciliation |
+| Physical-quantity units at extraction/web/release boundaries | [Synthetic before/after and actual c03/c07 check](quantity-units-20261023/README.md); missing units remain unconfirmed, no key/checklist/prompt changes |
+| Persistent controller application startup and truthful uncertainty fields | [Local ext4/synthetic import/restart proof](controller-startup-20261023/README.md); existing no-wallet health/admission reused, pinned public documents seeded without overwrite, wallet never initialized; no hosted proof |
+| Owner-approved, source-backed replacement proposals | [Policy, before/after, source gates and synthetic browser screens](replacement-proposals-20261023/README.md); 722 tests / 2 skipped, presentation/build and 9 mock browser journeys pass. No original selection is inferred; live proof remains blocked by billing |
+
+Before the proposal change, retained-source Python verification was **697 passed / 2 skipped**; [exact source/test match](status-timing-20261023/bounds-current-source.json), [output](status-timing-20261023/bounds-pytest.txt). Both [workflows for tested source `e89329f`](status-timing-20261023/bounds-ci.json)
+pass Python/mock, presentation/build and mock browser checks; no hosted browser proof. Raw mock remains
+**6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with 46/65 claims and 8/20
+web values. Settled local accounting is **$3.36648982 / 490**, plus **one unknown Tavily credit held**;
+paid work is blocked pending reconciliation. The ledger total 491 includes that hold, not a known charge.
+The [last valid two-item c03/c07 run](document-links-20261023/README.md) gets 2/2 calls/problems, 0/2 passing fixes,
+zero invalidity or warnings; two-item source/trace consistency passes. Four replacement investigations,
+none capped, give no complete fix. No primary investigation occurs; the old primary rescue stays historical.
+An output-limit item and valid intermediate miss remain preserved. The 65,536-token/concurrency-one
+profile and partly cached timing are disclosed. The frozen `061cf9d` image matches that validated source;
+newer shared status-timing work is excluded from its proof.
+The [subsequent date-bound affected-case attempt](status-timing-20261023/bounds.md) retains a valid
+c03 but an invalid c07/provider-accounting result; it does not replace that valid accuracy panel.
+
+Kyle reports account-wide **$2.13 / 421**, cutoff unspecified. The [read-only log-window audit](requirement-discovery-followup-20261023/billing-log-audit/README.md)
+finds **480 provider-logged credits versus 490 locally settled credits for October 21–23**.
+The monthly counter is 485 because it also includes five credits from October 8, outside this campaign.
+No returned record identifies the failed request; absence does not prove zero charge. Its one-credit
+hold remains unresolved. The ten-credit historical difference and Token Factory invoice reconciliation
+remain open; no accounting is adjusted. Historical cached-input quantities remain unavailable. Public IP/traffic
+rates are now [source-verified as advertised free](public-network-pricing-20261023/source.json); account overrides, taxes,
+private IAM/quota, grant/expiry terms, judge access funding and concrete approval remain open.
+
+## Still mine to finish
+
+1. **G2:** obtain and verify an actual complete replacement evidence bundle. Broader discovery now reaches
+   Starco SLLT and Williams LT. SLLT lacks accepted MacAdam/dimming/availability evidence;
+   LT now retains its unconditional L70 and MacAdam evidence; DLC/driver options
+   have not yet been validated as a complete proposal and availability remains unconfirmed. New [QuickShip source research](replacement-research-20261023/quickship-follow-up.md) finds stock evidence for DIM models, but supplies neither their minimum dimming percent nor a specific DLC class. c03 lacks complete mold/assembly/availability
+   proof; both current VOC reads pass but one candidate lacks standards proof. Broader discovery and current-source interpretation remain mine;
+   missing source evidence or a selection must remain unconfirmed. No candidate currently passes.
+2. **Cloud controller execution, after approval:** use the implemented pinned transfer/cutover tooling to
+   move the actual authority and fence its old writer. The real wallet remains local and active. Authenticate
+   stopped-host observations before preparing cutover approval, and prove the private filesystem, single-VM
+   writer, restart, import recovery and receipt persistence on the approved host. Offline tests do not prove
+   hosted durability, transport, IAM or control-plane observations.
+3. **Release evidence:** assemble the actual complete cases, samples, reviewed blind set and public recording
+   under the implemented promotion check. The offline check rejects the current incomplete bundle. Actual
+   owner dispositions and a passing check remain pending; diagnostic recording preserves honest wrong calls.
+4. **Blind review application:** apply Kyle's decisions to the six prepared draft labels, retain exact PDF/page
+   evidence, and bind the approved freeze/review before evaluation. Preparation and the label-isolated runner
+   are complete; label approval remains Kyle's part. Do not infer approval or run the unreviewed set.
+5. **After G2/G3 sign-off:** run the authorized final cases/samples/blind checks, diagnose every miss, create the
+   final full-public recording, check it for secrets and verify capped-day replay. At most two follow-up full-set
+   evals and one recording are authorized; none has been used at this checkpoint.
+6. **Deployment preparation:** the unpublished candidate freezes validated source `061cf9d`;
+   bind the final source/configuration and packaged inputs after all remaining corrections and validation;
+   finish the final validated image/registry digest, private account/IAM bindings and account-specific price/tax bounds.
+   The [bounded draft](../../deploy/nebius/rollout.pending.md) now specifies proposed preset/storage, expiry-aware
+   stop/recovery steps and resource forecasts; final identities, dates, complete allowance and approval are pending. The [cost worksheet](../../deploy/nebius/cost-manifest.json)
+   is a forecast, not spend or deployment approval. Keep Endpoint + Jobs; do not create resources yet.
+7. **After concrete cloud approval:** execute hosted restart/storage proof, public fresh-upload smoke and real
+   manual/scheduled jobs. Capture actual states, timings, reports and screenshots; restore temporary caps.
+8. **Demo/release:** finish the judge walk, public YouTube video under three minutes, functioning demo/test-build URL, truthful README/SUBMISSION/FEEDBACK, ranked issues and exact reproduction commands. Prove the approved judge-access route through December 15, 2026, 20:00 UTC; an initial trial is not that proof. The [official-source audit](submission-requirements-20261023.md) records the remaining fields. Request final approval only on a concrete reviewable release.
+
+## Kyle's parts, later
+
+- The [replacement proposal policy](document-revisions-20261023/replacement-policy-question.md) is approved:
+  Kyle allows clearly labelled agent proposals with every SKU, option and check backed by fetched quotes.
+  Original submissions still require their own selection. Implementation/offline verification is recorded
+  [here](replacement-proposals-20261023/README.md); an actual passing live replacement remains unverified.
+- Review each gate's evidence and accept or reject its remaining misses. Engineering authorization of the
+  c05/c06 selection-policy disagreements is recorded; release acceptance remains a separate judgment.
+- Review the blind labels before evaluation and adjudicate any new source/answer-key contradiction.
+  Specify a configuration only when the submitted package actually selects it; leaving an option unconfirmed
+  is allowed. Do not invent missing selection or assembly proof to make a case pass.
+- Obtain attributable billing confirmation for the failed October 23, 10:36–10:38 UTC Tavily request;
+  a [private support-inquiry draft](requirement-discovery-followup-20261023/billing-log-audit/support-inquiry.txt)
+  is ready and has not been sent. The agent will reconcile the hold and retry after confirmation.
+  Review the separate 490-versus-480 campaign-credit difference and Token Factory invoice with timestamps/scope.
+  Read AI Cloud balance, grant expiry and account tax/pricing facts privately. Never send keys in chat.
+- Approve the final resource/IAM/storage/cost/rollback manifest and supply private account access when needed.
+  The agent then carries out the approved work; Kyle need not write deployment scripts or debug storage.
+- Review final claims, pitch/video and release PR, then authorize final submission through the owner account.
+
+No cloud resources were created. G2 is open; G3–G5 remain pending. The deploy recommendation remains **no**.

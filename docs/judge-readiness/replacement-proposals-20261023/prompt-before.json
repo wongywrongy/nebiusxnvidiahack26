@@ -1,0 +1,291 @@
+{
+  "task": "extract_claims",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Extract the product's stated properties from this submittal. Return only these property names, with exactly these spellings and meanings: {\"dim_min_percent\": \"Dims down to\"}. Read every supplied page, including tables and notes. For a listed system, record its system number as model. For a product, record its short printed product/model identifier as model, not a rewritten marketing title. A product identifier names the product; selection separately proves a chosen ordering configuration. Separately identify the printed family and family_quote. Do not treat a blank catalog field or an ordering example as a selected model. Keep each test/rating metric distinct; never relabel a different metric to fit a requested name. Do not dump option tables. Return SKU-dependent table values only when these pages explicitly mark a selected/submitted/specified SKU and you return that matching selection object. If selection is null, omit SKU-dependent table values. A printed identifier or factory default does not select a SKU. A blank catalog-number field or an ordering example is not a submitted SKU selection. For other stated alternatives, retain distinct values without repeating the same value for every option. Set variant to the exact quoted option/configuration phrase whenever a value is limited to that option. Set scope and scope_quote from the complete applicability clause for this value. Include every condition on this value; do not mix in another metric's independently qualified clause. scope_quote must contain the value quote, not just a table heading. Use product_wide only for unqualified product properties, not selectable options. Return selection only when submitted evidence explicitly marks a selected/submitted/specified configuration, with its page and exact quote. Record the page and a short supporting quote for each claim, and the revision or date printed on the data sheet. For every physical quantity, include unit explicitly and copy it from the supporting quote, even when the property name encodes a unit. Use null units only for dimensionless or categorical values; omit a physical quantity if its unit is not printed. Copy each quote verbatim as one contiguous substring from that page, including its exact punctuation; never paraphrase, add sentence punctuation or join separate passages. Omit properties that are not stated instead of returning null claims. For lists, put each distinct standard or certification identifier in its own array entry. For covered pipe types, quote the enumerated penetrating-item list, not the wall studs or sleeves.\n\n[{\"page\": 1, \"text\": \"Model ZX-12. Catalog number: ZX-12-D1. D1 dimming to 2%.\"}]"
+    }
+  ],
+  "schema": {
+    "$defs": {
+      "Claim": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "product": {
+            "title": "Product",
+            "type": "string"
+          },
+          "manufacturer": {
+            "title": "Manufacturer",
+            "type": "string"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Model"
+          },
+          "property": {
+            "description": "snake_case property name matching requirement properties",
+            "title": "Property",
+            "type": "string",
+            "enum": [
+              "dim_min_percent"
+            ]
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Unit",
+            "description": "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values."
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "bbox": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "number"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Bbox"
+          },
+          "quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Short text from the page supporting the claim",
+            "title": "Quote"
+          },
+          "variant": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Exact phrase in the quote naming the optional model/driver/configuration limiting this value; null for a product-wide statement",
+            "title": "Variant"
+          },
+          "scope": {
+            "default": "unknown",
+            "enum": [
+              "product_wide",
+              "option",
+              "unknown"
+            ],
+            "title": "Scope",
+            "type": "string"
+          },
+          "scope_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Shortest exact complete sentence or clause that contains this value quote and all conditions on this metric. Exclude neighboring metrics and their independent conditions; do not copy a multi-metric paragraph.",
+            "title": "Scope Quote"
+          },
+          "selection_quote": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Selection Quote"
+          }
+        },
+        "required": [
+          "id",
+          "product",
+          "manufacturer",
+          "property",
+          "value"
+        ],
+        "title": "Claim",
+        "type": "object"
+      },
+      "Selection": {
+        "properties": {
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "quote": {
+            "description": "Exact submitted passage marking the selected/submitted/specified configuration; never an ordering example",
+            "title": "Quote",
+            "type": "string"
+          }
+        },
+        "required": [
+          "model",
+          "page",
+          "quote"
+        ],
+        "title": "Selection",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "product": {
+        "title": "Product",
+        "type": "string"
+      },
+      "manufacturer": {
+        "title": "Manufacturer",
+        "type": "string"
+      },
+      "model": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "title": "Model",
+        "description": "Short product or system identifier printed on these pages; null if absent. This does not select an ordering configuration."
+      },
+      "selection": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/Selection"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null
+      },
+      "family": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Product family identifier printed on the submitted pages, excluding order-code options",
+        "title": "Family"
+      },
+      "family_quote": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Exact submitted passage identifying this family",
+        "title": "Family Quote"
+      },
+      "document_revision": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "null"
+          }
+        ],
+        "default": null,
+        "description": "Revision or date printed on the sheet",
+        "title": "Document Revision"
+      },
+      "claims": {
+        "items": {
+          "$ref": "#/$defs/Claim"
+        },
+        "title": "Claims",
+        "type": "array"
+      }
+    },
+    "required": [
+      "product",
+      "manufacturer",
+      "claims",
+      "model"
+    ],
+    "title": "ClaimsRead",
+    "type": "object"
+  }
+}

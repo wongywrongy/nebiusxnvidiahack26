@@ -18,6 +18,7 @@ sys.path.insert(0, str(ROOT))
 
 from api.config import settings  # noqa: E402
 from api.providers.tavily import map_credits  # noqa: E402
+from api.providers import budget  # noqa: E402
 from api.web import WebClient  # noqa: E402
 
 # (label, url, search query, domains, words that should show up in usable text)
@@ -51,6 +52,8 @@ def usable(text: str, words: list[str]) -> str:
 
 
 async def main() -> None:
+    budget.LEDGER.set(budget.Ledger())
+    budget.ITEM.set("spike-tavily")
     if not settings.secret("tavily_api_key"):
         sys.exit("TAVILY_API_KEY is not set (put it in .env)")
     print("Estimated Tavily cost:")

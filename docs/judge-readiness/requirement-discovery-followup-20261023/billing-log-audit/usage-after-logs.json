@@ -1,0 +1,30 @@
+{
+  "scope": "Read-only usage counters after full-month logs; not an invoice or per-request settlement",
+  "observed_at": "2026-10-23T10:55:11.394812+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://api.tavily.com/usage",
+    "authorization": "REDACTED"
+  },
+  "status": 200,
+  "response": {
+    "key": {
+      "usage": 485,
+      "search_usage": 428,
+      "extract_usage": 53,
+      "map_usage": 4,
+      "crawl_usage": 0,
+      "research_usage": 0
+    },
+    "account": {
+      "plan_usage": 485,
+      "search_usage": 428,
+      "extract_usage": 53,
+      "map_usage": 4,
+      "crawl_usage": 0,
+      "research_usage": 0,
+      "paygo_usage": 0
+    }
+  },
+  "wallet_semantically_unchanged": true
+}

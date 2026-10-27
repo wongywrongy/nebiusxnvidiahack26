@@ -42,12 +42,12 @@ from datetime import datetime
 from typing import Literal, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
-from fastapi.responses import FileResponse, Response, StreamingResponse
+from fastapi.responses import FileResponse, Response, StreamingResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-from .config import settings
-from . import cloud_jobs, watch_store
+from .config import settings, redact
+from . import cloud_jobs, watch_store, job_control
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, senders
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
@@ -69,8 +69,9 @@ async def lifespan(app):
     settings.runs_dir.mkdir(parents=True, exist_ok=True)
     prune_page_cache()
     prune_runs()
-    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (local ledger may reset on container replacement)",
-                                               budget.today(), budget.caps())
+    logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on %s; hosted persistence unverified)",
+                                               budget.today(), budget.caps(),
+                                               "private controller mount" if settings.controller_state_dir else "local disk")
     await cloud_jobs.setup_profile()
     try:
         yield
@@ -79,6 +80,11 @@ async def lifespan(app):
 
 
 app = FastAPI(title="SpecCheck", lifespan=lifespan)
+
+
+@app.exception_handler(budget.BudgetExceeded)
+async def accounting_unavailable(request: Request, error: budget.BudgetExceeded):
+    return JSONResponse(status_code=503, content={"detail": redact(str(error))[:400]})
 RUNS: dict[str, Run] = {}
 _tasks: set[asyncio.Task] = set()
 
@@ -92,6 +98,7 @@ class Scan(BaseModel):
     ids: list[str]
     delay_ms: Optional[int] = None
     shared_item_budget: bool = False
+    refresh_web: bool = False
 
 
 class StartReplay(BaseModel):
@@ -164,13 +171,13 @@ def project():
         "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
         "mode": settings.mode,
         "recheck": latest_recheck(),
-        "jobs_available": cloud_jobs.available(),
+        "jobs_available": cloud_jobs.configured(),
     }
 
 
 def latest_recheck() -> Optional[dict]:
     """The newest nightly re-check report (scripts/recheck.py writes runs/watch/latest.json), or None."""
-    return watch_store.read("latest.json")
+    return job_control.latest() if settings.controller_state_dir else watch_store.read("latest.json")
 
 
 @app.post("/api/runs")
@@ -220,7 +227,7 @@ async def inbox(request: Request, name: str = "upload.pdf"):
         return _public(case)
 
     if settings.live and budget.day_spent():
-        raise HTTPException(429, "Today's live budget is spent. Uploads can be checked again tomorrow (UTC).")
+        raise HTTPException(429, budget.unavailable_reason())
     if not _is_admin(request):
         _rate_limit(request)
     pdf, text = await _read_pdf(request)
@@ -243,11 +250,12 @@ async def draft_spec(request: Request, section: str = Query(pattern=r"^\d{2} \d{
     if not _is_admin(request):
         _rate_limit(request)
     if budget.day_spent():
-        raise HTTPException(429, "Today's live budget is spent. Try again tomorrow (UTC).")
+        raise HTTPException(429, budget.unavailable_reason())
     pdf, text = await _read_pdf(request)
     if not text.strip():
         raise HTTPException(400, "No readable text in this spec PDF")
     token = budget.LEDGER.set(budget.Ledger())
+    item_token = budget.ITEM.set(f"spec-draft-{section}")
     try:
         draft, usage = await checklists.draft(section, text, name.rsplit("/", 1)[-1][:160],
                                               source_sha256=hashlib.sha256(pdf).hexdigest(), title=title)
@@ -258,6 +266,7 @@ async def draft_spec(request: Request, section: str = Query(pattern=r"^\d{2} \d{
         raise HTTPException(503, failure_reason(e)) from e
     finally:
         budget.LEDGER.reset(token)
+        budget.ITEM.reset(item_token)
 
 
 @app.post("/api/specs/{section}")
@@ -292,20 +301,24 @@ async def scan(body: Scan, request: Request):
     if settings.live and not admin:  # only live runs spend; a mock scan is free
         _rate_limit(request)
     if settings.live and budget.day_spent():
+        reason = budget.unavailable_reason()
+        if body.refresh_web:
+            raise HTTPException(429, reason + " A fresh re-check cannot use replay.")
         rec = recorded_runs()
         source = rec[0] if rec else None
         if any(c.get("upload") for c in cases.values()) or not source or any(
             not (settings.recorded_dir / source / "results" / f"{i}.json").is_file() for i in ids
         ):
-            raise HTTPException(429, "Today's live budget is spent and these items have no complete recording. Try again tomorrow (UTC).")
+            raise HTTPException(429, reason + " These items have no complete recording.")
         run = _new_run(ids, delay_ms=0, replay_of=source)
         _spawn(replay(run, source, ids=ids))
         date = f"{source[:4]}-{source[4:6]}-{source[6:8]}"
         return {"run_id": run.id, "mode": "live", "mock": [], "replay_of": source,
-                "note": f"Replayed from the live run recorded on {date}: today's live budget is spent."}
+                "note": f"Replayed from the live run recorded on {date}: {reason.lower()}"}
     mock = ([i for i, c in cases.items() if c.get("upload")]
             if settings.live and not admin and not settings.public_uploads_live else [])
-    run = _new_run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget)
+    run = _new_run(ids, delay_ms=body.delay_ms, mock=mock, shared_item_budget=body.shared_item_budget,
+                   refresh_web=body.refresh_web)
     _spawn(execute(run))
     note = "Uploads ran in mock mode: public live uploads are disabled; live checks need the admin token." if mock else None
     return {"run_id": run.id, "mode": settings.mode, "mock": mock, "note": note,
@@ -342,17 +355,56 @@ async def watch_report(body: WatchReport, request: Request):
     """The nightly job reports here with the admin token; the app shows the latest report on the Outcome step."""
     if not _is_admin(request):
         raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
+    if settings.controller_state_dir or body.job_name:
+        raise HTTPException(409, "Cloud reports must use their authenticated worker lease")
     report = body.model_dump(mode="json")
     watch_store.report(report)
-    await cloud_jobs.attach_report(report)
     return {"ok": True, "items": len(body.items)}
+
+
+async def worker_body(lease_id: str, action: str, request: Request) -> bytes:
+    job_control.authenticate(lease_id, action, b"", request.headers.get("X-Worker-Proof", ""))
+    raw = bytearray()
+    async for chunk in request.stream():
+        raw.extend(chunk)
+        if len(raw) > job_control.MAX_REPORT_BYTES:
+            raise HTTPException(413, "Worker report exceeds the size limit")
+    body = bytes(raw)
+    job_control.authenticate(lease_id, action, body, request.headers.get("X-Worker-Signature", ""))
+    if any(value and value.encode() in body for name in ("nebius_api_key", "tavily_api_key", "admin_token", "worker_token", "nebius_private_key")
+           if (value := settings.secret(name))):
+        raise HTTPException(400, "Worker payload contains credential material; nothing was stored")
+    return body
+
+
+@app.post("/api/watch/leases/{lease_id}/claim")
+async def worker_claim(lease_id: str, request: Request):
+    raw = await worker_body(lease_id, "claim", request)
+    try:
+        claim = job_control.Claim.model_validate_json(raw)
+    except ValueError:
+        raise HTTPException(422, "Worker claim is invalid") from None
+    return job_control.claimed(lease_id, claim)
+
+
+@app.post("/api/watch/leases/{lease_id}/report")
+async def worker_report(lease_id: str, request: Request):
+    raw = await worker_body(lease_id, "report", request)
+    try:
+        report = job_control.WorkerReport.model_validate_json(raw)
+    except ValueError:
+        raise HTTPException(422, "Worker report is invalid") from None
+    return job_control.receive(lease_id, report, hashlib.sha256(raw).hexdigest())
 
 
 @app.post("/api/watch/run")
 async def run_watch(request: Request):
     if not _is_admin(request):
-        _rate_limit(request)
-    return await cloud_jobs.start()
+        raise HTTPException(403, "Launching a cloud re-check needs the admin token (X-Admin-Token header)")
+    request_id = request.headers.get("Idempotency-Key", "")
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", request_id):
+        raise HTTPException(400, "Supply an Idempotency-Key containing 1–128 letters, digits, underscores or hyphens.")
+    return await cloud_jobs.start(request_id)
 
 
 @app.get("/api/watch/jobs")

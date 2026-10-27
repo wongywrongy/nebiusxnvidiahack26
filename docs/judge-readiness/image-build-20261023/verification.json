@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-10-23T04:34:26.357619+00:00",
+  "image_id": "sha256:653211984dbebafe719ad79b666043f0db0aeddace2f9b1b12392a4c496dd528",
+  "repo_digests": [
+    "speccheck@sha256:653211984dbebafe719ad79b666043f0db0aeddace2f9b1b12392a4c496dd528"
+  ],
+  "os": "linux",
+  "architecture": "amd64",
+  "size_bytes": 687135607,
+  "network": "none",
+  "mode": "mock",
+  "commands": {
+    "cli_version": {
+      "exit_code": 2,
+      "stdout_chars": 0,
+      "stderr_chars": 95
+    },
+    "job_create_help": {
+      "exit_code": 0,
+      "stdout_chars": 30724,
+      "stderr_chars": 0
+    },
+    "endpoint_create_help": {
+      "exit_code": 0,
+      "stdout_chars": 34405,
+      "stderr_chars": 0
+    },
+    "required_pdfs": {
+      "exit_code": 0,
+      "stdout_chars": 4491,
+      "stderr_chars": 0
+    },
+    "mock_eval": {
+      "exit_code": 1,
+      "stdout_chars": 1901,
+      "stderr_chars": 0
+    }
+  }
+}

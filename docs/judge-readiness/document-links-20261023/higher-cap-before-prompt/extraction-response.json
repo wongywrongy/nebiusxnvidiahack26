@@ -1,0 +1,93 @@
+{
+  "scope": "Actual cached structured response, with quote bodies redacted; no answer-key values supplied",
+  "cache_path": ".cache/llm/09227ee0ef6766b545336d4d.json",
+  "response_sha256": "08ce18e3fa3d86cec403bcac2dc5ff7a4c5f079beb2868c80523c512e85d3a88",
+  "usage": {
+    "task": "extract_claims",
+    "tier": "extract",
+    "model": "nvidia/nemotron-3-super-120b-a12b",
+    "input_tokens": 5711,
+    "output_tokens": 1412,
+    "cost_usd": 0.0029841,
+    "latency_ms": 6775,
+    "cached": false,
+    "format": "json_schema",
+    "reasoning_tokens": 0,
+    "thinking": "off",
+    "finish_reason": null
+  },
+  "claims": [
+    {
+      "property": "lumens",
+      "unit": null,
+      "quote_sha256": "f0ef3aba71951a5f0a817593d903f687c9904e7bb2f80a80f3fd405f5cc8b70a",
+      "quote_on_page": true,
+      "unit_quoted": false,
+      "metric_quoted": true,
+      "value_quoted": true
+    },
+    {
+      "property": "input_watts_120v",
+      "unit": null,
+      "quote_sha256": "79141140e3ac83212fd76071f1accfc594bd24698034ed6336444737dd9b2db2",
+      "quote_on_page": true,
+      "unit_quoted": false,
+      "metric_quoted": true,
+      "value_quoted": true
+    },
+    {
+      "property": "efficacy_lm_per_w",
+      "unit": null,
+      "quote_sha256": "79141140e3ac83212fd76071f1accfc594bd24698034ed6336444737dd9b2db2",
+      "quote_on_page": true,
+      "unit_quoted": false,
+      "metric_quoted": true,
+      "value_quoted": true
+    },
+    {
+      "property": "cri",
+      "unit": null,
+      "quote_sha256": "fc2f84979783b617795334f602919d0adb55c44693e1721cd221e69994defcd1",
+      "quote_on_page": true,
+      "unit_quoted": true,
+      "metric_quoted": false,
+      "value_quoted": false
+    },
+    {
+      "property": "l70_hours",
+      "unit": null,
+      "quote_sha256": "2f909a719e17d1fd74a145d4fdea74755b6b05bc60be56712c27d2eb0b2bfeec",
+      "quote_on_page": true,
+      "unit_quoted": false,
+      "metric_quoted": false,
+      "value_quoted": true
+    },
+    {
+      "property": "warranty_years",
+      "unit": null,
+      "quote_sha256": "7d67c629fa93655758172f7fe4cf8c10bd5ba04f0ac99737ed015db223915b44",
+      "quote_on_page": true,
+      "unit_quoted": false,
+      "metric_quoted": true,
+      "value_quoted": true
+    },
+    {
+      "property": "standards",
+      "unit": null,
+      "quote_sha256": "33f99ed2fb7cc1aa8f65e86b44c5d55f1e11658eb2c431f2cf3cfce84d6dd4a6",
+      "quote_on_page": true,
+      "unit_quoted": true,
+      "metric_quoted": true,
+      "value_quoted": false
+    },
+    {
+      "property": "dim_min_percent",
+      "unit": null,
+      "quote_sha256": "26b0586013a3e926502ee6cb4f84a9dc02d29fa150af77d47aab6e9ad608ddd7",
+      "quote_on_page": true,
+      "unit_quoted": false,
+      "metric_quoted": true,
+      "value_quoted": true
+    }
+  ]
+}

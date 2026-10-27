@@ -1,0 +1,40 @@
+{
+  "checked_at": "2026-10-21T07:19:32.381183+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://api.tavily.com/usage",
+    "authorization": "[REDACTED]",
+    "cache_control": "no-cache"
+  },
+  "status": 200,
+  "headers": {
+    "date": "Wed, 21 Oct 2026 07:19:32 GMT"
+  },
+  "response": {
+    "key": {
+      "usage": 5,
+      "limit": null,
+      "search_usage": 3,
+      "crawl_usage": 0,
+      "extract_usage": 0,
+      "map_usage": 2,
+      "research_usage": 0
+    },
+    "account": {
+      "current_plan": "Researcher",
+      "plan_usage": 5,
+      "plan_limit": 1000,
+      "search_usage": 3,
+      "crawl_usage": 0,
+      "extract_usage": 0,
+      "map_usage": 2,
+      "research_usage": 0,
+      "paygo_usage": 0,
+      "paygo_limit": null
+    }
+  },
+  "ledger": {
+    "usd": 0.000226,
+    "credits": 6.0
+  }
+}

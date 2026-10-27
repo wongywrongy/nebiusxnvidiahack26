@@ -1,0 +1,8 @@
+{
+  "source": "docs/judge-readiness/preproduction-packaging-20261023/reproduce.py",
+  "source_sha256": "2e3630aff5cf598d0d3e9231d7b22701543889a1f89e3a5c0bee8f4ae3c673c8",
+  "only_change": "Pinned local image constant",
+  "image_index": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
+  "executed_sha256": "125315a18cf55491bf30334494be5878293c49d040f6c74eaa44ab2ed38de21d",
+  "private_report": "/tmp/speccheck-synthetic-dhbsbh5c/result.json"
+}

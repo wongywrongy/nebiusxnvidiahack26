@@ -1,0 +1,9 @@
+{
+  "id": "sha256:aa8292661e33256a99aa3758105ec484c2fd20faac291e69e12ae94ae60e6a7f",
+  "size_bytes": 687150152,
+  "command": [
+    "python",
+    "scripts/serve.py"
+  ],
+  "published": false
+}

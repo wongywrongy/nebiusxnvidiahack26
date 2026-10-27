@@ -1,0 +1,20 @@
+{
+  "scope": "Same synthetic HTML replay; actual live source outputs are separate",
+  "input": {
+    "url": "https://maker.test/product",
+    "html": "<a href=\"/resources/lighting-guide.pdf\">Lighting guide</a><a href=\"/specsheet2/product.pdf\">Spec sheet</a>"
+  },
+  "before": {
+    "commit": "f95d6cf117d836fde39f81cd6e57494f4130b335",
+    "chosen_pdf": "https://maker.test/resources/lighting-guide.pdf"
+  },
+  "after": {
+    "code_hash": "a17778ef17694b9df24f01f717ffa7edcab2db1344bd527143be5811894fb767",
+    "chosen_pdf": "https://maker.test/specsheet2/product.pdf"
+  },
+  "regression_before_fix": {
+    "failed": 4,
+    "passed": 57,
+    "scope": "Full provider file with new regressions, before runtime edit"
+  }
+}

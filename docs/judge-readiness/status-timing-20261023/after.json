@@ -1,0 +1,146 @@
+{
+  "scope": "Offline synthetic responses only; no model, HTTP or paid provider request",
+  "observed_at": "2026-10-23T10:19:28.824744+00:00",
+  "code_hash": "1bd1495a7fe75c733886cb4d471371b264657fccad5f2d03e0e260da02c52a8d",
+  "observations": [
+    {
+      "name": "future discontinuation",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "As of May 1, 2035, the ZX family will be discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "unknown",
+        "status_date": null,
+        "replacement": null,
+        "status_findings": [],
+        "decision": "approve_with_note"
+      }
+    },
+    {
+      "name": "undated plan",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family will be discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "unknown",
+        "status_date": null,
+        "replacement": null,
+        "status_findings": [],
+        "decision": "approve_with_note"
+      }
+    },
+    {
+      "name": "past effective date",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "As of May 1, 2001, the ZX family will be discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "discontinued",
+        "status_date": "2001-05-01",
+        "replacement": null,
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "fail",
+            "severity": "major"
+          }
+        ],
+        "decision": "send_back"
+      }
+    },
+    {
+      "name": "future availability",
+      "request": {
+        "status": "active",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family is available from May 1, 2035.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "unknown",
+        "status_date": null,
+        "replacement": null,
+        "status_findings": [],
+        "decision": "approve_with_note"
+      }
+    },
+    {
+      "name": "expired availability",
+      "request": {
+        "status": "active",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family is available until May 1, 2001.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "unknown",
+        "status_date": null,
+        "replacement": null,
+        "status_findings": [],
+        "decision": "approve_with_note"
+      }
+    },
+    {
+      "name": "ungrounded metadata",
+      "request": {
+        "status": "discontinued",
+        "replacement": "XR-9",
+        "current_revision": null,
+        "status_date": "1999-01-01",
+        "status_quote": "The ZX family is discontinued.",
+        "status_family": "ZX",
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      },
+      "response": {
+        "status": "discontinued",
+        "status_date": null,
+        "replacement": null,
+        "status_findings": [
+          {
+            "check": "status",
+            "verdict": "fail",
+            "severity": "major"
+          }
+        ],
+        "decision": "send_back"
+      }
+    }
+  ],
+  "release_accepts_future_status": false
+}

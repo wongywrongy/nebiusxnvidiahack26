@@ -12,3 +12,6 @@ web/node_modules
 web/dist
 **/__pycache__
 **/.pytest_cache
+
+# Held-out validation packages stay outside the product image.
+data/raw/blind

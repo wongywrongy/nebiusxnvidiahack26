@@ -1,0 +1,1932 @@
+{
+  "case_id": "c07",
+  "title": "LED troffer, offices",
+  "decision": "send_back",
+  "summary": "We need more information about the LED's rated life, color consistency, and DLC qualification before we can approve this fixture. The main problem is that the specific model you submitted has been discontinued by the manufacturer and can no longer be sourced.",
+  "findings": [
+    {
+      "id": "spec-req_t_rating_hr_led",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Rated life (L70) not verified",
+      "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+      "why_it_matters": "Without confirmed long-life performance, we risk frequent lamp replacements and higher maintenance costs down the line.",
+      "requirement_id": "req_t_rating_hr_led",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 50000 hr",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.3",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_warranty_years_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Warranty",
+      "detail": "Package states 5 years; spec requires at least 5 yr.",
+      "why_it_matters": null,
+      "requirement_id": "req_warranty_years_led",
+      "claim_id": "cl-1",
+      "claim_ids": [
+        "cl-1"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-1",
+          "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+          "page": 1,
+          "quote": "WARRANTY — 5-year limited warranty.",
+          "boxes": [
+            {
+              "x0": 0.098,
+              "y0": 0.5081,
+              "x1": 0.2669,
+              "y1": 0.5196
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 5 yr",
+        "right_label": "Submitted",
+        "right_value": "5 years",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 1.10.B.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-lt-dlc",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "DLC listing not verified",
+      "detail": "Listed as a qualified DLC product, where applicable.",
+      "why_it_matters": "Missing DLC qualification could mean ineligibility for utility rebates and may not meet project energy efficiency goals.",
+      "requirement_id": "lt-dlc",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "dlc standard",
+          "dlc premium"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.H",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_macadam_ellipse",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "MacAdam ellipse binning not verified",
+      "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+      "why_it_matters": "LEDs outside the specified color tolerance could create noticeable color differences between fixtures, affecting the quality of light in the office spaces.",
+      "requirement_id": "req_macadam_ellipse",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 3",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.6",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-lt-dim",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Dims down to",
+      "detail": "Package states 0.1 %; spec requires at most 5 %.",
+      "why_it_matters": null,
+      "requirement_id": "lt-dim",
+      "claim_id": "cl-64",
+      "claim_ids": [
+        "cl-64"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-64",
+          "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+          "page": 2,
+          "quote": "EZB\neldoLED dims to  0.1% (0-10 volt \ndimming)",
+          "boxes": [
+            {
+              "x0": 0.0502,
+              "y0": 0.3173,
+              "x1": 0.0654,
+              "y1": 0.3286
+            },
+            {
+              "x0": 0.0923,
+              "y0": 0.3173,
+              "x1": 0.2256,
+              "y1": 0.3286
+            },
+            {
+              "x0": 0.0923,
+              "y0": 0.3274,
+              "x1": 0.1332,
+              "y1": 0.3387
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 5 %",
+        "right_label": "Submitted",
+        "right_value": "0.1 %",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.05.C.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "status-discontinued",
+      "check": "status",
+      "verdict": "fail",
+      "severity": "major",
+      "title": "Product is discontinued",
+      "detail": "The manufacturer lists it as discontinued.",
+      "why_it_matters": "A discontinued product cannot be purchased for this project, so approving it would delay installation until a valid substitute is provided.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Status",
+        "left_value": null,
+        "right_label": "Manufacturer",
+        "right_value": "Discontinued June 30th, 2024",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+          "tier": "manufacturer",
+          "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "6534db0fff3ce59dec17c7636a225756b5994586abb036eb4ff84017730eaae7",
+          "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n* [Español](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n## Welcome to Acuity Brands Insights\n\n* [Home](http://insights.acuitybrands.com)\n* [Industry](javascript:void(0)) \n  + Industry\n  + [Commercial Office](https://insights.acuitybrands.com/com",
+          "archived_path": null
+        },
+        {
+          "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+          "tier": "manufacturer",
+          "title": "CPX - LED Panel",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+          "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+          "archived_path": null
+        },
+        {
+          "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+          "tier": "manufacturer",
+          "title": "Technical Downloads",
+          "retrieved_at": "2026-10-22T18:16:12+00:00",
+          "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+          "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+          "archived_path": null
+        }
+      ],
+      "quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+      "decided_by": "tavily + super",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "Acuity Brands Lighting, Inc. current LED troffer data sheet",
+        "candidates": [],
+        "suggest": ""
+      }
+    }
+  ],
+  "comparison": [],
+  "claims": [
+    {
+      "id": "cl-1",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "warranty_years",
+      "value": 5.0,
+      "unit": "years",
+      "page": 1,
+      "bbox": null,
+      "quote": "WARRANTY — 5-year limited warranty.",
+      "variant": null
+    },
+    {
+      "id": "cl-2",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3010.9,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP830\n 3,010.9 \n25\n120.4",
+      "variant": null
+    },
+    {
+      "id": "cl-3",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 25.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP830\n 3,010.9 \n25\n120.4",
+      "variant": null
+    },
+    {
+      "id": "cl-4",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 120.4,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP830\n 3,010.9 \n25\n120.4",
+      "variant": null
+    },
+    {
+      "id": "cl-5",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3075.5,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP835\n 3,075.5 \n25\n123.0",
+      "variant": null
+    },
+    {
+      "id": "cl-6",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 25.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP835\n 3,075.5 \n25\n123.0",
+      "variant": null
+    },
+    {
+      "id": "cl-7",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 123.0,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP835\n 3,075.5 \n25\n123.0",
+      "variant": null
+    },
+    {
+      "id": "cl-8",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3097.0,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP840\n 3,097.0 \n25\n123.9",
+      "variant": null
+    },
+    {
+      "id": "cl-9",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 25.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP840\n 3,097.0 \n25\n123.9",
+      "variant": null
+    },
+    {
+      "id": "cl-10",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 123.9,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP840\n 3,097.0 \n25\n123.9",
+      "variant": null
+    },
+    {
+      "id": "cl-11",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3204.7,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP850\n 3,204.7 \n25\n128.2",
+      "variant": null
+    },
+    {
+      "id": "cl-12",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 25.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP850\n 3,204.7 \n25\n128.2",
+      "variant": null
+    },
+    {
+      "id": "cl-13",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 128.2,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "30L\nLP850\n 3,204.7 \n25\n128.2",
+      "variant": null
+    },
+    {
+      "id": "cl-14",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3835.1,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP830\n 3,835.1 \n32\n119.8",
+      "variant": null
+    },
+    {
+      "id": "cl-15",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 32.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP830\n 3,835.1 \n32\n119.8",
+      "variant": null
+    },
+    {
+      "id": "cl-16",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 119.8,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP830\n 3,835.1 \n32\n119.8",
+      "variant": null
+    },
+    {
+      "id": "cl-17",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3918.2,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP835\n 3,918.2 \n32\n122.4",
+      "variant": null
+    },
+    {
+      "id": "cl-18",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 32.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP835\n 3,918.2 \n32\n122.4",
+      "variant": null
+    },
+    {
+      "id": "cl-19",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 122.4,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP835\n 3,918.2 \n32\n122.4",
+      "variant": null
+    },
+    {
+      "id": "cl-20",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 3945.8,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP840\n 3,945.8 \n32\n123.3",
+      "variant": null
+    },
+    {
+      "id": "cl-21",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 32.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP840\n 3,945.8 \n32\n123.3",
+      "variant": null
+    },
+    {
+      "id": "cl-22",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 123.3,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP840\n 3,945.8 \n32\n123.3",
+      "variant": null
+    },
+    {
+      "id": "cl-23",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 4084.2,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP850\n 4,084.2 \n32\n127.6",
+      "variant": null
+    },
+    {
+      "id": "cl-24",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 32.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP850\n 4,084.2 \n32\n127.6",
+      "variant": null
+    },
+    {
+      "id": "cl-25",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 127.6,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "40L\nLP850\n 4,084.2 \n32\n127.6",
+      "variant": null
+    },
+    {
+      "id": "cl-26",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 4730.1,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP830\n 4,730.1 \n40\n118.3",
+      "variant": null
+    },
+    {
+      "id": "cl-27",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 40.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP830\n 4,730.1 \n40\n118.3",
+      "variant": null
+    },
+    {
+      "id": "cl-28",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 118.3,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP830\n 4,730.1 \n40\n118.3",
+      "variant": null
+    },
+    {
+      "id": "cl-29",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 4831.6,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP835\n 4,831.6 \n40\n120.8",
+      "variant": null
+    },
+    {
+      "id": "cl-30",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 40.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP835\n 4,831.6 \n40\n120.8",
+      "variant": null
+    },
+    {
+      "id": "cl-31",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 120.8,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP835\n 4,831.6 \n40\n120.8",
+      "variant": null
+    },
+    {
+      "id": "cl-32",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 4865.4,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP840\n 4,865.4 \n40\n121.6",
+      "variant": null
+    },
+    {
+      "id": "cl-33",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 40.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP840\n 4,865.4 \n40\n121.6",
+      "variant": null
+    },
+    {
+      "id": "cl-34",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 121.6,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP840\n 4,865.4 \n40\n121.6",
+      "variant": null
+    },
+    {
+      "id": "cl-35",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 5034.6,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP850\n 5,034.6 \n40\n125.9",
+      "variant": null
+    },
+    {
+      "id": "cl-36",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 40.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP850\n 5,034.6 \n40\n125.9",
+      "variant": null
+    },
+    {
+      "id": "cl-37",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 125.9,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "48L\nLP850\n 5,034.6 \n40\n125.9",
+      "variant": null
+    },
+    {
+      "id": "cl-38",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 5431.3,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP830\n 5,431.3 \n47\n115.6",
+      "variant": null
+    },
+    {
+      "id": "cl-39",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 47.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP830\n 5,431.3 \n47\n115.6",
+      "variant": null
+    },
+    {
+      "id": "cl-40",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 115.6,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP830\n 5,431.3 \n47\n115.6",
+      "variant": null
+    },
+    {
+      "id": "cl-41",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 5548.2,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP835\n 5,548.2 \n47\n118.0",
+      "variant": null
+    },
+    {
+      "id": "cl-42",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 47.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP835\n 5,548.2 \n47\n118.0",
+      "variant": null
+    },
+    {
+      "id": "cl-43",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 118.0,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP835\n 5,548.2 \n47\n118.0",
+      "variant": null
+    },
+    {
+      "id": "cl-44",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 5588.2,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP840\n 5,588.2 \n47\n118.9",
+      "variant": null
+    },
+    {
+      "id": "cl-45",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 47.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP840\n 5,588.2 \n47\n118.9",
+      "variant": null
+    },
+    {
+      "id": "cl-46",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 118.9,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP840\n 5,588.2 \n47\n118.9",
+      "variant": null
+    },
+    {
+      "id": "cl-47",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 5785.0,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP850\n 5,785.0 \n47\n123.1",
+      "variant": null
+    },
+    {
+      "id": "cl-48",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 47.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP850\n 5,785.0 \n47\n123.1",
+      "variant": null
+    },
+    {
+      "id": "cl-49",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 123.1,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "60L\nLP850\n 5,785.0 \n47\n123.1",
+      "variant": null
+    },
+    {
+      "id": "cl-50",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 7513.4,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP830\n 7,513.4 \n67\n112.1",
+      "variant": null
+    },
+    {
+      "id": "cl-51",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 67.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP830\n 7,513.4 \n67\n112.1",
+      "variant": null
+    },
+    {
+      "id": "cl-52",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 112.1,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP830\n 7,513.4 \n67\n112.1",
+      "variant": null
+    },
+    {
+      "id": "cl-53",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 7673.3,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP835\n 7,673.3 \n67\n114.5",
+      "variant": null
+    },
+    {
+      "id": "cl-54",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 67.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP835\n 7,673.3 \n67\n114.5",
+      "variant": null
+    },
+    {
+      "id": "cl-55",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 114.5,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP835\n 7,673.3 \n67\n114.5",
+      "variant": null
+    },
+    {
+      "id": "cl-56",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 7728.7,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP840\n 7,728.7 \n67\n115.4",
+      "variant": null
+    },
+    {
+      "id": "cl-57",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 67.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP840\n 7,728.7 \n67\n115.4",
+      "variant": null
+    },
+    {
+      "id": "cl-58",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 115.4,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP840\n 7,728.7 \n67\n115.4",
+      "variant": null
+    },
+    {
+      "id": "cl-59",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "lumens",
+      "value": 7999.3,
+      "unit": "lm",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP850\n 7,999.3 \n67\n119.4",
+      "variant": null
+    },
+    {
+      "id": "cl-60",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "input_watts_120v",
+      "value": 67.0,
+      "unit": "W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP850\n 7,999.3 \n67\n119.4",
+      "variant": null
+    },
+    {
+      "id": "cl-61",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "efficacy_lm_per_w",
+      "value": 119.4,
+      "unit": "lm/W",
+      "page": 2,
+      "bbox": null,
+      "quote": "72L\nLP850\n 7,999.3 \n67\n119.4",
+      "variant": null
+    },
+    {
+      "id": "cl-64",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "dim_min_percent",
+      "value": 0.1,
+      "unit": "%",
+      "page": 2,
+      "bbox": null,
+      "quote": "EZB\neldoLED dims to  0.1% (0-10 volt \ndimming)",
+      "variant": null
+    },
+    {
+      "id": "cl-66",
+      "product": "2TL 2X4 Recessed LED Lighting",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL-2X4",
+      "property": "standards",
+      "value": [
+        "IESNA LM-79"
+      ],
+      "unit": null,
+      "page": 3,
+      "bbox": null,
+      "quote": "tested in accordance to IESNA LM-79.",
+      "variant": null
+    }
+  ],
+  "document_revision": "Rev. 11/18/22",
+  "note_to_subcontractor": "Please provide documentation showing the LED's rated life (L70), MacAdam ellipse binning, and DLC qualification. Since the submitted product is discontinued, you will need to submit a currently available, equivalent fixture for review.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 2585,
+      "output_tokens": 68,
+      "cost_usd": 0.000171,
+      "latency_ms": 1009,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5191,
+      "output_tokens": 7680,
+      "cost_usd": 0.008469,
+      "latency_ms": 33112,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11738,
+      "output_tokens": 174,
+      "cost_usd": 0.003678,
+      "latency_ms": 2273,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1391,
+      "output_tokens": 138,
+      "cost_usd": 0.000541,
+      "latency_ms": 1753,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3159,
+      "output_tokens": 117,
+      "cost_usd": 0.001053,
+      "latency_ms": 1475,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3293,
+      "output_tokens": 108,
+      "cost_usd": 0.001085,
+      "latency_ms": 3939,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3418,
+      "output_tokens": 88,
+      "cost_usd": 0.001105,
+      "latency_ms": 1331,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5221,
+      "output_tokens": 86,
+      "cost_usd": 0.001644,
+      "latency_ms": 7164,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5324,
+      "output_tokens": 98,
+      "cost_usd": 0.001685,
+      "latency_ms": 1752,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5836,
+      "output_tokens": 72,
+      "cost_usd": 0.001816,
+      "latency_ms": 1744,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5925,
+      "output_tokens": 109,
+      "cost_usd": 0.001876,
+      "latency_ms": 4028,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7383,
+      "output_tokens": 136,
+      "cost_usd": 0.002337,
+      "latency_ms": 4049,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8706,
+      "output_tokens": 129,
+      "cost_usd": 0.002728,
+      "latency_ms": 2003,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9963,
+      "output_tokens": 97,
+      "cost_usd": 0.003076,
+      "latency_ms": 1643,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11013,
+      "output_tokens": 187,
+      "cost_usd": 0.003472,
+      "latency_ms": 2631,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12886,
+      "output_tokens": 684,
+      "cost_usd": 0.004481,
+      "latency_ms": 6888,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1377,
+      "output_tokens": 123,
+      "cost_usd": 0.000524,
+      "latency_ms": 1253,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2334,
+      "output_tokens": 79,
+      "cost_usd": 0.000771,
+      "latency_ms": 1441,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2430,
+      "output_tokens": 76,
+      "cost_usd": 0.000797,
+      "latency_ms": 1277,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2523,
+      "output_tokens": 78,
+      "cost_usd": 0.000827,
+      "latency_ms": 3685,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3429,
+      "output_tokens": 134,
+      "cost_usd": 0.001149,
+      "latency_ms": 1854,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5306,
+      "output_tokens": 81,
+      "cost_usd": 0.001665,
+      "latency_ms": 2036,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5404,
+      "output_tokens": 85,
+      "cost_usd": 0.001698,
+      "latency_ms": 2914,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6498,
+      "output_tokens": 133,
+      "cost_usd": 0.002069,
+      "latency_ms": 1793,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9104,
+      "output_tokens": 65,
+      "cost_usd": 0.00279,
+      "latency_ms": 2230,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9186,
+      "output_tokens": 64,
+      "cost_usd": 0.002813,
+      "latency_ms": 1261,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9267,
+      "output_tokens": 103,
+      "cost_usd": 0.002873,
+      "latency_ms": 1615,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9387,
+      "output_tokens": 63,
+      "cost_usd": 0.002873,
+      "latency_ms": 1304,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9467,
+      "output_tokens": 278,
+      "cost_usd": 0.00309,
+      "latency_ms": 2215,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9838,
+      "output_tokens": 84,
+      "cost_usd": 0.003027,
+      "latency_ms": 1634,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11970,
+      "output_tokens": 76,
+      "cost_usd": 0.003659,
+      "latency_ms": 2807,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12063,
+      "output_tokens": 330,
+      "cost_usd": 0.003916,
+      "latency_ms": 5500,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12493,
+      "output_tokens": 400,
+      "cost_usd": 0.004108,
+      "latency_ms": 5589,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4048,
+      "output_tokens": 29,
+      "cost_usd": 0.00124,
+      "latency_ms": 1331,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 675,
+      "output_tokens": 313,
+      "cost_usd": 0.000484,
+      "latency_ms": 2914,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 108,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "WRTL LED Troffer wet location recessed Lithonia lighting datasheet site:acuitybrands.com",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 2,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/664095/wrtl.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.acuitybrands.com/products/detail/664095/lithonia-lighting/wrtl-led-troffer/wet-location-recessed-led-troffer"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "WRTL LED troffer discontinued end of life site:acuitybrands.com",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 5,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.acuitybrands.com/products/detail/664095/lithonia-lighting/wrtl-led-troffer/wet-location-recessed-led-troffer"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 6,
+        "tool": "search",
+        "args": {
+          "query": "WRTL LED troffer specification sheet revision acuitybrands",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "1 result",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 7,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/664095/wrtl.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 8,
+        "tool": "extract",
+        "args": {
+          "url": "https://insights.acuitybrands.com/new-products-blog/new-and-improved-demanding-led-troffers-by-lithonia-lighting-srtl-vrtl-and-wrtl"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 9,
+        "tool": "search",
+        "args": {
+          "query": "\"664095\" \"wrtl.pdf\" acuitybrands",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "2 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 10,
+        "tool": "extract",
+        "args": {
+          "url": "https://lithonia.acuitybrands.com/resources/technical-downloads"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 11,
+        "tool": "search",
+        "args": {
+          "query": "WRTL LED troffer specification data sheet site:acuitybrands.com filetype:pdf",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "1 result",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 12,
+        "tool": "search",
+        "args": {
+          "query": "WRTL LED troffer discontinued site:acuitybrands.com",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 13,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://img.acuitybrands.com/public-assets/catalog/664095/wrtl.pdf",
+          "document_title": "WRTL LED Troffer - Wet-Location Recessed LED Troffer",
+          "revision_quote": "2020-07-16T10:50:13-04:00",
+          "status": "active",
+          "status_quote": "The SRTL, VRTL, and WRTL Demanding Troffers are now BAA compliant",
+          "note": "Found PDF document for WRTL LED Troffer at manufacturer's domain. PDF metadata shows revision date of 2020-07-16T10:50:13-04:00. Multiple 2024 sources confirm WRTL LED troffer is still active and recently updated with BAA compliance."
+        },
+        "summary": "couldn't confirm a document",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 14,
+        "tool": "search",
+        "args": {
+          "query": "VTL VT Series LED Troffer Acuity Brands Lithonia lighting datasheet specification",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 15,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 16,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/229368/2vtl2-2x4.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 17,
+        "tool": "search",
+        "args": {
+          "query": "VT Series LED Troffer VTL datasheet specification Acuity Brands PDF",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 18,
+        "tool": "search",
+        "args": {
+          "query": "\"VTL\" \"VT Series\" LED Troffer specification sheet Acuity Brands",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 19,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/229368/2vtl2-2x4.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 20,
+        "tool": "search",
+        "args": {
+          "query": "VT Series LED Troffer VTL discontinued Acuity Brands",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 21,
+        "tool": "extract",
+        "args": {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/florescent-vt-luminaire-discontinued"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 22,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.acuitybrands.com/products/detail/89720/lithonia-lighting/vt/volumetric-series"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 23,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 24,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/229368/2vtl-2x2.pdf?abl_version=07%2f13%2f2021+22:02:28&DOC_Type=SPEC_SHEET"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 25,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/229368/2vtl2-2x4.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 26,
+        "tool": "search",
+        "args": {
+          "query": "VTL VT Series LED Troffer discontinued 2023 2024 Acuity Brands",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "1 result",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 27,
+        "tool": "search",
+        "args": {
+          "query": "\"VTL\" \"VT Series\" LED Troffer site:acuitybrands.com \"spec sheet\" OR \"datasheet\"",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 28,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/229368/vtl-1x4.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 29,
+        "tool": "search",
+        "args": {
+          "query": "VTL VT Series LED Troffer buy purchase Acuity Brands Lithonia lighting",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "1 result",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 30,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer",
+          "document_title": "VTL - VT Series LED Troffer",
+          "status": "active",
+          "note": "While the exact revision quote could not be extracted from the PDF datasheet due to tool limitations, clear evidence shows the VTL VT Series LED Troffer is still active: The fluorescent VT troffer was discontinued in 2021 but the VTL/VTS LED versions were specifically recommended as replacements in Acuity Brands' official discontinuation notice. The VTL product page remains active on the manufacturer's website with current marketing content, and no discontinuation notices were found for the VTL LED series itself."
+        },
+        "summary": "couldn't confirm a document",
+        "credits": 0.0,
+        "ms": 0
+      }
+    ],
+    "outcome": "not_found"
+  },
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 66,
+  "claims_kept": 63,
+  "web_values_read": 0,
+  "web_values_kept": 0
+}

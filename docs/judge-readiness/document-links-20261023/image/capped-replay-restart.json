@@ -1,0 +1,51 @@
+{
+  "synthetic_only": true,
+  "before": {
+    "blocked_without_wallet": true,
+    "wallet_created": false
+  },
+  "imported": {
+    "synthetic_only": true,
+    "source_retired": true,
+    "state_sha256": "6190e4ddda2ba119602b7f021b020d3678df85886dbc2b9afdf518e9ce83d677",
+    "authority_sha256": "7dd03adac623e6a29598503af657c6e70281345f22c68181ad549cab1b44c002"
+  },
+  "restarted": {
+    "state_preserved": true,
+    "authority_preserved": true,
+    "app_files_preserved": true,
+    "accounting_available": true
+  },
+  "capped_api": {
+    "synthetic_accounting_only": true,
+    "real_provider_requests": 0,
+    "loopback_only": true,
+    "scoreboard_source": "20261022-181611-a9d0b5",
+    "scoreboard_mode": "live",
+    "explicit_replay_count": 10,
+    "tray_item_count": 7,
+    "watched_item_count": 1,
+    "full_public_item_count": 8,
+    "public_ids": [
+      "c01",
+      "c02",
+      "c03",
+      "c04",
+      "c06",
+      "c07",
+      "s3",
+      "s4"
+    ],
+    "full_public_replayed": true,
+    "fresh_recheck_at_zero_cap_http": 429,
+    "synthetic_accounting_unchanged": true,
+    "trial_cap_zero_only_in_temporary_container": true,
+    "scan_run_id": "20261023-101210-e0dc7f",
+    "explicit_replay_run_id": "20261023-101210-19191b"
+  },
+  "replay_restart": {
+    "replayed_results_persist_across_restart": true,
+    "result_count": 8,
+    "synthetic_wallet_unchanged": true
+  }
+}

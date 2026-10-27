@@ -1,0 +1,25 @@
+{
+  "base_url": "http://127.0.0.1:8001",
+  "scan": {
+    "run_id": "20261022-182245-2b796d",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "scan_ledger": {
+    "usd": 0,
+    "credits": 0
+  },
+  "approved_check": {
+    "run_id": "20261022-182432-6bd04e",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "check_ledger": {
+    "usd": 0,
+    "credits": 0
+  }
+}

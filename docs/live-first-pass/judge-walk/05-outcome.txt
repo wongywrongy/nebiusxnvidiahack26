@@ -1,0 +1,57 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+Inbox
+Scan
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Start over
+Outcome
+1 to return · 1 approved
+Check approved now
+
+Decisions and drafts are saved in this browser. No messages have been sent. The watch list includes a sample approval from 2024.
+
+Marked for return to subcontractors
+NUMBER
+RECIPIENT
+REQUESTED
+SUGGESTED REPLACEMENT
+07 84 00-03
+Coastline Firestop
+3M IC 15WB+
+The manufacturer's current data sheet
+None passed · 3M™ Fire Barrier Sealant CP 25WB+ | 3M United States; couldn't confirm VOC (air quality)
+Approved for forwarding to the architect
+No nightly re-check has reported yet
+NUMBER
+PRODUCT
+APPROVED
+LAST CHECKED
+STATUS
+07 84 00-01
+STI SpecSeal LCI
+Coastline Firestop
+Today
+Today 6:24 PM
+No change
+26 51 00-03
+Lithonia 2TL4
+Northgate Electric
+Mar 12, 2024
+Today 6:24 PM
+Discontinued
+26 51 00-03 · DISCONTINUED
+Lithonia 2TL4 is no longer manufactured
+Approved
+Mar 12, 2024
+Discontinued
+June 30th, 2024
+Detected
+Today
+“As of **June 30th, 2024**, the TL family will be discontinued.”
+Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire ↗
+Save substitution request for Northgate Electric

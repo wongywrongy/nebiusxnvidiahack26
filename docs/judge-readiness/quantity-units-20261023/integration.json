@@ -1,0 +1,37 @@
+{
+  "baseline_commit": "2ac6f89d9ffc8af1eb6142ee8d7421a266b19c1a",
+  "scope": "Three shared runtime callers/helpers, two synthetic test responses and one new regression module",
+  "preimages_checked": [
+    "api/pipeline/extract.py",
+    "api/pipeline/verify.py",
+    "api/release.py",
+    "tests/test_extraction_chunks.py",
+    "tests/test_pipeline_mock.py"
+  ],
+  "changes": [
+    {
+      "path": "api/pipeline/extract.py",
+      "sha256": "a46147119ae49b69d94fb639a3b4bf4db37057946d4dbb0f17c908e5af87f688"
+    },
+    {
+      "path": "api/pipeline/verify.py",
+      "sha256": "974d64ae99399a4cf4d5b1be871b92a47bd7f5add36970e98dfbe292c59aebff"
+    },
+    {
+      "path": "api/release.py",
+      "sha256": "ebdfbbc395a01bb96d702085bace4dde5dc8e3262de0d133eeb705c765ab2b1b"
+    },
+    {
+      "path": "tests/test_extraction_chunks.py",
+      "sha256": "142246549b603304990370d3835b7d355457b82955be7ffa91787a6b1fc3bd9e"
+    },
+    {
+      "path": "tests/test_pipeline_mock.py",
+      "sha256": "82dfb68f050319041ae4ed5a1b4e589cf96095363b28b53e34bee06fc83a30b5"
+    },
+    {
+      "path": "tests/test_quantity_units.py",
+      "sha256": "2f152c7f72d6d97f80a71f28c9c781a94625997505e44dd21a631cfb22d675df"
+    }
+  ]
+}

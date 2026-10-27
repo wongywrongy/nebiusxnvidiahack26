@@ -5,7 +5,7 @@
 FROM node:22-slim AS web
 WORKDIR /web
 COPY web/package.json web/package-lock.json* ./
-RUN npm install
+RUN npm ci
 COPY web/ ./
 RUN npm run build
 
@@ -17,20 +17,21 @@ RUN curl -fsSL https://artifacts.nebius.cloud/cli/install.sh -o /tmp/install-neb
     && NEBIUS_CLI_VERSION=0.12.289 NEBIUS_INSTALL_FOLDER=/usr/local/bin SHELL=/bin/sh bash /tmp/install-nebius.sh \
     && rm /tmp/install-nebius.sh
 COPY api/requirements.txt api/requirements.txt
-RUN pip install --no-cache-dir -r api/requirements.txt
+COPY api/constraints.txt api/constraints.txt
+RUN pip install --no-cache-dir -r api/requirements.txt -c api/constraints.txt
 COPY api/ api/
 COPY scripts/ scripts/
 COPY tests/data/ tests/data/
 # data/cases (the test set and answer key), data/fixtures (mock answers), data/requirements (reviewed checklists),
 # and data/raw when it exists on the build machine: the public manufacturer and agency PDFs are not committed, so
-# building from a checkout that ran scripts/fetch_docs.py bakes them in. Otherwise they are fetched at build time;
-# a host that refuses leaves that case on its recorded-text excerpt (the app still runs).
+# building from a checkout that ran scripts/fetch_docs.py bakes them in. Otherwise they are fetched at build time.
+# Missing, unreadable or changed public PDFs fail the image build for owner review.
 COPY data/ data/
-RUN python scripts/fetch_docs.py || echo "fetch_docs: some documents were not downloaded"
+RUN SPECCHECK_MODE=mock python scripts/fetch_docs.py && SPECCHECK_MODE=mock python scripts/check_pdfs.py --required
 # Recorded live runs (scripts/record_live.py) and the last nightly re-check report, when committed.
 COPY runs/ runs/
 COPY --from=web /web/dist web/dist
 # Defaults for a public demo. Set SPECCHECK_MODE=live, the keys and ADMIN_TOKEN in the deployment's environment.
 ENV SPECCHECK_MODE=mock MOCK_STAGE_DELAY_MS=700 THINKING=off
 EXPOSE 8000
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "scripts/serve.py"]

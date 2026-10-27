@@ -1,0 +1,74 @@
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/664095/lithonia-lighting/wrtl-led-troffer/wet-location-recessed-led-troffer "HTTP/1.1 403 Forbidden"
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=1 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1318 out=91 ms=1552 cost=$0.000477 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2964 out=106 ms=2863 cost=$0.000985 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=7929 out=116 ms=1782 cost=$0.002483 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/664095/lithonia-lighting/wrtl-led-troffer/wet-location-recessed-led-troffer "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=8062 out=80 ms=3688 cost=$0.002491 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=10669 out=167 ms=3163 cost=$0.003351 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=12971 out=85 ms=3118 cost=$0.003968 format=tools
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1304 out=84 ms=2629 cost=$0.000467 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=1886 out=135 ms=1552 cost=$0.000687 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://img.acuitybrands.com/public-assets/catalog/229368/2vtl2-2x4.pdf "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2038 out=97 ms=4169 cost=$0.000699 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/229368/lithonia-lighting/vtl/vt-series-led-troffer "HTTP/1.1 403 Forbidden"
+speccheck.tavily tavily_extract credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2152 out=118 ms=1712 cost=$0.000752 format=tools
+httpx HTTP Request: POST https://api.tavily.com/map "HTTP/1.1 200 OK"
+speccheck.tavily tavily_map credits=0 results=0
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=2287 out=86 ms=1457 cost=$0.000763 format=tools
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=4
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory investigate model=nvidia/nemotron-3-super-120b-a12b in=5301 out=176 ms=1974 cost=$0.001749 format=tools
+httpx HTTP Request: POST https://api.tavily.com/extract "HTTP/1.1 200 OK"
+speccheck.tavily tavily_extract credits=0 results=1
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=3620 out=42 reasoning=0 ms=1452 cost=$0.001124 format=json_schema thinking=off
+
+mode=live  run=20261021-082231-46f08f
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c07   send_back          send_back          status                 status                     none   60070   0.0720       6 ✓
+
+Answer-key panel
+  right call                      1 of 1
+  planted problems caught         1 of 1
+  clean packages wrongly flagged  0 of 0
+  fixes that pass the spec        0 of 1
+  average time per submittal      60.1 s
+  cost per submittal (model+web)  $0.0720
+Quote gate: claims 1/5 kept (80.0% dropped); web values 0/0 kept (n/a dropped)
+
+wrote /tmp/speccheck-c07-fix-scoped.json
+POST-RUN LEDGER: {"usd": 0.121112, "credits": 60.0}

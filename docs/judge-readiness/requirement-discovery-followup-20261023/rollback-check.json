@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-10-23T10:44:14.369848+00:00",
+  "rollback_commit": "2a62b6a",
+  "paths": {
+    "api/pipeline/fix.py": {
+      "matches_pre_experiment": true,
+      "sha256": "7d24e5addee11814a9aa82f17f8d84e921538fdd51b3b4fc1997636036b572b6"
+    },
+    "tests/test_investigate.py": {
+      "matches_pre_experiment": true,
+      "sha256": "154b58597078083d4bde46f6b136f3716cccf55470acb89ed2c7ed4ada57bb16"
+    },
+    "tests/test_replacement_bundle.py": {
+      "matches_pre_experiment": true,
+      "sha256": "fa40c7dc156d19ae60e155b9272b28febcd7fe99e0ab48f6a75ef9f3522fa03a"
+    }
+  },
+  "original_case_inputs_unchanged": {
+    "cases": true,
+    "samples": true,
+    "documents": true,
+    "specs": true
+  },
+  "case_input_hashes": {
+    "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+    "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+    "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+    "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c"
+  },
+  "temporary_private_environment_exists": false
+}

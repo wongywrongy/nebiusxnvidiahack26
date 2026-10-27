@@ -1,0 +1,20 @@
+
+mode=live  run=20261023-102055-14f173
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c07   send_back          send_back          status                 status                     none    1129   0.1741       0 ✓
+
+Answer-key panel
+  right call                      1 of 1
+  planted problems caught         1 of 1
+  clean packages wrongly flagged  0 of 0
+  fixes that pass the spec        0 of 1
+  invalid acceptance items        0 of 1
+  unnecessary notes               0
+  fresh model spend / web credits $0.000000 / 0
+  case evidence gate              Full scoring set required; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      1.1 s
+  cost per submittal (model+web)  $0.1741
+Quote gate: claims 109/262 kept (58.4% dropped); web values 19/60 kept (68.3% dropped)
+
+wrote docs/judge-readiness/status-timing-20261023/live/score.json

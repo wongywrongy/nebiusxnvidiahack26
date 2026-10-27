@@ -1,0 +1,38 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=1805 out=66 reasoning=0 ms=1138 cost=$0.000124 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=4313 out=2368 reasoning=0 ms=23008 cost=$0.003425 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=0
+httpx HTTP Request: POST https://api.tavily.com/search "HTTP/1.1 200 OK"
+speccheck.tavily tavily_search credits=1 results=5
+httpx HTTP Request: GET https://www.stifirestop.com/products/specseal-lci-intumescent-sealant "HTTP/1.1 200 OK"
+httpx HTTP Request: GET https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English "HTTP/1.1 200 OK"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=11121 out=1379 reasoning=0 ms=9133 cost=$0.004577 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=12447 out=1333 reasoning=0 ms=10536 cost=$0.004934 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=340 out=67 reasoning=0 ms=1665 cost=$0.000162 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=18920 out=8192 reasoning=0 ms=70658 cost=$0.013049 format=json_schema thinking=off
+
+mode=live  run=20261021-093028-7e0c4b
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -      59304   0.0372       3 ✓
+c05   ERROR  (see runs/20261021-093028-7e0c4b/events.jsonl)
+
+Answer-key panel
+  right call                      1 of 2
+  planted problems caught         0 of 0
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 0
+  average time per submittal      59.3 s
+  cost per submittal (model+web)  $0.0372
+Quote gate: claims 7/19 kept (63.2% dropped); web values 5/7 kept (28.6% dropped)
+
+wrote /tmp/speccheck-linked-documents-retry.json
+POST-RUN LEDGER: {"usd": 0.381328, "credits": 151.0}

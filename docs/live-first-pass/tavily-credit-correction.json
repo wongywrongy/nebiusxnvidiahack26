@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-21",
+  "reason": "Replace historical result-count estimates with captured include_usage response credits. Original run files unchanged.",
+  "rows": [
+    {
+      "run": "c03-baseline",
+      "original_ledger_credits": 5,
+      "reported_credits": 4,
+      "requests": [
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 0,
+          "urls": [
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "https://multimedia.3m.com/mws/media/1081475O/3m-fire-barrier-sealant-ic-15wb-dop-france.pdf"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "c03-quote-fix",
+      "original_ledger_credits": 12,
+      "reported_credits": 11,
+      "requests": [
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 1,
+          "urls": [
+            "https://pdf.lowes.com/productdocuments/5f24e7e8-f91c-4417-b3c8-c97b686db8fc/61418040.pdf",
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "https://www.jamindustrialsupply.com/product/3m-fire-barrier-sealant-ic-15wb-yellow-4-5-gallon-pail"
+          ]
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 1,
+          "urls": [
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "https://multimedia.3m.com/mws/media/1276869O/fire-barrier-ic-15wb-plus.pdf?fn=Fire+Barrier+IC+15WB+plus.pdf",
+            "https://www.3m.com/3M/en_US/p/d/b40065443"
+          ]
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 0,
+          "urls": [
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "https://www.3m.com/3M/en_US/p/d/b40065442"
+          ]
+        }
+      ]
+    },
+    {
+      "run": "c07-baseline",
+      "original_ledger_credits": 9,
+      "reported_credits": 10,
+      "requests": [
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 0,
+          "urls": [
+            "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf",
+            "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers",
+            "https://lithonia.acuitybrands.com/resources/technical-downloads"
+          ]
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 1,
+          "urls": [
+            "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf"
+          ]
+        },
+        {
+          "endpoint": "/extract",
+          "credits": 1,
+          "urls": [
+            "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers"
+          ]
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        },
+        {
+          "endpoint": "/search",
+          "credits": 1,
+          "urls": []
+        }
+      ]
+    }
+  ],
+  "adjustment": -1,
+  "before": {
+    "usd": 0.076209,
+    "credits": 32.0
+  },
+  "after": {
+    "usd": 0.076209,
+    "credits": 31.0
+  },
+  "dashboard_reconciliation": "Pending updated Kyle dashboard reading; no dashboard baseline inferred."
+}

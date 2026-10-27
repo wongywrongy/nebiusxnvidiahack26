@@ -1,0 +1,49 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+Inbox
+Scan
+3
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Start over
+Review
+0 of 2 decided
+sti_specseal_lci_tds_2025.pdf
+Page 1 of 3
+1
+2
+3
+Open original ↗
+07 84 00-01 · 1 of 2 · from Coastline Firestop
+Firestop sealant, through-penetrations
+Approve
+
+The firestop sealant submittal meets all requirements and can be approved as submitted.
+
+CHECK
+REQUIRED
+SUBMITTED
+VOC (air quality)
+≤ 250 g/L
+26 g/L
+astm g21 rating
+= 0
+0
+Test standards
+ASTM E814, ASTM E119, UL 1479
+ASTM E814 (UL1479), CAN/ULC-S115, ASTM E1966 (UL2079), ASTM E119 (UL263), ASTM E84 (UL723), ASTM C834, Type C, Grade 0
+Data sheet version
+Current: ZSFOD5062 25171
+ZSFOD5062 25171
+Sources: spec 07 84 00 · submitted sheet ZSFOD5062 25171 · SpecSeal® LCI Intumescent Sealant ↗
+Checked by Nemotron 3 Nano (sorted the pages) and Nemotron 3 Super (read the data sheet, read the web sources, wrote the result) on Nebius Token Factory · verdicts by code · 21k tokens · $0.007 model cost · 93 msevery call
+DRAFT FOR ARCHITECT
+
+Decisions and drafts stay in this browser. No email is sent.
+
+Save approval decision
+Save return

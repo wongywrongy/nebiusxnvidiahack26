@@ -1,0 +1,12 @@
+{
+  "source_request": {
+    "method": "GET",
+    "url": "https://www.lightmart.com/30w-40w-50w-selectable-wattage-lumens-and-color-temperature-led-architectural-2x4-troffer-light",
+    "authorization": null
+  },
+  "source_body_sha256": "d8bd6740588792f2163f22aef59369073a1facfef3bf7eaeb65e6727e63cfad7",
+  "same_saved_html_text_sha256": "a1bd00f7bcc0f2daa82f2ad1a5d55c3af27cfd836c12128aa5152a0b7d1bf044",
+  "before_link": "https://store-h2h8t9woje.mybigcommerce.com/content/pdfs/product-catalog/FullCatalog_LightMart_2020_SM%20%281%29.pdf",
+  "after_link": null,
+  "prompts_quote_and_selection_gates_changed": false
+}

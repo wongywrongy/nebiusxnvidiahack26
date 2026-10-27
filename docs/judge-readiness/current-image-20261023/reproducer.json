@@ -1,0 +1,8 @@
+{
+  "source": "docs/judge-readiness/controller-startup-20261023/reproduce.py",
+  "source_sha256": "0c7c55380ff90297d7267a153ee60eec2d1db079895343a9646d7675355504e9",
+  "only_change": "local image constant to speccheck:readiness-1c3c7fe",
+  "executed_script_sha256": "2ac90c413190365c4de5af490f0cb323ac73f44d8924d121da2d9e83252fbd33",
+  "network": "none",
+  "synthetic_only": true
+}

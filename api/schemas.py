@@ -72,12 +72,26 @@ class Claim(BaseModel):
     page: Optional[int] = None
     bbox: Optional[list[float]] = None
     quote: Optional[str] = Field(default=None, description="Short text from the page supporting the claim")
+    variant: Optional[str] = Field(default=None, description="Exact phrase in the quote naming the optional model/driver/configuration limiting this value; null for a product-wide statement")
+    scope: Literal["product_wide", "option", "unknown"] = "unknown"
+    scope_quote: Optional[str] = Field(default=None, description="Exact passage establishing whether this value covers the product or only an option")
+    selection_quote: Optional[str] = None
+
+
+class Selection(BaseModel):
+    model: str
+    page: int
+    quote: str = Field(description="Exact submitted passage marking the selected/submitted/specified configuration; never an ordering example")
+    origin: Literal["submitted", "agent_proposal"] = "submitted"
 
 
 class ClaimsOut(BaseModel):
     product: str
     manufacturer: str
     model: Optional[str] = None
+    selection: Optional[Selection] = None
+    family: Optional[str] = Field(default=None, description="Product family identifier printed on the submitted pages, excluding order-code options")
+    family_quote: Optional[str] = Field(default=None, description="Exact submitted passage identifying this family")
     document_revision: Optional[str] = Field(default=None, description="Revision or date printed on the sheet")
     claims: list[Claim]
 
@@ -93,6 +107,7 @@ class Evidence(BaseModel):
     sha256: Optional[str] = None
     excerpt: Optional[str] = None
     archived_path: Optional[str] = None
+    cache_hit: Optional[bool] = None
 
 
 class PropertyValue(BaseModel):
@@ -100,6 +115,13 @@ class PropertyValue(BaseModel):
     value: Value
     unit: Optional[str] = None
     quote: Optional[str] = Field(default=None, description="Exact text from the source stating this value")
+    source_url: Optional[str] = None
+    model: Optional[str] = Field(default=None, description="Exact product/model printed on this source; never copy SUBMITTED without source evidence")
+    identity_quote: Optional[str] = Field(default=None, description="Exact source passage naming this product/model")
+    variant: Optional[str] = Field(default=None, description="Exact quoted configuration limiting this value; null only for product-wide values")
+    scope: Literal["product_wide", "option", "unknown"] = "unknown"
+    scope_quote: Optional[str] = None
+    selection_quote: Optional[str] = None
 
 
 class VerifyOut(BaseModel):
@@ -110,9 +132,16 @@ class VerifyOut(BaseModel):
     current_revision: Optional[str] = Field(default=None, description="Revision or date exactly as printed on the source")
     status_date: Optional[str] = Field(default=None, description="Date it was discontinued or replaced, as stated")
     status_quote: Optional[str] = Field(default=None, description="Exact text from the source stating the status")
+    status_family: Optional[str] = Field(default=None, description="Exact family name in the status quote, also named by the submitted product; status only")
     current_values: list[PropertyValue] = []
     source_urls: list[str] = []
     notes: Optional[str] = None
+
+
+class VerificationProof(BaseModel):
+    submitted: ClaimsOut
+    output: VerifyOut
+    sources: list[Evidence] = []
 
 
 class CompareRow(BaseModel):
@@ -139,7 +168,7 @@ class Highlight(BaseModel):
 
 
 Check = Literal["spec", "currency", "validity", "status", "completeness"]
-Verdict = Literal["pass", "fail", "outdated", "unverified", "note", "not_applicable"]
+Verdict = Literal["pass", "fail", "outdated", "unverified", "note", "not_applicable", "pending"]
 Severity = Literal["critical", "major", "minor", "info"]
 Decision = Literal["approve", "approve_with_note", "send_back"]
 
@@ -151,20 +180,31 @@ class Compare(BaseModel):
     left_value: Value = None
     right_label: str
     right_value: Value = None
-    verdict: Literal["fail", "pass", "changed"]
+    verdict: Literal["fail", "pass", "changed", "unverified"]
     rows: list[CompareRow] = []  # currency: only the fields whose values differ
 
 
 class FixCheck(BaseModel):
     label: str
-    ok: Optional[bool]  # None: not stated in the candidate's document
+    check: Optional[Check] = None
+    ok: Optional[bool]  # None: not confirmed by accepted evidence
     note: str = ""
+    requirement_id: Optional[str] = None
+    claim_ids: list[str] = []
+    evidence: list[Evidence] = []
 
 
 class FixCandidate(BaseModel):
     name: str
     source_url: str
+    documents: list[Evidence] = Field(default=[], max_length=3)
     checks: list[FixCheck] = []
+    claims: list[Claim] = []
+    selection: Optional[Selection] = None
+    document_roles: list[str] = []
+    extracted: Optional[ClaimsOut] = None
+    verification: Optional[VerificationProof] = None
+    page_sources: dict[int, Evidence] = {}
     passes: bool
 
 
@@ -216,6 +256,7 @@ class Usage(BaseModel):
     format: Optional[str] = None  # live: "json_schema" or "json_object" (fallback)
     reasoning_tokens: int = 0  # live: thinking tokens the server reported (Nemotron 3 thinks by default)
     thinking: Optional[str] = None  # live: "off" (asked for no thinking), "on", or "server-default"
+    finish_reason: Optional[str] = None
 
 
 class ToolFunction(BaseModel):
@@ -242,17 +283,28 @@ class InvestigationStep(BaseModel):
     summary: str
     credits: float = 0
     ms: int = 0
+    succeeded: Optional[bool] = None
+    source_urls: list[str] = []
 
 
 class Investigation(BaseModel):
     steps: list[InvestigationStep] = []
     outcome: Literal["found", "not_found", "capped"] = "not_found"
+    purpose: Literal["primary", "replacement"] = "primary"
+    resolution: Literal["not_resolved", "revision_only", "values_confirmed", "problem_found"] = "not_resolved"
+    scripted: Optional[VerifyOut] = None
     # Whole extracted pages stay internal; the public trace contains only short, redacted summaries.
     _pages: list[dict] = PrivateAttr(default_factory=list)
     _usage: list[Usage] = PrivateAttr(default_factory=list)
     _verified: VerifyOut = PrivateAttr(default_factory=lambda: VerifyOut(status="unknown"))
     _document_url: Optional[str] = PrivateAttr(default=None)
     _document_title: str = PrivateAttr(default="")
+
+
+class Diagnostic(BaseModel):
+    stage: str
+    kind: Literal["budget", "provider", "output_limit", "internal"]
+    message: str
 
 
 class Result(BaseModel):
@@ -263,15 +315,26 @@ class Result(BaseModel):
     findings: list[Finding]
     comparison: list[CompareRow] = []
     claims: list[Claim] = []
+    selection: Optional[Selection] = None
+    document_roles: list[str] = []
+    extracted: Optional[ClaimsOut] = None
+    verification: Optional[VerificationProof] = None
     document_revision: Optional[str] = None
     note_to_subcontractor: str = ""
     usage: list[Usage] = []
     web_credits: float = 0.0
     duration_ms: int = 0
     investigation: Optional[Investigation] = None
+    investigations: list[Investigation] = []
     mode: Optional[Literal["mock", "live"]] = None
     replayed_from: Optional[str] = None
     warnings: list[str] = []
+    diagnostics: list[Diagnostic] = []
+    validity: Literal["valid", "invalid", "legacy"] = "legacy"
+    config_hash: Optional[str] = None
+    fresh_model_cost_usd: float = 0.0
+    fresh_web_credits: float = 0.0
+    queue_ms: int = 0
     ocr_pages: int = 0
     archived_submittals: list[str] = []
     evidence_label: Optional[str] = None

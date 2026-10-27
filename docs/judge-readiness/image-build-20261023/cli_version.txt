@@ -1,0 +1,4 @@
+Error: unknown flag --version for "nebius"
+
+To see available options, use:
+    $ nebius --help

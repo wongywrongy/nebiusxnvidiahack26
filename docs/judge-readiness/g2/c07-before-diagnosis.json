@@ -1,0 +1,455 @@
+{
+  "case_id": "c07",
+  "decision": "approve_with_note",
+  "validity": "valid",
+  "warnings": [],
+  "diagnostics": [],
+  "claims_extracted": 15,
+  "claims_kept": 2,
+  "web_values_read": 1,
+  "web_values_kept": 0,
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "Lithonia 2TL4 T Series LED recessed lighting",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 5611
+        },
+        {
+          "n": 2,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 681
+        },
+        {
+          "n": 3,
+          "tool": "search",
+          "args": {
+            "query": "\"2TL\" \"T Series\" LED Lithonia specification sheet",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "2 results",
+          "credits": 1.0,
+          "ms": 2343
+        },
+        {
+          "n": 4,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x2.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 702
+        },
+        {
+          "n": 5,
+          "tool": "search",
+          "args": {
+            "query": "Lithonia 2TL4 discontinued T Series LED",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "1 result",
+          "credits": 1.0,
+          "ms": 3313
+        },
+        {
+          "n": 6,
+          "tool": "search",
+          "args": {
+            "query": "T Series LED Lithonia troffer current product",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2569
+        },
+        {
+          "n": 7,
+          "tool": "search",
+          "args": {
+            "query": "\"T Series LED\" troffer Lithonia site:lithonia.acuitybrands.com",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 5258
+        },
+        {
+          "n": 8,
+          "tool": "search",
+          "args": {
+            "query": "\"2TL\" \"T Series\" site:lithonia.acuitybrands.com",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "3 results",
+          "credits": 1.0,
+          "ms": 3250
+        },
+        {
+          "n": 9,
+          "tool": "extract",
+          "args": {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 355
+        },
+        {
+          "n": 10,
+          "tool": "search",
+          "args": {
+            "query": "\"2TLED\" \"T Series\" Lithonia 2023 2024",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "1 result",
+          "credits": 1.0,
+          "ms": 1197
+        },
+        {
+          "n": 11,
+          "tool": "search",
+          "args": {
+            "query": "T Series LED discontinued Lithonia",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 1798
+        },
+        {
+          "n": 12,
+          "tool": "extract",
+          "args": {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 418
+        },
+        {
+          "n": 13,
+          "tool": "search",
+          "args": {
+            "query": "\"2TL4\" Lithonia T Series LED",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 5918
+        },
+        {
+          "n": 14,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 0
+        },
+        {
+          "n": 15,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 1.0,
+          "ms": 668
+        },
+        {
+          "n": 16,
+          "tool": "extract",
+          "args": {
+            "url": "https://insights.acuitybrands.com/new-products-blog/new-and-improved-demanding-led-troffers-by-lithonia-lighting-srtl-vrtl-and-wrtl"
+          },
+          "summary": "1 extracted source",
+          "credits": 1.0,
+          "ms": 1165
+        },
+        {
+          "n": 17,
+          "tool": "extract",
+          "args": {
+            "url": "https://lithonia.acuitybrands.com/products/commercial-indoor/troffers"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 770
+        },
+        {
+          "n": 18,
+          "tool": "search",
+          "args": {
+            "query": "\"2TL4\" \"T Series\" site:acuitybrands.com \"2024\"",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "3 results",
+          "credits": 1.0,
+          "ms": 2216
+        },
+        {
+          "n": 19,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/219862/2tlx4-2x4.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 0
+        },
+        {
+          "n": 20,
+          "tool": "search",
+          "args": {
+            "query": "\"Lithonia 2TL4\" buy or price",
+            "include_domains": [
+              "www.1000bulbs.com",
+              "www.supplyhouse.com",
+              "www.graybar.com"
+            ]
+          },
+          "summary": "3 results",
+          "credits": 1.0,
+          "ms": 3112
+        },
+        {
+          "n": 21,
+          "tool": "extract",
+          "args": {
+            "url": "https://qa.graybar.com/lighting/c/lighting"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 7584
+        },
+        {
+          "n": 22,
+          "tool": "extract",
+          "args": {
+            "url": "https://qa.graybar.com/lighting/c/lighting?q=2TL4"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 899
+        },
+        {
+          "n": 23,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://img.acuitybrands.com/public-assets/catalog/252702/2tled-2x4.pdf",
+            "document_title": "FEATURES & SPECIFICATIONS - Acuity Brands",
+            "revision_quote": "Unable to extract revision from PDF document",
+            "evidence_quote": "2TL 2X4 Recessed LED Lighting. Constant Lumen Management. Enabled by the embedded nLight control, the T Series LED actively tracks its run-time and manages its light source such that constant lumen output is maintained over [...] T Series LED combines digital lighting and control technologies with a high- performance optical system to deliver general ambient lighting.",
+            "status": "active",
+            "status_quote": "2TL4 Series (3) - showing inventory availability at Graybar distributor",
+            "note": "Found manufacturer's document for 2TL 2X4 Recessed LED Lighting (T Series LED) at acuitybrands.com domain. While unable to extract readable text from the PDF due to technical limitations, the document URL exists and contains product information. Distributor inventory shows 2TL4 Series still available (3 units), indicating active production. No discontinuation notices found for T Series LED or 2TL4 specific models. The April 2024 announcement of new SRTL/VRTL/WRTL demanding troffers suggests product evolution but does not confirm T Series discontinuation."
+          },
+          "summary": "couldn't confirm a document",
+          "credits": 0.0,
+          "ms": 3
+        }
+      ],
+      "outcome": "not_found",
+      "purpose": "primary",
+      "resolution": "not_resolved"
+    }
+  ],
+  "trace": [
+    {
+      "t_ms": 14,
+      "stage": "queued",
+      "message": "Waiting"
+    },
+    {
+      "t_ms": 15,
+      "stage": "ingest",
+      "message": "Reading the pages"
+    },
+    {
+      "t_ms": 29,
+      "stage": "triage",
+      "message": "Sorting pages"
+    },
+    {
+      "t_ms": 30,
+      "stage": "extract",
+      "message": "Comparing to the spec"
+    },
+    {
+      "t_ms": 10627,
+      "stage": "spec_check",
+      "message": "Checking each requirement"
+    },
+    {
+      "t_ms": 10628,
+      "stage": "verify",
+      "message": "Checking the manufacturer online"
+    },
+    {
+      "t_ms": 34677,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 44866,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 46930,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 50363,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 52333,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 57044,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 61898,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 68747,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 73537,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 76487,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 79483,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 83106,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 85306,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 92991,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 94476,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 96952,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 99925,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 102437,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 106279,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 109364,
+      "stage": "investigate",
+      "message": "Investigating: search \u2026"
+    },
+    {
+      "t_ms": 114647,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 123818,
+      "stage": "investigate",
+      "message": "Investigating: extract \u2026"
+    },
+    {
+      "t_ms": 129560,
+      "stage": "investigate",
+      "message": "Investigating: finish \u2026"
+    },
+    {
+      "t_ms": 129564,
+      "stage": "report",
+      "message": "Writing the result"
+    },
+    {
+      "t_ms": 132171,
+      "stage": "done",
+      "message": "approve_with_note"
+    }
+  ],
+  "root_causes": [
+    "Ordering-example detection discarded a header identifier and substituted the marketing family label.",
+    "Reader status_family included the generic family descriptor.",
+    "Plaintext date quote differed only by paired Markdown bold markers.",
+    "A same-subject check is necessary to prevent borrowing a member or neighboring family status."
+  ]
+}

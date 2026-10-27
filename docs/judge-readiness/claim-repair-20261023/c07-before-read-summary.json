@@ -1,0 +1,133 @@
+[
+  {
+    "cache_file": "3395611760e8d2b3004ba643.json",
+    "product": null,
+    "model": null,
+    "kind": "value_correction",
+    "claims": 0,
+    "l70": [],
+    "reasoning_tokens": 0,
+    "latency_ms": 882
+  },
+  {
+    "cache_file": "8c0d702d2cbea2b6fb514255.json",
+    "product": "Integrated Control Indoor Luminaires Look Up Guide",
+    "model": null,
+    "kind": "initial",
+    "claims": 0,
+    "l70": [],
+    "reasoning_tokens": 0,
+    "latency_ms": 1335
+  },
+  {
+    "cache_file": "6aa711de648f37d327f3a4e8.json",
+    "product": "SLLT LED Troffer",
+    "model": "SLLT",
+    "kind": "initial",
+    "claims": 4,
+    "l70": [],
+    "reasoning_tokens": 0,
+    "latency_ms": 5329
+  },
+  {
+    "cache_file": "4874343089abb76726887adb.json",
+    "product": "SLLT LED TROFFER LUMINAIRE",
+    "model": "SLLT",
+    "kind": "initial",
+    "claims": 19,
+    "l70": [
+      {
+        "id": "l70_hours-1",
+        "product": "SLLT LED TROFFER LUMINAIRE",
+        "manufacturer": "Starco Lighting Inc.",
+        "model": "SLLT",
+        "property": "l70_hours",
+        "value": "349,000",
+        "unit": "hours",
+        "page": 1,
+        "bbox": null,
+        "quote": "Reported L70 Lifetime: 349,000 hours @25\\u00b0C",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Reported L70 Lifetime: 349,000 hours @25\\u00b0C",
+        "selection_quote": null
+      }
+    ],
+    "reasoning_tokens": 0,
+    "latency_ms": 15918
+  },
+  {
+    "cache_file": "0690d187597679f78c0ed757.json",
+    "product": "LED Troffer",
+    "model": "SD40",
+    "kind": "initial",
+    "claims": 0,
+    "l70": [],
+    "reasoning_tokens": 0,
+    "latency_ms": 2123
+  },
+  {
+    "cache_file": "0d2df0f35ca6aa6909348572.json",
+    "product": "SLLT LED Troffer Luminaire",
+    "model": null,
+    "kind": "initial",
+    "claims": 0,
+    "l70": [],
+    "reasoning_tokens": 0,
+    "latency_ms": 1551
+  },
+  {
+    "cache_file": "3a24789dddf2575ae506cf8e.json",
+    "product": "2TL 2X4 Recessed LED Lighting",
+    "model": "2TL-2X4",
+    "kind": "initial",
+    "claims": 87,
+    "l70": [
+      {
+        "id": "cl-81",
+        "product": "2TL 2X4 Recessed LED Lighting",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": null,
+        "property": "l70_hours",
+        "value": 60000.0,
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000). ",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Long-life LEDs, coupled with high-efficiency drivers, provide superior level and quality of illumination for extended service life. 90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+        "selection_quote": null
+      }
+    ],
+    "reasoning_tokens": 0,
+    "latency_ms": 58263
+  },
+  {
+    "cache_file": "8902e2cd839a325b8afd7c92.json",
+    "product": "LT LED Troffer",
+    "model": "LT",
+    "kind": "initial",
+    "claims": 15,
+    "l70": [
+      {
+        "id": "cl-8",
+        "product": "LT LED Troffer",
+        "manufacturer": "H.E. Williams, Inc.",
+        "model": null,
+        "property": "l70_hours",
+        "value": 72000.0,
+        "unit": "hours",
+        "page": 1,
+        "bbox": null,
+        "quote": "L70 > 72,000 hours per IES TM-21.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "L70 > 72,000 hours per IES TM-21. L80 > 102,000 hours with HE option.",
+        "selection_quote": null
+      }
+    ],
+    "reasoning_tokens": 0,
+    "latency_ms": 14762
+  }
+]

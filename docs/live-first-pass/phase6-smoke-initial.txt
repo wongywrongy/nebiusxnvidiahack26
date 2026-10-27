@@ -1,0 +1,4 @@
+Caps: {"budget_tavily_credits_per_day": 600.0, "budget_tavily_credits_per_item": 60.0, "budget_usd_per_day": 8.0, "budget_usd_per_run": 3.0, "max_concurrency": 2}
+Run: 20261022-182621-9c3c7a · inputs: c01 + smoke.pdf · shared item budget · no retries
+Smoke failed:
+- c01: expected a non-cached live Nemotron call or replayed_from; a fully cached trace does not prove a new provider call.

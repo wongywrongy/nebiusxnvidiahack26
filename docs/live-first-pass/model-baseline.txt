@@ -1,0 +1,25 @@
+Endpoint: https://api.tokenfactory.nebius.com/v1/   THINKING=off
+httpx HTTP Request: GET https://api.tokenfactory.nebius.com/v1/models "HTTP/1.1 200 OK"
+28 models on this account
+Nemotron models visible:
+  nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+  nvidia/Nemotron-3-Ultra-550b-a55b
+  nvidia/Nemotron-3.5-Super-VL
+  nvidia/Nemotron-3_5-Lightning
+  nvidia/nemotron-3-super-120b-a12b
+  triage    nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B         listed
+  extract   nvidia/nemotron-3-super-120b-a12b             listed
+Estimated cost: ~$0.00125
+
+== triage: nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory triage model=nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B in=136 out=37 reasoning=0 ms=779 cost=$0.000017 format=json_schema thinking=off
+   result: {'product': 'Firestop sealant', 'f_rating_hours': 2.0, 'standard': 'ASTM E814'}
+   format=json_schema  thinking=off  reasoning_tokens=0  latency=779 ms  in=136  out=37  cost=$0.000017  cached=False
+
+== extract: nvidia/nemotron-3-super-120b-a12b
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory extract_claims model=nvidia/nemotron-3-super-120b-a12b in=136 out=32 reasoning=0 ms=1053 cost=$0.000070 format=json_schema thinking=off
+   result: {'product': 'Firestop sealant', 'f_rating_hours': 2.0, 'standard': 'ASTM E814'}
+   format=json_schema  thinking=off  reasoning_tokens=0  latency=1053 ms  in=136  out=32  cost=$0.000070  cached=False
+POST-RUN LEDGER: {"usd": 8.7e-05, "credits": 0.0}

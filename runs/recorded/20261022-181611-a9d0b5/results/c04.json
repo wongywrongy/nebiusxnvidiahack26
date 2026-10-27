@@ -1,0 +1,864 @@
+{
+  "case_id": "c04",
+  "title": "Firestop system, steel pipe through gypsum wall",
+  "decision": "send_back",
+  "summary": "The firestop submittal was sent back because the listed products don’t cover steel pipe as required, and some key details couldn’t be verified due to missing information in the package.",
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "VOC (air quality)",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": "This doesn’t affect the current review since it only applies to product data sheets.",
+      "requirement_id": "req_voc_content",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "ASTM G21 rating",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": "This doesn’t affect the current review since it only applies to product data sheets.",
+      "requirement_id": "req_mold_resistance",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_t_rating_min_equal_f",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Temperature rating (T) comparison",
+      "detail": "Values were not comparable.",
+      "why_it_matters": "We couldn’t verify if the temperature rating meets the requirement without comparable values in the submittal.",
+      "requirement_id": "req_t_rating_min_equal_f",
+      "claim_id": "clm-3",
+      "claim_ids": [
+        "clm-3"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-3",
+          "doc_file": "c04/hilti_w-l-2078.pdf",
+          "page": 1,
+          "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR.",
+          "boxes": [
+            {
+              "x0": 0.3597,
+              "y0": 0.1006,
+              "x1": 0.64,
+              "y1": 0.1165
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "T = F",
+        "right_label": "Submitted",
+        "right_value": "0 hr",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "Test standards",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": "This doesn’t affect the current review since it only applies to product data sheets.",
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "validity-cond-penetrant",
+      "check": "validity",
+      "verdict": "fail",
+      "severity": "critical",
+      "title": "Pipe types covered",
+      "detail": "Package lists PVC, ABS, FRPP, CPVC, PVDF, PEX; needs steel pipe.",
+      "why_it_matters": "Using a firestop not rated for steel pipe could fail during a fire, allowing smoke and flames to spread through the wall.",
+      "requirement_id": "cond-penetrant",
+      "claim_id": "clm-7",
+      "claim_ids": [
+        "clm-7"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-7",
+          "doc_file": "c04/hilti_w-l-2078.pdf",
+          "page": 2,
+          "quote": "PENETRATING ITEM TO BE ONE OF THE FOLLOWING (ALSO SEE NOTE NO. 3 BELOW) :\nA. MAXIMUM 10\" NOMINAL DIAMETER PVC PLASTIC PIPE (CELLULAR OR SOLID CORE).\nB. MAXIMUM 10\" NOMINAL DIAMETER CPVC PLASTIC PIPE (CLOSED PIPING SYSTEM ONLY).\nC. MAXIMUM 6\" NOMINAL DIAMETER ABS PLASTIC PIPE (CELLULAR OR SOLID CORE).\nD. MAXIMUM 6\" NOMINAL DIAMETER FRPP PLASTIC PIPE.\nE. MAXIMUM 4\" NOMINAL DIAMETER PVDF PLASTIC PIPE.\nF. MAXIMUM 4\" NOMINAL DIAMETER CROSS-LINKED POLYETHYLENE (PEX) TUBING (SDR 9) (AQUAPEX\nOR WIRSBO HEPEX BY UPONOR) (CLOSED PIPING SYSTEM ONLY).",
+          "boxes": [
+            {
+              "x0": 0.0751,
+              "y0": 0.2508,
+              "x1": 0.7911,
+              "y1": 0.2666
+            },
+            {
+              "x0": 0.0865,
+              "y0": 0.2689,
+              "x1": 0.8076,
+              "y1": 0.2848
+            },
+            {
+              "x0": 0.0852,
+              "y0": 0.2871,
+              "x1": 0.8457,
+              "y1": 0.303
+            },
+            {
+              "x0": 0.0856,
+              "y0": 0.3053,
+              "x1": 0.7983,
+              "y1": 0.3212
+            },
+            {
+              "x0": 0.0852,
+              "y0": 0.3235,
+              "x1": 0.5612,
+              "y1": 0.3394
+            },
+            {
+              "x0": 0.0852,
+              "y0": 0.3417,
+              "x1": 0.5603,
+              "y1": 0.3575
+            },
+            {
+              "x0": 0.0852,
+              "y0": 0.3599,
+              "x1": 0.9364,
+              "y1": 0.3757
+            },
+            {
+              "x0": 0.1004,
+              "y0": 0.378,
+              "x1": 0.6517,
+              "y1": 0.3939
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Job needs",
+        "left_value": [
+          "steel pipe"
+        ],
+        "right_label": "Listing covers",
+        "right_value": [
+          "PVC",
+          "ABS",
+          "FRPP",
+          "CPVC",
+          "PVDF",
+          "PEX"
+        ],
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 drawing schedule",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "UL listed firestop system steel pipe steel pipe through gypsum wall",
+        "candidates": [
+          {
+            "name": "System No. WL-1049",
+            "source_url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Fwl1049_dl.pdf",
+            "checks": [
+              {
+                "label": "Temperature rating (T)",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "Pipe types covered",
+                "ok": null,
+                "note": "not stated"
+              },
+              {
+                "label": "Current document",
+                "ok": true,
+                "note": "December 4, 2023"
+              }
+            ],
+            "passes": false
+          }
+        ],
+        "suggest": ""
+      }
+    },
+    {
+      "id": "currency-unverified",
+      "check": "currency",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Current document confirmation",
+      "detail": "No source quoted a revision or a value; check manually.",
+      "why_it_matters": "Without knowing which revision is current, we can’t be sure the submitted documents reflect the latest approved information.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "Apr. 17, 2018",
+        "right_label": "Current",
+        "right_value": "Not found",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [],
+      "quote": null,
+      "decided_by": "tavily",
+      "fix": null
+    }
+  ],
+  "comparison": [],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "f_rating_hr",
+      "value": 1.0,
+      "unit": "hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "F-RATING = 1-HR. OR 2-HR.",
+      "variant": null
+    },
+    {
+      "id": "clm-2",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "f_rating_hr",
+      "value": 2.0,
+      "unit": "hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "F-RATING = 1-HR. OR 2-HR.",
+      "variant": null
+    },
+    {
+      "id": "clm-3",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "t_rating_hr",
+      "value": 0.0,
+      "unit": "hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR.",
+      "variant": null
+    },
+    {
+      "id": "clm-4",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "t_rating_hr",
+      "value": 1.0,
+      "unit": "hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR.",
+      "variant": null
+    },
+    {
+      "id": "clm-5",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "t_rating_hr",
+      "value": 2.0,
+      "unit": "hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "T-RATING = 0-HR., 1-HR., OR 2-HR.",
+      "variant": null
+    },
+    {
+      "id": "clm-6",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "max_annular_space_in",
+      "value": 0.5,
+      "unit": "in",
+      "page": 2,
+      "bbox": null,
+      "quote": "ANNULAR SPACE = MINIMUM 0\", MAXIMUM 1/2\".",
+      "variant": null
+    },
+    {
+      "id": "clm-7",
+      "product": "Hilti Firestop System W-L-2078",
+      "manufacturer": "Hilti, Inc.",
+      "model": "W-L-2078",
+      "property": "penetrant_types",
+      "value": [
+        "PVC",
+        "ABS",
+        "FRPP",
+        "CPVC",
+        "PVDF",
+        "PEX"
+      ],
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "PENETRATING ITEM TO BE ONE OF THE FOLLOWING (ALSO SEE NOTE NO. 3 BELOW) :\nA. MAXIMUM 10\" NOMINAL DIAMETER PVC PLASTIC PIPE (CELLULAR OR SOLID CORE).\nB. MAXIMUM 10\" NOMINAL DIAMETER CPVC PLASTIC PIPE (CLOSED PIPING SYSTEM ONLY).\nC. MAXIMUM 6\" NOMINAL DIAMETER ABS PLASTIC PIPE (CELLULAR OR SOLID CORE).\nD. MAXIMUM 6\" NOMINAL DIAMETER FRPP PLASTIC PIPE.\nE. MAXIMUM 4\" NOMINAL DIAMETER PVDF PLASTIC PIPE.\nF. MAXIMUM 4\" NOMINAL DIAMETER CROSS-LINKED POLYETHYLENE (PEX) TUBING (SDR 9) (AQUAPEX\nOR WIRSBO HEPEX BY UPONOR) (CLOSED PIPING SYSTEM ONLY).",
+      "variant": null
+    }
+  ],
+  "document_revision": "Apr. 17, 2018",
+  "note_to_subcontractor": "Please resubmit with a firestop system that explicitly includes steel pipe and provide clear revision numbers or dates for all documents so we can confirm they are current.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 1213,
+      "output_tokens": 47,
+      "cost_usd": 0.000084,
+      "latency_ms": 1091,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2579,
+      "output_tokens": 1074,
+      "cost_usd": 0.00174,
+      "latency_ms": 4865,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4875,
+      "output_tokens": 226,
+      "cost_usd": 0.001666,
+      "latency_ms": 2301,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5128,
+      "output_tokens": 147,
+      "cost_usd": 0.001671,
+      "latency_ms": 4953,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1367,
+      "output_tokens": 139,
+      "cost_usd": 0.000535,
+      "latency_ms": 1589,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3269,
+      "output_tokens": 113,
+      "cost_usd": 0.001082,
+      "latency_ms": 2113,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4107,
+      "output_tokens": 120,
+      "cost_usd": 0.00134,
+      "latency_ms": 1646,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4244,
+      "output_tokens": 85,
+      "cost_usd": 0.00135,
+      "latency_ms": 1843,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4346,
+      "output_tokens": 77,
+      "cost_usd": 0.001373,
+      "latency_ms": 2847,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6243,
+      "output_tokens": 140,
+      "cost_usd": 0.001999,
+      "latency_ms": 4604,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6400,
+      "output_tokens": 77,
+      "cost_usd": 0.001989,
+      "latency_ms": 1413,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7170,
+      "output_tokens": 111,
+      "cost_usd": 0.002251,
+      "latency_ms": 1798,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7922,
+      "output_tokens": 92,
+      "cost_usd": 0.002459,
+      "latency_ms": 1612,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8031,
+      "output_tokens": 85,
+      "cost_usd": 0.002486,
+      "latency_ms": 2569,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9891,
+      "output_tokens": 386,
+      "cost_usd": 0.003315,
+      "latency_ms": 9543,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 10294,
+      "output_tokens": 83,
+      "cost_usd": 0.003163,
+      "latency_ms": 2050,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11266,
+      "output_tokens": 572,
+      "cost_usd": 0.003895,
+      "latency_ms": 4600,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6846,
+      "output_tokens": 27,
+      "cost_usd": 0.002078,
+      "latency_ms": 4722,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2388,
+      "output_tokens": 41,
+      "cost_usd": 0.000753,
+      "latency_ms": 2754,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2993,
+      "output_tokens": 479,
+      "cost_usd": 0.001329,
+      "latency_ms": 3006,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7806,
+      "output_tokens": 234,
+      "cost_usd": 0.002552,
+      "latency_ms": 2715,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 811,
+      "output_tokens": 352,
+      "cost_usd": 0.00056,
+      "latency_ms": 2921,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 68,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "Hilti Firestop System W-L-2078 W-L-2078 specification data sheet",
+          "include_domains": [
+            "hilti.com",
+            "hilti.ca"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 2,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.hilti.com/engineering/question/penetration-on-a-interior-1-hour-fire-rated-wall/58j7bi"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.hilti.com/content/dam/hilti/hilti/global/products/firestop/systems/wl-series/WL2078r.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 4,
+        "tool": "extract",
+        "args": {
+          "url": "https://files-ask.hilti.com/original/hm/WL2078r.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 5,
+        "tool": "search",
+        "args": {
+          "query": "\"WL2078\" Hilti firestop system specification",
+          "include_domains": [
+            "hilti.com",
+            "hilti.ca"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 6,
+        "tool": "extract",
+        "args": {
+          "url": "https://files-ask.hilti.com/original/hm/WL2078r.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 7,
+        "tool": "extract",
+        "args": {
+          "url": "https://files-ask.hilti.com/original/hm/hmtn7xrswt.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 8,
+        "tool": "search",
+        "args": {
+          "query": "WL2078r.pdf site:hilti.com",
+          "include_domains": [
+            "hilti.com"
+          ]
+        },
+        "summary": "2 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 9,
+        "tool": "extract",
+        "args": {
+          "url": "https://files-ask.hilti.com/original/hm/WL2078r.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 10,
+        "tool": "search",
+        "args": {
+          "query": "\"WL 2078\" Hilti firestop system PDF",
+          "include_domains": [
+            "hilti.com",
+            "hilti.ca"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 11,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.hilti.com/content/dam/hilti/hilti/global/products/firestop/systems/wl-series/WL2078r.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 12,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.hilti.com/content/hilti/W1/US/en/business/business/engineering/fire-protection/firestop-selector.html"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 13,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://www.hilti.com/content/hilti/W1/US/en/business/business/engineering/fire-protection/systems-to-withstand-movement.html",
+          "document_title": "Firestop Systems to Withstand Movement - Hilti USA",
+          "revision_quote": "Unable to extract exact revision from PDF document",
+          "status": "active",
+          "status_quote": "\"Firestop Collar CP 643 N or CP 644 | WL 2078 | PDF |\"",
+          "note": "Found explicit listing of WL 2078 as an active Hilti firestop system associated with Firestop Collar CP 643 N or CP 644 in Hilti's official 'Firestop Systems to Withstand Movement' documentation. Multiple recent references to WL2078r.pdf files in Hilti engineering questions from the past 2 years confirm ongoing use and support of this system."
+        },
+        "summary": "couldn't confirm a document",
+        "credits": 0.0,
+        "ms": 0
+      }
+    ],
+    "outcome": "not_found"
+  },
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 11,
+  "claims_kept": 11,
+  "web_values_read": 3,
+  "web_values_kept": 2
+}

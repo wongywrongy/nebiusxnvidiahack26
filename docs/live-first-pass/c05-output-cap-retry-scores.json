@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-10-21T09:35:47+00:00",
+  "mode": "live",
+  "run_id": "20261021-093410-e942f4",
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "quote_gate": {
+    "claims_extracted": 12,
+    "claims_kept": 10,
+    "web_values_read": 10,
+    "web_values_kept": 2,
+    "claims_drop_rate": 0.16666666666666663,
+    "web_values_drop_rate": 0.8
+  },
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "",
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 12,
+    "map_limit": 20
+  },
+  "right_call": {
+    "n": 0,
+    "of": 1
+  },
+  "caught": {
+    "n": 0,
+    "of": 0
+  },
+  "false_alarms": {
+    "n": 1,
+    "of": 1
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 0
+  },
+  "time_ms_per_item": 96947,
+  "cost_usd_per_item": 0.114106,
+  "rows": [
+    {
+      "id": "c05",
+      "title": "LED troffer, classrooms",
+      "product": "Lithonia BLT 2x4",
+      "expected": "approve",
+      "expected_problems": [],
+      "decision": "send_back",
+      "found_problems": [
+        "currency_note",
+        "spec"
+      ],
+      "right_call": false,
+      "caught": 0,
+      "false_alarm": true,
+      "fix": null,
+      "time_ms": 96947,
+      "model_cost_usd": 0.042106,
+      "web_credits": 9.0,
+      "cost_usd": 0.114106,
+      "claims_extracted": 12,
+      "claims_kept": 10,
+      "web_values_read": 10,
+      "web_values_kept": 2
+    }
+  ],
+  "runner": "local",
+  "job_name": null
+}

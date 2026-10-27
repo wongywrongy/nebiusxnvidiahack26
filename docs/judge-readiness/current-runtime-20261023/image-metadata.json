@@ -1,0 +1,78 @@
+{
+  "local_only": true,
+  "published": false,
+  "image_index": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
+  "config_id": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
+  "runtime_code_hash": "00e67a6b689a02864de9286e2f4b7d39fbb31b845fee871a7a09d5964783a3a3",
+  "observed_checkout_commit": "aff6b6ed0eabd18b7b757fa5623353a7b3627538",
+  "runtime_source_commit": "a9df48c",
+  "default_cmd": [
+    "python",
+    "scripts/serve.py"
+  ],
+  "buildkit_metadata": {
+    "buildx.build.provenance": {
+      "builder": {
+        "id": ""
+      },
+      "buildType": "https://mobyproject.org/buildkit@v1",
+      "materials": [
+        {
+          "uri": "pkg:docker/node@22-slim?platform=linux%2Famd64",
+          "digest": {
+            "sha256": "de170b39439eb0e5a3444ad7d60b015614a381e10fecae2e30ec9e735122f38d"
+          }
+        },
+        {
+          "uri": "pkg:docker/python@3.12-slim?platform=linux%2Famd64",
+          "digest": {
+            "sha256": "78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea"
+          }
+        }
+      ],
+      "invocation": {
+        "configSource": {
+          "entryPoint": "Dockerfile"
+        },
+        "parameters": {
+          "frontend": "dockerfile.v0",
+          "locals": [
+            {
+              "name": "context"
+            },
+            {
+              "name": "dockerfile"
+            }
+          ],
+          "root": {
+            "configSource": {
+              "path": "Dockerfile"
+            },
+            "request": {
+              "args": {
+                "vcs:localdir:context": ".",
+                "vcs:localdir:dockerfile": ".",
+                "vcs:revision": "aff6b6ed0eabd18b7b757fa5623353a7b3627538",
+                "vcs:source": "https://github.com/wongywrongy/nebiusxnvidiahack26.git"
+              }
+            }
+          },
+          "compatibilityVersion": 30
+        },
+        "environment": {
+          "dockerfileVersion": "1.28.0",
+          "platform": "linux/amd64"
+        }
+      }
+    },
+    "buildx.build.ref": "default/default/q7ph4378v1b2r4yir5nhhz2fb",
+    "containerimage.descriptor": {
+      "mediaType": "application/vnd.oci.image.index.v1+json",
+      "digest": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
+      "size": 856
+    },
+    "containerimage.digest": "sha256:f9b23899e35c38fdb1dff56ab7661dd3723b22701cc625bfc21abef062edf586",
+    "image.name": "docker.io/library/speccheck:unit-source-local"
+  },
+  "cached_layers": "Dependency and frontend layers reused; not an uncached dependency/build proof."
+}

@@ -1,0 +1,167 @@
+{
+  "scope": "Manual public manufacturer GETs and native-page inspection only; no pipeline evaluation, candidate injection, selection, cache repair or passing replacement",
+  "sources": [
+    {
+      "name": "accord-page",
+      "requested_url": "https://www.cooperlighting.com/global/brands/metalux/135266/accord-led-series",
+      "method": "GET",
+      "observed_at": "2026-10-23T10:27:28.536716+00:00",
+      "status": 200,
+      "final_url": "https://www.cooperlighting.com/global/brands/metalux/135266/accord-led-series",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 302598,
+      "sha256": "503ad62cec73ff8d4a5e73d861ff16a76cdc8dc62898518e46417c89d004ef44",
+      "catalog_mentions": [
+        "24AC-LD5-44-UNV-L835-CD1-U",
+        "24AC-LD5-44-UNV-L840-CD1-U",
+        "24AC-LD5-48-UNV-L835-CD1-U",
+        "24AC-LD5-55-UNV-L835-CD1-U",
+        "24AC-LD5-55-UNV-L840-CD1-U"
+      ]
+    },
+    {
+      "name": "accord24-sheet",
+      "requested_url": "https://www.cooperlighting.com/api/assets/v1/file/CLS/content/4ee7e138261b4054aca2ad410084d901/Metalux-2-x-4-Recessed-Series-LED-4400-and-5500-with-MTO-options-DLC-LD5-spec-sheet_24ac-ld5-55-unv-l835-cd1-u.pdf",
+      "method": "GET",
+      "observed_at": "2026-10-23T10:27:28.909019+00:00",
+      "status": 200,
+      "final_url": "https://www.cooperlighting.com/api/assets/v1/file/CLS/content/4ee7e138261b4054aca2ad410084d901/Metalux-2-x-4-Recessed-Series-LED-4400-and-5500-with-MTO-options-DLC-LD5-spec-sheet_24ac-ld5-55-unv-l835-cd1-u.pdf",
+      "content_type": "application/pdf",
+      "bytes": 897815,
+      "sha256": "a120aeb9dce472f46d6421a0ef803ceceed50dd742e77d6d9a1639ac825151f2",
+      "pages": 5
+    },
+    {
+      "name": "sllt-page",
+      "requested_url": "https://starcous.com/product/sllt-led-troffer/",
+      "method": "GET",
+      "observed_at": "2026-10-23T10:27:29.764204+00:00",
+      "status": 200,
+      "final_url": "https://starcous.com/product/sllt-led-troffer/",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 73938,
+      "sha256": "a4d897e34ab2f4b41f1145c5cdf036ee7d2907353c97e223920eba06dafba9a6",
+      "catalog_mentions": []
+    },
+    {
+      "name": "sllt-sheet",
+      "requested_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+      "method": "GET",
+      "observed_at": "2026-10-23T10:27:30.730499+00:00",
+      "status": 200,
+      "final_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+      "content_type": "application/pdf",
+      "bytes": 1663956,
+      "sha256": "4f1d40620dd4549fb88e24d0aa0b458631df06d7df5f0b016b3a3549985cb2ff",
+      "pages": 7
+    },
+    {
+      "name": "lt-controls",
+      "requested_url": "https://hew.com/specifications/controls-guide_troffers-surface-wraps.pdf",
+      "method": "GET",
+      "observed_at": "2026-10-23T10:27:30.996787+00:00",
+      "status": 200,
+      "final_url": "https://hew.com/specifications/controls-guide_troffers-surface-wraps.pdf",
+      "content_type": "application/pdf",
+      "bytes": 1683162,
+      "sha256": "39025cc4f0275f42c09562c1d5ebc9af9bb57e3ac5003cc97fca2cf018ee8a51",
+      "pages": 7
+    },
+    {
+      "scope": "Actual manufacturer SKU GET, no credentials or provider call",
+      "request": {
+        "method": "GET",
+        "url": "https://www.cooperlighting.com/global/brands/metalux/135266/accord-led-series/24ac-ld5-44-unv-l840-cd1-u"
+      },
+      "observed_at": "2026-10-23T10:29:12.036759+00:00",
+      "response": {
+        "status": 200,
+        "final_url": "https://www.cooperlighting.com/global/brands/metalux/135266/accord-led-series/24ac-ld5-44-unv-l840-cd1-u",
+        "content_type": "text/html; charset=UTF-8",
+        "bytes": 236569,
+        "sha256": "2fc73cdc25f0be36b0a7d2c418f7e7c50e8d315171f4f10eae94b362be501f84"
+      },
+      "structured_data": []
+    }
+  ],
+  "current_family_stock_rows": [
+    {
+      "catalogNumber": "24AC-LD5-44-UNV-L840-CD1-U",
+      "variantUrl": "https://www.cooperlighting.com/global/brands/metalux/135266/accord-led-series/24ac-ld5-44-unv-l840-cd1-u",
+      "lampType": "LED",
+      "mounting": "Surface Mount",
+      "voltageRating": "120-277V",
+      "wattage": "37.9W",
+      "specSheet": "/api/assets/v1/file/CLS/content/4ee7e138261b4054aca2ad410084d901/4ee7e138261b4054aca2ad410084d901_24ac-ld5-44-unv-l840-cd1-u.pdf",
+      "iesFile": ""
+    }
+  ],
+  "manual_findings": [
+    {
+      "source": "accord24-sheet",
+      "page": 3,
+      "property": "macadam_steps",
+      "value": "<=3",
+      "status": "Printed family specification; selected configuration is not established"
+    },
+    {
+      "source": "accord24-sheet",
+      "page": 3,
+      "property": "warranty_years",
+      "value": 5,
+      "unit": "yr",
+      "status": "Standard term, optional longer term not assumed"
+    },
+    {
+      "source": "accord24-sheet",
+      "page": 4,
+      "property": "l70_hours",
+      "value": ">193000",
+      "unit": "hr",
+      "status": "Theoretical TM-21 estimate at 25 C; not measured service life"
+    },
+    {
+      "source": "accord24-sheet",
+      "pages": [
+        2,
+        3
+      ],
+      "property": "dim_min_percent",
+      "value": 1,
+      "unit": "%",
+      "status": "CD driver only; other driver options have different limits, no option selection inferred"
+    },
+    {
+      "source": "accord24-sheet",
+      "pages": [
+        2,
+        3
+      ],
+      "property": "dlc_listed",
+      "status": "Family names Standard/Premium, refers to QPL; exact SKU classification not independently verified"
+    },
+    {
+      "source": "accord24-sheet",
+      "page": 4,
+      "property": "availability",
+      "status": "Four exact stock catalog rows appear in PDF; not evidence that all configurations are stocked"
+    },
+    {
+      "source": "accord-sku",
+      "property": "source_consistency",
+      "status": "Description names 2x4, dimensional metadata says 2x2, and mounting is surface; unresolved source inconsistency"
+    },
+    {
+      "source": "sllt-sheet",
+      "property": "missing_properties",
+      "status": "Seven-page native text has no MacAdam/SDCM term or minimum dimming percentage found; 0-10 V is only an interface"
+    },
+    {
+      "source": "lt-controls",
+      "property": "dim_min_percent",
+      "status": "Controls/fixture-compatibility table does not supply a minimum percentage for the stocked DIM configuration"
+    }
+  ],
+  "native_inputs_overlap_blind_urls": false,
+  "caveat": "Read only the frozen blind input source URLs for overlap checking, not labels or expected outcomes. Sources here are not evaluated as blind items."
+}

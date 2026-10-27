@@ -1,0 +1,14 @@
+{
+  "source": "Kyle dashboard reading in chat",
+  "used_credits": 15,
+  "displayed_limit": 9000,
+  "dashboard_timestamp": null,
+  "scope": null,
+  "recorded_at": "2026-10-21T07:57:58.469543+00:00",
+  "checkpoint": "after c03 baseline; before its affected-case rerun",
+  "local_pass_ledger": {
+    "usd": 0.018874,
+    "credits": 11.0
+  },
+  "note": "This is a user-read dashboard value. Exact observation time and per-key/account scope were not supplied."
+}

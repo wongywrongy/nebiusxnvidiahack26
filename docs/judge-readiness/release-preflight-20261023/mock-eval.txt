@@ -1,0 +1,27 @@
+
+mode=mock  run=20261023-015625-fce412
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -         61   0.0454       5 ✓
+c02   send_back          send_back          spec                   spec                       none      39   0.0508       6 ✓
+c03   send_back          send_back          currency               currency                   none      74   0.1177      14 ✓
+c04   send_back          send_back          validity               validity                   none      29   0.1157      14 ✓
+c05   approve            approve_with_note  -                      -                          -         83   0.0648       7 ✗
+c06   send_back          approve_with_note  currency               currency_note              none      72   0.0647       7 ✗
+c07   send_back          send_back          status                 status                     none     100   0.1226      14 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -         65   0.0462       5 ✓
+
+Answer-key panel
+  right call                      6 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        0 of 8
+  unnecessary notes               1
+  fresh model spend / web credits $0.000000 / 0
+  case evidence gate              Live evidence required; Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      0.1 s
+  cost per submittal (model+web)  $0.0785   (mock: estimated token counts)
+Quote gate: claims 48/65 kept (26.2% dropped); web values 8/20 kept (60.0% dropped)
+
+wrote docs/judge-readiness/release-preflight-20261023/mock-score.json

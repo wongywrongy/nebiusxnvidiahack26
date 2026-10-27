@@ -1,7 +1,7 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
   DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
-  streamEvents, uploadToInbox, archiveUrl, getJobs, getWatch, runJob, type CloudJob,
+  streamEvents, uploadToInbox, archiveUrl, getJobs, getWatch, type CloudJob,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
   type Health, type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
 } from './api'
@@ -56,8 +56,10 @@ const NBSP = ' '
 
 const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? '' : 's'}`
 const now = () => `Today ${new Date().toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}`
-const longDate = (d: string) =>
-  new Date(/^\d{4}-\d\d-\d\d$/.test(d) ? `${d}T00:00` : d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+const longDate = (d: string) => {
+  const parsed = new Date(/^\d{4}-\d\d-\d\d$/.test(d) ? `${d}T00:00` : d)
+  return Number.isNaN(parsed.getTime()) ? d : parsed.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+}
 const ASKS_SEP = ' · '
 const fileName = (c: Case) => c.submittal[0]?.file.split('/').pop() ?? ''
 const fixOf = (r?: Result) => r?.findings.find((f) => f.fix)?.fix ?? null
@@ -146,8 +148,13 @@ export default function App() {
   }
 
   // Stream a run into a row map; onDone gets each item's result.
-  function follow(run: string, set: typeof setRows, onDone: (id: string, r: Result) => void) {
+  function follow(run: string, ids: string[], set: typeof setRows, onDone: (id: string, r: Result) => void) {
     const active = generation.current
+    const incomplete = (reason: string) => {
+      if (active !== generation.current) return
+      set((m) => Object.fromEntries(Object.entries(m).map(([id, row]) => [id,
+        !ids.includes(id) || ['done', 'error'].includes(row.stage) ? row : { stage: 'error', model: null, reason }])))
+    }
     const close = streamEvents(run, (e) => {
       if (active !== generation.current) return
       const id = e.case_id
@@ -158,7 +165,11 @@ export default function App() {
       }).catch((error: Error) => { if (active === generation.current) set((m) => ({ ...m, [id]: { stage: 'error', model: null, reason: error.message } })) })
       set((m) => ({ ...m, [id]: { ...m[id], stage: e.stage, reason: e.stage === 'error' ? e.message : undefined,
         model: e.model ?? (e.stage === 'done' ? null : m[id]?.model ?? null) } }))
-    }, () => { streams.current.delete(close); getHealth().then(setHealth).catch(() => {}) })
+    }, () => {
+      streams.current.delete(close)
+      incomplete('The scan ended before this item completed. Retry this item.')
+      getHealth().then(setHealth).catch(() => {})
+    }, (error) => { streams.current.delete(close); incomplete(error.message) })
     streams.current.add(close)
   }
 
@@ -203,7 +214,7 @@ export default function App() {
       if (active !== generation.current) return
       setScanNote(run.note ?? null)
       setRows((m) => ({ ...m, ...Object.fromEntries(fresh.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
-      follow(run.run_id, setRows, async (id, result) => {
+      follow(run.run_id, fresh.map((c) => c.id), setRows, async (id, result) => {
         const c = fresh.find((x) => x.id === id)!
         const found = await Promise.all(c.submittal.map((d) => getDocPages(id, d.file)))
         const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
@@ -237,12 +248,12 @@ export default function App() {
     const active = generation.current
     setError(null)
     try {
-      const run = await scan(watchList.map((c) => c.id))
+      const run = await scan(watchList.map((c) => c.id), 700, true)
       if (active !== generation.current) return
       setCheckNote(run.note ?? null)
       setChecked({})
       setChecks((m) => ({ ...m, ...Object.fromEntries(watchList.map((c) => [c.id, { stage: 'queued' as Stage, model: null }])) }))
-      follow(run.run_id, setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
+      follow(run.run_id, watchList.map((c) => c.id), setChecks, (id, r) => setChecked((m) => ({ ...m, [id]: r })))
     } catch (e) { if (active === generation.current) setError((e as Error).message) }
   }
 
@@ -530,6 +541,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
             : anyMock ? `; ${credits} Tavily credits include mock estimates` : `; Tavily checked the manufacturers' sites (${credits} credits)` : ''}.
           {' '}{kTokens(tokens)} tokens · {money(cost)} model cost · {seconds(longest)} for the longest item
           {allMock ? ' · estimated counts and cost; no provider calls' : anyMock ? ' · includes estimated counts and cost' : ''}
+          {!anyMock && usage.some((u) => u.cached) && ' · includes cached usage; cached cost and credits are usage equivalents, not fresh charges'}
           {results.some((r) => r.replayed_from) ? ' · replayed items show their original usage and time' : ''}
           {' · '}<a href="#scoreboard" className="underline underline-offset-4 hover:text-ink">Scoreboard</a>
         </p>
@@ -555,7 +567,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
                   : l ? (
                     <span className="flex min-w-0 flex-col items-start gap-1">
                       <Pill d={l.result.decision} />
-                      <span className="w-full truncate text-xs text-muted" title={l.result.summary}>{l.result.summary}</span>
+                      <span className="w-full truncate text-xs text-muted" title={reviewSummary(l.result)}>{reviewSummary(l.result)}</span>
                     </span>
                   ) : (
                     <span className="flex min-w-0 flex-col gap-2">
@@ -624,13 +636,25 @@ function asks(r: Result, section: string): string[] {
   return [...new Set(out)]
 }
 
-function returnNote(c: Case, r: Result, best?: { name: string }): string {
+function returnNote(c: Case, r: Result, best?: Fix['candidates'][number]): string {
   return [
     `Revise and resubmit ${c.number ?? c.title}.`,
-    r.summary,
+    reviewSummary(r),
     `Please send:\n${asks(r, c.section).map((a) => `- ${a.charAt(0).toLowerCase()}${a.slice(1)}`).join('\n')}`,
-    ...(best ? [`Suggested replacement: ${best.name}.`] : []),
+    ...(best ? [best.selection?.origin === 'agent_proposal'
+      ? `SpecCheck proposal: ${best.selection.model}. Confirm configuration before ordering.`
+      : `Suggested replacement: ${best.name}.`] : []),
   ].join('\n\n')
+}
+
+function approvalNote(c: Case, r: Result): string {
+  const note = !r.validity || r.validity === 'legacy' ? reviewSummary(r) : r.note_to_subcontractor || r.summary
+  return `Please review ${c.number ?? c.title} for approval.\n\n${note}`
+}
+
+function reviewSummary(r: Result): string {
+  if (r.validity && r.validity !== 'legacy') return r.summary
+  return 'Historical result. Evidence coverage has not been evaluated under the current review rules.'
 }
 
 // Web checks as rows of the one check table: Required is what the maker publishes today.
@@ -639,6 +663,7 @@ function webRows(f: Finding): CheckRow[] {
   if (f.verdict === 'unverified') return [[f, `Couldn't confirm ${f.check === 'status' ? 'product status' : 'current sheet'}`, f.compare?.right_value, f.compare?.left_value]]
   if (f.compare?.rows.length) return f.compare.rows.map((r: CompareRow): CheckRow => [f, r.label, `Current: ${r.current ?? '—'}`, r.submitted])
   if (f.id === 'status-discontinued') return [[f, WEB_LABEL[f.id], 'In production', f.compare?.right_value]]
+  if (f.id === 'status-active') return [[f, 'Product status', 'In production', f.compare?.right_value]]
   const now = f.compare?.right_value
   const current = f.verdict === 'pass' && (now === 'unknown' || !now) ? 'Same values as current' : `Current: ${show(now)}`
   return [[f, 'Data sheet version', current, f.compare?.left_value]]
@@ -662,9 +687,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
   const who = c.from ?? 'sender'
   const draft = (a: Act) => a === 'return'
     ? returnNote(c, result, best)
-    : result.decision === 'approve'
-      ? `No exceptions taken. Forwarding ${c.number ?? c.title} for approval.`
-      : `Please review ${c.number ?? c.title} for approval with the following note.\n\n${result.note_to_subcontractor || result.summary}`
+    : approvalNote(c, result)
   const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
   const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
   const web = result.findings.filter((f) => WEB.has(f.check))
@@ -684,7 +707,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
           <span className="text-xs text-muted"><span className="font-mono">{c.number ?? 'Upload'}</span> · {at} of {of} · from {c.from ?? 'you'}</span>
           <h2 className="text-lg font-semibold leading-tight">{c.title}</h2>
           <span className="flex items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Saved: {call.act === 'return' ? 'return decision' : 'approval decision'}</span>}</span>
-          <p className="text-base text-soft">{result.summary}</p>
+          <p className="text-base text-soft">{reviewSummary(result)}</p>
         </div>
 
         <div className="flex flex-col gap-2">
@@ -703,7 +726,29 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
           <div className="flex flex-col gap-1 rounded-xl border border-good/40 p-4">
             <span className={CAPS}>Suggested replacement</span>
             <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
-            <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes all checks</span>
+            {best.selection?.origin === 'agent_proposal' && <p className="text-sm text-soft">
+              Proposed by SpecCheck: {best.selection.model}. Confirm configuration before ordering.
+            </p>}
+            <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes the listed checks</span>
+            <details className="mt-2 text-sm">
+              <summary className="cursor-pointer text-soft">Replacement evidence</summary>
+              <ul className="mt-2 flex flex-col gap-3">
+                {best.selection?.origin === 'agent_proposal' && <li>
+                  <span className="font-medium">Proposed configuration · page {best.selection.page}</span>
+                  <blockquote className="mt-1 border-l-2 border-edge pl-3 text-muted">
+                    <p>“{best.selection.quote}”</p>
+                    <a href={best.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(best.source_url)} ↗</a>
+                  </blockquote>
+                </li>}
+                {best.checks.map((check, n) => <li key={n}>
+                  <span className="font-medium">{check.label}</span>
+                  {check.evidence?.map((e, i) => <blockquote key={i} className="mt-1 border-l-2 border-edge pl-3 text-muted">
+                    {e.excerpt && <p>“{e.excerpt}”</p>}
+                    <a href={e.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(e.url)} ↗</a>
+                  </blockquote>)}
+                </li>)}
+              </ul>
+            </details>
           </div>
         )}
 
@@ -762,7 +807,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
         {result.replayed_from && ' · replayed'}
         {result.evidence_label && ` · archived to ${result.evidence_label}`}
-        <span className="text-faint"> · {mode === 'mock' ? 'estimated ' : ''}{kTokens(tokens)} tokens · {money(cost)} model cost · {seconds(result.duration_ms)}</span>
+        <span className="text-faint"> · {mode === 'mock' ? 'estimated ' : ''}{kTokens(tokens)} tokens · {money(cost)} {mode === 'live' && result.usage.some((u) => u.cached) ? 'equivalent model cost' : 'model cost'} · {seconds(result.duration_ms)}</span>
         <span className="ml-1 text-faint underline decoration-edge underline-offset-2 group-open:hidden">every call</span>
       </summary>
       <div className="mt-2 overflow-hidden rounded-lg border border-line">
@@ -797,6 +842,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
               : 'Live mode: real calls to NVIDIA Nemotron 3 on Nebius Token Factory and to Tavily. Repeats are cached.'
             : 'Mock mode: fixture answers, no API calls; token counts are estimated from text length.'}
           {' '}Models read and quote; every pass/fail is computed in code from the quoted values.
+          {mode === 'live' && result.usage.some((u) => u.cached) && ' Cached rows show original token usage and equivalent cost; they are not billed again.'}
         </p>
       </div>
     </details>
@@ -1062,7 +1108,8 @@ function replacement(fix: Fix | null): [string, boolean] {
   const bad = c.checks.find((k) => k.ok === false) ?? c.checks.find((k) => k.ok === null)
   const name = c.name.split(',')[0].replace(/^(\S+) SpecSeal System No\. /, '$1 ')  // "STI SpecSeal System No. W-L-1079, metallic…" -> "STI W-L-1079"
   const why = bad ? (bad.note || (bad.ok === null ? `${bad.label} not stated` : bad.label)) : ''
-  return [`None passed · ${name}${why ? ` fails on ${why}` : ''}`, false]
+  const reason = !why ? '' : bad?.ok === null ? `; couldn't confirm ${bad.label}` : ` fails on ${why}`
+  return [`None passed · ${name}${reason}`, false]
 }
 
 // When the nightly re-check (scripts/recheck.py as a Nebius Serverless Job) last ran, in one line.
@@ -1076,7 +1123,6 @@ const recheckLine = (r: Recheck | null | undefined) => {
 function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck | null }) {
   const [report, setReport] = useState(initial)
   const [jobs, setJobs] = useState<CloudJob[]>([])
-  const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   useEffect(() => {
     if (!enabled) return
@@ -1092,20 +1138,12 @@ function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck 
     return () => { active = false; window.clearInterval(timer) }
   }, [enabled])
   const current = jobs.find((job) => !['done', 'failed'].includes(job.state))
-  async function launch() {
-    setBusy(true); setError(null)
-    try { setJobs([await runJob()]) }
-    catch (e) { setError((e as Error).message) }
-    finally { setBusy(false) }
-  }
   return <div className="flex flex-col items-start gap-1 break-words text-xs text-muted">
     <span>{recheckLine(report)}</span>
     {current && <span role="status">{current.name} · {current.state_known === false ? 'Unmapped state' : current.state}
-      {current.raw_state ? ` (${current.raw_state})` : ''}. Nebius starts a job in a few minutes.
+      {current.raw_state ? ` (${current.raw_state})` : ''}. Waiting for confirmed job status.
       {current.poll_error ? ` ${current.poll_error}` : ''}</span>}
     {!current && jobs[0]?.state === 'failed' && <span role="status">{jobs[0].name} · failed ({jobs[0].raw_state})</span>}
-    {enabled && <button className="min-h-8 text-left underline underline-offset-4 hover:text-ink disabled:opacity-50"
-      disabled={busy || !!current} onClick={launch}>{busy ? 'Requesting job…' : 'Run as a Nebius Serverless Job'}</button>}
     {error && <span role="alert">{error}</span>}
   </div>
 }
@@ -1242,6 +1280,9 @@ function Alert({ c, result, sent, onRequest }: { c: Case; result: Result; sent: 
         <div className="flex flex-col gap-1 rounded-lg border border-good/40 p-3">
           <span className={CAPS}>Suggested replacement</span>
           <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
+          {best.selection?.origin === 'agent_proposal' && <p className="text-sm text-soft">
+            Proposed by SpecCheck: {best.selection.model}. Confirm configuration before ordering.
+          </p>}
           <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes all checks</span>
         </div>
       )}

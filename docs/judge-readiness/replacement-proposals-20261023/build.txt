@@ -1,0 +1,13 @@
+
+> speccheck-web@0.1.0 build
+> tsc -b && vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 33 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.95 kB │ gzip:  0.54 kB
+dist/assets/index-De3q2k5x.css   21.79 kB │ gzip:  5.54 kB
+dist/assets/index-52DK4YqL.js   209.84 kB │ gzip: 66.48 kB
+✓ built in 5.53s

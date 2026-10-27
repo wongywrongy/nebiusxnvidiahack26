@@ -1,0 +1,60 @@
+SpecCheck
+Live
+Elementary School Modernization (sample)
+Inbox
+Scan
+3
+Review
+4
+Outcome
+Specs 07 84 00 · 26 51 00
+Scoreboard
+Start over
+Review
+2 of 3 decided
+3m_ic15wb_2005.pdf
+Page 1 of 4
+1
+2
+3
+4
+Open original ↗
+now 180 °F
+now 5 · 50
+07 84 00-03 · 2 of 3 · from Coastline Firestop
+Firestop sealant, cable penetrations
+Send back
+Saved: return decision
+
+We need more information about the firestop sealant's mold resistance and test standards before we can approve it, and the data sheet provided is outdated.
+
+CHECK
+REQUIRED
+SUBMITTED
+continuous operating temperature limit f
+Current: 180 °F
+120 °F
+astm e84 flame spread
+Current: 5
+0
+astm e84 smoke development
+Current: 50
+0
+Missing mold resistance proof
+= 0
+Not stated
+Missing test standard confirmation
+ASTM E814, ASTM E119, UL 1479
+Not stated
+VOC (air quality)
+≤ 250 g/L
+0 g/L
+Sources: spec 07 84 00 · submitted sheet 90G9 · Fire Protection Products ↗
+Checked by Nemotron 3 Nano (sorted the pages) and Nemotron 3 Super (read the data sheet, read the web sources, read a replacement, checked a replacement online, wrote the result) on Nebius Token Factory · verdicts by code · 60k tokens · $0.02 equivalent model cost · 120 msevery call
+DRAFT FOR COASTLINE FIRESTOP
+submittals@coastlinefirestop.com
+
+Decisions and drafts stay in this browser. No email is sent.
+
+Save return decision
+Save approval

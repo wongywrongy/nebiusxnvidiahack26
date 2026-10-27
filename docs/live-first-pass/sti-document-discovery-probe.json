@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-21",
+  "url": "https://www.stifirestop.com/products/specseal-lci-intumescent-sealant",
+  "method": "httpx GET; PDF/PDS/data-sheet URL matches in HTML",
+  "status": 200,
+  "document_links": [
+    "https://www.stifirestop.com/resources/product-data-sheets",
+    "https://stifirestop.ca/resources/product-data-sheets",
+    "https://stifirestop.com.br/resources/product-data-sheets",
+    "https://stifirestop.com.mx/resources/product-data-sheets",
+    "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+    "https://cdn.bfldr.com/97UPJRLN/at/rt7g7gz3pmfsx9pskjkhf89/PDS_LCI_Intumescent_Sealant_French",
+    "https://cdn.bfldr.com/97UPJRLN/at/3brkb8qwrkr69n6t8s4jt8nq/PDS_LCI_Intumescent_Sealant_Portuguese",
+    "https://cdn.bfldr.com/97UPJRLN/at/76r56m9bsqx44vhp66nhqg9/PDS_LCI_Intumescent_Sealant_Spanish",
+    "https://cdn.bfldr.com/97UPJRLN/at/cvj7wbxphw4pwxtfgn8zfqwr/Spears_CPVC_Compatibility_Bulletin.pdf"
+  ]
+}

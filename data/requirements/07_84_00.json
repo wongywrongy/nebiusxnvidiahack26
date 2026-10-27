@@ -1,0 +1,75 @@
+{
+  "_note": "Reviewed by Kyle on 2026-10-21; only the explicitly approved Gate 3 rows are included.",
+  "requirements": [
+    {
+      "id": "req_voc_content",
+      "section": "07 84 00",
+      "paragraph": "2.02.B",
+      "property": "voc_g_per_l",
+      "operator": "lte",
+      "value": 250.0,
+      "unit": "g/L",
+      "text": "VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_mold_resistance",
+      "section": "07 84 00",
+      "paragraph": "2.02.C",
+      "property": "astm_g21_rating",
+      "operator": "eq",
+      "value": 0.0,
+      "unit": null,
+      "text": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_t_rating_min_equal_f",
+      "section": "07 84 00",
+      "paragraph": "2.04.A.1",
+      "property": "t_rating_hr",
+      "operator": "eq_ref",
+      "value": "f_rating_hr",
+      "unit": "hr",
+      "text": "Minimum T Rating equal to F Rating.",
+      "severity": "critical",
+      "check": "spec",
+      "applies_to": []
+    },
+    {
+      "id": "fs-std",
+      "section": "07 84 00",
+      "paragraph": "2.04.A.1",
+      "property": "standards",
+      "operator": "any_of",
+      "value": [
+        "astm e814",
+        "astm e119",
+        "ul 1479"
+      ],
+      "unit": null,
+      "text": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    }
+  ],
+  "section": "07 84 00",
+  "title": "Firestopping",
+  "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+  "source_name": "cps_07_84_00.pdf",
+  "source_url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/firestopping-new/07-84-00-firestopping.pdf",
+  "source_sha256": "9f303a2c52b1121f7e1b372f0e6f15fd5834e42a06989c3a9f9519ea013c231f",
+  "drafted_at": "2026-10-21T07:26:33.095562Z",
+  "reviewed_at": "2026-10-21"
+}

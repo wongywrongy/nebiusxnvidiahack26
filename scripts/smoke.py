@@ -17,7 +17,7 @@ PRODUCTION_CAPS = {"budget_usd_per_run": 3, "budget_usd_per_day": 8, "budget_tav
                    "budget_tavily_credits_per_day": 600, "max_concurrency": 2}
 
 
-def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1) -> list[str]:
+def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1, preflight_only: bool = False) -> list[str]:
     failures = []
 
     def request(method, path, **kwargs):
@@ -62,7 +62,7 @@ def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1) -> l
             failures.append("Watch must return a report or a clear 404.")
     except (httpx.HTTPError, ValueError):
         failures.append("Watch request failed or returned invalid JSON.")
-    if failures:
+    if failures or preflight_only:
         return failures  # All preflight checks are read-only; never spend on a misconfigured deployment.
 
     print("Caps: " + json.dumps(caps, sort_keys=True))
@@ -100,11 +100,14 @@ def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1) -> l
             failures.append(f"{cid}: no result before completion/timeout; inspect run {scan['run_id']} events.")
         elif result.get("error") or not result.get("findings"):
             failures.append(f"{cid}: result is an error or has no findings.")
+        elif (result.get("validity") != "valid" or result.get("warnings") or result.get("diagnostics")
+              or result.get("replayed_from")):
+            failures.append(f"{cid}: invalid or replayed evidence cannot prove a fresh deployment check.")
     if result := results.get("c01"):
         fresh = any(not u.get("cached", False) and u.get("model", "").lower().startswith("nvidia/")
                     and "nemotron" in u.get("model", "").lower() for u in result.get("usage", []))
-        if not result.get("replayed_from") and (result.get("mode") != "live" or not fresh):
-            failures.append("c01: expected a non-cached live Nemotron call or replayed_from; a fully cached trace does not prove a new provider call.")
+        if result.get("mode") != "live" or not fresh:
+            failures.append("c01: expected a non-cached live Nemotron call; a cached trace or replay does not prove a new provider call.")
     if result := results.get(uploaded["id"]):
         if result.get("mode") != "live":
             failures.append("Upload ran in mock mode; enable public live uploads or supply the admin token.")
@@ -121,6 +124,7 @@ def main() -> int:
     parser.add_argument("base_url")
     parser.add_argument("--admin-token", default=os.environ.get("ADMIN_TOKEN", ""))
     parser.add_argument("--timeout", type=float, default=600, help="maximum polling seconds (default 600)")
+    parser.add_argument("--preflight-only", action="store_true", help="read-only health/configuration checks; never upload or scan")
     args = parser.parse_args()
     url = urlsplit(args.base_url)
     if url.scheme not in ("http", "https") or not url.hostname or url.username or url.password or url.query or url.fragment:
@@ -129,13 +133,14 @@ def main() -> int:
         parser.error("--timeout must be positive")
     headers = {"X-Admin-Token": args.admin_token} if args.admin_token else {}
     with httpx.Client(base_url=args.base_url.rstrip("/"), headers=headers, timeout=30, follow_redirects=False) as client:
-        failures = check(client, timeout=args.timeout)
+        failures = check(client, timeout=args.timeout, preflight_only=args.preflight_only)
     if failures:
         print("Smoke failed:", file=sys.stderr)
         for failure in failures:
             print(f"- {failure}", file=sys.stderr)
         return 1
-    print("Smoke passed: live health/project, bounded scan, PDF, specs, scores and watch.")
+    print("Read-only preflight passed; no scan was started." if args.preflight_only else
+          "Smoke passed: live health/project, bounded fresh scan, PDF, specs, scores and watch.")
     return 0
 
 

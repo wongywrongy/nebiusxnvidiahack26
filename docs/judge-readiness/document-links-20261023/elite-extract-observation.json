@@ -1,0 +1,81 @@
+{
+  "scope": "Bounded source extraction diagnostic; no model call, case evaluation or proposed selection",
+  "run_id": "source-research-20261023-092556",
+  "observed_at": "2026-10-23T09:26:00.565089+00:00",
+  "redacted_request": {
+    "operation": "Tavily extract through existing WebClient",
+    "urls": [
+      "https://iuseelite.com/product/24-ovhp-rtk-led-ml-cct/",
+      "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf"
+    ],
+    "depth": "basic",
+    "authentication": "REDACTED",
+    "credit_scope": 4
+  },
+  "redacted_response": [
+    {
+      "url": "https://media.iuseelite.com/media/recommended-ies-footcandle.pdf",
+      "requested_url": "https://iuseelite.com/product/24-ovhp-rtk-led-ml-cct/",
+      "sha256": "01d219f974aa81e1ff0c4c53b86b5220c2ac1edfdfa4ec677928d73f77468c30",
+      "retrieved_at": "2026-10-23T09:26:00+00:00",
+      "archived_path": "manufacturer-source-research/2026-10-23T09_26_00+00_00/01d219f974aa81e1ff0c4c53b86b5220c2ac1edfdfa4ec677928d73f77468c30.txt",
+      "chars": 8715,
+      "cache_hit": null,
+      "configuration_printed": false,
+      "has_dlc_section": false,
+      "has_quickship_section": false
+    },
+    {
+      "url": "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf",
+      "requested_url": "https://media.iuseelite.com/specsheet2/24-ovhp-rtk-led-ml-cct.pdf",
+      "sha256": "2babf558fa8ce0cdd90ab47efefa094cd8aed9b3bff4d12fbcc02fe3aeeda424",
+      "retrieved_at": "2026-10-23T09:25:59+00:00",
+      "archived_path": "manufacturer-source-research/2026-10-23T09_25_59+00_00/2babf558fa8ce0cdd90ab47efefa094cd8aed9b3bff4d12fbcc02fe3aeeda424.txt",
+      "chars": 11732,
+      "cache_hit": false,
+      "configuration_printed": true,
+      "has_dlc_section": false,
+      "has_quickship_section": false
+    }
+  ],
+  "fresh": {
+    "usd": 0.0,
+    "credits": 0
+  },
+  "ledger_before": {
+    "day": "2026-10-23",
+    "usd": 1.464912,
+    "credits": 99,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.9516488,
+    "total_credits": 457,
+    "phase": "engineering",
+    "phase_usd": 1.8930438,
+    "phase_credits": 159,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "ledger_after": {
+    "day": "2026-10-23",
+    "usd": 1.464912,
+    "credits": 99,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 2.9516488,
+    "total_credits": 457,
+    "phase": "engineering",
+    "phase_usd": 1.8930438,
+    "phase_credits": 159,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "accounting_issues": {},
+  "fresh_attribution": "Confirmed against exact campaign payments for this run"
+}

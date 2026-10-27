@@ -1,0 +1,952 @@
+{
+  "case_id": "c02",
+  "title": "Firestop system, floor penetration",
+  "decision": "send_back",
+  "summary": "The firestop submittal was sent back because the temperature rating does not match the required fire rating. Other items were noted as not applicable or needing clarification on document versions.",
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "VOC (air quality)",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": "This item does not apply to the current submittal type, so no action is needed.",
+      "requirement_id": "req_voc_content",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "astm g21 rating",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": "This item does not apply to the current submittal type, so no action is needed.",
+      "requirement_id": "req_mold_resistance",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "spec-req_t_rating_min_equal_f",
+      "check": "spec",
+      "verdict": "fail",
+      "severity": "critical",
+      "title": "Does not meet: Temperature rating (T)",
+      "detail": "Temperature rating (T) is 0 Hr but Fire rating (F) is 2 Hr.",
+      "why_it_matters": "If the temperature rating is too low, the firestop may fail during a fire, allowing heat and flames to spread through the floor.",
+      "requirement_id": "req_t_rating_min_equal_f",
+      "claim_id": "clm-2",
+      "claim_ids": [
+        "clm-2",
+        "clm-1"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-2",
+          "doc_file": "c02/3m_c-aj-2738.pdf",
+          "page": 1,
+          "quote": "T Rating — 0 Hr",
+          "boxes": [
+            {
+              "x0": 0.4456,
+              "y0": 0.0783,
+              "x1": 0.5396,
+              "y1": 0.0933
+            }
+          ],
+          "kind": "problem"
+        },
+        {
+          "claim_id": "clm-1",
+          "doc_file": "c02/3m_c-aj-2738.pdf",
+          "page": 1,
+          "quote": "F Rating — 2 Hr",
+          "boxes": [
+            {
+              "x0": 0.4459,
+              "y0": 0.0657,
+              "x1": 0.5394,
+              "y1": 0.0806
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "T = F (2 Hr)",
+        "right_label": "Submitted",
+        "right_value": "0 Hr",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "UL listed firestop system  floor penetration Temperature rating (T) equals Fire rating (F)",
+        "candidates": [
+          {
+            "name": "3M™ Fire Barrier Rated Foam FIP 1-Step Product Data Sheet",
+            "source_url": "https://multimedia.3m.com/mws/media/889316O/3m-fire-barrier-rated-foam-fip-1-step-technical-data-sheet.pdf",
+            "checks": [
+              {
+                "label": "Current document",
+                "ok": true,
+                "note": "RevB"
+              },
+              {
+                "label": "Temperature rating (T)",
+                "ok": null,
+                "note": "No quoted evidence that this corrects the failed requirement"
+              }
+            ],
+            "passes": false
+          }
+        ],
+        "suggest": ""
+      }
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "Test standards",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": "This item does not apply to the current submittal type, so no action is needed.",
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not stated",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null
+    },
+    {
+      "id": "currency-newer",
+      "check": "currency",
+      "verdict": "note",
+      "severity": "minor",
+      "title": "Different revision found; no quoted values changed",
+      "detail": "Submitted July 30, 2015, web source Issue Date 2020-December-15. The revision labels differ; their age order is not confirmed.",
+      "why_it_matters": "We cannot determine which document is newer based on revision labels alone, so we need a clear date to ensure we are reviewing the correct version.",
+      "requirement_id": null,
+      "claim_id": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "July 30, 2015",
+        "right_label": "Current",
+        "right_value": "Issue Date 2020-December-15",
+        "verdict": "changed",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://multimedia.3m.com/mws/media/645454O/ul-certificate-of-compliance-cp25wb-sealant.pdf",
+          "tier": "manufacturer",
+          "title": "CERT IFICATE OF COMPLIANCE",
+          "retrieved_at": "2026-10-22T18:16:11+00:00",
+          "sha256": "0fff938b4fe08d44b6884e4ad1f312169050f1785f68c0dc6c542cb92ab8e599",
+          "excerpt": "C E R T I F I C A T E O F C O M P L I A N C E Certificate Number 20201215-R9700 Report Reference R9700 Issue Date 2020-December-15 Bruce Mahrenholz, Director North American Certification Program UL LLC Any information and documentation involving UL Mark services are provided on behalf of UL LLC (UL) or any authorized licensee of UL. For questions, please contact a local UL Customer Service Represe",
+          "archived_path": null
+        },
+        {
+          "url": "https://www.3m.com/3M/en_US/building-construction-us/applications/firestop/through-penetrations",
+          "tier": "manufacturer",
+          "title": "Through Penetration Products for Firestopping | 3M",
+          "retrieved_at": "2026-10-22T18:16:11+00:00",
+          "sha256": "490c58150f0eb308ff5a6dd87332925c91821c5d4d3ef1b0c36852a27d6147f3",
+          "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to Building & Construction Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [Design & Construction](/3M/en_US/design-construction-us/)\n3. [Building & Construction](/3M/en_US/",
+          "archived_path": null
+        },
+        {
+          "url": "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf",
+          "tier": "manufacturer",
+          "title": "CERT IFICATE OF COMPLIANCE - mu ltime dia",
+          "retrieved_at": "2026-10-22T18:16:11+00:00",
+          "sha256": "14ca939e38e152e092ae46e1f721f89b94b01fb8a8ba36140ed3cf272de8e771",
+          "excerpt": "C E R T I F I C A T E O F C O M P L I A N C E Certificate Number 20201016- R9700 Report Reference R9700 Issue Date 2020-October-16 Bruce Mahrenholz, Director North American Certification Program UL LLC Any information and documentation involving UL Mark services are provided on behalf of UL LLC (UL) or any authorized licensee of UL. For questions, please contact a local UL Customer Service Represe",
+          "archived_path": null
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": null
+    }
+  ],
+  "comparison": [
+    {
+      "property": "document_revision",
+      "label": "Data sheet version",
+      "submitted": "July 30, 2015",
+      "current": "Issue Date 2020-December-15",
+      "changed": true,
+      "source_url": null,
+      "quote": null
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "Through Penetrations",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "property": "f_rating_hr",
+      "value": 2.0,
+      "unit": "Hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "F Rating — 2 Hr",
+      "variant": null
+    },
+    {
+      "id": "clm-2",
+      "product": "Through Penetrations",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "property": "t_rating_hr",
+      "value": 0.0,
+      "unit": "Hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "T Rating — 0 Hr",
+      "variant": null
+    }
+  ],
+  "document_revision": "July 30, 2015",
+  "note_to_subcontractor": "Please resubmit with a firestop system that has a temperature rating (T) equal to or greater than the fire rating (F) of 2 hours. Also confirm which document version is the most current by providing a clear date or revision number.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 765,
+      "output_tokens": 28,
+      "cost_usd": 0.000053,
+      "latency_ms": 832,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2349,
+      "output_tokens": 225,
+      "cost_usd": 0.000907,
+      "latency_ms": 2088,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13332,
+      "output_tokens": 257,
+      "cost_usd": 0.004231,
+      "latency_ms": 6742,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13621,
+      "output_tokens": 134,
+      "cost_usd": 0.004207,
+      "latency_ms": 1964,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1365,
+      "output_tokens": 143,
+      "cost_usd": 0.000538,
+      "latency_ms": 1628,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3033,
+      "output_tokens": 183,
+      "cost_usd": 0.001075,
+      "latency_ms": 1946,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5020,
+      "output_tokens": 219,
+      "cost_usd": 0.001703,
+      "latency_ms": 9458,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7099,
+      "output_tokens": 147,
+      "cost_usd": 0.002262,
+      "latency_ms": 1960,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8140,
+      "output_tokens": 115,
+      "cost_usd": 0.002546,
+      "latency_ms": 1749,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 10269,
+      "output_tokens": 151,
+      "cost_usd": 0.003217,
+      "latency_ms": 3217,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12254,
+      "output_tokens": 97,
+      "cost_usd": 0.003763,
+      "latency_ms": 3655,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12965,
+      "output_tokens": 60,
+      "cost_usd": 0.003943,
+      "latency_ms": 4182,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14035,
+      "output_tokens": 448,
+      "cost_usd": 0.004614,
+      "latency_ms": 7274,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2999,
+      "output_tokens": 1508,
+      "cost_usd": 0.002257,
+      "latency_ms": 11182,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11120,
+      "output_tokens": 497,
+      "cost_usd": 0.003783,
+      "latency_ms": 9666,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11619,
+      "output_tokens": 491,
+      "cost_usd": 0.003928,
+      "latency_ms": 4007,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2672,
+      "output_tokens": 49,
+      "cost_usd": 0.000846,
+      "latency_ms": 1211,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1357,
+      "output_tokens": 259,
+      "cost_usd": 0.00064,
+      "latency_ms": 6372,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2974,
+      "output_tokens": 137,
+      "cost_usd": 0.001015,
+      "latency_ms": 3142,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4684,
+      "output_tokens": 102,
+      "cost_usd": 0.001497,
+      "latency_ms": 1606,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4803,
+      "output_tokens": 91,
+      "cost_usd": 0.001523,
+      "latency_ms": 5120,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4911,
+      "output_tokens": 52,
+      "cost_usd": 0.00152,
+      "latency_ms": 1529,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6642,
+      "output_tokens": 55,
+      "cost_usd": 0.002042,
+      "latency_ms": 2020,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7816,
+      "output_tokens": 159,
+      "cost_usd": 0.002488,
+      "latency_ms": 2582,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7992,
+      "output_tokens": 66,
+      "cost_usd": 0.002457,
+      "latency_ms": 1615,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9050,
+      "output_tokens": 204,
+      "cost_usd": 0.002899,
+      "latency_ms": 5609,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 10770,
+      "output_tokens": 392,
+      "cost_usd": 0.003584,
+      "latency_ms": 4034,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12875,
+      "output_tokens": 261,
+      "cost_usd": 0.004097,
+      "latency_ms": 3889,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 15004,
+      "output_tokens": 415,
+      "cost_usd": 0.004875,
+      "latency_ms": 7134,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 760,
+      "output_tokens": 349,
+      "cost_usd": 0.000542,
+      "latency_ms": 8726,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 132,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "3M Penetration product",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 2,
+        "tool": "search",
+        "args": {
+          "query": "3M \"Service Penetration\" product model number data sheet",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://multimedia.3m.com/mws/media/898421O/3m-tm-fire-barrier-rated-foam-fip-1-step-submittal-package.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 4,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.3m.com/3M/en_US/building-construction-us/applications/firestop/through-penetrations"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 5,
+        "tool": "search",
+        "args": {
+          "query": "\"3M™ Fire Barrier Foam Product Data Sheet\" PDF",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 6,
+        "tool": "extract",
+        "args": {
+          "url": "https://multimedia.3m.com/mws/media/889316O/3m-fire-barrier-rated-foam-fip-1-step-technical-data-sheet.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 7,
+        "tool": "search",
+        "args": {
+          "query": "\"3M™ Fire Barrier Rated Foam FIP 1-Step\" discontinued",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "2 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 8,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.3m.com/3M/en_US/p/d/b40069743"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 9,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://multimedia.3m.com/mws/media/889316O/3m-fire-barrier-rated-foam-fip-1-step-technical-data-sheet.pdf",
+          "document_title": "3M™ Fire Barrier Rated Foam FIP 1-Step Product Data Sheet",
+          "revision_quote": "Reference Number 98-0213-4666-7 RevB",
+          "status": "active",
+          "status_quote": "© 3M 2026. All Rights Reserved.",
+          "note": "Found 3M™ Fire Barrier Rated Foam FIP 1-Step product data sheet with revision \"Reference Number 98-0213-4666-7 RevB\". Product is currently active and available for purchase on 3M website showing 2026 copyright."
+        },
+        "summary": "Reference Number 98-0213-4666-7 RevB, active",
+        "credits": 0.0,
+        "ms": 9
+      },
+      {
+        "n": 10,
+        "tool": "search",
+        "args": {
+          "query": "antibiotic penetration klebsiella test kit 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "3 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 11,
+        "tool": "search",
+        "args": {
+          "query": "\"Role of antibiotic penetration limitation in Klebsiella\" 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 12,
+        "tool": "extract",
+        "args": {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10858336"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 13,
+        "tool": "extract",
+        "args": {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10858336/"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 14,
+        "tool": "search",
+        "args": {
+          "query": "10858336 antibiotic penetration klebsiella"
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 15,
+        "tool": "search",
+        "args": {
+          "query": "\"10858336\" pubmed"
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 16,
+        "tool": "extract",
+        "args": {
+          "url": "https://pubmed.ncbi.nlm.nih.gov/10858336"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 17,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC89967/"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 2
+      },
+      {
+        "n": 18,
+        "tool": "search",
+        "args": {
+          "query": "biofilm test antibiotic susceptibility 3M product",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 19,
+        "tool": "search",
+        "args": {
+          "query": "antibiotic susceptibility test 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 20,
+        "tool": "search",
+        "args": {
+          "query": "\"Anderl\" \"Franklin\" \"Stewart\" 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0
+      },
+      {
+        "n": 21,
+        "tool": "finish",
+        "args": {
+          "found": false,
+          "status": "unknown",
+          "note": "The product name \"Role of antibiotic penetration limitation in Klebsiella ...\" corresponds to PubMed PMID 10858336, which is an academic research article titled \"Role of Antibiotic Penetration Limitation in Klebsiella pneumoniae Biofilm Resistance to Ampicillin and Ciprofloxacin\" by Anderl, Franklin, and Stewart from Montana State University (2000). This is not a 3M product. Extensive searches of 3M.com domains revealed no product matching this name or description. Therefore, no manufacturer's document exists for this item as it is not a 3M product."
+        },
+        "summary": "couldn't confirm a document",
+        "credits": 0.0,
+        "ms": 0
+      }
+    ],
+    "outcome": "found"
+  },
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 14,
+  "claims_kept": 11,
+  "web_values_read": 7,
+  "web_values_kept": 7
+}

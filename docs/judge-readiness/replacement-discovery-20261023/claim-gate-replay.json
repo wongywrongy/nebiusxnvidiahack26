@@ -1,0 +1,248 @@
+[
+  {
+    "url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+    "provider_http_disabled": true,
+    "before": [
+      {
+        "requirement_id": "req_t_rating_hr_led",
+        "ok": true,
+        "note": "349000 hours"
+      },
+      {
+        "requirement_id": "req_warranty_years_led",
+        "ok": true,
+        "note": "10 years"
+      },
+      {
+        "requirement_id": "lt-dlc",
+        "ok": true,
+        "note": ""
+      },
+      {
+        "requirement_id": "req_macadam_ellipse",
+        "ok": null,
+        "note": "not stated"
+      },
+      {
+        "requirement_id": "lt-dim",
+        "ok": null,
+        "note": "not stated"
+      }
+    ],
+    "after": [
+      {
+        "requirement_id": "req_t_rating_hr_led",
+        "verdict": "pass",
+        "claim_ids": [
+          "cl-9"
+        ]
+      },
+      {
+        "requirement_id": "req_warranty_years_led",
+        "verdict": "pass",
+        "claim_ids": [
+          "cl-22"
+        ]
+      },
+      {
+        "requirement_id": "lt-dlc",
+        "verdict": "pass",
+        "claim_ids": [
+          "cl-3"
+        ]
+      },
+      {
+        "requirement_id": "req_macadam_ellipse",
+        "verdict": "unverified",
+        "claim_ids": []
+      },
+      {
+        "requirement_id": "lt-dim",
+        "verdict": "unverified",
+        "claim_ids": []
+      }
+    ],
+    "kept_claims": [
+      {
+        "id": "cl-3",
+        "product": "SLLT LED TROFFER LUMINAIRE",
+        "manufacturer": "Starco Lighting Inc.",
+        "model": null,
+        "property": "dlc_listed",
+        "value": [
+          "DLC Premium"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Certi\ufb01cation UL & cUL; DLC Premium; Control & Networking Integrated sensor Integrated Wireless BLE Sensor Integrated Wireless BLE Driver Internet/Cloud base remote programming control",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-9",
+        "product": "SLLT LED TROFFER LUMINAIRE",
+        "manufacturer": "Starco Lighting Inc.",
+        "model": null,
+        "property": "l70_hours",
+        "value": 349000.0,
+        "unit": "hours",
+        "page": 1,
+        "bbox": null,
+        "quote": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Reported L70 Lifetime: 349,000 hours @25\u00b0C",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-22",
+        "product": "SLLT LED TROFFER LUMINAIRE",
+        "manufacturer": "Starco Lighting Inc.",
+        "model": null,
+        "property": "warranty_years",
+        "value": 10.0,
+        "unit": "years",
+        "page": 1,
+        "bbox": null,
+        "quote": "Warranty 10 Years",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Warranty 10 Years",
+        "selection_quote": null
+      }
+    ]
+  },
+  {
+    "url": "https://hew.com/specifications/LT_led.pdf",
+    "provider_http_disabled": true,
+    "before": [
+      {
+        "requirement_id": "req_t_rating_hr_led",
+        "ok": null,
+        "note": "not stated"
+      },
+      {
+        "requirement_id": "req_warranty_years_led",
+        "ok": null,
+        "note": "not stated"
+      },
+      {
+        "requirement_id": "lt-dlc",
+        "ok": false,
+        "note": "not listed"
+      },
+      {
+        "requirement_id": "req_macadam_ellipse",
+        "ok": true,
+        "note": "3"
+      },
+      {
+        "requirement_id": "lt-dim",
+        "ok": null,
+        "note": "not stated"
+      }
+    ],
+    "after": [
+      {
+        "requirement_id": "req_t_rating_hr_led",
+        "verdict": "unverified",
+        "claim_ids": []
+      },
+      {
+        "requirement_id": "req_warranty_years_led",
+        "verdict": "pass",
+        "claim_ids": [
+          "cl-19"
+        ]
+      },
+      {
+        "requirement_id": "lt-dlc",
+        "verdict": "unverified",
+        "claim_ids": []
+      },
+      {
+        "requirement_id": "req_macadam_ellipse",
+        "verdict": "pass",
+        "claim_ids": [
+          "cl-11"
+        ]
+      },
+      {
+        "requirement_id": "lt-dim",
+        "verdict": "unverified",
+        "claim_ids": []
+      }
+    ],
+    "kept_claims": [
+      {
+        "id": "cl-2",
+        "product": "LT LED Troffer",
+        "manufacturer": "H.E. Williams, Inc.",
+        "model": null,
+        "property": "dim_min_percent",
+        "value": 1.0,
+        "unit": "%",
+        "page": 1,
+        "bbox": null,
+        "quote": "DIM1 1 % Driver with external 0-10V dimming wires",
+        "variant": "DIM1 1 % Driver with external 0-10V dimming wires",
+        "scope": "product_wide",
+        "scope_quote": "DIM Driver with external dimming wires prewired for 0-10V low voltage applications (tunable white: (1) 0-10V signal controls dimming and (1) 0-10V signal controls CCT) DIM1 1% driver with external dimming wires prewired for 0-10V low voltage applications",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-3",
+        "product": "LT LED Troffer",
+        "manufacturer": "H.E. Williams, Inc.",
+        "model": null,
+        "property": "dlc_listed",
+        "value": [
+          "DesignLights Consortium qualified product"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "DesignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL",
+        "variant": "DesignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL",
+        "scope": "product_wide",
+        "scope_quote": "DesignLights Consortium qualified product. Not all versions of this product may be DLC qualified, see the DLC Qualified Products List at www.designlights.org/QPL",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-11",
+        "product": "LT LED Troffer",
+        "manufacturer": "H.E. Williams, Inc.",
+        "model": null,
+        "property": "macadam_steps",
+        "value": 3.0,
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "All CCTs are within 3 MacAdam ellipses.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "All CCTs are within 3 MacAdam ellipses.",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-19",
+        "product": "LT LED Troffer",
+        "manufacturer": "H.E. Williams, Inc.",
+        "model": null,
+        "property": "warranty_years",
+        "value": 5.0,
+        "unit": "years",
+        "page": 1,
+        "bbox": null,
+        "quote": "5-year limited warranty, see hew.com/warranty",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY \u2013 5-year limited warranty, see hew.com/warranty",
+        "selection_quote": null
+      }
+    ]
+  }
+]

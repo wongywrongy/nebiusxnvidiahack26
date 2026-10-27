@@ -1,0 +1,17 @@
+
+mode=live  run=20261021-110621-4740c2
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c07   send_back          approve_with_note  status                 -                          none      99   0.0316       0 ✗
+
+Answer-key panel
+  right call                      0 of 1
+  planted problems caught         0 of 1
+  clean packages wrongly flagged  0 of 0
+  fixes that pass the spec        0 of 1
+  average time per submittal      0.1 s
+  cost per submittal (model+web)  $0.0316
+Quote gate: claims 64/66 kept (3.0% dropped); web values 0/2 kept (100.0% dropped)
+
+wrote /tmp/speccheck-family-notice-retry.json
+POST-RUN LEDGER: {"usd": 0.72193, "credits": 230.0}

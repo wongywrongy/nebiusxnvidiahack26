@@ -1,0 +1,785 @@
+{
+  "_note": "Draft from nvidia/nemotron-3-super-120b-a12b. Review, then save as 26_51_00.json.",
+  "requirements": [
+    {
+      "id": "req_t_rating_hr_led",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.1.a",
+      "property": "t_rating_hr",
+      "operator": "gte",
+      "value": 50000.0,
+      "unit": "hours",
+      "text": "LED Luminaires: Estimated useful life, calculated based on IES LM-80 test data, minimum of 50,000 hours at 70 percent lumen maintenance.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_cri_screw_in",
+      "section": "26 51 00",
+      "paragraph": "2.06.B.5",
+      "property": "cri",
+      "operator": "gte",
+      "value": 80.0,
+      "unit": null,
+      "text": "Screw-in type LED Lamps: Color Rendering Consistency: All lamps shall have a minimum CRI of 80.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_warranty_years_led",
+      "section": "26 51 00",
+      "paragraph": "1.10.B.1",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 5.0,
+      "unit": "years",
+      "text": "Warranty Period for LED Luminaires, including LED modules, LED boards, chips, and drivers: Five (5) years from date of Preliminary Acceptance.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_warranty_years_screw_in",
+      "section": "26 51 00",
+      "paragraph": "1.10.B.2",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 3.0,
+      "unit": "years",
+      "text": "Warranty Period for Screw-in type LED Lamps: Three (3) years from date of Preliminary Acceptance.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_warranty_years_emerg_batt",
+      "section": "26 51 00",
+      "paragraph": "1.10.C.1",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 5.0,
+      "unit": "years",
+      "text": "Warranty Period for Emergency Lighting Unit Batteries: Five (5) years from date of Preliminary Acceptance.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_warranty_years_exit_sign_batt",
+      "section": "26 51 00",
+      "paragraph": "1.10.C.2",
+      "property": "warranty_years",
+      "operator": "gte",
+      "value": 5.0,
+      "unit": "years",
+      "text": "Warranty Period for internal batteries of Exit and Area of Rescue Signs: Five (5) years from date of Preliminary Acceptance.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_listed_ul_1598",
+      "section": "26 51 00",
+      "paragraph": "2.02.B.1",
+      "property": "listed_ul_1598",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Provide products that are listed and labeled as complying with UL 1598, where applicable.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_listed_ul_924_emerg",
+      "section": "26 51 00",
+      "paragraph": "2.03.A",
+      "property": "listed_ul_924",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Emergency lighting units complying with NFPA 101 and the Chicago Electrical Code, and listed and labeled as complying with UL 924.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_listed_ul_924_exit",
+      "section": "26 51 00",
+      "paragraph": "2.04.A",
+      "property": "listed_ul_924",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Internally illuminated exit signs with LEDs unless otherwise indicated; complying with NFPA 101 and the Chicago Electrical Code for sign colors, visibility, luminance, and lettering size, and listed and labeled as complying with UL 924.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_listed_ul_8750_led",
+      "section": "26 51 00",
+      "paragraph": "2.09.S.1",
+      "property": "listed_ul_8750",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "LED Luminaires: Components: UL 8750 recognized or listed as applicable.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_tested_ies_lm79",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.1.b",
+      "property": "tested_ies_lm79",
+      "operator": "eq",
+      "value": "available",
+      "unit": null,
+      "text": "LED Luminaires: Include IES LM-79 test report upon request.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_tested_ies_lm80",
+      "section": "26 51 00",
+      "paragraph": "2.09.S.2",
+      "property": "tested_ies_lm80",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "LED Luminaires: Tested in accordance with IES LM-79 and IES LM-80.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_photometric_ies_lm63",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.2",
+      "property": "photometric_ies_lm63",
+      "operator": "eq",
+      "value": "available",
+      "unit": null,
+      "text": "Provide electronic files of photometric data certified by a National Voluntary Laboratory Accreditation Program (NVLAP) lab or independent testing agency in IES LM-63 standard format upon request.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_dlc_listed",
+      "section": "26 51 00",
+      "paragraph": "1.04.F.2",
+      "property": "dlc_listed",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Include DLC listing status.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_doe_lighting_facts",
+      "section": "26 51 00",
+      "paragraph": "2.09.S.4",
+      "property": "doe_lighting_facts",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "LED Luminaires: Shall be provided with a U.S. Department of Energy (DOE) \"Lighting Facts\" label indicating their specific performance characteristics, tested and reported in accordance with the requirements of the most current version of IES LM-79.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_ansi_c78_379",
+      "section": "26 51 00",
+      "paragraph": "2.06.B.7",
+      "property": "ansi_c78_379_compliant",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Reflector Lamp Beam Pattern: ANSI C78.379.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_ansi_nema_c78_377",
+      "section": "26 51 00",
+      "paragraph": "2.09.S.5",
+      "property": "ansi_nema_c78_377_compliant",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Chromaticity ranges for \"white light\" products, with various correlated color temperatures, shall be provided in accordance with ANSI/NEMA -C78.377.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_macadam_ellipse",
+      "section": "26 51 00",
+      "paragraph": "2.09.S.6",
+      "property": "macadam_ellipse_max_step",
+      "operator": "lte",
+      "value": 3.0,
+      "unit": null,
+      "text": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_ansi_c82_ssl1",
+      "section": "26 51 00",
+      "paragraph": "2.05.B.2",
+      "property": "ansi_c82_ssl1_compliant",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Drivers and power supplies shall be provided in accordance with the requirements of ANSI C82.SSL1.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_ansi_c82_77",
+      "section": "26 51 00",
+      "paragraph": "2.05.B.2",
+      "property": "ansi_c82_77_compliant",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Drivers and power supplies shall be provided in accordance with the requirements of ANSI C82.SSL1 and their maximum allowable harmonic emission limits shall be in accordance with ANSI C82.77.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_fcc_part18",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.4",
+      "property": "fcc_part18_compliant",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "LED drivers shall be factory provided by the respective luminaire manufacturers, and shall be suitable for their intended use, to operate the designated LED modules listed in the Luminaire Schedule, and as specified herein, to their full light output. Comply with the requirements of the Federal Communications Commission (FCC) rules and regulations, Title 47 CFR Part 18, Non-Consumer (Class A) for EMI/RFI (conducted and radiated).",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_temp_rating",
+      "section": "26 51 00",
+      "paragraph": "2.05.B.4",
+      "property": "driver_temp_rating",
+      "operator": "eq_ref",
+      "value": "fixture_temp_rating",
+      "unit": null,
+      "text": "Provide UL listed and labeled drivers. Provide drivers with temperature ratings appropriate to the installation.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_surge_tolerance",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.8",
+      "property": "driver_surge_tolerance_aic",
+      "operator": "gte",
+      "value": 10000.0,
+      "unit": "aic",
+      "text": "Surge Tolerance: Capable of withstanding characteristic surges, 10,000 aic minimum.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_enclosure_type",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.7",
+      "property": "driver_enclosure_type",
+      "operator": "eq",
+      "value": "totally_enclosed_metallic",
+      "unit": null,
+      "text": "Drivers shall be totally enclosed within a metallic enclosure, and shall be provided with integral leads color coded per ANSI Standards or with poke-in style wire retaining connectors.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_dimming_range",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.1",
+      "property": "driver_dimming_range_min_percent",
+      "operator": "lte",
+      "value": 5.0,
+      "unit": "%",
+      "text": "Dimming Range: Continuous dimming from 100 percent to five percent relative light output unless dimming capability to lower level is indicated, without flicker.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_control_compat",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.2",
+      "property": "driver_control_compat",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Control Compatibility: Fixtures intended to be dimmed shall have dimming driver fully compatible with the dimming controls to be installed.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_identical_within_type",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.5",
+      "property": "driver_identical_within_type",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Provide identical drivers within each luminaire type.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_driver_connection_types",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.6",
+      "property": "driver_connection_types",
+      "operator": "eq",
+      "value": "both_intgrl_and_remote",
+      "unit": null,
+      "text": "Provide complete connection to LED type luminaires through both integrally installed and remote electronic drivers.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data",
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_remote_driver_location",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.9.a",
+      "property": "remote_driver_location",
+      "operator": "eq",
+      "value": "readily_accessible_dry_indoor_concealed",
+      "unit": null,
+      "text": "Remote drivers are specifically not shown on the drawings. Contractor shall install remote drivers in a readily accessible, dry, indoor, concealed location, in accordance with the manufacturer's instructions.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_remote_driver_wiring",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.9.b",
+      "property": "remote_driver_wiring_in_conduit",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "All wiring to/from remote drivers and their associated LED luminaires shall be installed in conduit.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_remote_driver_enclosure",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.9.c",
+      "property": "remote_driver_enclosure_chicago_plenum_rated",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Metal Enclosures shall be Chicago Plenum Rated",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_remote_driver_distance_limit",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.9.d",
+      "property": "remote_driver_distance_limit",
+      "operator": "eq_ref",
+      "value": "manufacturer_specified_limit",
+      "unit": null,
+      "text": "Verify and comply with remote distance limitations specified by the luminaire/driver manufacturer.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_remote_driver_ventilated_enclosure",
+      "section": "26 51 00",
+      "paragraph": "2.05.C.9.b",
+      "property": "remote_driver_ventilated_metal_enclosure",
+      "operator": "eq",
+      "value": "yes",
+      "unit": null,
+      "text": "Provide ventilated metal enclosures for remote drivers furnished as loose equipment.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "system_drawing"
+      ]
+    },
+    {
+      "id": "req_input_watts_driver",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.3",
+      "property": "input_watts",
+      "operator": "exists",
+      "value": null,
+      "unit": "watts",
+      "text": "LED Drivers: Include information as to input watts.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_remote_driver_mount_dist_limit",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.3",
+      "property": "remote_driver_mount_dist_limit",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "LED Drivers: Indicate mounting distance limitation and standard wire sizes for remote drivers.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_remote_driver_wire_size",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.3",
+      "property": "remote_driver_wire_size",
+      "operator": "exists",
+      "value": null,
+      "unit": "awg",
+      "text": "LED Drivers: Indicate mounting distance limitation and standard wire sizes for remote drivers.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_driver_dimming_type_range",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.3",
+      "property": "driver_dimming_type_range",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "LED Drivers: Indicate dimming type and range.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_led_modules_per_tag",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.4",
+      "property": "led_modules_per_tag",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "LED modules: per luminaire tag, including life, lumen output, correlated color temperature (CC), color rendering index (CRI) and energy-efficiency data.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_screw_in_lamp_life",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.5",
+      "property": "screw_in_lamp_life_hr",
+      "operator": "gte",
+      "value": 20000.0,
+      "unit": "hours",
+      "text": "Screw-in type LED Lamps: Include rated life, color temperature, color rendering index (CRI), and initial and mean lumen output.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_screw_in_lamp_ct",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.5",
+      "property": "screw_in_lamp_color_temp",
+      "operator": "exists",
+      "value": null,
+      "unit": "kelvin",
+      "text": "Screw-in type LED Lamps: Include rated life, color temperature, color rendering index (CRI), and initial and mean lumen output.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_screw_in_lamp_cri",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.5",
+      "property": "screw_in_lamp_cri",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Screw-in type LED Lamps: Include rated life, color temperature, color rendering index (CRI), and initial and mean lumen output.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_screw_in_lamp_lumen_init_mean",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.5",
+      "property": "screw_in_lamp_lumen_output",
+      "operator": "exists",
+      "value": null,
+      "unit": "lumens",
+      "text": "Screw-in type LED Lamps: Include rated life, color temperature, color rendering index (CRI), and initial and mean lumen output.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_battery_charger_info_emerg",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.6",
+      "property": "battery_charger_info",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Battery and charger information for emergency lighting units.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_remote_driver_mount_dist_limit_2",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.7",
+      "property": "remote_driver_mount_dist_limit",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Remote Drivers: Indicate mounting distance limitation and standard wire sizes for remote drivers/transformers.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_remote_driver_wire_size_2",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.7",
+      "property": "remote_driver_wire_size",
+      "operator": "exists",
+      "value": null,
+      "unit": "awg",
+      "text": "Remote Drivers: Indicate mounting distance limitation and standard wire sizes for remote drivers/transformers.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_efficiency_data",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.8",
+      "property": "efficiency_data",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Efficiency Data: Provide both lumen performance efficiency and luminaire efficiency rating (LER).",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_special_warranty_doc",
+      "section": "26 51 00",
+      "paragraph": "1.04.D.9",
+      "property": "special_warranty_doc",
+      "operator": "eq",
+      "value": "provided",
+      "unit": null,
+      "text": "Special Warranty: Provide documentation of compliance with special warranties as part of the product data.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_mercury_content_lamp_life",
+      "section": "26 51 00",
+      "paragraph": "1.04.F.1",
+      "property": "mercury_content_lamp_life",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Include DOE \"Lighting Facts\" Information",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_dlc_listing_status",
+      "section": "26 51 00",
+      "paragraph": "1.04.F.2",
+      "property": "dlc_listing_status",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Include DLC listing status.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    },
+    {
+      "id": "req_efficacy_info",
+      "section": "26 51 00",
+      "paragraph": "1.04.F.3",
+      "property": "efficacy_info",
+      "operator": "exists",
+      "value": null,
+      "unit": null,
+      "text": "Include Efficacy information.",
+      "severity": "major",
+      "check": "spec",
+      "applies_to": [
+        "product_data"
+      ]
+    }
+  ],
+  "section": "26 51 00",
+  "title": "",
+  "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+  "source_name": "Interior Lighting",
+  "source_url": "https://www.cps.edu/globalassets/cps-pages/services-and-supports/school-facilities/facilities-standards/cps-infrastructure-handbook/electrical-new/26-51-00-interior-lighting.pdf",
+  "source_sha256": "a6f49d7e4371591954e283295bb45fac5f1ff39a87a85a30fb1b16a554a4b6ce",
+  "drafted_at": "2026-10-21T07:27:03.659556Z",
+  "reviewed_at": null
+}

@@ -1,0 +1,19 @@
+{
+  "observed_at": "2026-10-23T10:40:47.152384+00:00",
+  "run_id": "20261023-103618-93d441",
+  "scope": "Read-only payment records; unsettled hold is not a known charge",
+  "payments": {
+    "e83716fcb77d4608991fbbc71ec5e156": {
+      "run": "20261023-103618-93d441",
+      "item": "c07",
+      "day": "2026-10-23",
+      "held": {
+        "usd_nano": 0,
+        "credits": 1
+      },
+      "actual": null,
+      "unknown": true,
+      "kind": "request"
+    }
+  }
+}

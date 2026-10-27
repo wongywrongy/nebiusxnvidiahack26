@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://docs.nebius.com/vpc/resources/pricing.md",
+    "authorization": null
+  },
+  "status": 200,
+  "content_type": "text/markdown; charset=utf-8",
+  "observed_at": "2026-10-23T07:49:34.106292+00:00",
+  "bytes": 285,
+  "sha256": "9e1c8b8fe89b2c5fec407c82a1ab391151fffa4918e2bf5d712fcd5f4c0e8c66",
+  "excerpts": []
+}

@@ -1,0 +1,12 @@
+{
+  "source_url": "https://starcous.com/wp-content/uploads/2024/10/Spec-Sheet-SLLT-LED-Troffer.pdf",
+  "source_sha256": "d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b",
+  "archived_path": "c07/2026-10-23T02_07_45+00_00/d69d7123a2230150b018efb7977ee4442122b0cfc4808b94b21dea5945206b4b.txt",
+  "claim_property": "l70_hours",
+  "value": "349,000",
+  "unit": "hours",
+  "quote": "Reported L70 Lifetime: 349,000 hours @25\\u00b0C",
+  "before_quote_kept": false,
+  "after_quote_kept": true,
+  "value_gate": true
+}

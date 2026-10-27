@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-080829-94b9d6",
+  "reproduction": ".venv/bin/python scripts/eval.py --case c03 --out /tmp/speccheck-c03-source-first.json",
+  "decision": "approve_with_note",
+  "warnings": [],
+  "counts": {
+    "claims_extracted": 4,
+    "claims_kept": 2,
+    "web_values_read": 2,
+    "web_values_kept": 1
+  },
+  "comparison": [
+    {
+      "property": "document_revision",
+      "label": "Data sheet version",
+      "submitted": "98-0400-5077-9 \u00a9 3M 2005",
+      "current": "\u00a9 3M 2018",
+      "changed": true,
+      "source_url": null,
+      "quote": null
+    },
+    {
+      "property": "standards",
+      "label": "Test standards",
+      "submitted": "ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079)",
+      "current": "ASTM E 814 (UL 1479), ASTM E 1966 (UL 2079)",
+      "changed": false,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115"
+    }
+  ],
+  "fixes": [],
+  "fresh_model_requests_responses": [
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "validation_retry": false,
+        "sources": "[omitted: fetched source text; hashes in run results]"
+      },
+      "response": {
+        "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"\\u00a9 3M 2018\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"quote\": \"Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115\"}, {\"property\": \"voc_g_per_l\", \"value\": \"<2\", \"unit\": \"g/L\", \"quote\": \"contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf\"], \"notes\": null}",
+        "usage": {
+          "completion_tokens": 270,
+          "prompt_tokens": 9724,
+          "total_tokens": 9994,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 9724
+        }
+      },
+      "latency_ms": 2319
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "validation_retry": false,
+        "sources": "[omitted: fetched source text; hashes in run results]"
+      },
+      "response": {
+        "content": "{\"summary\": \"The firestop sealant is approved but needs clarification on mold resistance and an updated data sheet before final records are complete.\", \"note_to_subcontractor\": \"Please provide confirmation that the product meets ASTM G21 mold resistance rating of zero (0), and submit the current 2018 data sheet for our files.\", \"finding_titles\": {\"spec-req_mold_resistance\": \"Missing Mold Resistance Rating\", \"currency-newer\": \"Outdated Data Sheet\"}, \"why_it_matters\": {\"spec-req_mold_resistance\": \"Without verified mold resistance, the sealant could degrade in damp areas, compromising fire safety over time.\", \"currency-newer\": \"Using an outdated data sheet risks missing updates to performance or safety info, even if the product itself hasn\u2019t changed.\"}}",
+        "usage": {
+          "completion_tokens": 172,
+          "prompt_tokens": 482,
+          "total_tokens": 654,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 482
+        }
+      },
+      "latency_ms": 1652
+    }
+  ]
+}

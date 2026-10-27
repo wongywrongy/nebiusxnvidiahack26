@@ -1,0 +1,100 @@
+{
+  "cases": [
+    {
+      "id": "b01",
+      "title": "STI SpecSeal SSS Intumescent Sealant",
+      "section": "07 84 00",
+      "manufacturer_domains": [
+        "stifirestop.com"
+      ],
+      "submittal": [
+        {
+          "file": "blind/20261023/sti-sss.pdf",
+          "url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_SSS%20Intumescent%20Sealant.pdf",
+          "sha256": "4e918dbb57da12ca8258fa4221f744eeb1e9447844cd876d5d29920c1677deaf",
+          "role": "product_data"
+        }
+      ]
+    },
+    {
+      "id": "b02",
+      "title": "Tremco TREMstop Acrylic SP",
+      "section": "07 84 00",
+      "manufacturer_domains": [
+        "tremcosealants.com"
+      ],
+      "submittal": [
+        {
+          "file": "blind/20261023/tremstop-acrylic.pdf",
+          "url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_SP_DS.pdf",
+          "sha256": "011a230b8d5c1eb3dbea3ab939b7276dbc50c9bdea13d17c0510ce2698759604",
+          "role": "product_data"
+        }
+      ]
+    },
+    {
+      "id": "b03",
+      "title": "STI C-AJ-0113 listing",
+      "section": "07 84 00",
+      "manufacturer_domains": [
+        "stifirestop.com"
+      ],
+      "submittal": [
+        {
+          "file": "blind/20261023/sti-caj0113.pdf",
+          "url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Fcaj0113_dl.pdf",
+          "sha256": "de359ea0a878b692b3182c40b40822c134f45ace8c4a9f4bdd085d5192bda9d2",
+          "role": "listing"
+        }
+      ]
+    },
+    {
+      "id": "b04",
+      "title": "STI F-A-1118 listing",
+      "section": "07 84 00",
+      "manufacturer_domains": [
+        "stifirestop.com"
+      ],
+      "submittal": [
+        {
+          "file": "blind/20261023/sti-fa1118.pdf",
+          "url": "https://files.stifirestop.com/1.%20System%20PDF%20Files%2F1.%20UL%20and%20cUL%20Systems%2Ffa1118_dl.pdf",
+          "sha256": "e82a38eb68963ce504ef199f117a62f03fe1b8a09fc9264254fedd0e5482b20c",
+          "role": "listing"
+        }
+      ]
+    },
+    {
+      "id": "b05",
+      "title": "RAB RPLED Field-Adjustable Retrofit Panels",
+      "section": "26 51 00",
+      "manufacturer_domains": [
+        "rablighting.com"
+      ],
+      "submittal": [
+        {
+          "file": "blind/20261023/rab-rpled.pdf",
+          "url": "https://www.rablighting.com/sites/default/files/downloads/RPLED_Family_Spec_Sheet.pdf",
+          "sha256": "b54270043c00e2c66fa4145e3b6c01b0b8f0f779e79417fe22af778eb18a3ae1",
+          "role": "product_data"
+        }
+      ]
+    },
+    {
+      "id": "b06",
+      "title": "RAB RTLED Field-Adjustable Troffer",
+      "section": "26 51 00",
+      "manufacturer_domains": [
+        "rablighting.com"
+      ],
+      "submittal": [
+        {
+          "file": "blind/20261023/rab-rtled.pdf",
+          "url": "https://www.rablighting.com/sites/default/files/downloads/RTLED_Field_Adjustable_Family_Spec_Sheet_2.pdf",
+          "sha256": "0bfc8844c42ccd3a9db3a5dc0a26a308f02ead29a9082e30e3df2545518fcd45",
+          "role": "product_data"
+        }
+      ]
+    }
+  ]
+}

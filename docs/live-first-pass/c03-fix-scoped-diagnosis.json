@@ -1,0 +1,775 @@
+{
+  "date": "2026-10-21",
+  "run_id": "20261021-082125-1f89d8",
+  "reproduction": ".venv/bin/python scripts/eval.py --case c03 --out /tmp/speccheck-c03-fix-scoped.json",
+  "warnings": [],
+  "investigation": null,
+  "counts": {
+    "claims_extracted": 12,
+    "claims_kept": 7,
+    "web_values_read": 7,
+    "web_values_kept": 7
+  },
+  "fixes": [
+    {
+      "head": "No passing replacement found",
+      "query": "3M 3M Fire Barrier IC 15WB+ Sealant current data sheet",
+      "candidates": [
+        {
+          "name": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "source_url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Current document",
+              "ok": false,
+              "note": ""
+            }
+          ],
+          "passes": false
+        },
+        {
+          "name": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+          "source_url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "astm g21 rating",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Test standards",
+              "ok": null,
+              "note": "not stated"
+            },
+            {
+              "label": "Current document",
+              "ok": true,
+              "note": "July / 2025"
+            }
+          ],
+          "passes": false
+        }
+      ],
+      "suggest": ""
+    }
+  ],
+  "requests_responses": [
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M Fire Barrier IC 15WB+ Sealant current data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "3m.com"
+          ],
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065442",
+            "title": "3M\u2122 Fire Barrier Water Tight Sealant 3000 WT | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40069743",
+            "title": "3M\u2122 Fire Barrier Rated Foam FIP 1-Step | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/493817O/3m-fire-protection-products-full-line-brochure.pdf",
+            "title": "3M\u2122 Fire Protection - Trust and Confidence. Even under fire.",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "https://www.3m.com/3M/en_US/p/d/b40065442"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 0
+        },
+        "results": [
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+            "chars": 10161
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "chars": 11112
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065442",
+            "title": "3M\u2122 Fire Barrier Water Tight Sealant 3000 WT | 3M United States",
+            "chars": 11142
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"document_revision\": null, \"claims\": [{\"id\": \"t-rating-1\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"t_rating_hr\", \"value\": 3, \"unit\": \"hr\", \"page\": 1, \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\"}, {\"id\": \"standards-1\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"CAN/ULC S115\", \"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"page\": 1, \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\"}, {\"id\": \"standards-2\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"standards\", \"value\": [\"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"page\": 1, \"quote\": \"Fire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)\"}, {\"id\": \"voc-1\", \"product\": \"3M\u2122 Fire Barrier Sealant IC 15WB+\", \"manufacturer\": \"3M\", \"property\": \"voc_g_per_l\", \"value\": \"meets the intent of LEED\u00ae VOC environmental regulations\", \"unit\": null, \"page\": 1, \"quote\": \"This sealant meets the intent of LEED\u00ae VOC environmental regulations, International Building Code (IBC) and other key life safety building code requirements.\"}]}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 513,
+          "prompt_tokens": 2500,
+          "total_tokens": 3013,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2500
+        }
+      },
+      "latency_ms": 5693
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant IC 15WB+ data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "3m.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://pdf.lowes.com/productdocuments/5f24e7e8-f91c-4417-b3c8-c97b686db8fc/61418040.pdf",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "title": "Fire Protection Products",
+            "chars": 0
+          },
+          {
+            "url": "https://www.jamindustrialsupply.com/product/3m-fire-barrier-sealant-ic-15wb-yellow-4-5-gallon-pail",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+, #7000059404",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://pdf.datasheet.live/b41130cc/3m.com/IC-15WB-10.1OZ.pdf",
+            "title": "IC-15WB-10.1OZ - 3M",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant IC 15WB+ discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.jamindustrialsupply.com/product/3m-fire-barrier-sealant-ic-15wb-yellow-4-5-gallon-pail",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+, #7000059404",
+            "chars": 0
+          },
+          {
+            "url": "https://cdn.gescan.com/PIM_Docs/Docs/STEP_ASSETS_PDF/14470377.pdf",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "title": "Fire Protection Products",
+            "chars": 0
+          },
+          {
+            "url": "https://pdf.datasheet.live/b41130cc/3m.com/IC-15WB-10.1OZ.pdf",
+            "title": "IC-15WB-10.1OZ - 3M",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant IC 15WB+ discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "news",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.stocktitan.net/news/MMM/3m-announces-capacity-investment-for-expanded-beam-optical-ebo-amsjltw7nk0q.html",
+            "title": "3M to more than double EBO output for AI data centers amid rising demand - Stock Titan",
+            "chars": 0
+          },
+          {
+            "url": "https://www.cnbc.com/2026/01/20/3m-fourth-quarter-profit-beats-estimates-as-cost-cuts-boost-margins.html",
+            "title": "3M fourth-quarter profit beats estimates as cost cuts boost margins - CNBC",
+            "chars": 0
+          },
+          {
+            "url": "https://gizmodo.com/australia-launches-1-4-billion-suit-over-3m-forever-chemicals-contamination-at-bases-2000764791",
+            "title": "Australia Launches $1.4 Billion Suit Over 3M \u2018Forever Chemicals\u2019 Contamination at Bases - Gizmodo",
+            "chars": 0
+          },
+          {
+            "url": "https://www.indexbox.io/store/european-union-building-sealants-market-analysis-forecast-size-trends-and-insights/",
+            "title": "European Union Building Sealants - Market Analysis, Forecast, Size, Trends and Insights - IndexBox",
+            "chars": 0
+          },
+          {
+            "url": "https://www.cbsnews.com/minnesota/video/minnesota-dnr-to-use-3m-settlement-funds-to-restore-build-parks/",
+            "title": "Minnesota DNR to use 3M settlement funds to restore, build parks - CBS News",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant IC 15WB+ discontinuation notice",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "3m.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://pdf.lowes.com/productdocuments/5f24e7e8-f91c-4417-b3c8-c97b686db8fc/61418040.pdf",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/1081476O/3m-fire-barrier-sealant-ic-15wb-dop-uk.pdf",
+            "title": "Fire Barrier IC 15WB+ - mu ltime dia",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "title": "Fire Protection Products",
+            "chars": 0
+          },
+          {
+            "url": "https://www.electriduct.com/assets/images/docs/3mfirebarrierIC15WBDataSheet.pdf",
+            "title": "3 Fire Barrier IC 15WB+ Sealant",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "https://multimedia.3m.com/mws/media/1081476O/3m-fire-barrier-sealant-ic-15wb-dop-uk.pdf"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "title": null,
+            "chars": 10560
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "title": "3M\u2122 Fire Barrier Sealant IC 15WB+ | 3M United States",
+            "chars": 10161
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/1081476O/3m-fire-barrier-sealant-ic-15wb-dop-uk.pdf",
+            "title": null,
+            "chars": 6010
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"01. November 2014\", \"status_date\": null, \"status_quote\": null, \"current_values\": [{\"property\": \"t_rating_hr\", \"value\": 3.0, \"unit\": \"hr\", \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\"}, {\"property\": \"standards\", \"value\": [\"ASTM E 814 (UL 1479)\", \"CAN/ULC S115\", \"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\\n\\nSealant designed to help minimize sound transfer\\n\\nWater-based and paintable sealant provides easy application and clean-up\\n\\nView more details\\n\\nFrequently viewed resources\\n\\n[Tech Data Sheet (PDF)](https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf)[Safety Data Sheet (PDF)](https://cdmsweb.3m.com/ingredientcommunication/file/Media/soRopXSv-hA)\\n\\n## Details\\n\\n### Highlights\\n\\n* Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\\n* Sealant designed to help minimize sound transfer\\n* Water-based and paintable sealant provides easy application and clean-up\\n* Exceptional adhesion for long-term performance\\n* Applied with conventional caulking equipment with excellent caulk rate\\n* Sag-resistant properties offer clean application as well as strong adhesion\\n* Sealant is re-enterable and repairable\\n* Fire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)\"}, {\"property\": \"standards\", \"value\": [\"ASTM E 1966 (UL 2079)\"], \"unit\": null, \"quote\": \"Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\\n\\nSealant designed to help minimize sound transfer\\n\\nWater-based and paintable sealant provides easy application and clean-up\\n\\nView more details\\n\\nFrequently viewed resources\\n\\n[Tech Data Sheet (PDF)](https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf)[Safety Data Sheet (PDF)](https://cdmsweb.3m.com/ingredientcommunication/file/Media/soRopXSv-hA)\\n\\n## Details\\n\\n### Highlights\\n\\n* Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\\n* Sealant designed to help minimize sound transfer\\n* Water-based and paintable sealant provides easy application and clean-up\\n* Exceptional adhesion for long-term performance\\n* Applied with conventional caulking equipment with excellent caulk rate\\n* Sag-resistant properties offer clean application as well as strong adhesion\\n* Sealant is re-enterable and repairable\\n* Fire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)\"}, {\"property\": \"voc_g_per_l\", \"value\": \"meets the intent of LEED\\u00ae VOC environmental regulations\", \"unit\": null, \"quote\": \"This sealant meets the intent of LEED\\u00ae VOC environmental regulations, International Building Code (IBC) and other key life safety building code requirements.\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf\", \"https://www.3m.com/3M/en_US/p/d/b40065443\", \"https://multimedia.3m.com/mws/media/1081476O/3m-fire-barrier-sealant-ic-15wb-dop-uk.pdf\"], \"notes\": null}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 1097,
+          "prompt_tokens": 9320,
+          "total_tokens": 10417,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 9320
+        }
+      },
+      "latency_ms": 8877
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"product\": \"3M\u2122 Fire Barrier Sealant CP 25WB+\", \"manufacturer\": \"3M\", \"model\": null, \"document_revision\": null, \"claims\": [{\"id\": \"t-rating-1\", \"product\": \"3M\u2122 Fire Barrier Sealant CP 25WB+\", \"manufacturer\": \"3M\", \"property\": \"t_rating_hr\", \"value\": 4, \"unit\": \"hours\", \"page\": 1, \"quote\": \"Firestop tested for through penetration applications up to 4 hours in accordance with ASTM E814 (UL 1479) and CAN/ULC-S115\"}, {\"id\": \"astm-g21-rating-1\", \"product\": \"3M\u2122 Fire Barrier Sealant CP 25WB+\", \"manufacturer\": \"3M\", \"property\": \"astm_g21_rating\", \"value\": null, \"unit\": null, \"page\": 1, \"quote\": \"\"}, {\"id\": \"standards-1\", \"product\": \"3M\u2122 Fire Barrier Sealant CP 25WB+\", \"manufacturer\": \"3M\", \"property\": \"standards\", \"value\": [\"ASTM E814\", \"UL 1479\", \"CAN/ULC-S115\", \"ASTM E 1966\", \"UL 2079\"], \"unit\": null, \"page\": 1, \"quote\": \"Firestop tested for through penetration applications up to 4 hours in accordance with ASTM E814 (UL 1479) and CAN/ULC-S115\\n\\nFire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)\"}, {\"id\": \"voc-g-per-l-1\", \"product\": \"3M\u2122 Fire Barrier Sealant CP 25WB+\", \"manufacturer\": \"3M\", \"property\": \"voc_g_per_l\", \"value\": null, \"unit\": null, \"page\": 1, \"quote\": \"\"}]}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 471,
+          "prompt_tokens": 2401,
+          "total_tokens": 2872,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2401
+        }
+      },
+      "latency_ms": 2884
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant CP 25WB+ data sheet",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "3m.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://multimedia.3m.com/mws/media/1681954O/cp25wb-ds-eng-gb-04-2018-pdf.pdf",
+            "title": "Fire Barrier CP25WB+ Sealant - Product Data Sheet",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+            "title": "[PDF] Fire Protection Products - 3M\u2122 Fire Barrier Sealant CP 25WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://bindingsource.com/3mtrade-fire-barrier-sealant-cp-25wb-101-fl-oz-cartridge-12case-41967",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+, Red, 10.1 fl oz Cartridge",
+            "chars": 0
+          },
+          {
+            "url": "https://www.passifire-sa.com/hp/product/3m-fire-barrier-sealant-cp-25wb",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | Passifire PFP Solutions & Services",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant CP 25WB+ discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://images.thdstatic.com/catalog/pdfImages/00/0092f239-7b11-4197-bcb6-ce89984dccd2.pdf",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/1681954O/cp25wb-ds-eng-gb-04-2018-pdf.pdf",
+            "title": "Fire Barrier CP25WB+ Sealant - Product Data Sheet",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "chars": 0
+          },
+          {
+            "url": "https://www.buyinsulationproductstore.com/3m-fire-barrier-sealant-cp-25wb",
+            "title": "Lastex-Based 3M CP-25WB+ Fire Caulk Barrier Sealant",
+            "chars": 0
+          },
+          {
+            "url": "https://bindingsource.com/3mtrade-fire-barrier-sealant-cp-25wb-5-gallon-pail-1case-41942",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+, Red, 5 Gallon Pail",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant CP 25WB+ discontinued OR replaced",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "news",
+          "include_published_date": true,
+          "exact_match": false,
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://www.cnbc.com/2026/01/20/3m-fourth-quarter-profit-beats-estimates-as-cost-cuts-boost-margins.html",
+            "title": "3M fourth-quarter profit beats estimates as cost cuts boost margins - CNBC",
+            "chars": 0
+          },
+          {
+            "url": "https://www.stocktitan.net/news/MMM/3m-announces-capacity-investment-for-expanded-beam-optical-ebo-amsjltw7nk0q.html",
+            "title": "3M to more than double EBO output for AI data centers amid rising demand - Stock Titan",
+            "chars": 0
+          },
+          {
+            "url": "https://gizmodo.com/australia-launches-1-4-billion-suit-over-3m-forever-chemicals-contamination-at-bases-2000764791",
+            "title": "Australia Launches $1.4 Billion Suit Over 3M \u2018Forever Chemicals\u2019 Contamination at Bases - Gizmodo",
+            "chars": 0
+          },
+          {
+            "url": "https://www.indexbox.io/store/european-union-building-sealants-market-analysis-forecast-size-trends-and-insights/",
+            "title": "European Union Building Sealants - Market Analysis, Forecast, Size, Trends and Insights - IndexBox",
+            "chars": 0
+          },
+          {
+            "url": "https://www.cbsnews.com/minnesota/video/minnesota-dnr-to-use-3m-settlement-funds-to-restore-build-parks/",
+            "title": "Minnesota DNR to use 3M settlement funds to restore, build parks - CBS News",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/search",
+        "body": {
+          "query": "3M 3M\u2122 Fire Barrier Sealant CP 25WB+ discontinuation notice",
+          "search_depth": "basic",
+          "max_results": 5,
+          "topic": "general",
+          "include_published_date": false,
+          "exact_match": false,
+          "include_domains": [
+            "3m.com"
+          ],
+          "include_domains_mode": "prefer",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 1
+        },
+        "results": [
+          {
+            "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+            "title": "[PDF] Fire Protection Products - 3M\u2122 Fire Barrier Sealant CP 25WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://images.thdstatic.com/catalog/pdfImages/00/0092f239-7b11-4197-bcb6-ce89984dccd2.pdf",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/1681954O/cp25wb-ds-eng-gb-04-2018-pdf.pdf",
+            "title": "Fire Barrier CP25WB+ Sealant - Product Data Sheet",
+            "chars": 0
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00xlY_9N8_U4v70k17zHvu9lxtD7SSSSSS--",
+            "title": "Mediawebserver.pdf",
+            "chars": 0
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "chars": 0
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "endpoint": "/extract",
+        "body": {
+          "urls": [
+            "https://multimedia.3m.com/mws/media/1681954O/cp25wb-ds-eng-gb-04-2018-pdf.pdf",
+            "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+            "https://www.3m.com/3M/en_US/p/d/b40065441"
+          ],
+          "extract_depth": "basic",
+          "include_usage": true
+        }
+      },
+      "response": {
+        "usage": {
+          "credits": 0
+        },
+        "results": [
+          {
+            "url": "https://multimedia.3m.com/mws/media/1681954O/cp25wb-ds-eng-gb-04-2018-pdf.pdf",
+            "title": null,
+            "chars": 6800
+          },
+          {
+            "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+            "title": "[PDF] Fire Protection Products - 3M\u2122 Fire Barrier Sealant CP 25WB+",
+            "chars": 11130
+          },
+          {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065441",
+            "title": "3M\u2122 Fire Barrier Sealant CP 25WB+ | 3M United States",
+            "chars": 11112
+          }
+        ]
+      }
+    },
+    {
+      "request": {
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "response_format": "json_schema",
+        "has_tools": false
+      },
+      "response": {
+        "message": {
+          "content": "{\"status\": \"active\", \"replacement\": null, \"current_revision\": \"July / 2025\", \"status_date\": null, \"status_quote\": \"Technical Data Sheet July / 2025\", \"current_values\": [{\"property\": \"t_rating_hr\", \"value\": 4.0, \"unit\": \"hours\", \"quote\": \"Firestop tested for through penetration applications up to 4 hours in accordance with ASTM E814 (UL 1479) and CAN/ULC-S115\"}], \"source_urls\": [\"https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf\", \"https://www.3m.com/3M/en_US/p/d/b40065441/\"], \"notes\": null}",
+          "refusal": null,
+          "role": "assistant",
+          "annotations": null,
+          "audio": null,
+          "function_call": null,
+          "tool_calls": null,
+          "reasoning": null
+        },
+        "usage": {
+          "completion_tokens": 205,
+          "prompt_tokens": 9339,
+          "total_tokens": 9544,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 0,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 9339
+        }
+      },
+      "latency_ms": 1961
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "observed_at": "2026-10-23T09:56:08.384109+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://api.tavily.com/usage",
+    "authorization": "REDACTED",
+    "cache_control": "no-cache"
+  },
+  "response": {
+    "status": 200,
+    "date": "Fri, 23 Oct 2026 09:56:08 GMT",
+    "usage_fields": {
+      "key": {
+        "usage": 452,
+        "search_usage": 397,
+        "crawl_usage": 0,
+        "extract_usage": 51,
+        "map_usage": 4,
+        "research_usage": 0
+      },
+      "account": {
+        "plan_usage": 452,
+        "search_usage": 397,
+        "crawl_usage": 0,
+        "extract_usage": 51,
+        "map_usage": 4,
+        "research_usage": 0,
+        "paygo_usage": 0
+      }
+    }
+  },
+  "local_before": {
+    "day": "2026-10-23",
+    "usd": 1.87975302,
+    "credits": 132,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 3.36648982,
+    "total_credits": 490,
+    "phase": "engineering",
+    "phase_usd": 2.30788482,
+    "phase_credits": 192,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "local_after": {
+    "day": "2026-10-23",
+    "usd": 1.87975302,
+    "credits": 132,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 3.36648982,
+    "total_credits": 490,
+    "phase": "engineering",
+    "phase_usd": 2.30788482,
+    "phase_credits": 192,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": false
+  },
+  "local_unchanged": true,
+  "scope": "Read-only API counters; no new dashboard/invoice reading or reconciliation claimed"
+}

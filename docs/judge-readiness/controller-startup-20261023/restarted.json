@@ -1,0 +1,12 @@
+{
+  "stage": "after local container restart",
+  "synthetic_only": true,
+  "state_preserved": true,
+  "authority_preserved": true,
+  "cache_upload_run_files_preserved": true,
+  "accounting_available": true,
+  "/api/project": 200,
+  "/api/scores": 200,
+  "/api/specs": 200,
+  "/": 200
+}

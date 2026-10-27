@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "scope": "two-item evidence consistency only, not release promotion",
+  "run_id": "20261023-064841-187b83",
+  "artifact_sha256": "ca5a7672fb39b32f26b07ce8d983d759033a5566a5920841dbf6d2f240ee3cc4",
+  "code_hash": "fb8286db4c960c17e5cb6d1613d4a62e05e92eb652c01f3c5edeeafe30fa1337"
+}

@@ -1,0 +1,168 @@
+{
+  "scope": "One valid item and one invalid provider/accounting item; not an accuracy panel or fresh latency benchmark",
+  "run_id": "20261023-103618-93d441",
+  "rows": [
+    {
+      "id": "c03",
+      "decision": "send_back",
+      "validity": "valid",
+      "warnings": [],
+      "diagnostics": [],
+      "quote_gate": {
+        "claims_extracted": 78,
+        "claims_kept": 22,
+        "web_values_read": 44,
+        "web_values_kept": 10
+      },
+      "status_output": {
+        "status": "unknown",
+        "status_quote": null,
+        "status_date": null
+      },
+      "fixes": [
+        {
+          "name": "Fire Protection Products - 3M\u2122 Fire Barrier Sealant IC 15WB+",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "check": "spec",
+              "ok": true,
+              "note": "<250 g/L"
+            },
+            {
+              "label": "astm g21 rating",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Temperature rating (T)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Test standards",
+              "check": "spec",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": "January / 2026"
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ]
+        },
+        {
+          "name": "3M FireBarrier\u2122 Sealant IC 15 WB+ - mu ltime dia",
+          "source_url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+          "passes": false,
+          "checks": [
+            {
+              "label": "VOC (air quality)",
+              "check": "spec",
+              "ok": true,
+              "note": "<=4 g/l"
+            },
+            {
+              "label": "astm g21 rating",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Temperature rating (T)",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Test standards",
+              "check": "spec",
+              "ok": null,
+              "note": "not confirmed"
+            },
+            {
+              "label": "Current document",
+              "check": "currency",
+              "ok": true,
+              "note": ""
+            },
+            {
+              "label": "Still made",
+              "check": "status",
+              "ok": null,
+              "note": "No quoted confirmation that this replacement is available"
+            }
+          ]
+        }
+      ],
+      "investigations": [
+        {
+          "purpose": "replacement",
+          "outcome": "not_found",
+          "resolution": "not_resolved"
+        },
+        {
+          "purpose": "replacement",
+          "outcome": "found",
+          "resolution": "not_resolved"
+        }
+      ],
+      "model_usage_all_cached": true,
+      "duration_ms": 781
+    },
+    {
+      "id": "c07",
+      "decision": "approve_with_note",
+      "validity": "invalid",
+      "warnings": [
+        "verify: Tavily could not complete this check; try again in a minute; couldn't confirm",
+        "report: Campaign accounting unavailable or unsettled; paid work blocked; couldn't confirm"
+      ],
+      "diagnostics": [
+        {
+          "stage": "verify",
+          "kind": "provider",
+          "message": "Tavily could not complete this check; try again in a minute"
+        },
+        {
+          "stage": "report",
+          "kind": "provider",
+          "message": "Campaign accounting unavailable or unsettled; paid work blocked"
+        },
+        {
+          "stage": "accounting",
+          "kind": "provider",
+          "message": "Provider usage is unknown; its reservation requires reconciliation"
+        },
+        {
+          "stage": "accounting",
+          "kind": "provider",
+          "message": "Campaign accounting requires reconciliation; paid work is blocked"
+        }
+      ],
+      "quote_gate": {
+        "claims_extracted": 71,
+        "claims_kept": 6,
+        "web_values_read": 0,
+        "web_values_kept": 0
+      },
+      "status_output": null,
+      "fixes": [],
+      "investigations": [],
+      "model_usage_all_cached": true,
+      "duration_ms": 60296
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scope": "Read-only per-request log lookup; no search/extract/model call or ledger settlement",
+  "observed_at": "2026-10-23T10:50:00.434981+00:00",
+  "request": {
+    "method": "POST",
+    "url": "https://api.tavily.com/logs",
+    "authorization": "REDACTED",
+    "body": {
+      "limit": 100,
+      "start_date": "2026-10-23",
+      "end_date": "2026-10-23",
+      "endpoints": [
+        "search",
+        "extract",
+        "map"
+      ],
+      "filter_by_api_key": true
+    }
+  },
+  "response": {
+    "status": 400,
+    "count": null,
+    "response_time": null,
+    "error": "start_date and end_date cannot be the same",
+    "retained_rows": 0,
+    "latest_sample": []
+  },
+  "wallet_semantically_unchanged": true,
+  "budget_before": {
+    "day": "2026-10-23",
+    "usd": 1.87975302,
+    "credits": 132,
+    "held_usd": 0.0,
+    "held_credits": 1,
+    "total_usd": 3.36648982,
+    "total_credits": 491,
+    "phase": "engineering",
+    "phase_usd": 2.30788482,
+    "phase_credits": 193,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": true
+  },
+  "budget_after": {
+    "day": "2026-10-23",
+    "usd": 1.87975302,
+    "credits": 132,
+    "held_usd": 0.0,
+    "held_credits": 1,
+    "total_usd": 3.36648982,
+    "total_credits": 491,
+    "phase": "engineering",
+    "phase_usd": 2.30788482,
+    "phase_credits": 193,
+    "usd_limit": 20.0,
+    "credit_limit": 2000,
+    "phase_usd_limit": 10.0,
+    "phase_credit_limit": 1000,
+    "blocked": true
+  },
+  "complete_snapshot_sha256": "c500af7d53439f0009e38fb1e2d8b7591fd526f8b83fa8df04c265da80d4eaeb",
+  "complete_snapshot_ignored_path": ".cache/reconciliation/tavily-20261023/logs-observation.json"
+}

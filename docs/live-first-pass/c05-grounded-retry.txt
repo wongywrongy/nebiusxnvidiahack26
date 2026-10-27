@@ -1,0 +1,24 @@
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=1896 out=39 reasoning=0 ms=1233 cost=$0.000604 format=json_schema thinking=off
+httpx HTTP Request: GET https://www.acuitybrands.com/products/detail/456337/lithonia-lighting/blt-series/low-profile-recessed-led-luminaire "HTTP/1.1 403 Forbidden"
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory verify model=nvidia/nemotron-3-super-120b-a12b in=6829 out=208 reasoning=0 ms=2489 cost=$0.002236 format=json_schema thinking=off
+httpx HTTP Request: POST https://api.tokenfactory.nebius.com/v1/chat/completions "HTTP/1.1 200 OK"
+speccheck.tokenfactory report model=nvidia/nemotron-3-super-120b-a12b in=817 out=368 reasoning=0 ms=2755 cost=$0.000576 format=json_schema thinking=off
+
+mode=live  run=20261021-101307-dd95fb
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c05   approve            approve_with_note  -                      currency_note              -       6685   0.0345       0 ✗
+
+Answer-key panel
+  right call                      0 of 1
+  planted problems caught         0 of 0
+  clean packages wrongly flagged  0 of 1
+  fixes that pass the spec        0 of 0
+  average time per submittal      6.7 s
+  cost per submittal (model+web)  $0.0345
+Quote gate: claims 20/25 kept (20.0% dropped); web values 0/3 kept (100.0% dropped)
+
+wrote /tmp/speccheck-c05-grounded-retry.json
+POST-RUN LEDGER: {"usd": 0.494373, "credits": 172.0}

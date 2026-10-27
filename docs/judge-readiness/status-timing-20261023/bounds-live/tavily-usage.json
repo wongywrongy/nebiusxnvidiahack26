@@ -1,0 +1,29 @@
+{
+  "observed_at": "2026-10-23T10:39:22.751441+00:00",
+  "request": {
+    "method": "GET",
+    "url": "https://api.tavily.com/usage",
+    "authorization": "omitted"
+  },
+  "scope": "Read-only counters; not a dashboard/invoice reconciliation or per-request receipt",
+  "status_code": 200,
+  "response": {
+    "key": {
+      "usage": 485,
+      "search_usage": 428,
+      "crawl_usage": 0,
+      "extract_usage": 53,
+      "map_usage": 4,
+      "research_usage": 0
+    },
+    "account": {
+      "plan_usage": 485,
+      "search_usage": 428,
+      "crawl_usage": 0,
+      "extract_usage": 53,
+      "map_usage": 4,
+      "research_usage": 0,
+      "paygo_usage": 0
+    }
+  }
+}

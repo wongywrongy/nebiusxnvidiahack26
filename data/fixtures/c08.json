@@ -28,7 +28,9 @@
         "value": 5,
         "unit": "yr",
         "page": 1,
-        "quote": "5-year warranty"
+        "quote": "5-year warranty",
+        "scope": "product_wide",
+        "scope_quote": "5-year warranty"
       },
       {
         "id": "k2",
@@ -38,7 +40,9 @@
         "value": 0.62,
         "unit": "W",
         "page": 1,
-        "quote": "0.62 W at 120 V"
+        "quote": "0.62 W at 120 V",
+        "scope": "unknown",
+        "scope_quote": "0.62 W at 120 V"
       },
       {
         "id": "k3",
@@ -48,9 +52,13 @@
         "value": 0.69,
         "unit": "W",
         "page": 1,
-        "quote": "0.69 W at 277 V"
+        "quote": "0.69 W at 277 V",
+        "scope": "unknown",
+        "scope_quote": "0.69 W at 277 V"
       }
-    ]
+    ],
+    "family": "LQM",
+    "family_quote": "Lithonia LQM Quantum thermoplastic LED exi"
   },
   "web": {
     "search": [
@@ -60,7 +68,7 @@
       }
     ],
     "extract": {
-      "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf": "Contractor Select LQM LED exit sign. Rev. 08/07/24. 0.62 W at 120 V, 0.69 W at 277 V."
+      "https://img.acuitybrands.com/public-assets/catalog/999297/contractor-select-lqm.pdf": "Catalog Number Notes Type CONTRACTOR SELECT LQM Page 1 of 2 LQM Quantum ® LED Emergency Exit The Lithonia Lighting® LQM Quantum® LED Exit Signs are suitable for identifying emergency exits. This fully assembled single-face exit with extra faceplate is available in red or green letters. Ideal for applications requiring attractive, quick-installation exit signs and low energy consumption. The emergency power provides 90 minutes of illumination in the event of a power loss. FEATURES: ¡ Test switch and status indicator for low maintenance (EL N emergency models only) ¡ UL indoor damp location 50° to 104°F (10°C to 40°C) listed standard ¡ For use with Dual voltage 120/277VAC, 60Hz Accessories: Order as separate catalog number.\nELA WG1 Wireguard (back mount only, 13 3/4\"H x 15 1/4\"W x 6\"D) 1 ELA LQMUS12 12\" Stem kit, brushed aluminum with white canopy 2 Contractor Select™ Catalog Number UPC Description Supply Voltage Input Wattage Input Amps Pallet Qty Carton Qty 120 277 120 277 LQM S W 3 R 120/277 M6 784231011508 Red exit, AC only, White 120/277, 60Hz 0.62W 0.69W 0.05 0.06 270 6 LQM S W 3 G 120/277 M6 784231011584 Green exit, AC only, White 120/277, 60Hz 0.62W 0.74W 0.05 0.06 270 6 LQM S W 3 R 120/277 EL N M6 784231011553 Red exit with backup battery, White 120/277, 60Hz 0.71W 0.92W 0.05 0.06 270 6 LQM S W 3 G 120/277 EL N M6 784231011614 Green exit with backup battery, White 120/277, 60Hz 0.66W 0.70W 0.05 0.06 270 6 TM NOTES 1. See spec sheet ELA-WG for more information.\n2. See spec sheet ELA-STEMKITS for more info.\n† † Exit Signs Certified in the CA Title 20 Appliance Efficiency Database.\nPage 2 of 2 CONTRACTOR SELECT LQM One Lithonia Way, Conyers, GA 30012 | 800-705-SERV (7378) | Techsupport-Lighting@Acuitybrands.com | www.lithonia.com © 2019-2024 Acuity Brands Lighting, Inc. All rights reserved. Rev. 08/07/24 INTENDED USE: Ideal for applications requiring attractive, quick-installation exit signs and low energy consumption.\nCONSTRUCTION: Engineering-grade thermoplastic housing is impact-resistant, scratch-resistant, and corrosion-proof. UL94V-0 flame rating. UV-stable resin resists discoloration from natural and man-made light sources.\nRugged unibody housing snaps together with no additional mechanical fasteners. Faceplate and back cover are interchangeable on housing. Positive snap-fit tabs hold faceplate securely, yet easily removable for lamp compartment access.\nUniversal directional Chevron inserts are easily removed and reinserted. Uniform illumination without shadows or hot spots. Reinforced, impact-resistant color panels. Letters 6\" high with 3/4\" stroke, with 100 ft. viewing distance rating, based upon UL924 standards.\nOPTICS: LEDs mounted on printed circuit boards. Low energy consumption – less than one watt.\nEL N operation: LED lamp operates in normal (AC input) and emergency (DC input) modes.\nThe typical life of the exit LED lamp is 5 years, based on 24/7 operation.\nELECTRICAL: Dual-voltage input 120V or 277V AC. Non-emergency (AC only without battery) or Emergency exit with battery.\nBattery: (EL N models) maintenance-free ni-cad battery provides 90 minutes of emergency power. The emergency model includes the test switch, status indicator and rechargeable battery.\nINSTALLATION: Universal mounting canopy for top or end mount (canopy included). Back mount standard for single face only.\nShips standard as single face exit with additional face plate and color panel. Allows capability to convert a single sided exit to a double sided exit in the field.\nLISTINGS: UL damp location listed 50°-104°F (10°-40°C) standard. NOM Certified. Meets UL924, NFPA 101 (current Life Safety Code), NEC and OSHA illumination standards. Meets all applicable FCC Title 47, Part 15, Subpart B requirements. WARRANTY: 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed. Complete warranty terms located at: www.acuitybrands.com/support/warranty/terms-and-conditions All life safety equipment, including emergency lighting for path of egress must be maintained, serviced, and tested in accordance with all National Fire Protection Association (NFPA) and local codes. Failure to perform the required maintenance, service, or testing could jeopardize the safety of occupants and will void all warranties.\nNote: Actual performance may differ as a result of end-user environment and application. All values are design or typical values, measured under laboratory conditions at 25 °C. Specifications subject to change without notice.\nSpecifications Dimensions Length: 11-3/4 (29.8) Depth: 2 (5.1) Height: 7-5/8 (19.3) Weight: 2.6 lbs (1.2 kgs) All dimensions are inches (centimeters) unless otherwise indicated.\n7-5/8 (19.3) 11-3/4 (29.8) 2 (5.1)"
     }
   },
   "verify": {
@@ -71,13 +79,17 @@
         "property": "input_watts_120v",
         "value": 0.62,
         "unit": "W",
-        "quote": "0.62 W at 120 V"
+        "quote": "0.62 W at 120 V",
+        "scope": "unknown",
+        "scope_quote": "0.62 W at 120 V"
       },
       {
         "property": "input_watts_277v",
         "value": 0.69,
         "unit": "W",
-        "quote": "0.69 W at 277 V"
+        "quote": "0.69 W at 277 V",
+        "scope": "unknown",
+        "scope_quote": "0.69 W at 277 V"
       }
     ],
     "source_urls": [
