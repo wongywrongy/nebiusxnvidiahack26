@@ -61,6 +61,7 @@ async def extract_requirements(section: str, spec_text: str, title: str = "") ->
                 "system drawing can be checked against: numbers, ratings, listings, test standards, warranty. "
                 "Leave out installation, execution, scheduling, contractor qualifications and anything only the "
                 "drawings or the site can show. Give the paragraph number for each. "
+                "Return at most 30 of the most directly checkable requirements. "
                 "Use snake_case property names with the unit in the name (t_rating_hr, voc_g_per_l, cri, warranty_years). "
                 "Use operator eq_ref when one property must equal another (value = the other property name). "
                 "Set applies_to to product_data or system_drawing when a requirement only makes sense for one.\n\n"
@@ -201,6 +202,7 @@ async def _read_claims(case_id, text, properties, *, propose=False):
                 f"Return only these property names, with exactly these spellings and meanings: {json.dumps({p: _label(p) for p in properties})}. "
                 "Read every supplied page, including tables and notes. For a listed system, record its system number as model. "
                 "For a product, record its short printed product/model identifier as model, not a rewritten marketing title. "
+                "Use that same printed identifier in each claim's product and model; a generic category heading is not a product identity. "
                 "A product identifier names the product; selection separately proves a chosen ordering configuration. "
                 "Separately identify the printed family and family_quote. Do not treat a blank catalog field or an ordering example as a selected model. "
                 "Keep each test/rating metric distinct; never relabel a different metric to fit a requested name. "
@@ -254,6 +256,9 @@ async def _read_claims(case_id, text, properties, *, propose=False):
                 schema["$defs"]["Selection"]["properties"]["quote"]["description"] = (
                     "Exact page passage with the complete printed catalog/stock SKU and its label; never an ordering example.")
             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
+            schema["$defs"]["Claim"]["properties"]["product"]["description"] = (
+                "The exact printed identifier of the product this claim describes. For a claim about the top-level model, "
+                "copy that model identifier here; do not substitute a generic category or marketing heading.")
             schema["$defs"]["Claim"]["properties"]["unit"]["description"] = (
                 "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values.")
             schema["$defs"]["Claim"]["properties"]["scope_quote"]["description"] = (

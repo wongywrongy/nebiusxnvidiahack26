@@ -165,7 +165,7 @@ def test_runner_uses_observed_assembly_kind_for_uploaded_product_data(monkeypatc
     from api.pipeline import runner
     from api.schemas import ClaimsOut, Requirement, RequirementsOut, TriageOut, Usage
     monkeypatch.setattr(settings, "runs_dir", tmp_path)
-    case = {"id": "upload", "title": "Uploaded assembly", "section": "07 84 00", "fixture": None,
+    case = {"id": "upload", "title": "Uploaded assembly", "section": "07 84 00", "fixture": None, "upload": True,
             "submittal": [{"role": "product_data", "file": "missing-upload.pdf"}]}
     monkeypatch.setattr(runner, "get_case", lambda _: case)
     async def pages(_):

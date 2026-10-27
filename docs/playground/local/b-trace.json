@@ -1,0 +1,1751 @@
+{
+  "case": "b",
+  "url": "http://127.0.0.1:8009",
+  "captured_at": "2026-10-27T19:10:07.283Z",
+  "runs": [
+    {
+      "run_id": "20261027-191007-cfd26e",
+      "mode": "live",
+      "mock": [],
+      "note": null,
+      "shared_item_budget": false,
+      "results": [
+        {
+          "case_id": "u-33542f8e",
+          "title": "rectorseal-metacaulk.pdf",
+          "decision": "approve_with_note",
+          "summary": "The product data can be approved with the clarification notes below. Assembly proof remains pending; confirm the listed assembly separately.",
+          "spec_section": "07 84 00",
+          "spec_title": "Firestopping",
+          "spec_rule_count": 4,
+          "spec_match_count": 2,
+          "checklist_id": null,
+          "findings": [
+            {
+              "id": "spec-req_voc_content",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "VOC (air quality)",
+              "detail": "Package states < 10 g/L; spec requires at most 250 g/L.",
+              "why_it_matters": null,
+              "requirement_id": "req_voc_content",
+              "claim_id": "clm-18",
+              "claim_ids": [
+                "clm-18"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "clm-18",
+                  "doc_file": "uploads/u-33542f8e/rectorseal-metacaulk.pdf",
+                  "page": 2,
+                  "quote": "VOC < 10 g/L",
+                  "boxes": [
+                    {
+                      "x0": 0.6831,
+                      "y0": 0.7287,
+                      "x1": 0.7066,
+                      "y1": 0.7433
+                    },
+                    {
+                      "x0": 0.8883,
+                      "y0": 0.7287,
+                      "x1": 0.9346,
+                      "y1": 0.7433
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≤ 250 g/L",
+                "right_label": "Submitted",
+                "right_value": "< 10 g/L",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.02.B",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-req_mold_resistance",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Missing mold resistance test data",
+              "detail": "Values were not comparable.",
+              "why_it_matters": "Without the mold rating, we can’t verify long-term performance in damp areas.",
+              "requirement_id": "req_mold_resistance",
+              "claim_id": "clm-1",
+              "claim_ids": [
+                "clm-1"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "clm-1",
+                  "doc_file": "uploads/u-33542f8e/rectorseal-metacaulk.pdf",
+                  "page": 1,
+                  "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "boxes": [
+                    {
+                      "x0": 0.2263,
+                      "y0": 0.412,
+                      "x1": 0.5832,
+                      "y1": 0.4284
+                    },
+                    {
+                      "x0": 0.0588,
+                      "y0": 0.4271,
+                      "x1": 0.461,
+                      "y1": 0.4435
+                    }
+                  ],
+                  "kind": "problem"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= 0",
+                "right_label": "Submitted",
+                "right_value": "zero",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.02.C",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-req_t_rating_min_equal_f",
+              "check": "spec",
+              "verdict": "pending",
+              "severity": "info",
+              "title": "Assembly fire rating not yet confirmed",
+              "detail": "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.",
+              "why_it_matters": "We need to know the actual fire and temperature rating of the installed assembly to ensure it stops fire spread.",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_id": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "T = F",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.04.A.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-fs-std",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Test standard reference needs clarification",
+              "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+              "why_it_matters": "Knowing which test was used lets us confirm the product was evaluated correctly for firestopping.",
+              "requirement_id": "fs-std",
+              "claim_id": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "astm e814",
+                  "astm e119",
+                  "ul 1479"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.04.A.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "currency-current",
+              "check": "currency",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "Compared values match current sources",
+              "detail": "",
+              "why_it_matters": null,
+              "requirement_id": null,
+              "claim_id": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Submitted",
+                "left_value": "undated",
+                "right_label": "Current",
+                "right_value": "unknown",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": null,
+              "evidence": [
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:06:35+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:06:35+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:06:35+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "VOC\n< 10 g/L",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:06:37+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:06:37+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:06:37+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "VOC\n< 10 g/L",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:10:14+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "archived_path": null,
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:10:14+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "archived_path": null,
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "retrieved_at": "2026-10-27T19:10:14+00:00",
+                  "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                  "excerpt": "VOC\n< 10 g/L",
+                  "archived_path": null,
+                  "cache_hit": null
+                }
+              ],
+              "quote": null,
+              "decided_by": "tavily + super",
+              "fix": null
+            }
+          ],
+          "comparison": [
+            {
+              "property": "astm_g21_rating",
+              "label": "astm g21 rating",
+              "submitted": "zero",
+              "current": "zero",
+              "changed": false,
+              "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+              "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero."
+            },
+            {
+              "property": "penetrant_types",
+              "label": "Pipe types covered",
+              "submitted": "EMT, telephone & power cables, insulated pipes",
+              "current": "EMT, telephone & power cables, insulated pipes",
+              "changed": false,
+              "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+              "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors."
+            },
+            {
+              "property": "voc_g_per_l",
+              "label": "VOC (air quality)",
+              "submitted": "< 10 g/L",
+              "current": "< 10 g/L",
+              "changed": false,
+              "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+              "quote": "VOC\n< 10 g/L"
+            }
+          ],
+          "claims": [
+            {
+              "id": "clm-1",
+              "product": "Metacaulk 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": null,
+              "property": "astm_g21_rating",
+              "value": "zero",
+              "unit": null,
+              "page": 1,
+              "bbox": null,
+              "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+              "selection_quote": null
+            },
+            {
+              "id": "clm-5",
+              "product": "Metacaulk 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": null,
+              "property": "document_revision",
+              "value": "©2025 RectorSeal. All rights reserved. R50101-0225",
+              "unit": null,
+              "page": 3,
+              "bbox": null,
+              "quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+              "selection_quote": null
+            },
+            {
+              "id": "clm-13",
+              "product": "Metacaulk 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": null,
+              "property": "penetrant_types",
+              "value": [
+                "EMT",
+                "telephone & power cables",
+                "insulated pipes"
+              ],
+              "unit": null,
+              "page": 1,
+              "bbox": null,
+              "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+              "selection_quote": null
+            },
+            {
+              "id": "clm-18",
+              "product": "Metacaulk 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": null,
+              "property": "voc_g_per_l",
+              "value": "< 10",
+              "unit": "g/L",
+              "page": 2,
+              "bbox": null,
+              "quote": "VOC < 10 g/L",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "VOC < 10 g/L",
+              "selection_quote": null
+            }
+          ],
+          "selection": null,
+          "document_roles": [
+            "product_data"
+          ],
+          "extracted": {
+            "product": "Metacaulk 1000",
+            "manufacturer": "RectorSeal, LLC",
+            "model": "Metacaulk 1000",
+            "selection": null,
+            "family": null,
+            "family_quote": null,
+            "document_revision": null,
+            "claims": [
+              {
+                "id": "clm-1",
+                "product": "Metacaulk 1000",
+                "manufacturer": "RectorSeal, LLC",
+                "model": null,
+                "property": "astm_g21_rating",
+                "value": "zero",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                "selection_quote": null
+              },
+              {
+                "id": "clm-5",
+                "product": "Metacaulk 1000",
+                "manufacturer": "RectorSeal, LLC",
+                "model": null,
+                "property": "document_revision",
+                "value": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                "unit": null,
+                "page": 3,
+                "bbox": null,
+                "quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                "selection_quote": null
+              },
+              {
+                "id": "clm-13",
+                "product": "Metacaulk 1000",
+                "manufacturer": "RectorSeal, LLC",
+                "model": null,
+                "property": "penetrant_types",
+                "value": [
+                  "EMT",
+                  "telephone & power cables",
+                  "insulated pipes"
+                ],
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                "selection_quote": null
+              },
+              {
+                "id": "clm-18",
+                "product": "Metacaulk 1000",
+                "manufacturer": "RectorSeal, LLC",
+                "model": null,
+                "property": "voc_g_per_l",
+                "value": "< 10",
+                "unit": "g/L",
+                "page": 2,
+                "bbox": null,
+                "quote": "VOC < 10 g/L",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "VOC < 10 g/L",
+                "selection_quote": null
+              }
+            ]
+          },
+          "verification": {
+            "submitted": {
+              "product": "Metacaulk 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": "Metacaulk 1000",
+              "selection": null,
+              "family": null,
+              "family_quote": null,
+              "document_revision": null,
+              "claims": [
+                {
+                  "id": "clm-1",
+                  "product": "Metacaulk 1000",
+                  "manufacturer": "RectorSeal, LLC",
+                  "model": null,
+                  "property": "astm_g21_rating",
+                  "value": "zero",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "clm-5",
+                  "product": "Metacaulk 1000",
+                  "manufacturer": "RectorSeal, LLC",
+                  "model": null,
+                  "property": "document_revision",
+                  "value": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                  "unit": null,
+                  "page": 3,
+                  "bbox": null,
+                  "quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                  "selection_quote": null
+                },
+                {
+                  "id": "clm-13",
+                  "product": "Metacaulk 1000",
+                  "manufacturer": "RectorSeal, LLC",
+                  "model": null,
+                  "property": "penetrant_types",
+                  "value": [
+                    "EMT",
+                    "telephone & power cables",
+                    "insulated pipes"
+                  ],
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "clm-18",
+                  "product": "Metacaulk 1000",
+                  "manufacturer": "RectorSeal, LLC",
+                  "model": null,
+                  "property": "voc_g_per_l",
+                  "value": "< 10",
+                  "unit": "g/L",
+                  "page": 2,
+                  "bbox": null,
+                  "quote": "VOC < 10 g/L",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "VOC < 10 g/L",
+                  "selection_quote": null
+                }
+              ]
+            },
+            "output": {
+              "status": "unknown",
+              "replacement": null,
+              "current_revision": null,
+              "status_date": null,
+              "status_quote": null,
+              "status_family": null,
+              "current_values": [
+                {
+                  "property": "astm_g21_rating",
+                  "value": "zero",
+                  "unit": null,
+                  "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "model": "Metacaulk 1000",
+                  "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                  "selection_quote": null
+                },
+                {
+                  "property": "penetrant_types",
+                  "value": [
+                    "EMT",
+                    "telephone & power cables",
+                    "insulated pipes"
+                  ],
+                  "unit": null,
+                  "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "model": "Metacaulk 1000",
+                  "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Metacaulk 1000 can be used in interior applications as a general purpose fire rated sealant and smoke seal for construction joints, through penetrations and blank openings on both vertical and horizontal surfaces. Use Metacaulk 1000 to prevent the spread of fire and smoke through joints in fire rated gypsum wallboard partitions, concrete block or concrete walls and/or concrete or corrugated steel deck floor/ceiling assemblies. Metacaulk 1000 is also an excellent fire rated acoustical sealant and can be used in areas under constant vibration or movement to reduce the transfer of noise through assemblies. Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                  "selection_quote": null
+                },
+                {
+                  "property": "voc_g_per_l",
+                  "value": "< 10",
+                  "unit": "g/L",
+                  "quote": "VOC\n< 10 g/L",
+                  "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "model": "Metacaulk 1000",
+                  "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "VOC\n< 10 g/L",
+                  "selection_quote": null
+                }
+              ],
+              "source_urls": [
+                "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "https://bit.ly/39qYlio"
+              ],
+              "notes": null
+            },
+            "sources": [
+              {
+                "url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                "tier": "distributor",
+                "title": "Metacaulk 1000 Firestopping Sealant - Product Data",
+                "retrieved_at": "2026-10-27T19:06:33+00:00",
+                "sha256": "456ba417206aee1ff0eb88412855a3c300978dad459b1d58d1e53f8d585aebf0",
+                "excerpt": "METACAULK® 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T Page 1 of 3 Description Metacaulk® 1000 is a single component, general purpose fire rated sealant and smoke seal for construction joints and through-penetrations. Metacaulk 1000 is a water based, extremely intumescent, non-sag caulking grade sealant that is easy to apply. It cures to an elastomeric seal that is sui",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "tier": "distributor",
+                "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                "retrieved_at": "2026-10-27T19:06:35+00:00",
+                "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                "excerpt": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T\nPage 1 of 3\nDescription\nMetacaulk® 1000 is a single component, general purpose fire rated sealant and \nsmoke seal for construction joints and through-penetrations. Metacaulk 1000 \nis a water based, extremely intumescent, non-sag caulking grade sealant that \nis easy to apply. It cures to an elastomeric seal that is ",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "tier": "distributor",
+                "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                "retrieved_at": "2026-10-27T19:06:37+00:00",
+                "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                "excerpt": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T\nPage 1 of 3\nDescription\nMetacaulk® 1000 is a single component, general purpose fire rated sealant and \nsmoke seal for construction joints and through-penetrations. Metacaulk 1000 \nis a water based, extremely intumescent, non-sag caulking grade sealant that \nis easy to apply. It cures to an elastomeric seal that is ",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "tier": "distributor",
+                "title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                "retrieved_at": "2026-10-27T19:10:14+00:00",
+                "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                "excerpt": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T\nPage 1 of 3\nDescription\nMetacaulk® 1000 is a single component, general purpose fire rated sealant and \nsmoke seal for construction joints and through-penetrations. Metacaulk 1000 \nis a water based, extremely intumescent, non-sag caulking grade sealant that \nis easy to apply. It cures to an elastomeric seal that is ",
+                "archived_path": null,
+                "cache_hit": null
+              },
+              {
+                "url": "https://rectorseal.com/firestop-resource-library",
+                "tier": "distributor",
+                "title": "Firestop Resource Library",
+                "retrieved_at": "2026-10-27T19:10:19+00:00",
+                "sha256": "3215c8c003578e4d70af44479b261af16a1ea76dda489249786383513fd576ef",
+                "excerpt": "The store will not work correctly when cookies are disabled.\n\n* [Sign In](https://rectorseal.com/customer/account/login/referer/aHR0cHM6Ly9yZWN0b3JzZWFsLmNvbS9maXJlc3RvcC1yZXNvdXJjZS1saWJyYXJ5/)\n\n [Skip to Content](#contentarea)\n\n[![](https://rectorseal.com/static/version1792753562/frontend/RectorSeal/patagonia/en_US/images/logo.svg)](https://rectorseal.com/)\n\n* [Home](https://rectorseal.com/ \"Go ",
+                "archived_path": null,
+                "cache_hit": false
+              },
+              {
+                "url": "https://rectorseal.com/blog/category/firestop-2",
+                "tier": "distributor",
+                "title": "https://rectorseal.com/blog/category/firestop-2",
+                "retrieved_at": "2026-10-27T19:10:24+00:00",
+                "sha256": "f708de85d7e2581ebbe426571257bfd252bcdaec08a5464a3071ed2a3a31f695",
+                "excerpt": "![](https://www.facebook.com/tr?id=1651971681557861&ev=PageView&noscript=1)\n![](https://www.facebook.com/tr?id=1201839528150206&ev=PageView&noscript=1)\n\n**JavaScript seems to be disabled in your browser.**\n\nFor the best experience on our site, be sure to turn on Javascript in your browser.\n\n![](https://rectorseal.com/static/version1793092840/frontend/RectorSeal/patagonia/en_US/images/logo.svg)\n\nHV",
+                "archived_path": null,
+                "cache_hit": false
+              }
+            ]
+          },
+          "document_revision": null,
+          "note_to_subcontractor": "The product data can be approved with the clarification notes below. Assembly proof remains pending; confirm the listed assembly separately.\n\nMissing mold resistance test data: Values were not comparable.\nAssembly fire rating not yet confirmed: Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.\nTest standard reference needs clarification: Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+          "usage": [
+            {
+              "task": "triage",
+              "tier": "triage",
+              "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+              "input_tokens": 1913,
+              "output_tokens": 67,
+              "cost_usd": 0.00013086,
+              "latency_ms": 985,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4603,
+              "output_tokens": 3139,
+              "cost_usd": 0.004206,
+              "latency_ms": 13600,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4135,
+              "output_tokens": 1027,
+              "cost_usd": 0.0021648,
+              "latency_ms": 5167,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4406,
+              "output_tokens": 1105,
+              "cost_usd": 0.0023163,
+              "latency_ms": 4580,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4396,
+              "output_tokens": 1045,
+              "cost_usd": 0.0022593,
+              "latency_ms": 4390,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 1531,
+              "output_tokens": 81,
+              "cost_usd": 0.0005322,
+              "latency_ms": 1406,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3585,
+              "output_tokens": 81,
+              "cost_usd": 0.0011484,
+              "latency_ms": 2023,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4683,
+              "output_tokens": 86,
+              "cost_usd": 0.0014823,
+              "latency_ms": 1650,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5920,
+              "output_tokens": 53,
+              "cost_usd": 0.0018237,
+              "latency_ms": 1336,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 9181,
+              "output_tokens": 54,
+              "cost_usd": 0.0028029,
+              "latency_ms": 1301,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 9719,
+              "output_tokens": 287,
+              "cost_usd": 0.003174,
+              "latency_ms": 4176,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4396,
+              "output_tokens": 1045,
+              "cost_usd": 0.0022593,
+              "latency_ms": 4390,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 6646,
+              "output_tokens": 526,
+              "cost_usd": 0.0024672,
+              "latency_ms": 3674,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 2608,
+              "output_tokens": 20,
+              "cost_usd": 0.0008004,
+              "latency_ms": 1403,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "report",
+              "tier": "write",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 606,
+              "output_tokens": 258,
+              "cost_usd": 0.000414,
+              "latency_ms": 2248,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            }
+          ],
+          "web_credits": 3,
+          "duration_ms": 26047,
+          "investigation": {
+            "steps": [
+              {
+                "n": 1,
+                "tool": "search",
+                "args": {
+                  "query": "RectorSeal Metacaulk 1000 technical data sheet product specification"
+                },
+                "summary": "5 results",
+                "credits": 1,
+                "ms": 1484,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 2,
+                "tool": "extract",
+                "args": {
+                  "url": "https://rectorseal.com/metacaulk-1000-10-3-oz"
+                },
+                "summary": "1 extracted source",
+                "credits": 0,
+                "ms": 1936,
+                "succeeded": true,
+                "source_urls": [
+                  "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf"
+                ]
+              },
+              {
+                "n": 3,
+                "tool": "search",
+                "args": {
+                  "query": "RectorSeal Metacaulk 1000 discontinued end of life"
+                },
+                "summary": "5 results",
+                "credits": 1,
+                "ms": 1835,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 4,
+                "tool": "extract",
+                "args": {
+                  "url": "https://rectorseal.com/firestop-resource-library"
+                },
+                "summary": "1 extracted source",
+                "credits": 0,
+                "ms": 363,
+                "succeeded": true,
+                "source_urls": [
+                  "https://rectorseal.com/firestop-resource-library"
+                ]
+              },
+              {
+                "n": 5,
+                "tool": "extract",
+                "args": {
+                  "url": "https://rectorseal.com/blog/category/firestop-2"
+                },
+                "summary": "1 extracted source",
+                "credits": 1,
+                "ms": 3070,
+                "succeeded": true,
+                "source_urls": [
+                  "https://rectorseal.com/blog/category/firestop-2"
+                ]
+              },
+              {
+                "n": 6,
+                "tool": "finish",
+                "args": {
+                  "found": true,
+                  "document_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "document_title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                  "revision_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                  "status": "active",
+                  "note": "The product is currently active and being sold, as evidenced by the product pages showing multiple sizes (10.3 oz cartridge, 5 gallon pails, 30 oz cartridge) with pricing and availability information. The spec sheet shows a 2025 copyright date, indicating it's current. No discontinuation notices were found in the search."
+                },
+                "summary": "©2025 RectorSeal. All rights reserved. R50101-0225, unknown",
+                "credits": 0,
+                "ms": 19,
+                "succeeded": true,
+                "source_urls": []
+              }
+            ],
+            "outcome": "found",
+            "purpose": "primary",
+            "resolution": "not_resolved",
+            "scripted": null
+          },
+          "investigations": [
+            {
+              "steps": [
+                {
+                  "n": 1,
+                  "tool": "search",
+                  "args": {
+                    "query": "RectorSeal Metacaulk 1000 technical data sheet product specification"
+                  },
+                  "summary": "5 results",
+                  "credits": 1,
+                  "ms": 1484,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 2,
+                  "tool": "extract",
+                  "args": {
+                    "url": "https://rectorseal.com/metacaulk-1000-10-3-oz"
+                  },
+                  "summary": "1 extracted source",
+                  "credits": 0,
+                  "ms": 1936,
+                  "succeeded": true,
+                  "source_urls": [
+                    "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf"
+                  ]
+                },
+                {
+                  "n": 3,
+                  "tool": "search",
+                  "args": {
+                    "query": "RectorSeal Metacaulk 1000 discontinued end of life"
+                  },
+                  "summary": "5 results",
+                  "credits": 1,
+                  "ms": 1835,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 4,
+                  "tool": "extract",
+                  "args": {
+                    "url": "https://rectorseal.com/firestop-resource-library"
+                  },
+                  "summary": "1 extracted source",
+                  "credits": 0,
+                  "ms": 363,
+                  "succeeded": true,
+                  "source_urls": [
+                    "https://rectorseal.com/firestop-resource-library"
+                  ]
+                },
+                {
+                  "n": 5,
+                  "tool": "extract",
+                  "args": {
+                    "url": "https://rectorseal.com/blog/category/firestop-2"
+                  },
+                  "summary": "1 extracted source",
+                  "credits": 1,
+                  "ms": 3070,
+                  "succeeded": true,
+                  "source_urls": [
+                    "https://rectorseal.com/blog/category/firestop-2"
+                  ]
+                },
+                {
+                  "n": 6,
+                  "tool": "finish",
+                  "args": {
+                    "found": true,
+                    "document_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "document_title": "METACAULK® 1000 Highly Intumescent Firestop Sealant - Product Data Sheet",
+                    "revision_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                    "status": "active",
+                    "note": "The product is currently active and being sold, as evidenced by the product pages showing multiple sizes (10.3 oz cartridge, 5 gallon pails, 30 oz cartridge) with pricing and availability information. The spec sheet shows a 2025 copyright date, indicating it's current. No discontinuation notices were found in the search."
+                  },
+                  "summary": "©2025 RectorSeal. All rights reserved. R50101-0225, unknown",
+                  "credits": 0,
+                  "ms": 19,
+                  "succeeded": true,
+                  "source_urls": []
+                }
+              ],
+              "outcome": "found",
+              "purpose": "primary",
+              "resolution": "not_resolved",
+              "scripted": {
+                "status": "unknown",
+                "replacement": null,
+                "current_revision": null,
+                "status_date": null,
+                "status_quote": null,
+                "status_family": null,
+                "current_values": [
+                  {
+                    "property": "astm_g21_rating",
+                    "value": "zero",
+                    "unit": null,
+                    "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                    "source_url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "penetrant_types",
+                    "value": [
+                      "EMT",
+                      "telephone & power cables",
+                      "insulated pipes"
+                    ],
+                    "unit": null,
+                    "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                    "source_url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Applications Metacaulk 1000 can be used in interior applications as a general purpose fire rated sealant and smoke seal for construction joints, through penetrations and blank openings on both vertical and horizontal surfaces. Use Metacaulk 1000 to prevent the spread of fire and smoke through joints in fire rated gypsum wallboard partitions, concrete block or concrete walls and/or concrete or corrugated steel deck floor/ceiling assemblies. Metacaulk 1000 is also an excellent fire rated acoustical sealant and can be used in areas under constant vibration or movement to reduce the transfer of noise through assemblies. Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "< 10",
+                    "unit": "g/L",
+                    "quote": "VOC < 10 g/L",
+                    "source_url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T",
+                    "variant": "VOC < 10 g/L",
+                    "scope": "product_wide",
+                    "scope_quote": "Characteristics • Water based • Excellent freeze-thaw • Flexible set • Highly intumescent • Paintable • VOC compliant • Safe and easy to use • 3 Year shelf life ... VOC < 10 g/L",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "astm_g21_rating",
+                    "value": "zero",
+                    "unit": null,
+                    "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "penetrant_types",
+                    "value": [
+                      "EMT",
+                      "telephone & power cables",
+                      "insulated pipes"
+                    ],
+                    "unit": null,
+                    "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Metacaulk 1000 can be used in interior applications as a general purpose fire rated sealant and smoke seal for construction joints, through penetrations and blank openings on both vertical and horizontal surfaces. Use Metacaulk 1000 to prevent the spread of fire and smoke through joints in fire rated gypsum wallboard partitions, concrete block or concrete walls and/or concrete or corrugated steel deck floor/ceiling assemblies. Metacaulk 1000 is also an excellent fire rated acoustical sealant and can be used in areas under constant vibration or movement to reduce the transfer of noise through assemblies. Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "< 10",
+                    "unit": "g/L",
+                    "quote": "VOC\n< 10 g/L",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": "VOC\n< 10 g/L",
+                    "scope": "product_wide",
+                    "scope_quote": "•\t Water based\n•\t Excellent freeze-thaw\n•\t Flexible set\n•\t Highly intumescent\n•\t Paintable\n•\t VOC compliant\n•\t Safe and easy to use\n•\t 3 Year shelf life\nVOC\n< 10 g/L",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "astm_g21_rating",
+                    "value": "zero",
+                    "unit": null,
+                    "quote": "Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "penetrant_types",
+                    "value": [
+                      "EMT",
+                      "telephone & power cables",
+                      "insulated pipes"
+                    ],
+                    "unit": null,
+                    "quote": "Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Metacaulk 1000 can be used in interior applications as a general purpose fire rated sealant and smoke seal for construction joints, through penetrations and blank openings on both vertical and horizontal surfaces. Use Metacaulk 1000 to prevent the spread of fire and smoke through joints in fire rated gypsum wallboard partitions, concrete block or concrete walls and/or concrete or corrugated steel deck floor/ceiling assemblies. Metacaulk 1000 is also an excellent fire rated acoustical sealant and can be used in areas under constant vibration or movement to reduce the transfer of noise through assemblies. Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "< 10",
+                    "unit": "g/L",
+                    "quote": "VOC\n< 10 g/L",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "VOC\n< 10 g/L",
+                    "selection_quote": null
+                  }
+                ],
+                "source_urls": [
+                  "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                  "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf"
+                ],
+                "notes": null
+              }
+            }
+          ],
+          "mode": "live",
+          "replayed_from": null,
+          "warnings": [],
+          "diagnostics": [],
+          "validity": "valid",
+          "config_hash": "748df94ef4cbf3cca1ca4835be8608dda4a8a449099207bb91365a8811c48781",
+          "fresh_model_cost_usd": 0.0142311,
+          "fresh_web_credits": 3,
+          "queue_ms": 7,
+          "ocr_pages": 0,
+          "archived_submittals": [],
+          "evidence_label": null,
+          "claims_extracted": 20,
+          "claims_kept": 4,
+          "web_values_read": 15,
+          "web_values_kept": 12
+        }
+      ],
+      "events": [
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 7,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 7,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 17,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 18,
+          "stage": "extract",
+          "message": "Comparing to the spec",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 47,
+          "stage": "spec_check",
+          "message": "Checked against 07 84 00: 2 of 4 rules matched",
+          "model": "code",
+          "data": {
+            "section": "07 84 00",
+            "title": "Firestopping",
+            "rules": 4,
+            "matched": 2,
+            "checklist_id": null
+          }
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 48,
+          "stage": "verify",
+          "message": "Checking the manufacturer online",
+          "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "spec": {
+              "pass": 1,
+              "fail": 0,
+              "unverified": 2
+            }
+          }
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 1588,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 5115,
+          "stage": "investigate",
+          "message": "Investigating: extract …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 8720,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 11907,
+          "stage": "investigate",
+          "message": "Investigating: extract …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 13590,
+          "stage": "investigate",
+          "message": "Investigating: extract …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 20857,
+          "stage": "investigate",
+          "message": "Investigating: finish …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 26043,
+          "stage": "report",
+          "message": "Writing the result",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "web": {
+              "sheet": "Compared values match current sources",
+              "verdict": "pass",
+              "sources": [
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "tier": "distributor"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "run_id": "20261027-191007-cfd26e",
+          "case_id": "u-33542f8e",
+          "t_ms": 26055,
+          "stage": "done",
+          "message": "approve_with_note",
+          "model": null,
+          "data": {
+            "decision": "approve_with_note",
+            "summary": "The product data can be approved with the clarification notes below. Assembly proof remains pending; confirm the listed assembly separately.",
+            "usage": [
+              {
+                "task": "triage",
+                "tier": "triage",
+                "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+                "input_tokens": 1913,
+                "output_tokens": 67,
+                "cost_usd": 0.00013086,
+                "latency_ms": 985,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4603,
+                "output_tokens": 3139,
+                "cost_usd": 0.004206,
+                "latency_ms": 13600,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4135,
+                "output_tokens": 1027,
+                "cost_usd": 0.0021648,
+                "latency_ms": 5167,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4406,
+                "output_tokens": 1105,
+                "cost_usd": 0.0023163,
+                "latency_ms": 4580,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4396,
+                "output_tokens": 1045,
+                "cost_usd": 0.0022593,
+                "latency_ms": 4390,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 1531,
+                "output_tokens": 81,
+                "cost_usd": 0.0005322,
+                "latency_ms": 1406,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3585,
+                "output_tokens": 81,
+                "cost_usd": 0.0011484,
+                "latency_ms": 2023,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4683,
+                "output_tokens": 86,
+                "cost_usd": 0.0014823,
+                "latency_ms": 1650,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5920,
+                "output_tokens": 53,
+                "cost_usd": 0.0018237,
+                "latency_ms": 1336,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 9181,
+                "output_tokens": 54,
+                "cost_usd": 0.0028029,
+                "latency_ms": 1301,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 9719,
+                "output_tokens": 287,
+                "cost_usd": 0.003174,
+                "latency_ms": 4176,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4396,
+                "output_tokens": 1045,
+                "cost_usd": 0.0022593,
+                "latency_ms": 4390,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 6646,
+                "output_tokens": 526,
+                "cost_usd": 0.0024672,
+                "latency_ms": 3674,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 2608,
+                "output_tokens": 20,
+                "cost_usd": 0.0008004,
+                "latency_ms": 1403,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "report",
+                "tier": "write",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 606,
+                "output_tokens": 258,
+                "cost_usd": 0.000414,
+                "latency_ms": 2248,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              }
+            ],
+            "web_credits": 3
+          }
+        },
+        {}
+      ]
+    }
+  ],
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.01970862,
+      "credits": 5,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 3.38619844,
+      "total_credits": 496,
+      "phase": "engineering",
+      "phase_usd": 2.32759344,
+      "phase_credits": 198,
+      "usd_limit": 20,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10,
+      "phase_credit_limit": 1000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 1.98029138,
+      "credits_left": 145
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 2,
+      "budget_usd_per_day": 2,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 150,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 8.2,
+    "disk_free_gb": 909.7
+  },
+  "inputs": [
+    {
+      "id": "u-33542f8e",
+      "filename": "rectorseal-metacaulk.pdf",
+      "spec": "07 84 00",
+      "input": 0
+    }
+  ],
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.03393972,
+      "credits": 8,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 3.40042954,
+      "total_credits": 499,
+      "phase": "engineering",
+      "phase_usd": 2.34182454,
+      "phase_credits": 201,
+      "usd_limit": 20,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10,
+      "phase_credit_limit": 1000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 1.96606028,
+      "credits_left": 142
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 2,
+      "budget_usd_per_day": 2,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 150,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 35.6,
+    "disk_free_gb": 909.65
+  },
+  "cost": {
+    "usd": 0.0142311,
+    "credits": 3
+  }
+}

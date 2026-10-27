@@ -15,9 +15,9 @@ from ..schemas import Decision, Finding, ReportOut, Usage
 FLAGGED = ("fail", "outdated")
 
 
-def decide(findings: list[Finding]) -> Decision:
+def decide(findings: list[Finding], case: Optional[dict] = None) -> Decision:
     requirements = [f for f in findings if f.requirement_id]
-    if requirements and all(not f.claim_ids and not f.claim_id and f.verdict in
+    if (case or {}).get("upload") and requirements and all(not f.claim_ids and not f.claim_id and f.verdict in
                             ("unverified", "pending", "not_applicable") for f in requirements):
         return "not_applicable"
     active = [f for f in findings if f.verdict in FLAGGED]

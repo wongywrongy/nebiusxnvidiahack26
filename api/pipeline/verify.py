@@ -39,7 +39,8 @@ def classify(url: str, manufacturer_domains: list[str]) -> str:
 
 
 def source_urls(results: list[dict], domains: list[str]) -> list[str]:
-    ranked = sorted(results, key=lambda r: TIER_RANK[classify(r["url"], domains)])
+    ranked = sorted(results, key=lambda r: (TIER_RANK[classify(r["url"], domains)],
+        bool(re.search(r"price[\s_-]*book|catalog(?:ue)?", r.get("title", "") + " " + r["url"], re.I))))
     urls = list(dict.fromkeys(r["url"] for r in ranked))
     # Reserve a source slot for a status notice as well as product documentation.
     notice = next((r["url"] for r in ranked if classify(r["url"], domains) == "manufacturer" and

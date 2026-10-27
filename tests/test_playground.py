@@ -222,6 +222,24 @@ def test_incomparable_quoted_value_is_uncertain_not_off_topic():
     assert findings[0].verdict == "unverified" and decide(findings) == "approve_with_note"
 
 
+def test_tray_with_no_matched_claims_still_checks_the_manufacturer(playground, monkeypatch):
+    from api.schemas import ClaimsOut
+    monkeypatch.setattr(settings, "data_dir", ROOT / "data")
+    monkeypatch.setattr(settings, "fixtures_dir", ROOT / "data/fixtures")
+    calls = []
+    async def no_claims(*args, **kwargs):
+        return ClaimsOut(product="Synthetic unmatched tray document", manufacturer="", claims=[]), []
+    async def verify(case, *args, **kwargs):
+        calls.append(case["id"])
+        return [runner.verify.unconfirmed("Synthetic missing manufacturer evidence")], [], [], 0, None
+    monkeypatch.setattr(runner.extract, "extract_claims", no_claims)
+    monkeypatch.setattr(runner.verify, "verify", verify)
+    run = asyncio.run(runner.execute(runner.Run(["c01"], delay_ms=0)))
+    assert calls == ["c01"] and any(e.stage == "verify" for e in run.events)
+    assert run.results["c01"].spec_match_count == 0
+    assert run.results["c01"].decision != "not_applicable"
+
+
 def test_runner_refuses_a_tray_checklist_even_without_the_api(playground, monkeypatch):
     case = {**upload(playground), "upload": False, "fixture": None, "checklist_id": "ck-" + "0" * 32}
     monkeypatch.setattr(settings, "data_dir", ROOT / "data")

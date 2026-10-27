@@ -25,26 +25,30 @@ Token Factory credits do not establish a separate AI Cloud grant.
 - At `574299b`: **723 Python tests passed, 2 skipped**; web production build clean; current raw mock
   panel **6/8, 5/6, 0/2, 0/5**. Mock results are fixture answers and incur no provider spend.
 - Playground checks on October 27: **741 Python tests passed, 2 skipped; 12 Chromium journeys passed; presentation checks and production build passed**. The raw mock panel remains unchanged. Draft generation in the browser regression is synthetic, and all provider-adapter tests use intercepted HTTP.
-- [GitHub Actions checks for `40df685`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40562321396) passed, including the mock browser job. PR #13 remains draft pending GATE 1.
+- [GitHub Actions checks for `40df685`](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40562321396) passed, including the mock browser job. PR #13 remains draft: local a–c completed, d hit two provider timeouts, e is pending. [Evidence](docs/playground/README.md).
 - Local image `speccheck:playground-40df685` built with all 13 locked PDFs and the recorded replay.
   A disposable container with networking disabled passed actual HTTP/static, checklist save/assignment,
   upload scan and native-PDF rendering checks in mock mode, with no configured provider keys and zero
   fresh charges. This is packaging evidence, not public deployment or live GATE 1 evidence.
 - PR #12 is merged. Playground implementation is on `feat/playground`; its live walkthrough, public deployment and final video are still pending.
-- Local cumulative accounting: **$3.36648982 model spend, 490 settled Tavily credits, one held credit**.
-  Kyle reported dashboard totals of 485 credits and approximately $3; those totals do not identify the
-  held request’s charge. The hold stays intact. Kyle asked to continue with unpaid work; paid work remains blocked until actual usage is resolved.
+- October 27 owner accounting decision: the historical request was **settled at its reserved 1 credit / $0**.
+  Baseline cumulative accounting is $3.36648982 / 491 credits, with no holds and `blocked: false`.
+  This conservatively counts the reservation; it is not an itemized provider receipt. See [FEEDBACK](FEEDBACK.md).
+- Kyle authorizes merging PR #13 after all local live checks pass, and deployment without another approval.
+  Nebius Endpoint cpu-d3 2vcpu-8gb, 32 GiB, public auth, through December 15 20:00 UTC is approved
+  at about $76; after 90 minutes without live health, use an always-on Render/Fly host with persistent
+  storage up to $25/month. Judging ceiling: $75 / 6,000 credits; daily $8 / 600, per-run $3, concurrency 2.
 
 ## Finish in this order
 
 | Work | Completion evidence | State |
 | --- | --- | --- |
-| Phase 0: owner-run `resolve-hold`, merge live branch | Tested CLI, PR #12 merged; ledger has no holds and permits paid calls | CLI and merge done; ledger still has one hold and blocks paid calls |
+| Phase 0: owner-run `resolve-hold`, merge live branch | Tested CLI, PR #12 merged; ledger has no holds and permits paid calls | Complete: owner settled reserved credit; no holds, paid calls allowed |
 | 1. Off-topic guard | Zero matching requirements yields `not_applicable`; neutral “Doesn’t match this spec”; no web/fix calls; Outcome “Not checked” | Implemented; mock/respx checked |
 | 2. Upload spec choice | Inbox select; upload-only `PATCH /api/inbox/{id}` validates and persists spec before scan | Implemented; persistence and refusal tests pass |
 | 3. Bring your own spec | Draft → edit/delete rows → save unreviewed checklist → assign to upload → full pipeline → Review/Outcome | Implemented; synthetic browser loop checked, live proof pending |
 | 4. Try-one PDFs | 3–4 new manufacturer products plus another-division spec/product pair; HTTPS downloads and readable page counts shown to Kyle | Links verified from this machine; UI checked |
-| GATE 1: local live walkthrough | Screenshots, run IDs, trace and actual cost for a–e below; Kyle approves before merge | Pending |
+| GATE 1: local live walkthrough | Screenshots, run IDs, trace and actual cost for a–e; owner authorizes merge after passing checks | a–c completed; d provider timeouts held; e pending |
 | Phase 2: one-container public demo | Approved host cost/expiry, judging allowance initialized, live health, smoke and private-window a–e | Pending |
 | GATE 2: public evidence and freeze | Public URL, smoke output, screenshots, spend; hotfixes only afterward | Pending |
 | Phase 3: recording and submission | One deployed tray + BYO run; README first screen; observed feedback; public YouTube video and Devpost | Pending |
@@ -113,13 +117,14 @@ each live run. Never clear an unknown charge by guessing. Provider reservations 
 item/step caps still apply. Budget exhaustion degrades supported stages to unconfirmed findings.
 
 Deployment is **one container**. First try Nebius Serverless Endpoint `cpu-d3 2vcpu-8gb`, disk 32 GiB,
-public auth, credentials in MysteryBox. Kyle must confirm AI Cloud balance/expiry and approve the concrete
-cost before creation. Timebox from the first endpoint attempt to **90 minutes**; if `/api/health` is not
-serving `mode: live`, stop and prepare Render or Fly.io with persistent disk for Kyle’s cost approval.
+public auth, credentials in MysteryBox. Kyle approved approximately $76 through December 15 20:00 UTC;
+stop only for required account login, secret entry or an unavailable dashboard fact. Timebox from the first endpoint attempt to **90 minutes**; if `/api/health` is not
+serving `mode: live`, fall back to an always-on Render or Fly.io instance with persistent disk,
+within the approved $25/month ceiling.
 No controller/authority topology. Do not assume Token Factory credits cover hosting.
 
 Add `campaign_budget.py init-judging --usd X --credits N`: create an allowance-only database only when
-none exists; refuse replacement. Run at startup when JUDGING_USD/JUDGING_CREDITS are set. Proposed
+none exists; refuse replacement. Run at startup when JUDGING_USD/JUDGING_CREDITS are set. Approved
 allowance **$75 / 6,000 credits**, confirmed by Kyle on October 27 as a ceiling, not a spending target. Set daily caps **$8 / 600 credits**, run
 cap **$3**, concurrency **2**. Put state on persistent disk. If the host has none, README must explain that
 a replacement container resets the allowance, with daily caps still configured; do not claim durable
@@ -189,9 +194,8 @@ Kyle confirms San Francisco attendance for the City field, reviews feedback in h
 
 ## Last actions for Kyle
 
-1. Resolve the held request from individual usage if available; approve the concrete host cost. Kyle has
-   confirmed sufficient funding and the $75 / 6,000-credit judging ceiling; exact grant expiry has not
-   been independently checked. Review local/public gate evidence at each stop.
+1. Complete a cloud login or secret entry if needed. Historical settlement, host costs, fallback and the
+   $75 / 6,000-credit judging ceiling are authorized; no repeat cost approval is needed. Review local/public gate evidence at each stop.
 2. Record the deployed browser workflow and narration using the storyboard; upload the public YouTube video.
 3. Complete Devpost: description, track, public demo/repo/video URLs, Built With and feedback fields.
 4. Open all links signed out, ensure the public repository has its MIT license/setup instructions, and
