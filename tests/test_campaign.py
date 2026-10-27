@@ -90,6 +90,26 @@ def test_unknown_settlement_blocks_paid_work_after_restart(campaign_state):
     assert reserve(campaign_state)
 
 
+def test_owner_resolve_hold_command(campaign_state, monkeypatch, capsys):
+    from scripts.campaign_budget import cli
+    ticket = reserve(campaign_state, usd=0, credits=1)
+    campaign.settle(campaign_state, ticket, None)
+    monkeypatch.setattr("sys.argv", ["campaign_budget.py", "resolve-hold", ticket, "--credits", "1", "--usd", "0"])
+    cli()
+    result = json.loads(capsys.readouterr().out)
+    assert result["id"] == ticket
+    assert result["before"]["held_credits"] == 1 and result["before"]["blocked"]
+    assert result["after"]["held_credits"] == 0 and not result["after"]["blocked"]
+    assert result["after"]["total_credits"] == result["before"]["total_credits"]
+    assert result["after"]["total_usd"] == result["before"]["total_usd"]
+    for identifier in (ticket, "missing"):
+        monkeypatch.setattr("sys.argv", ["campaign_budget.py", "resolve-hold", identifier, "--credits", "1", "--usd", "0"])
+        with pytest.raises(SystemExit, match="No unresolved hold"):
+            cli()
+        assert campaign.status(campaign_state) == result["after"]
+    assert reserve(campaign_state)
+
+
 def test_item_and_nested_credit_limits_include_holds(campaign_state):
     reserve(campaign_state, usd=0, credits=40)
     with pytest.raises(BudgetExceeded):

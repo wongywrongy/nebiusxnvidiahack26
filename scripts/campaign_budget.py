@@ -2,6 +2,7 @@
 
   python scripts/campaign_budget.py init --seed-day 2026-10-21 --seed-day 2026-10-22
   python scripts/campaign_budget.py status
+  python scripts/campaign_budget.py resolve-hold <id> --credits N --usd X
 
 Never initializes during a provider call. Unknown or abandoned reservations require owner reconciliation.
 """
@@ -40,14 +41,36 @@ def initialize(days: list[str]) -> dict:
     return campaign.status(settings.campaign_budget_file)
 
 
-if __name__ == "__main__":
+def resolve_hold(identifier: str, *, credits: int, usd: float) -> dict:
+    actual = campaign.Amount(usd_nano=budget.usd_nano(usd), credits=credits)
+    path = settings.campaign_budget_file
+    before = campaign.status(path)
+    with campaign.transaction(path) as state:
+        payment = state.payments.get(identifier)
+        if payment is None or payment.actual is not None:
+            raise budget.BudgetExceeded("No unresolved hold exists for this id")
+        if payment.kind != "request":
+            raise budget.BudgetExceeded("Only request holds can be resolved by this command")
+    campaign.settle(path, identifier, actual)
+    return {"id": identifier, "before": before, "after": campaign.status(path)}
+
+
+def cli():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["init", "status", "install-controller"])
+    parser.add_argument("action", choices=["init", "status", "install-controller", "resolve-hold"])
+    parser.add_argument("id", nargs="?")
+    parser.add_argument("--credits", type=int, help="actual credits confirmed by the owner in the provider dashboard")
+    parser.add_argument("--usd", type=float, help="actual USD confirmed by the owner in the provider dashboard")
     parser.add_argument("--seed-day", action="append", default=[])
     parser.add_argument("--source", type=Path, help="existing campaign SQLite database for an explicit cold import")
     parser.add_argument("--controller-dir", type=Path, help="controller-only mounted POSIX filesystem")
     args = parser.parse_args()
     try:
+        if args.action == "resolve-hold":
+            if not args.id or args.credits is None or args.usd is None:
+                parser.error("resolve-hold requires an id, --credits and --usd from the provider dashboard")
+            print(json.dumps(resolve_hold(args.id, credits=args.credits, usd=args.usd), indent=2))
+            return
         if args.action == "install-controller":
             if not args.source or not args.controller_dir:
                 parser.error("install-controller requires --source and --controller-dir")
@@ -58,3 +81,7 @@ if __name__ == "__main__":
                          campaign.status(settings.campaign_budget_file), indent=2))
     except (ValueError, OSError, budget.BudgetExceeded) as error:
         sys.exit(str(error))
+
+
+if __name__ == "__main__":
+    cli()
