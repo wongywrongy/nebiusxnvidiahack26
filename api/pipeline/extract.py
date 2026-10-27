@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 from ..config import settings
 from ..llm import router
-from ..schemas import Claim, ClaimsOut, PageLabel, RequirementsOut, Selection, TriageOut, Usage, Value
+from ..schemas import Claim, ClaimsOut, PageLabel, ProductTypeOut, RequirementsOut, Selection, TriageOut, Usage, Value
 
 from . import metrics
 from .spec_check import _label, _mentions, to_number
@@ -61,6 +61,13 @@ async def extract_requirements(section: str, spec_text: str, title: str = "") ->
                 "system drawing can be checked against: numbers, ratings, listings, test standards, warranty. "
                 "Leave out installation, execution, scheduling, contractor qualifications and anything only the "
                 "drawings or the site can show. Give the paragraph number for each. "
+                "Return at most 30 of the most directly checkable requirements. "
+                "When the section covers several product types, set product_type on each type-specific requirement "
+                "using consistent singular labels (for example cylindrical lockset, door closer, exit device). "
+                "Warranty rules belong to the product type they cover. Use null only for rules shared by all types. "
+                "Use plain words separated by spaces for product_type, not snake_case. Approved manufacturer and model lists "
+                "are type-specific too: a hinge manufacturer rule is for hinge; a pivot rule is for pivot; "
+                "a lock cylinder rule is for lock cylinder. Do not mark these as shared hardware rules. "
                 "Use snake_case property names with the unit in the name (t_rating_hr, voc_g_per_l, cri, warranty_years). "
                 "Use operator eq_ref when one property must equal another (value = the other property name). "
                 "Set applies_to to product_data or system_drawing when a requirement only makes sense for one.\n\n"
@@ -69,6 +76,24 @@ async def extract_requirements(section: str, spec_text: str, title: str = "") ->
         }
     ]
     return await router.call("extract_requirements", RequirementsOut, messages, {"section": section})
+
+
+async def identify_product_type(case_id, pages: list[dict], types: list[str]) -> tuple[Optional[str], Usage]:
+    class ProductTypeRead(ProductTypeOut):
+        @classmethod
+        def model_json_schema(cls, **kwargs):
+            schema = super().model_json_schema(**kwargs)
+            schema["properties"]["product_type"]["anyOf"][0]["enum"] = types
+            return schema
+    # shortcut: twenty page headers bound this short classification call; widen for observed long cover bundles.
+    preview = [{"page": p["page"], "text": p["text"][:600]} for p in pages[:20]]
+    out, usage = await router.call("product_type", ProductTypeRead, [{"role": "user", "content":
+        "Name the single physical product type this submittal describes. Choose exactly one offered type, "
+        "or null if uncertain or several product types are submitted. Quote a short printed passage naming "
+        "the physical product type and its page; a brand/model alone is insufficient. Return no explanation.\n"
+        + json.dumps({"types": types, "pages": preview})}], {"case_id": case_id})
+    text = next((p["text"] for p in pages if p["page"] == out.page), "")
+    return (out.product_type if out.product_type in types and quoted(out.quote, text) else None), usage
 
 
 def page_batches(pages: list[dict], limit: int):
@@ -201,6 +226,7 @@ async def _read_claims(case_id, text, properties, *, propose=False):
                 f"Return only these property names, with exactly these spellings and meanings: {json.dumps({p: _label(p) for p in properties})}. "
                 "Read every supplied page, including tables and notes. For a listed system, record its system number as model. "
                 "For a product, record its short printed product/model identifier as model, not a rewritten marketing title. "
+                "Use that same printed identifier in each claim's product and model; a generic category heading is not a product identity. "
                 "A product identifier names the product; selection separately proves a chosen ordering configuration. "
                 "Separately identify the printed family and family_quote. Do not treat a blank catalog field or an ordering example as a selected model. "
                 "Keep each test/rating metric distinct; never relabel a different metric to fit a requested name. "
@@ -254,6 +280,9 @@ async def _read_claims(case_id, text, properties, *, propose=False):
                 schema["$defs"]["Selection"]["properties"]["quote"]["description"] = (
                     "Exact page passage with the complete printed catalog/stock SKU and its label; never an ordering example.")
             schema["$defs"]["Claim"]["properties"]["property"]["enum"] = properties
+            schema["$defs"]["Claim"]["properties"]["product"]["description"] = (
+                "The exact printed identifier of the product this claim describes. For a claim about the top-level model, "
+                "copy that model identifier here; do not substitute a generic category or marketing heading.")
             schema["$defs"]["Claim"]["properties"]["unit"]["description"] = (
                 "Unit printed in this claim's supporting quote for a physical quantity; null only for dimensionless or categorical values.")
             schema["$defs"]["Claim"]["properties"]["scope_quote"]["description"] = (

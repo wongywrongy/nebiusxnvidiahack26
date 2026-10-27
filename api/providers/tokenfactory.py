@@ -38,6 +38,7 @@ TASK_MODEL: dict[str, str] = {
     "triage": "triage",
     "extract_requirements": "extract",
     "extract_claims": "extract",
+    "product_type": "extract",
     "verify": "verify",
     "investigate": "verify",
     "report": "write",
@@ -53,6 +54,16 @@ CONTEXT_LIMITS = {
 
 
 async def _request(method: str, path: str, body: Optional[dict] = None) -> dict:
+    for attempt in range(2):
+        try:
+            return await _request_once(method, path, body)
+        except ProviderError as error:
+            if attempt or method != "POST" or path != "/chat/completions" or not isinstance(error.__cause__, httpx.TimeoutException):
+                raise
+            log.warning("Model request timed out; retrying once with a fresh worst-case reservation")
+
+
+async def _request_once(method: str, path: str, body: Optional[dict] = None) -> dict:
     """One HTTP call. 401/403 -> AuthError, 429 -> RateLimited, other errors -> ProviderError with the server's message."""
     ticket = None
     if method == "POST" and path == "/chat/completions":
@@ -273,6 +284,8 @@ async def chat_tools(task: str, messages: list[dict[str, Any]], tools: list[dict
     model = settings.models[role]
     body = dict(model=model, messages=messages, tools=tools, tool_choice="auto", temperature=0,
                 max_tokens=settings.max_output_tokens)
+    if len(tools) == 1 and tools[0]['function']['name'] == 'finish':
+        body['tool_choice'] = {'type': 'function', 'function': {'name': 'finish'}}
     thinking = settings.thinking_for(task)
     no_think = NO_THINK if thinking == "off" else {}
     key = {"base_url": settings.nebius_base_url, **body, "thinking": thinking}

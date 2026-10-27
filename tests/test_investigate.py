@@ -104,7 +104,7 @@ def test_six_call_cap_including_parallel_tool_calls(http):
              for i in range(9)]
     route = http.post(CHAT).mock(return_value=reply("search", calls=calls))
     inv = asyncio.run(investigate(CASE, CLAIMS, WebClient("test")))
-    assert inv.outcome == "capped" and len(inv.steps) == 6 and len(route.calls) == 1
+    assert inv.outcome == "capped" and len(inv.steps) == 5 and len(route.calls) == 2
 
 
 def test_eight_credit_cap_stops_before_the_next_web_call(http):
@@ -190,6 +190,33 @@ def test_investigator_records_tool_cap_reason(http, monkeypatch):
     happy(http)
     inv = asyncio.run(investigate(CASE, CLAIMS, WebClient("test", on_warning=warn)))
     assert inv.outcome == "capped" and "tool-call cap" in warnings[0][1]
+
+
+def test_last_tool_slot_is_reserved_for_an_honest_finish(http, monkeypatch):
+    monkeypatch.setattr(settings, "investigate_max_steps", 2)
+    sources(http)
+    route = http.post(CHAT).mock(side_effect=[reply("search", {"query": "Maker X data sheet"}),
+        reply("finish", {"found": False, "status": "unknown", "note": "No quoted document confirmed."})])
+    inv = asyncio.run(investigate(CASE, CLAIMS, WebClient("test")))
+    assert inv.outcome == "not_found" and [s.tool for s in inv.steps] == ["search", "finish"]
+    last = json.loads(route.calls[-1].request.content)
+    assert [t["function"]["name"] for t in last["tools"]] == ["finish"]
+    assert last['tool_choice'] == {'type': 'function', 'function': {'name': 'finish'}}
+    assert "1 tool calls remain" in last["messages"][0]["content"]
+    assert "response_format" not in last
+
+
+def test_parallel_tool_requests_cannot_consume_the_reserved_finish_slot(http, monkeypatch):
+    monkeypatch.setattr(settings, "investigate_max_steps", 2)
+    sources(http)
+    batch = reply("search", {"query": "Maker X data sheet"}).json()
+    batch["choices"][0]["message"]["tool_calls"].append({"id": "extra", "type": "function",
+        "function": {"name": "search", "arguments": json.dumps({"query": "another search"})}})
+    route = http.post(CHAT).mock(side_effect=[httpx.Response(200, json=batch),
+        reply("finish", {"found": False, "status": "unknown", "note": "No quoted document confirmed."})])
+    inv = asyncio.run(investigate(CASE, CLAIMS, WebClient("test")))
+    assert inv.outcome == "not_found" and [s.tool for s in inv.steps] == ["search", "finish"]
+    assert "Not executed" in json.loads(route.calls[-1].request.content)["messages"][-1]["content"]
 
 
 def test_no_tool_call_stops_and_secret_arguments_never_reach_trace(http):
@@ -441,6 +468,13 @@ def test_source_selection_keeps_manufacturer_status_notice():
     selected = verify.source_urls([unrelated, *docs, notice, notice], ["maker.test"])
     assert selected == [docs[0]["url"], docs[1]["url"], notice["url"]]
     assert verify.source_urls([], ["maker.test"]) == []
+
+
+def test_source_selection_prefers_product_documents_over_broad_price_books():
+    book = {"url": "https://maker.test/price-book.pdf", "title": "Mechanical price book"}
+    docs = [{"url": f"https://maker.test/data-sheet-{n}.pdf"} for n in range(3)]
+    assert verify.source_urls([book, *docs], ["maker.test"]) == [d["url"] for d in docs]
+    assert verify.source_urls([book], ["maker.test"]) == [book["url"]]
 
 
 def test_investigator_can_read_cached_source_with_zero_web_allowance(http, monkeypatch):

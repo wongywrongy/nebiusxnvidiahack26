@@ -1,8 +1,9 @@
 # Nebius rollout preparation — 2026-10-23
 
-**No deployment is approved or verified.** Keep the Endpoint + Serverless Jobs design. The October 16–17
-and October 22 rollout dates are historical targets, not completed deployments. No cloud resources have
-been created in this session. [Ownership and open work](../../docs/judge-readiness/ownership.md).
+**Superseded October 27:** follow the [current demo-site and video plan](../../SUBMISSION.md).
+The submission uses one container; controller/authority work below is retained as historical preparation,
+and cloud jobs are optional. No deployment is approved or verified. The October 16–17 and October 22
+rollout dates are historical targets, not completed deployments. No cloud resources have been created.
 
 ## Release blockers
 

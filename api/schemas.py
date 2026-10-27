@@ -9,7 +9,7 @@ from __future__ import annotations
 from datetime import date, datetime
 from typing import Literal, Optional, Union
 
-from pydantic import BaseModel, Field, PrivateAttr
+from pydantic import BaseModel, Field, PrivateAttr, model_validator
 
 Value = Union[float, str, list[str], None]
 
@@ -27,6 +27,12 @@ class TriageOut(BaseModel):
     pages: list[PageLabel]
 
 
+class ProductTypeOut(BaseModel):
+    product_type: Optional[str] = None
+    page: Optional[int] = None
+    quote: Optional[str] = None
+
+
 class Requirement(BaseModel):
     id: str
     section: str = Field(description="Spec section, e.g. 07 84 00")
@@ -39,6 +45,8 @@ class Requirement(BaseModel):
     severity: Literal["critical", "major", "minor"] = "major"
     check: Literal["spec", "validity", "completeness"] = "spec"
     applies_to: list[str] = Field(default=[], description="Submittal roles it applies to (product_data, system_drawing); empty = all")
+    product_type: Optional[str] = Field(default=None, min_length=1, max_length=80,
+        description="Plain space-separated singular product type, not snake_case. Every item-specific manufacturer, model or warranty rule needs its type; null only for rules shared by all types.")
 
 
 class RequirementsOut(BaseModel):
@@ -46,7 +54,7 @@ class RequirementsOut(BaseModel):
 
 
 class Checklist(RequirementsOut):
-    """Draft provenance stays beside the requirements; only an admin-reviewed file is used live."""
+    """Draft provenance stays beside the requirements; public drafts are upload-only."""
     section: str = ""
     title: str = ""
     drafted_by: Optional[str] = None
@@ -59,6 +67,22 @@ class Checklist(RequirementsOut):
 
 class ReviewedChecklist(Checklist):
     reviewed_at: date
+
+
+class UploadChecklist(Checklist):
+    section: str = Field(pattern=r"^\d{2} \d{2} \d{2}$")
+    title: str = Field(min_length=1, max_length=160)
+    requirements: list[Requirement] = Field(min_length=1, max_length=30)
+
+    @model_validator(mode="after")
+    def validate_rules(self):
+        if not self.title.strip() or any(ord(c) < 32 for c in self.title):
+            raise ValueError("Give the checklist a title without control characters")
+        if len({r.id for r in self.requirements}) != len(self.requirements):
+            raise ValueError("Requirement IDs must be unique")
+        if any(r.section != self.section for r in self.requirements):
+            raise ValueError("Every requirement must belong to the checklist section")
+        return self
 
 
 class Claim(BaseModel):
@@ -170,7 +194,7 @@ class Highlight(BaseModel):
 Check = Literal["spec", "currency", "validity", "status", "completeness"]
 Verdict = Literal["pass", "fail", "outdated", "unverified", "note", "not_applicable", "pending"]
 Severity = Literal["critical", "major", "minor", "info"]
-Decision = Literal["approve", "approve_with_note", "send_back"]
+Decision = Literal["approve", "approve_with_note", "send_back", "not_applicable"]
 
 
 class Compare(BaseModel):
@@ -227,6 +251,7 @@ class Finding(BaseModel):
     why_it_matters: Optional[str] = None
     requirement_id: Optional[str] = None
     claim_id: Optional[str] = None
+    product_type: Optional[str] = None
     claim_ids: list[str] = []  # claims on the page that this finding is about
     highlights: list[Highlight] = []
     compare: Optional[Compare] = None
@@ -312,6 +337,12 @@ class Result(BaseModel):
     title: str
     decision: Decision
     summary: str
+    spec_section: Optional[str] = None
+    spec_title: Optional[str] = None
+    spec_rule_count: Optional[int] = None
+    spec_match_count: Optional[int] = None
+    checklist_id: Optional[str] = None
+    product_type: Optional[str] = None
     findings: list[Finding]
     comparison: list[CompareRow] = []
     claims: list[Claim] = []

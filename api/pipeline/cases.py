@@ -24,6 +24,11 @@ def all_specs() -> dict[str, dict]:
     return {s["section"]: s for s in data["specs"]}
 
 
+def try_documents() -> list[dict]:
+    path = settings.data_dir / "cases" / "try.json"
+    return json.loads(path.read_text()) if path.exists() else []
+
+
 @lru_cache
 def senders() -> dict[str, dict]:
     """Sender name -> trade and email (sample companies)."""
@@ -65,6 +70,13 @@ def get_upload(case_id: str) -> Optional[dict]:
     return json.loads(p.read_text()) if p.exists() else None
 
 
+def save_upload(case: dict):
+    path = settings.uploads_dir / case["id"] / "case.json"
+    temp = path.with_suffix(".tmp")
+    temp.write_text(json.dumps(case, indent=2))
+    temp.replace(path)
+
+
 def _known_fixture(digest: str) -> Optional[str]:
     """The case whose submittal PDF has this sha256, so mock mode can replay its recorded answers."""
     manifest = settings.raw_dir / "manifest.json"
@@ -100,5 +112,5 @@ def add_upload(name: str, pdf: bytes, text: str) -> dict:
         "fixture": fixture,
         "upload": True,
     }
-    (folder / "case.json").write_text(json.dumps(case, indent=2))
+    save_upload(case)
     return case

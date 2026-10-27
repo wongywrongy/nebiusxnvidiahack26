@@ -1,0 +1,393 @@
+{
+  "case": "d",
+  "url": "http://127.0.0.1:8009",
+  "captured_at": "2026-10-27T19:37:30.132Z",
+  "runs": [
+    {
+      "run_id": "20261027-193730-d9deab",
+      "mode": "live",
+      "mock": [],
+      "note": null,
+      "shared_item_budget": false,
+      "results": [],
+      "events": [
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c01",
+          "t_ms": 6,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c02",
+          "t_ms": 6,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c03",
+          "t_ms": 6,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c04",
+          "t_ms": 7,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s4",
+          "t_ms": 7,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c06",
+          "t_ms": 7,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s3",
+          "t_ms": 7,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c01",
+          "t_ms": 7,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c01",
+          "t_ms": 22,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c02",
+          "t_ms": 111,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c02",
+          "t_ms": 119,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c02",
+          "t_ms": 180526,
+          "stage": "error",
+          "message": "Token Factory could not complete this check; try again in a minute",
+          "model": null,
+          "data": {
+            "reason": "Token Factory could not complete this check; try again in a minute"
+          }
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c03",
+          "t_ms": 180526,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c03",
+          "t_ms": 180546,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c03",
+          "t_ms": 180547,
+          "stage": "extract",
+          "message": "Comparing to the spec",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c03",
+          "t_ms": 180578,
+          "stage": "error",
+          "message": "Campaign accounting unavailable or unsettled; paid work blocked",
+          "model": null,
+          "data": {
+            "reason": "Campaign accounting unavailable or unsettled; paid work blocked"
+          }
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c04",
+          "t_ms": 180579,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c04",
+          "t_ms": 180583,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c04",
+          "t_ms": 180600,
+          "stage": "error",
+          "message": "Campaign accounting unavailable or unsettled; paid work blocked",
+          "model": null,
+          "data": {
+            "reason": "Campaign accounting unavailable or unsettled; paid work blocked"
+          }
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s4",
+          "t_ms": 180601,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s4",
+          "t_ms": 180605,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s4",
+          "t_ms": 180625,
+          "stage": "error",
+          "message": "Campaign accounting unavailable or unsettled; paid work blocked",
+          "model": null,
+          "data": {
+            "reason": "Campaign accounting unavailable or unsettled; paid work blocked"
+          }
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c01",
+          "t_ms": 180668,
+          "stage": "error",
+          "message": "Token Factory could not complete this check; try again in a minute",
+          "model": null,
+          "data": {
+            "reason": "Token Factory could not complete this check; try again in a minute"
+          }
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c06",
+          "t_ms": 180669,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c06",
+          "t_ms": 180702,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "c06",
+          "t_ms": 180724,
+          "stage": "error",
+          "message": "Campaign accounting unavailable or unsettled; paid work blocked",
+          "model": null,
+          "data": {
+            "reason": "Campaign accounting unavailable or unsettled; paid work blocked"
+          }
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s3",
+          "t_ms": 180724,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s3",
+          "t_ms": 180751,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-193730-d9deab",
+          "case_id": "s3",
+          "t_ms": 180769,
+          "stage": "error",
+          "message": "Campaign accounting unavailable or unsettled; paid work blocked",
+          "model": null,
+          "data": {
+            "reason": "Campaign accounting unavailable or unsettled; paid work blocked"
+          }
+        },
+        {}
+      ]
+    }
+  ],
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.46614516,
+      "credits": 32,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 3.83263498,
+      "total_credits": 523,
+      "phase": "engineering",
+      "phase_usd": 2.77402998,
+      "phase_credits": 225,
+      "usd_limit": 20,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10,
+      "phase_credit_limit": 1000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 1.53385484,
+      "credits_left": 118
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 2,
+      "budget_usd_per_day": 2,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 150,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 253.6,
+    "disk_free_gb": 909.53
+  },
+  "passed": false,
+  "error": "AssertionError [ERR_ASSERTION]: Run must complete with results",
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.46614516,
+      "credits": 32,
+      "held_usd": 0.06365184,
+      "held_credits": 0,
+      "total_usd": 3.89628682,
+      "total_credits": 523,
+      "phase": "engineering",
+      "phase_usd": 2.83768182,
+      "phase_credits": 225,
+      "usd_limit": 20,
+      "credit_limit": 2000,
+      "phase_usd_limit": 10,
+      "phase_credit_limit": 1000,
+      "blocked": true
+    },
+    "budget": {
+      "usd_left": 0,
+      "credits_left": 0
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 2,
+      "budget_usd_per_day": 2,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 150,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 435.4,
+    "disk_free_gb": 909.52
+  },
+  "cost": {
+    "usd": 0.06365184,
+    "credits": 0
+  }
+}

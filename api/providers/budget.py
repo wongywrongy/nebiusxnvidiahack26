@@ -9,6 +9,7 @@ Live requests reserve against campaign SQLite before HTTP; .cache/budget/<date>.
 from __future__ import annotations
 
 import json
+import logging
 import math
 import uuid
 from decimal import Decimal, ROUND_CEILING
@@ -187,6 +188,13 @@ def reserve_payment(*, usd: float = 0, credits: int = 0) -> str:
 def settle_payment(identifier: str, *, usd: float | None = None, credits: int | None = None) -> None:
     from . import campaign
     actual = campaign.Amount(usd_nano=usd_nano(usd or 0), credits=credits or 0) if usd is not None or credits is not None else None
+    if actual is None:
+        with campaign.transaction(settings.campaign_budget_file) as state:
+            payment = state.payments[identifier]
+            actual = payment.actual or payment.held
+        usd, credits = actual.usd_nano / 1e9, actual.credits
+        logging.getLogger("speccheck.budget").warning(
+            "Provider usage unknown; settling reservation %s at worst case $%.9f / %s credits", identifier, usd, credits)
     led = LEDGER.get()
     known = led.accounted_payments.get(identifier) if led else None
     amount = (actual.usd_nano, actual.credits) if actual is not None else None
@@ -206,8 +214,6 @@ def settle_payment(identifier: str, *, usd: float | None = None, credits: int | 
                 charge_usd(usd, real=True, persist=False)
             if credits is not None:
                 charge_credits(credits, real=True, persist=False)
-        if actual is None:
-            unknown_usage("Provider usage is unknown; its reservation requires reconciliation")
     if report["blocked"]:
         unknown_usage("Campaign accounting requires reconciliation; paid work is blocked")
     path = settings.cache_dir / "budget" / f"{report['day']}.json"
@@ -215,3 +221,13 @@ def settle_payment(identifier: str, *, usd: float | None = None, credits: int | 
     temp = path.with_suffix(".tmp")
     temp.write_text(json.dumps(report))
     temp.replace(path)
+
+
+def recover_unknown_usage() -> None:
+    """A single hosted process conservatively closes requests left by an earlier process."""
+    from . import campaign
+    with campaign.transaction(settings.campaign_budget_file) as state:
+        abandoned = [identifier for identifier, p in state.payments.items()
+                     if p.kind == "request" and p.actual is None and (p.unknown or p.owner != campaign.SESSION)]
+    for identifier in abandoned:
+        settle_payment(identifier)
