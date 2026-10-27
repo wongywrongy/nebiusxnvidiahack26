@@ -2,6 +2,7 @@
 
   python scripts/campaign_budget.py init --seed-day 2026-10-21 --seed-day 2026-10-22
   python scripts/campaign_budget.py status
+  python scripts/campaign_budget.py init-judging --usd 75 --credits 6000
   python scripts/campaign_budget.py resolve-hold <id> --credits N --usd X
 
 Never initializes during a provider call. Unknown or abandoned reservations require owner reconciliation.
@@ -55,9 +56,17 @@ def resolve_hold(identifier: str, *, credits: int, usd: float) -> dict:
     return {"id": identifier, "before": before, "after": campaign.status(path)}
 
 
+def initialize_judging(*, usd: float, credits: int) -> dict:
+    if usd <= 0 or credits <= 0:
+        raise ValueError("Judging USD and credits must be positive")
+    allowance = campaign.Amount(usd_nano=budget.usd_nano(usd), credits=credits)
+    campaign.initialize(settings.campaign_budget_file, campaign.Amount(), {}, allowance, allowance)
+    return campaign.status(settings.campaign_budget_file)
+
+
 def cli():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["init", "status", "install-controller", "resolve-hold"])
+    parser.add_argument("action", choices=["init", "init-judging", "status", "install-controller", "resolve-hold"])
     parser.add_argument("id", nargs="?")
     parser.add_argument("--credits", type=int, help="actual credits confirmed by the owner in the provider dashboard")
     parser.add_argument("--usd", type=float, help="actual USD confirmed by the owner in the provider dashboard")
@@ -66,6 +75,11 @@ def cli():
     parser.add_argument("--controller-dir", type=Path, help="controller-only mounted POSIX filesystem")
     args = parser.parse_args()
     try:
+        if args.action == "init-judging":
+            if args.usd is None or args.credits is None:
+                parser.error("init-judging requires --usd and --credits")
+            print(json.dumps(initialize_judging(usd=args.usd, credits=args.credits), indent=2))
+            return
         if args.action == "resolve-hold":
             if not args.id or args.credits is None or args.usd is None:
                 parser.error("resolve-hold requires an id, --credits and --usd from the provider dashboard")
