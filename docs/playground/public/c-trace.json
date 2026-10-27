@@ -1,0 +1,4679 @@
+{
+  "case": "c",
+  "url": "https://port8000-ddh028qg63p3bzj.tunnel.applications.eu-west1.nebius.cloud",
+  "captured_at": "2026-10-27T21:36:34.903Z",
+  "runs": [
+    {
+      "run_id": "20261027-213717-37058d",
+      "mode": "live",
+      "mock": [],
+      "note": null,
+      "shared_item_budget": false,
+      "results": [
+        {
+          "case_id": "u-a47883c2",
+          "title": "schlage-nd.pdf",
+          "decision": "approve_with_note",
+          "summary": "The product data can be approved with the clarification notes below.",
+          "spec_section": "08 71 00",
+          "spec_title": "UBC Door Hardware",
+          "spec_rule_count": 7,
+          "spec_match_count": 5,
+          "checklist_id": "ck-28ff42f0e7c24ab2a6fc3defcbcfd061",
+          "product_type": "cylindrical lock",
+          "findings": [
+            {
+              "id": "spec-087100-1.7.1",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Warranty start date",
+              "detail": "Both quoted ratings are needed for this comparison.",
+              "why_it_matters": "Without a clear warranty start date, we cannot track when coverage begins for maintenance or replacement planning.",
+              "requirement_id": "087100-1.7.1",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "warranty start date = substantial completion date",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.1",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "labour warranty years",
+              "detail": "Package states 10 years; spec requires at least 1.5 years.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.1",
+              "claim_id": "cl-4",
+              "product_type": null,
+              "claim_ids": [
+                "cl-4"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "cl-4",
+                  "doc_file": "uploads/u-a47883c2/schlage-nd.pdf",
+                  "page": 14,
+                  "quote": "10 years mechanical, 3 year wired electrified",
+                  "boxes": [
+                    {
+                      "x0": 0.1968,
+                      "y0": 0.6804,
+                      "x1": 0.4661,
+                      "y1": 0.6959
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 1.5 years",
+                "right_label": "Submitted",
+                "right_value": "10 years",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.2",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "door closer warranty years",
+              "detail": "For other product type: door closer.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.2",
+              "claim_id": null,
+              "product_type": "door closer",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 10 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.2",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.3",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "exit device warranty years",
+              "detail": "For other product type: exit device.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.3",
+              "claim_id": null,
+              "product_type": "exit device",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 5 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.3",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.4",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "mortise lockset warranty years",
+              "detail": "For other product type: mortise lockset.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.4",
+              "claim_id": null,
+              "product_type": "mortise lockset",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 10 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.4",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.5",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "cylindrical lockset warranty years",
+              "detail": "For other product type: cylindrical lockset.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.5",
+              "claim_id": null,
+              "product_type": "cylindrical lockset",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 7 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.5",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.6",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "power operator electronics warranty years",
+              "detail": "For other product type: power door operator.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.6",
+              "claim_id": null,
+              "product_type": "power door operator",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 2 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.6",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.6b",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "power operator mechanical warranty years",
+              "detail": "For other product type: power door operator.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.6b",
+              "claim_id": null,
+              "product_type": "power door operator",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 5 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.6",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.7",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "electrified lockset electronics warranty years",
+              "detail": "For other product type: electrified lockset.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.7",
+              "claim_id": null,
+              "product_type": "electrified lockset",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 2 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.7",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.7b",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "electrified lockset mechanical warranty years",
+              "detail": "For other product type: electrified lockset.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.7b",
+              "claim_id": null,
+              "product_type": "electrified lockset",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 5 years",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.7",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.8",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "other electrified hardware warranty years",
+              "detail": "Package states 3 years; spec requires at least 3 years.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.8",
+              "claim_id": "cl-5",
+              "product_type": null,
+              "claim_ids": [
+                "cl-5"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "cl-5",
+                  "doc_file": "uploads/u-a47883c2/schlage-nd.pdf",
+                  "page": 14,
+                  "quote": "10 years mechanical, 3 year wired electrified",
+                  "boxes": [
+                    {
+                      "x0": 0.1968,
+                      "y0": 0.6804,
+                      "x1": 0.4661,
+                      "y1": 0.6959
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 3 years",
+                "right_label": "Submitted",
+                "right_value": "3 years",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.8",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-1.7.2.9",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "other mechanical hardware warranty years",
+              "detail": "Package states 10 years; spec requires at least 5 years.",
+              "why_it_matters": null,
+              "requirement_id": "087100-1.7.2.9",
+              "claim_id": "cl-6",
+              "product_type": null,
+              "claim_ids": [
+                "cl-6"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "cl-6",
+                  "doc_file": "uploads/u-a47883c2/schlage-nd.pdf",
+                  "page": 14,
+                  "quote": "10 years mechanical, 3 year wired electrified",
+                  "boxes": [
+                    {
+                      "x0": 0.1968,
+                      "y0": 0.6804,
+                      "x1": 0.4661,
+                      "y1": 0.6959
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≥ 5 years",
+                "right_label": "Submitted",
+                "right_value": "10 years",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 1.7.2.9",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-2.3.1",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "CSA standard confirmation",
+              "detail": "CSA for Heavy Duty.",
+              "why_it_matters": "Confirming the CSA standard ensures the lockset meets the required durability and safety level for heavy-duty use on this project.",
+              "requirement_id": "087100-2.3.1",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= Heavy Duty",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 2.3.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-2.3.2",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "grade",
+              "detail": "Package states 1; spec requires exactly 1.",
+              "why_it_matters": null,
+              "requirement_id": "087100-2.3.2",
+              "claim_id": "cl-1",
+              "product_type": null,
+              "claim_ids": [
+                "cl-1"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "cl-1",
+                  "doc_file": "uploads/u-a47883c2/schlage-nd.pdf",
+                  "page": 11,
+                  "quote": "Grade 1 Cylindrical Locks",
+                  "boxes": [
+                    {
+                      "x0": 0.7293,
+                      "y0": 0.0391,
+                      "x1": 0.9345,
+                      "y1": 0.0603
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= 1",
+                "right_label": "Submitted",
+                "right_value": "1",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 2.3.2",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.1.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "lock cylinder manufacturer",
+              "detail": "For other product type: lock cylinder.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.1.1",
+              "claim_id": null,
+              "product_type": "lock cylinder",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= Abloy of Canada",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.1.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.2.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "hinge manufacturer",
+              "detail": "For other product type: hinge.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.2.1",
+              "claim_id": null,
+              "product_type": "hinge",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Stanley",
+                  "Monthard",
+                  "Hager",
+                  "McKinney"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.2.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.3.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "pivot manufacturer",
+              "detail": "For other product type: pivot.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.3.1",
+              "claim_id": null,
+              "product_type": "pivot",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Dorma",
+                  "Yale - Corbin (Rixson)"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.3.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.4.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "door stop manufacturer",
+              "detail": "For other product type: door stop.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.4.1",
+              "claim_id": null,
+              "product_type": "door stop",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Rixson",
+                  "Dorma",
+                  "Hagar",
+                  "Gallery",
+                  "Ives",
+                  "Glynn–Johnson",
+                  "Rockwood"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.4.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.5.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "flush bolt manufacturer",
+              "detail": "For other product type: flush bolt.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.5.1",
+              "claim_id": null,
+              "product_type": "flush bolt",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Trimco",
+                  "Ives",
+                  "Glynn-Johnson",
+                  "Gallery",
+                  "Rockwood"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.5.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.6.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "mortise lock manufacturer series",
+              "detail": "For other product type: mortise lock.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.6.1",
+              "claim_id": null,
+              "product_type": "mortise lock",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Corbin ML2000 series",
+                  "Schlage L9000 series",
+                  "Sargent 8200 series"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.6.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.7.1",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "cylindrical lock manufacturer series",
+              "detail": "Package states ND; allowed: Corbin CL3300 series, Schlage ND series, Sargent 10 line, LSDA-800 series.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.7.1",
+              "claim_id": "cl-2",
+              "product_type": "cylindrical lock",
+              "claim_ids": [
+                "cl-2"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "cl-2",
+                  "doc_file": "uploads/u-a47883c2/schlage-nd.pdf",
+                  "page": 11,
+                  "quote": "ND Series",
+                  "boxes": [
+                    {
+                      "x0": 0.8412,
+                      "y0": 0.0193,
+                      "x1": 0.9345,
+                      "y1": 0.0448
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Corbin CL3300 series",
+                  "Schlage ND series",
+                  "Sargent 10 line",
+                  "LSDA-800 series"
+                ],
+                "right_label": "Submitted",
+                "right_value": "ND",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.7.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.8.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "push button code lock model",
+              "detail": "For other product type: push button code lock.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.8.1",
+              "claim_id": null,
+              "product_type": "push button code lock",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Schlage CO 100 x less cylinder x KP x 626",
+                  "Sargent KP Series"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.8.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.9.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "alarm lock model",
+              "detail": "For other product type: alarm lock.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.9.1",
+              "claim_id": null,
+              "product_type": "alarm lock",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Detex EAX500",
+                  "Alarm Lock Pilfergard PG21"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.9.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.9.2",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "panic bar style model",
+              "detail": "For other product type: exit device.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.9.2",
+              "claim_id": null,
+              "product_type": "exit device",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Sargent",
+                  "Von Duprin",
+                  "Corbin",
+                  "Alarm Lock",
+                  "Detex"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.9.2",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.10.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "mortise deadbolt model",
+              "detail": "For other product type: dead bolt lock.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.10.1",
+              "claim_id": null,
+              "product_type": "dead bolt lock",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Corbin DL4000 series",
+                  "Sargent 4800 series",
+                  "Schlage L600 series"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.10.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.10.2",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "cylindrical deadbolt model",
+              "detail": "For other product type: dead bolt lock.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.10.2",
+              "claim_id": null,
+              "product_type": "dead bolt lock",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= ILCO 4514.25.1.04.04.5",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.10.2",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.11.2",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "magnetic lock model if required",
+              "detail": "For other product type: magnetic lock.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.11.2",
+              "claim_id": null,
+              "product_type": "magnetic lock",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= Securitron M Series",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.11.2",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.12.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "exit device model",
+              "detail": "For other product type: exit device.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.12.1",
+              "claim_id": null,
+              "product_type": "exit device",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "Von Duprin 98XP and 99XP series",
+                  "Von Duprin 33A series",
+                  "Sargent 8000 series",
+                  "Corbin ED5000 series"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.12.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.13.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "door closer model",
+              "detail": "For other product type: door closer.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.13.1",
+              "claim_id": null,
+              "product_type": "door closer",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "LCN 4040XP Series x 689 finish",
+                  "Sargent 351",
+                  "Corbin 6200 / Norton 7700"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.13.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "spec-087100-3.1.14.1",
+              "check": "spec",
+              "verdict": "not_applicable",
+              "severity": "info",
+              "title": "power operator model",
+              "detail": "For other product type: power operator.",
+              "why_it_matters": null,
+              "requirement_id": "087100-3.1.14.1",
+              "claim_id": null,
+              "product_type": "power operator",
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "LCN 4630/4640 Series - \"Auto Equalizer\" x 689 finish",
+                  "Record-8100 Series",
+                  "Record-Simple Swing units"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "fail",
+                "rows": []
+              },
+              "spec_ref": "08 71 00 3.1.14.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null
+            },
+            {
+              "id": "currency-current",
+              "check": "currency",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "Compared values match current sources",
+              "detail": "",
+              "why_it_matters": null,
+              "requirement_id": null,
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Submitted",
+                "left_value": "013158, Rev. 10/24",
+                "right_label": "Current",
+                "right_value": "unknown",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": null,
+              "evidence": [
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Mechanical Data Sheet",
+                  "retrieved_at": "2026-10-27T21:37:39+00:00",
+                  "sha256": "c63d522b8a6235fae71cacb4b6bc9d42d2b0338cce522587568787015b5d519a",
+                  "excerpt": "10-year mechanical",
+                  "archived_path": null,
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Mechanical Data Sheet",
+                  "retrieved_at": "2026-10-27T21:37:39+00:00",
+                  "sha256": "c63d522b8a6235fae71cacb4b6bc9d42d2b0338cce522587568787015b5d519a",
+                  "excerpt": "3-year electro-mechanical",
+                  "archived_path": null,
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Mechanical Data Sheet",
+                  "retrieved_at": "2026-10-27T21:37:38+00:00",
+                  "sha256": "d9aaff8597cd064392677fa987ee00490ced26787d255fe5f2dc5ec7a48166f2",
+                  "excerpt": "10-year mechanical",
+                  "archived_path": null,
+                  "cache_hit": false
+                },
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Mechanical Data Sheet",
+                  "retrieved_at": "2026-10-27T21:37:38+00:00",
+                  "sha256": "d9aaff8597cd064392677fa987ee00490ced26787d255fe5f2dc5ec7a48166f2",
+                  "excerpt": "3-year electro-mechanical",
+                  "archived_path": null,
+                  "cache_hit": false
+                },
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Cut Sheet",
+                  "retrieved_at": "2026-10-27T21:38:10+00:00",
+                  "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                  "excerpt": "Grade 1 Cylindrical Locks",
+                  "archived_path": null,
+                  "cache_hit": false
+                },
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor",
+                  "title": "Schlage ND Series Cut Sheet",
+                  "retrieved_at": "2026-10-27T21:38:10+00:00",
+                  "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                  "excerpt": "ND Series",
+                  "archived_path": null,
+                  "cache_hit": false
+                }
+              ],
+              "quote": null,
+              "decided_by": "tavily + super",
+              "fix": null
+            }
+          ],
+          "comparison": [
+            {
+              "property": "grade",
+              "label": "grade",
+              "submitted": "1",
+              "current": "1",
+              "changed": false,
+              "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+              "quote": "Grade 1 Cylindrical Locks"
+            },
+            {
+              "property": "cylindrical_lock_manufacturer_series",
+              "label": "cylindrical lock manufacturer series",
+              "submitted": "ND",
+              "current": "ND",
+              "changed": false,
+              "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+              "quote": "ND Series"
+            },
+            {
+              "property": "labour_warranty_years",
+              "label": "labour warranty years",
+              "submitted": "10 years",
+              "current": "10 years",
+              "changed": false,
+              "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+              "quote": "10-year mechanical"
+            },
+            {
+              "property": "other_electrified_hardware_warranty_years",
+              "label": "other electrified hardware warranty years",
+              "submitted": "3 years",
+              "current": "3 years",
+              "changed": false,
+              "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+              "quote": "3-year electro-mechanical"
+            },
+            {
+              "property": "other_mechanical_hardware_warranty_years",
+              "label": "other mechanical hardware warranty years",
+              "submitted": "10 years",
+              "current": "10 years",
+              "changed": false,
+              "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+              "quote": "10-year mechanical"
+            }
+          ],
+          "claims": [
+            {
+              "id": "cl-1",
+              "product": "ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "property": "grade",
+              "value": "1",
+              "unit": null,
+              "page": 11,
+              "bbox": null,
+              "quote": "Grade 1 Cylindrical Locks",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Grade 1 Cylindrical Locks\nND Series",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-2",
+              "product": "ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "property": "cylindrical_lock_manufacturer_series",
+              "value": "ND",
+              "unit": null,
+              "page": 11,
+              "bbox": null,
+              "quote": "ND Series",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Grade 1 Cylindrical Locks\nND Series",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-4",
+              "product": "ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "property": "labour_warranty_years",
+              "value": "10",
+              "unit": "years",
+              "page": 14,
+              "bbox": null,
+              "quote": "10 years mechanical, 3 year wired electrified",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-5",
+              "product": "ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "property": "other_electrified_hardware_warranty_years",
+              "value": "3",
+              "unit": "years",
+              "page": 14,
+              "bbox": null,
+              "quote": "10 years mechanical, 3 year wired electrified",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-6",
+              "product": "ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "property": "other_mechanical_hardware_warranty_years",
+              "value": "10",
+              "unit": "years",
+              "page": 14,
+              "bbox": null,
+              "quote": "10 years mechanical, 3 year wired electrified",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+              "selection_quote": null
+            }
+          ],
+          "selection": null,
+          "document_roles": [
+            "cover",
+            "listing",
+            "other",
+            "product_data",
+            "system_drawing"
+          ],
+          "extracted": {
+            "product": "ND Series",
+            "manufacturer": "Schlage",
+            "model": "ND Series",
+            "selection": null,
+            "family": "ND Series",
+            "family_quote": "Grade 1 Cylindrical Locks\nND Series",
+            "document_revision": "013158, Rev. 10/24",
+            "claims": [
+              {
+                "id": "cl-1",
+                "product": "ND Series",
+                "manufacturer": "Schlage",
+                "model": "ND Series",
+                "property": "grade",
+                "value": "1",
+                "unit": null,
+                "page": 11,
+                "bbox": null,
+                "quote": "Grade 1 Cylindrical Locks",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Grade 1 Cylindrical Locks\nND Series",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-2",
+                "product": "ND Series",
+                "manufacturer": "Schlage",
+                "model": "ND Series",
+                "property": "cylindrical_lock_manufacturer_series",
+                "value": "ND",
+                "unit": null,
+                "page": 11,
+                "bbox": null,
+                "quote": "ND Series",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Grade 1 Cylindrical Locks\nND Series",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-4",
+                "product": "ND Series",
+                "manufacturer": "Schlage",
+                "model": "ND Series",
+                "property": "labour_warranty_years",
+                "value": "10",
+                "unit": "years",
+                "page": 14,
+                "bbox": null,
+                "quote": "10 years mechanical, 3 year wired electrified",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-5",
+                "product": "ND Series",
+                "manufacturer": "Schlage",
+                "model": "ND Series",
+                "property": "other_electrified_hardware_warranty_years",
+                "value": "3",
+                "unit": "years",
+                "page": 14,
+                "bbox": null,
+                "quote": "10 years mechanical, 3 year wired electrified",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-6",
+                "product": "ND Series",
+                "manufacturer": "Schlage",
+                "model": "ND Series",
+                "property": "other_mechanical_hardware_warranty_years",
+                "value": "10",
+                "unit": "years",
+                "page": 14,
+                "bbox": null,
+                "quote": "10 years mechanical, 3 year wired electrified",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+                "selection_quote": null
+              }
+            ]
+          },
+          "verification": {
+            "submitted": {
+              "product": "ND Series",
+              "manufacturer": "Schlage",
+              "model": "ND Series",
+              "selection": null,
+              "family": "ND Series",
+              "family_quote": "Grade 1 Cylindrical Locks\nND Series",
+              "document_revision": "013158, Rev. 10/24",
+              "claims": [
+                {
+                  "id": "cl-1",
+                  "product": "ND Series",
+                  "manufacturer": "Schlage",
+                  "model": "ND Series",
+                  "property": "grade",
+                  "value": "1",
+                  "unit": null,
+                  "page": 11,
+                  "bbox": null,
+                  "quote": "Grade 1 Cylindrical Locks",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks\nND Series",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-2",
+                  "product": "ND Series",
+                  "manufacturer": "Schlage",
+                  "model": "ND Series",
+                  "property": "cylindrical_lock_manufacturer_series",
+                  "value": "ND",
+                  "unit": null,
+                  "page": 11,
+                  "bbox": null,
+                  "quote": "ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks\nND Series",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-4",
+                  "product": "ND Series",
+                  "manufacturer": "Schlage",
+                  "model": "ND Series",
+                  "property": "labour_warranty_years",
+                  "value": "10",
+                  "unit": "years",
+                  "page": 14,
+                  "bbox": null,
+                  "quote": "10 years mechanical, 3 year wired electrified",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-5",
+                  "product": "ND Series",
+                  "manufacturer": "Schlage",
+                  "model": "ND Series",
+                  "property": "other_electrified_hardware_warranty_years",
+                  "value": "3",
+                  "unit": "years",
+                  "page": 14,
+                  "bbox": null,
+                  "quote": "10 years mechanical, 3 year wired electrified",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-6",
+                  "product": "ND Series",
+                  "manufacturer": "Schlage",
+                  "model": "ND Series",
+                  "property": "other_mechanical_hardware_warranty_years",
+                  "value": "10",
+                  "unit": "years",
+                  "page": 14,
+                  "bbox": null,
+                  "quote": "10 years mechanical, 3 year wired electrified",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Warranty\n10 years mechanical, 3 year wired electrified",
+                  "selection_quote": null
+                }
+              ]
+            },
+            "output": {
+              "status": "unknown",
+              "replacement": null,
+              "current_revision": null,
+              "status_date": null,
+              "status_quote": null,
+              "status_family": null,
+              "current_values": [
+                {
+                  "property": "grade",
+                  "value": "1",
+                  "unit": null,
+                  "quote": "Grade 1 Cylindrical Locks",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks Beyond Grade 1 performance is the hallmark of the mechanical and electrified ND Series locks.",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_manufacturer_series",
+                  "value": "ND",
+                  "unit": null,
+                  "quote": "ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks Beyond Grade 1 performance is the hallmark of the mechanical and electrified ND Series locks.",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "1",
+                  "unit": null,
+                  "quote": "Grade 1 Cylindrical Locks ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_manufacturer_series",
+                  "value": "ND",
+                  "unit": null,
+                  "quote": "ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Commercial.Schlage.com Grade 1 Cylindrical Locks ND Series MECHANICAL KEYED FUNCTIONS",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "1",
+                  "unit": null,
+                  "quote": "Grade 1 Cylindrical Locks ND Series",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Grade 1 Cylindrical Locks ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS",
+                  "selection_quote": null
+                },
+                {
+                  "property": "labour_warranty_years",
+                  "value": "10",
+                  "unit": "years",
+                  "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS",
+                  "variant": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS Chassis Material ... Warranty 10 years mechanical, 3 year wired electrified",
+                  "selection_quote": null
+                },
+                {
+                  "property": "other_electrified_hardware_warranty_years",
+                  "value": "3",
+                  "unit": "years",
+                  "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS",
+                  "variant": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS Chassis Material ... Warranty 10 years mechanical, 3 year wired electrified",
+                  "selection_quote": null
+                },
+                {
+                  "property": "other_mechanical_hardware_warranty_years",
+                  "value": "10",
+                  "unit": "years",
+                  "quote": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "source_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS",
+                  "variant": "Warranty 10 years mechanical, 3 year wired electrified",
+                  "scope": "product_wide",
+                  "scope_quote": "Grade 1 Cylindrical Locks ND Series Commercial.Schlage.com © 2024 Allegion plc 013158, Rev. 10/24 SPECIFICATIONS Chassis Material ... Warranty 10 years mechanical, 3 year wired electrified",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "1",
+                  "unit": null,
+                  "quote": "• Exceeds ANSI A156.2 series 4000 Grade 1 torque requirements",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Electrified Cylindrical Lock ND Series",
+                  "variant": "• Exceeds ANSI A156.2 series 4000 Grade 1 torque requirements",
+                  "scope": "product_wide",
+                  "scope_quote": "Exceeds ANSI A156.2 series 4000 Grade 1 torque requirements",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_manufacturer_series",
+                  "value": "ND",
+                  "unit": null,
+                  "quote": "ND Series",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "Electrified Cylindrical Lock ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "ND Series",
+                  "selection_quote": null
+                },
+                {
+                  "property": "grade",
+                  "value": "1",
+                  "unit": null,
+                  "quote": "ANSI/BHMA Grade 1 certified",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "ANSI/BHMA Grade 1 certified",
+                  "selection_quote": null
+                },
+                {
+                  "property": "cylindrical_lock_manufacturer_series",
+                  "value": "ND",
+                  "unit": null,
+                  "quote": "ND Series",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "ND Series",
+                  "selection_quote": null
+                },
+                {
+                  "property": "labour_warranty_years",
+                  "value": "10",
+                  "unit": "years",
+                  "quote": "10-year mechanical",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "10-year mechanical and 3-year electro-mechanical",
+                  "selection_quote": null
+                },
+                {
+                  "property": "other_electrified_hardware_warranty_years",
+                  "value": "3",
+                  "unit": "years",
+                  "quote": "3-year electro-mechanical",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "10-year mechanical and 3-year electro-mechanical",
+                  "selection_quote": null
+                },
+                {
+                  "property": "other_mechanical_hardware_warranty_years",
+                  "value": "10",
+                  "unit": "years",
+                  "quote": "10-year mechanical",
+                  "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "model": "ND Series",
+                  "identity_quote": "ND Series",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "10-year mechanical and 3-year electro-mechanical",
+                  "selection_quote": null
+                }
+              ],
+              "source_urls": [
+                "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf"
+              ],
+              "notes": null
+            },
+            "sources": [
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Electrified Data Sheet",
+                "retrieved_at": "2026-10-27T21:37:38+00:00",
+                "sha256": "0834327d8a8f42e7e27e2890b5009180a7d604ba674f528cb83f584c82df2a5f",
+                "excerpt": "Commercial.Schlage.com ND Series Electrified Cylindrical Lock Overview Features & Benefits Many of the most advanced electronic access control systems still rely on the strength and functionality of the mechanical lock hardware on the door. ND Series electrified locks feature Schlage's most robust cylindrical design built for performance, security and durability. It is a \"beyond grade 1\" lock in t",
+                "archived_path": null,
+                "cache_hit": false
+              },
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Mechanical Data Sheet",
+                "retrieved_at": "2026-10-27T21:37:39+00:00",
+                "sha256": "c63d522b8a6235fae71cacb4b6bc9d42d2b0338cce522587568787015b5d519a",
+                "excerpt": "Commercial.Schlage.com\nND Series\nGrade 1 \nCylindrical Locks\nOverview\nFeatures & Benefits\nStrength and durability are more than numbers, you can actually feel it in \nthe lock. ND Series locks significantly exceed BHMA testing requirements. \nSo, whether your application calls for high abuse resistance or just reliable \noperation over millions of cycles, you can be confident ND Series locks will \nlas",
+                "archived_path": null,
+                "cache_hit": null
+              },
+              {
+                "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Mechanical Data Sheet",
+                "retrieved_at": "2026-10-27T21:37:38+00:00",
+                "sha256": "d9aaff8597cd064392677fa987ee00490ced26787d255fe5f2dc5ec7a48166f2",
+                "excerpt": "Commercial.Schlage.com ND Series Grade 1 Cylindrical Locks Overview Features & Benefits Strength and durability are more than numbers, you can actually feel it in the lock. ND Series locks significantly exceed BHMA testing requirements. So, whether your application calls for high abuse resistance or just reliable operation over millions of cycles, you can be confident ND Series locks will last and",
+                "archived_path": null,
+                "cache_hit": false
+              },
+              {
+                "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                "tier": "distributor",
+                "title": "Schlage ND Series Cut Sheet",
+                "retrieved_at": "2026-10-27T21:38:10+00:00",
+                "sha256": "d60f744778649bdf87cc60be4cd2a43c7f1416c5042ea701988f59ae60a8e4bd",
+                "excerpt": "Commercial.Schlage.com OVERVIEW ND Series Grade 1 Cylindrical Locks Beyond Grade 1 performance is the hallmark of the mechanical and electrified ND Series locks. These locks are put through extreme levels of testing and are proven to withstand 3,100 in-lb. of abusive lever torque-more than 2-1/2 times the Grade 1 standard requirement. Offset lever pull testing up to 1,600 lbs. assures you of the l",
+                "archived_path": null,
+                "cache_hit": false
+              }
+            ]
+          },
+          "document_revision": "013158, Rev. 10/24",
+          "note_to_subcontractor": "The product data can be approved with the clarification notes below.\n\nWarranty start date: Both quoted ratings are needed for this comparison.\nCSA standard confirmation: CSA for Heavy Duty.",
+          "usage": [
+            {
+              "task": "triage",
+              "tier": "triage",
+              "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+              "input_tokens": 6390,
+              "output_tokens": 274,
+              "cost_usd": 0.00044916,
+              "latency_ms": 3472,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "product_type",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3581,
+              "output_tokens": 31,
+              "cost_usd": 0.0011022,
+              "latency_ms": 675,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5758,
+              "output_tokens": 53,
+              "cost_usd": 0.0017751,
+              "latency_ms": 930,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5023,
+              "output_tokens": 53,
+              "cost_usd": 0.0015546,
+              "latency_ms": 953,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5249,
+              "output_tokens": 2194,
+              "cost_usd": 0.0035493,
+              "latency_ms": 8341,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3119,
+              "output_tokens": 683,
+              "cost_usd": 0.0015504,
+              "latency_ms": 3043,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5363,
+              "output_tokens": 829,
+              "cost_usd": 0.002355,
+              "latency_ms": 3668,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4893,
+              "output_tokens": 888,
+              "cost_usd": 0.0022671,
+              "latency_ms": 3704,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5135,
+              "output_tokens": 606,
+              "cost_usd": 0.0020859,
+              "latency_ms": 2760,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 7378,
+              "output_tokens": 841,
+              "cost_usd": 0.0029703,
+              "latency_ms": 3741,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 6908,
+              "output_tokens": 841,
+              "cost_usd": 0.0028293,
+              "latency_ms": 3823,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 1543,
+              "output_tokens": 86,
+              "cost_usd": 0.0005403,
+              "latency_ms": 1557,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3560,
+              "output_tokens": 104,
+              "cost_usd": 0.0011616,
+              "latency_ms": 2940,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5260,
+              "output_tokens": 107,
+              "cost_usd": 0.0016743,
+              "latency_ms": 1566,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 7138,
+              "output_tokens": 388,
+              "cost_usd": 0.0024906,
+              "latency_ms": 2855,
+              "cached": false,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4983,
+              "output_tokens": 1110,
+              "cost_usd": 0.0024939,
+              "latency_ms": 6801,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4835,
+              "output_tokens": 1006,
+              "cost_usd": 0.0023559,
+              "latency_ms": 4861,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3841,
+              "output_tokens": 1483,
+              "cost_usd": 0.002487,
+              "latency_ms": 6866,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3119,
+              "output_tokens": 683,
+              "cost_usd": 0.0015504,
+              "latency_ms": 3043,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5363,
+              "output_tokens": 829,
+              "cost_usd": 0.002355,
+              "latency_ms": 3668,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "report",
+              "tier": "write",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 2598,
+              "output_tokens": 215,
+              "cost_usd": 0.0009729,
+              "latency_ms": 1856,
+              "cached": false,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            }
+          ],
+          "web_credits": 6,
+          "duration_ms": 76964,
+          "investigation": {
+            "steps": [
+              {
+                "n": 1,
+                "tool": "search",
+                "args": {
+                  "query": "Schlage ND Series product data sheet specification manual",
+                  "include_domains": [
+                    "schlage.com",
+                    "allegion.com"
+                  ]
+                },
+                "summary": "5 results",
+                "credits": 1,
+                "ms": 2150,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 2,
+                "tool": "search",
+                "args": {
+                  "query": "Schlage ND Series discontinued end of life EOL announcement 2023 2024",
+                  "include_domains": [
+                    "schlage.com",
+                    "allegion.com"
+                  ]
+                },
+                "summary": "5 results",
+                "credits": 1,
+                "ms": 1502,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 3,
+                "tool": "extract",
+                "args": {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf"
+                },
+                "summary": "1 extracted source",
+                "credits": 0,
+                "ms": 481,
+                "succeeded": true,
+                "source_urls": [
+                  "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf"
+                ]
+              },
+              {
+                "n": 4,
+                "tool": "finish",
+                "args": {
+                  "found": true,
+                  "document_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "document_title": "Schlage ND Series Cut Sheet",
+                  "revision_quote": "Rev. 10/24",
+                  "status": "active",
+                  "note": "Found Schlage ND Series Cut Sheet dated October 2024 (Rev. 10/24) showing current specifications, warranties, and certifications. No discontinuation notices found for ND Series in Schlage/Allegion sources. The document indicates active production with current technical specifications and marketing content."
+                },
+                "summary": "Rev. 10/24, unknown",
+                "credits": 0,
+                "ms": 15,
+                "succeeded": true,
+                "source_urls": []
+              }
+            ],
+            "outcome": "found",
+            "purpose": "primary",
+            "resolution": "not_resolved",
+            "scripted": null
+          },
+          "investigations": [
+            {
+              "steps": [
+                {
+                  "n": 1,
+                  "tool": "search",
+                  "args": {
+                    "query": "Schlage ND Series product data sheet specification manual",
+                    "include_domains": [
+                      "schlage.com",
+                      "allegion.com"
+                    ]
+                  },
+                  "summary": "5 results",
+                  "credits": 1,
+                  "ms": 2150,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 2,
+                  "tool": "search",
+                  "args": {
+                    "query": "Schlage ND Series discontinued end of life EOL announcement 2023 2024",
+                    "include_domains": [
+                      "schlage.com",
+                      "allegion.com"
+                    ]
+                  },
+                  "summary": "5 results",
+                  "credits": 1,
+                  "ms": 1502,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 3,
+                  "tool": "extract",
+                  "args": {
+                    "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf"
+                  },
+                  "summary": "1 extracted source",
+                  "credits": 0,
+                  "ms": 481,
+                  "succeeded": true,
+                  "source_urls": [
+                    "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf"
+                  ]
+                },
+                {
+                  "n": 4,
+                  "tool": "finish",
+                  "args": {
+                    "found": true,
+                    "document_url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                    "document_title": "Schlage ND Series Cut Sheet",
+                    "revision_quote": "Rev. 10/24",
+                    "status": "active",
+                    "note": "Found Schlage ND Series Cut Sheet dated October 2024 (Rev. 10/24) showing current specifications, warranties, and certifications. No discontinuation notices found for ND Series in Schlage/Allegion sources. The document indicates active production with current technical specifications and marketing content."
+                  },
+                  "summary": "Rev. 10/24, unknown",
+                  "credits": 0,
+                  "ms": 15,
+                  "succeeded": true,
+                  "source_urls": []
+                }
+              ],
+              "outcome": "found",
+              "purpose": "primary",
+              "resolution": "not_resolved",
+              "scripted": {
+                "status": "unknown",
+                "replacement": null,
+                "current_revision": null,
+                "status_date": null,
+                "status_quote": null,
+                "status_family": null,
+                "current_values": [
+                  {
+                    "property": "grade",
+                    "value": "1",
+                    "unit": null,
+                    "quote": "• Exceeds ANSI A156.2 series 4000 Grade 1 torque requirements",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "Electrified Cylindrical Lock ND Series",
+                    "variant": "• Exceeds ANSI A156.2 series 4000 Grade 1 torque requirements",
+                    "scope": "product_wide",
+                    "scope_quote": "Exceeds ANSI A156.2 series 4000 Grade 1 torque requirements",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "cylindrical_lock_manufacturer_series",
+                    "value": "ND",
+                    "unit": null,
+                    "quote": "ND Series",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Electrified_Data_Sheet_104999.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "Electrified Cylindrical Lock ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "ND Series",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "grade",
+                    "value": "1",
+                    "unit": null,
+                    "quote": "ANSI/BHMA Grade 1 certified",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "ANSI/BHMA Grade 1 certified",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "cylindrical_lock_manufacturer_series",
+                    "value": "ND",
+                    "unit": null,
+                    "quote": "ND Series",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "ND Series",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "labour_warranty_years",
+                    "value": "10",
+                    "unit": "years",
+                    "quote": "10-year mechanical",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Warranty\n10-year mechanical and 3-year electro-mechanical",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "other_electrified_hardware_warranty_years",
+                    "value": "3",
+                    "unit": "years",
+                    "quote": "3-year electro-mechanical",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Warranty\n10-year mechanical and 3-year electro-mechanical",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "other_mechanical_hardware_warranty_years",
+                    "value": "10",
+                    "unit": "years",
+                    "quote": "10-year mechanical",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Warranty\n10-year mechanical and 3-year electro-mechanical",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "grade",
+                    "value": "1",
+                    "unit": null,
+                    "quote": "ANSI/BHMA Grade 1 certified",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "ANSI/BHMA Grade 1 certified",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "cylindrical_lock_manufacturer_series",
+                    "value": "ND",
+                    "unit": null,
+                    "quote": "ND Series",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "ND Series",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "labour_warranty_years",
+                    "value": "10",
+                    "unit": "years",
+                    "quote": "10-year mechanical",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Warranty 10-year mechanical and 3-year electro-mechanical",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "other_electrified_hardware_warranty_years",
+                    "value": "3",
+                    "unit": "years",
+                    "quote": "3-year electro-mechanical",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Warranty 10-year mechanical and 3-year electro-mechanical",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "other_mechanical_hardware_warranty_years",
+                    "value": "10",
+                    "unit": "years",
+                    "quote": "10-year mechanical",
+                    "source_url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                    "model": "ND Series",
+                    "identity_quote": "ND Series",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Warranty 10-year mechanical and 3-year electro-mechanical",
+                    "selection_quote": null
+                  }
+                ],
+                "source_urls": [
+                  "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf"
+                ],
+                "notes": null
+              }
+            }
+          ],
+          "mode": "live",
+          "replayed_from": null,
+          "warnings": [],
+          "diagnostics": [],
+          "validity": "valid",
+          "config_hash": "a5b7ce0400f35d0d2648c693f7ebb5b735c1b72f2e13f8e002cb277aaee5afba",
+          "fresh_model_cost_usd": 0.03666486,
+          "fresh_web_credits": 6,
+          "queue_ms": 24,
+          "ocr_pages": 0,
+          "archived_submittals": [],
+          "evidence_label": null,
+          "claims_extracted": 9,
+          "claims_kept": 5,
+          "web_values_read": 40,
+          "web_values_kept": 27
+        }
+      ],
+      "events": [
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 16,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 24,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 117,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 3614,
+          "stage": "extract",
+          "message": "Comparing to the spec",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 4309,
+          "stage": "extract",
+          "message": "Submitted product type: cylindrical lock",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 14609,
+          "stage": "spec_check",
+          "message": "Checked against 08 71 00: 5 of 7 rules matched",
+          "model": "code",
+          "data": {
+            "section": "08 71 00",
+            "title": "UBC Door Hardware",
+            "rules": 7,
+            "matched": 5,
+            "product_type": "cylindrical lock",
+            "other_product_type_rules": 23,
+            "checklist_id": "ck-28ff42f0e7c24ab2a6fc3defcbcfd061"
+          }
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 14611,
+          "stage": "verify",
+          "message": "Checking the manufacturer online",
+          "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "spec": {
+              "pass": 5,
+              "fail": 0,
+              "unverified": 2
+            }
+          }
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 44344,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 49452,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 52539,
+          "stage": "investigate",
+          "message": "Investigating: extract …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 55892,
+          "stage": "investigate",
+          "message": "Investigating: finish …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 75050,
+          "stage": "report",
+          "message": "Writing the result",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "web": {
+              "sheet": "Compared values match current sources",
+              "verdict": "pass",
+              "sources": [
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://commercial.schlage.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Data_Sheet_106486.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor"
+                },
+                {
+                  "url": "https://us.allegion.com/content/dam/allegion-us-2/web-files/schlage/information-documents/Schlage_ND_Series_Cut_Sheet_113158.pdf",
+                  "tier": "distributor"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "run_id": "20261027-213717-37058d",
+          "case_id": "u-a47883c2",
+          "t_ms": 76996,
+          "stage": "done",
+          "message": "approve_with_note",
+          "model": null,
+          "data": {
+            "decision": "approve_with_note",
+            "summary": "The product data can be approved with the clarification notes below.",
+            "usage": [
+              {
+                "task": "triage",
+                "tier": "triage",
+                "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+                "input_tokens": 6390,
+                "output_tokens": 274,
+                "cost_usd": 0.00044916,
+                "latency_ms": 3472,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "product_type",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3581,
+                "output_tokens": 31,
+                "cost_usd": 0.0011022,
+                "latency_ms": 675,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5758,
+                "output_tokens": 53,
+                "cost_usd": 0.0017751,
+                "latency_ms": 930,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5023,
+                "output_tokens": 53,
+                "cost_usd": 0.0015546,
+                "latency_ms": 953,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5249,
+                "output_tokens": 2194,
+                "cost_usd": 0.0035493,
+                "latency_ms": 8341,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3119,
+                "output_tokens": 683,
+                "cost_usd": 0.0015504,
+                "latency_ms": 3043,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5363,
+                "output_tokens": 829,
+                "cost_usd": 0.002355,
+                "latency_ms": 3668,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4893,
+                "output_tokens": 888,
+                "cost_usd": 0.0022671,
+                "latency_ms": 3704,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5135,
+                "output_tokens": 606,
+                "cost_usd": 0.0020859,
+                "latency_ms": 2760,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 7378,
+                "output_tokens": 841,
+                "cost_usd": 0.0029703,
+                "latency_ms": 3741,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 6908,
+                "output_tokens": 841,
+                "cost_usd": 0.0028293,
+                "latency_ms": 3823,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 1543,
+                "output_tokens": 86,
+                "cost_usd": 0.0005403,
+                "latency_ms": 1557,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3560,
+                "output_tokens": 104,
+                "cost_usd": 0.0011616,
+                "latency_ms": 2940,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5260,
+                "output_tokens": 107,
+                "cost_usd": 0.0016743,
+                "latency_ms": 1566,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 7138,
+                "output_tokens": 388,
+                "cost_usd": 0.0024906,
+                "latency_ms": 2855,
+                "cached": false,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4983,
+                "output_tokens": 1110,
+                "cost_usd": 0.0024939,
+                "latency_ms": 6801,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4835,
+                "output_tokens": 1006,
+                "cost_usd": 0.0023559,
+                "latency_ms": 4861,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3841,
+                "output_tokens": 1483,
+                "cost_usd": 0.002487,
+                "latency_ms": 6866,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3119,
+                "output_tokens": 683,
+                "cost_usd": 0.0015504,
+                "latency_ms": 3043,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5363,
+                "output_tokens": 829,
+                "cost_usd": 0.002355,
+                "latency_ms": 3668,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "report",
+                "tier": "write",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 2598,
+                "output_tokens": 215,
+                "cost_usd": 0.0009729,
+                "latency_ms": 1856,
+                "cached": false,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              }
+            ],
+            "web_credits": 6
+          }
+        },
+        {}
+      ]
+    }
+  ],
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.04756146,
+      "credits": 14,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 0.04756146,
+      "total_credits": 14,
+      "phase": "engineering",
+      "phase_usd": 0.04756146,
+      "phase_credits": 14,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.95243854,
+      "credits_left": 586
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 243.6,
+    "disk_free_gb": 9.99
+  },
+  "draft": {
+    "draft": {
+      "requirements": [
+        {
+          "id": "087100-1.7.1",
+          "section": "08 71 00",
+          "paragraph": "1.7.1",
+          "property": "warranty_start_date",
+          "operator": "eq_ref",
+          "value": "substantial_completion_date",
+          "unit": null,
+          "text": "Manufacturers’ warranties shall be from the date of Substantial Completion.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-1.7.2.1",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.1",
+          "property": "labour_warranty_years",
+          "operator": "gte",
+          "value": 1.5,
+          "unit": "years",
+          "text": "Installation labour warranty: 1.5 years from Substantial Completion.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-1.7.2.2",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.2",
+          "property": "door_closer_warranty_years",
+          "operator": "gte",
+          "value": 10,
+          "unit": "years",
+          "text": "Door closers: 10 years.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "door closer"
+        },
+        {
+          "id": "087100-1.7.2.3",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.3",
+          "property": "exit_device_warranty_years",
+          "operator": "gte",
+          "value": 5,
+          "unit": "years",
+          "text": "Exit Devices: 5 years.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "exit device"
+        },
+        {
+          "id": "087100-1.7.2.4",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.4",
+          "property": "mortise_lockset_warranty_years",
+          "operator": "gte",
+          "value": 10,
+          "unit": "years",
+          "text": "Mortise Locksets: 10 years.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "mortise lockset"
+        },
+        {
+          "id": "087100-1.7.2.5",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.5",
+          "property": "cylindrical_lockset_warranty_years",
+          "operator": "gte",
+          "value": 7,
+          "unit": "years",
+          "text": "Cylindrical Locksets: 7 years.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "cylindrical lockset"
+        },
+        {
+          "id": "087100-1.7.2.6",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.6",
+          "property": "power_operator_electronics_warranty_years",
+          "operator": "gte",
+          "value": 2,
+          "unit": "years",
+          "text": "Power door operators: 2 years on electronics.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "power door operator"
+        },
+        {
+          "id": "087100-1.7.2.6b",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.6",
+          "property": "power_operator_mechanical_warranty_years",
+          "operator": "gte",
+          "value": 5,
+          "unit": "years",
+          "text": "Power door operators: 5 years on mechanical components.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "power door operator"
+        },
+        {
+          "id": "087100-1.7.2.7",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.7",
+          "property": "electrified_lockset_electronics_warranty_years",
+          "operator": "gte",
+          "value": 2,
+          "unit": "years",
+          "text": "Electrified Locksets: 2 years on electronics.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified lockset"
+        },
+        {
+          "id": "087100-1.7.2.7b",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.7",
+          "property": "electrified_lockset_mechanical_warranty_years",
+          "operator": "gte",
+          "value": 5,
+          "unit": "years",
+          "text": "Electrified Locksets: 5 years on mechanical components.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified lockset"
+        },
+        {
+          "id": "087100-1.7.2.8",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.8",
+          "property": "other_electrified_hardware_warranty_years",
+          "operator": "gte",
+          "value": 3,
+          "unit": "years",
+          "text": "Other electrified hardware components: 3 years.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-1.7.2.9",
+          "section": "08 71 00",
+          "paragraph": "1.7.2.9",
+          "property": "other_mechanical_hardware_warranty_years",
+          "operator": "gte",
+          "value": 5,
+          "unit": "years",
+          "text": "Other mechanical hardware: 5 years",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-2.3.1",
+          "section": "08 71 00",
+          "paragraph": "2.3.1",
+          "property": "standard_csa",
+          "operator": "eq",
+          "value": "Heavy Duty",
+          "unit": null,
+          "text": "CSA for Heavy Duty.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-2.3.2",
+          "section": "08 71 00",
+          "paragraph": "2.3.2",
+          "property": "grade",
+          "operator": "eq",
+          "value": "1",
+          "unit": null,
+          "text": "All hardware to be Grade 1.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.1.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.1.1",
+          "property": "lock_cylinder_manufacturer",
+          "operator": "eq",
+          "value": "Abloy of Canada",
+          "unit": null,
+          "text": "Abloy of Canada Cylinders – no substitutions allowed.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "lock cylinder"
+        },
+        {
+          "id": "087100-3.1.2.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.2.1",
+          "property": "hinge_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Stanley",
+            "Monthard",
+            "Hager",
+            "McKinney"
+          ],
+          "unit": null,
+          "text": "Stanley/ Monthard/ Hager/ McKinney.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "hinge"
+        },
+        {
+          "id": "087100-3.1.3.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.3.1",
+          "property": "pivot_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Dorma",
+            "Yale - Corbin (Rixson)"
+          ],
+          "unit": null,
+          "text": "Dorma. Yale - Corbin (Rixson).",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "pivot"
+        },
+        {
+          "id": "087100-3.1.4.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.4.1",
+          "property": "door_stop_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Rixson",
+            "Dorma",
+            "Hagar",
+            "Gallery",
+            "Ives",
+            "Glynn–Johnson",
+            "Rockwood"
+          ],
+          "unit": null,
+          "text": "Rixson/ Dorma/ Hagar/ Gallery/ Ives/ Glynn – Johnson/ Rockwood.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "door stop"
+        },
+        {
+          "id": "087100-3.1.5.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.5.1",
+          "property": "flush_bolt_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Trimco",
+            "Ives",
+            "Glynn-Johnson",
+            "Gallery",
+            "Rockwood"
+          ],
+          "unit": null,
+          "text": "Trimco/ Ives/ Glynn-Johnson/ Gallery/ Rockwood.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "flush bolt"
+        },
+        {
+          "id": "087100-3.1.6.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.6.1",
+          "property": "mortise_lock_manufacturer_series",
+          "operator": "any_of",
+          "value": [
+            "Corbin ML2000 series",
+            "Schlage L9000 series",
+            "Sargent 8200 series"
+          ],
+          "unit": null,
+          "text": "Corbin ML2000 series with LWA lever. Schlage L9000 series with 03B lever. Sargent 8200 series with LNJ lever.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "mortise lock"
+        },
+        {
+          "id": "087100-3.1.7.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.7.1",
+          "property": "cylindrical_lock_manufacturer_series",
+          "operator": "any_of",
+          "value": [
+            "Corbin CL3300 series",
+            "Schlage ND series",
+            "Sargent 10 line",
+            "LSDA-800 series"
+          ],
+          "unit": null,
+          "text": "Corbin CL3300 series Schlage ND series with Vandlguard Sargent 10 line LSDA-800 series Grade 2 levers.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "cylindrical lock"
+        },
+        {
+          "id": "087100-3.1.8.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.8.1",
+          "property": "push_button_code_lock_model",
+          "operator": "any_of",
+          "value": [
+            "Schlage CO 100 x less cylinder x KP x 626",
+            "Sargent KP Series"
+          ],
+          "unit": null,
+          "text": "Schlage CO 100 x less cylinder x KP x 626 Sargent KP Series",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "push button code lock"
+        },
+        {
+          "id": "087100-3.1.9.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.9.1",
+          "property": "alarm_lock_model",
+          "operator": "any_of",
+          "value": [
+            "Detex EAX500",
+            "Alarm Lock Pilfergard PG21"
+          ],
+          "unit": null,
+          "text": "Stand-alone systems: Detex EAX500 or Alarm Lock Pilfergard PG21",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "alarm lock"
+        },
+        {
+          "id": "087100-3.1.9.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.9.2",
+          "property": "panic_bar_style_model",
+          "operator": "any_of",
+          "value": [
+            "Sargent",
+            "Von Duprin",
+            "Corbin",
+            "Alarm Lock",
+            "Detex"
+          ],
+          "unit": null,
+          "text": "Panic Bar Style (must re-latch): Sargent, Von Duprin, Corbin, Alarm Lock, Detex",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "exit device"
+        },
+        {
+          "id": "087100-3.1.10.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.10.1",
+          "property": "mortise_deadbolt_model",
+          "operator": "any_of",
+          "value": [
+            "Corbin DL4000 series",
+            "Sargent 4800 series",
+            "Schlage L600 series"
+          ],
+          "unit": null,
+          "text": "Mortise: Corbin DL4000 series, Sargent 4800 series, Schlage L600 series.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "dead bolt lock"
+        },
+        {
+          "id": "087100-3.1.10.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.10.2",
+          "property": "cylindrical_deadbolt_model",
+          "operator": "eq",
+          "value": "ILCO 4514.25.1.04.04.5",
+          "unit": null,
+          "text": "Cylindrical: ILCO 4514.25.1.04.04.5",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "dead bolt lock"
+        },
+        {
+          "id": "087100-3.1.11.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.11.2",
+          "property": "magnetic_lock_model_if_required",
+          "operator": "eq",
+          "value": "Securitron M Series",
+          "unit": null,
+          "text": "Securitron M Series (if required)",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "magnetic lock"
+        },
+        {
+          "id": "087100-3.1.12.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.12.1",
+          "property": "exit_device_model",
+          "operator": "any_of",
+          "value": [
+            "Von Duprin 98XP and 99XP series",
+            "Von Duprin 33A series",
+            "Sargent 8000 series",
+            "Corbin ED5000 series"
+          ],
+          "unit": null,
+          "text": "Von Duprin 98XP and 99XP series, and 33A series. Sargent 8000 series. Corbin ED5000 series",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "exit device"
+        },
+        {
+          "id": "087100-3.1.13.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.13.1",
+          "property": "door_closer_model",
+          "operator": "any_of",
+          "value": [
+            "LCN 4040XP Series x 689 finish",
+            "Sargent 351",
+            "Corbin 6200 / Norton 7700"
+          ],
+          "unit": null,
+          "text": "LCN 4040XP Series x 689 finish. Sargent 351 Corbin 6200 / Norton 7700",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "door closer"
+        },
+        {
+          "id": "087100-3.1.14.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.14.1",
+          "property": "power_operator_model",
+          "operator": "any_of",
+          "value": [
+            "LCN 4630/4640 Series - \"Auto Equalizer\" x 689 finish",
+            "Record-8100 Series",
+            "Record-Simple Swing units"
+          ],
+          "unit": null,
+          "text": "LCN 4630/4640 Series - \"Auto Equalizer\" x 689 finish. Record-8100 Series and Record-Simple Swing units.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "power operator"
+        },
+        {
+          "id": "087100-3.1.14.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.14.3",
+          "property": "power_operator_substitution_allowed",
+          "operator": "eq",
+          "value": "no",
+          "unit": null,
+          "text": "No substitutions allowed.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "power operator"
+        },
+        {
+          "id": "087100-3.1.15.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.15.1",
+          "property": "automatic_door_opener_push_plate_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Camden",
+            "BEA"
+          ],
+          "unit": null,
+          "text": "Camden or BEA.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "automatic door opener push plate"
+        },
+        {
+          "id": "087100-3.1.15.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.15.2",
+          "property": "automatic_door_opener_push_plate_height_in",
+          "operator": "eq",
+          "value": 36,
+          "unit": "in",
+          "text": "36\" tall vertical actuation bar, high and low push plate.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "automatic door opener push plate"
+        },
+        {
+          "id": "087100-3.1.15.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.15.3",
+          "property": "automatic_door_opener_push_plate_wiring",
+          "operator": "eq",
+          "value": "hardwired",
+          "unit": null,
+          "text": "Hardwired with 'push to open' text.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "automatic door opener push plate"
+        },
+        {
+          "id": "087100-3.1.16.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.16.1",
+          "property": "push_plate_pull_protective_plate_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Trimco",
+            "CBH",
+            "Gallery"
+          ],
+          "unit": null,
+          "text": "Trimco/CBH/Gallery.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "push plate pull protective plate"
+        },
+        {
+          "id": "087100-3.1.17.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.17.1",
+          "property": "threshold_weatherstripping_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Pemko",
+            "Crowder",
+            "Zero"
+          ],
+          "unit": null,
+          "text": "Pemko/Crowder/Zero.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "threshold weather stripping"
+        },
+        {
+          "id": "087100-3.1.18.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.18.1",
+          "property": "station_control_key_switch_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Von Duprin",
+            "LCN",
+            "RCI",
+            "Securitron"
+          ],
+          "unit": null,
+          "text": "Von Duprin/ LCN/ RCI/ Securitron",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "station control key switch"
+        },
+        {
+          "id": "087100-3.1.18.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.18.2",
+          "property": "camden_station_control_model",
+          "operator": "eq",
+          "value": "CM-1030-7224 SPDT with red & green LED",
+          "unit": null,
+          "text": "Camden CM-1030-7224 SPDT with red & green LED",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "station control key switch"
+        },
+        {
+          "id": "087100-3.1.19.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.19.1",
+          "property": "power_supply_match_manufacturer_equipment",
+          "operator": "eq",
+          "value": "yes",
+          "unit": null,
+          "text": "Use power supplies to match manufacturers’ equipment when required.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.19.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.19.2",
+          "property": "power_supply_battery_backup_required",
+          "operator": "eq",
+          "value": "yes",
+          "unit": null,
+          "text": "Power supplies require battery backup.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.19.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.19.3",
+          "property": "power_supply_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Locknetic",
+            "Folger-Adams",
+            "Securitron",
+            "Von Duprin",
+            "Yale",
+            "Corbin"
+          ],
+          "unit": null,
+          "text": "Locknetic / Folger-Adams, Securitron, Von Duprin, Yale / Corbin",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.20.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.20.1",
+          "property": "electrified_strike_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "HES",
+            "RCI",
+            "Adams Rite"
+          ],
+          "unit": null,
+          "text": "HES/ RCI/ Adams Rite",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified strike"
+        },
+        {
+          "id": "087100-3.1.21.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.21.1",
+          "property": "transfer_hinge_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "McKinney with electro lynx",
+            "Stanley",
+            "Hager"
+          ],
+          "unit": null,
+          "text": "McKinney with electro lynx, Stanley, Hager",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "transfer hinge"
+        },
+        {
+          "id": "087100-3.1.22.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.22.1",
+          "property": "hard_wired_electrified_lockset_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Schlage",
+            "Corbin",
+            "Sargent"
+          ],
+          "unit": null,
+          "text": "Manufacturers: Schlage, Corbin, Sargent",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "hard wired electrified lockset"
+        },
+        {
+          "id": "087100-3.1.22.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.22.2",
+          "property": "hard_wired_electrified_lockset_magnetic_position_indicator",
+          "operator": "eq",
+          "value": "integral",
+          "unit": null,
+          "text": "Integral magnetic position indicator.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "hard wired electrified lockset"
+        },
+        {
+          "id": "087100-3.1.22.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.22.3",
+          "property": "hard_wired_electrified_lockset_request_to_exit_function",
+          "operator": "eq",
+          "value": "handle_integrated",
+          "unit": null,
+          "text": "Handle integrated request to exit function",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "hard wired electrified lockset"
+        },
+        {
+          "id": "087100-3.1.22.4",
+          "section": "08 71 00",
+          "paragraph": "3.1.22.4",
+          "property": "hard_wired_electrified_lockset_card_fob_reader",
+          "operator": "eq",
+          "value": "i_class_compatible",
+          "unit": null,
+          "text": "Integrated card / FOB reader (I-Class compatible)",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "hard wired electrified lockset"
+        },
+        {
+          "id": "087100-3.1.23.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.23.1",
+          "property": "wireless_electrified_lockset_manufacturer_status",
+          "operator": "eq",
+          "value": "under_review",
+          "unit": null,
+          "text": "[Manufacturers are currently under review]",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "wireless electrified lockset"
+        },
+        {
+          "id": "087100-3.1.23.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.23.2",
+          "property": "wireless_electrified_lockset_battery_supply_type",
+          "operator": "eq",
+          "value": "non_proprietary",
+          "unit": null,
+          "text": "Non-proprietary battery supply only",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "wireless electrified lockset"
+        },
+        {
+          "id": "087100-3.1.23.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.23.3",
+          "property": "wireless_electrified_lockset_min_cycles_per_battery",
+          "operator": "gte",
+          "value": 50000,
+          "unit": null,
+          "text": "Minimum 50,000 cycles per battery supply",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "wireless electrified lockset"
+        },
+        {
+          "id": "087100-3.1.23.4",
+          "section": "08 71 00",
+          "paragraph": "3.1.23.4",
+          "property": "wireless_electrified_lockset_hard_wired_power_preferred",
+          "operator": "eq",
+          "value": "yes",
+          "unit": null,
+          "text": "Hard-wired power source option preferred",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "wireless electrified lockset"
+        },
+        {
+          "id": "087100-3.1.23.5",
+          "section": "08 71 00",
+          "paragraph": "3.1.23.5",
+          "property": "wireless_electrified_lockset_network_type",
+          "operator": "any_of",
+          "value": [
+            "dedicated wireless network hardware",
+            "encrypted wi-fi"
+          ],
+          "unit": null,
+          "text": "Dedicated Wireless network hardware or encrypted Wi-Fi",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "wireless electrified lockset"
+        },
+        {
+          "id": "087100-3.1.24.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.24.1",
+          "property": "electrified_exit_device_manufacturer",
+          "operator": "any_of",
+          "value": [
+            "Corbin",
+            "Sargent",
+            "Von Duprin"
+          ],
+          "unit": null,
+          "text": "Corbin/ Sargent / Von Duprin (QEL series)",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified exit device"
+        },
+        {
+          "id": "087100-3.1.24.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.24.2",
+          "property": "electrified_exit_device_electrified_dogging_required",
+          "operator": "eq",
+          "value": "yes_unless_prohibited_by_code",
+          "unit": null,
+          "text": "Electrified dogging required unless prohibited by code.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified exit device"
+        },
+        {
+          "id": "087100-3.1.25.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.25.1",
+          "property": "electrified_hold_open_device_model",
+          "operator": "any_of",
+          "value": [
+            "Simplex RSG series",
+            "Edwards 1500 series"
+          ],
+          "unit": null,
+          "text": "Simplex RSG series or Edwards 1500 series.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified hold open device"
+        },
+        {
+          "id": "087100-3.1.25.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.25.3",
+          "property": "electrified_hold_open_device_concealed_within_closer_acceptable",
+          "operator": "eq",
+          "value": "no",
+          "unit": null,
+          "text": "Concealed hold-opens within door closers are not acceptable.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified hold open device"
+        },
+        {
+          "id": "087100-3.1.26.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.26.1",
+          "property": "electrified_lock_box_model",
+          "operator": "eq",
+          "value": "ProxSafe flex key management system",
+          "unit": null,
+          "text": "ProxSafe flex key management system",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "electrified lock box"
+        },
+        {
+          "id": "087100-3.1.27.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.27.1",
+          "property": "electrified_hardware_communications_equipment_supplier",
+          "operator": "eq",
+          "value": "UBC Access and Security Services",
+          "unit": null,
+          "text": "Supplied and installed by UBC Access and Security Services.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.27.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.27.2",
+          "property": "electrified_hardware_communications_equipment_contractor_scope",
+          "operator": "eq",
+          "value": "supply_and_install_power_pathways_cabling_as_indicated_on_drawings",
+          "unit": null,
+          "text": "Contractor to supply and install power, pathways, and cabling as indicated on the drawings.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.27.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.27.3",
+          "property": "electrified_hardware_communications_equipment_protocol_type",
+          "operator": "eq",
+          "value": "open_source",
+          "unit": null,
+          "text": "Open source communication protocol only.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        },
+        {
+          "id": "087100-3.1.28.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.28.1",
+          "property": "request_to_exit_device_supplier",
+          "operator": "eq",
+          "value": "UBC Access and Security Services",
+          "unit": null,
+          "text": "Supplied and installed by UBC Access and Security Services where not integrated into the lockset.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "request to exit device"
+        },
+        {
+          "id": "087100-3.1.29.1",
+          "section": "08 71 00",
+          "paragraph": "3.1.29.1",
+          "property": "card_strike_fob_reader_supplier",
+          "operator": "eq",
+          "value": "UBC Access and Security Services",
+          "unit": null,
+          "text": "Supplied and installed by UBC Access and Security Services where not integrated into the lockset.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "card strike fob reader"
+        },
+        {
+          "id": "087100-3.1.29.2",
+          "section": "08 71 00",
+          "paragraph": "3.1.29.2",
+          "property": "card_strike_fob_reader_contractor_scope",
+          "operator": "eq",
+          "value": "supply_and_install_pathway_installation_only_as_indicated_on_drawings",
+          "unit": null,
+          "text": "Contractor to supply and install pathway installation only as indicated on drawings.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "card strike fob reader"
+        },
+        {
+          "id": "087100-3.1.29.3",
+          "section": "08 71 00",
+          "paragraph": "3.1.29.3",
+          "property": "card_strike_fob_reader_i_class_compatible",
+          "operator": "eq",
+          "value": "yes",
+          "unit": null,
+          "text": "I-Class compatible",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": "card strike fob reader"
+        },
+        {
+          "id": "087100-3.2.1",
+          "section": "08 71 00",
+          "paragraph": "3.2.1",
+          "property": "fire_department_key_card_tube_deposit_lockbox_finish",
+          "operator": "eq",
+          "value": "brushed stainless steel",
+          "unit": null,
+          "text": "Brushed stainless steel.",
+          "severity": "major",
+          "check": "spec",
+          "applies_to": [
+            "product_data",
+            "system_drawing"
+          ],
+          "product_type": null
+        }
+      ],
+      "section": "08 71 00",
+      "title": "UBC Door Hardware",
+      "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+      "source_name": "ubc-door-hardware.pdf",
+      "source_url": null,
+      "source_sha256": "2116d555cae1f485f70d336fdf356fca389bd022fe13c2c4e423bb7290758af2",
+      "drafted_at": "2026-10-27T21:37:13.663711Z",
+      "reviewed_at": null
+    },
+    "usage": {
+      "task": "extract_requirements",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6763,
+      "output_tokens": 8833,
+      "cost_usd": 0.0099786,
+      "latency_ms": 36163,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  },
+  "checklist": {
+    "id": "ck-28ff42f0e7c24ab2a6fc3defcbcfd061",
+    "section": "08 71 00",
+    "title": "UBC Door Hardware",
+    "n": 30
+  },
+  "edited_checklist": {
+    "requirements": [
+      {
+        "id": "087100-1.7.1",
+        "section": "08 71 00",
+        "paragraph": "1.7.1",
+        "property": "warranty_start_date",
+        "operator": "eq_ref",
+        "value": "substantial_completion_date",
+        "unit": null,
+        "text": "Manufacturers’ warranties shall be from the date of Substantial Completion.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": null
+      },
+      {
+        "id": "087100-1.7.2.1",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.1",
+        "property": "labour_warranty_years",
+        "operator": "gte",
+        "value": 1.5,
+        "unit": "years",
+        "text": "Installation labour warranty: 1.5 years from Substantial Completion.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": null
+      },
+      {
+        "id": "087100-1.7.2.2",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.2",
+        "property": "door_closer_warranty_years",
+        "operator": "gte",
+        "value": 10,
+        "unit": "years",
+        "text": "Door closers: 10 years.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "door closer"
+      },
+      {
+        "id": "087100-1.7.2.3",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.3",
+        "property": "exit_device_warranty_years",
+        "operator": "gte",
+        "value": 5,
+        "unit": "years",
+        "text": "Exit Devices: 5 years.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "exit device"
+      },
+      {
+        "id": "087100-1.7.2.4",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.4",
+        "property": "mortise_lockset_warranty_years",
+        "operator": "gte",
+        "value": 10,
+        "unit": "years",
+        "text": "Mortise Locksets: 10 years.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "mortise lockset"
+      },
+      {
+        "id": "087100-1.7.2.5",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.5",
+        "property": "cylindrical_lockset_warranty_years",
+        "operator": "gte",
+        "value": 7,
+        "unit": "years",
+        "text": "Cylindrical Locksets: 7 years.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "cylindrical lockset"
+      },
+      {
+        "id": "087100-1.7.2.6",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.6",
+        "property": "power_operator_electronics_warranty_years",
+        "operator": "gte",
+        "value": 2,
+        "unit": "years",
+        "text": "Power door operators: 2 years on electronics.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "power door operator"
+      },
+      {
+        "id": "087100-1.7.2.6b",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.6",
+        "property": "power_operator_mechanical_warranty_years",
+        "operator": "gte",
+        "value": 5,
+        "unit": "years",
+        "text": "Power door operators: 5 years on mechanical components.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "power door operator"
+      },
+      {
+        "id": "087100-1.7.2.7",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.7",
+        "property": "electrified_lockset_electronics_warranty_years",
+        "operator": "gte",
+        "value": 2,
+        "unit": "years",
+        "text": "Electrified Locksets: 2 years on electronics.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "electrified lockset"
+      },
+      {
+        "id": "087100-1.7.2.7b",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.7",
+        "property": "electrified_lockset_mechanical_warranty_years",
+        "operator": "gte",
+        "value": 5,
+        "unit": "years",
+        "text": "Electrified Locksets: 5 years on mechanical components.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "electrified lockset"
+      },
+      {
+        "id": "087100-1.7.2.8",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.8",
+        "property": "other_electrified_hardware_warranty_years",
+        "operator": "gte",
+        "value": 3,
+        "unit": "years",
+        "text": "Other electrified hardware components: 3 years.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": null
+      },
+      {
+        "id": "087100-1.7.2.9",
+        "section": "08 71 00",
+        "paragraph": "1.7.2.9",
+        "property": "other_mechanical_hardware_warranty_years",
+        "operator": "gte",
+        "value": 5,
+        "unit": "years",
+        "text": "Other mechanical hardware: 5 years",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": null
+      },
+      {
+        "id": "087100-2.3.1",
+        "section": "08 71 00",
+        "paragraph": "2.3.1",
+        "property": "standard_csa",
+        "operator": "eq",
+        "value": "Heavy Duty",
+        "unit": null,
+        "text": "CSA for Heavy Duty.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": null
+      },
+      {
+        "id": "087100-2.3.2",
+        "section": "08 71 00",
+        "paragraph": "2.3.2",
+        "property": "grade",
+        "operator": "eq",
+        "value": 1,
+        "unit": null,
+        "text": "All hardware to be Grade 1.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": null
+      },
+      {
+        "id": "087100-3.1.1.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.1.1",
+        "property": "lock_cylinder_manufacturer",
+        "operator": "eq",
+        "value": "Abloy of Canada",
+        "unit": null,
+        "text": "Abloy of Canada Cylinders – no substitutions allowed.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "lock cylinder"
+      },
+      {
+        "id": "087100-3.1.2.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.2.1",
+        "property": "hinge_manufacturer",
+        "operator": "any_of",
+        "value": [
+          "Stanley",
+          "Monthard",
+          "Hager",
+          "McKinney"
+        ],
+        "unit": null,
+        "text": "Stanley/ Monthard/ Hager/ McKinney.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "hinge"
+      },
+      {
+        "id": "087100-3.1.3.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.3.1",
+        "property": "pivot_manufacturer",
+        "operator": "any_of",
+        "value": [
+          "Dorma",
+          "Yale - Corbin (Rixson)"
+        ],
+        "unit": null,
+        "text": "Dorma. Yale - Corbin (Rixson).",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "pivot"
+      },
+      {
+        "id": "087100-3.1.4.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.4.1",
+        "property": "door_stop_manufacturer",
+        "operator": "any_of",
+        "value": [
+          "Rixson",
+          "Dorma",
+          "Hagar",
+          "Gallery",
+          "Ives",
+          "Glynn–Johnson",
+          "Rockwood"
+        ],
+        "unit": null,
+        "text": "Rixson/ Dorma/ Hagar/ Gallery/ Ives/ Glynn – Johnson/ Rockwood.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "door stop"
+      },
+      {
+        "id": "087100-3.1.5.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.5.1",
+        "property": "flush_bolt_manufacturer",
+        "operator": "any_of",
+        "value": [
+          "Trimco",
+          "Ives",
+          "Glynn-Johnson",
+          "Gallery",
+          "Rockwood"
+        ],
+        "unit": null,
+        "text": "Trimco/ Ives/ Glynn-Johnson/ Gallery/ Rockwood.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "flush bolt"
+      },
+      {
+        "id": "087100-3.1.6.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.6.1",
+        "property": "mortise_lock_manufacturer_series",
+        "operator": "any_of",
+        "value": [
+          "Corbin ML2000 series",
+          "Schlage L9000 series",
+          "Sargent 8200 series"
+        ],
+        "unit": null,
+        "text": "Corbin ML2000 series with LWA lever. Schlage L9000 series with 03B lever. Sargent 8200 series with LNJ lever.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "mortise lock"
+      },
+      {
+        "id": "087100-3.1.7.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.7.1",
+        "property": "cylindrical_lock_manufacturer_series",
+        "operator": "any_of",
+        "value": [
+          "Corbin CL3300 series",
+          "Schlage ND series",
+          "Sargent 10 line",
+          "LSDA-800 series"
+        ],
+        "unit": null,
+        "text": "Corbin CL3300 series Schlage ND series with Vandlguard Sargent 10 line LSDA-800 series Grade 2 levers.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "cylindrical lock"
+      },
+      {
+        "id": "087100-3.1.8.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.8.1",
+        "property": "push_button_code_lock_model",
+        "operator": "any_of",
+        "value": [
+          "Schlage CO 100 x less cylinder x KP x 626",
+          "Sargent KP Series"
+        ],
+        "unit": null,
+        "text": "Schlage CO 100 x less cylinder x KP x 626 Sargent KP Series",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "push button code lock"
+      },
+      {
+        "id": "087100-3.1.9.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.9.1",
+        "property": "alarm_lock_model",
+        "operator": "any_of",
+        "value": [
+          "Detex EAX500",
+          "Alarm Lock Pilfergard PG21"
+        ],
+        "unit": null,
+        "text": "Stand-alone systems: Detex EAX500 or Alarm Lock Pilfergard PG21",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "alarm lock"
+      },
+      {
+        "id": "087100-3.1.9.2",
+        "section": "08 71 00",
+        "paragraph": "3.1.9.2",
+        "property": "panic_bar_style_model",
+        "operator": "any_of",
+        "value": [
+          "Sargent",
+          "Von Duprin",
+          "Corbin",
+          "Alarm Lock",
+          "Detex"
+        ],
+        "unit": null,
+        "text": "Panic Bar Style (must re-latch): Sargent, Von Duprin, Corbin, Alarm Lock, Detex",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "exit device"
+      },
+      {
+        "id": "087100-3.1.10.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.10.1",
+        "property": "mortise_deadbolt_model",
+        "operator": "any_of",
+        "value": [
+          "Corbin DL4000 series",
+          "Sargent 4800 series",
+          "Schlage L600 series"
+        ],
+        "unit": null,
+        "text": "Mortise: Corbin DL4000 series, Sargent 4800 series, Schlage L600 series.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "dead bolt lock"
+      },
+      {
+        "id": "087100-3.1.10.2",
+        "section": "08 71 00",
+        "paragraph": "3.1.10.2",
+        "property": "cylindrical_deadbolt_model",
+        "operator": "eq",
+        "value": "ILCO 4514.25.1.04.04.5",
+        "unit": null,
+        "text": "Cylindrical: ILCO 4514.25.1.04.04.5",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "dead bolt lock"
+      },
+      {
+        "id": "087100-3.1.11.2",
+        "section": "08 71 00",
+        "paragraph": "3.1.11.2",
+        "property": "magnetic_lock_model_if_required",
+        "operator": "eq",
+        "value": "Securitron M Series",
+        "unit": null,
+        "text": "Securitron M Series (if required)",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "magnetic lock"
+      },
+      {
+        "id": "087100-3.1.12.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.12.1",
+        "property": "exit_device_model",
+        "operator": "any_of",
+        "value": [
+          "Von Duprin 98XP and 99XP series",
+          "Von Duprin 33A series",
+          "Sargent 8000 series",
+          "Corbin ED5000 series"
+        ],
+        "unit": null,
+        "text": "Von Duprin 98XP and 99XP series, and 33A series. Sargent 8000 series. Corbin ED5000 series",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "exit device"
+      },
+      {
+        "id": "087100-3.1.13.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.13.1",
+        "property": "door_closer_model",
+        "operator": "any_of",
+        "value": [
+          "LCN 4040XP Series x 689 finish",
+          "Sargent 351",
+          "Corbin 6200 / Norton 7700"
+        ],
+        "unit": null,
+        "text": "LCN 4040XP Series x 689 finish. Sargent 351 Corbin 6200 / Norton 7700",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "door closer"
+      },
+      {
+        "id": "087100-3.1.14.1",
+        "section": "08 71 00",
+        "paragraph": "3.1.14.1",
+        "property": "power_operator_model",
+        "operator": "any_of",
+        "value": [
+          "LCN 4630/4640 Series - \"Auto Equalizer\" x 689 finish",
+          "Record-8100 Series",
+          "Record-Simple Swing units"
+        ],
+        "unit": null,
+        "text": "LCN 4630/4640 Series - \"Auto Equalizer\" x 689 finish. Record-8100 Series and Record-Simple Swing units.",
+        "severity": "major",
+        "check": "spec",
+        "applies_to": [
+          "product_data",
+          "system_drawing"
+        ],
+        "product_type": "power operator"
+      }
+    ],
+    "section": "08 71 00",
+    "title": "UBC Door Hardware",
+    "drafted_by": "nvidia/nemotron-3-super-120b-a12b",
+    "source_name": "ubc-door-hardware.pdf",
+    "source_url": null,
+    "source_sha256": "2116d555cae1f485f70d336fdf356fca389bd022fe13c2c4e423bb7290758af2",
+    "drafted_at": "2026-10-27T21:37:13.663711Z",
+    "reviewed_at": null
+  },
+  "inputs": [
+    {
+      "id": "u-a47883c2",
+      "filename": "schlage-nd.pdf",
+      "spec": "ck-28ff42f0e7c24ab2a6fc3defcbcfd061",
+      "input": 4
+    }
+  ],
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-27",
+      "usd": 0.09420492,
+      "credits": 20,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 0.09420492,
+      "total_credits": 20,
+      "phase": "engineering",
+      "phase_usd": 0.09420492,
+      "phase_credits": 20,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.90579508,
+      "credits_left": 580
+    },
+    "recorded": "20261022-181611-a9d0b5",
+    "jobs_available": false,
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 369.6,
+    "disk_free_gb": 9.98
+  },
+  "cost": {
+    "usd": 0.04664346,
+    "credits": 6
+  }
+}

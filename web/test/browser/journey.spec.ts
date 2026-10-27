@@ -22,6 +22,23 @@ async function review(page: Page) {
   await expect(page.locator('#message')).toBeVisible()
 }
 
+test('add all samples waits for every row and skips samples already in the inbox', async ({ page }) => {
+  await inbox(page)
+  await expect(page.getByRole('button', { name: 'Scan 1 submittal', exact: true })).toBeEnabled()
+  const project = await (await page.request.get('/api/project')).json()
+  const expected = project.tray.flatMap((g: { items: { ready: boolean }[] }) => g.items).filter((c: { ready: boolean }) => c.ready).length
+  let release!: () => void
+  const pending = new Promise<void>((resolve) => { release = resolve })
+  await page.route('**/api/inbox', async route => { await pending; await route.continue() })
+  await page.getByRole('button', { name: 'Add all samples', exact: true }).click()
+  await expect(page.getByRole('button', { name: 'Scan 1 submittal', exact: true })).toBeDisabled()
+  release()
+  await expect(page.getByRole('button', { name: `Scan ${expected} submittals`, exact: true })).toBeEnabled()
+  await expect(page.getByRole('button', { name: 'Add all samples', exact: true })).toBeDisabled()
+  await expect(page.getByRole('button', { name: /^Add .* to the inbox$/ })).toHaveCount(project.tray.flatMap((g: { items: unknown[] }) => g.items).length)
+  for (const tile of await page.getByRole('button', { name: /^Add .* to the inbox$/ }).all()) await expect(tile).toBeDisabled()
+})
+
 test('tray review, edit decision, outcome, fresh re-check, reload and start over', async ({ page }) => {
   const errors: string[] = []
   page.on('pageerror', (error) => errors.push(error.message))
@@ -32,6 +49,7 @@ test('tray review, edit decision, outcome, fresh re-check, reload and start over
   await page.locator('#message').fill('Reviewer edited this message after checking the evidence.')
   await page.getByRole('button', { name: /^Save approval( decision)?$/, exact: true }).click()
   await expect(page.getByRole('heading', { name: 'Outcome', exact: true })).toBeVisible()
+  await expect(page.getByText('No nightly re-check has reported yet', { exact: true })).toHaveCount(0)
   const refreshed = page.waitForRequest((r) => r.url().endsWith('/api/scan') && r.postDataJSON().refresh_web === true)
   await page.getByRole('button', { name: 'Check approved now', exact: true }).click()
   await refreshed
@@ -102,9 +120,9 @@ test('replacement proposal is labelled in review, draft and outcome', async ({ p
       claim_ids: [], highlights: [], evidence: [], decided_by: 'code', fix: {
         head: 'Checked proposal', query: '', suggest: 'SpecCheck proposal: ZX-12-D1. Confirm configuration before ordering.',
         candidates: [{ name: 'Synthetic catalog', source_url: 'https://maker.test/catalog', passes: true,
-          selection: { model: 'ZX-12-D1', origin: 'agent_proposal', page: 1, quote: 'Catalog number: ZX-12-D1' },
+          selection: { model: 'ZX-12-D1', origin: 'agent_proposal', page: 1, quote: '**Catalog** number: __ZX-12-D1__' },
           checks: [{ label: 'Synthetic quoted check', ok: true, note: '',
-            evidence: [{url: 'https://maker.test/catalog', excerpt: 'Synthetic quoted evidence.'}] }] }] } }]
+            evidence: [{url: 'https://maker.test/catalog', excerpt: '**Synthetic** quoted __evidence__.'}] }] }] } }]
     await route.fulfill({ response, json: result })
   })
   await review(page)
@@ -113,6 +131,10 @@ test('replacement proposal is labelled in review, draft and outcome', async ({ p
   await page.getByText('Replacement evidence', {exact:true}).click()
   await expect(page.getByText('“Catalog number: ZX-12-D1”')).toBeVisible()
   await expect(page.getByText('“Synthetic quoted evidence.”')).toBeVisible()
+  await expect.poll(() => page.evaluate(() => {
+    const saved = JSON.parse(localStorage.getItem('speccheck.session.v1')!)
+    return Object.values(saved.loaded).map((item: any) => item.result.findings[0].fix.candidates[0].selection.quote)[0]
+  })).toBe('**Catalog** number: __ZX-12-D1__')
   await page.screenshot({path: testInfo.outputPath('proposal-desktop.png'),fullPage:true})
   await page.setViewportSize({width:390,height:844})
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)

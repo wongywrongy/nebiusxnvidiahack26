@@ -1,0 +1,17 @@
+{
+  "instances": [
+    {
+      "compute_instance_id": "computeinstance-e01k21m2336qpw22b2",
+      "compute_instance_state": "RUNNING",
+      "private_ip": "10.48.0.40",
+      "state": "STARTING"
+    }
+  ],
+  "private_endpoints": [
+    "10.48.0.40:8000"
+  ],
+  "public_endpoints": [
+    "https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud"
+  ],
+  "state": "STARTING"
+}

@@ -1,0 +1,4 @@
+Command: env -u ADMIN_TOKEN python scripts/smoke.py https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud --preflight-only
+Read-only preflight passed; no scan was started.
+Full fresh smoke from the first deployment is preserved in smoke.txt.
+Final public a-e include fresh provider calls and are recorded in ../playground/public-final/.

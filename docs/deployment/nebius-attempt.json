@@ -1,0 +1,14 @@
+{
+  "result": "eu-north1 quota prevented endpoint creation; eu-west1 creation accepted",
+  "failed_region": "eu-north1",
+  "quota": "compute.instance.non-gpu.vcpu",
+  "limit": 0,
+  "requested": 2,
+  "endpoint_created_in_failed_region": false,
+  "retry_region": "eu-west1",
+  "retry_cpu_quota": 200,
+  "retry_endpoint_id": "aiendpoint-e01kyrtp1ayc0j6nj8",
+  "fallback": "Fly login stopped; only use if Nebius cannot serve the app",
+  "unused_filesystem_deleted": true,
+  "unused_secret_deleted": true
+}

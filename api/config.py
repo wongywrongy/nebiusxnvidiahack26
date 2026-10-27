@@ -88,6 +88,9 @@ class Settings(BaseSettings):
     fix_max_candidates: int = 3
     fix_credit_cap: float = 12
     max_concurrency: int = 4
+    judging_usd: float | None = Field(default=None, gt=0)
+    judging_credits: int | None = Field(default=None, gt=0)
+    app_state_dir: Path | None = None
     # Mock mode only: pause per stage so the UI animation looks like a real run. 0 for eval.
     mock_stage_delay_ms: int = 0
 

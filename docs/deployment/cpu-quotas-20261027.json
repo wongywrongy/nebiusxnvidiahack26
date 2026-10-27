@@ -1,0 +1,55 @@
+{
+  "source": "Authenticated Nebius tenant quota-allowance list, 2026-10-27",
+  "quotas": [
+    {
+      "region": "eu-north1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 0
+    },
+    {
+      "region": "eu-north2",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 0
+    },
+    {
+      "region": "eu-south1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    },
+    {
+      "region": "eu-west1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    },
+    {
+      "region": "eu-west2",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    },
+    {
+      "region": "me-west1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    },
+    {
+      "region": "uk-south1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    },
+    {
+      "region": "uk-south2",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    },
+    {
+      "region": "us-central1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 0
+    },
+    {
+      "region": "us-north1",
+      "quota": "compute.instance.non-gpu.vcpu",
+      "limit": 200
+    }
+  ]
+}

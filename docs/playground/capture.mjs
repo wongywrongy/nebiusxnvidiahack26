@@ -154,9 +154,12 @@ try {
     const expected = project.tray.flatMap(s => s.items).length
     const add = page.getByRole('button', { name: /^Add .* to the inbox$/ })
     for (let i = 0; i < expected; i++) await add.nth(i).click()
+    await page.getByRole('button', { name: `Scan ${expected} submittals`, exact: true }).waitFor()
     const results = await scan()
     assert.equal(results.length, expected)
     assert(results.every(r => r.decision !== 'not_applicable'), 'Tray items must reach manufacturer checks')
+    assert(results.every(r => evidence.runs[0].events.some(e => e.case_id === r.case_id && e.stage === 'verify')),
+      'Every tray item must reach the manufacturer check, including zero-match items')
     await screenshot('review')
     for (let i = 0; i < expected; i++) await decide()
     await page.getByRole('heading', { name: 'Outcome', exact: true }).waitFor()
