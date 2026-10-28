@@ -208,11 +208,11 @@ async def _create_no_think(no_think: dict[str, Any], **body) -> tuple[dict, dict
             del fields[bad]
 
 
-async def chat(task: str, messages: list[dict[str, Any]], schema: type[T]) -> tuple[T, Usage]:
+async def chat(task: str, messages: list[dict[str, Any]], schema: type[T], *, thinking: Optional[str] = None) -> tuple[T, Usage]:
     last: Optional[Exception] = None
     for attempt in range(2):  # one retry on invalid JSON, then the step fails
         try:
-            return await _once(task, messages, schema, retry_note=last)
+            return await _once(task, messages, schema, retry_note=last, thinking=thinking)
         except (ValidationError, json.JSONDecodeError) as e:
             last = e
     raise ProviderError(f"{task}: no valid JSON after one retry: {last}")

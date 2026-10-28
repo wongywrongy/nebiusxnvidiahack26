@@ -123,9 +123,9 @@ LABELS = {
 }
 
 
-def properties_for(requirements: list[Requirement]) -> list[str]:
+def properties_for(requirements: list[Requirement], *, include_known: bool = True) -> list[str]:
     """Spec dependencies plus known performance properties used to compare revisions."""
-    return sorted(set(LABELS) | {r.property for r in requirements} |
+    return sorted((set(LABELS) if include_known else set()) | {r.property for r in requirements} |
                   {str(r.value) for r in requirements if r.operator == "eq_ref"})
 
 

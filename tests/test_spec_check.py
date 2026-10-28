@@ -32,6 +32,12 @@ def test_extraction_properties_include_references_and_currency_metrics():
     assert {"measured", "reference", "watts", "lumens", "input_watts_120v", "input_watts_277v"} <= set(props)
 
 
+def test_custom_checklists_request_only_their_own_properties_and_references():
+    rules = [req(property="grade", operator="eq", value=1),
+             req(property="measured", operator="eq_ref", value="reference")]
+    assert properties_for(rules, include_known=False) == ['grade', 'measured', 'reference']
+
+
 def test_gte_pass_and_fail():
     r = req(property="cri", operator="gte", value=80)
     assert check([r], [claim("cri", 82)])[0].verdict == "pass"

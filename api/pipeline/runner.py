@@ -171,8 +171,9 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 requirements = [r for r in requirements if r.property not in skip]
             active_requirements = [r for r in requirements if not product_type or not r.product_type
                                    or spec_check._text(product_type) == spec_check._text(r.product_type)]
-            props = spec_check.properties_for(active_requirements)
-            claims, u = await extract.extract_claims(fx, pages, labels, props)
+            props = spec_check.properties_for(active_requirements, include_known=not bool(case.get("checklist_id")))
+            custom = {"requirements": active_requirements} if case.get("checklist_id") else {}
+            claims, u = await extract.extract_claims(fx, pages, labels, props, **custom)
             usage += u
 
             stage = "spec_check"

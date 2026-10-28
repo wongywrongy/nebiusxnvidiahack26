@@ -51,7 +51,7 @@ class Router:
                 return await tokenfactory.chat_tools(task, messages, ctx["tools"])
             return self._mock_tools(messages, ctx or {})
         if settings.live:
-            return await tokenfactory.chat(task, messages, schema)
+            return await tokenfactory.chat(task, messages, schema, thinking=(ctx or {}).get("thinking"))
         return self._mock(task, schema, messages, ctx or {})
 
     def _mock(self, task, schema, messages, ctx) -> tuple[Any, Usage]:
@@ -70,7 +70,7 @@ class Router:
         tout = len(obj.model_dump_json()) // 4
         usage = Usage(task=task, tier=role, model=model, input_tokens=tin, output_tokens=tout,
                       cost_usd=tokenfactory.cost(model, tin, tout), latency_ms=int((time.perf_counter() - t0) * 1000),
-                      cached=True, thinking=settings.thinking_for(task))
+                      cached=True, thinking=ctx.get("thinking", settings.thinking_for(task)))
         budget.check_usd()
         budget.charge_usd(usage.cost_usd, real=False)
         return obj, usage
