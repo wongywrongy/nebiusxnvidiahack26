@@ -9,9 +9,9 @@ For the existing video session; no restructure or new render is part of this rel
 - Before results, show **Package review memo**, print it and scroll one actual point-by-point alternate table. Keep live/cached/replay/unreviewed labels.
 - Fresh 2x Review captures are needed for each catch. W1 screenshots are in `docs/customer-feedback/screens/`; deployment evidence belongs in `docs/customer-feedback/release-20261028/`.
 
-Exact current numbers: **6/8 right calls, 5/6 problems caught, 0/2 false alarms, 0/5 passing replacements**. Wrong-spec: **0 approved out of 14** (13 not applicable, 1 sent back). Source: `runs/recorded/20261028-171142-5ca0fc/scores.json`; wrong-spec run `20261028-171959-1f6c87`.
+Exact current numbers: **6/8 right calls, 5/6 problems caught, 1/2 false alarms, 0/5 passing replacements**, 0 unnecessary notes. Wrong-spec: **0 approved out of 14** (13 not applicable, 1 sent back). Source: `runs/recorded/20261028-173729-554074/scores.json`; wrong-spec run `20261028-183608-dfa1b9`. Say **0/2 false alarms** nowhere: clean case c05 is now sent back.
 
-The 6/8, 5/6 numbers now match October 22 again; the morning 4/8, 4/6 figures are superseded. Do not describe accuracy as improved over October 22. The case gate still fails; see `docs/customer-feedback/accuracy-release-20261028/README.md` for every changed decision.
+The 6/8, 5/6 numbers now match October 22 again; the morning 4/8, 4/6 figures are superseded. Do not describe accuracy as improved over October 22. The case gate still fails; see `docs/customer-feedback/accuracy-arms-20261028/README.md` for every changed decision. Models on screen: Nemotron 3 Nano sorts pages, Nemotron 3 Super reads data sheets and web sources and writes the result. Do not show or claim Nemotron 3 Ultra; it was tested and not adopted.
 
 Use “suggests alternates and shows what's still unconfirmed.” Delete “finds a passing replacement.” Remove the Investigator as a headline feature: Package D triggered it on two items and resolved none. No planted-problem Investigator rescue or Nebius Serverless Job execution is proved. Show a re-check line only from the actual stored report, with its real runner and timestamp; the prepared fallback runs on GitHub Actions.
 

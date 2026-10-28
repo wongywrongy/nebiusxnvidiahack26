@@ -15,20 +15,20 @@ An upload with no quoted values matching its selected spec says **“Doesn't mat
 
 ## Measured live panel
 
-Recorded **October 28, 2026** (afternoon), run **`20261028-171142-5ca0fc`**, including all tray and watched items:
+Recorded **October 28, 2026** (afternoon) on the release code, run **`20261028-173729-554074`**, including all tray and watched items:
 
 | Right calls | Problems caught | Clean cases wrongly flagged | Passing replacements |
 | --- | --- | --- | --- |
-| **6 / 8** | **5 / 6** | **0 / 2** | **0 / 5** |
+| **6 / 8** | **5 / 6** | **1 / 2** | **0 / 5** |
 
-The separate wrong-spec check, re-run on this build, approved **0 of 14** documents: 13 were marked not applicable and one (an LED troffer under the firestop section) was sent back instead. This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. This restores the October 22 panel (6/8, 5/6) after the morning October 28 build dropped to 4/8, 4/6: c01 approves again without an unnecessary note and c04 again catches the steel-pipe coverage problem. No decision differs from October 22. c05 and c06 remain wrong calls. **The strict case evidence gate does not pass. No passing replacement was found live; no planted-problem Investigator rescue is claimed.** [New evidence and comparison](docs/customer-feedback/accuracy-release-20261028/README.md) · [Recorded scores](runs/recorded/20261028-171142-5ca0fc/scores.json) · [Deployment evidence](docs/deployment/README.md)
+The separate wrong-spec check, re-run on this build, approved **0 of 14** documents: 13 were marked not applicable and one (an LED troffer under the firestop section) was sent back instead. This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. Right calls and problems caught match October 22 (6/8, 5/6). One decision differs: clean case c05 is now sent back (a freshly read 10 % minimum dimming against the 5 % rule) instead of approved with a note, so it counts as a false alarm and no longer as an unnecessary note. c05 and c06 remain wrong calls. A same-day A/B tested Nemotron 3 Ultra for reading data sheets and web sources (5/8, about $0.64 per item) and reasoning on every Super step (4/8); neither beat this configuration, so neither ships. **The strict case evidence gate does not pass. No passing replacement was found live; no planted-problem Investigator rescue is claimed.** [A/B evidence](docs/customer-feedback/accuracy-arms-20261028/README.md) · [Recorded scores](runs/recorded/20261028-173729-554074/scores.json) · [Deployment evidence](docs/deployment/README.md)
 
 ## Models and evidence
 
 | Component | Work |
 | --- | --- |
 | **Nemotron 3 Nano**, Nebius Token Factory | Sorts PDF pages |
-| **Nemotron 3 Super**, Nebius Token Factory | Drafts checklists, identifies draft product types, extracts quoted claims, reads manufacturer sources and writes summaries |
+| **Nemotron 3 Super**, Nebius Token Factory | Drafts checklists (with reasoning on), identifies draft product types, extracts quoted claims, reads manufacturer sources and writes summaries. Nemotron 3 Ultra was tested for these steps on October 28 and not adopted |
 | **Tavily Search, Extract and bounded Map** | Finds and retrieves current manufacturer documents |
 | **Code** | Validates quotations, compares values, applies product-type scope and owns every verdict |
 

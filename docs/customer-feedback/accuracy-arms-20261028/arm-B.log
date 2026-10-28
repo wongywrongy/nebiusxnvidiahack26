@@ -1,0 +1,29 @@
+
+mode=live  run=20261028-174706-910df5
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve_with_note  -                      -                          -     138010   0.1201       6 ✗
+c02   send_back          send_back          spec                   spec                       none  100145   0.0991       7 ✓
+c03   send_back          approve_with_note  currency               -                          none  116126   0.0965       4 ✗
+c04   send_back          send_back          validity               validity                   none  187047   0.0660       3 ✓
+c05   approve            approve_with_note  -                      -                          -     163888   0.0790       1 ✗
+c06   send_back          approve_with_note  currency               -                          none  211474   0.1104       6 ✗
+c07   send_back          send_back          status                 status                     none  313082   0.1942      12 ✓
+c08   approve_with_note  approve_with_note  currency_note          -                          -     782499   0.4711       3 ✗
+
+Answer-key panel
+  right call                      4 of 8
+  planted problems caught         3 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        0 of 8
+  unnecessary notes               2
+  fresh model spend / web credits $0.963653 / 56
+  case evidence gate              Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      24.5 s
+  cost per submittal (model+web)  $0.0151
+Quote gate: claims 54/129 kept (58.1% dropped); web values 4/92 kept (95.7% dropped)
+
+wrote /home/kyle/code/nebiusxnvidiahack26/.cache/accuracy-arms/runs/arms/B/scores.json
+recorded runs/arms/B/recorded/20261028-174706-910df5  (commit it)
+exit 1

@@ -1,0 +1,13 @@
+# Deploy handoff for the Nebius session
+
+Source: local branch `accuracy/arms` (worktree `/home/kyle/code/nebiusxnvidiahack26/.cache/accuracy-arms`) = merged master `30ca3ec` (PR #20 + #21) + `4138a41` (per-item scores fix) + the PR #20 recording/evidence commit `8f91ae9` + the promoted A/B winner. Not pushed; Kyle merges. Freeze by **19:00 PT October 28 = 02:00 UTC October 29**.
+
+This **supersedes** the `8f91ae9` image in [the PR #20 handoff](../accuracy-release-20261028/HANDOFF.md). Same steps as the October 28 release:
+
+1. **Image.** Build per `deploy/nebius/README.md` from a clean tracked checkout of this branch's head plus the 13 locked public PDFs. It must contain `runs/recorded/20261028-173729-554074/` and **no** `runs/scores.json`. Push an immutable GHCR tag; deploy by digest.
+2. **Env.** The winner is the default config: **no `MODEL_*` and no `THINKING_TASKS` variables.** Keep every judging setting from the current create command unchanged: `BUDGET_USD_PER_RUN=3`, `BUDGET_USD_PER_DAY=8`, `JUDGING_USD=75`, `JUDGING_CREDITS=6000`, `BUDGET_TAVILY_CREDITS_PER_DAY=600`, `BUDGET_TAVILY_CREDITS_PER_ITEM=60`, `MAX_CONCURRENCY=2`, `MAX_OUTPUT_TOKENS=65536`, `FIX_MAX_CANDIDATES=1`, `FIX_CREDIT_CAP=12`, `INVESTIGATE_MAX_STEPS=6`, `INVESTIGATE_CREDIT_CAP=8`, `UPLOADS_PER_IP_PER_HOUR=30`, MysteryBox secrets. Set `SPECCHECK_COMMIT` to the new head.
+3. **Endpoint.** New endpoint from the digest (`cpu-d3`, `2vcpu-8gb`, 32 GiB, port 8000, `--auth none`), mounting `computefilesystem-e01syzwfv7rqexfcys` at `/state`. Stop the currently serving endpoint before the new one writes. Record the judging ledger before and after.
+4. **Vercel.** Point `deploy/vercel/vercel.json` at the new tunnel origin and redeploy; the stable URL stays https://speccheck-wongywrongys-projects.vercel.app.
+5. **Public checks.** `python scripts/smoke.py <url>` without admin token; journeys a–e via `docs/playground/capture.mjs`; memo/PDF; Check approved now. `/api/scores` and the Scoreboard must show run **`20261028-173729-554074`**: 6/8, 5/6, **1/2**, 0/5, wrong-spec 0/14, cost per submittal **≈ $0.13** and time **≈ 114 s** (not $0.0099 / 8.9 s, which would mean the fix is missing). If another run shows, a `/state` scores file or newer archived `evidence/scores.json` overrides it (`api/main.py` `scores()`); report, do not delete state without Kyle.
+6. **Delete the old endpoint only after step 5 passes.** Keep the filesystem.
+7. **Docs.** Endpoint/origin/digest/run in `docs/deployment/README.md` and `final-deployment.json`, a new `freeze.json`, hosted charges appended to the accounting table in [README.md](README.md). Do not push without Kyle's permission.
