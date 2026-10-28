@@ -1,0 +1,146 @@
+{
+  "items": [
+    {
+      "metadata": {
+        "id": "aiendpoint-e01y93s8ffx7g7wern",
+        "parent_id": "project-e01ab4axpa005e506zq7nq",
+        "name": "speccheck-accuracy-draft-fix-20261028",
+        "resource_version": "1",
+        "created_at": "2026-10-28T18:19:03.037326Z",
+        "updated_at": "2026-10-28T18:19:03.037326Z"
+      },
+      "spec": {
+        "image": "ghcr.io/wongywrongy/speccheck@sha256:a7a6dab1a2460e5ba745ee29b3060f4e44ded3e563aa3f8eccb597348e25166f",
+        "environment_variables": [
+          {
+            "name": "SPECCHECK_MODE",
+            "value": "live"
+          },
+          {
+            "name": "JUDGING_USD",
+            "value": "75"
+          },
+          {
+            "name": "JUDGING_CREDITS",
+            "value": "6000"
+          },
+          {
+            "name": "APP_STATE_DIR",
+            "value": "/state"
+          },
+          {
+            "name": "CAMPAIGN_BUDGET_FILE",
+            "value": "/state/campaign.sqlite3"
+          },
+          {
+            "name": "BUDGET_USD_PER_DAY",
+            "value": "8"
+          },
+          {
+            "name": "BUDGET_TAVILY_CREDITS_PER_DAY",
+            "value": "600"
+          },
+          {
+            "name": "BUDGET_USD_PER_RUN",
+            "value": "3"
+          },
+          {
+            "name": "BUDGET_TAVILY_CREDITS_PER_ITEM",
+            "value": "60"
+          },
+          {
+            "name": "MAX_CONCURRENCY",
+            "value": "2"
+          },
+          {
+            "name": "MAX_OUTPUT_TOKENS",
+            "value": "65536"
+          },
+          {
+            "name": "FIX_MAX_CANDIDATES",
+            "value": "1"
+          },
+          {
+            "name": "FIX_CREDIT_CAP",
+            "value": "12"
+          },
+          {
+            "name": "INVESTIGATE_MAX_STEPS",
+            "value": "6"
+          },
+          {
+            "name": "INVESTIGATE_CREDIT_CAP",
+            "value": "8"
+          },
+          {
+            "name": "UPLOADS_PER_IP_PER_HOUR",
+            "value": "30"
+          },
+          {
+            "name": "SPECCHECK_COMMIT",
+            "value": "a81d9d203f2562fdc7486b74f3863f11cf8154aa"
+          },
+          {
+            "name": "NEBIUS_API_KEY",
+            "mysterybox_secret": {
+              "reference_identifiers_redacted": true
+            }
+          },
+          {
+            "name": "TAVILY_API_KEY",
+            "mysterybox_secret": {
+              "reference_identifiers_redacted": true
+            }
+          },
+          {
+            "name": "ADMIN_TOKEN",
+            "mysterybox_secret": {
+              "reference_identifiers_redacted": true
+            }
+          }
+        ],
+        "ports": [
+          {
+            "container_port": 8000,
+            "host_port": 8000,
+            "protocol": "HTTP"
+          }
+        ],
+        "volumes": [
+          {
+            "source": "computefilesystem-e01syzwfv7rqexfcys",
+            "container_path": "/state",
+            "mode": "READ_WRITE"
+          }
+        ],
+        "platform": "cpu-d3",
+        "preset": "2vcpu-8gb",
+        "disk": {
+          "type": "NETWORK_SSD",
+          "size_bytes": "34359738368"
+        },
+        "subnet_id": "vpcsubnet-e01hcsq457acvjc2kf"
+      },
+      "status": {
+        "private_endpoints": [
+          "10.48.0.23:8000"
+        ],
+        "public_endpoints": [
+          "https://port8000-d38t85f0yhyyzek.tunnel.applications.eu-west1.nebius.cloud"
+        ],
+        "instances": [
+          {
+            "state": "RUNNING",
+            "compute_instance_id": "computeinstance-e01qdfgj7jvwmm5z9e",
+            "compute_instance_state": "RUNNING",
+            "private_ip": "10.48.0.23"
+          }
+        ],
+        "state": "RUNNING"
+      }
+    }
+  ],
+  "redactions": [
+    "MysteryBox reference identifiers; unchanged references were verified privately"
+  ]
+}

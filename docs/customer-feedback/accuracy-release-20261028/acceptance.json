@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "checks": {
+    "a": true,
+    "b": true,
+    "c": true,
+    "d": true,
+    "e": true,
+    "public_smoke": true,
+    "memo_pdf": true,
+    "scoreboard": true,
+    "check_approved": true,
+    "retained_ledger": true,
+    "original_stopped_before_write": true,
+    "intermediate_stopped_before_write": true,
+    "same_filesystem": true,
+    "ledger_settled": true
+  },
+  "recording": "20261028-171142-5ca0fc",
+  "endpoint": "aiendpoint-e01y93s8ffx7g7wern",
+  "source_commit": "a81d9d203f2562fdc7486b74f3863f11cf8154aa",
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "checked_at": "2026-10-28T18:40:57.870302+00:00"
+}

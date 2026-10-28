@@ -10,3 +10,9 @@ Source: branch `release/accuracy-20261028` (local commit; PR #20 code plus the n
 6. **Docs.** Fill the deployment section of `README.md` in this folder, the endpoint/origin/digest/run in `docs/deployment/README.md` and `final-deployment.json`, and a new `freeze.json`. Add the hosted charges to `accounting.json`. Do not push without Kyle's permission.
 
 Local spend so far: $0.83968200 / 27 credits (recording + wrong-spec), cron run $0.
+
+## Completed by Codex
+
+Public deployment and checks completed October 28, 18:43 UTC. Runtime source `a81d9d2` fixes the approved fresh-draft regression beyond `8f91ae9`; image, endpoint, Vercel deployment, evidence, accounting and freeze are in [README.md](README.md) and [final-deployment.json](../../deployment/final-deployment.json). All required public gates passed before both stopped endpoints were deleted. The retained filesystem remains.
+
+Review local branch `deploy/accuracy-release` at `.cache/accuracy-deploy`; root `video/pipeline` was left untouched. The runtime fix is also on `fix/public-draft-gate` at `a81d9d2`. Smoke-tool commit `20cca85` preserves cached product evidence and uses a labelled new PDF probe. No Git push, PR #20 merge or new CI run was performed. The remote merge state remains a review item; this deployment uses the explicitly handed-off local release tree plus the approved fix.

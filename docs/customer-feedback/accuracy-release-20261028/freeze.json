@@ -1,0 +1,22 @@
+{
+  "code_frozen": true,
+  "frozen_at": "2026-10-28T18:43:03.052509+00:00",
+  "deadline": "2026-10-29T02:00:00Z",
+  "source_commit": "a81d9d203f2562fdc7486b74f3863f11cf8154aa",
+  "release_base_commit": "8f91ae924893d70f8d8f9fff95b305a6d2fe8eff",
+  "image": "ghcr.io/wongywrongy/speccheck@sha256:a7a6dab1a2460e5ba745ee29b3060f4e44ded3e563aa3f8eccb597348e25166f",
+  "endpoint": "aiendpoint-e01y93s8ffx7g7wern",
+  "recorded_run": "20261028-171142-5ca0fc",
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "acceptance_at": "2026-10-28T18:40:57.870302+00:00",
+  "all_public_checks_passed": true,
+  "old_endpoint_deleted_after_acceptance": true,
+  "intermediate_endpoint_deleted_after_acceptance": true,
+  "filesystem_preserved": true,
+  "judging_remaining": {
+    "model_usd": 73.17403422,
+    "tavily_credits": 5612
+  },
+  "strict_case_evidence_gate_passed": false,
+  "git_push_performed": false
+}

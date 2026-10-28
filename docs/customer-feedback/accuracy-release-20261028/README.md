@@ -41,8 +41,33 @@ Extraction changed, so the fixed 14-document set was re-run live under a hard $0
 
 ## Accounting
 
-Shared local ledger: **$2.20976732 / 159 credits** before; recording **$0.72872730 / 19**; wrong-spec **$0.11095470 / 8**; after **$3.04944932 / 186**, no holds. Incremental **$0.83968200 model USD / 27 Tavily credits**. [accounting.json](accounting.json), [before](local-ledger-before.json), [after](local-ledger-after.json). Hosted verification charges are added after deployment. Cloud and CI billing are not measured.
+Shared local ledger: **$2.20976732 / 159 credits** before; recording **$0.72872730 / 19**; wrong-spec **$0.11095470 / 8**; after **$3.04944932 / 186**, no holds. Incremental **$0.83968200 model USD / 27 Tavily credits**. [accounting.json](accounting.json), [before](local-ledger-before.json), [after](local-ledger-after.json). Hosted commissioning, including failed attempts: **$0.66621930 model USD / 64 Tavily credits**. Public total: **$1.82596578 / 388**, no holds; judging remaining **$73.17403422 / 5,612 credits**. Cloud and CI billing are not measured.
 
 ## Deployment
 
-Pending: new pinned image from this commit, replacement endpoint on `computefilesystem-e01syzwfv7rqexfcys` at `/state`, Vercel rewrite to the new tunnel, then public smoke, the five journeys and memo. See [HANDOFF.md](HANDOFF.md).
+**[Open SpecCheck](https://speccheck-wongywrongys-projects.vercel.app)**. Frozen **October 28, 18:43:03 UTC**, before the October 29, 02:00 UTC deadline. Runtime source `a81d9d2` follows handoff source `8f91ae9`; [the public draft regression and fix](public-gate-fix.md) explain the change. The Git source and docs are committed locally on `deploy/accuracy-release`; no Git push or new CI run was performed, per the handoff.
+
+- Image: `ghcr.io/wongywrongy/speccheck@sha256:a7a6dab1a2460e5ba745ee29b3060f4e44ded3e563aa3f8eccb597348e25166f` (`accuracy-a81d9d2`).
+- Endpoint: `aiendpoint-e01y93s8ffx7g7wern`, cpu-d3 / 2vcpu-8gb / 32 GiB, port 8000, auth none, unchanged MysteryBox references and judging caps.
+- Filesystem: `computefilesystem-e01syzwfv7rqexfcys` at `/state`. Ledger before/after the fixed swap: exactly **$1.59951768 / 360**, no holds. Existing watch report and prior upload survived.
+- [Native origin](https://port8000-d38t85f0yhyyzek.tunnel.applications.eu-west1.nebius.cloud); Vercel production deployment `dpl_4BwLP7PxhBiaykM2JMSf7cfCN94Z` rewrites the unchanged stable URL to it.
+- Both superseded endpoints were stopped before their replacements wrote, then deleted only after every public check passed. The filesystem remains.
+
+### Public acceptance on the fixed image
+
+| Check | Result | Incremental model USD / credits | Evidence |
+| --- | --- | --- | --- |
+| No-admin bounded smoke, real new PDF probe | Pass; fresh Nano and Super calls | $0.00069840 / 0 | [run 20261028-183136-799436](public/smoke-results.json), [stdout](public/smoke.txt) |
+| a: off-topic upload | Pass | $0 / 0 | [trace](public/a-trace.json) |
+| b: Try-one product sheet | Pass | $0 / 0 | [trace](public/b-trace.json) |
+| c: fresh UBC draft → edit/delete → Schlage → scoped review | Pass; 2 matched rules, 4 grounded claims, 25 excluded rules | $0.03820680 / 0 | [trace](public/c-trace.json) |
+| d: seven-item tray → review → Outcome | Pass | $0.09265830 / 8 | [trace](public/d-trace.json) |
+| e: correct versus wrong spec | Pass | $0 / 0 | [trace](public/e-trace.json) |
+| Memo/PDF and Scoreboard | Pass; recording `20261028-171142-5ca0fc` | $0 / 0 | [proof](public/memo-scoreboard.json), [PDF](public/memo.pdf), [Scoreboard](public/scoreboard.png) |
+| Check approved now | Pass; real fresh web, quoted discontinued status | $0.09488460 / 15 | [proof](public/check-approved.json), [capture](public/check-approved.png) |
+
+The first `8f91ae9` deployment attempt cost **$0.43977120 / 36 credits** and remains in `public-8f91ae9-attempt/`, including failed c and the initial b stream disconnect. On the fixed image, two original smoke attempts correctly failed cached-only freshness; the fresh-web attempt spent **0 USD / 5 credits**. Those attempts remain in `public/`. Two browser-inspector upload failures before Check approved started any scan cost $0 / 0 and are also retained. Total hosted increment: **$0.66621930 / 64 credits**. All acceptance ledger holds are settled. [Accounting](accounting.json).
+
+The displayed **6/8, 5/6, 0/2, 0/5** panel is the saved afternoon recording on `8f91ae9`, retained in the fixed image. The fix leaves all 13 stock extraction batches' prompts, schemas and contexts identical; it changes custom-checklist extraction and drafting. No new eight-case accuracy recording is claimed. The public tray is a workflow check: c01 produced approve with note there, while the saved recording has approve. The known c05/c06 errors, missed c06 problem and 0/5 passing replacements remain disclosed; the strict case gate still fails.
+
+Full image-source mock suite: **797 passed, 2 skipped**; standalone smoke tool: **10 passed**. The clean image has 13 hash-locked public PDFs, the 10-result recording, no `runs/scores.json`, no configured secret values, and passed its network-disabled API/package/PNG/memo proof. [Acceptance](acceptance.json), [freeze](freeze.json), [deployment manifest](../../deployment/final-deployment.json).

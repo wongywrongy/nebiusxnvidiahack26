@@ -1,0 +1,1 @@
+{"mode":"approved","passed":false,"error":"Error: response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.","cost":{"usd":0,"credits":0}}

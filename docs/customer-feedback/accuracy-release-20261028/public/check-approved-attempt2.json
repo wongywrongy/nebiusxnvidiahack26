@@ -1,0 +1,107 @@
+{
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "recording": "20261028-171142-5ca0fc",
+  "captured_at": "2026-10-28T18:35:50.009Z",
+  "mode": "approved",
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.9350523,
+      "credits": 238,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.73108118,
+      "total_credits": 373,
+      "phase": "engineering",
+      "phase_usd": 1.73108118,
+      "phase_credits": 373,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.0649477,
+      "credits_left": 362
+    },
+    "recorded": "20261028-171142-5ca0fc",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 732.3,
+    "disk_free_gb": 9.93
+  },
+  "passed": false,
+  "error": "Error: response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation.",
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.9350523,
+      "credits": 238,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.73108118,
+      "total_credits": 373,
+      "phase": "engineering",
+      "phase_usd": 1.73108118,
+      "phase_credits": 373,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.0649477,
+      "credits_left": 362
+    },
+    "recorded": "20261028-171142-5ca0fc",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 735.7,
+    "disk_free_gb": 9.93
+  },
+  "browser_errors": [],
+  "cost": {
+    "usd": 0,
+    "credits": 0
+  }
+}
