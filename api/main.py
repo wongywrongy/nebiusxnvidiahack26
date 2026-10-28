@@ -47,7 +47,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
 from .config import settings, redact
-from . import cloud_jobs, watch_store, job_control
+from . import daily_recheck, watch_store
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, save_upload, senders, try_documents
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
@@ -78,11 +78,12 @@ async def lifespan(app):
     logging.getLogger("speccheck.startup").info("Today's recorded spend: %s; caps: %s (campaign ledger on %s; hosted persistence unverified)",
                                                budget.today(), budget.caps(),
                                                "private controller mount" if settings.controller_state_dir else "local disk")
-    await cloud_jobs.setup_profile()
+    daily = asyncio.create_task(daily_recheck.loop()) if daily_recheck.configured() else None
     try:
         yield
     finally:
-        cloud_jobs.cleanup_profile()
+        if daily:
+            daily.cancel()
 
 
 app = FastAPI(title="SpecCheck", lifespan=lifespan)
@@ -164,7 +165,7 @@ def health():
     disk_path = next(p for p in (settings.runs_dir, *settings.runs_dir.parents) if p.exists())
     return {"mode": settings.mode, "keys": settings.keys_present, "models": settings.models, "today": budget.today(),
             "budget": budget.remaining(), "recorded": rec[0] if rec else None,
-            "jobs_available": cloud_jobs.available(), "caps": budget.caps(), "scan_shared_item_budget": True,
+            "caps": budget.caps(), "scan_shared_item_budget": True,
             "uptime_s": round(time.monotonic() - STARTED, 1),
             "disk_free_gb": round(shutil.disk_usage(disk_path).free / 1024**3, 2)}
 
@@ -184,13 +185,12 @@ def project():
         "watched": [_public(c) for c in all_cases().values() if c.get("watch")],
         "mode": settings.mode,
         "recheck": latest_recheck(),
-        "jobs_available": cloud_jobs.configured(),
     }
 
 
 def latest_recheck() -> Optional[dict]:
     """The newest nightly re-check report (scripts/recheck.py writes runs/watch/latest.json), or None."""
-    return job_control.latest() if settings.controller_state_dir else watch_store.read("latest.json")
+    return watch_store.read("latest.json")
 
 
 @app.post("/api/runs")
@@ -406,61 +406,14 @@ async def watch_report(body: WatchReport, request: Request):
     """The nightly job reports here with the admin token; the app shows the latest report on the Outcome step."""
     if not _is_admin(request):
         raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
-    if settings.controller_state_dir or body.job_name:
-        raise HTTPException(409, "Cloud reports must use their authenticated worker lease")
+    if body.job_name:
+        raise HTTPException(409, "Name a job in runner; only jobs this server launched are accepted")
+    # Only a job this server launched may sign a report as a Nebius Serverless Job.
+    if "nebius" in body.runner.lower() and body.runner not in {daily_recheck.PREFIX + n for n in daily_recheck.launched_names()}:
+        raise HTTPException(422, "No job with that name was launched by this server")
     report = body.model_dump(mode="json")
     watch_store.report(report)
     return {"ok": True, "items": len(body.items)}
-
-
-async def worker_body(lease_id: str, action: str, request: Request) -> bytes:
-    job_control.authenticate(lease_id, action, b"", request.headers.get("X-Worker-Proof", ""))
-    raw = bytearray()
-    async for chunk in request.stream():
-        raw.extend(chunk)
-        if len(raw) > job_control.MAX_REPORT_BYTES:
-            raise HTTPException(413, "Worker report exceeds the size limit")
-    body = bytes(raw)
-    job_control.authenticate(lease_id, action, body, request.headers.get("X-Worker-Signature", ""))
-    if any(value and value.encode() in body for name in ("nebius_api_key", "tavily_api_key", "admin_token", "worker_token", "nebius_private_key")
-           if (value := settings.secret(name))):
-        raise HTTPException(400, "Worker payload contains credential material; nothing was stored")
-    return body
-
-
-@app.post("/api/watch/leases/{lease_id}/claim")
-async def worker_claim(lease_id: str, request: Request):
-    raw = await worker_body(lease_id, "claim", request)
-    try:
-        claim = job_control.Claim.model_validate_json(raw)
-    except ValueError:
-        raise HTTPException(422, "Worker claim is invalid") from None
-    return job_control.claimed(lease_id, claim)
-
-
-@app.post("/api/watch/leases/{lease_id}/report")
-async def worker_report(lease_id: str, request: Request):
-    raw = await worker_body(lease_id, "report", request)
-    try:
-        report = job_control.WorkerReport.model_validate_json(raw)
-    except ValueError:
-        raise HTTPException(422, "Worker report is invalid") from None
-    return job_control.receive(lease_id, report, hashlib.sha256(raw).hexdigest())
-
-
-@app.post("/api/watch/run")
-async def run_watch(request: Request):
-    if not _is_admin(request):
-        raise HTTPException(403, "Launching a cloud re-check needs the admin token (X-Admin-Token header)")
-    request_id = request.headers.get("Idempotency-Key", "")
-    if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", request_id):
-        raise HTTPException(400, "Supply an Idempotency-Key containing 1–128 letters, digits, underscores or hyphens.")
-    return await cloud_jobs.start(request_id)
-
-
-@app.get("/api/watch/jobs")
-async def watch_jobs():
-    return await cloud_jobs.list_jobs()
 
 
 @app.get("/api/evidence/{path:path}")

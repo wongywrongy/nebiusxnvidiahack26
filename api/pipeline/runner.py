@@ -187,7 +187,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
             await run.pause()
 
             vf, rows, credits, verification = [], [], 0.0, []
-            if not case.get("upload") or decide.decide(findings, case) != "not_applicable":
+            if not case.get("upload") or decide.decide(findings, case, requirements) != "not_applicable":
                 tally = {v: sum(f.verdict == v for f in findings) for v in ("pass", "fail", "unverified")}
                 run.emit("verify", "Checking the manufacturer online", case_id, f"tavily + {settings.models['verify']}",
                          data={"spec": tally})
@@ -204,7 +204,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 findings += vf
                 await run.pause()
 
-            decision = decide.decide(findings, case)
+            decision = decide.decide(findings, case, requirements)
             ev = next((f.evidence for f in vf if f.evidence), [])
             web = {"sheet": next((f.title for f in vf), ""), "verdict": next((f.verdict for f in vf), ""),
                    "sources": [{"url": e.url, "tier": e.tier} for e in ev]}

@@ -1,7 +1,7 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
   DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
-  streamEvents, uploadToInbox, setUploadSpec, archiveUrl, getJobs, getWatch, getPackage, type CloudJob, type SavedChecklist,
+  streamEvents, uploadToInbox, setUploadSpec, archiveUrl, getPackage, type SavedChecklist,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
   type Health, type Investigation, type PackageRow, type PackageSummary, type Recheck, type Stage, type TextPage, type Tone,
   type Usage, type Value,
@@ -335,7 +335,6 @@ export default function App() {
           <>
           {checkNote && <p className="text-muted" role="status">{checkNote}</p>}
           <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks} rowOf={rowOf}
-            jobsAvailable={mode === 'live' && !!project?.jobs_available}
             checked={checked} requested={requested} error={error} recheck={project?.recheck} onCheck={checkApproved}
             onRequest={(id) => setRequested((m) => ({ ...m, [id]: true }))} />
           </>
@@ -1167,42 +1166,15 @@ function TextPages({ pages, marks, selId, result, page, onPage, name, href, prod
 const recheckLine = (r: Recheck) => {
   const flagged = r.items.filter((i) => i.status !== 'no_change').length
   const when = new Date(r.checked_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
-  return `${r.mode === 'mock' ? 'Mock · ' : ''}Nightly re-check · last ran ${when} (${r.runner}${r.job_name ? ` ${r.job_name}` : ''}${r.duration_ms != null ? `, ${seconds(r.duration_ms)}` : ''}): ${plural(r.items.length, 'item')}, ${flagged} flagged`
+  const by = r.job_name ? `${r.runner} ${r.job_name}` : r.runner === 'local' ? '' : r.runner
+  return `${r.mode === 'mock' ? 'Mock · ' : ''}Re-checked${by ? ` by ${by}` : ''} · ${when} · ${plural(r.items.length, 'item')}, ${flagged} flagged`
 }
 
-function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck | null }) {
-  const [report, setReport] = useState(initial)
-  const [jobs, setJobs] = useState<CloudJob[]>([])
-  const [error, setError] = useState<string | null>(null)
-  useEffect(() => {
-    if (!enabled) return
-    let active = true
-    const refresh = async () => {
-      try {
-        const [data, latest] = await Promise.all([getJobs(), getWatch()])
-        if (active) { setJobs(data.jobs); setReport(latest); setError(null) }
-      } catch (e) { if (active) setError((e as Error).message) }
-    }
-    void refresh()
-    const timer = window.setInterval(refresh, 15000)
-    return () => { active = false; window.clearInterval(timer) }
-  }, [enabled])
-  const current = jobs.find((job) => !['done', 'failed'].includes(job.state))
-  return <div className="flex flex-col items-start gap-1 break-words text-xs text-muted">
-    {report && <span>{recheckLine(report)}</span>}
-    {current && <span role="status">{current.name} · {current.state_known === false ? 'Unmapped state' : current.state}
-      {current.raw_state ? ` (${current.raw_state})` : ''}. Waiting for confirmed job status.
-      {current.poll_error ? ` ${current.poll_error}` : ''}</span>}
-    {!current && jobs[0]?.state === 'failed' && <span role="status">{jobs[0].name} · failed ({jobs[0].raw_state})</span>}
-    {error && <span role="alert">{error}</span>}
-  </div>
-}
-
-function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, jobsAvailable, rowOf, onCheck, onRequest }: {
+function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, rowOf, onCheck, onRequest }: {
   queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; rows: Record<string, Row>; watched: Case[]
   rowOf: (id: string) => PackageRow | undefined
   checks: Record<string, Row>; checked: Record<string, Result>; requested: Record<string, boolean>; error: string | null
-  recheck?: Recheck | null; jobsAvailable: boolean; onCheck: () => void; onRequest: (id: string) => void
+  recheck?: Recheck | null; onCheck: () => void; onRequest: (id: string) => void
 }) {
   const notChecked = queue.filter((c) => loaded[c.id].result.decision === 'not_applicable')
   const returned = queue.filter((c) => loaded[c.id].result.decision !== 'not_applicable' && calls[c.id]?.act === 'return')
@@ -1277,7 +1249,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
           <h2 className="font-semibold">Approved for forwarding to the architect</h2>
         </div>
-        <CloudWatch enabled={jobsAvailable} initial={recheck} />
+        {recheck && <p className="break-words text-xs text-muted">{recheckLine(recheck)}</p>}
         <div className="rounded-xl border border-line">
           <Table cols={fwd} head={['Number', 'Product', 'Approved', 'Last checked', 'Status']}>
             {approved.map((c) => {

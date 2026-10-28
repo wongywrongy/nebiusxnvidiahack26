@@ -20,6 +20,7 @@ FORCE_MOCK: ContextVar[bool] = ContextVar("force_mock", default=False)
 PRICES: dict[str, tuple[float, float]] = {
     "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": (0.06, 0.24),
     "nvidia/nemotron-3-super-120b-a12b": (0.30, 0.90),
+    "nvidia/Nemotron-3-Ultra-550b-a55b": (1.00, 3.00),  # /v1/models?verbose=true pricing, 2026-10-28
 }
 KEYS = ("nebius_api_key", "tavily_api_key", "admin_token")
 LIVE_REQUIRES = ("nebius_api_key", "tavily_api_key")
@@ -38,22 +39,20 @@ class Settings(BaseSettings):
     nebius_public_key_id: str = ""
     nebius_private_key: SecretStr = SecretStr("")
     nebius_project_id: str = ""
-    nebius_secret_nebius_api_key: str = ""
-    nebius_secret_tavily_api_key: str = ""
-    worker_token: SecretStr = SecretStr("")
-    nebius_secret_worker_token: str = ""
     speccheck_image: str = ""
     speccheck_url: str = ""
+    # Daily re-check job (api/daily_recheck.py): the MysteryBox secret holding NEBIUS_API_KEY, TAVILY_API_KEY and
+    # ADMIN_TOKEN payload keys, and the UTC hour after which the server launches that day's job.
+    recheck_mysterybox_secret_id: str = ""
+    recheck_hour_utc: int = Field(default=9, ge=0, le=23)
     evidence_dir: Path | None = None
     evidence_label: str = "disk"
-    # Populate only with state strings observed by the owner; COMPLETED is documented.
-    nebius_job_state_map: dict[str, Literal["queued", "starting", "running", "done", "failed"]] = {"COMPLETED": "done"}
-    watch_run_interval_s: int = Field(default=3600, ge=0)
 
     model_triage: str = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
     model_extract: str = "nvidia/nemotron-3-super-120b-a12b"
     model_verify: str = "nvidia/nemotron-3-super-120b-a12b"
     model_write: str = "nvidia/nemotron-3-super-120b-a12b"
+    model_draft: str = "nvidia/nemotron-3-super-120b-a12b"  # checklist drafting only; never the scan path
 
     # Nemotron 3 models think before answering unless told not to. Every call here is extraction into a fixed JSON
     # schema, so thinking only spends output tokens (and can run into max_output_tokens). "off" asks the server not to
@@ -121,7 +120,7 @@ class Settings(BaseSettings):
 
     @property
     def models(self) -> dict[str, str]:
-        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write")}
+        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write", "draft")}
 
     @property
     def keys_present(self) -> dict[str, bool]:
@@ -155,7 +154,7 @@ _PATTERNS = re.compile(r"(Bearer\s+)\S+|\b(sk-|tvly-|lsv2_)[A-Za-z0-9_\-]{8,}")
 
 
 def redact(text: str) -> str:
-    for k in (*KEYS, "nebius_private_key", "worker_token"):
+    for k in (*KEYS, "nebius_private_key"):
         v = settings.secret(k)
         if len(v) >= 4:
             text = text.replace(v, "***")

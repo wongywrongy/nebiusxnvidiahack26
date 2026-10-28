@@ -10,15 +10,18 @@ from typing import Optional
 
 from ..llm import router
 from ..config import settings
-from ..schemas import Decision, Finding, ReportOut, Usage
+from ..schemas import Decision, Finding, ReportOut, Requirement, Usage
 
 FLAGGED = ("fail", "outdated")
+# Warranty terms appear on almost any product sheet, so a warranty match alone doesn't show a document belongs here.
+SCOPE_NEUTRAL = ("warranty",)
 
 
-def decide(findings: list[Finding], case: Optional[dict] = None) -> Decision:
-    requirements = [f for f in findings if f.requirement_id]
-    if (case or {}).get("upload") and requirements and all(not f.claim_ids and not f.claim_id and f.verdict in
-                            ("unverified", "pending", "not_applicable") for f in requirements):
+def decide(findings: list[Finding], case: Optional[dict] = None, requirements: Optional[list[Requirement]] = None) -> Decision:
+    neutral = {r.id for r in requirements or [] if r.property.startswith(SCOPE_NEUTRAL)}
+    scoped = [f for f in findings if f.requirement_id and f.requirement_id not in neutral]
+    if (case or {}).get("upload") and scoped and all(not f.claim_ids and not f.claim_id and f.verdict in
+                            ("unverified", "pending", "not_applicable") for f in scoped):
         return "not_applicable"
     active = [f for f in findings if f.verdict in FLAGGED]
     if any(f.severity in ("critical", "major") for f in active):
