@@ -362,6 +362,14 @@ def test_preferred_sheet_still_requires_a_public_url():
     assert tavily._document_link(html, "https://maker.test/product") == "https://maker.test/docs/current.pdf"
 
 
+def test_typed_spec_sheet_precedes_navigation_and_marketing_pdfs():
+    sheet = '/api/products/getasset/model.pdf?abl_version=06%2f09%2f2026&DOC_Type=SPEC_SHEET'
+    text = f'[Sell sheet](/docs/sell-sheet.pdf) [Specification]({sheet})'
+    assert tavily._document_link(text, 'https://maker.test/product') == 'https://maker.test' + sheet
+    text = f'<a href="http://127.0.0.1/a.pdf?DOC_Type=SPEC_SHEET">Private</a> {text}'
+    assert tavily._document_link(text, 'https://maker.test/product') == 'https://maker.test' + sheet
+
+
 def test_direct_fallback_fetches_product_sheet_instead_of_navigation_guide(live):
     page = "https://maker.test/product"
     document = "https://maker.test/specsheet2/product.pdf"

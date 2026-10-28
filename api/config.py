@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     # think (reasoning_effort none + chat_template_kwargs.enable_thinking false; a server that rejects either field is
     # retried without it). "on" leaves the model's default.
     thinking: Literal["off", "on"] = "off"
-    thinking_tasks: str = ""
+    thinking_tasks: str = "extract_requirements"
     max_page_chars: int = Field(default=6000, ge=1)
     web_source_chars: int = Field(default=12000, ge=1)
     search_depth: Literal["basic", "advanced"] = "basic"

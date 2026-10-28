@@ -15,7 +15,7 @@ import asyncio
 from datetime import datetime, timezone
 from html import unescape
 from typing import Any, Optional
-from urllib.parse import unquote, urljoin, urlparse
+from urllib.parse import parse_qs, unquote, urljoin, urlparse
 
 import httpx
 
@@ -78,6 +78,10 @@ def _document_link(text: str, base: str) -> Optional[str]:
             documents.append(Extract(url=link).url)
         except ValueError:
             continue
+    typed = [url for url in documents if any(key.lower() == "doc_type" and any(
+        value.upper() == "SPEC_SHEET" for value in values) for key, values in parse_qs(urlparse(url).query).items())]
+    if typed:
+        return typed[0]
     # shortcut: prefer explicit sheet paths; opaque document IDs retain page order until link labels are needed.
     sheet = r"/spec(?:sheet|ification)s?\d*(?:/|[-_])|(?:data|spec)[\W_]*sheet|(?:product|technical)[\W_]*data|/PDS[_-]"
     return next((url for url in documents if re.search(sheet, unquote(urlparse(url).path), re.I)),

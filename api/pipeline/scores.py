@@ -73,6 +73,11 @@ def scores(run, case_ids: list[str], *, catalog: dict | None = None) -> dict:
     gates = {key: sum(r[key] for r in ok) for key in FIELDS}
     investigations = [inv for cid in case_ids if (res := run.results.get(cid)) for inv in res.investigations]
     primary = [inv for inv in investigations if inv.purpose == "primary"]
+    reasons: dict[str, int] = {}
+    for cid in case_ids:
+        for key, n in getattr(run.results.get(cid), "drop_reasons", {}).items():
+            reasons[key] = reasons.get(key, 0) + n
+    gates["drop_reasons"] = dict(sorted(reasons.items(), key=lambda kv: -kv[1]))
     for prefix, read in (("claims", "claims_extracted"), ("web_values", "web_values_read")):
         gates[f"{prefix}_drop_rate"] = (1 - gates[f"{prefix}_kept"] / gates[read]) if gates[read] else None
     result = {
