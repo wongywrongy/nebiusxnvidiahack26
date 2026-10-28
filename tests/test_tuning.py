@@ -20,6 +20,13 @@ class Answer(BaseModel):
     value: int
 
 
+def test_only_checklist_drafting_opts_into_reasoning_by_default(monkeypatch):
+    monkeypatch.delenv('THINKING_TASKS', raising=False)
+    configured = Settings(_env_file=None)
+    assert configured.thinking_for('extract_requirements') == 'on'
+    assert all(configured.thinking_for(task) == 'off' for task in ('triage', 'extract_claims', 'verify', 'investigate', 'report'))
+
+
 @respx.mock
 def test_per_task_thinking_changes_both_request_and_cache(monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "speccheck_mode", "live")

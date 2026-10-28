@@ -123,7 +123,7 @@ def test_oversized_draft_is_retried_under_the_actual_provider_schema(monkeypatch
         assert body['response_format']['json_schema']['schema']['properties']['requirements']['maxItems'] == 30
 
 
-@pytest.mark.parametrize('bad', ['separate_brands', 'series_as_manufacturer'])
+@pytest.mark.parametrize('bad', ['separate_brands', 'series_as_manufacturer', 'multiple_groups'])
 def test_ambiguous_draft_alternatives_are_retried_without_silently_rewriting(monkeypatch, tmp_path, bad):
     monkeypatch.setattr(settings, 'speccheck_mode', 'live')
     monkeypatch.setattr(settings, 'cache_dir', tmp_path)
@@ -133,6 +133,8 @@ def test_ambiguous_draft_alternatives_are_retried_without_silently_rewriting(mon
                  {**rule, 'id': 'other', 'property': 'manufacturer', 'operator': 'eq', 'value': 'Brand B'}]
     if bad == 'series_as_manufacturer':
         incorrect = [{**rule, 'property': 'manufacturer', 'value': ['Brand A AX100 series']}]
+    if bad == 'multiple_groups':
+        incorrect += [{**r, 'id': 'mortise-' + r['id'], 'product_type': 'mortise lockset'} for r in incorrect]
     def reply(rules):
         return httpx.Response(200, json={'choices': [{'finish_reason': 'stop', 'message': {
             'content': json.dumps({'requirements': rules})}}], 'usage': {'prompt_tokens': 10, 'completion_tokens': 10}})
@@ -141,3 +143,6 @@ def test_ambiguous_draft_alternatives_are_retried_without_silently_rewriting(mon
         out, _ = asyncio.run(extract.extract_requirements('08 71 00', 'Allowed models: Brand A AX100 or Brand B BX200'))
         assert out.requirements[0].value == rule['value'] and out.requirements[0].property == 'model'
         assert len(route.calls) == 2
+        if bad == 'multiple_groups':
+            feedback = json.loads(route.calls[1].request.content)['messages'][-1]['content']
+            assert 'cylindrical lockset' in feedback and 'mortise lockset' in feedback

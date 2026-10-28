@@ -1,0 +1,36 @@
+{
+  "python": {
+    "command": "SPECCHECK_MODE=mock .venv/bin/python -m pytest -q",
+    "passed": 793,
+    "skipped": 2,
+    "provider_network": "intercepted by tests/conftest.py"
+  },
+  "browser": {
+    "command": "SPECCHECK_BROWSER_URL=http://127.0.0.1:38427 npm run test:browser",
+    "passed": 17,
+    "mode": "mock",
+    "occupied_port_8017_attempt": "discarded"
+  },
+  "raw_mock_panel": {
+    "right_calls": "6/8",
+    "caught": "5/6",
+    "major_false_alarms": "0/2",
+    "passing_fixes": "0/5",
+    "exit_code": 1
+  },
+  "live_targeted_run": "20261028-090749-c1a0ea",
+  "live_targeted_code": "03d61eb",
+  "full_live_panel_repeated": false,
+  "production_changed": false,
+  "artifacts": {
+    "draft.json": "63fc1f5198107aeb07225df45b05979d6043dfe2024192f9f72d877c1ce7be20",
+    "targeted-panel.json": "36a7be46b5c98c9e3bcce64bbdd642a41d740e3f30d3862097f27edd6bb6da45",
+    "c05-diagnostic.json": "b29519e618a40129446d5f33c4175b9d981515aa2bd8b410c81358f4b7b70701",
+    "c06-discovery.json": "f8590e6039d69a32f0e6def2b067ec7449aa4a511478bba9bf1de87ff8e894b1",
+    "c01-committed.json": "4d694e8bf22ed0f08a5be303cabb797d688775cea9865e2d59061f549303ecfb",
+    "ldn6-source.json": "8ce91ac355637613d4c84b2191e3d2c82c3ffe1a2d6b9d3ec0db6b965b934eb2",
+    "accounting.json": "6ff90c27ac9a2e15b4322f1e99262332fad4810caab45cc474607f596014cfca",
+    "c04-committed.json": "63efd1cdbdafd7bedc6b897778b6486323f5245c9474b26a9c702f81d00c2b64",
+    "c06-manual-source.json": "73c8e3435b2c2f559719ff5cc622345e036afef8648f6969a66653f85727733e"
+  }
+}

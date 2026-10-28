@@ -91,15 +91,20 @@ async def extract_requirements(section: str, spec_text: str, title: str = "") ->
 
         @model_validator(mode="after")
         def categorical_alternatives(self):
-            seen = set()
+            groups, mislabeled = {}, []
             for rule in self.requirements:
                 if rule.property in ("manufacturer", "model", "series"):
                     key = rule.property, (rule.product_type or "").strip().casefold()
-                    if key in seen:
-                        raise ValueError("Group approved manufacturer/model/series alternatives for each product type into ONE any_of rule; never separate simultaneous eq rules. Retain numeric ratings, grade and warranty rules before catalog alternatives when limiting to 30")
-                    seen.add(key)
+                    groups.setdefault(key, []).append(rule.value)
                     if rule.property == "manufacturer" and re.search(r"\b(?:series|model)\b", str(rule.value), re.I):
-                        raise ValueError("Model/series names belong in property model or series, never manufacturer")
+                        mislabeled.append(rule.value)
+            duplicates = [{"property": key[0], "product_type": key[1], "alternatives": values}
+                          for key, values in groups.items() if len(values) > 1]
+            if duplicates or mislabeled:
+                raise ValueError("Fix ALL these draft issues. Group each duplicate manufacturer's/model's alternatives "
+                                 "into ONE any_of rule for that product type, never simultaneous eq rules: "
+                                 + json.dumps(duplicates) + ". Move these model/series names out of property manufacturer: "
+                                 + json.dumps(mislabeled) + ". Retain numeric ratings, grade and warranty rules before catalog alternatives when limiting to 30")
             return self
     return await router.call("extract_requirements", RequirementsRead, messages, {"section": section})
 
