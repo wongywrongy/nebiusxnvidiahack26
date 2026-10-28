@@ -89,6 +89,7 @@ def test_a_quoted_successor_is_searched_and_ranked_first(live):
     ReplacementOut(product="ZX-20", quote="The ZX-20 family replaces it."),  # sentence not on the notice
     ReplacementOut(product="ZX-30", quote="Please convert this business to the ZX-20 family, its direct replacement."),  # name not in it
     ReplacementOut(),
+    ReplacementOut(product="this business", quote="Please convert this business to the ZX-20 family, its direct replacement."),  # no designation
 ])
 @respx.mock
 def test_an_unquoted_successor_is_dropped(live, reply):

@@ -13,6 +13,7 @@ answers candidate n's claims and verify, shaped like a case fixture.
 from __future__ import annotations
 
 import json
+import re
 from typing import Optional
 
 from ..config import settings
@@ -88,6 +89,13 @@ def _head(group: str, flagged: list[Finding], case: dict, claims: ClaimsOut, can
     return "Current sheet found and re-checked"
 
 
+def _named(product: Optional[str], quote: Optional[str], text: str) -> bool:
+    """A kept name is quoted in the text it was read from, sits in that quote, and carries a designation (a token
+    with a capital or a digit, like "CPX" or "ZX-20"): "the following replacement options" is not a product."""
+    return bool(product and quote and extract.quoted(quote, text) and extract.model_quoted(product, quote)
+                and re.search(r"\b\w*[A-Z0-9]\w*\b", product))
+
+
 async def named_replacement(case: dict, flagged: list[Finding], claims: ClaimsOut, on_step=None,
                             on_warning=None) -> tuple[Optional[NamedReplacement], list[Usage], float]:
     """The successor a discontinuation notice names, or None. Super reads the notice page that verify quoted; when
@@ -104,11 +112,12 @@ async def named_replacement(case: dict, flagged: list[Finding], claims: ClaimsOu
     ctx = {"case_id": f"fix/{case.get('fixture', case['id'])}"}
     out, usage = await router.call("replacement", ReplacementOut, [{"role": "user", "content": (
         "This page is a manufacturer's discontinuation notice. Does its text name a replacement or successor product? "
-        "If yes, give the product or family name exactly as written and the exact sentence that names it. "
+        "If yes, give the product or family name (its model or family designation) exactly as written and the exact "
+        "sentence that names it. A phrase such as 'the following options' is not a name. "
         "If the text names none (for example, it points to a table or image you cannot read), return nulls.\n\n"
         + page["raw_content"][:20000])}], ctx)
     usages = [usage]
-    if out.product and out.quote and extract.quoted(out.quote, page["raw_content"]) and extract.model_quoted(out.product, out.quote):
+    if _named(out.product, out.quote, page["raw_content"]):
         return NamedReplacement(name=out.product.strip(), quote=out.quote, url=page["url"]), usages, web.credits
     ocr = "\n".join(await web.image_text(page["url"]))
     if not ocr:
@@ -119,7 +128,7 @@ async def named_replacement(case: dict, flagged: list[Finding], claims: ClaimsOu
         "Which replacement does the text give for it? Give the name exactly as the text writes it, and the exact line "
         "that names it. If no line applies, return nulls.\n\n" + ocr[:8000])}], {**ctx, "fixture_key": "replacement_ocr"})
     usages.append(usage)
-    if out.product and out.quote and extract.quoted(out.quote, ocr) and extract.model_quoted(out.product, out.quote):
+    if _named(out.product, out.quote, ocr):
         return NamedReplacement(name=out.product.strip(), quote=out.quote, url=page["url"], source="image_ocr"), usages, web.credits
     return None, usages, web.credits
 
