@@ -8,13 +8,11 @@
 An approved submittal is the record of what gets installed. This job runs the same pipeline a new submittal gets
 (Nemotron 3 Nano and Super on Nebius Token Factory read; Tavily fetches the manufacturer's current pages; code
 diffs the values) and reports, per item: no_change, changed (a value on the current sheet differs), discontinued
-(the maker says so, quoted), or unverified (nothing could be confirmed). Local runs write runs/watch reports;
---post is for a local app without controller authority. Cloud workers require --controller and --lease,
-enforce their assigned allowance locally, then return sealed usage and evidence through signed callbacks.
-Only the controller can settle accounting and publish after cloud completion is independently observed.
+(the maker says so, quoted), or unverified (nothing could be confirmed). Runs write runs/watch reports;
+--post also sends the report to the running app.
 
-The disabled GitHub schedule requests that controller; it never creates jobs directly. Hosted execution and
-durability remain unverified. See deploy/nebius/README.md before preparing an approved deployment.
+Once a day the app server launches this script as a Nebius Serverless Job with --post to the public app
+(api/daily_recheck.py); see deploy/nebius/recheck-job.md.
 """
 
 from __future__ import annotations
@@ -126,16 +124,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     p.add_argument("--ids", nargs="*", help="item ids to re-check (default: every watched item)")
     p.add_argument("--post", help="base URL of the running app; the report is posted there with ADMIN_TOKEN")
-    p.add_argument("--controller", help="HTTPS controller URL for a leased cloud worker")
-    p.add_argument("--lease", help="controller-issued worker lease ID")
     args = p.parse_args()
-    if args.controller or args.lease:
-        if not args.controller or not args.lease or args.ids or args.post:
-            p.error("Use --controller and --lease together, without --ids or --post")
-        from api.job_worker import run as run_worker
-        sys.exit(asyncio.run(run_worker(args.controller, args.lease)))
-    if os.environ.get("JOB_NAME") and settings.live:
-        sys.exit("Live cloud workers require a controller-issued lease; no provider call was made")
     ids = args.ids or sorted(i for i, c in all_cases().items() if c.get("watch"))
     if not ids:
         sys.exit("Nothing to re-check: no item has \"watch\" in data/cases/cases.json and no --ids given")

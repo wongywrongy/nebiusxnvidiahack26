@@ -9,7 +9,7 @@ import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
-from api import cloud_jobs, main, watch_store
+from api import main, watch_store
 from api.config import settings
 from api.pipeline import render, runner
 
@@ -98,7 +98,7 @@ def test_watch_state_survives_container_replacement_and_reads_bucket_first(stora
     watch_store.report(report)
     assert (settings.runs_dir / "watch/latest.json").is_file()
     monkeypatch.setattr(settings, "runs_dir", storage / "replacement/runs")
-    assert main.latest_recheck() == report and cloud_jobs.read_jobs() == []
+    assert main.latest_recheck() == report
     local = settings.runs_dir / "watch/latest.json"
     local.parent.mkdir(parents=True)
     local.write_text(json.dumps({"runner": "stale image fallback"}))

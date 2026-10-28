@@ -112,6 +112,19 @@ def test_exists_without_a_claim_cannot_send_back_the_submittal():
     assert check([r], [claim("input_watts", 30)])[0].verdict == "pass"
 
 
+def test_a_warranty_match_alone_does_not_put_an_upload_in_scope():
+    # A door lock checked against a lighting spec: only its warranty matched (measured live, 2026-10-28).
+    rules = [req(id="w", property="warranty_years", operator="gte", value=5, unit="yr"),
+             req(id="l70", property="l70_hours", operator="gte", value=50000, unit="hr")]
+    findings = check(rules, [claim("warranty_years", 7, "yr", cid="warranty_years-1")])
+    assert [f.verdict for f in findings] == ["pass", "unverified"]
+    assert decide(findings, {"upload": True}, rules) == "not_applicable"
+    assert decide(findings, None, rules) == "approve_with_note"  # the test set and tray keep their decisions
+    in_scope = check(rules, [claim("warranty_years", 7, "yr", cid="a"), claim("l70_hours", 60000, "hr", cid="b")])
+    assert decide(in_scope, {"upload": True}, rules) == "approve"
+    only_warranty = [rules[0]]
+    assert decide(check(only_warranty, [claim("warranty_years", 7, "yr")]), {"upload": True}, only_warranty) == "approve"
+
 def test_unit_conversion_mm_to_in():
     r = req(property="max_annular_space_in", operator="lte", value=1, unit="in")
     assert check([r], [claim("max_annular_space_in", 20, "mm")])[0].verdict == "pass"

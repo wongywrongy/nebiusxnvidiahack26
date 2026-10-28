@@ -7,3 +7,4 @@ pytesseract>=0.3.13
 pydantic-settings>=2.4
 pytest>=8.0
 respx>=0.21
+nebius>=0.6.29
