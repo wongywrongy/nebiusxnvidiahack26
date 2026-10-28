@@ -1,0 +1,349 @@
+{
+  "run_id": "20261028-040006-28d2af",
+  "context": "Earlier local live work from Claude; not repeated in this continuation",
+  "items": [
+    {
+      "id": "u-0a02156f",
+      "input": "metacaulk.pdf=07 84 00",
+      "source_sha256": "a90877c8abc844f075a2306dc5dce708926cde6c4bb5532aa466abb041d410a7",
+      "decision": "approve_with_note",
+      "validity": "valid",
+      "warnings": [],
+      "fresh_model_cost_usd": 0.0073074,
+      "fresh_web_credits": 3.0,
+      "investigations": [
+        {
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "RectorSeal Metacaulk 1000 technical data sheet specification",
+                "include_domains": [
+                  "rectorseal.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 0.0,
+              "ms": 0,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 2,
+              "tool": "extract",
+              "args": {
+                "url": "https://rectorseal.com/wp-content/uploads/2022/08/Metacaulk-1000-Spec-Sheet.pdf"
+              },
+              "summary": "0 extracted sources",
+              "credits": 0.0,
+              "ms": 3104,
+              "succeeded": false,
+              "source_urls": []
+            },
+            {
+              "n": 3,
+              "tool": "search",
+              "args": {
+                "query": "Metacaulk 1000 Spec Sheet site:rectorseal.com filetype:pdf",
+                "include_domains": [
+                  "rectorseal.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 3592,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 4,
+              "tool": "extract",
+              "args": {
+                "url": "https://rectorseal.com/wp-content/uploads/2022/08/Metacaulk-1000-Spec-Sheet-English.pdf"
+              },
+              "summary": "0 extracted sources",
+              "credits": 0.0,
+              "ms": 2970,
+              "succeeded": false,
+              "source_urls": []
+            },
+            {
+              "n": 5,
+              "tool": "search",
+              "args": {
+                "query": "Metacaulk 1000 discontinued RectorSeal",
+                "include_domains": [
+                  "rectorseal.com"
+                ]
+              },
+              "summary": "2 results",
+              "credits": 1.0,
+              "ms": 1223,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 6,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://rectorseal.com/metacaulk-1000-group",
+                "document_title": "Metacaulk 1000 Intumescent Firestop Sealant",
+                "status": "active",
+                "note": "Product is listed as part of RectorSeal's firestopping solutions lineup with no indication of discontinuation. Multiple cartridge sizes (10.3oz, 30oz, 5 gallon) are shown as available with technical documents accessible."
+              },
+              "summary": "couldn't confirm a document",
+              "credits": 0.0,
+              "ms": 22,
+              "succeeded": false,
+              "source_urls": []
+            }
+          ],
+          "outcome": "not_found",
+          "purpose": "primary",
+          "resolution": "not_resolved",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": null,
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "voc_g_per_l",
+                "value": "< 10",
+                "unit": "g/L",
+                "quote": "(< 10 g/L)",
+                "source_url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+                "model": "Metacaulk\u00ae 1000",
+                "identity_quote": "Product Name Metacaulk\u00ae 1000 Intumescent Firestop Sealant",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)",
+                "selection_quote": null
+              },
+              {
+                "property": "astm_g21_rating",
+                "value": "zero",
+                "unit": null,
+                "quote": "Fungal Growth Rating results of zero.",
+                "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "model": "Metacaulk\u00ae 1000",
+                "identity_quote": "METACAULK\u2122 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Metacaulk 1000 is protected in a wet stage as well as in a dry stage against mold growth with a combination of biocides. Tested by a third party independent laboratory to the ASTM G21 standard with Fungal Growth Rating results of zero.",
+                "selection_quote": null
+              },
+              {
+                "property": "penetrant_types",
+                "value": [
+                  "EMT",
+                  "telephone & power cables",
+                  "insulated pipes"
+                ],
+                "unit": null,
+                "quote": "such as EMT, telephone & power cables, insulated pipes, etc.",
+                "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "model": "Metacaulk\u00ae 1000",
+                "identity_quote": "METACAULK\u2122 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Metacaulk 1000 can be used in interior applications as a general purpose fire rated sealant and smoke seal for construction joints, through penetrations and blank openings on both vertical and horizontal surfaces. Use Metacaulk 1000 to prevent the spread of fire and smoke through joints in fire rated gypsum wallboard partitions, concrete block or concrete walls and/or concrete or corrugated steel deck floor/ceiling assemblies. Metacaulk 1000 is also an excellent fire rated acoustical sealant and can be used in areas under constant vibration or movement to reduce the transfer of noise through assemblies. Metacaulk 1000 can also be used on various penetrations such as EMT, telephone & power cables, insulated pipes, etc. in concrete floors and walls, gypsum walls as well as wood floors.",
+                "selection_quote": null
+              },
+              {
+                "property": "voc_g_per_l",
+                "value": "< 10",
+                "unit": "g/L",
+                "quote": "< 10 g/L",
+                "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "model": "Metacaulk\u00ae 1000",
+                "identity_quote": "METACAULK\u2122 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                "variant": "< 10 g/L",
+                "scope": "product_wide",
+                "scope_quote": "\u2022\t Water based\n\u2022\t Excellent freeze-thaw\n\u2022\t Flexible set\n\u2022\t Highly intumescent\n\u2022\t Paintable\n\u2022\t VOC compliant\n\u2022\t Safe and easy to use\n\u2022\t 3 Year shelf life\nVOC\n< 10 g/L",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://www.siglers.com/mwdownloads/download/link/id/7282",
+              "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+              "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf"
+            ],
+            "notes": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "u-8d5ec024",
+      "input": "schlage.pdf=@ubc.pdf",
+      "source_sha256": "417e8833020f437ce1b35cb7656e9757ee6d3302524773b95cc8624fa97c3da2",
+      "decision": "not_applicable",
+      "validity": "valid",
+      "warnings": [],
+      "fresh_model_cost_usd": 0.0069075,
+      "fresh_web_credits": 0.0,
+      "investigations": []
+    },
+    {
+      "id": "u-964b1ae6",
+      "input": "keystone.pdf=26 51 00",
+      "source_sha256": "5f117d8b318e6d99cc48d570e3e159686cea258932c17e201037f4887922aa61",
+      "decision": "send_back",
+      "validity": "valid",
+      "warnings": [],
+      "fresh_model_cost_usd": 0.29824806,
+      "fresh_web_credits": 4.0,
+      "investigations": []
+    },
+    {
+      "id": "u-eb3b3048",
+      "input": "tremstop.pdf=07 84 00",
+      "source_sha256": "117a26c80695e77abeaa0b34d58794813cf224d1d9ce410b6b13cf44ef3aff68",
+      "decision": "approve_with_note",
+      "validity": "valid",
+      "warnings": [],
+      "fresh_model_cost_usd": 0.0185667,
+      "fresh_web_credits": 8.0,
+      "investigations": [
+        {
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "TREMstop\u00ae Acrylic Tremco product data sheet",
+                "include_domains": [
+                  "tremco.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 1340,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 2,
+              "tool": "search",
+              "args": {
+                "query": "\"TREMstop Acrylic\" Tremco technical data sheet",
+                "include_domains": [
+                  "tremco.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 2154,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 3,
+              "tool": "search",
+              "args": {
+                "query": "TREMstop acrylic sealant Tremco",
+                "include_domains": [
+                  "tremco.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 1201,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 4,
+              "tool": "search",
+              "args": {
+                "query": "TREMstop Acrylic",
+                "include_domains": [
+                  "tremcosealants.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1.0,
+              "ms": 3316,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 5,
+              "tool": "extract",
+              "args": {
+                "url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf"
+              },
+              "summary": "1 extracted source",
+              "credits": 1.0,
+              "ms": 480,
+              "succeeded": true,
+              "source_urls": [
+                "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf"
+              ]
+            },
+            {
+              "n": 6,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf",
+                "document_title": "TREMSTOP\u00ae ACRYLIC Gunnable, Acrylic Latex Firestop Sealant - TECHNICAL DATA SHEET",
+                "revision_quote": "TSA-DS/0123",
+                "evidence_quote": "Immediately available from your local Tremco Sales Representative, Tremco Distributor, or Tremco Warehouse in 10.1 oz (300 mL) cartridges, 20 oz (600 mL) sausages, 28.7 oz (850 mL) quart cartridges, and 5 gal (19 L) pails.",
+                "status": "active",
+                "status_quote": "Immediately available from your local Tremco Sales Representative, Tremco Distributor, or Tremco Warehouse in 10.1 oz (300 mL) cartridges, 20 oz (600 mL) sausages, 28.7 oz (850 mL) quart cartridges, and 5 gal (19 L) pails.",
+                "note": "Found the manufacturer's technical data sheet for TREMstop\u00ae Acrylic. The document shows revision TSA-DS/0123 and confirms the product is immediately available through various channels indicating active production status."
+              },
+              "summary": "TSA-DS/0123, active",
+              "credits": 0.0,
+              "ms": 40,
+              "succeeded": true,
+              "source_urls": []
+            }
+          ],
+          "outcome": "found",
+          "purpose": "primary",
+          "resolution": "not_resolved",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": null,
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "voc_g_per_l",
+                "value": 35.0,
+                "unit": "g/L",
+                "quote": "VOC Content 35 g/L",
+                "source_url": "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf",
+                "model": "TREMstop\u00ae Acrylic",
+                "identity_quote": "TREMSTOP\u00ae ACRYLIC Gunnable, Acrylic Latex Firestop Sealant",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "TSA-DS/0123 TYPICAL PHYSICAL PROPERTIES PROPERTY TEST METHOD TYPICAL RESULTS Flame Spread ASTM E84 15 Smoke Development ASTM E84 0 Movement Capability ASTM C719, UL2079; Class I, II, III \u00b1 33% Peel Strength ASTM C794 15 to 25 (substrate dependent) VOC Content 35 g/L",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://www.tremcosealants.com/resource/download/TREMstop_Acrylic_DS.pdf"
+            ],
+            "notes": null
+          }
+        }
+      ]
+    }
+  ],
+  "items_requiring_primary_investigation": 2,
+  "investigations": 2,
+  "resolved": 0,
+  "capped": 0,
+  "fresh_model_usd": 0.33102966,
+  "fresh_web_credits": 15.0
+}

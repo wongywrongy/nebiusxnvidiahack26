@@ -10,7 +10,7 @@ The reviewer gets a package matrix and a short **What to send** list for each it
 
 The flow is **Inbox → Scan → Review → Outcome**. People can upload their own spec, draft checkable rules, edit or delete them, and use that unreviewed checklist for their own submittals. The PDF stays beside the findings. Nothing sends a message or approves construction work without the reviewer saving a decision.
 
-Approved samples can be checked again against current manufacturer sources. The scheduled GitHub Actions fallback is bounded at $0.50 and 40 Tavily credits per execution; only a real stored report may supply the Outcome timestamp. No Nebius Serverless Job execution is claimed. See [setup and actual execution status](deploy/nebius/recheck-job.md).
+Approved samples can be checked again against current manufacturer sources. The daily GitHub Actions fallback is bounded at $0.50 and 40 Tavily credits per execution. Its first real report, October 28 at 07:22 UTC, flags the watched Lithonia troffer as discontinued and cost $0.0667 / 13 credits. Only stored reports supply the Outcome timestamp. No Nebius Serverless Job execution is claimed. See [setup and actual execution status](deploy/nebius/recheck-job.md).
 
 ## Why this matters
 
@@ -37,11 +37,11 @@ October 28 live recording `20261028-065522-3dd974`: **4/8 right calls, 4/6 plant
 
 The earlier October 22 panel was 6/8 calls and 5/6 problems. This release adds an unnecessary c01 note and misses c04's pipe-coverage failure. c05/c06 remain wrong calls. The strict case evidence gate fails; no passing replacement or planted-problem Investigator rescue is claimed. [Full comparison and costs](docs/customer-feedback/release-20261028/README.md).
 
-Verification: **771 Python tests passed, 2 skipped; 17 mock browser journeys passed; presentation checks and web build passed**. The final recording charged $0.59806296 and 46 Tavily credits. Wrong-spec checks added no fresh charge. Public smoke and browser evidence must be read from the deployment record, not inferred from these local checks.
+Verification: **771 local Python tests passed, 2 skipped, plus 4 passing fallback tests; GitHub CI reports 771 passed / 6 skipped; 17 mock browser journeys, presentation checks and web build passed**. The final recording charged $0.59806296 and 46 Tavily credits. Wrong-spec checks added no fresh charge. Public no-admin fresh smoke, all five browser journeys, the memo/Scoreboard and Check approved now also passed. [Public evidence](docs/customer-feedback/release-20261028/README.md).
 
 ## Submission checklist for Kyle
 
 - Supply the timing results and permissioned quote above, or remove those placeholders.
 - Re-capture the existing video using [video/DELTA.md](video/DELTA.md), publish it and add its URL here and on Devpost. The previous video shows the old UI and numbers.
-- Complete Devpost, select Best Apps and Agents / San Francisco, and verify the entry is submitted. Kyle's target is Thursday October 29; the recorded official deadline is October 30 at 17:00 UTC.
+- Complete Devpost, select Best Apps and Agents / San Francisco, and verify the entry is submitted. Kyle's target is Thursday October 29; the [official deadline](https://nebiusglobalaihackathon.devpost.com/rules), verified October 28, is October 30 at 10:00 AM PDT / 17:00 UTC.
 - Keep the public demo available through December 15, 2026, 20:00 UTC.

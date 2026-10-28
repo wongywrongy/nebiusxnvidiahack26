@@ -13,4 +13,6 @@ Exact current numbers: **4/8 right calls, 4/6 problems caught, 0/2 false alarms,
 
 Delete the old **6/8, 5/6** scoreboard narration or explicitly label it October 22 historical evidence. Do not describe accuracy as improved. The new case gate fails; see `docs/customer-feedback/release-20261028/README.md` for every difference.
 
-Use “suggests alternates and shows what's still unconfirmed.” Delete “finds a passing replacement.” No planted-problem Investigator rescue or Nebius Serverless Job execution is proved. Show a re-check line only from the actual stored report, with its real runner and timestamp; the prepared fallback runs on GitHub Actions.
+Use “suggests alternates and shows what's still unconfirmed.” Delete “finds a passing replacement.” Remove the Investigator as a headline feature: Package D triggered it on two items and resolved none. No planted-problem Investigator rescue or Nebius Serverless Job execution is proved. Show a re-check line only from the actual stored report, with its real runner and timestamp; the prepared fallback runs on GitHub Actions.
+
+Actual Outcome line: **Re-checked by GitHub Actions · Oct 28, 07:22 UTC · 1 item, 1 flagged** (display time follows the browser timezone). Source: `docs/customer-feedback/release-20261028/public-github-recheck.json`. The fresh on-demand check is run `20261028-075230-87f8ef`; its actual discontinued alert is `docs/customer-feedback/release-20261028/public/check-approved.png`. Public memo and Scoreboard captures are in the same directory.
