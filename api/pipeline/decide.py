@@ -56,17 +56,19 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
         {"case_id": case_id},
     )
     for f in findings:
-        if f.id in out.finding_titles:
+        # Requirement rows keep their code title ("Does not meet: VOC (air quality)"): a reworded title once
+        # said "Missing mold resistance test data" beside a quoted value. Only web findings take the model's words.
+        if f.id in out.finding_titles and not f.requirement_id:
             f.title = out.finding_titles[f.id]
         if f.id in out.why_it_matters:
             f.why_it_matters = out.why_it_matters[f.id]
     # Verdict and coverage statements are templates: generated prose cannot broaden the review.
-    lead = {"approve": "The checked product data can be approved.",
-            "approve_with_note": "The product data can be approved with the clarification notes below.",
-            "send_back": "Revise and resubmit to address the findings below.",
-            "not_applicable": "This document does not match this spec; pick a different spec in the Inbox."}[decision]
+    lead = {"approve": "Approve: meets the spec as submitted.",
+            "approve_with_note": "Approve with notes: confirm the items below.",
+            "send_back": "Send back: see what to send.",
+            "not_applicable": "Not checked: doesn't match this spec."}[decision]
     if decision != "not_applicable" and any(f.verdict == "pending" for f in findings):
-        lead += " Assembly proof remains pending; confirm the listed assembly separately."
+        lead += " Assembly proof remains pending."
     if settings.live or case_id is not None:
         out.summary = lead
         details = [f"{f.title}: {f.detail}" for f in findings if f.verdict not in ("pass", "not_applicable")]

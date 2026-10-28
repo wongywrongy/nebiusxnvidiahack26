@@ -2,12 +2,18 @@
 
 from __future__ import annotations
 
+import asyncio
+import base64
 import hashlib
+import io
+import re
 from datetime import datetime, timezone
 from typing import Any, Optional
 
+import httpx
+
 from .config import settings
-from . import archive
+from . import archive, cache
 from .llm import load_fixture
 from .providers import budget, tavily, failure_reason
 
@@ -55,6 +61,25 @@ class WebClient:
         self.credits += spent
         return results
 
+    async def image_text(self, url: str) -> list[str]:
+        """OCR of the images embedded in a page (e.g. a replacement table on a discontinuation notice).
+        Mock: fixture web.images[url]. Live: one direct GET of the page, no Tavily credits; cached by URL."""
+        if not settings.live:
+            return self._fixture().get("images", {}).get(url, [])
+        if (hit := cache.get("page_image_ocr", {"url": url})) is not None:
+            return hit
+        try:
+            async with httpx.AsyncClient(headers=tavily.BROWSER_HEADERS, follow_redirects=True, max_redirects=3, timeout=20) as c:
+                html = (await c.get(url)).text
+        except httpx.HTTPError as error:
+            await self.warn("fix", error)
+            return []
+        # shortcut: inline data: images only (the case seen live); linked <img src=https://…> files are not fetched.
+        found = re.findall(r'src="data:image/(?:png|jpe?g|gif);base64,([A-Za-z0-9+/=]{200,4000000})"', html)[:6]
+        texts = [t for t in [await asyncio.to_thread(_ocr, base64.b64decode(b)) for b in found] if len(t.strip()) >= 20]
+        cache.put("page_image_ocr", {"url": url}, texts)
+        return texts
+
     async def extract(self, urls: list[str], depth: Optional[str] = None) -> list[dict]:
         depth = depth or settings.extract_depth
         if not urls:
@@ -97,3 +122,15 @@ def snapshot(url: str, text: str, retrieved_at: Optional[str] = None) -> dict[st
         "sha256": hashlib.sha256(text.encode()).hexdigest(),
         "excerpt": text[:400],
     }
+
+
+def _ocr(data: bytes) -> str:
+    """Tesseract on one image: grey, 2x upscale, one column of text lines (--psm 4 reads tables row by row)."""
+    import pytesseract
+    from PIL import Image
+    try:
+        image = Image.open(io.BytesIO(data)).convert("L")
+        image = image.resize((image.width * 2, image.height * 2), Image.BICUBIC)
+        return pytesseract.image_to_string(image, config="--psm 4", timeout=20)
+    except (OSError, RuntimeError, pytesseract.TesseractNotFoundError, pytesseract.TesseractError):
+        return ""

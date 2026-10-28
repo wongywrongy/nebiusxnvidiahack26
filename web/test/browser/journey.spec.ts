@@ -45,6 +45,7 @@ test('tray review, edit decision, outcome, fresh re-check, reload and start over
   await inbox(page)
   await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
   await page.getByRole('button', { name: 'Start review', exact: true }).click()
+  await page.getByText('How this was checked', { exact: true }).click()
   await expect(page.locator('aside').getByText(/Sources: spec/)).toBeVisible()
   await page.locator('#message').fill('Reviewer edited this message after checking the evidence.')
   await page.getByRole('button', { name: /^Save approval( decision)?$/, exact: true }).click()
@@ -122,24 +123,97 @@ test('replacement proposal is labelled in review, draft and outcome', async ({ p
         candidates: [{ name: 'Synthetic catalog', source_url: 'https://maker.test/catalog', passes: true,
           selection: { model: 'ZX-12-D1', origin: 'agent_proposal', page: 1, quote: '**Catalog** number: __ZX-12-D1__' },
           checks: [{ label: 'Synthetic quoted check', ok: true, note: '',
-            evidence: [{url: 'https://maker.test/catalog', excerpt: '**Synthetic** quoted __evidence__.'}] }] }] } }]
+            evidence: [{url: 'https://maker.test/catalog', excerpt: '**Synthetic** quoted __evidence__.'}] }] }],
+        alternates: [{ name: 'Synthetic catalog', source_url: 'https://maker.test/catalog', rank: 'meets_spec',
+          confirm: [], failed: [], better: [], origin: 'search' }] } }]
     await route.fulfill({ response, json: result })
   })
   await review(page)
   await expect(page.getByText('Proposed by SpecCheck: ZX-12-D1. Confirm configuration before ordering.')).toBeVisible()
-  await expect(page.locator('#message')).toHaveValue(/SpecCheck proposal: ZX-12-D1/)
-  await page.getByText('Replacement evidence', {exact:true}).click()
+  await page.getByText('Evidence', {exact:true}).click()
   await expect(page.getByText('“Catalog number: ZX-12-D1”')).toBeVisible()
   await expect(page.getByText('“Synthetic quoted evidence.”')).toBeVisible()
   await expect.poll(() => page.evaluate(() => {
-    const saved = JSON.parse(localStorage.getItem('speccheck.session.v1')!)
+    const saved = JSON.parse(localStorage.getItem('speccheck.session.v2')!)
     return Object.values(saved.loaded).map((item: any) => item.result.findings[0].fix.candidates[0].selection.quote)[0]
   })).toBe('**Catalog** number: __ZX-12-D1__')
   await page.screenshot({path: testInfo.outputPath('proposal-desktop.png'),fullPage:true})
   await page.setViewportSize({width:390,height:844})
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   await page.screenshot({path:testInfo.outputPath('proposal-mobile.png'),fullPage:true})
-  await page.getByRole('button', {name:'Save return decision',exact:true}).click()
-  await expect(page.getByRole('heading', {name:'Outcome',exact:true})).toBeVisible()
-  await expect(page.getByText('SpecCheck proposal: ZX-12-D1. Confirm configuration before ordering.', {exact:true})).toBeVisible()
+})
+
+test('scan complete shows the package matrix and opens Review at a row', async ({ page }) => {
+  const cell = (spec: string, sheet: string, made: string, id: string) => ({ case_id: id, title: `Item ${id}`, number: id,
+    sender: 'Sub', decision: 'approve_with_note', stamp: 'Exceptions noted', spec, current_sheet: sheet, still_made: made,
+    meets: 1, doesnt_meet: 0, couldnt_confirm: 0, what_to_send: [`Line ${id}`, 'Second'], best_alternate: null,
+    manual_review_suggested: id === 'r1', return_note: '', approval_note: '' })
+  const synthetic = [cell('meets', 'current', 'active', 'r1'), cell('fails', 'outdated', 'discontinued', 'r2'),
+    cell('configure', 'newer', 'unknown', 'r3'), cell('unconfirmed', 'unknown', 'unknown', 'r4'), cell('not_checked', 'unknown', 'unknown', 'r5')]
+  await page.route('**/api/runs/*/package', async (route) => {
+    const response = await route.fetch()
+    const real = await response.json()
+    await route.fulfill({ response, json: { ...real, rows: [...real.rows, ...synthetic] } })
+  })
+  await inbox(page)
+  await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Scan complete', exact: true })).toBeVisible()
+  const matrix = page.getByRole('button', { name: /^Review / })
+  await expect(matrix).toHaveCount(1)  // only rows for items in this scan are shown
+  await matrix.click()
+  await expect(page.locator('#message')).toBeVisible()
+})
+
+test('the matrix renders every cell type', async ({ page }) => {
+  // Every spec / sheet / still-made value, through a real scan whose one row is rewritten per value.
+  const values: [string, string, string][] = [['meets', 'current', 'active'], ['fails', 'outdated', 'discontinued'],
+    ['configure', 'newer', 'unknown'], ['not_checked', 'unknown', 'unknown'], ['unconfirmed', 'unknown', 'unknown']]
+  const words = ['Meets', 'Current', 'Made', 'Fails', 'Outdated', 'Discontinued', 'Option', 'Newer exists', 'Not checked', 'Unconfirmed', 'Unknown']
+  const cells = new Set<string>()
+  let n = 0
+  await page.route('**/api/runs/*/package', async (route) => {
+    const response = await route.fetch()
+    const real = await response.json()
+    const [spec, current_sheet, still_made] = values[n++ % values.length]
+    await route.fulfill({ response, json: { ...real, rows: real.rows.map((r: object) => ({ ...r, spec, current_sheet, still_made })) } })
+  })
+  const seen = new Set<string>()
+  for (let i = 0; i < values.length; i++) {
+    await page.evaluate(() => localStorage.clear()).catch(() => {})
+    await inbox(page)
+    await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
+    await expect(page.getByRole('heading', { name: 'Scan complete', exact: true })).toBeVisible()
+    await expect(page.getByRole('button', { name: /^Review / })).toBeVisible()
+    for (const el of await page.locator('[data-cell]').all()) {
+      cells.add((await el.getAttribute('data-cell'))!)
+      const shown = await el.innerText()
+      for (const w of words) if (shown.endsWith(w)) seen.add(w)
+    }
+  }
+  expect([...seen].sort()).toEqual([...words].sort())
+  expect(cells.size).toBe(11)
+})
+
+test('flag for manual review lands in its own Outcome bucket and survives reload', async ({ page }) => {
+  await review(page)
+  await expect(page.getByText('What to send', { exact: true })).toBeVisible()
+  await page.getByRole('button', { name: 'Flag for manual review', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Outcome', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Manual review', exact: true })).toBeVisible()
+  await expect(page.getByText(/· 1 for manual review$/)).toBeVisible()
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Manual review', exact: true })).toBeVisible()
+  await page.getByRole('button', { name: /^3 Review/ }).click()
+  await expect(page.getByText('· Saved: flagged for manual review')).toBeVisible()
+})
+
+test('the package memo opens from Scan complete with the matrix, labels and a reviewer line', async ({ page, context }) => {
+  await inbox(page)
+  await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Scan complete', exact: true })).toBeVisible()
+  const [memo] = await Promise.all([context.waitForEvent('page'), page.getByRole('link', { name: 'Package review memo' }).click()])
+  await expect(memo.getByText(/^Reviewer:/)).toBeVisible()
+  await expect(memo.getByText(/mock \(fixture answers\)/)).toBeVisible()
+  await expect(memo.locator('[data-cell]').first()).toBeVisible()
+  await expect(memo.getByText(/^Checked by /)).toHaveCount(1)
 })

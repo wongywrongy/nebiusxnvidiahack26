@@ -51,7 +51,7 @@ from . import daily_recheck, watch_store
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, save_upload, senders, try_documents
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
-from .pipeline import checklists
+from .pipeline import checklists, package
 from .pipeline.extract import checklist_path
 from .pipeline.render import page_count, page_sizes, prune_page_cache, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, prune_runs, recorded_runs, replay, run_dir
@@ -500,6 +500,22 @@ def results(run_id: str):
             "done": RUNS[run_id].done.is_set() if run_id in RUNS else True}
 
 
+@app.get("/api/runs/{run_id}/package")
+def package_view(run_id: str):
+    """The whole package as one compliance matrix (rows derived in code from each result's findings)."""
+    folder = run_dir(run_id)
+    if not folder:
+        raise HTTPException(404, "No such run")
+    items = []
+    for p in sorted((folder / "results").glob("*.json")):
+        res = load_result(run_id, p.stem)
+        if res is None:
+            continue
+        case = {**all_cases(), **all_samples()}.get(res.case_id) or get_upload(res.case_id) or {}
+        items.append((_public(case) if case else {}, res))
+    return package.summarize(run_id, items)
+
+
 @app.get("/api/runs/{run_id}/results/{case_id}")
 def result(run_id: str, case_id: str):
     res = load_result(run_id, case_id)
@@ -546,6 +562,15 @@ def case_text(case_id: str):
 
 def _sse(ev: Event) -> str:
     return f"data: {ev.model_dump_json()}\n\n"
+
+
+@app.get("/memo/{run_id}", include_in_schema=False)
+def memo_page(run_id: str):
+    """The printable package memo is a client route of the built app."""
+    index = settings.web_dist / "index.html"
+    if not index.exists():
+        raise HTTPException(404, "Web app not built")
+    return FileResponse(index)
 
 
 if settings.web_dist.exists():
