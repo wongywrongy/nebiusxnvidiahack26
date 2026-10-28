@@ -1,0 +1,54 @@
+{
+  "kind": "manually_selected_source_diagnostic_not_automated_discovery",
+  "source_revision": "Rev. 05/03/22",
+  "comparison": [
+    {
+      "property": "l70_hours",
+      "label": "Rated life (L70)",
+      "submitted": "50000 hours",
+      "current": "60000 hours",
+      "changed": true,
+      "source_url": "https://media.distributordatasolutions.com/acuity/2022q4/documents/6499e1a96d86f2be26e71969267ebd7c36c3db5b.pdf",
+      "quote": "70% lumen maintenance at 60,000 hours."
+    }
+  ],
+  "coded_findings": [
+    {
+      "id": "currency-outdated",
+      "check": "currency",
+      "verdict": "outdated",
+      "severity": "major"
+    }
+  ],
+  "usage": [
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8226,
+      "output_tokens": 1309,
+      "cost_usd": 0.0036459,
+      "latency_ms": 7148,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4899,
+      "output_tokens": 966,
+      "cost_usd": 0.0023391,
+      "latency_ms": 4813,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "note": "Source selected manually. This validates the existing quote gate and comparison, not automated discovery. Download and hash the public PDF for full source review."
+}

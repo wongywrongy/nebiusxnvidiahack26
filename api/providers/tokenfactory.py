@@ -65,6 +65,18 @@ async def _request(method: str, path: str, body: Optional[dict] = None) -> dict:
             log.warning("Model request timed out; retrying once with a fresh worst-case reservation")
 
 
+TEMPLATE_TOKENS = 2048  # chat-template role headers and special tokens, generously
+
+
+def input_token_bound(model: str, body: dict) -> int:
+    """A hard upper bound on prompt tokens without a tokenizer: every byte-level BPE token covers at least one
+    UTF-8 byte, so tokens <= bytes of the serialized request (+ template overhead), capped at the context.
+    Reserving this instead of the whole context keeps the worst case honest while letting a 1M-context model
+    (Ultra) run under the same per-run caps."""
+    size = len(json.dumps(body, ensure_ascii=False).encode("utf-8")) + TEMPLATE_TOKENS
+    return min(CONTEXT_LIMITS[model], size)
+
+
 async def _request_once(method: str, path: str, body: Optional[dict] = None) -> dict:
     """One HTTP call. 401/403 -> AuthError, 429 -> RateLimited, other errors -> ProviderError with the server's message."""
     ticket = None
@@ -74,7 +86,7 @@ async def _request_once(method: str, path: str, body: Optional[dict] = None) -> 
             raise ProviderError("Cannot bound the cost of this model request")
         if "tools" in body and "response_format" in body:
             raise ProviderError("Tools and response_format must be separate requests")
-        ticket = budget.reserve_payment(usd=cost(model, CONTEXT_LIMITS[model], body["max_tokens"]))
+        ticket = budget.reserve_payment(usd=cost(model, input_token_bound(model, body), body["max_tokens"]))
     try:
         async with httpx.AsyncClient(timeout=180) as c:
             r = await c.request(method, settings.nebius_base_url.rstrip("/") + path, json=body,

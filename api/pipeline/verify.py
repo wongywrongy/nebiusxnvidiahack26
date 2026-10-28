@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import re
 from datetime import datetime, timezone
+from typing import Optional
 from urllib.parse import urlparse
 
 from ..config import settings
@@ -145,7 +146,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
         missing or availability_missing or out.current_revision is None and (not comparable or (out.status == "unknown" and
                                   not any(classify(r["url"], domains) == "manufacturer" for r in results))
     )):
-        investigation = await investigate({**case, "unconfirmed_properties": sorted(missing)}, submitted, web)
+        investigation = await investigate({**case, "unconfirmed_properties": sorted(missing)}, submitted, web, pages=pages)
         investigation.scripted = scripted
         usage += investigation._usage
         if investigation.outcome == "found":
@@ -162,7 +163,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
             except (budget.BudgetExceeded, ProviderError) as error:
                 await web.warn("verify.read", error)
             out = newer
-            pages += investigation._pages
+            pages += [p for p in investigation._pages if p["url"] not in {source["url"] for source in pages}]
             titles[investigation._document_url] = investigation._document_title
             confirmed = gate(out, pages, submitted=submitted)
 
@@ -374,14 +375,32 @@ def gate(out: VerifyOut, pages: list[dict], *, measure: bool = True, submitted: 
     if out.replacement and not quoted(out.replacement, out.status_quote):
         out.replacement = None
     read = len(out.current_values)
-    out.current_values = [pv for pv in out.current_values if source_of(pv.quote, pv.source_url) and value_quoted(pv.value, pv.quote, pv.property)
-                          and metric_quoted(pv.property, pv.quote) and unit_quoted(pv.unit, pv.quote, pv.property)
-                          and (submitted is None or pv.source_url and pv.model and pv.identity_quote)
-                          and (not pv.identity_quote or source_of(pv.identity_quote, pv.source_url) == source_of(pv.quote, pv.source_url)
-                               and (submitted is None or model_quoted(pv.model, pv.identity_quote)))
-                          and (not pv.model or submitted is None or model_quoted(submitted.model or submitted.family or submitted.product, pv.model)
-                               and model_quoted(pv.model, submitted.model or submitted.family or submitted.product))
-                          and (not pv.variant or quoted(pv.variant, pv.quote or ""))]
+    def gate(pv) -> Optional[str]:
+        """The first gate this web value fails, or None when it is kept."""
+        own = submitted.model or submitted.family or submitted.product if submitted else ""
+        if not source_of(pv.quote, pv.source_url):
+            return "quote_not_on_source"
+        if not value_quoted(pv.value, pv.quote, pv.property):
+            return "value_not_in_quote"
+        if not metric_quoted(pv.property, pv.quote):
+            return "metric_not_in_quote"
+        if not unit_quoted(pv.unit, pv.quote, pv.property):
+            return "unit_not_in_quote"
+        if submitted is not None and not (pv.source_url and pv.model and pv.identity_quote):
+            return "identity_missing"
+        if pv.identity_quote and not (source_of(pv.identity_quote, pv.source_url) == source_of(pv.quote, pv.source_url)
+                                      and (submitted is None or model_quoted(pv.model, pv.identity_quote))):
+            return "identity_not_on_source"
+        if pv.model and submitted is not None and not (model_quoted(own, pv.model) and model_quoted(pv.model, own)):
+            return "different_model"
+        if pv.variant and not quoted(pv.variant, pv.quote or ""):
+            return "variant_not_in_quote"
+        return None
+    verdicts = [(pv, gate(pv)) for pv in out.current_values]
+    if measure:
+        for _, reason in verdicts:
+            metrics.drop("web", reason)
+    out.current_values = [pv for pv, reason in verdicts if reason is None]
     for pv in out.current_values:
         pv.selection_quote = None
         if submitted is not None:

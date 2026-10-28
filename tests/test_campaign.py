@@ -219,7 +219,10 @@ def test_failed_extract_is_zero_cost_and_does_not_erase_other_holds(campaign_sta
 
 
 def test_concurrent_http_admission_reserves_before_network(campaign_state, monkeypatch):
-    monkeypatch.setattr(settings, "budget_usd_per_run", 0.02)
+    # Reservations are bounded by request size (tokenfactory.input_token_bound): one fits under this cap, two don't.
+    body = {"model": settings.model_triage, "max_tokens": 32, "messages": []}
+    one = tokenfactory.cost(body["model"], tokenfactory.input_token_bound(body["model"], body), 32)
+    monkeypatch.setattr(settings, "budget_usd_per_run", one * 1.5)
     async def check():
         entered, release = asyncio.Event(), asyncio.Event()
         async def slow(request):

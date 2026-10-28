@@ -123,10 +123,34 @@ LABELS = {
 }
 
 
+LUMEN_LIFE = re.compile(r"l(\d+)_hours")
+
+
+def _stricter_lumen_life(prop: str) -> list[str]:
+    """For an L70 rule, the L80/L90 properties whose rated hours also prove it (see `_lumen_implied`)."""
+    m = LUMEN_LIFE.fullmatch(prop)
+    return [f"l{n}_hours" for n in (80, 90) if m and n > int(m[1])]
+
+
 def properties_for(requirements: list[Requirement]) -> list[str]:
     """Spec dependencies plus known performance properties used to compare revisions."""
     return sorted(set(LABELS) | {r.property for r in requirements} |
-                  {str(r.value) for r in requirements if r.operator == "eq_ref"})
+                  {str(r.value) for r in requirements if r.operator == "eq_ref"} |
+                  {p for r in requirements for p in _stricter_lumen_life(r.property)})
+
+
+def _lumen_implied(r: Requirement, by_prop: dict[str, list[Claim]]) -> Optional[tuple[Claim, str]]:
+    """Lumen output only declines with time, so a luminaire that still gives 80% at T hours reaches 70% no
+    earlier than T: L80 >= T proves L70 >= T. Only for 'at least' rules, only from product-wide (or selected)
+    quoted values, and never a failure: a shorter L80 says nothing about L70."""
+    if r.operator != "gte":
+        return None
+    for prop in _stricter_lumen_life(r.property):
+        for c in by_prop.get(prop, []):
+            if (c.variant and not c.selection_quote) or numeric_compare(c.value, c.unit, r.value, r.unit, "gte") is not True:
+                continue
+            return c, prop.split("_")[0].upper()
+    return None
 
 
 def _label(prop: str) -> str:
@@ -183,7 +207,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
     for r in requirements:
         other_type = product_type and r.product_type and _text(product_type) != _text(r.product_type)
         scoped = [] if other_type else by_prop.get(r.property, [])
-        variants = [c.variant for c in scoped if c.variant]
+        variants = [c.variant for c in scoped if c.variant and c.scope == "option"]
         found = [c for c in scoped if not c.variant or c.selection_quote]
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
@@ -236,8 +260,18 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
                                      "Both quoted ratings are needed for this comparison.", severity="minor"))
             continue
 
+        if claim is None and (implied := _lumen_implied(r, by_prop)):
+            stronger, name = implied
+            claim = stronger
+            findings.append(make("pass", _label(r.property),
+                                 f"{name} {_fmt(stronger.value, stronger.unit)} is quoted; lumen output only declines, so "
+                                 f"{_label(r.property).split('(')[-1].rstrip(')')} is at least as long. "
+                                 f"Spec requires at least {_fmt(r.value, r.unit)}.",
+                                 right=f"{name} {_fmt(stronger.value, stronger.unit)}"))
+            continue
+
         if claim is None:
-            options = [c for c in scoped if c.variant and meets(r, c) is True]
+            options = [c for c in scoped if c.variant and c.scope == "option" and meets(r, c) is True]
             if options:
                 # The base product doesn't state it, but a quoted ordering option does: say exactly what to order.
                 names = list(dict.fromkeys(c.variant for c in options))

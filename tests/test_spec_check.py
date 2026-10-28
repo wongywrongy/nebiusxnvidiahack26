@@ -196,6 +196,7 @@ def test_option_value_does_not_fail_an_unspecified_configuration():
     r = req(property="measurement", operator="lte", value=5, severity="major")
     c = claim("measurement", 10)
     c.variant = "Optional driver"
+    c.scope = "option"
     c.quote = "Optional driver: measurement 10"
     f = check([r], [c])[0]
     assert f.verdict == "unverified" and f.severity == "minor"

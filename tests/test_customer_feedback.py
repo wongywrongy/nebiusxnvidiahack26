@@ -26,7 +26,8 @@ WARRANTY = Requirement(id="war", section="26 51 00", paragraph="1.10.B.1", prope
 
 def claim(cid, prop, value, unit=None, variant=None, quote=None, page=2):
     return Claim(id=cid, product="BLT", manufacturer="Lithonia", property=prop, value=value, unit=unit,
-                 variant=variant, quote=quote or f"{variant or ''} {value}".strip(), page=page)
+                 variant=variant, scope="option" if variant else "product_wide",
+                 quote=quote or f"{variant or ''} {value}".strip(), page=page)
 
 
 # ---------- configuration to meet spec ----------

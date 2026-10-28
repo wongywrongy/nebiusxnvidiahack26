@@ -78,6 +78,29 @@ def test_search_extract_finish_is_verified_and_uses_native_tools(http):
     assert inv.steps[1].succeeded and inv.steps[1].source_urls == [URL]
 
 
+def test_investigator_reuses_already_fetched_sources_and_gets_metric_names(http):
+    route = http.post(CHAT).mock(return_value=reply('finish', FINAL))
+    text = 'Product X. Rev B. Product X is still made. [Spec](/current.pdf)'
+    case = {**CASE, 'unconfirmed_properties': ['l70_hours']}
+    inv = asyncio.run(investigate(case, CLAIMS, WebClient('test'), pages=[{'url': URL, 'raw_content': text}]))
+    assert inv.outcome == 'found' and len(inv.steps) == 1 and inv.steps[0].credits == 0
+    user = json.loads(json.loads(route.calls[0].request.content)['messages'][1]['content'])
+    assert user['property_labels']['l70_hours'] == 'Rated life (L70)'
+    assert user['sources'][0]['url'] == URL and '/current.pdf' in user['sources'][0]['text']
+
+
+def test_blocked_document_reserves_search_extract_finish_for_another_source(http, monkeypatch):
+    monkeypatch.setattr(settings, 'investigate_max_steps', 4)
+    http.post(tavily.API + '/extract').respond(200, json={'results': []})
+    http.get(URL).respond(403)
+    route = http.post(CHAT).mock(side_effect=[reply('extract', {'url': URL}), reply(text='No other source')])
+    inv = asyncio.run(investigate(CASE, CLAIMS, WebClient('test')))
+    assert not inv.steps[0].succeeded
+    prompt = json.loads(route.calls[1].request.content)['messages'][0]['content']
+    assert 'distributor or agency copy' in prompt and 'do not retry the blocked assets' in prompt
+    assert [t['function']['name'] for t in json.loads(route.calls[1].request.content)['tools']] == ['search']
+
+
 def test_extract_records_returned_linked_document_url_instead_of_requested_page(http, monkeypatch):
     page = 'https://maker.test/product-page'
     async def extract(self, urls):
