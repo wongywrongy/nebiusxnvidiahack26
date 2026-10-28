@@ -17,6 +17,7 @@ page.on('pageerror', (e) => errors.push(e.message))
 const log = (...a) => console.log(new Date().toISOString(), ...a)
 
 await page.goto(base)
+if (process.env.FROM !== 'upload') {
 assert.equal((await (await page.request.get(`${base}/api/health`)).json()).mode, 'live')
 for (const f of ['sti_specseal_lci_tds_2025.pdf', '3m_c-aj-2738.pdf', '3m_ic15wb_2005.pdf'])
   await page.getByRole('button', { name: `Add ${f} to the inbox`, exact: true }).click()
@@ -60,13 +61,15 @@ await page.getByRole('button', { name: 'Check approved now', exact: true }).wait
 await page.waitForFunction(() => [...document.querySelectorAll('button')].some((b) => b.textContent === 'Check approved now' && !b.disabled), null, { timeout: 600000 })
 log('check approved now done')
 await shot(page, 'ui-outcome.png')
+}
 
-await page.getByRole('link', { name: 'Start over', exact: true }).click()
+if (await page.getByRole('link', { name: 'Start over', exact: true }).isVisible()) await page.getByRole('link', { name: 'Start over', exact: true }).click()
 await page.locator('input[type=file]').first().setInputFiles(path.join(here, '../../tests/data/off-topic.pdf'))
 await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
 await page.getByRole('heading', { name: 'Scan complete', exact: true }).waitFor({ timeout: 600000 })
-await page.getByRole('region', { name: 'Your uploads' }).waitFor()
-log('upload lands in Your uploads')
+// Uploads default to the first spec section, so the upload joins that band.
+await page.getByRole('button', { name: /^Review off-topic/ }).waitFor()
+log('upload row:', await page.locator('section[aria-label]').first().getAttribute('aria-label'))
 await shot(page, 'ui-upload.png')
 
 const [memo] = await Promise.all([context.waitForEvent('page'), page.getByRole('link', { name: 'Package review memo' }).click()])
@@ -79,7 +82,7 @@ await official.close()
 log('memo ok')
 
 await page.goto(`${base}/#scoreboard`)
-await page.getByText('6/8', { exact: false }).first().waitFor()
+await page.getByText('6 of 8', { exact: true }).first().waitFor()
 log('scoreboard ok')
 assert.deepEqual(errors, [])
 console.log(JSON.stringify({ passed: true }))
