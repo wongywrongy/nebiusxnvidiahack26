@@ -20,6 +20,21 @@ class Answer(BaseModel):
     value: int
 
 
+@respx.mock
+def test_custom_scan_reasoning_does_not_change_ordinary_extraction(monkeypatch, tmp_path):
+    monkeypatch.setattr(settings, 'speccheck_mode', 'live')
+    monkeypatch.setattr(settings, 'cache_dir', tmp_path)
+    route = respx.post(settings.nebius_base_url + 'chat/completions').respond(200, json={
+        'choices': [{'message': {'content': '{"value":1}'}}]})
+    async def call():
+        for ctx in ({'thinking': 'on'}, {}, {'thinking': 'on'}):
+            await router.call('extract_claims', Answer, [{'role': 'user', 'content': 'same source'}], ctx)
+    asyncio.run(call())
+    assert len(route.calls) == 2
+    on, off = [json.loads(c.request.content) for c in route.calls]
+    assert 'reasoning_effort' not in on and off['reasoning_effort'] == 'none'
+
+
 def test_only_checklist_drafting_opts_into_reasoning_by_default(monkeypatch):
     monkeypatch.delenv('THINKING_TASKS', raising=False)
     configured = Settings(_env_file=None)

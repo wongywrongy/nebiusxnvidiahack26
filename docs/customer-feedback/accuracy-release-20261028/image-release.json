@@ -1,0 +1,13 @@
+{
+  "source_commit": "a81d9d203f2562fdc7486b74f3863f11cf8154aa",
+  "base_commit": "8f91ae924893d70f8d8f9fff95b305a6d2fe8eff",
+  "tag": "ghcr.io/wongywrongy/speccheck:accuracy-a81d9d2",
+  "context": "/tmp/speccheck-draft-fix-image-akggbj8u",
+  "recording": "20261028-171142-5ca0fc",
+  "locked_pdfs": 13,
+  "image": "ghcr.io/wongywrongy/speccheck@sha256:a7a6dab1a2460e5ba745ee29b3060f4e44ded3e563aa3f8eccb597348e25166f",
+  "digest": "sha256:a7a6dab1a2460e5ba745ee29b3060f4e44ded3e563aa3f8eccb597348e25166f",
+  "published": true,
+  "offline_verified": true,
+  "secrets_absent": true
+}

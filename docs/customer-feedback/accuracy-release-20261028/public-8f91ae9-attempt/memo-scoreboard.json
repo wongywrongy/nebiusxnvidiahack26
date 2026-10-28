@@ -1,0 +1,870 @@
+{
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "recording": "20261028-171142-5ca0fc",
+  "captured_at": "2026-10-28T18:10:48.881Z",
+  "mode": "memo-scoreboard",
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.8034888,
+      "credits": 225,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.59951768,
+      "total_credits": 360,
+      "phase": "engineering",
+      "phase_usd": 1.59951768,
+      "phase_credits": 360,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.1965112,
+      "credits_left": 375
+    },
+    "recorded": "20261028-171142-5ca0fc",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 1884.9,
+    "disk_free_gb": 9.94
+  },
+  "package": {
+    "run_id": "20261028-171142-5ca0fc",
+    "rows": [
+      {
+        "case_id": "c01",
+        "title": "Firestop sealant, through-penetrations",
+        "number": "07 84 00-01",
+        "sender": "Coastline Firestop",
+        "decision": "approve",
+        "stamp": "No exceptions taken",
+        "spec": "unconfirmed",
+        "current_sheet": "current",
+        "still_made": "unknown",
+        "meets": 3,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 1,
+        "what_to_send": [],
+        "return_note": "Revise and resubmit 07 84 00-01 Firestop sealant, through-penetrations.\n\nPlease send:\n1. A product that meets the spec",
+        "approval_note": "Please review 07 84 00-01 Firestop sealant, through-penetrations for approval: no exceptions taken.\nNot confirmed: pending assembly proof.",
+        "best_alternate": null,
+        "manual_review_suggested": false
+      },
+      {
+        "case_id": "c02",
+        "title": "Firestop system, floor penetration",
+        "number": "07 84 00-02",
+        "sender": "Coastline Firestop",
+        "decision": "send_back",
+        "stamp": "Revise and resubmit",
+        "spec": "fails",
+        "current_sheet": "unknown",
+        "still_made": "unknown",
+        "meets": 0,
+        "doesnt_meet": 1,
+        "couldnt_confirm": 0,
+        "what_to_send": [
+          "A listed system with T = F (2 Hr)"
+        ],
+        "return_note": "Revise and resubmit 07 84 00-02 Firestop system, floor penetration.\n\nPlease send:\n1. A listed system with T = F (2 Hr)",
+        "approval_note": "Please review 07 84 00-02 Firestop system, floor penetration for approval: exceptions noted.",
+        "best_alternate": null,
+        "manual_review_suggested": false
+      },
+      {
+        "case_id": "c03",
+        "title": "Firestop sealant, cable penetrations",
+        "number": "07 84 00-03",
+        "sender": "Coastline Firestop",
+        "decision": "send_back",
+        "stamp": "Revise and resubmit",
+        "spec": "unconfirmed",
+        "current_sheet": "outdated",
+        "still_made": "unknown",
+        "meets": 0,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 4,
+        "what_to_send": [
+          "The manufacturer's current data sheet",
+          "Possible alternate: Fire Protection Products; confirm astm g21 rating, temperature rating (T), still made"
+        ],
+        "return_note": "Revise and resubmit 07 84 00-03 Firestop sealant, cable penetrations.\n\nPlease send:\n1. The manufacturer's current data sheet\nPossible alternate to confirm: Fire Protection Products (astm g21 rating, temperature rating (T), still made).",
+        "approval_note": "Please review 07 84 00-03 Firestop sealant, cable penetrations for approval: exceptions noted.\nNot confirmed: VOC (air quality), astm g21 rating, temperature rating (T), test standards.",
+        "best_alternate": {
+          "name": "Fire Protection Products",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "rank": "possible",
+          "confirm": [
+            "astm g21 rating",
+            "Temperature rating (T)",
+            "Still made"
+          ],
+          "failed": [],
+          "better": [
+            {
+              "requirement_id": "req_voc_content",
+              "label": "VOC (air quality)",
+              "alternate": "<250 g/L",
+              "submitted": null,
+              "mark": "meets"
+            }
+          ],
+          "origin": "current_document"
+        },
+        "manual_review_suggested": false
+      },
+      {
+        "case_id": "c04",
+        "title": "Firestop system, steel pipe through gypsum wall",
+        "number": "07 84 00-04",
+        "sender": "Coastline Firestop",
+        "decision": "send_back",
+        "stamp": "Revise and resubmit",
+        "spec": "fails",
+        "current_sheet": "unknown",
+        "still_made": "unknown",
+        "meets": 0,
+        "doesnt_meet": 1,
+        "couldnt_confirm": 4,
+        "what_to_send": [
+          "A listing that covers steel pipe"
+        ],
+        "return_note": "Revise and resubmit 07 84 00-04 Firestop system, steel pipe through gypsum wall.\n\nPlease send:\n1. A listing that covers steel pipe",
+        "approval_note": "Please review 07 84 00-04 Firestop system, steel pipe through gypsum wall for approval: exceptions noted.\nNot confirmed: VOC (air quality), astm g21 rating, couldn't compare: Temperature rating (T), test standards.",
+        "best_alternate": null,
+        "manual_review_suggested": false
+      },
+      {
+        "case_id": "c05",
+        "title": "LED troffer, classrooms",
+        "number": "26 51 00-01",
+        "sender": "Northgate Electric",
+        "decision": "approve_with_note",
+        "stamp": "Exceptions noted",
+        "spec": "unconfirmed",
+        "current_sheet": "unknown",
+        "still_made": "unknown",
+        "meets": 2,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 3,
+        "what_to_send": [],
+        "return_note": "Revise and resubmit 26 51 00-01 LED troffer, classrooms.\n\nPlease send:\n1. A product that meets the spec",
+        "approval_note": "Please review 26 51 00-01 LED troffer, classrooms for approval: exceptions noted.\nNot confirmed: rated life (L70), DLC listing, dims down to.",
+        "best_alternate": null,
+        "manual_review_suggested": true
+      },
+      {
+        "case_id": "c06",
+        "title": "LED downlight, corridors",
+        "number": "26 51 00-02",
+        "sender": "Northgate Electric",
+        "decision": "approve_with_note",
+        "stamp": "Exceptions noted",
+        "spec": "unconfirmed",
+        "current_sheet": "newer",
+        "still_made": "unknown",
+        "meets": 3,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 2,
+        "what_to_send": [
+          "The newer data sheet (optional)"
+        ],
+        "return_note": "Revise and resubmit 26 51 00-02 LED downlight, corridors.\n\nPlease send:\n1. The newer data sheet (optional)",
+        "approval_note": "Please review 26 51 00-02 LED downlight, corridors for approval: exceptions noted.\nNot confirmed: DLC listing, dims down to.",
+        "best_alternate": null,
+        "manual_review_suggested": true
+      },
+      {
+        "case_id": "c07",
+        "title": "LED troffer, offices",
+        "number": "26 51 00-03",
+        "sender": "Northgate Electric",
+        "decision": "send_back",
+        "stamp": "Revise and resubmit",
+        "spec": "unconfirmed",
+        "current_sheet": "unknown",
+        "still_made": "discontinued",
+        "meets": 1,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 4,
+        "what_to_send": [
+          "A current product that meets the spec (this one is discontinued)"
+        ],
+        "return_note": "Revise and resubmit 26 51 00-03 LED troffer, offices.\n\nPlease send:\n1. A current product that meets the spec (this one is discontinued)",
+        "approval_note": "Please review 26 51 00-03 LED troffer, offices for approval: exceptions noted.\nNot confirmed: rated life (L70), DLC listing, macadam steps, dims down to.",
+        "best_alternate": null,
+        "manual_review_suggested": false
+      },
+      {
+        "case_id": "c08",
+        "title": "Exit sign",
+        "number": "26 51 00-04",
+        "sender": "Northgate Electric",
+        "decision": "approve_with_note",
+        "stamp": "Exceptions noted",
+        "spec": "unconfirmed",
+        "current_sheet": "newer",
+        "still_made": "unknown",
+        "meets": 0,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 3,
+        "what_to_send": [
+          "The newer data sheet (optional)"
+        ],
+        "return_note": "Revise and resubmit 26 51 00-04 Exit sign.\n\nPlease send:\n1. The newer data sheet (optional)",
+        "approval_note": "Please review 26 51 00-04 Exit sign for approval: exceptions noted.\nNot confirmed: rated life (L70), warranty, macadam steps.",
+        "best_alternate": null,
+        "manual_review_suggested": true
+      },
+      {
+        "case_id": "s3",
+        "title": "LED troffer, stock version",
+        "number": "26 51 00-05",
+        "sender": "Northgate Electric",
+        "decision": "approve_with_note",
+        "stamp": "Exceptions noted",
+        "spec": "unconfirmed",
+        "current_sheet": "newer",
+        "still_made": "unknown",
+        "meets": 2,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 3,
+        "what_to_send": [
+          "The newer data sheet (optional)"
+        ],
+        "return_note": "Revise and resubmit 26 51 00-05 LED troffer, stock version.\n\nPlease send:\n1. The newer data sheet (optional)",
+        "approval_note": "Please review 26 51 00-05 LED troffer, stock version for approval: exceptions noted.\nNot confirmed: rated life (L70), DLC listing, dims down to.",
+        "best_alternate": null,
+        "manual_review_suggested": true
+      },
+      {
+        "case_id": "s4",
+        "title": "Firestop sealant, alternate product",
+        "number": "07 84 00-05",
+        "sender": "Coastline Firestop",
+        "decision": "approve_with_note",
+        "stamp": "Exceptions noted",
+        "spec": "unconfirmed",
+        "current_sheet": "current",
+        "still_made": "unknown",
+        "meets": 2,
+        "doesnt_meet": 0,
+        "couldnt_confirm": 2,
+        "what_to_send": [],
+        "return_note": "Revise and resubmit 07 84 00-05 Firestop sealant, alternate product.\n\nPlease send:\n1. A product that meets the spec",
+        "approval_note": "Please review 07 84 00-05 Firestop sealant, alternate product for approval: exceptions noted.\nNot confirmed: VOC (air quality), pending assembly proof.",
+        "best_alternate": null,
+        "manual_review_suggested": true
+      }
+    ],
+    "ready": 6,
+    "need_changes": 4,
+    "not_checked": 0,
+    "manual_review_suggested": 5
+  },
+  "memo_printed": true,
+  "scores": {
+    "generated_at": "2026-10-28T17:19:34+00:00",
+    "mode": "live",
+    "run_id": "20261028-171142-5ca0fc",
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "quote_gate": {
+      "claims_extracted": 292,
+      "claims_kept": 75,
+      "web_values_read": 260,
+      "web_values_kept": 28,
+      "claims_drop_rate": 0.7431506849315068,
+      "web_values_drop_rate": 0.8923076923076922
+    },
+    "tuning": {
+      "thinking": "off",
+      "thinking_tasks": "extract_requirements",
+      "max_output_tokens": 65536,
+      "max_page_chars": 6000,
+      "web_source_chars": 12000,
+      "search_depth": "basic",
+      "extract_depth": "basic",
+      "search_max_results": 5,
+      "investigate_credit_cap": 8,
+      "investigate_max_steps": 6,
+      "map_limit": 20
+    },
+    "right_call": {
+      "n": 6,
+      "of": 8
+    },
+    "caught": {
+      "n": 5,
+      "of": 6
+    },
+    "false_alarms": {
+      "n": 0,
+      "of": 2
+    },
+    "fixes_passing": {
+      "n": 0,
+      "of": 5
+    },
+    "unnecessary_notes": {
+      "n": 1,
+      "of": 2
+    },
+    "validity": {
+      "invalid_items": 0,
+      "requested_items": 8
+    },
+    "fresh_model_cost_usd": 0.649691,
+    "fresh_web_credits": 16,
+    "run_fresh_spend": {
+      "usd": 0.728727,
+      "credits": 19
+    },
+    "investigations": {
+      "scripted_unconfirmed_items": 6,
+      "primary_runs": 6,
+      "resolved": 0,
+      "revision_only": 1,
+      "capped": 0,
+      "replacement_runs": 1,
+      "replacement_capped": 0
+    },
+    "manifest": {
+      "version": 1,
+      "commit": null,
+      "config": {
+        "thinking": "off",
+        "thinking_tasks": "extract_requirements",
+        "max_output_tokens": 65536,
+        "max_page_chars": 6000,
+        "web_source_chars": 12000,
+        "search_depth": "basic",
+        "extract_depth": "basic",
+        "search_max_results": 5,
+        "investigate_credit_cap": 8,
+        "investigate_max_steps": 6,
+        "map_limit": 20,
+        "map_max_depth": 1,
+        "fix_credit_cap": 12,
+        "fix_max_candidates": 1,
+        "budget_usd_per_run": 3,
+        "budget_usd_per_day": 5.20976732,
+        "budget_tavily_credits_per_item": 60,
+        "budget_tavily_credits_per_day": 339,
+        "max_concurrency": 2,
+        "public_uploads_live": true,
+        "nebius_base_url": "https://api.tokenfactory.nebius.com/v1/",
+        "tavily_credit_usd": 0.008,
+        "models": {
+          "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "extract": "nvidia/nemotron-3-super-120b-a12b",
+          "verify": "nvidia/nemotron-3-super-120b-a12b",
+          "write": "nvidia/nemotron-3-super-120b-a12b",
+          "draft": "nvidia/nemotron-3-super-120b-a12b"
+        },
+        "prices": {
+          "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": [
+            0.06,
+            0.24
+          ],
+          "nvidia/nemotron-3-super-120b-a12b": [
+            0.3,
+            0.9
+          ],
+          "nvidia/Nemotron-3-Ultra-550b-a55b": [
+            1,
+            3
+          ]
+        }
+      },
+      "config_hash": "81f818080034ef0f6e7b42313ee3e6a2212a960942917af32eb375bd0f999974",
+      "code_hash": "9578ceed62bd8e23fac62fe04daffecfb5bf93077df985ef13c6922e03edbe01",
+      "checklists": {
+        "07_84_00.json": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+        "26_51_00.json": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1"
+      },
+      "inputs": {
+        "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+        "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+        "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+        "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+        "document_lock": "97cd7c956dda3fa5875426400ae081e8c3853f4da7787f28a0338efb9cad13df"
+      },
+      "refresh_web": false,
+      "run_id": "20261028-171142-5ca0fc",
+      "requested_ids": [
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07",
+        "c08",
+        "s3",
+        "s4"
+      ],
+      "started_at": "2026-10-28T17:11:42.735305+00:00"
+    },
+    "time_ms_per_item": 88776,
+    "cost_usd_per_item": 0.147759,
+    "rows": [
+      {
+        "id": "c01",
+        "title": "Firestop sealant, through-penetrations",
+        "product": "STI SpecSeal LCI",
+        "expected": "approve",
+        "expected_problems": [],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 2,
+        "fresh_model_cost_usd": 0.0161358,
+        "fresh_web_credits": 1,
+        "decision": "approve",
+        "found_problems": [],
+        "right_call": true,
+        "caught": 0,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": null,
+        "time_ms": 30281,
+        "model_cost_usd": 0.034405,
+        "web_credits": 1,
+        "cost_usd": 0.042405,
+        "claims_extracted": 20,
+        "claims_kept": 5,
+        "web_values_read": 15,
+        "web_values_kept": 8
+      },
+      {
+        "id": "c02",
+        "title": "Firestop system, floor penetration",
+        "product": "3M C-AJ-2738",
+        "expected": "send_back",
+        "expected_problems": [
+          "spec"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 373,
+        "fresh_model_cost_usd": 0.036636,
+        "fresh_web_credits": 6,
+        "decision": "send_back",
+        "found_problems": [
+          "spec"
+        ],
+        "right_call": true,
+        "caught": 1,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": {
+          "suggest": null,
+          "passes": false,
+          "candidates": 0
+        },
+        "time_ms": 70128,
+        "model_cost_usd": 0.037123,
+        "web_credits": 6,
+        "cost_usd": 0.085123,
+        "claims_extracted": 2,
+        "claims_kept": 2,
+        "web_values_read": 0,
+        "web_values_kept": 0
+      },
+      {
+        "id": "c03",
+        "title": "Firestop sealant, cable penetrations",
+        "product": "3M IC 15WB+",
+        "expected": "send_back",
+        "expected_problems": [
+          "currency"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 30285,
+        "fresh_model_cost_usd": 0.070167,
+        "fresh_web_credits": 1,
+        "decision": "send_back",
+        "found_problems": [
+          "currency"
+        ],
+        "right_call": true,
+        "caught": 1,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": {
+          "suggest": null,
+          "passes": false,
+          "candidates": 1
+        },
+        "time_ms": 127039,
+        "model_cost_usd": 0.142366,
+        "web_credits": 1,
+        "cost_usd": 0.150366,
+        "claims_extracted": 59,
+        "claims_kept": 16,
+        "web_values_read": 59,
+        "web_values_kept": 19
+      },
+      {
+        "id": "c04",
+        "title": "Firestop system, steel pipe through gypsum wall",
+        "product": "Hilti W-L-2078",
+        "expected": "send_back",
+        "expected_problems": [
+          "validity"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 70502,
+        "fresh_model_cost_usd": 0.0092553,
+        "fresh_web_credits": 0,
+        "decision": "send_back",
+        "found_problems": [
+          "validity"
+        ],
+        "right_call": true,
+        "caught": 1,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": {
+          "suggest": null,
+          "passes": false,
+          "candidates": 0
+        },
+        "time_ms": 28172,
+        "model_cost_usd": 0.025909,
+        "web_credits": 0,
+        "cost_usd": 0.025909,
+        "claims_extracted": 8,
+        "claims_kept": 6,
+        "web_values_read": 1,
+        "web_values_kept": 0
+      },
+      {
+        "id": "c05",
+        "title": "LED troffer, classrooms",
+        "product": "Lithonia BLT 2x4",
+        "expected": "approve",
+        "expected_problems": [],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 98675,
+        "fresh_model_cost_usd": 0.0263823,
+        "fresh_web_credits": 2,
+        "decision": "approve_with_note",
+        "found_problems": [],
+        "right_call": false,
+        "caught": 0,
+        "false_alarm": false,
+        "unnecessary_note": true,
+        "fix": null,
+        "time_ms": 40663,
+        "model_cost_usd": 0.078243,
+        "web_credits": 2,
+        "cost_usd": 0.094243,
+        "claims_extracted": 19,
+        "claims_kept": 5,
+        "web_values_read": 25,
+        "web_values_kept": 0
+      },
+      {
+        "id": "c06",
+        "title": "LED downlight, corridors",
+        "product": "Lithonia LDN6",
+        "expected": "send_back",
+        "expected_problems": [
+          "currency"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 139340,
+        "fresh_model_cost_usd": 0.0084,
+        "fresh_web_credits": 1,
+        "decision": "approve_with_note",
+        "found_problems": [
+          "currency_note"
+        ],
+        "right_call": false,
+        "caught": 0,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": {
+          "suggest": null,
+          "passes": false,
+          "candidates": 0
+        },
+        "time_ms": 15524,
+        "model_cost_usd": 0.093352,
+        "web_credits": 1,
+        "cost_usd": 0.101352,
+        "claims_extracted": 28,
+        "claims_kept": 17,
+        "web_values_read": 60,
+        "web_values_kept": 1
+      },
+      {
+        "id": "c07",
+        "title": "LED troffer, offices",
+        "product": "Lithonia 2TL4",
+        "expected": "send_back",
+        "expected_problems": [
+          "status"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 154866,
+        "fresh_model_cost_usd": 0.0335373,
+        "fresh_web_credits": 0,
+        "decision": "send_back",
+        "found_problems": [
+          "status"
+        ],
+        "right_call": true,
+        "caught": 1,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": {
+          "suggest": null,
+          "passes": false,
+          "candidates": 0
+        },
+        "time_ms": 84469,
+        "model_cost_usd": 0.036247,
+        "web_credits": 0,
+        "cost_usd": 0.036247,
+        "claims_extracted": 138,
+        "claims_kept": 10,
+        "web_values_read": 1,
+        "web_values_kept": 0
+      },
+      {
+        "id": "c08",
+        "title": "Exit sign",
+        "product": "Lithonia LQM",
+        "expected": "approve_with_note",
+        "expected_problems": [
+          "currency_note"
+        ],
+        "valid": true,
+        "diagnostics": [],
+        "warnings": [],
+        "queue_ms": 157326,
+        "fresh_model_cost_usd": 0.4491777,
+        "fresh_web_credits": 5,
+        "decision": "approve_with_note",
+        "found_problems": [
+          "currency_note"
+        ],
+        "right_call": true,
+        "caught": 1,
+        "false_alarm": false,
+        "unnecessary_note": false,
+        "fix": null,
+        "time_ms": 313933,
+        "model_cost_usd": 0.606426,
+        "web_credits": 5,
+        "cost_usd": 0.646426,
+        "claims_extracted": 18,
+        "claims_kept": 14,
+        "web_values_read": 99,
+        "web_values_kept": 0
+      }
+    ],
+    "release_gate": {
+      "scope": "cases",
+      "passed": false,
+      "issues": [
+        "Wrong calls",
+        "Missed problems",
+        "False alarms or unnecessary notes",
+        "No evidenced passing replacement",
+        "No demonstrated Investigator rescue"
+      ]
+    },
+    "runner": "local",
+    "job_name": null,
+    "wrong_spec": {
+      "n": 14,
+      "approved": 0,
+      "not_applicable": 13,
+      "other": 1,
+      "run_id": "20261028-171959-1f6c87",
+      "mode": "live",
+      "rows": [
+        {
+          "id": "w-c01",
+          "document": "Firestop sealant, through-penetrations",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-c02",
+          "document": "Firestop system, floor penetration",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-c03",
+          "document": "Firestop sealant, cable penetrations",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-c04",
+          "document": "Firestop system, steel pipe through gypsum wall",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-c05",
+          "document": "LED troffer, classrooms",
+          "section": "07 84 00",
+          "decision": "send_back"
+        },
+        {
+          "id": "w-c06",
+          "document": "LED downlight, corridors",
+          "section": "07 84 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-c07",
+          "document": "LED troffer, offices",
+          "section": "07 84 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-c08",
+          "document": "Exit sign",
+          "section": "07 84 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-off-topic",
+          "document": "Off-topic PDF",
+          "section": "07 84 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-try0-265100",
+          "document": "RectorSeal Metacaulk 1000",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-try1-265100",
+          "document": "Tremco TREMstop Acrylic",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-try2-078400",
+          "document": "Keystone KT-BPLED40 LED panel",
+          "section": "07 84 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-try3-078400",
+          "document": "Schlage ND Series Grade 1 locks",
+          "section": "07 84 00",
+          "decision": "not_applicable"
+        },
+        {
+          "id": "w-try3-265100",
+          "document": "Schlage ND Series Grade 1 locks",
+          "section": "26 51 00",
+          "decision": "not_applicable"
+        }
+      ]
+    }
+  },
+  "scoreboard": true,
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.8034888,
+      "credits": 225,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.59951768,
+      "total_credits": 360,
+      "phase": "engineering",
+      "phase_usd": 1.59951768,
+      "phase_credits": 360,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.1965112,
+      "credits_left": 375
+    },
+    "recorded": "20261028-171142-5ca0fc",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 1890.7,
+    "disk_free_gb": 9.94
+  },
+  "browser_errors": [],
+  "cost": {
+    "usd": 0,
+    "credits": 0
+  }
+}

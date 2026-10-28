@@ -1,0 +1,10 @@
+/usr/local/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+2026-10-28 18:16:25,012 speccheck.startup Today's recorded spend: {'usd': 0.0, 'credits': 0.0}; caps: {'budget_usd_per_run': 1.0, 'budget_usd_per_day': 2.0, 'budget_tavily_credits_per_item': 25.0, 'budget_tavily_credits_per_day': 150.0, 'max_concurrency': 4} (campaign ledger on local disk; hosted persistence unverified)
+2026-10-28 18:16:25,015 httpx HTTP Request: GET http://testserver/api/health "HTTP/1.1 200 OK"
+2026-10-28 18:16:25,017 httpx HTTP Request: GET http://testserver/api/scores "HTTP/1.1 200 OK"
+2026-10-28 18:16:25,044 httpx HTTP Request: GET http://testserver/api/runs/20261028-171142-5ca0fc/results "HTTP/1.1 200 OK"
+2026-10-28 18:16:25,065 httpx HTTP Request: GET http://testserver/api/runs/20261028-171142-5ca0fc/package "HTTP/1.1 200 OK"
+2026-10-28 18:16:25,216 httpx HTTP Request: GET http://testserver/api/docs/c01/sti_specseal_lci_tds_2025.pdf/pages/1.png "HTTP/1.1 200 OK"
+2026-10-28 18:16:25,219 httpx HTTP Request: GET http://testserver/memo/20261028-171142-5ca0fc "HTTP/1.1 200 OK"
+{"recording": "20261028-171142-5ca0fc", "locked_public_pdfs": 13, "recorded_results": 10, "panel": {"right_call": {"n": 6, "of": 8}, "caught": {"n": 5, "of": 6}, "false_alarms": {"n": 0, "of": 2}, "fixes_passing": {"n": 0, "of": 5}}, "package_api": true, "native_png": true, "memo_route": true, "network": "none", "keys_present": false}

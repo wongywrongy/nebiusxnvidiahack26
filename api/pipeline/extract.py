@@ -63,6 +63,9 @@ async def extract_requirements(section: str, spec_text: str, title: str = "") ->
                 "drawings or the site can show. Give the paragraph number for each. "
                 "Return at most 30 of the most directly checkable requirements, prioritizing numeric ratings, grades "
                 "and manufacturer warranties before manufacturer/model catalog lists. "
+                "Product-selection lists are checkable rules even when written as fragments without 'shall'. "
+                "Include their grouped manufacturer/model alternatives; do not return a numeric-only draft when "
+                "printed approved-product groups fit within the remaining rows. "
                 "When the section covers several product types, set product_type on each type-specific requirement "
                 "using consistent singular labels (for example cylindrical lockset, door closer, exit device). "
                 "Warranty rules belong to the product type they cover. Use null only for rules shared by all types. "
@@ -153,11 +156,15 @@ def page_batches(pages: list[dict], limit: int):
 
 
 async def extract_claims(case_id: Optional[str], pages: list[dict], labels: TriageOut, properties: list[str],
-                         *, propose: bool = False) -> tuple[ClaimsOut, list[Usage]]:
+                         *, propose: bool = False, requirements: list[Requirement] | None = None) -> tuple[ClaimsOut, list[Usage]]:
     usage, outputs, kept, identities = [], [], {}, []
     ambiguous = False
     texts = {p["page"]: p["text"] for p in pages}
     for text in page_batches(pages, settings.max_page_chars):
+        if requirements is not None:
+            descriptions = {prop: " ".join(r.text[:1000] for r in requirements if r.property == prop)
+                            for prop in {r.property for r in requirements}}
+            text = [{**text[0], "requirement_descriptions": descriptions}, *text[1:]]
         if outputs and outputs[0].model and model_quoted(outputs[0].model, pages[0]["text"]):
             text = [{**p, "document_header": pages[0]["text"][:1500]} for p in text]
         out, u = (await _read_claims(case_id, text, properties, propose=True) if propose
@@ -283,12 +290,13 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
 
 
 async def _read_claims(case_id, text, properties, *, propose=False):
+    descriptions = text[0].get("requirement_descriptions", {}) if text else {}
     messages = [
         {
             "role": "user",
             "content": (
                 "Extract the product's stated properties from this submittal. "
-                f"Return only these property names, with exactly these spellings and meanings: {json.dumps({p: _label(p) for p in properties})}. "
+                f"Return only these property names, with exactly these spellings and meanings: {json.dumps({p: descriptions.get(p, _label(p)) for p in properties})}. "
                 "Read every supplied page, including tables and notes. For a listed system, record its system number as model. "
                 "For a product, record its short printed product/model identifier as model, not a rewritten marketing title. "
                 "Use that same printed identifier in each claim's product and model; a generic category heading is not a product identity. "
@@ -366,7 +374,13 @@ async def _read_claims(case_id, text, properties, *, propose=False):
             if "model" not in schema["required"]:
                 schema["required"].append("model")
             return schema
-    return await router.call("extract_claims", ClaimsRead, messages, {"case_id": case_id})
+    if descriptions:
+        messages[0]["content"] = ("Requirement descriptions explain the requested metrics; they are not evidence "
+            "of a product's values. Copy every value and quote from its own page text. A universal grade or series "
+            "statement is not an ordering choice and needs no selected SKU. Preserve all actual option restrictions. "
+            + messages[0]["content"])
+    return await router.call("extract_claims", ClaimsRead, messages,
+                             {"case_id": case_id, **({"thinking": "on"} if descriptions else {})})
 
 
 class ClaimValueRepair(BaseModel):

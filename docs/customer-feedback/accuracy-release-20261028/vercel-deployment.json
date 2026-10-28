@@ -1,0 +1,30 @@
+{
+  "id": "dpl_4BwLP7PxhBiaykM2JMSf7cfCN94Z",
+  "name": "speccheck",
+  "url": "speccheck-96ephk415-wongywrongys-projects.vercel.app",
+  "type": "LAMBDAS",
+  "state": "READY",
+  "createdAt": 1793211859096,
+  "creator": {
+    "uid": "4upXCHPpwkHOka2wZ8cHjwpL",
+    "username": "wongywrongy"
+  },
+  "project": {
+    "id": "prj_vtszsJ4wNZ1pd7lZ1CpmpMf0D3eK",
+    "name": "speccheck",
+    "framework": null
+  },
+  "meta": {},
+  "alias": [
+    "speccheck-eosin.vercel.app",
+    "speccheck-wongywrongys-projects.vercel.app"
+  ],
+  "target": "production",
+  "regions": [
+    "iad1"
+  ],
+  "buildingAt": 1793211859988,
+  "ready": 1793211861314,
+  "readyState": "READY",
+  "aliasError": null
+}

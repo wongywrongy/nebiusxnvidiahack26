@@ -1,0 +1,2 @@
+Smoke failed:
+- c01: expected a non-cached live Nemotron call; a cached trace or replay does not prove a new provider call.
