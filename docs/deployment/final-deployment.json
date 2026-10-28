@@ -108,5 +108,78 @@
   "nebius_job_executed": false,
   "image": "ghcr.io/wongywrongy/speccheck@sha256:d5b22ed554d26dac83808ea53155d8a28d03bd3f2c6623171cb6b5321093bb07"
  },
- "previous_manifest": "final-deployment-20261028-afternoon.json"
+ "previous_manifest": "final-deployment-20261028-afternoon.json",
+ "public_checks": {
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "admin_token": false,
+  "smoke": "passed; run 20261028-195228-e527df (c01 + stamped off-topic probe, fresh Nano and Super calls)",
+  "browser_journeys": {
+   "a": {
+    "passed": true,
+    "run": "20261028-195240-316ca1",
+    "usd": 0,
+    "credits": 0
+   },
+   "b": {
+    "passed": true,
+    "run": "20261028-195245-25cf26",
+    "usd": 0,
+    "credits": 0
+   },
+   "c": {
+    "passed": true,
+    "run": "20261028-195254-7e6132",
+    "usd": 0.0732213,
+    "credits": 1
+   },
+   "d": {
+    "passed": true,
+    "run": "20261028-195511-4911e1",
+    "usd": 0.1960011,
+    "credits": 13
+   },
+   "e": {
+    "passed": true,
+    "run": "20261028-195917-3db065",
+    "usd": 0.0027249,
+    "credits": 0
+   }
+  },
+  "journey_meaning": {
+   "a": "off-topic upload: not checked, 0 web credits",
+   "b": "Try-one RectorSeal upload: quoted values",
+   "c": "UBC spec -> drafted checklist edited -> Schlage ND: ND passes, other product types set aside",
+   "d": "tray scan of 7 -> matrix -> Review -> Outcome",
+   "e": "same product under two specs"
+  },
+  "memo_pdf_and_scoreboard": "passed; Scoreboard shows 20261028-173729-554074",
+  "check_approved_now": "passed; fresh web, quoted Lithonia discontinued notice",
+  "memo_item_captures": "c02, c03, c05, c07 from the official run's memo",
+  "spend": {
+   "usd": 0.2844459,
+   "credits": 21
+  }
+ },
+ "old_endpoint_deleted_after_checks": "aiendpoint-e01y93s8ffx7g7wern",
+ "final_judging_ledger": {
+  "day": "2026-10-28",
+  "usd": 1.3143828,
+  "credits": 274,
+  "held_usd": 0.0,
+  "held_credits": 0,
+  "total_usd": 2.11041168,
+  "total_credits": 409,
+  "phase": "engineering",
+  "phase_usd": 2.11041168,
+  "phase_credits": 409,
+  "usd_limit": 75.0,
+  "credit_limit": 6000,
+  "phase_usd_limit": 75.0,
+  "phase_credit_limit": 6000,
+  "blocked": false
+ },
+ "judging_remaining": {
+  "model_usd": 72.88958832,
+  "tavily_credits": 5591
+ }
 }

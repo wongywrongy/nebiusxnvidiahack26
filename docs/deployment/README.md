@@ -1,17 +1,36 @@
-# Public deployment — October 28, 2026
+# Public deployment — final release, October 28, 2026
 
-**[Open SpecCheck](https://speccheck-wongywrongys-projects.vercel.app)** · [Frozen configuration](final-deployment.json) · [Public captures and accounting](../customer-feedback/accuracy-release-20261028/README.md)
+**[Open SpecCheck](https://speccheck-wongywrongys-projects.vercel.app)** · [Frozen configuration](final-deployment.json) · [Public checks and screenshots](../release-final/README.md)
 
-Runtime source `a81d9d2` (handoff base `8f91ae9`) is deployed by digest `sha256:a7a6dab1a2460e5ba745ee29b3060f4e44ded3e563aa3f8eccb597348e25166f` on Nebius endpoint `aiendpoint-e01y93s8ffx7g7wern` in eu-west1, cpu-d3 / 2 vCPUs / 8 GB, with a 32 GiB disk. [Native origin](https://port8000-d38t85f0yhyyzek.tunnel.applications.eu-west1.nebius.cloud). Vercel deployment `dpl_4BwLP7PxhBiaykM2JMSf7cfCN94Z` rewrites the stable URL to this origin. Runtime code was frozen **2026-10-28 18:43:03 UTC**, before the **2026-10-29 02:00 UTC** deadline.
+Source `3d35d10` (branch `release/final`: master `30ca3ec` + per-item scores fix `4138a41` + custom-checklist fix `1e7f436` + smoke probe `20cca85`) is deployed by digest `sha256:4be93dc8eeb1de118218e5e16f96e2ead88aaf6ce4cc32cf31211111f77878e1` on Nebius endpoint `aiendpoint-e01cg2e1rfwpvfpnb0` in eu-west1 (cpu-d3, 2 vCPUs, 8 GB, 32 GiB disk). The [native origin](https://port8000-gysms8dcks7n3zb.tunnel.applications.eu-west1.nebius.cloud) sits behind Vercel deployment `dpl_68tw1EwhVyfmwJUXLnhp6JCtJicY`, which rewrites the stable URL to it.
 
-The original filesystem `computefilesystem-e01syzwfv7rqexfcys` remains mounted at `/state`. The ledger was exactly **$1.59951768 / 360 credits** immediately before and after the fixed-image swap, with no holds; prior uploads and the actual GitHub Actions watch report survived. Each previous endpoint was stopped before a replacement wrote. Original endpoint `aiendpoint-e01fxw4c8jd1yq6nn5` and temporary endpoint `aiendpoint-e01q4vmzhp1ay4qpr3` were deleted only after all public checks passed.
+The filesystem `computefilesystem-e01syzwfv7rqexfcys` stays mounted at `/state`. The previous endpoint `aiendpoint-e01y93s8ffx7g7wern` was stopped at 19:44:58 UTC, before the new one wrote anything. The stable URL served the new endpoint from 19:52:00 UTC, about 7 minutes later. The old endpoint was deleted only after every public check passed. The ledger read exactly **$1.82596578 / 388 credits** before and after the swap, with no holds.
 
-Fresh no-admin smoke, all five unchanged public browser journeys, the printable memo/PDF, correct Scoreboard recording and a fresh Check approved now action passed through the stable URL. The approved-item result contains the quoted manufacturer's discontinued notice. The first deployment's custom-checklist regression was fixed with grounded requirement descriptions and reasoning for custom scans; [the evidence](../customer-feedback/accuracy-release-20261028/public-gate-fix.md) preserves the failed attempts and the smoke-tool change needed to commission with an existing cache.
+## What the Scoreboard shows
 
-The displayed recording `20261028-171142-5ca0fc` is **6/8 calls, 5/6 problems, 0/2 major false alarms, 0/5 passing replacements**, with **0/14 wrong-spec approvals** (13 not applicable, 1 sent back). It restores the October 22 recorded panel after the morning 4/8, 4/6 result. The fixed image retains this recording; no new eight-case benchmark is claimed. Public tray c01 was approve with note, versus approve in that recording. The strict case gate fails; c05/c06 and replacement limitations remain disclosed.
+Recorded run `20261028-173729-554074` (arm A of the [same-day A/B](../customer-feedback/accuracy-arms-20261028/README.md)) was recorded on `4e6066b`, the code on master. The deployed source adds only:
+- a fix to how per-item time and cost are averaged;
+- the custom-checklist drafting fix;
+- a verification-tool change.
 
-Hosted commissioning, including failed attempts: **$0.66621930 model USD / 64 Tavily credits**. Claude's preceding local recording and wrong-spec check cost **$0.83968200 / 27 credits**. Final public ledger: **$1.82596578 / 388**, no holds. Judging remaining: **$73.17403422 / 5,612 credits**; daily caps remain $8 / 600, run $3, concurrency 2. Cloud/CI billing was not measured.
+Every model request for the eight stock cases is byte-identical between the two ([parity](../release-final/stock-request-parity.json)).
 
-The GitHub Actions fallback retains its morning pinned image. Its October 28 manual report is proved ($0.06667272 / 13 credits). The first cron event fired at 15:37 UTC ([run 40717808721](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40717808721)) and skipped providers because that day's report already existed. A cron-triggered provider execution and a Nebius Serverless Job execution remain unproved. The daily schedule is capped at $0.50 / 40 credits and stops provider calls after December 15, 20:00 UTC. [Setup](../../deploy/nebius/recheck-job.md).
+| Right calls | Problems caught | Clean cases wrongly flagged | Unnecessary notes | Passing replacements |
+| --- | --- | --- | --- | --- |
+| 6 / 8 | 5 / 6 | 1 / 2 | 0 | 0 / 5 |
 
-Git changes are local on `deploy/accuracy-release`, as the handoff reserves pushes for Kyle. [Morning manifest](final-deployment-20261028-morning.json) and [October 27 manifest](final-deployment-20261027.json) remain historical; the current proof is the afternoon accuracy-release directory.
+Wrong-spec check: 0 of 14 approved (13 not applicable, 1 sent back), run `20261028-183608-dfa1b9`. Run-to-run variance: the same-day PR #20 run `20261028-171142-5ca0fc` differed only on c05; c05 flips between runs. The strict case gate fails, and no passing replacement or Investigator rescue is claimed.
+
+## Public checks (no admin token, through the stable URL)
+
+Smoke, five browser journeys (off-topic upload, Try-one upload, UBC spec → draft → Schlage, tray scan → matrix → Review → Outcome, one product under two specs), the memo/PDF and Scoreboard, and a fresh Check approved now all passed. They cost **$0.2844459 / 21 credits**. The judging allowance left is **$72.88958832 / 5,591 credits**; daily caps stay at $8 / 600, $3 per run, concurrency 2. Cloud and CI billing were not measured.
+
+## Daily re-check
+
+The GitHub Actions fallback keeps its pinned image. Its October 28 manual run is proved ($0.06667272 / 13 credits, Lithonia discontinued). The first cron event fired at 15:37 UTC ([run 40717808721](https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40717808721)) and skipped providers because that day's report already existed. No Nebius Serverless Job execution is claimed. [Setup](../../deploy/nebius/recheck-job.md).
+
+## History
+
+- [Afternoon `a81d9d2` deploy](final-deployment-20261028-afternoon.json), with its [evidence](../customer-feedback/accuracy-release-20261028/README.md).
+- [Morning manifest](final-deployment-20261028-morning.json).
+- [October 27 manifest](final-deployment-20261027.json).
