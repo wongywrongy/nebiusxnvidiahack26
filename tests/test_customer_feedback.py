@@ -165,13 +165,13 @@ def test_package_endpoint_summarizes_a_mock_run(isolated):
 def test_drafts_are_code_templates_with_options_and_alternates():
     configured = result("approve_with_note", [
         finding("spec-dim", "spec", "unverified", "minor", requirement_id="dim", title="Specify option: Dims down to",
-                configure=[ConfigOption(option="EZ1", value="1 %", claim_id="k1")]),
+                left="≤ 5 %", configure=[ConfigOption(option="EZ1", value="1 %", claim_id="k1")]),
         finding("spec-voc", "spec", "unverified", "minor", requirement_id="voc", title="Couldn't confirm: VOC (air quality)"),
     ])
     r = package.row({"number": "26 51 00-01", "title": "LED troffer"}, configured)
-    assert r.what_to_send == ["Specify EZ1 (dims down to 1 %)"]
+    assert r.what_to_send == ["Specify EZ1 → dims down to 1 % (spec ≤ 5 %)"]
     assert r.approval_note.splitlines() == ["Please review 26 51 00-01 LED troffer for approval: exceptions noted.",
-                                            "Specify EZ1 (dims down to 1 %)", "Not confirmed: VOC (air quality)."]
+                                            "Specify EZ1 → dims down to 1 % (spec ≤ 5 %)", "Not confirmed: VOC (air quality)."]
 
     sent = result("send_back", [finding("currency-outdated", "currency", "outdated")])
     sent.findings[0].fix = Fix(head="h", alternates=[
@@ -202,3 +202,10 @@ def test_memo_route_serves_the_app(isolated, monkeypatch, tmp_path):
     monkeypatch.setattr(settings, "web_dist", tmp_path / "dist")
     response = isolated.get("/memo/20261028-000000-abcdef")
     assert response.status_code == 200 and "root" in response.text
+
+
+def test_still_made_is_not_checked_unless_a_web_check_ran():
+    assert package.row({}, result("approve", [finding("a", "spec", "pass", requirement_id="a")])).still_made == "not_checked"
+    ran = result("approve_with_note", [finding("currency-newer", "currency", "note")])
+    assert package.row({}, ran).still_made == "unknown"
+    assert package.row({}, result("not_applicable", [finding("currency-newer", "currency", "note")])).still_made == "not_checked"

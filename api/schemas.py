@@ -426,7 +426,7 @@ class PackageRow(BaseModel):
     stamp: str  # industry wording for the decision, display only
     spec: Literal["meets", "fails", "configure", "unconfirmed", "not_checked"]
     current_sheet: Literal["current", "outdated", "newer", "unknown"]
-    still_made: Literal["active", "discontinued", "unknown"]
+    still_made: Literal["active", "discontinued", "unknown", "not_checked"]
     meets: int = 0
     doesnt_meet: int = 0
     couldnt_confirm: int = 0

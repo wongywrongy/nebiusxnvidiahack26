@@ -71,9 +71,11 @@ def what_to_send(f: Finding) -> Optional[str]:
 
 
 def specify(f: Finding) -> str:
-    """"Specify EZ1 (dims down to 1 %)": the ordering option whose quoted value meets the rule."""
+    """"Specify EZ1 → dims down to 1 % (spec ≤ 5 %)": the ordering option whose quoted value meets the rule."""
     names = " or ".join(dict.fromkeys(o.option for o in f.configure))
-    return f"Specify {names} ({_lc(f.title.removeprefix('Specify option: '))} {f.configure[0].value})"
+    wanted = f.compare.left_value if f.compare else None
+    spec = f" (spec {', '.join(map(str, wanted)) if isinstance(wanted, list) else wanted})" if wanted not in (None, "") else ""
+    return f"Specify {names} → {_lc(f.title.removeprefix('Specify option: '))} {f.configure[0].value}{spec}"
 
 
 def _confirm(a: Alternate) -> str:
@@ -122,7 +124,10 @@ def row(case: dict, result: Result) -> PackageRow:
         spec = "meets"
     current = ("outdated" if "currency-outdated" in by_id else "current" if "currency-current" in by_id
                else "newer" if "currency-newer" in by_id else "unknown")
-    made = "discontinued" if "status-discontinued" in by_id else "active" if "status-active" in by_id else "unknown"
+    # "unknown": the web check ran and couldn't confirm; "not_checked": no web check ran for this item.
+    web_ran = result.decision != "not_applicable" and any(f.check in ("currency", "status") for f in result.findings)
+    made = ("discontinued" if "status-discontinued" in by_id else "active" if "status-active" in by_id
+            else "unknown" if web_ran else "not_checked")
     meets, fails, unconfirmed = counts(result)
     unconfirmed_plain = sum(f.verdict in ("unverified", "pending") and not f.configure for f in rf)
     # Most important first: product status, then the sheet, then spec failures, then configuration notes.
@@ -137,7 +142,7 @@ def row(case: dict, result: Result) -> PackageRow:
     if best and best.rank == "meets_spec":
         actions.insert(0, f"Send {best.name} (meets the spec)")
     elif best:
-        actions.append(f"Possible alternate: {best.name} (confirm {_confirm(best)})")
+        actions.append(f"Possible alternate: {best.name}; confirm {_confirm(best)}")
     proposal = next((c.selection.model for f in result.findings if f.fix for c in f.fix.candidates
                      if best and c.source_url == best.source_url and c.selection
                      and c.selection.origin == "agent_proposal"), None)

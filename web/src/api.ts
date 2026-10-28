@@ -72,7 +72,7 @@ export interface PackageRow {
   decision: Decision; stamp: string
   spec: 'meets' | 'fails' | 'configure' | 'unconfirmed' | 'not_checked'
   current_sheet: 'current' | 'outdated' | 'newer' | 'unknown'
-  still_made: 'active' | 'discontinued' | 'unknown'
+  still_made: 'active' | 'discontinued' | 'unknown' | 'not_checked'
   meets: number; doesnt_meet: number; couldnt_confirm: number
   what_to_send: string[]; best_alternate?: Alternate | null; manual_review_suggested: boolean
   return_note: string; approval_note: string // code-written drafts

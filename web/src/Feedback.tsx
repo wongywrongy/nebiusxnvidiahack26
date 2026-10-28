@@ -42,7 +42,9 @@ export function ConfigureLines({ findings }: { findings: Finding[] }) {
       <span className={CAPS}>Configuration to request</span>
       {lines.map((f) => f.configure!.map((o) => (
         <div key={`${f.id}-${o.claim_id}`} className="flex flex-col gap-1">
-          <span><span className="font-semibold">Specify {o.option}</span> <span className="text-muted">· {f.title.replace('Specify option: ', '')} {o.value}{f.spec_ref ? ` · ${f.spec_ref}` : ''}</span></span>
+          <span><span className="font-semibold">Specify {o.option}</span> <span className="text-muted">→ {f.title.replace('Specify option: ', '').replace(/^\w(?![A-Z])/, (ch) => ch.toLowerCase())} {o.value}
+            {f.compare?.left_value != null && ` (spec ${Array.isArray(f.compare.left_value) ? f.compare.left_value.join(', ') : f.compare.left_value})`}
+            {f.spec_ref ? ` · ${f.spec_ref}` : ''}</span></span>
           {o.quote && <blockquote className="border-l-2 border-edge pl-3 text-sm text-muted">“{o.quote}”{o.page ? ` · page ${o.page}` : ''}</blockquote>}
         </div>
       )))}
