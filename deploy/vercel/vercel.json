@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud/$1" }
+  ],
+  "headers": [
+    { "source": "/(.*)", "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }] }
+  ]
+}
