@@ -19,7 +19,7 @@ from ..config import settings
 from .. import archive
 from ..llm import load_fixture, router
 from ..providers import budget, tavily
-from ..schemas import ClaimsOut, Evidence, ReplacementOut, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
+from ..schemas import ClaimsOut, Evidence, NamedReplacement, ReplacementOut, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
 from ..web import WebClient, snapshot
 from . import alternates, extract, spec_check, verify
 from .decide import FLAGGED
@@ -88,25 +88,40 @@ def _head(group: str, flagged: list[Finding], case: dict, claims: ClaimsOut, can
     return "Current sheet found and re-checked"
 
 
-async def named_replacement(case: dict, flagged: list[Finding], on_step=None, on_warning=None) -> tuple[Optional[str], list[Usage], float]:
-    """The successor a discontinuation notice names in its text, or None. Super reads the notice page that verify
-    quoted; the name is kept only if its sentence is on that page and the name is in the sentence."""
+async def named_replacement(case: dict, flagged: list[Finding], claims: ClaimsOut, on_step=None,
+                            on_warning=None) -> tuple[Optional[NamedReplacement], list[Usage], float]:
+    """The successor a discontinuation notice names, or None. Super reads the notice page that verify quoted; when
+    its text names none, the page's images are OCR'd (a replacement table is often a picture) and read the same way.
+    A name is kept only if its sentence or row is in the text it was read from and the name is in that quote."""
     status = next((f for f in flagged if f.id == "status-discontinued" and f.quote), None)
     if status is None:
         return None, [], 0.0
     web = WebClient(case.get("fixture", case["id"]), on_step, on_warning)  # live: verify's cached fetch, 0 credits
     pages = await web.extract([e.url for e in status.evidence][:3])
-    notice = next((p["raw_content"] for p in pages if extract.quoted(status.quote, p.get("raw_content", ""))), None)
-    if notice is None:
+    page = next((p for p in pages if extract.quoted(status.quote, p.get("raw_content", ""))), None)
+    if page is None:
         return None, [], web.credits
+    ctx = {"case_id": f"fix/{case.get('fixture', case['id'])}"}
     out, usage = await router.call("replacement", ReplacementOut, [{"role": "user", "content": (
         "This page is a manufacturer's discontinuation notice. Does its text name a replacement or successor product? "
         "If yes, give the product or family name exactly as written and the exact sentence that names it. "
         "If the text names none (for example, it points to a table or image you cannot read), return nulls.\n\n"
-        + notice[:20000])}], {"case_id": f"fix/{case.get('fixture', case['id'])}"})
-    if out.product and out.quote and extract.quoted(out.quote, notice) and extract.model_quoted(out.product, out.quote):
-        return out.product.strip(), [usage], web.credits
-    return None, [usage], web.credits
+        + page["raw_content"][:20000])}], ctx)
+    usages = [usage]
+    if out.product and out.quote and extract.quoted(out.quote, page["raw_content"]) and extract.model_quoted(out.product, out.quote):
+        return NamedReplacement(name=out.product.strip(), quote=out.quote, url=page["url"]), usages, web.credits
+    ocr = "\n".join(await web.image_text(page["url"]))
+    if not ocr:
+        return None, usages, web.credits
+    out, usage = await router.call("replacement", ReplacementOut, [{"role": "user", "content": (
+        "This text was read by OCR from an image on a manufacturer's discontinuation notice; it is often a table of "
+        f"old models and their replacements. The discontinued product submitted is {claims.model or claims.product}. "
+        "Which replacement does the text give for it? Give the name exactly as the text writes it, and the exact line "
+        "that names it. If no line applies, return nulls.\n\n" + ocr[:8000])}], {**ctx, "fixture_key": "replacement_ocr"})
+    usages.append(usage)
+    if out.product and out.quote and extract.quoted(out.quote, ocr) and extract.model_quoted(out.product, out.quote):
+        return NamedReplacement(name=out.product.strip(), quote=out.quote, url=page["url"], source="image_ocr"), usages, web.credits
+    return None, usages, web.credits
 
 
 VERIFY_LABEL = {
@@ -150,9 +165,9 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     named, usage, named_credits, named_hits = None, [], 0.0, []
     if any(f.id == "status-discontinued" for f in flagged):
         try:  # a cap here skips the named search; the category search below still runs
-            named, usage, named_credits = await named_replacement(case, flagged, on_step, on_warning)
+            named, usage, named_credits = await named_replacement(case, flagged, claims, on_step, on_warning)
             if named:
-                named_hits = (await web.search(f"{claims.manufacturer} {named} data sheet",
+                named_hits = (await web.search(f"{claims.manufacturer} {named.name} data sheet",
                                                include_domains=case.get("manufacturer_domains") or None))[:1]
         except budget.BudgetExceeded as e:
             await web.warn("fix", e)
@@ -311,6 +326,6 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     best = next((c for c in cands if c.passes), None)
     suggestion = (f"SpecCheck proposal: {best.selection.model}. Confirm configuration before ordering."
                   if best and best.selection and best.selection.origin == "agent_proposal" else best.name if best else "")
-    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion,
+    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion, named=named,
               alternates=alternates.rank(cands, requirements, claims.claims, origins))
     return fix, usage, web.credits + verify_credits

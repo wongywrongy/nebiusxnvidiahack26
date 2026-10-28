@@ -1,7 +1,7 @@
 // Customer-feedback building blocks. Presentational only: every value comes from code-decided fields
 // (Result.findings, Fix.alternates, /api/runs/{id}/package). Used by Review, Scan-complete and the memo.
 import type { ReactNode } from 'react'
-import type { Alternate, Finding, Fix, FixCandidate, PackageRow, Result } from './api'
+import { namedLabel, type Alternate, type Finding, type Fix, type FixCandidate, type NamedReplacement, type PackageRow, type Result } from './api'
 
 const CAPS = 'font-mono text-xs font-medium uppercase tracking-[0.08em] text-faint'
 const SPEC_CHECKS = new Set(['spec', 'validity', 'completeness'])
@@ -63,7 +63,7 @@ const host = (url: string) => { try { return new URL(url).hostname.replace(/^www
 const unmark = (q: string) => q.replace(/\*\*|__/g, '')
 
 // c: the checked candidate behind the alternate, for its quotes and a configuration SpecCheck proposed.
-function AlternateRow({ a, c }: { a: Alternate; c?: FixCandidate }) {
+function AlternateRow({ a, c, named }: { a: Alternate; c?: FixCandidate; named?: NamedReplacement | null }) {
   const proposal = c?.selection?.origin === 'agent_proposal' ? c.selection : null
   return (
     <li className="flex flex-col gap-1.5 border-b border-line py-3 last:border-b-0">
@@ -71,8 +71,10 @@ function AlternateRow({ a, c }: { a: Alternate; c?: FixCandidate }) {
         <span className="rounded-full px-2 text-xs font-semibold" style={{ color: RANK_COLOR[a.rank], boxShadow: `inset 0 0 0 1px ${RANK_COLOR[a.rank]}` }}>{RANK_LABEL[a.rank]}</span>
         <a href={a.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{a.name} ↗</a>
         {a.origin === 'current_document' && <span className="text-xs text-muted">current sheet of the same product</span>}
-        {a.origin === 'named_replacement' && <span className="text-xs text-muted">named on the discontinuation notice</span>}
+        {a.origin === 'named_replacement' && <span className="text-xs text-muted">{namedLabel(named)}</span>}
       </span>
+      {a.origin === 'named_replacement' && named && <span className="text-xs text-muted">
+        Notice: “{named.quote}” · <a href={named.url} target="_blank" rel="noreferrer" className="underline">{host(named.url)} ↗</a></span>}
       {a.better.length > 0 && <span className="flex flex-wrap gap-x-4 gap-y-1 text-sm">{a.better.map((m) => (
         <span key={m.requirement_id}><span className="text-muted">{m.label} </span><span style={{ color: MARK[m.mark][1] }}>{m.alternate} {MARK[m.mark][0]}</span>{m.submitted && <span className="text-faint"> (submitted {m.submitted})</span>}</span>
       ))}</span>}
@@ -105,7 +107,7 @@ export function AlternatesCard({ fix }: { fix: Fix }) {
     <div className="flex flex-col gap-1 rounded-xl border border-line bg-panel p-4">
       <span className={CAPS}>What to send instead</span>
       {shown.length ? <ul className="flex flex-col">{shown.map((a) => <AlternateRow key={a.source_url} a={a}
-        c={fix.candidates.find((c) => c.source_url === a.source_url)} />)}</ul>
+        c={fix.candidates.find((c) => c.source_url === a.source_url)} named={fix.named} />)}</ul>
         : <p className="text-soft">No alternate found that meets the spec. Ask the sub for a product that does.</p>}
       {failed.length > 0 && <details className="text-sm text-muted">
         <summary className="cursor-pointer">{failed.length} other candidate{failed.length > 1 ? 's' : ''} didn't meet spec</summary>

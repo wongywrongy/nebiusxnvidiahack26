@@ -258,6 +258,14 @@ class Alternate(BaseModel):
     origin: Literal["current_document", "named_replacement", "search"] = "search"
 
 
+class NamedReplacement(BaseModel):
+    """The successor a discontinuation notice names, with the exact text that names it."""
+    name: str
+    quote: str
+    url: str
+    source: Literal["text", "image_ocr"] = "text"  # image_ocr: read from an image on the notice (OCR)
+
+
 class Fix(BaseModel):
     """What to send instead: candidates found online, each run through the same checks as a new submittal."""
 
@@ -266,6 +274,7 @@ class Fix(BaseModel):
     candidates: list[FixCandidate] = []
     suggest: str = ""  # the best passing candidate, "" when none passes
     alternates: list[Alternate] = []  # every checked candidate, ranked in code (api/pipeline/alternates.py)
+    named: Optional[NamedReplacement] = None  # the notice's own successor, searched first
 
 
 class ConfigOption(BaseModel):

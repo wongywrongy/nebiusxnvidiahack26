@@ -1,7 +1,7 @@
 // The package review memo: one printable page per run (/memo/<runId>), letter size. Every line comes from the
 // package view and the results the run already stored; nothing is written by a model here.
 import { useEffect, useState } from 'react'
-import { DECISION_LABEL, getPackage, getProject, modelName, type Alternate, type Finding, type Fix, type PackageRow,
+import { DECISION_LABEL, getPackage, getProject, modelName, namedLabel, type Alternate, type Finding, type Fix, type PackageRow,
   type PackageSummary, type Result } from './api'
 import { ConfigureLines, PackageMatrix } from './Feedback'
 
@@ -54,7 +54,7 @@ function PointByPoint({ a, fix, result }: { a: Alternate; fix: Fix; result: Resu
   return (
     <div className="flex flex-col gap-1">
       <span className="font-semibold">{RANK[a.rank]}: <a href={a.source_url} className="underline">{a.name}</a>
-        {a.origin === 'current_document' ? ' (current sheet of the same product)' : a.origin === 'named_replacement' ? ' (named on the discontinuation notice)' : ''}</span>
+        {a.origin === 'current_document' ? ' (current sheet of the same product)' : a.origin === 'named_replacement' ? ` (${namedLabel(fix.named)}: “${fix.named?.quote ?? ''}”)` : ''}</span>
       {c?.selection?.origin === 'agent_proposal' && <span className="text-sm">Proposed by SpecCheck: {c.selection.model}. Confirm configuration before ordering.</span>}
       {c && <table className="w-full text-sm">
         <thead><tr className={CAPS}><th className="py-1 text-left">Item</th><th className="text-left">Specified</th>

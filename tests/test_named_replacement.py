@@ -22,6 +22,7 @@ CURRENT = "https://maker.test/zx-12-current.pdf"
 TEXT = ("Discontinuation notice. As of June 30, 2024, the ZX-12 family will be discontinued. "
         "Please convert this business to the ZX-20 family, its direct replacement.")
 SHEET = "Model ZX-20. Warranty 6 years."
+OCR = "Old family New\nZX-12 A12 ( flat frame) ZX-20 A12\nZX-12 SWL ( flat frame) ZX-20 SWL"
 REQ = Requirement(id="w", section="test", paragraph="", property="warranty_years", operator="gte", value=5, unit="yr",
                   text="Five year warranty")
 RETIRED = Finding(id="status-discontinued", check="status", verdict="fail", severity="major", title="Discontinued",
@@ -54,17 +55,20 @@ def live(monkeypatch, tmp_path):
 
     async def verified(*args, **kwargs):
         return [], [], [], 0, None
+    async def images(self, url):
+        return [OCR] if url == NOTICE else []
+    monkeypatch.setattr(WebClient, "image_text", images)
     monkeypatch.setattr(WebClient, "search", search)
     monkeypatch.setattr(WebClient, "extract", extract)
     monkeypatch.setattr(fix.verify, "verify", verified)
     return queries
 
 
-def model_replies(replacement: ReplacementOut):
-    """The replacement call gets `replacement`; every data sheet read gets that sheet's model."""
+def model_replies(replacement: ReplacementOut, ocr: ReplacementOut = ReplacementOut()):
+    """The notice-text call gets `replacement`, the OCR call `ocr`; every data sheet read gets that sheet's model."""
     def reply(request):
         content = json.dumps(json.loads(request.content)["messages"])
-        body = (replacement.model_dump_json() if "discontinuation notice" in content
+        body = (ocr.model_dump_json() if "read by OCR" in content else replacement.model_dump_json() if "discontinuation notice" in content
                 else claims(next(m for m in ("ZX-20", "QT-4", "ZX-12") if m in content)).model_dump_json())
         return respx.MockResponse(200, json={"choices": [{"message": {"content": body}}]})
     respx.post(settings.nebius_base_url + "chat/completions").mock(side_effect=reply)
@@ -78,6 +82,7 @@ def test_a_quoted_successor_is_searched_and_ranked_first(live):
     assert result.candidates[0].source_url == NAMED
     assert {a.source_url: a.origin for a in result.alternates}[NAMED] == "named_replacement"
     assert any(u.task == "fix: replacement" for u in usage)
+    assert result.named.source == "text" and result.named.url == NOTICE
 
 
 @pytest.mark.parametrize("reply", [
@@ -122,3 +127,35 @@ def test_the_current_sheet_reuses_the_items_own_still_made_quote(live):
     assert result.candidates[0].source_url == CURRENT and still(result).ok is True and still(result).evidence
     result, _, _ = asyncio.run(fix._fix(CASE, "currency", [outdated], [REQ], SUBMITTED, 1, 40, item_findings=[outdated]))
     assert still(result).ok is None  # no quoted proof from the item's own check: stays unconfirmed
+
+
+@respx.mock
+def test_a_successor_read_from_an_image_on_the_notice_is_labelled_and_first(live):
+    model_replies(ReplacementOut(), ocr=ReplacementOut(product="ZX-20 A12", quote="ZX-12 A12 ( flat frame) ZX-20 A12"))
+    result, _, _ = asyncio.run(fix._fix(CASE, "currency", [RETIRED], [REQ], SUBMITTED, 2, 40))
+    assert result.named.source == "image_ocr" and result.named.name == "ZX-20 A12"
+    assert result.candidates[0].source_url == NAMED and result.alternates[0].origin == "named_replacement"
+
+
+@pytest.mark.parametrize("ocr", [
+    ReplacementOut(product="ZX-20 A12", quote="ZX-12 A12 flat frame ZX-20 A12 replacement"),  # not a line of the OCR text
+    ReplacementOut(product="ZX-30", quote="ZX-12 A12 ( flat frame) ZX-20 A12"),  # name not in the line
+])
+@respx.mock
+def test_an_unquoted_ocr_successor_is_dropped(live, ocr):
+    model_replies(ReplacementOut(), ocr=ocr)
+    result, _, _ = asyncio.run(fix._fix(CASE, "currency", [RETIRED], [REQ], SUBMITTED, 2, 40))
+    assert result.named is None and [c.source_url for c in result.candidates] == [OTHER]
+
+
+@respx.mock
+def test_page_images_are_ocrd_once_and_cached(monkeypatch, tmp_path):
+    import base64
+    from api import web
+    monkeypatch.setattr(settings, "speccheck_mode", "live")
+    monkeypatch.setattr(settings, "cache_dir", tmp_path / "cache")
+    png = base64.b64encode(b"\x89PNG" + b"0" * 300).decode()
+    page = respx.get(NOTICE).respond(200, text=f'<p>replacements:</p><img src="data:image/png;base64,{png}">')
+    monkeypatch.setattr(web, "_ocr", lambda data: OCR if data.startswith(b"\x89PNG") else "")
+    assert asyncio.run(WebClient(None).image_text(NOTICE)) == [OCR]
+    assert asyncio.run(WebClient(None).image_text(NOTICE)) == [OCR] and page.call_count == 1

@@ -62,7 +62,11 @@ export interface ConfigOption { option: string; value: string; quote?: string | 
 interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
 export interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean;
   selection?: { model: string; page: number; quote: string; origin?: 'submitted' | 'agent_proposal' } | null }
-export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string; alternates?: Alternate[] }
+export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string; alternates?: Alternate[]
+  named?: NamedReplacement | null }
+// The successor a discontinuation notice names; image_ocr: read from an image on the notice (OCR).
+export interface NamedReplacement { name: string; quote: string; url: string; source: 'text' | 'image_ocr' }
+export const namedLabel = (n?: NamedReplacement | null) => n?.source === 'image_ocr' ? 'read from an image on the notice (OCR)' : 'named on the discontinuation notice'
 // Ranked in code (api/pipeline/alternates.py): meets_spec only when every check passed on quoted evidence.
 export interface BetterMark { requirement_id: string; label: string; alternate?: string | null; submitted?: string | null; mark: 'better' | 'meets' | 'worse' | 'unknown' }
 export interface Alternate { name: string; source_url: string; rank: 'meets_spec' | 'possible' | 'failed'; confirm: string[]; failed: string[]; better: BetterMark[]; origin: 'current_document' | 'named_replacement' | 'search' }

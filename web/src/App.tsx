@@ -88,6 +88,7 @@ const TASK_LABEL: Record<string, string> = {
   triage: 'sorted the pages', extract_requirements: 'read the spec', extract_claims: 'read the data sheet', product_type: 'identified the product type',
   verify: 'read the web sources', investigate: 'investigated missing documents', report: 'wrote the result',
   'fix: extract_claims': 'read a replacement', 'fix: verify': 'checked a replacement online',
+  'fix: replacement': 'read the discontinuation notice',
 }
 const taskLabel = (t: string) => TASK_LABEL[t] ?? t
 // Calls grouped by model, in order of first use, each with its distinct tasks.
@@ -876,6 +877,7 @@ function Trace({ result, mode }: { result: Result; mode: Project['mode'] }) {
         {result.checklist_id && ` · your draft checklist ${result.spec_section} ${result.spec_title} (${result.spec_rule_count} rules, unreviewed)`}
         {!!result.ocr_pages && ` · ${plural(result.ocr_pages, 'page')} scanned → OCR (Tesseract), ${mode === 'mock' ? 'mock reading by' : 'read by'} Nemotron 3 Super`}
         {result.investigation && ` · investigated in ${plural(result.investigation.steps.length, 'step')}`}
+        {fixOf(result)?.named?.source === 'image_ocr' && ' · replacement read from an image on the notice (OCR)'}
         {result.replayed_from && ' · replayed'}
         {result.evidence_label && ` · archived to ${result.evidence_label}`}
         <span className="text-faint"> · {mode === 'mock' ? 'estimated ' : ''}{kTokens(tokens)} tokens · {money(cost)} {mode === 'live' && result.usage.some((u) => u.cached) ? 'equivalent model cost' : 'model cost'} · {seconds(result.duration_ms)}</span>
