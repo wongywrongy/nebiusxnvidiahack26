@@ -3,7 +3,10 @@
 Vercel serves nothing itself. Every path is rewritten to the Nebius endpoint, so the app, API,
 event stream and uploads all come from the origin. No functions, no build, no secrets.
 
-## Deploy (Kyle)
+Live: https://speccheck-wongywrongys-projects.vercel.app (project `speccheck`, team wongywrongys-projects,
+Deployment Protection off). `speccheck.vercel.app` belongs to someone else.
+
+## Deploy
 
 ```bash
 cd deploy/vercel
