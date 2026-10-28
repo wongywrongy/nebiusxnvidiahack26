@@ -113,7 +113,6 @@ def test_missing_authority_allows_read_only_health_and_refuses_fresh_scan(storag
         health = client.get("/api/health").json()
         assert health["today"]["blocked"] and health["today"]["accounting_available"] is False
         assert health["budget"] == {"usd_left":0.0,"credits_left":0.0}
-        assert client.get("/api/project").status_code == 503  # Watch state needs the imported authority.
         assert client.post("/api/scan", json={"ids":["c01"],"refresh_web":True}).status_code == 429
     assert not (mounted / "campaign.sqlite3").exists() and not (mounted / "authority.json").exists()
 

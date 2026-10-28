@@ -36,7 +36,7 @@ log = logging.getLogger("speccheck.tokenfactory")
 # Which configured model (settings.models role) answers each task. Change routing here, nowhere else.
 TASK_MODEL: dict[str, str] = {
     "triage": "triage",
-    "extract_requirements": "extract",
+    "extract_requirements": "draft",
     "extract_claims": "extract",
     "product_type": "extract",
     "verify": "verify",
@@ -50,6 +50,7 @@ RATE_LIMIT_RETRIES = 3  # on 429, back off 1s, 2s, 4s, then RateLimited
 CONTEXT_LIMITS = {
     "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": 262 * 1024,
     "nvidia/nemotron-3-super-120b-a12b": 256 * 1024,
+    "nvidia/Nemotron-3-Ultra-550b-a55b": 1024 * 1024,
 }
 
 
