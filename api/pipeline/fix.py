@@ -13,15 +13,16 @@ answers candidate n's claims and verify, shaped like a case fixture.
 from __future__ import annotations
 
 import json
+import re
 from typing import Optional
 
 from ..config import settings
 from .. import archive
-from ..llm import load_fixture
+from ..llm import load_fixture, router
 from ..providers import budget, tavily
-from ..schemas import ClaimsOut, Evidence, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
+from ..schemas import ClaimsOut, Evidence, NamedReplacement, ReplacementOut, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
 from ..web import WebClient, snapshot
-from . import extract, spec_check, verify
+from . import alternates, extract, spec_check, verify
 from .decide import FLAGGED
 from .investigate import investigate
 
@@ -41,7 +42,7 @@ async def find_fixes(case: dict, requirements: list[Requirement], claims: Claims
         flagged.sort(key=lambda f: ("critical", "major").index(f.severity))
         with budget.credit_scope(credit_cap - credits):
             fix, u, c = await _fix(case, group, flagged, requirements, claims, max_candidates, credit_cap - credits,
-                                  investigations, on_step, on_warning)
+                                  investigations, on_step, on_warning, findings)
         flagged[0].fix = fix
         usage += u
         credits += c
@@ -88,6 +89,50 @@ def _head(group: str, flagged: list[Finding], case: dict, claims: ClaimsOut, can
     return "Current sheet found and re-checked"
 
 
+def _named(product: Optional[str], quote: Optional[str], text: str) -> bool:
+    """A kept name is quoted in the text it was read from, sits in that quote, and carries a designation (a token
+    with a capital or a digit, like "CPX" or "ZX-20"): "the following replacement options" is not a product."""
+    return bool(product and quote and extract.quoted(quote, text) and extract.model_quoted(product, quote)
+                and re.search(r"\b\w*[A-Z0-9]\w*\b", product))
+
+
+async def named_replacement(case: dict, flagged: list[Finding], claims: ClaimsOut, on_step=None,
+                            on_warning=None) -> tuple[Optional[NamedReplacement], list[Usage], float]:
+    """The successor a discontinuation notice names, or None. Super reads the notice page that verify quoted; when
+    its text names none, the page's images are OCR'd (a replacement table is often a picture) and read the same way.
+    A name is kept only if its sentence or row is in the text it was read from and the name is in that quote."""
+    status = next((f for f in flagged if f.id == "status-discontinued" and f.quote), None)
+    if status is None:
+        return None, [], 0.0
+    web = WebClient(case.get("fixture", case["id"]), on_step, on_warning)  # live: verify's cached fetch, 0 credits
+    pages = await web.extract([e.url for e in status.evidence][:3])
+    page = next((p for p in pages if extract.quoted(status.quote, p.get("raw_content", ""))), None)
+    if page is None:
+        return None, [], web.credits
+    ctx = {"case_id": f"fix/{case.get('fixture', case['id'])}"}
+    out, usage = await router.call("replacement", ReplacementOut, [{"role": "user", "content": (
+        "This page is a manufacturer's discontinuation notice. Does its text name a replacement or successor product? "
+        "If yes, give the product or family name (its model or family designation) exactly as written and the exact "
+        "sentence that names it. A phrase such as 'the following options' is not a name. "
+        "If the text names none (for example, it points to a table or image you cannot read), return nulls.\n\n"
+        + page["raw_content"][:20000])}], ctx)
+    usages = [usage]
+    if _named(out.product, out.quote, page["raw_content"]):
+        return NamedReplacement(name=out.product.strip(), quote=out.quote, url=page["url"]), usages, web.credits
+    ocr = "\n".join(await web.image_text(page["url"]))
+    if not ocr:
+        return None, usages, web.credits
+    out, usage = await router.call("replacement", ReplacementOut, [{"role": "user", "content": (
+        "This text was read by OCR from an image on a manufacturer's discontinuation notice; it is often a table of "
+        f"old models and their replacements. The discontinued product submitted is {claims.model or claims.product}. "
+        "Which replacement does the text give for it? Give the name exactly as the text writes it, and the exact line "
+        "that names it. If no line applies, return nulls.\n\n" + ocr[:8000])}], {**ctx, "fixture_key": "replacement_ocr"})
+    usages.append(usage)
+    if _named(out.product, out.quote, ocr):
+        return NamedReplacement(name=out.product.strip(), quote=out.quote, url=page["url"], source="image_ocr"), usages, web.credits
+    return None, usages, web.credits
+
+
 VERIFY_LABEL = {
     "status-discontinued": "Still made",
     "currency-current": "Current document",
@@ -117,34 +162,47 @@ def _row(f: Finding, reqs: dict[str, Requirement]) -> FixCheck:
 
 
 async def _fix(case: dict, group: str, flagged: list[Finding], requirements: list[Requirement], claims: ClaimsOut,
-               max_candidates: int, cap: float, investigations=None, on_step=None, on_warning=None) -> tuple[Fix, list[Usage], float]:
+               max_candidates: int, cap: float, investigations=None, on_step=None, on_warning=None,
+               item_findings: Optional[list[Finding]] = None) -> tuple[Fix, list[Usage], float]:
+    item_findings = item_findings or []
     fx = case.get("fixture", case["id"])
     fix_fx = f"fix/{fx}" if fx else None
     web = WebClient(fix_fx, on_step, on_warning)
     own = {d.get("url") for d in case.get("submittal", [])}
     query = _query(group, case, claims, flagged, requirements)
     domains = case.get("manufacturer_domains", []) if group == "currency" and not any(f.check == "status" for f in flagged) else []
+    named, usage, named_credits, named_hits = None, [], 0.0, []
+    if any(f.id == "status-discontinued" for f in flagged):
+        try:  # a cap here skips the named search; the category search below still runs
+            named, usage, named_credits = await named_replacement(case, flagged, claims, on_step, on_warning)
+            if named:
+                named_hits = (await web.search(f"{claims.manufacturer} {named.name} data sheet",
+                                               include_domains=case.get("manufacturer_domains") or None))[:1]
+        except budget.BudgetExceeded as e:
+            await web.warn("fix", e)
     results = await web.search(query, include_domains=domains or None)
     known = [{"url": row.source_url, "title": next((e.title for e in f.evidence if e.url == row.source_url), row.source_url)}
              for f in flagged if f.check == "currency" and f.compare for row in f.compare.rows
              if row.changed and row.source_url and row.quote]
     by_url = {}
-    for result in [*known, *results]:
+    for result in [*known, *named_hits, *results]:
         if result["url"] not in own:
             by_url.setdefault(result["url"], result)
     results = list(by_url.values())[:max_candidates]
     found = {p.get("requested_url", p["url"]): p for p in await web.extract([r["url"] for r in results])}
+    origins = {**{h["url"]: "named_replacement" for h in named_hits}, **{k["url"]: "current_document" for k in known}}
 
+    identity = claims.model or claims.product
     roles = {d["role"] for d in case["submittal"]}
     props = spec_check.properties_for(requirements)
     reqs = {r.id: r for r in requirements}
-    usage: list[Usage] = []
-    verify_credits = 0.0
+    verify_credits = named_credits
     cands: list[FixCandidate] = []
     for n, r in enumerate(results, start=1):
         page = found.get(r["url"])
         text = page["raw_content"] if page else None
         if page:
+            origins.setdefault(page["url"], origins.get(r["url"], "search"))
             r = {**r, "url": page["url"]}
         cfx = f"{fix_fx}-{n}" if fix_fx else None
         if not text:
@@ -255,7 +313,14 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
                 for check in checks:
                     if check.requirement_id == original.requirement_id and check.ok is None:
                         check.note = "No quoted evidence that this corrects the failed requirement"
-        if not any(f.id == "status-active" and f.evidence for f in vf):
+        own = (origins.get(r["url"]) == "current_document" and extract.model_quoted(identity, cl.model or cl.product)
+               and next((f for f in item_findings if f.id == "status-active" and f.quote
+                         and any(e.url == r["url"] for e in f.evidence)), None))
+        if own and not any(f.id == "status-active" and f.evidence for f in vf):
+            # The current sheet is the submitted product's own page: verify already quoted it as active there.
+            checks.append(FixCheck(label="Still made", check="status", ok=True, note="active (quoted by the item's own check)",
+                                   evidence=[e for e in own.evidence if e.url == r["url"]]))
+        elif not any(f.id == "status-active" and f.evidence for f in vf):
             checks.append(FixCheck(label="Still made", check="status", ok=None,
                                    note="No quoted confirmation that this replacement is available"))
         cands.append(FixCandidate(
@@ -270,5 +335,6 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     best = next((c for c in cands if c.passes), None)
     suggestion = (f"SpecCheck proposal: {best.selection.model}. Confirm configuration before ordering."
                   if best and best.selection and best.selection.origin == "agent_proposal" else best.name if best else "")
-    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion)
+    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion, named=named,
+              alternates=alternates.rank(cands, requirements, claims.claims, origins))
     return fix, usage, web.credits + verify_credits
