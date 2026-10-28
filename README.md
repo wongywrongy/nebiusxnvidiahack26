@@ -7,7 +7,7 @@ SpecCheck checks construction submittals against the project spec and the manufa
 ## Try it
 
 - Add the sample submittals in the Inbox, scan, review and save your decisions.
-- Read the package matrix, open a row to review **What to send**, and flag an item for manual review when it needs a person. Open **Package review memo** to print the matrix, evidence and alternate comparisons.
+- Read the package, grouped by spec section, open a row to review **What to send**, and flag an item for manual review when it needs a person. Open **Package review memo** to print the matrix, evidence and alternate comparisons.
 - No PDFs handy? Download a **Try one** product sheet beneath the drop zone, upload it and select its spec.
 - Bring your own spec: open **Specs**, draft a checklist from the example UBC Door Hardware PDF, edit/delete rows and use it for an uploaded Schlage ND sheet. Drafts are **unreviewed**, saved for this browser, and available for 14 days. Rules for other product types are disclosed separately.
 

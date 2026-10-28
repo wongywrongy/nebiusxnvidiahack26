@@ -22,7 +22,7 @@ When I showed an early version to a GC practitioner, the feedback was simple: do
 
 You drop in submittal PDFs and pick the spec section. SpecCheck reads the pages, pulls quoted values for each spec requirement, then checks the manufacturer's live website for a newer data sheet or a discontinued notice. You get:
 
-- a package view grouped by spec section: each submittal shows its documents, one square per spec rule (meets, doesn't meet, meets with an ordering option, not confirmed), and a status line only when the sheet is out of date or the product is discontinued;
+- a package view grouped by spec section: each submittal shows its documents, one square per spec rule (meets, doesn't meet, meets with an ordering option, not confirmed), and a status line only when the sheet is out of date, a newer sheet is online, or the product is discontinued;
 - a review for each item, with the PDF beside the findings, the quotes and links behind each one grouped by where each value came from (the submitted PDF page or the manufacturer's site), and **What to send**: the exact fix, the ordering option to specify when one exists, and ranked possible alternates with what's still unconfirmed;
 - an Outcome page where you save decisions or flag items for manual review, plus a printable package review memo;
 - a "Check approved now" button that re-checks already-approved products against the manufacturer's current site.
