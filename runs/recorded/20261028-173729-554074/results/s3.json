@@ -1,0 +1,1190 @@
+{
+  "case_id": "s3",
+  "title": "LED troffer, stock version",
+  "decision": "approve_with_note",
+  "summary": "Approve with notes: confirm the items below.",
+  "spec_section": "26 51 00",
+  "spec_title": "Interior Lighting",
+  "spec_rule_count": 5,
+  "spec_match_count": 3,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_t_rating_hr_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Rated life (L70)",
+      "detail": "L80 60000 hours is quoted; lumen output only declines, so L70 is at least as long. Spec requires at least 50000 hr.",
+      "why_it_matters": null,
+      "requirement_id": "req_t_rating_hr_led",
+      "claim_id": "cl-6",
+      "product_type": null,
+      "claim_ids": [
+        "cl-6"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-6",
+          "doc_file": "samples/s3/lithonia_2blt4_adp_2019-07.pdf",
+          "page": 1,
+          "quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+          "boxes": [
+            {
+              "x0": 0.2585,
+              "y0": 0.3421,
+              "x1": 0.4972,
+              "y1": 0.3541
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 50000 hr",
+        "right_label": "Submitted",
+        "right_value": "L80 60000 hours",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.3",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_warranty_years_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Warranty",
+      "detail": "Package states 5 years; spec requires at least 5 yr.",
+      "why_it_matters": null,
+      "requirement_id": "req_warranty_years_led",
+      "claim_id": "cl-8",
+      "product_type": null,
+      "claim_ids": [
+        "cl-8"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-8",
+          "doc_file": "samples/s3/lithonia_2blt4_adp_2019-07.pdf",
+          "page": 1,
+          "quote": "WARRANTY — 5-year limited warranty.",
+          "boxes": [
+            {
+              "x0": 0.098,
+              "y0": 0.8336,
+              "x1": 0.2669,
+              "y1": 0.8458
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 5 yr",
+        "right_label": "Submitted",
+        "right_value": "5 years",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 1.10.B.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-lt-dlc",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: DLC listing",
+      "detail": "Listed as a qualified DLC product, where applicable.",
+      "why_it_matters": "Without DLC confirmation, we can’t be sure the fixture qualifies for any energy rebates or meets project efficiency goals.",
+      "requirement_id": "lt-dlc",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "dlc standard",
+          "dlc premium"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.H",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_macadam_ellipse",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "macadam steps",
+      "detail": "Package states 3; spec requires at most 3.",
+      "why_it_matters": null,
+      "requirement_id": "req_macadam_ellipse",
+      "claim_id": "cl-2",
+      "product_type": null,
+      "claim_ids": [
+        "cl-2"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-2",
+          "doc_file": "samples/s3/lithonia_2blt4_adp_2019-07.pdf",
+          "page": 1,
+          "quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+          "boxes": [
+            {
+              "x0": 0.4992,
+              "y0": 0.3421,
+              "x1": 0.5216,
+              "y1": 0.3541
+            },
+            {
+              "x0": 0.098,
+              "y0": 0.3522,
+              "x1": 0.2996,
+              "y1": 0.3642
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 3",
+        "right_label": "Submitted",
+        "right_value": "3",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.6",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-lt-dim",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: Dims down to",
+      "detail": "Continuous dimming from 100 to 5 percent without flicker.",
+      "why_it_matters": "If the dimming range isn’t as specified, the lighting controls may not work smoothly, affecting comfort and energy use.",
+      "requirement_id": "lt-dim",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 5 %",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.05.C.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "currency-unverified",
+      "check": "currency",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm the current documents",
+      "detail": "No source quoted a revision or a value; check manually.",
+      "why_it_matters": "Using outdated documents risks installing a product that doesn’t match what was approved or specified.",
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "Rev. 07/01/19",
+        "right_label": "Current",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [],
+      "quote": null,
+      "decided_by": "tavily",
+      "fix": null,
+      "configure": []
+    }
+  ],
+  "comparison": [],
+  "claims": [
+    {
+      "id": "cl-2",
+      "product": "2BLT4",
+      "manufacturer": "Acuity Brands Lighting",
+      "model": "2BLT-2X4",
+      "property": "macadam_steps",
+      "value": 3.0,
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+      "selection_quote": null
+    },
+    {
+      "id": "cl-3",
+      "product": "2BLT4",
+      "manufacturer": "Acuity Brands Lighting",
+      "model": "2BLT-2X4",
+      "property": "dim_min_percent",
+      "value": 10.0,
+      "unit": "%",
+      "page": 1,
+      "bbox": null,
+      "quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+      "variant": "Non-Configurable BLT",
+      "scope": "product_wide",
+      "scope_quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+      "selection_quote": null
+    },
+    {
+      "id": "cl-4",
+      "product": "2BLT4",
+      "manufacturer": "Acuity Brands Lighting",
+      "model": "2BLT-2X4",
+      "property": "dlc_listed",
+      "value": [
+        "DLC Premium"
+      ],
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "DesignLights Consortium® (DLC) Premium qualified product.",
+      "variant": "DesignLights Consortium® (DLC) Premium qualified product.",
+      "scope": "product_wide",
+      "scope_quote": "DesignLights Consortium® (DLC) Premium qualified product. Not all versions of this product may be DLC Premium qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified.",
+      "selection_quote": null
+    },
+    {
+      "id": "cl-6",
+      "product": "2BLT4",
+      "manufacturer": "Acuity Brands Lighting",
+      "model": "2BLT-2X4",
+      "property": "l80_hours",
+      "value": 60000.0,
+      "unit": "hours",
+      "page": 1,
+      "bbox": null,
+      "quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+      "selection_quote": null
+    },
+    {
+      "id": "cl-8",
+      "product": "2BLT4",
+      "manufacturer": "Acuity Brands Lighting",
+      "model": "2BLT-2X4",
+      "property": "warranty_years",
+      "value": 5.0,
+      "unit": "years",
+      "page": 1,
+      "bbox": null,
+      "quote": "WARRANTY — 5-year limited warranty.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at:  www.acuitybrands.com/support/customer-support/terms-and-conditions",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "product_data"
+  ],
+  "extracted": {
+    "product": "2BLT4",
+    "manufacturer": "Acuity Brands Lighting",
+    "model": "2BLT-2X4",
+    "selection": null,
+    "family": null,
+    "family_quote": null,
+    "document_revision": "Rev. 07/01/19",
+    "claims": [
+      {
+        "id": "cl-2",
+        "product": "2BLT4",
+        "manufacturer": "Acuity Brands Lighting",
+        "model": "2BLT-2X4",
+        "property": "macadam_steps",
+        "value": 3.0,
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-3",
+        "product": "2BLT4",
+        "manufacturer": "Acuity Brands Lighting",
+        "model": "2BLT-2X4",
+        "property": "dim_min_percent",
+        "value": 10.0,
+        "unit": "%",
+        "page": 1,
+        "bbox": null,
+        "quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+        "variant": "Non-Configurable BLT",
+        "scope": "product_wide",
+        "scope_quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-4",
+        "product": "2BLT4",
+        "manufacturer": "Acuity Brands Lighting",
+        "model": "2BLT-2X4",
+        "property": "dlc_listed",
+        "value": [
+          "DLC Premium"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "DesignLights Consortium® (DLC) Premium qualified product.",
+        "variant": "DesignLights Consortium® (DLC) Premium qualified product.",
+        "scope": "product_wide",
+        "scope_quote": "DesignLights Consortium® (DLC) Premium qualified product. Not all versions of this product may be DLC Premium qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified.",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-6",
+        "product": "2BLT4",
+        "manufacturer": "Acuity Brands Lighting",
+        "model": "2BLT-2X4",
+        "property": "l80_hours",
+        "value": 60000.0,
+        "unit": "hours",
+        "page": 1,
+        "bbox": null,
+        "quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-8",
+        "product": "2BLT4",
+        "manufacturer": "Acuity Brands Lighting",
+        "model": "2BLT-2X4",
+        "property": "warranty_years",
+        "value": 5.0,
+        "unit": "years",
+        "page": 1,
+        "bbox": null,
+        "quote": "WARRANTY — 5-year limited warranty.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at:  www.acuitybrands.com/support/customer-support/terms-and-conditions",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "2BLT4",
+      "manufacturer": "Acuity Brands Lighting",
+      "model": "2BLT-2X4",
+      "selection": null,
+      "family": null,
+      "family_quote": null,
+      "document_revision": "Rev. 07/01/19",
+      "claims": [
+        {
+          "id": "cl-2",
+          "product": "2BLT4",
+          "manufacturer": "Acuity Brands Lighting",
+          "model": "2BLT-2X4",
+          "property": "macadam_steps",
+          "value": 3.0,
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Color Variation within 3-step MacAdam ellipse (3SDCM).",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-3",
+          "product": "2BLT4",
+          "manufacturer": "Acuity Brands Lighting",
+          "model": "2BLT-2X4",
+          "property": "dim_min_percent",
+          "value": 10.0,
+          "unit": "%",
+          "page": 1,
+          "bbox": null,
+          "quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+          "variant": "Non-Configurable BLT",
+          "scope": "product_wide",
+          "scope_quote": "Non-Configurable BLT: Generic 0-10 volt dimming driver. Dims to 10%",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-4",
+          "product": "2BLT4",
+          "manufacturer": "Acuity Brands Lighting",
+          "model": "2BLT-2X4",
+          "property": "dlc_listed",
+          "value": [
+            "DLC Premium"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "DesignLights Consortium® (DLC) Premium qualified product.",
+          "variant": "DesignLights Consortium® (DLC) Premium qualified product.",
+          "scope": "product_wide",
+          "scope_quote": "DesignLights Consortium® (DLC) Premium qualified product. Not all versions of this product may be DLC Premium qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified.",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-6",
+          "product": "2BLT4",
+          "manufacturer": "Acuity Brands Lighting",
+          "model": "2BLT-2X4",
+          "property": "l80_hours",
+          "value": 60000.0,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000).",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-8",
+          "product": "2BLT4",
+          "manufacturer": "Acuity Brands Lighting",
+          "model": "2BLT-2X4",
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "WARRANTY — 5-year limited warranty.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at:  www.acuitybrands.com/support/customer-support/terms-and-conditions",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "unknown",
+      "replacement": null,
+      "current_revision": null,
+      "status_date": null,
+      "status_quote": null,
+      "status_family": null,
+      "current_values": [],
+      "source_urls": [
+        "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf",
+        "https://www.acuitybrands.com/resources/filters?keyword=2BLT&sortBy=relevance&pageSize=10&pageNumber=1"
+      ],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+        "tier": "manufacturer",
+        "title": "Technical Downloads",
+        "retrieved_at": "2026-10-28T17:43:32+00:00",
+        "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+        "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://insights.acuitybrands.com/product-updates-blog/lithonia-lighting-commercial-outdoor-discontinuations-2",
+        "tier": "manufacturer",
+        "title": "Lithonia Lighting® Commercial Outdoor Discontinuations",
+        "retrieved_at": "2026-10-28T17:43:32+00:00",
+        "sha256": "1363e23ea6de81477f2dc3f04791503fb55599f0166031781af5721990c6eacd",
+        "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+        "tier": "manufacturer",
+        "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+        "retrieved_at": "2026-10-28T17:43:33+00:00",
+        "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+        "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf",
+        "tier": "manufacturer",
+        "title": "BLT Series LED Troffer Specification Sheet",
+        "retrieved_at": "2026-10-28T06:57:44+00:00",
+        "sha256": "142b001bf10dc66e04b011e3ff0c27dd44a13a06ef4c3ff511eb782e44f184f8",
+        "excerpt": "COMMERCIAL INDOOR  BLT-2X4 BLT Series LED 2BLT4 \n\n2' x 4' LED Catalog Number Notes Type \n\n# FEATURES & SPECIFICATIONS INTENDED USE —The BLT Best-in-Value Low Profile LED luminaire features a popular center basket design that offers a clean, versatile style and volumetric distribution. High efficacy LED light engines deliver energy savings and low maintenance compared to traditional sources. An ext",
+        "archived_path": null,
+        "cache_hit": true
+      }
+    ]
+  },
+  "document_revision": "Rev. 07/01/19",
+  "note_to_subcontractor": "Approve with notes: confirm the items below.\n\nCouldn't confirm: DLC listing: Listed as a qualified DLC product, where applicable.\nCouldn't confirm: Dims down to: Continuous dimming from 100 to 5 percent without flicker.\nCouldn't confirm the current documents: No source quoted a revision or a value; check manually.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 6135,
+      "output_tokens": 143,
+      "cost_usd": 0.00040242,
+      "latency_ms": 1663,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3850,
+      "output_tokens": 1271,
+      "cost_usd": 0.0022989,
+      "latency_ms": 5649,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7048,
+      "output_tokens": 112,
+      "cost_usd": 0.0022152,
+      "latency_ms": 1848,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9068,
+      "output_tokens": 88,
+      "cost_usd": 0.0027996,
+      "latency_ms": 1568,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4261,
+      "output_tokens": 86,
+      "cost_usd": 0.0013557,
+      "latency_ms": 1762,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2787,
+      "output_tokens": 20,
+      "cost_usd": 0.0008541,
+      "latency_ms": 1283,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5882,
+      "output_tokens": 20,
+      "cost_usd": 0.0017826,
+      "latency_ms": 1519,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6121,
+      "output_tokens": 20,
+      "cost_usd": 0.0018543,
+      "latency_ms": 1343,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6647,
+      "output_tokens": 85,
+      "cost_usd": 0.0020706,
+      "latency_ms": 2031,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4579,
+      "output_tokens": 20,
+      "cost_usd": 0.0013917,
+      "latency_ms": 1521,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6253,
+      "output_tokens": 131,
+      "cost_usd": 0.0019938,
+      "latency_ms": 1835,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6509,
+      "output_tokens": 85,
+      "cost_usd": 0.0020292,
+      "latency_ms": 1720,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2502,
+      "output_tokens": 26,
+      "cost_usd": 0.000774,
+      "latency_ms": 1728,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6463,
+      "output_tokens": 381,
+      "cost_usd": 0.0022818,
+      "latency_ms": 3067,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9522,
+      "output_tokens": 124,
+      "cost_usd": 0.0029682,
+      "latency_ms": 1955,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11545,
+      "output_tokens": 428,
+      "cost_usd": 0.0038487,
+      "latency_ms": 3292,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14822,
+      "output_tokens": 230,
+      "cost_usd": 0.0046536,
+      "latency_ms": 2938,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 17900,
+      "output_tokens": 129,
+      "cost_usd": 0.0054861,
+      "latency_ms": 2230,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 20496,
+      "output_tokens": 497,
+      "cost_usd": 0.0065961,
+      "latency_ms": 26455,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5208,
+      "output_tokens": 610,
+      "cost_usd": 0.0021114,
+      "latency_ms": 3285,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5869,
+      "output_tokens": 845,
+      "cost_usd": 0.0025212,
+      "latency_ms": 3810,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7094,
+      "output_tokens": 575,
+      "cost_usd": 0.0026457,
+      "latency_ms": 2898,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4774,
+      "output_tokens": 20,
+      "cost_usd": 0.0014502,
+      "latency_ms": 1483,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5882,
+      "output_tokens": 20,
+      "cost_usd": 0.0017826,
+      "latency_ms": 1519,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6121,
+      "output_tokens": 20,
+      "cost_usd": 0.0018543,
+      "latency_ms": 1343,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6647,
+      "output_tokens": 85,
+      "cost_usd": 0.0020706,
+      "latency_ms": 2031,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4579,
+      "output_tokens": 20,
+      "cost_usd": 0.0013917,
+      "latency_ms": 1521,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 574,
+      "output_tokens": 249,
+      "cost_usd": 0.0003963,
+      "latency_ms": 2429,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 8.0,
+  "duration_ms": 100378,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "2BLT-2X4 ADP datasheet site:acuitybrands.com"
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 3069,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 2,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": [
+          "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+        ]
+      },
+      {
+        "n": 3,
+        "tool": "search",
+        "args": {
+          "query": "\"2BLT4 ADP\" site:acuitybrands.com filetype:pdf"
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2575,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "\"2BLT4 ADP\" \"spec sheet\" site:acuitybrands.com"
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2373,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 5,
+        "tool": "search",
+        "args": {
+          "query": "\"2BLT4 ADP\" filetype:pdf"
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 1687,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 6,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf",
+          "document_title": "BLT Series LED Troffer Specification Sheet",
+          "revision_quote": "Not found in extracted text",
+          "evidence_quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000). Color Variation within 3-step MacAdam ellipse (3SDCM).",
+          "status": "unknown",
+          "status_quote": "No discontinuation notice found for this product in searched sources.",
+          "note": "The spec sheet confirms l80_hours and macadam_steps properties. Warranty years not located in extracted text; no explicit statement of product availability or discontinuation found."
+        },
+        "summary": "revision unknown, unknown",
+        "credits": 0.0,
+        "ms": 63,
+        "succeeded": true,
+        "source_urls": []
+      }
+    ],
+    "outcome": "found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "2BLT-2X4 ADP datasheet site:acuitybrands.com"
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 3069,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": [
+            "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf"
+          ]
+        },
+        {
+          "n": 3,
+          "tool": "search",
+          "args": {
+            "query": "\"2BLT4 ADP\" site:acuitybrands.com filetype:pdf"
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2575,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 4,
+          "tool": "search",
+          "args": {
+            "query": "\"2BLT4 ADP\" \"spec sheet\" site:acuitybrands.com"
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2373,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 5,
+          "tool": "search",
+          "args": {
+            "query": "\"2BLT4 ADP\" filetype:pdf"
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 1687,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 6,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://img.acuitybrands.com/public-assets/catalog/456337/blt-2x4.pdf",
+            "document_title": "BLT Series LED Troffer Specification Sheet",
+            "revision_quote": "Not found in extracted text",
+            "evidence_quote": "80% LED lumen maintenance at 60,000 hours (L80/60,000). Color Variation within 3-step MacAdam ellipse (3SDCM).",
+            "status": "unknown",
+            "status_quote": "No discontinuation notice found for this product in searched sources.",
+            "note": "The spec sheet confirms l80_hours and macadam_steps properties. Warranty years not located in extracted text; no explicit statement of product availability or discontinuation found."
+          },
+          "summary": "revision unknown, unknown",
+          "credits": 0.0,
+          "ms": 63,
+          "succeeded": true,
+          "source_urls": []
+        }
+      ],
+      "outcome": "found",
+      "purpose": "primary",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [],
+        "source_urls": [
+          "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+        ],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "15251ce97314cc3e06f59069a6ec031666572727996befff6b10ac2b5c8ef685",
+  "fresh_model_cost_usd": 0.056379,
+  "fresh_web_credits": 8.0,
+  "queue_ms": 341265,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 8,
+  "claims_kept": 5,
+  "web_values_read": 9,
+  "web_values_kept": 0,
+  "drop_reasons": {
+    "claim:quote_not_on_page": 1,
+    "claim:value_not_in_quote": 1,
+    "claim:variant_not_in_quote": 1,
+    "web:quote_not_on_source": 9
+  }
+}

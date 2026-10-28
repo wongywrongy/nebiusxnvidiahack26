@@ -2,6 +2,7 @@ import asyncio
 import json
 
 import httpx
+import pymupdf as fitz
 import pytest
 from fastapi.testclient import TestClient
 
@@ -11,7 +12,7 @@ from api.pipeline.runner import Run, execute
 from scripts import smoke
 
 
-def deployment(*, mode="live", cached=False, replay=False, upload_error=False, bad_watch=False, shared=True):
+def deployment(*, mode="live", cached=False, replay=False, upload_error=False, bad_watch=False, shared=True, upload_cached=None):
     calls = []
     def respond(request):
         path = request.url.path
@@ -34,7 +35,8 @@ def deployment(*, mode="live", cached=False, replay=False, upload_error=False, b
             body = {"done": True, "results": [{**common, "case_id": "c01", "replayed_from": "recorded" if replay else None,
                 "usage": [{"model": "nvidia/nemotron-3-super-120b-a12b", "cached": cached}]}]}
             if not upload_error:
-                body["results"].append({**common, "case_id": "upload-fixture"})
+                body["results"].append({**common, "case_id": "upload-fixture", "usage": [
+                    {"model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B", "cached": cached if upload_cached is None else upload_cached}]})
         else:
             raise AssertionError(path)
         return httpx.Response(200, json=body)
@@ -48,6 +50,15 @@ def test_smoke_checks_two_inputs_with_exactly_one_bounded_scan():
     scans = [json.loads(body) for method, path, body in calls if path == "/api/scan"]
     assert scans == [{"ids": ["c01", "upload-fixture"], "delay_ms": 0, "shared_item_budget": True}]
     assert any(body.startswith(b"%PDF") for _, path, body in calls if path == "/api/inbox")
+    uploaded = next(body for _, path, body in calls if path == "/api/inbox" and body.startswith(b"%PDF"))
+    with fitz.open(stream=uploaded, filetype="pdf") as probe:
+        assert "Deployment smoke probe" in probe[0].get_text()
+
+
+def test_fresh_probe_can_prove_provider_access_with_preserved_product_cache():
+    client, _ = deployment(cached=True, upload_cached=False)
+    with client:
+        assert smoke.check(client, poll_s=0) == []
 
 
 @pytest.mark.parametrize("options,part", [({"mode": "mock"}, "mode: live"), ({"shared": False}, "shared smoke budget"),

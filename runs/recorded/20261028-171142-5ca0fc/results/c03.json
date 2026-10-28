@@ -1,0 +1,2599 @@
+{
+  "case_id": "c03",
+  "title": "Firestop sealant, cable penetrations",
+  "decision": "send_back",
+  "summary": "Send back: see what to send.",
+  "spec_section": "07 84 00",
+  "spec_title": "Firestopping",
+  "spec_rule_count": 4,
+  "spec_match_count": 0,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: VOC (air quality)",
+      "detail": "VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).",
+      "why_it_matters": "Without confirmed low VOC, we can’t be sure the sealant meets air quality rules that protect workers and occupants.",
+      "requirement_id": "req_voc_content",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: astm g21 rating",
+      "detail": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+      "why_it_matters": "If mold resistance isn’t verified, the sealant could fail in damp areas, leading to health risks and costly rework.",
+      "requirement_id": "req_mold_resistance",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_t_rating_min_equal_f",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: Temperature rating (T)",
+      "detail": "Both quoted ratings are needed for this comparison.",
+      "why_it_matters": "We need both temperature ratings to confirm the sealant will hold up during a fire — guessing isn’t safe on site.",
+      "requirement_id": "req_t_rating_min_equal_f",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "T = F",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: Test standards",
+      "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+      "why_it_matters": "Without proof of proper fire testing, we can’t trust the sealant will stop flames and smoke from spreading through floor or wall gaps.",
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "currency-outdated",
+      "check": "currency",
+      "verdict": "outdated",
+      "severity": "major",
+      "title": "Data sheet is out of date",
+      "detail": "The submitted sheet (undated) differs from the current source (January / 2026) on: Highest service temperature.",
+      "why_it_matters": "An outdated data sheet might not reflect the product’s real performance today, risking use of a material that doesn’t meet current specs.",
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [
+        "cl-13"
+      ],
+      "highlights": [
+        {
+          "claim_id": "cl-13",
+          "doc_file": "c03/3m_ic15wb_2005.pdf",
+          "page": 1,
+          "quote": "Continuous operating temperature not to exceed 120°F (48°C).",
+          "boxes": [
+            {
+              "x0": 0.394,
+              "y0": 0.6942,
+              "x1": 0.6303,
+              "y1": 0.7062
+            },
+            {
+              "x0": 0.394,
+              "y0": 0.7081,
+              "x1": 0.5884,
+              "y1": 0.7201
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Submitted (undated)",
+        "left_value": null,
+        "right_label": "Current (January / 2026)",
+        "right_value": null,
+        "verdict": "changed",
+        "rows": [
+          {
+            "property": "service_temp_max_f",
+            "label": "Highest service temperature",
+            "submitted": "120 °F",
+            "current": "180 °F",
+            "changed": true,
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)"
+          }
+        ]
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "tier": "manufacturer",
+          "title": "Fire Protection Products",
+          "retrieved_at": "2026-10-28T03:49:46+00:00",
+          "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+          "excerpt": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://multimedia.3m.com/mws/media/493817O/3m-fire-protection-products-full-line-brochure.pdf",
+          "tier": "manufacturer",
+          "title": "Trust and Confidence. Even under fire.",
+          "retrieved_at": "2026-10-28T03:49:46+00:00",
+          "sha256": "f052408224af4c43529addae12cb8037347e3a588007e9ab764196ff097c1ea5",
+          "excerpt": "3M™ Fire Protection Products 1 3M.com/firestop 1-800-328-1687 3M™ Fire Protection T rust and Confidence. Even under fire.\nFull Line Catalog 2 3M™ Fire Protection Products 3 3M.com/firestop 1-800-328-1687 3M Fire Protection Through-Penetration Firestops Fire Barrier Sealants and Foam 6-7 .............................\nFire Barrier Watertight Sealants & Tape 8 ..................\nFire Barrier Devices ",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+          "tier": "manufacturer",
+          "title": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+          "retrieved_at": "2026-10-28T03:49:46+00:00",
+          "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+          "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "tier": "manufacturer",
+          "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "retrieved_at": "2026-10-28T03:49:46+00:00",
+          "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+          "excerpt": "Fire Protection Products 3M™ Fire Barrier Sealant IC 15WB+ Page 1 of 4 Technical Data Sheet January / 2026 Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, gun-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M™ Fire Barrier Sealant IC 15WB+ firestops throu",
+          "archived_path": null,
+          "cache_hit": true
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "3M 3M Fire Barrier IC 15WB+ Sealant IC 15WB+ current data sheet",
+        "candidates": [
+          {
+            "name": "Fire Protection Products",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "documents": [
+              {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "tier": "manufacturer",
+                "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "retrieved_at": "2026-10-28T03:52:16+00:00",
+                "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                "excerpt": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                "tier": "manufacturer",
+                "title": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                "retrieved_at": "2026-10-28T03:52:48+00:00",
+                "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+                "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                "tier": "manufacturer",
+                "title": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                "retrieved_at": "2026-10-28T03:52:48+00:00",
+                "sha256": "870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1",
+                "excerpt": "3M FireBarrier™ Sealant IC 15 WB+ 02/06/24 __________________________________________________________________________________________ Page 1 of 12 Safety Data Sheet Copyright,2024, 3M Company.\nAll rights reserved. Copying and/or downloading of this information for the purpose of properly utilizing 3M products is allowed provided that: (1) the information is copied in full with no changes unless pr",
+                "archived_path": null,
+                "cache_hit": true
+              }
+            ],
+            "checks": [
+              {
+                "label": "VOC (air quality)",
+                "check": "spec",
+                "ok": true,
+                "note": "<250 g/L",
+                "requirement_id": "req_voc_content",
+                "claim_ids": [
+                  "cl-17"
+                ],
+                "evidence": [
+                  {
+                    "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "tier": "manufacturer",
+                    "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "retrieved_at": "2026-10-28T03:52:16+00:00",
+                    "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                    "excerpt": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                    "archived_path": null,
+                    "cache_hit": true
+                  }
+                ]
+              },
+              {
+                "label": "astm g21 rating",
+                "check": "spec",
+                "ok": null,
+                "note": "not confirmed",
+                "requirement_id": "req_mold_resistance",
+                "claim_ids": [],
+                "evidence": []
+              },
+              {
+                "label": "Temperature rating (T)",
+                "check": "spec",
+                "ok": null,
+                "note": "not confirmed",
+                "requirement_id": "req_t_rating_min_equal_f",
+                "claim_ids": [],
+                "evidence": []
+              },
+              {
+                "label": "Test standards",
+                "check": "spec",
+                "ok": true,
+                "note": "",
+                "requirement_id": "fs-std",
+                "claim_ids": [
+                  "cl-15"
+                ],
+                "evidence": [
+                  {
+                    "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "tier": "manufacturer",
+                    "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "retrieved_at": "2026-10-28T03:52:16+00:00",
+                    "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                    "excerpt": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                    "archived_path": null,
+                    "cache_hit": true
+                  }
+                ]
+              },
+              {
+                "label": "Current document",
+                "check": "currency",
+                "ok": true,
+                "note": "",
+                "requirement_id": null,
+                "claim_ids": [],
+                "evidence": [
+                  {
+                    "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "tier": "manufacturer",
+                    "title": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                    "retrieved_at": "2026-10-28T03:52:48+00:00",
+                    "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                    "excerpt": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                    "archived_path": null,
+                    "cache_hit": true
+                  },
+                  {
+                    "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "tier": "manufacturer",
+                    "title": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                    "retrieved_at": "2026-10-28T03:52:48+00:00",
+                    "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                    "excerpt": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                    "archived_path": null,
+                    "cache_hit": true
+                  }
+                ]
+              },
+              {
+                "label": "Still made",
+                "check": "status",
+                "ok": null,
+                "note": "No quoted confirmation that this replacement is available",
+                "requirement_id": null,
+                "claim_ids": [],
+                "evidence": []
+              }
+            ],
+            "claims": [
+              {
+                "id": "cl-4",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "document_revision",
+                "value": "© 3M 2018",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "© 3M 2018. All rights reserved.",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "© 3M 2018. All rights reserved.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-12",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-13",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "service_temp_max_f",
+                "value": 180.0,
+                "unit": "°F",
+                "page": 1,
+                "bbox": null,
+                "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-14",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "service_temp_range_f",
+                "value": "-20° to 180°F",
+                "unit": "°F",
+                "page": 1,
+                "bbox": null,
+                "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-15",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "ASTM E 1966 (UL 2079)",
+                  "CAN/ULC-S115"
+                ],
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-17",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "page": 1,
+                "bbox": null,
+                "quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-4-bundle",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "document_revision",
+                "value": "© 3M 2018",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "© 3M 2018. All rights reserved.",
+                "variant": "© 3M 2018. All rights reserved.",
+                "scope": "unknown",
+                "scope_quote": "© 3M 2018. All rights reserved.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-12-bundle",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "penetrant_types",
+                "value": [
+                  "metallic pipe",
+                  "plastic pipe",
+                  "conduit",
+                  "power and communication cable",
+                  "cable trays",
+                  "busways",
+                  "combos",
+                  "insulated pipe",
+                  "HVAC duct penetrations"
+                ],
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                "variant": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                "scope": "unknown",
+                "scope_quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-13-bundle",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "service_temp_max_f",
+                "value": 180.0,
+                "unit": "°F",
+                "page": 1,
+                "bbox": null,
+                "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "variant": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "scope": "unknown",
+                "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-14-bundle",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "service_temp_range_f",
+                "value": "-20° to 180°F",
+                "unit": "°F",
+                "page": 1,
+                "bbox": null,
+                "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "variant": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "scope": "unknown",
+                "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-15-bundle",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "ASTM E 1966 (UL 2079)",
+                  "CAN/ULC-S115"
+                ],
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                "variant": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                "scope": "unknown",
+                "scope_quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-17-bundle",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "property": "voc_g_per_l",
+                "value": "<250",
+                "unit": "g/L",
+                "page": 1,
+                "bbox": null,
+                "quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "variant": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "scope": "unknown",
+                "scope_quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                "selection_quote": null
+              },
+              {
+                "id": "clm-2",
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "IC 15WB+",
+                "property": "standards",
+                "value": [
+                  "ASTM E 814 (UL 1479)",
+                  "CAN/ULC S115"
+                ],
+                "unit": null,
+                "page": 2,
+                "bbox": null,
+                "quote": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115",
+                "variant": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115",
+                "scope": "unknown",
+                "scope_quote": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115",
+                "selection_quote": null
+              }
+            ],
+            "selection": null,
+            "document_roles": [
+              "product_data"
+            ],
+            "extracted": {
+              "product": "3M™ Fire Barrier Sealant IC 15WB+",
+              "manufacturer": "3M",
+              "model": "3M™ Fire Barrier Sealant IC 15WB+",
+              "selection": null,
+              "family": null,
+              "family_quote": null,
+              "document_revision": null,
+              "claims": [
+                {
+                  "id": "cl-4",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "document_revision",
+                  "value": "© 3M 2018",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "© 3M 2018. All rights reserved.",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "© 3M 2018. All rights reserved.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-12",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "penetrant_types",
+                  "value": [
+                    "metallic pipe",
+                    "plastic pipe",
+                    "conduit",
+                    "power and communication cable",
+                    "cable trays",
+                    "busways",
+                    "combos",
+                    "insulated pipe",
+                    "HVAC duct penetrations"
+                  ],
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-13",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "service_temp_max_f",
+                  "value": 180.0,
+                  "unit": "°F",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-14",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "service_temp_range_f",
+                  "value": "-20° to 180°F",
+                  "unit": "°F",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-15",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "standards",
+                  "value": [
+                    "ASTM E 814 (UL 1479)",
+                    "ASTM E 1966 (UL 2079)",
+                    "CAN/ULC-S115"
+                  ],
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-17",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "voc_g_per_l",
+                  "value": "<250",
+                  "unit": "g/L",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-4-bundle",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "document_revision",
+                  "value": "© 3M 2018",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "© 3M 2018. All rights reserved.",
+                  "variant": "© 3M 2018. All rights reserved.",
+                  "scope": "unknown",
+                  "scope_quote": "© 3M 2018. All rights reserved.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-12-bundle",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "penetrant_types",
+                  "value": [
+                    "metallic pipe",
+                    "plastic pipe",
+                    "conduit",
+                    "power and communication cable",
+                    "cable trays",
+                    "busways",
+                    "combos",
+                    "insulated pipe",
+                    "HVAC duct penetrations"
+                  ],
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                  "variant": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                  "scope": "unknown",
+                  "scope_quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-13-bundle",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "service_temp_max_f",
+                  "value": 180.0,
+                  "unit": "°F",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "variant": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "scope": "unknown",
+                  "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-14-bundle",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "service_temp_range_f",
+                  "value": "-20° to 180°F",
+                  "unit": "°F",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "variant": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "scope": "unknown",
+                  "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-15-bundle",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "standards",
+                  "value": [
+                    "ASTM E 814 (UL 1479)",
+                    "ASTM E 1966 (UL 2079)",
+                    "CAN/ULC-S115"
+                  ],
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                  "variant": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                  "scope": "unknown",
+                  "scope_quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-17-bundle",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "property": "voc_g_per_l",
+                  "value": "<250",
+                  "unit": "g/L",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "variant": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "scope": "unknown",
+                  "scope_quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                  "selection_quote": null
+                },
+                {
+                  "id": "clm-2",
+                  "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                  "manufacturer": "3M",
+                  "model": "IC 15WB+",
+                  "property": "standards",
+                  "value": [
+                    "ASTM E 814 (UL 1479)",
+                    "CAN/ULC S115"
+                  ],
+                  "unit": null,
+                  "page": 2,
+                  "bbox": null,
+                  "quote": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115",
+                  "variant": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115",
+                  "scope": "unknown",
+                  "scope_quote": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115",
+                  "selection_quote": null
+                }
+              ]
+            },
+            "verification": {
+              "submitted": {
+                "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                "manufacturer": "3M",
+                "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                "selection": null,
+                "family": null,
+                "family_quote": null,
+                "document_revision": null,
+                "claims": [
+                  {
+                    "id": "cl-4",
+                    "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "manufacturer": "3M",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "property": "document_revision",
+                    "value": "© 3M 2018",
+                    "unit": null,
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "© 3M 2018. All rights reserved.",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "© 3M 2018. All rights reserved.",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-12",
+                    "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "manufacturer": "3M",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "property": "penetrant_types",
+                    "value": [
+                      "metallic pipe",
+                      "plastic pipe",
+                      "conduit",
+                      "power and communication cable",
+                      "cable trays",
+                      "busways",
+                      "combos",
+                      "insulated pipe",
+                      "HVAC duct penetrations"
+                    ],
+                    "unit": null,
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-13",
+                    "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "manufacturer": "3M",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "property": "service_temp_max_f",
+                    "value": 180.0,
+                    "unit": "°F",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-14",
+                    "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "manufacturer": "3M",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "property": "service_temp_range_f",
+                    "value": "-20° to 180°F",
+                    "unit": "°F",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-15",
+                    "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "manufacturer": "3M",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "property": "standards",
+                    "value": [
+                      "ASTM E 814 (UL 1479)",
+                      "ASTM E 1966 (UL 2079)",
+                      "CAN/ULC-S115"
+                    ],
+                    "unit": null,
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-17",
+                    "product": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "manufacturer": "3M",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "property": "voc_g_per_l",
+                    "value": "<250",
+                    "unit": "g/L",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Complies with the intent of LEED® NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                    "selection_quote": null
+                  }
+                ]
+              },
+              "output": {
+                "status": "unknown",
+                "replacement": null,
+                "current_revision": null,
+                "status_date": null,
+                "status_quote": null,
+                "status_family": null,
+                "current_values": [
+                  {
+                    "property": "penetrant_types",
+                    "value": [
+                      "metallic pipe",
+                      "plastic pipe",
+                      "conduit",
+                      "power and communication cable",
+                      "cable trays",
+                      "busways",
+                      "combos",
+                      "insulated pipe",
+                      "HVAC duct penetrations"
+                    ],
+                    "unit": null,
+                    "quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                    "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "model": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                    "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "standards",
+                    "value": [
+                      "ASTM E 814 (UL 1479)",
+                      "ASTM E 1966 (UL 2079)",
+                      "CAN/ULC-S115"
+                    ],
+                    "unit": null,
+                    "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+                    "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "model": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                    "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Product Features \\u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115 \\u2022 Expanded fire protection systems \\u2022 Helps minimize sound transfer* \\u2022 Meets the standards and is deemed FBC\\u2122 System Compatible \\u2022 Sag-resistant \\u2022 Halogen-free \\u2022 Excellent adhesion \\u2022 Re-enterable/repairable \\u2022 Excellent caulk rate \\u2022 Paintable \\u2022 Water clean up",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "<250",
+                    "unit": "g/L",
+                    "quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                    "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                    "model": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+                    "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "penetrant_types",
+                    "value": [
+                      "HVAC ducts and vents",
+                      "Metallic and non-metallic, including CPVC pipes",
+                      "Blank openings",
+                      "Single and bundled cables",
+                      "Insulated pipe",
+                      "Pipe and cable through-Penetrations",
+                      "Busways",
+                      "Combos",
+                      "Rated wall, floor and floor-ceiling assemblies",
+                      "Static construction joints"
+                    ],
+                    "unit": null,
+                    "quote": "**Recommended Applications**\n\n* HVAC ducts and vents\n* Metallic and non-metallic, including CPVC pipes\n* Blank openings\n* Single and bundled cables\n* Insulated pipe\n* Pipe and cable through-Penetrations\n* Busways\n* Combos\n* Rated wall, floor and floor-ceiling assemblies\n* Static construction joints",
+                    "source_url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "identity_quote": "# 3M™ Fire Barrier Sealant IC 15WB+\n\n* Options available\n* | Select product options for IDs.",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "**Recommended Applications**\n\n* HVAC ducts and vents\n* Metallic and non-metallic, including CPVC pipes\n* Blank openings\n* Single and bundled cables\n* Insulated pipe\n* Pipe and cable through-Penetrations\n* Busways\n* Combos\n* Rated wall, floor and floor-ceiling assemblies\n* Static construction joints",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "standards",
+                    "value": [
+                      "ASTM E 814 (UL 1479)",
+                      "ASTM E 1966 (UL 2079)",
+                      "CAN/ULC-S115"
+                    ],
+                    "unit": null,
+                    "quote": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\n\nSealant designed to help minimize sound transfer\n\nWater-based and paintable sealant provides easy application and clean-up\n\nView more details\n\nFrequently viewed resources\n\n[Tech Data Sheet (PDF)](https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf)[Safety Data Sheet (PDF)](https://cdmsweb.3m.com/ingredientcommunication/file/Media/soRopXSv-hA)\n\n## Details\n\n### Highlights\n\n* Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\n* Sealant designed to help minimize sound transfer\n* Water-based and paintable sealant provides easy application and clean-up\n* Exceptional adhesion for long-term performance\n* Applied with conventional caulking equipment with excellent caulk rate\n* Sag-resistant properties offer clean application as well as strong adhesion\n* Sealant is re-enterable and repairable\n* Fire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)",
+                    "source_url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                    "model": "3M™ Fire Barrier Sealant IC 15WB+",
+                    "identity_quote": "# 3M™ Fire Barrier Sealant IC 15WB+\n\n* Options available\n* | Select product options for IDs.",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\n\nSealant designed to help minimize sound transfer\n\nWater-based and paintable sealant provides easy application and clean-up\n\nView more details\n\nFrequently viewed resources\n\n[Tech Data Sheet (PDF)](https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf)[Safety Data Sheet (PDF)](https://cdmsweb.3m.com/ingredientcommunication/file/Media/soRopXSv-hA)\n\n## Details\n\n### Highlights\n\n* Firestop tested for through penetration applications for up to 3 hours in accordance with ASTM E 814 (UL 1479) and CAN/ULC S115\n* Sealant designed to help minimize sound transfer\n* Water-based and paintable sealant provides easy application and clean-up\n* Exceptional adhesion for long-term performance\n* Applied with conventional caulking equipment with excellent caulk rate\n* Sag-resistant properties offer clean application as well as strong adhesion\n* Sealant is re-enterable and repairable\n* Fire resistance tested for static construction joint systems in accordance with ASTM E 1966 (UL 2079)",
+                    "selection_quote": null
+                  }
+                ],
+                "source_urls": [
+                  "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "https://www.3m.com/3M/en_US/p/d/b40065443",
+                  "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--"
+                ],
+                "notes": null
+              },
+              "sources": [
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+                  "retrieved_at": "2026-10-28T03:52:48+00:00",
+                  "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                  "excerpt": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                  "tier": "manufacturer",
+                  "title": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+                  "retrieved_at": "2026-10-28T03:52:48+00:00",
+                  "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+                  "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                  "tier": "manufacturer",
+                  "title": "3M FireBarrier™ Sealant IC 15 WB+ - mu ltime dia",
+                  "retrieved_at": "2026-10-28T03:52:48+00:00",
+                  "sha256": "870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1",
+                  "excerpt": "3M FireBarrier™ Sealant IC 15 WB+ 02/06/24 __________________________________________________________________________________________ Page 1 of 12 Safety Data Sheet Copyright,2024, 3M Company.\nAll rights reserved. Copying and/or downloading of this information for the purpose of properly utilizing 3M products is allowed provided that: (1) the information is copied in full with no changes unless pr",
+                  "archived_path": null,
+                  "cache_hit": true
+                },
+                {
+                  "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "tier": "manufacturer",
+                  "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+                  "retrieved_at": "2026-10-28T03:49:46+00:00",
+                  "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+                  "excerpt": "Fire Protection Products 3M™ Fire Barrier Sealant IC 15WB+ Page 1 of 4 Technical Data Sheet January / 2026 Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, gun-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M™ Fire Barrier Sealant IC 15WB+ firestops throu",
+                  "archived_path": null,
+                  "cache_hit": true
+                }
+              ]
+            },
+            "page_sources": {
+              "1": {
+                "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "tier": "manufacturer",
+                "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+                "retrieved_at": "2026-10-28T03:52:16+00:00",
+                "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+                "excerpt": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "2": {
+                "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                "tier": "manufacturer",
+                "title": "https://www.3m.com/3M/en_US/p/d/b40065443",
+                "retrieved_at": "2026-10-28T03:52:48+00:00",
+                "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+                "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "3": {
+                "url": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                "tier": "manufacturer",
+                "title": "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+                "retrieved_at": "2026-10-28T03:52:48+00:00",
+                "sha256": "870cac5cb4d73092b76da7e2b71e9acaa470655339c56da60de3f225b08a6bf1",
+                "excerpt": "3M FireBarrier™ Sealant IC 15 WB+ 02/06/24 __________________________________________________________________________________________ Page 1 of 12 Safety Data Sheet Copyright,2024, 3M Company.\nAll rights reserved. Copying and/or downloading of this information for the purpose of properly utilizing 3M products is allowed provided that: (1) the information is copied in full with no changes unless pr",
+                "archived_path": null,
+                "cache_hit": true
+              }
+            },
+            "passes": false
+          }
+        ],
+        "suggest": "",
+        "alternates": [
+          {
+            "name": "Fire Protection Products",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "rank": "possible",
+            "confirm": [
+              "astm g21 rating",
+              "Temperature rating (T)",
+              "Still made"
+            ],
+            "failed": [],
+            "better": [
+              {
+                "requirement_id": "req_voc_content",
+                "label": "VOC (air quality)",
+                "alternate": "<250 g/L",
+                "submitted": null,
+                "mark": "meets"
+              }
+            ],
+            "origin": "current_document"
+          }
+        ],
+        "named": null
+      },
+      "configure": []
+    }
+  ],
+  "comparison": [
+    {
+      "property": "service_temp_max_f",
+      "label": "Highest service temperature",
+      "submitted": "120 °F",
+      "current": "180 °F",
+      "changed": true,
+      "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+      "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)"
+    }
+  ],
+  "claims": [
+    {
+      "id": "cl-4",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": "IC 15WB+",
+      "property": "document_revision",
+      "value": "98-0400-5077-9",
+      "unit": null,
+      "page": 4,
+      "bbox": null,
+      "quote": "© 3M  2005     98-0400-5077-9",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "© 3M  2005     98-0400-5077-9",
+      "selection_quote": null
+    },
+    {
+      "id": "cl-12",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": "IC 15WB+",
+      "property": "penetrant_types",
+      "value": [
+        "Metallic pipes",
+        "Non-metallic pipes",
+        "Cables",
+        "Cable trays",
+        "Insulated pipes",
+        "Busways",
+        "HVAC vents and ducts",
+        "Combinations",
+        "Bottom of wall construction joints"
+      ],
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+      "variant": "• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+      "scope": "product_wide",
+      "scope_quote": "Use 3M Fire Barrier IC 15WB+ Sealant to firestop the following construction voids:\n• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+      "selection_quote": null
+    },
+    {
+      "id": "cl-13",
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": "IC 15WB+",
+      "property": "service_temp_max_f",
+      "value": 120.0,
+      "unit": "°F",
+      "page": 1,
+      "bbox": null,
+      "quote": "Continuous operating temperature not to exceed 120°F (48°C).",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "• Continuous operating temperature not to exceed 120°F (48°C).",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "product_data",
+    "system_drawing",
+    "warranty"
+  ],
+  "extracted": {
+    "product": "3M Fire Barrier IC 15WB+ Sealant",
+    "manufacturer": "3M",
+    "model": "IC 15WB+",
+    "selection": null,
+    "family": "3M Fire Barrier IC 15WB+",
+    "family_quote": "3M Fire Barrier IC 15WB+ Sealant",
+    "document_revision": null,
+    "claims": [
+      {
+        "id": "cl-4",
+        "product": "3M Fire Barrier IC 15WB+ Sealant",
+        "manufacturer": "3M",
+        "model": "IC 15WB+",
+        "property": "document_revision",
+        "value": "98-0400-5077-9",
+        "unit": null,
+        "page": 4,
+        "bbox": null,
+        "quote": "© 3M  2005     98-0400-5077-9",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "© 3M  2005     98-0400-5077-9",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-12",
+        "product": "3M Fire Barrier IC 15WB+ Sealant",
+        "manufacturer": "3M",
+        "model": "IC 15WB+",
+        "property": "penetrant_types",
+        "value": [
+          "Metallic pipes",
+          "Non-metallic pipes",
+          "Cables",
+          "Cable trays",
+          "Insulated pipes",
+          "Busways",
+          "HVAC vents and ducts",
+          "Combinations",
+          "Bottom of wall construction joints"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+        "variant": "• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+        "scope": "product_wide",
+        "scope_quote": "Use 3M Fire Barrier IC 15WB+ Sealant to firestop the following construction voids:\n• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+        "selection_quote": null
+      },
+      {
+        "id": "cl-13",
+        "product": "3M Fire Barrier IC 15WB+ Sealant",
+        "manufacturer": "3M",
+        "model": "IC 15WB+",
+        "property": "service_temp_max_f",
+        "value": 120.0,
+        "unit": "°F",
+        "page": 1,
+        "bbox": null,
+        "quote": "Continuous operating temperature not to exceed 120°F (48°C).",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "• Continuous operating temperature not to exceed 120°F (48°C).",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "3M Fire Barrier IC 15WB+ Sealant",
+      "manufacturer": "3M",
+      "model": "IC 15WB+",
+      "selection": null,
+      "family": "3M Fire Barrier IC 15WB+",
+      "family_quote": "3M Fire Barrier IC 15WB+ Sealant",
+      "document_revision": null,
+      "claims": [
+        {
+          "id": "cl-4",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": "IC 15WB+",
+          "property": "document_revision",
+          "value": "98-0400-5077-9",
+          "unit": null,
+          "page": 4,
+          "bbox": null,
+          "quote": "© 3M  2005     98-0400-5077-9",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "© 3M  2005     98-0400-5077-9",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-12",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": "IC 15WB+",
+          "property": "penetrant_types",
+          "value": [
+            "Metallic pipes",
+            "Non-metallic pipes",
+            "Cables",
+            "Cable trays",
+            "Insulated pipes",
+            "Busways",
+            "HVAC vents and ducts",
+            "Combinations",
+            "Bottom of wall construction joints"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+          "variant": "• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+          "scope": "product_wide",
+          "scope_quote": "Use 3M Fire Barrier IC 15WB+ Sealant to firestop the following construction voids:\n• Metallic pipes\n• Non-metallic pipes\n• Cables\n• Cable trays\n• Insulated pipes\n• Busways\n• HVAC vents and ducts\n• Combinations\n• Bottom of wall construction joints",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-13",
+          "product": "3M Fire Barrier IC 15WB+ Sealant",
+          "manufacturer": "3M",
+          "model": "IC 15WB+",
+          "property": "service_temp_max_f",
+          "value": 120.0,
+          "unit": "°F",
+          "page": 1,
+          "bbox": null,
+          "quote": "Continuous operating temperature not to exceed 120°F (48°C).",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "• Continuous operating temperature not to exceed 120°F (48°C).",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "unknown",
+      "replacement": null,
+      "current_revision": "January / 2026",
+      "status_date": null,
+      "status_quote": null,
+      "status_family": null,
+      "current_values": [
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 180.0,
+          "unit": "°F",
+          "quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "model": "IC 15WB+",
+          "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "selection_quote": null
+        }
+      ],
+      "source_urls": [
+        "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+        "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf"
+      ],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+        "tier": "manufacturer",
+        "title": "Fire Protection Products",
+        "retrieved_at": "2026-10-28T03:49:46+00:00",
+        "sha256": "e80169a7b55120b9bfdf89b9fe6b2986a5a370d9bc737cff6f0b1989ea5deb77",
+        "excerpt": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet 1. Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, g un-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M ™ Fire Barrier Sealant IC 15WB+ firestops through penetrations passing through fire-rated floor,",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/493817O/3m-fire-protection-products-full-line-brochure.pdf",
+        "tier": "manufacturer",
+        "title": "Trust and Confidence. Even under fire.",
+        "retrieved_at": "2026-10-28T03:49:46+00:00",
+        "sha256": "f052408224af4c43529addae12cb8037347e3a588007e9ab764196ff097c1ea5",
+        "excerpt": "3M™ Fire Protection Products 1 3M.com/firestop 1-800-328-1687 3M™ Fire Protection T rust and Confidence. Even under fire.\nFull Line Catalog 2 3M™ Fire Protection Products 3 3M.com/firestop 1-800-328-1687 3M Fire Protection Through-Penetration Firestops Fire Barrier Sealants and Foam 6-7 .............................\nFire Barrier Watertight Sealants & Tape 8 ..................\nFire Barrier Devices ",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://www.3m.com/3M/en_US/p/d/b40065443",
+        "tier": "manufacturer",
+        "title": "3M™ Fire Barrier Sealant IC 15WB+ | 3M United States",
+        "retrieved_at": "2026-10-28T03:49:46+00:00",
+        "sha256": "b8a8912a1a3d5c2f8a005cc8a8cdf30b2422e09fc8a9d58cd1a5cabf658a9e3f",
+        "excerpt": "* [Go to US Navigation](#js-gsnMenu)\n* [Go to GPH Navigation](#ssnMenu)\n* [Go to Page Content](#pageContent)\n* [Go to Search](#js-searchBar)\n* [Go to Contact Information](#help--links)\n* [Go to Site Map](/3M/en_US/company-us/site-map/)\n\n1. [United States](/3M/en_US/company-us/)\n2. [All 3M Products](/3M/en_US/p/)\n3. [Building Materials](https://www.3m.com/3M/en_US/p/c/building-materials/)\n4. [Fire ",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+        "tier": "manufacturer",
+        "title": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+        "retrieved_at": "2026-10-28T03:49:46+00:00",
+        "sha256": "0ac7dddc7a7515b16df1cc5588e921963dffa15f8eec8dae5c55526ec3176cc6",
+        "excerpt": "Fire Protection Products 3M™ Fire Barrier Sealant IC 15WB+ Page 1 of 4 Technical Data Sheet January / 2026 Product Description 3M™ Fire Barrier Sealant IC 15WB+ is a cost-effective, one-part, gun-grade, latex-based, intumescent firestop sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M™ Fire Barrier Sealant IC 15WB+ firestops throu",
+        "archived_path": null,
+        "cache_hit": true
+      }
+    ]
+  },
+  "document_revision": null,
+  "note_to_subcontractor": "Send back: see what to send.\n\nCouldn't confirm: VOC (air quality): VOC lower than SCAQMD 1168 requires (250 g/L: the Rule 1168 architectural sealant limit; the number comes from the rule, not the spec).\nCouldn't confirm: astm g21 rating: Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.\nCouldn't confirm: Temperature rating (T): Both quoted ratings are needed for this comparison.\nCouldn't confirm: Test standards: Tested in accordance with ASTM E814, ASTM E119 or UL 1479.\nData sheet is out of date: The submitted sheet (undated) differs from the current source (January / 2026) on: Highest service temperature.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 2054,
+      "output_tokens": 89,
+      "cost_usd": 0.0001446,
+      "latency_ms": 1358,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4560,
+      "output_tokens": 2857,
+      "cost_usd": 0.0039393,
+      "latency_ms": 11979,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4938,
+      "output_tokens": 191,
+      "cost_usd": 0.0016533,
+      "latency_ms": 2440,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5559,
+      "output_tokens": 277,
+      "cost_usd": 0.001917,
+      "latency_ms": 2103,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5162,
+      "output_tokens": 455,
+      "cost_usd": 0.0019581,
+      "latency_ms": 2548,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5322,
+      "output_tokens": 300,
+      "cost_usd": 0.0018666,
+      "latency_ms": 2515,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5492,
+      "output_tokens": 447,
+      "cost_usd": 0.0020499,
+      "latency_ms": 3623,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7485,
+      "output_tokens": 351,
+      "cost_usd": 0.0025614,
+      "latency_ms": 3444,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5302,
+      "output_tokens": 98,
+      "cost_usd": 0.0016788,
+      "latency_ms": 1702,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4622,
+      "output_tokens": 137,
+      "cost_usd": 0.0015099,
+      "latency_ms": 1898,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4731,
+      "output_tokens": 308,
+      "cost_usd": 0.0016965,
+      "latency_ms": 2750,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7044,
+      "output_tokens": 288,
+      "cost_usd": 0.0023724,
+      "latency_ms": 2244,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7665,
+      "output_tokens": 288,
+      "cost_usd": 0.0025587,
+      "latency_ms": 2936,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7268,
+      "output_tokens": 234,
+      "cost_usd": 0.002391,
+      "latency_ms": 2045,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7428,
+      "output_tokens": 288,
+      "cost_usd": 0.0024876,
+      "latency_ms": 2649,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7598,
+      "output_tokens": 288,
+      "cost_usd": 0.0025386,
+      "latency_ms": 3316,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9591,
+      "output_tokens": 288,
+      "cost_usd": 0.0031365,
+      "latency_ms": 15643,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7407,
+      "output_tokens": 288,
+      "cost_usd": 0.0024813,
+      "latency_ms": 4184,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6728,
+      "output_tokens": 288,
+      "cost_usd": 0.0022776,
+      "latency_ms": 2966,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6836,
+      "output_tokens": 347,
+      "cost_usd": 0.0023631,
+      "latency_ms": 2321,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5301,
+      "output_tokens": 2891,
+      "cost_usd": 0.0041922,
+      "latency_ms": 29175,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5145,
+      "output_tokens": 1889,
+      "cost_usd": 0.0032436,
+      "latency_ms": 24338,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4829,
+      "output_tokens": 3965,
+      "cost_usd": 0.0050172,
+      "latency_ms": 22682,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4874,
+      "output_tokens": 1504,
+      "cost_usd": 0.0028158,
+      "latency_ms": 8112,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4693,
+      "output_tokens": 1457,
+      "cost_usd": 0.0027192,
+      "latency_ms": 9212,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2449,
+      "output_tokens": 26,
+      "cost_usd": 0.0007581,
+      "latency_ms": 2274,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4938,
+      "output_tokens": 1915,
+      "cost_usd": 0.0032049,
+      "latency_ms": 9427,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14825,
+      "output_tokens": 1871,
+      "cost_usd": 0.0061314,
+      "latency_ms": 9640,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14509,
+      "output_tokens": 1914,
+      "cost_usd": 0.0060753,
+      "latency_ms": 11163,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14554,
+      "output_tokens": 1745,
+      "cost_usd": 0.0059367,
+      "latency_ms": 11657,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14373,
+      "output_tokens": 1725,
+      "cost_usd": 0.0058644,
+      "latency_ms": 8066,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12128,
+      "output_tokens": 1425,
+      "cost_usd": 0.0049209,
+      "latency_ms": 7710,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14617,
+      "output_tokens": 1786,
+      "cost_usd": 0.0059925,
+      "latency_ms": 9675,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6655,
+      "output_tokens": 94,
+      "cost_usd": 0.0020811,
+      "latency_ms": 1746,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8529,
+      "output_tokens": 78,
+      "cost_usd": 0.0026289,
+      "latency_ms": 1722,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9124,
+      "output_tokens": 77,
+      "cost_usd": 0.0028065,
+      "latency_ms": 2091,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11098,
+      "output_tokens": 70,
+      "cost_usd": 0.0033924,
+      "latency_ms": 1915,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12120,
+      "output_tokens": 725,
+      "cost_usd": 0.0042885,
+      "latency_ms": 4766,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5145,
+      "output_tokens": 1889,
+      "cost_usd": 0.0032436,
+      "latency_ms": 24338,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4829,
+      "output_tokens": 3965,
+      "cost_usd": 0.0050172,
+      "latency_ms": 22682,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4874,
+      "output_tokens": 1504,
+      "cost_usd": 0.0028158,
+      "latency_ms": 8112,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4693,
+      "output_tokens": 1457,
+      "cost_usd": 0.0027192,
+      "latency_ms": 9212,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2449,
+      "output_tokens": 26,
+      "cost_usd": 0.0007581,
+      "latency_ms": 2274,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5301,
+      "output_tokens": 2891,
+      "cost_usd": 0.0041922,
+      "latency_ms": 29175,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6234,
+      "output_tokens": 507,
+      "cost_usd": 0.0023265,
+      "latency_ms": 3030,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6155,
+      "output_tokens": 161,
+      "cost_usd": 0.0019914,
+      "latency_ms": 1868,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6025,
+      "output_tokens": 77,
+      "cost_usd": 0.0018768,
+      "latency_ms": 1650,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3487,
+      "output_tokens": 110,
+      "cost_usd": 0.0011451,
+      "latency_ms": 1675,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 826,
+      "output_tokens": 423,
+      "cost_usd": 0.0006285,
+      "latency_ms": 3572,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 1.0,
+  "duration_ms": 127039,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "extract",
+        "args": {
+          "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": [
+          "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+        ]
+      },
+      {
+        "n": 2,
+        "tool": "search",
+        "args": {
+          "query": "3M Fire Barrier Sealant IC 15WB+ discontinued or still available",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "1 result",
+        "credits": 1.0,
+        "ms": 1729,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 3,
+        "tool": "search",
+        "args": {
+          "query": "\"3M Fire Barrier Sealant IC 15WB+\" site:3m.com",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 4,
+        "tool": "extract",
+        "args": {
+          "url": "https://www.3m.com/3M/en_US/p/d/b40065443"
+        },
+        "summary": "2 extracted sources",
+        "credits": 0.0,
+        "ms": 1,
+        "succeeded": true,
+        "source_urls": [
+          "https://www.3m.com/3M/en_US/p/d/b40065443",
+          "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf"
+        ]
+      },
+      {
+        "n": 5,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "document_title": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+          "revision_quote": "© 3M 2018. All rights reserved.",
+          "evidence_quote": "FIRE BARRIER Fire Protection UP TO 3 HOUR and Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+          "status": "active",
+          "status_quote": "© 3M 2026. All Rights Reserved.",
+          "note": "The product is currently listed on 3M's website with active sales page (© 3M 2026) and the technical data sheet is available. Confirmed properties: Fire protection up to 3 hours (F rating), service temperature range -20° to 180°F. Unconfirmed properties from the technical data sheet extract: ASTM G21 rating, exact F rating in hours, T rating in hours, and maximum service temperature (though range is provided)."
+        },
+        "summary": "© 3M 2018. All rights reserved., active",
+        "credits": 0.0,
+        "ms": 40,
+        "succeeded": true,
+        "source_urls": []
+      }
+    ],
+    "outcome": "found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "extract",
+          "args": {
+            "url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": [
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf"
+          ]
+        },
+        {
+          "n": 2,
+          "tool": "search",
+          "args": {
+            "query": "3M Fire Barrier Sealant IC 15WB+ discontinued or still available",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "1 result",
+          "credits": 1.0,
+          "ms": 1729,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 3,
+          "tool": "search",
+          "args": {
+            "query": "\"3M Fire Barrier Sealant IC 15WB+\" site:3m.com",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 4,
+          "tool": "extract",
+          "args": {
+            "url": "https://www.3m.com/3M/en_US/p/d/b40065443"
+          },
+          "summary": "2 extracted sources",
+          "credits": 0.0,
+          "ms": 1,
+          "succeeded": true,
+          "source_urls": [
+            "https://www.3m.com/3M/en_US/p/d/b40065443",
+            "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf"
+          ]
+        },
+        {
+          "n": 5,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "document_title": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+            "revision_quote": "© 3M 2018. All rights reserved.",
+            "evidence_quote": "FIRE BARRIER Fire Protection UP TO 3 HOUR and Service Temperature Range: -20° to 180°F (-28° to 82°C)",
+            "status": "active",
+            "status_quote": "© 3M 2026. All Rights Reserved.",
+            "note": "The product is currently listed on 3M's website with active sales page (© 3M 2026) and the technical data sheet is available. Confirmed properties: Fire protection up to 3 hours (F rating), service temperature range -20° to 180°F. Unconfirmed properties from the technical data sheet extract: ASTM G21 rating, exact F rating in hours, T rating in hours, and maximum service temperature (though range is provided)."
+          },
+          "summary": "© 3M 2018. All rights reserved., active",
+          "credits": 0.0,
+          "ms": 40,
+          "succeeded": true,
+          "source_urls": []
+        }
+      ],
+      "outcome": "found",
+      "purpose": "replacement",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [
+          {
+            "property": "penetrant_types",
+            "value": [
+              "metallic pipe",
+              "plastic pipe",
+              "conduit",
+              "power and communication cable",
+              "cable trays",
+              "busways",
+              "combos",
+              "insulated pipe",
+              "HVAC duct penetrations"
+            ],
+            "unit": null,
+            "quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "model": "3M™ Fire Barrier Sealant IC 15WB+",
+            "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "3M ™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+            "selection_quote": null
+          },
+          {
+            "property": "standards",
+            "value": [
+              "ASTM E 814 (UL 1479)",
+              "ASTM E 1966 (UL 2079)",
+              "CAN/ULC-S115"
+            ],
+            "unit": null,
+            "quote": "3M™ Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standard Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1966 (UL 2079) Standard Test Method for Fire Resistive Joint Systems and CAN/ULC-S115 Standard Method of Fire Tests of Firestop Systems.",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+            "model": "3M™ Fire Barrier Sealant IC 15WB+",
+            "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "3M™ Fire Barrier Sealant IC 15WB+ shall be tested to and pass the criteria of ASTM E 814 (UL 1479) Standard Test Method for Fire Tests of Penetration Firestop Systems, ASTM E 1966 (UL 2079) Standard Test Method for Fire Resistive Joint Systems and CAN/ULC-S115 Standard Method of Fire Tests of Firestop Systems.",
+            "selection_quote": null
+          },
+          {
+            "property": "penetrant_types",
+            "value": [
+              "metallic pipe",
+              "plastic pipe",
+              "conduit",
+              "power and communication cable",
+              "cable trays",
+              "busways",
+              "combos",
+              "insulated pipe",
+              "HVAC duct penetrations"
+            ],
+            "unit": null,
+            "quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "model": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+            "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "3M \\u2122 Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+            "selection_quote": null
+          },
+          {
+            "property": "standards",
+            "value": [
+              "ASTM E 814 (UL 1479)",
+              "ASTM E 1966 (UL 2079)",
+              "CAN/ULC-S115"
+            ],
+            "unit": null,
+            "quote": "Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "model": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+            "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Product Features \\u2022 Firestop tested up to 3 hours in accordance with ASTM E 814 (U L1479), ASTM E 196 6(UL 2079) & CAN/ULC-S115 \\u2022 Expanded fire protection systems \\u2022 Helps minimize sound transfer* \\u2022 Meets the standards and is deemed FBC\\u2122 System Compatible \\u2022 Sag-resistant \\u2022 Halogen-free \\u2022 Excellent adhesion \\u2022 Re-enterable/repairable \\u2022 Excellent caulk rate \\u2022 Paintable \\u2022 Water clean up",
+            "selection_quote": null
+          },
+          {
+            "property": "voc_g_per_l",
+            "value": "<250",
+            "unit": "g/L",
+            "quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "model": "3M\\u2122 Fire Barrier Sealant IC 15WB+",
+            "identity_quote": "3M\\u2122 Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Complies with the intent of LEED\\u00ae NC-EQ Credit 4.1 for Low-Emitting Materials: Adhesives and Sealants, contains <250 g/L VOC contents (less H2O and exempt solvents per SCAQMD Rule 1168).",
+            "selection_quote": null
+          },
+          {
+            "property": "penetrant_types",
+            "value": [
+              "metallic pipe",
+              "plastic pipe",
+              "conduit",
+              "power and communication cable",
+              "cable trays",
+              "busways",
+              "combos",
+              "insulated pipe",
+              "HVAC duct penetrations"
+            ],
+            "unit": null,
+            "quote": "3M™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+            "source_url": "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+            "model": "3M™ Fire Barrier Sealant IC 15WB+",
+            "identity_quote": "3M™ Fire Barrier Sealant IC 15WB+ Product Data Sheet",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "3M™ Fire Barrier Sealant IC 15WB+ is typically used in mechanical, electrical and plumbing applications to firestop openings created by the following penetrations in fire-rated floors, floor/ceilings or walls: metallic pipe, plastic pipe, conduit, power and communication cable, cable trays, busways, combos, insulated pipe and HVAC duct penetrations.",
+            "selection_quote": null
+          }
+        ],
+        "source_urls": [
+          "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf",
+          "https://www.3m.com/3M/en_US/p/d/b40065443",
+          "https://multimedia.3m.com/mws/media/207329O/3m-fire-barrier-sealant-ic-15wb-technical-data-sheet.pdf?&fn=3m-fire-barrier-sealant-ic-15wb-product-data-sheet.pdf",
+          "https://multimedia.3m.com/mws/mediawebserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--",
+          "https://multimedia.3m.com/mws/media/webserver?mwsId=SSSSSuUn_zu8l00x4Y_Go8mBOv70k17zHvu9lxtD7SSSSSS--"
+        ],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "81f818080034ef0f6e7b42313ee3e6a2212a960942917af32eb375bd0f999974",
+  "fresh_model_cost_usd": 0.070167,
+  "fresh_web_credits": 1.0,
+  "queue_ms": 30285,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 59,
+  "claims_kept": 16,
+  "web_values_read": 59,
+  "web_values_kept": 19
+}

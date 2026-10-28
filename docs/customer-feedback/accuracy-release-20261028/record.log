@@ -1,0 +1,30 @@
+Tavily extract returned empty text or raw PDF syntax; trying direct PDF download
+
+mode=live  run=20261028-171142-5ca0fc
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -      30281   0.0424       1 ✓
+c02   send_back          send_back          spec                   spec                       none   70128   0.0851       6 ✓
+c03   send_back          send_back          currency               currency                   none  127039   0.1504       1 ✓
+c04   send_back          send_back          validity               validity                   none   28172   0.0259       0 ✓
+c05   approve            approve_with_note  -                      -                          -      40663   0.0942       2 ✗
+c06   send_back          approve_with_note  currency               currency_note              none   15524   0.1014       1 ✗
+c07   send_back          send_back          status                 status                     none   84469   0.0362       0 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -     313933   0.6464       5 ✓
+
+Answer-key panel
+  right call                      6 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        0 of 8
+  unnecessary notes               1
+  fresh model spend / web credits $0.728727 / 19
+  case evidence gate              Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement; No demonstrated Investigator rescue
+  average time per submittal      88.8 s
+  cost per submittal (model+web)  $0.1478
+Quote gate: claims 75/292 kept (74.3% dropped); web values 28/260 kept (89.2% dropped)
+
+wrote /home/kyle/code/nebiusxnvidiahack26/.cache/customer-feedback-finish/runs/scores.json
+recorded runs/recorded/20261028-171142-5ca0fc  (commit it)
+exit 1

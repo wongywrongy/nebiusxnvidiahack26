@@ -4,6 +4,7 @@ import asyncio
 
 from api.pipeline import metrics, spec_check
 from api.pipeline.runner import Run, execute
+from api.pipeline.scores import scores
 from api.schemas import Claim, Requirement
 
 L70 = Requirement(id="l70", section="26 51 00", paragraph="2.02.S.3", property="l70_hours", operator="gte",
@@ -50,6 +51,10 @@ def test_drop_reasons_are_recorded_per_result():
     metrics.REASONS.reset(token)
     run = asyncio.run(execute(Run(["c03"], delay_ms=0)))
     assert isinstance(run.results["c03"].drop_reasons, dict)
+    run.results["c03"].drop_reasons = {"web:quote_not_on_source": 102}
+    panel = scores(run, ["c03"])  # per-item averages divide by the item count, not a drop-reason count
+    assert panel["cost_usd_per_item"] == round(panel["rows"][0]["cost_usd"], 6)
+    assert panel["time_ms_per_item"] == panel["rows"][0]["time_ms"]
 
 
 def test_reservation_is_bounded_by_request_bytes_not_the_whole_context():

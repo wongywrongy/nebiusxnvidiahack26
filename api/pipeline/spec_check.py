@@ -132,9 +132,9 @@ def _stricter_lumen_life(prop: str) -> list[str]:
     return [f"l{n}_hours" for n in (80, 90) if m and n > int(m[1])]
 
 
-def properties_for(requirements: list[Requirement]) -> list[str]:
+def properties_for(requirements: list[Requirement], *, include_known: bool = True) -> list[str]:
     """Spec dependencies plus known performance properties used to compare revisions."""
-    return sorted(set(LABELS) | {r.property for r in requirements} |
+    return sorted((set(LABELS) if include_known else set()) | {r.property for r in requirements} |
                   {str(r.value) for r in requirements if r.operator == "eq_ref"} |
                   {p for r in requirements for p in _stricter_lumen_life(r.property)})
 

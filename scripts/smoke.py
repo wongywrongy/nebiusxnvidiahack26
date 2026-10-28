@@ -11,6 +11,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 import httpx
+import pymupdf as fitz
 
 ROOT = Path(__file__).resolve().parent.parent
 PRODUCTION_CAPS = {"budget_usd_per_run": 3, "budget_usd_per_day": 8, "budget_tavily_credits_per_item": 60,
@@ -73,8 +74,12 @@ def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1, pref
     if not pdfs:
         return ["No smoke PDF in tests/data/; nothing was scanned."]
     pdf = min(pdfs, key=lambda p: p.stat().st_size)
+    # A new, labelled probe proves provider access without discarding paid cached product readings.
+    with fitz.open(pdf) as probe:
+        probe[0].insert_text((36, 36), f"Deployment smoke probe {time.time_ns()}")
+        payload = probe.tobytes()
     uploaded = request("POST", "/api/inbox", params={"name": pdf.name},
-                       headers={"Content-Type": "application/pdf"}, content=pdf.read_bytes())
+                       headers={"Content-Type": "application/pdf"}, content=payload)
     if not uploaded or not uploaded.get("id"):
         return failures or ["Upload did not return an inbox item."]
     ids = ["c01", uploaded["id"]]
@@ -104,10 +109,14 @@ def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1, pref
               or result.get("replayed_from")):
             failures.append(f"{cid}: invalid or replayed evidence cannot prove a fresh deployment check.")
     if result := results.get("c01"):
-        fresh = any(not u.get("cached", False) and u.get("model", "").lower().startswith("nvidia/")
-                    and "nemotron" in u.get("model", "").lower() for u in result.get("usage", []))
-        if result.get("mode") != "live" or not fresh:
-            failures.append("c01: expected a non-cached live Nemotron call; a cached trace or replay does not prove a new provider call.")
+        if result.get("mode") != "live":
+            failures.append("c01: expected live mode.")
+    fresh = any(r.get("mode") == "live" and not r.get("replayed_from") and
+                not u.get("cached", False) and u.get("model", "").lower().startswith("nvidia/") and
+                "nemotron" in u.get("model", "").lower()
+                for r in results.values() for u in r.get("usage", []))
+    if not fresh:
+        failures.append("Expected a non-cached live Nemotron call; cached traces or replays do not prove provider access.")
     if result := results.get(uploaded["id"]):
         if result.get("mode") != "live":
             failures.append("Upload ran in mock mode; enable public live uploads or supply the admin token.")
@@ -115,7 +124,7 @@ def check(client: httpx.Client, *, timeout: float = 600, poll_s: float = 1, pref
             f.get("verdict") == "unverified" for f in result.get("findings", [])
         ):
             failures.append("Upload: expected a quoted claim or an honest couldn't-confirm finding.")
-    print(f"Run: {scan['run_id']} · inputs: c01 + {pdf.name} · shared item budget · no retries")
+    print(f"Run: {scan['run_id']} · inputs: c01 + {pdf.name} (stamped smoke probe) · shared item budget · no retries")
     return failures
 
 

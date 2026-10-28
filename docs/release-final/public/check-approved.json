@@ -1,0 +1,912 @@
+{
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "recording": "20261028-173729-554074",
+  "captured_at": "2026-10-28T19:59:36.734Z",
+  "mode": "approved",
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 1.302579,
+      "credits": 267,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 2.09860788,
+      "total_credits": 402,
+      "phase": "engineering",
+      "phase_usd": 2.09860788,
+      "phase_credits": 402,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 6.697421,
+      "credits_left": 333
+    },
+    "recorded": "20261028-173729-554074",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 496.6,
+    "disk_free_gb": 9.93
+  },
+  "input": {
+    "id": "u-a3853eb3",
+    "title": "off-topic.pdf",
+    "section": "07 84 00",
+    "submittal": [
+      {
+        "role": "product_data",
+        "file": "uploads/u-a3853eb3/off-topic.pdf"
+      }
+    ],
+    "pages": 1,
+    "upload": true,
+    "mock_fixture": null,
+    "ready": true
+  },
+  "setup_run": {
+    "run_id": "20261028-195938-045739",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "request": {
+    "ids": [
+      "c07"
+    ],
+    "delay_ms": 700,
+    "refresh_web": true
+  },
+  "run": {
+    "run_id": "20261028-195939-73777a",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "results": [
+    {
+      "case_id": "c07",
+      "title": "LED troffer, offices",
+      "decision": "send_back",
+      "summary": "Send back: see what to send.",
+      "spec_section": "26 51 00",
+      "spec_title": "Interior Lighting",
+      "spec_rule_count": 5,
+      "spec_match_count": 2,
+      "checklist_id": null,
+      "product_type": null,
+      "findings": [
+        {
+          "id": "spec-req_t_rating_hr_led",
+          "check": "spec",
+          "verdict": "pass",
+          "severity": "info",
+          "title": "Rated life (L70)",
+          "detail": "L90 60000 hours is quoted; lumen output only declines, so L70 is at least as long. Spec requires at least 50000 hr.",
+          "why_it_matters": null,
+          "requirement_id": "req_t_rating_hr_led",
+          "claim_id": "cl-11",
+          "product_type": null,
+          "claim_ids": [
+            "cl-11"
+          ],
+          "highlights": [
+            {
+              "claim_id": "cl-11",
+              "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+              "page": 1,
+              "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+              "boxes": [
+                {
+                  "x0": 0.249,
+                  "y0": 0.3277,
+                  "x1": 0.4884,
+                  "y1": 0.339
+                }
+              ],
+              "kind": "checked"
+            }
+          ],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≥ 50000 hr",
+            "right_label": "Submitted",
+            "right_value": "L90 60000 hours",
+            "verdict": "pass",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.S.3",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-req_warranty_years_led",
+          "check": "spec",
+          "verdict": "pass",
+          "severity": "info",
+          "title": "Warranty",
+          "detail": "Package states 5 years; spec requires at least 5 yr.",
+          "why_it_matters": null,
+          "requirement_id": "req_warranty_years_led",
+          "claim_id": "cl-21",
+          "product_type": null,
+          "claim_ids": [
+            "cl-21"
+          ],
+          "highlights": [
+            {
+              "claim_id": "cl-21",
+              "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+              "page": 1,
+              "quote": "5-year limited warranty.",
+              "boxes": [
+                {
+                  "x0": 0.1665,
+                  "y0": 0.5082,
+                  "x1": 0.2669,
+                  "y1": 0.5196
+                }
+              ],
+              "kind": "checked"
+            }
+          ],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≥ 5 yr",
+            "right_label": "Submitted",
+            "right_value": "5 years",
+            "verdict": "pass",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 1.10.B.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-lt-dlc",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Couldn't confirm: DLC listing",
+          "detail": "Listed as a qualified DLC product, where applicable.",
+          "why_it_matters": "Without proof of DLC listing, we can’t confirm eligibility for energy rebates or compliance with project efficiency goals.",
+          "requirement_id": "lt-dlc",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": [
+              "dlc standard",
+              "dlc premium"
+            ],
+            "right_label": "Submitted",
+            "right_value": "Not confirmed",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.H",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-req_macadam_ellipse",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Couldn't confirm: macadam steps",
+          "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+          "why_it_matters": "If the LEDs aren’t binned tightly, color consistency across fixtures may vary noticeably in office spaces.",
+          "requirement_id": "req_macadam_ellipse",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≤ 3",
+            "right_label": "Submitted",
+            "right_value": "Not confirmed",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.S.6",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-lt-dim",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Specify option: Dims down to",
+          "detail": "Dims down to meets the spec only with EZB (0.1 %). Confirm the order specifies it.",
+          "why_it_matters": "If the dimming isn’t confirmed to work down to 0.1%, the lighting controls may not perform as expected in low-light settings.",
+          "requirement_id": "lt-dim",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≤ 5 %",
+            "right_label": "Submitted",
+            "right_value": "0.1 % with EZB",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.05.C.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": [
+            {
+              "option": "EZB",
+              "value": "0.1 %",
+              "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+              "page": 2,
+              "claim_id": "cl-2"
+            }
+          ]
+        },
+        {
+          "id": "status-discontinued",
+          "check": "status",
+          "verdict": "fail",
+          "severity": "major",
+          "title": "Product is no longer made",
+          "detail": "The manufacturer lists it as discontinued.",
+          "why_it_matters": "A discontinued product can’t be sourced for installation or future maintenance, risking delays and mismatched replacements.",
+          "requirement_id": null,
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Status",
+            "left_value": null,
+            "right_label": "Manufacturer",
+            "right_value": "Discontinued 2024-06-30",
+            "verdict": "fail",
+            "rows": []
+          },
+          "spec_ref": null,
+          "evidence": [
+            {
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "tier": "manufacturer",
+              "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+              "retrieved_at": "2026-10-28T20:00:06+00:00",
+              "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+              "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+              "archived_path": null,
+              "cache_hit": false
+            },
+            {
+              "url": "https://www.acuitybrands.com",
+              "tier": "manufacturer",
+              "title": "Acuity Brands Lighting",
+              "retrieved_at": "2026-10-28T20:00:06+00:00",
+              "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+              "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+              "archived_path": null,
+              "cache_hit": false
+            },
+            {
+              "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+              "tier": "manufacturer",
+              "title": "Technical Downloads",
+              "retrieved_at": "2026-10-28T20:00:06+00:00",
+              "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+              "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+              "archived_path": null,
+              "cache_hit": false
+            }
+          ],
+          "quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+          "decided_by": "tavily + super",
+          "fix": {
+            "head": "No passing replacement found",
+            "query": "\"LED troffer\" manufacturer specification sheet",
+            "candidates": [],
+            "suggest": "",
+            "alternates": [],
+            "named": {
+              "name": "CPX A12",
+              "quote": "TL FW A12 ( flat frame) CPX A12",
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "source": "image_ocr"
+            }
+          },
+          "configure": []
+        }
+      ],
+      "comparison": [],
+      "claims": [
+        {
+          "id": "cl-2",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "dim_min_percent",
+          "value": 0.1,
+          "unit": "%",
+          "page": 2,
+          "bbox": null,
+          "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "variant": "EZB",
+          "scope": "option",
+          "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-4",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "document_revision",
+          "value": "Rev. 11/18/22",
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "Rev. 11/18/22",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Rev. 11/18/22",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-11",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "l90_hours",
+          "value": 60000,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-18",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "standards",
+          "value": [
+            "CSA",
+            "IC"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+          "selection_quote": null
+        },
+        {
+          "id": "cl-21",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "warranty_years",
+          "value": 5,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "5-year limited warranty.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind.",
+          "selection_quote": null
+        }
+      ],
+      "selection": null,
+      "document_roles": [
+        "product_data",
+        "test_report"
+      ],
+      "extracted": {
+        "product": "2TL-2X4",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "2TL",
+        "selection": null,
+        "family": "T Series LED",
+        "family_quote": "T Series LED",
+        "document_revision": "Rev. 11/18/22",
+        "claims": [
+          {
+            "id": "cl-2",
+            "product": "2TL-2X4",
+            "manufacturer": "Acuity Brands Lighting, Inc.",
+            "model": "2TL",
+            "property": "dim_min_percent",
+            "value": 0.1,
+            "unit": "%",
+            "page": 2,
+            "bbox": null,
+            "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+            "variant": "EZB",
+            "scope": "option",
+            "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+            "selection_quote": null
+          },
+          {
+            "id": "cl-4",
+            "product": "2TL-2X4",
+            "manufacturer": "Acuity Brands Lighting, Inc.",
+            "model": "2TL",
+            "property": "document_revision",
+            "value": "Rev. 11/18/22",
+            "unit": null,
+            "page": 2,
+            "bbox": null,
+            "quote": "Rev. 11/18/22",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Rev. 11/18/22",
+            "selection_quote": null
+          },
+          {
+            "id": "cl-11",
+            "product": "2TL-2X4",
+            "manufacturer": "Acuity Brands Lighting, Inc.",
+            "model": "2TL",
+            "property": "l90_hours",
+            "value": 60000,
+            "unit": "hours",
+            "page": 1,
+            "bbox": null,
+            "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+            "selection_quote": null
+          },
+          {
+            "id": "cl-18",
+            "product": "2TL-2X4",
+            "manufacturer": "Acuity Brands Lighting, Inc.",
+            "model": "2TL",
+            "property": "standards",
+            "value": [
+              "CSA",
+              "IC"
+            ],
+            "unit": null,
+            "page": 1,
+            "bbox": null,
+            "quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+            "selection_quote": null
+          },
+          {
+            "id": "cl-21",
+            "product": "2TL-2X4",
+            "manufacturer": "Acuity Brands Lighting, Inc.",
+            "model": "2TL",
+            "property": "warranty_years",
+            "value": 5,
+            "unit": "years",
+            "page": 1,
+            "bbox": null,
+            "quote": "5-year limited warranty.",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind.",
+            "selection_quote": null
+          }
+        ]
+      },
+      "verification": {
+        "submitted": {
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "selection": null,
+          "family": "T Series LED",
+          "family_quote": "T Series LED",
+          "document_revision": "Rev. 11/18/22",
+          "claims": [
+            {
+              "id": "cl-2",
+              "product": "2TL-2X4",
+              "manufacturer": "Acuity Brands Lighting, Inc.",
+              "model": "2TL",
+              "property": "dim_min_percent",
+              "value": 0.1,
+              "unit": "%",
+              "page": 2,
+              "bbox": null,
+              "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+              "variant": "EZB",
+              "scope": "option",
+              "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-4",
+              "product": "2TL-2X4",
+              "manufacturer": "Acuity Brands Lighting, Inc.",
+              "model": "2TL",
+              "property": "document_revision",
+              "value": "Rev. 11/18/22",
+              "unit": null,
+              "page": 2,
+              "bbox": null,
+              "quote": "Rev. 11/18/22",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "Rev. 11/18/22",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-11",
+              "product": "2TL-2X4",
+              "manufacturer": "Acuity Brands Lighting, Inc.",
+              "model": "2TL",
+              "property": "l90_hours",
+              "value": 60000,
+              "unit": "hours",
+              "page": 1,
+              "bbox": null,
+              "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-18",
+              "product": "2TL-2X4",
+              "manufacturer": "Acuity Brands Lighting, Inc.",
+              "model": "2TL",
+              "property": "standards",
+              "value": [
+                "CSA",
+                "IC"
+              ],
+              "unit": null,
+              "page": 1,
+              "bbox": null,
+              "quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+              "selection_quote": null
+            },
+            {
+              "id": "cl-21",
+              "product": "2TL-2X4",
+              "manufacturer": "Acuity Brands Lighting, Inc.",
+              "model": "2TL",
+              "property": "warranty_years",
+              "value": 5,
+              "unit": "years",
+              "page": 1,
+              "bbox": null,
+              "quote": "5-year limited warranty.",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind.",
+              "selection_quote": null
+            }
+          ]
+        },
+        "output": {
+          "status": "discontinued",
+          "replacement": null,
+          "current_revision": null,
+          "status_date": "2024-06-30",
+          "status_quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+          "status_family": "TL",
+          "current_values": [],
+          "source_urls": [
+            "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+          ],
+          "notes": null
+        },
+        "sources": [
+          {
+            "url": "https://www.acuitybrands.com",
+            "tier": "manufacturer",
+            "title": "Acuity Brands Lighting",
+            "retrieved_at": "2026-10-28T20:00:06+00:00",
+            "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+            "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+            "archived_path": null,
+            "cache_hit": false
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "tier": "manufacturer",
+            "title": "Technical Downloads",
+            "retrieved_at": "2026-10-28T20:00:06+00:00",
+            "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+            "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+            "archived_path": null,
+            "cache_hit": false
+          },
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+            "tier": "manufacturer",
+            "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+            "retrieved_at": "2026-10-28T20:00:06+00:00",
+            "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+            "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+            "archived_path": null,
+            "cache_hit": false
+          }
+        ]
+      },
+      "document_revision": "Rev. 11/18/22",
+      "note_to_subcontractor": "Send back: see what to send.\n\nCouldn't confirm: DLC listing: Listed as a qualified DLC product, where applicable.\nCouldn't confirm: macadam steps: LEDs shall be binned within a maximum 3-step MacAdam Ellipse.\nSpecify option: Dims down to: Dims down to meets the spec only with EZB (0.1 %). Confirm the order specifies it.\nProduct is no longer made: The manufacturer lists it as discontinued.",
+      "usage": [
+        {
+          "task": "triage",
+          "tier": "triage",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "input_tokens": 2585,
+          "output_tokens": 67,
+          "cost_usd": 0.00017118,
+          "latency_ms": 1032,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 5924,
+          "output_tokens": 2926,
+          "cost_usd": 0.0044106,
+          "latency_ms": 10120,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 3497,
+          "output_tokens": 26,
+          "cost_usd": 0.0010725,
+          "latency_ms": 1427,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6251,
+          "output_tokens": 131,
+          "cost_usd": 0.0019932,
+          "latency_ms": 1827,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6507,
+          "output_tokens": 88,
+          "cost_usd": 0.0020313,
+          "latency_ms": 1644,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 2500,
+          "output_tokens": 168,
+          "cost_usd": 0.0009012,
+          "latency_ms": 2456,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: replacement",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7893,
+          "output_tokens": 25,
+          "cost_usd": 0.0023904,
+          "latency_ms": 1495,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: replacement",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 459,
+          "output_tokens": 30,
+          "cost_usd": 0.0001647,
+          "latency_ms": 1160,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 2902,
+          "output_tokens": 45,
+          "cost_usd": 0.0009111,
+          "latency_ms": 1856,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "report",
+          "tier": "write",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 662,
+          "output_tokens": 317,
+          "cost_usd": 0.0004839,
+          "latency_ms": 3528,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        }
+      ],
+      "web_credits": 7,
+      "duration_ms": 49853,
+      "investigation": null,
+      "investigations": [],
+      "mode": "live",
+      "replayed_from": null,
+      "warnings": [],
+      "diagnostics": [],
+      "validity": "valid",
+      "config_hash": "501f647e2268fb2dbaa69e922a3adcfc710a05e07885e041b4d051667eb0e52d",
+      "fresh_model_cost_usd": 0.0118038,
+      "fresh_web_credits": 7,
+      "queue_ms": 15,
+      "ocr_pages": 0,
+      "archived_submittals": [],
+      "evidence_label": null,
+      "claims_extracted": 22,
+      "claims_kept": 5,
+      "web_values_read": 0,
+      "web_values_kept": 0,
+      "drop_reasons": {
+        "claim:metric_not_in_quote": 1,
+        "claim:quote_not_on_page": 10,
+        "claim:unit_not_in_quote": 2,
+        "claim:value_not_in_quote": 4
+      }
+    }
+  ],
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 1.3143828,
+      "credits": 274,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 2.11041168,
+      "total_credits": 409,
+      "phase": "engineering",
+      "phase_usd": 2.11041168,
+      "phase_credits": 409,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 6.6856172,
+      "credits_left": 326
+    },
+    "recorded": "20261028-173729-554074",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 550.1,
+    "disk_free_gb": 9.93
+  },
+  "browser_errors": [],
+  "cost": {
+    "usd": 0.0118038,
+    "credits": 7
+  }
+}

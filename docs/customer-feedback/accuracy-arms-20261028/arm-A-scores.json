@@ -1,0 +1,447 @@
+{
+  "generated_at": "2026-10-28T17:47:00+00:00",
+  "mode": "live",
+  "run_id": "20261028-173729-554074",
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b",
+    "draft": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "quote_gate": {
+    "claims_extracted": 235,
+    "claims_kept": 91,
+    "web_values_read": 320,
+    "web_values_kept": 39,
+    "drop_reasons": {
+      "web:quote_not_on_source": 261,
+      "claim:quote_not_on_page": 49,
+      "claim:value_not_in_quote": 35,
+      "claim:bad_page": 28,
+      "claim:unit_not_in_quote": 17,
+      "claim:metric_not_in_quote": 14,
+      "web:value_not_in_quote": 8,
+      "web:identity_not_on_source": 7,
+      "web:unit_not_in_quote": 4,
+      "claim:variant_not_in_quote": 1,
+      "web:variant_not_in_quote": 1
+    },
+    "claims_drop_rate": 0.6127659574468085,
+    "web_values_drop_rate": 0.878125
+  },
+  "tuning": {
+    "thinking": "off",
+    "thinking_tasks": "extract_requirements",
+    "max_output_tokens": 65536,
+    "max_page_chars": 6000,
+    "web_source_chars": 12000,
+    "search_depth": "basic",
+    "extract_depth": "basic",
+    "search_max_results": 5,
+    "investigate_credit_cap": 8.0,
+    "investigate_max_steps": 6,
+    "map_limit": 20
+  },
+  "right_call": {
+    "n": 6,
+    "of": 8
+  },
+  "caught": {
+    "n": 5,
+    "of": 6
+  },
+  "false_alarms": {
+    "n": 1,
+    "of": 2
+  },
+  "fixes_passing": {
+    "n": 0,
+    "of": 5
+  },
+  "unnecessary_notes": {
+    "n": 0,
+    "of": 2
+  },
+  "validity": {
+    "invalid_items": 0,
+    "requested_items": 8
+  },
+  "fresh_model_cost_usd": 0.529207,
+  "fresh_web_credits": 21.0,
+  "run_fresh_spend": {
+    "usd": 0.585586,
+    "credits": 29.0
+  },
+  "investigations": {
+    "scripted_unconfirmed_items": 6,
+    "primary_runs": 6,
+    "resolved": 2,
+    "revision_only": 0,
+    "capped": 0,
+    "replacement_runs": 2,
+    "replacement_capped": 0
+  },
+  "manifest": {
+    "version": 1,
+    "commit": null,
+    "config": {
+      "thinking": "off",
+      "thinking_tasks": "extract_requirements",
+      "max_output_tokens": 65536,
+      "max_page_chars": 6000,
+      "web_source_chars": 12000,
+      "search_depth": "basic",
+      "extract_depth": "basic",
+      "search_max_results": 5,
+      "investigate_credit_cap": 8.0,
+      "investigate_max_steps": 6,
+      "map_limit": 20,
+      "map_max_depth": 1,
+      "fix_credit_cap": 12.0,
+      "fix_max_candidates": 1,
+      "budget_usd_per_run": 3.0,
+      "budget_usd_per_day": 18.04944932,
+      "budget_tavily_credits_per_item": 60.0,
+      "budget_tavily_credits_per_day": 586.0,
+      "max_concurrency": 2,
+      "public_uploads_live": true,
+      "nebius_base_url": "https://api.tokenfactory.nebius.com/v1/",
+      "tavily_credit_usd": 0.008,
+      "models": {
+        "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+        "extract": "nvidia/nemotron-3-super-120b-a12b",
+        "verify": "nvidia/nemotron-3-super-120b-a12b",
+        "write": "nvidia/nemotron-3-super-120b-a12b",
+        "draft": "nvidia/nemotron-3-super-120b-a12b"
+      },
+      "prices": {
+        "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": [
+          0.06,
+          0.24
+        ],
+        "nvidia/nemotron-3-super-120b-a12b": [
+          0.3,
+          0.9
+        ],
+        "nvidia/Nemotron-3-Ultra-550b-a55b": [
+          1.0,
+          3.0
+        ]
+      }
+    },
+    "config_hash": "15251ce97314cc3e06f59069a6ec031666572727996befff6b10ac2b5c8ef685",
+    "code_hash": "939784ace8676fcbf95c0b9c65f924575b02268848e8b6d6f4b95675ad1276e8",
+    "checklists": {
+      "07_84_00.json": "a4dbc70d8038f833e44adad186ebe722d74f4bf064f7b22b158dde0aa710def3",
+      "26_51_00.json": "7eb156f78e2d3eb90e1a0eb05a7acdb66ba67c9a6abc9b0398b968665749cae1"
+    },
+    "inputs": {
+      "cases": "e9abdea3ed9fb683c1ab45481de4bf1b9cb8374f50f197698eb9cf7ddddb5f17",
+      "specs": "91fc574c1f94a08c02d7d5a0fa4b5829b73895289fc185c58930389b60b6714c",
+      "samples": "e160366b0f25847c201acdaf56edc01d92ee9ccb5f0b4df8f46601c9ffbda877",
+      "documents": "bef5dc97653ae01bca35d4cb5a9709e1dc60e4d3bab0fd5d9d5e4d4548cdb661",
+      "document_lock": "97cd7c956dda3fa5875426400ae081e8c3853f4da7787f28a0338efb9cad13df"
+    },
+    "refresh_web": false,
+    "run_id": "20261028-173729-554074",
+    "requested_ids": [
+      "c01",
+      "c02",
+      "c03",
+      "c04",
+      "c05",
+      "c06",
+      "c07",
+      "c08",
+      "s3",
+      "s4"
+    ],
+    "started_at": "2026-10-28T17:37:29.331083+00:00"
+  },
+  "time_ms_per_item": 8943,
+  "cost_usd_per_item": 0.009867,
+  "rows": [
+    {
+      "id": "c01",
+      "title": "Firestop sealant, through-penetrations",
+      "product": "STI SpecSeal LCI",
+      "expected": "approve",
+      "expected_problems": [],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 0,
+      "fresh_model_cost_usd": 0.0056157,
+      "fresh_web_credits": 0.0,
+      "decision": "approve",
+      "found_problems": [],
+      "right_call": true,
+      "caught": 0,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": null,
+      "time_ms": 18604,
+      "model_cost_usd": 0.033979,
+      "web_credits": 0.0,
+      "cost_usd": 0.033979,
+      "claims_extracted": 20,
+      "claims_kept": 5,
+      "web_values_read": 25,
+      "web_values_kept": 12
+    },
+    {
+      "id": "c02",
+      "title": "Firestop system, floor penetration",
+      "product": "3M C-AJ-2738",
+      "expected": "send_back",
+      "expected_problems": [
+        "spec"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 358,
+      "fresh_model_cost_usd": 0.0234954,
+      "fresh_web_credits": 2.0,
+      "decision": "send_back",
+      "found_problems": [
+        "spec"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 0
+      },
+      "time_ms": 41307,
+      "model_cost_usd": 0.040452,
+      "web_credits": 2.0,
+      "cost_usd": 0.056452,
+      "claims_extracted": 2,
+      "claims_kept": 2,
+      "web_values_read": 2,
+      "web_values_kept": 0
+    },
+    {
+      "id": "c03",
+      "title": "Firestop sealant, cable penetrations",
+      "product": "3M IC 15WB+",
+      "expected": "send_back",
+      "expected_problems": [
+        "currency"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 18606,
+      "fresh_model_cost_usd": 0.0104013,
+      "fresh_web_credits": 0.0,
+      "decision": "send_back",
+      "found_problems": [
+        "currency"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 1
+      },
+      "time_ms": 9444,
+      "model_cost_usd": 0.14228,
+      "web_credits": 0.0,
+      "cost_usd": 0.14228,
+      "claims_extracted": 59,
+      "claims_kept": 16,
+      "web_values_read": 59,
+      "web_values_kept": 19
+    },
+    {
+      "id": "c04",
+      "title": "Firestop system, steel pipe through gypsum wall",
+      "product": "Hilti W-L-2078",
+      "expected": "send_back",
+      "expected_problems": [
+        "validity"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 28051,
+      "fresh_model_cost_usd": 0.0,
+      "fresh_web_credits": 0.0,
+      "decision": "send_back",
+      "found_problems": [
+        "validity"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 0
+      },
+      "time_ms": 110,
+      "model_cost_usd": 0.025909,
+      "web_credits": 0.0,
+      "cost_usd": 0.025909,
+      "claims_extracted": 8,
+      "claims_kept": 6,
+      "web_values_read": 1,
+      "web_values_kept": 0
+    },
+    {
+      "id": "c05",
+      "title": "LED troffer, classrooms",
+      "product": "Lithonia BLT 2x4",
+      "expected": "approve",
+      "expected_problems": [],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 28163,
+      "fresh_model_cost_usd": 0.1086369,
+      "fresh_web_credits": 4.0,
+      "decision": "send_back",
+      "found_problems": [
+        "currency_note",
+        "spec"
+      ],
+      "right_call": false,
+      "caught": 0,
+      "false_alarm": true,
+      "unnecessary_note": false,
+      "fix": null,
+      "time_ms": 230265,
+      "model_cost_usd": 0.120175,
+      "web_credits": 4.0,
+      "cost_usd": 0.152175,
+      "claims_extracted": 32,
+      "claims_kept": 18,
+      "web_values_read": 60,
+      "web_values_kept": 5
+    },
+    {
+      "id": "c06",
+      "title": "LED downlight, corridors",
+      "product": "Lithonia LDN6",
+      "expected": "send_back",
+      "expected_problems": [
+        "currency"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 41667,
+      "fresh_model_cost_usd": 0.1089195,
+      "fresh_web_credits": 1.0,
+      "decision": "approve_with_note",
+      "found_problems": [],
+      "right_call": false,
+      "caught": 0,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 0
+      },
+      "time_ms": 190648,
+      "model_cost_usd": 0.109171,
+      "web_credits": 1.0,
+      "cost_usd": 0.117171,
+      "claims_extracted": 30,
+      "claims_kept": 18,
+      "web_values_read": 60,
+      "web_values_kept": 0
+    },
+    {
+      "id": "c07",
+      "title": "LED troffer, offices",
+      "product": "Lithonia 2TL4",
+      "expected": "send_back",
+      "expected_problems": [
+        "status"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 232317,
+      "fresh_model_cost_usd": 0.0481299,
+      "fresh_web_credits": 8.0,
+      "decision": "send_back",
+      "found_problems": [
+        "status"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": {
+        "suggest": null,
+        "passes": false,
+        "candidates": 1
+      },
+      "time_ms": 108947,
+      "model_cost_usd": 0.059239,
+      "web_credits": 8.0,
+      "cost_usd": 0.123239,
+      "claims_extracted": 65,
+      "claims_kept": 22,
+      "web_values_read": 8,
+      "web_values_kept": 0
+    },
+    {
+      "id": "c08",
+      "title": "Exit sign",
+      "product": "Lithonia LQM",
+      "expected": "approve_with_note",
+      "expected_problems": [
+        "currency_note"
+      ],
+      "valid": true,
+      "diagnostics": [],
+      "warnings": [],
+      "queue_ms": 258429,
+      "fresh_model_cost_usd": 0.2240085,
+      "fresh_web_credits": 6.0,
+      "decision": "approve_with_note",
+      "found_problems": [
+        "currency_note"
+      ],
+      "right_call": true,
+      "caught": 1,
+      "false_alarm": false,
+      "unnecessary_note": false,
+      "fix": null,
+      "time_ms": 312886,
+      "model_cost_usd": 0.307218,
+      "web_credits": 6.0,
+      "cost_usd": 0.355218,
+      "claims_extracted": 19,
+      "claims_kept": 4,
+      "web_values_read": 105,
+      "web_values_kept": 3
+    }
+  ],
+  "release_gate": {
+    "scope": "cases",
+    "passed": false,
+    "issues": [
+      "Wrong calls",
+      "Missed problems",
+      "False alarms or unnecessary notes",
+      "No evidenced passing replacement"
+    ]
+  },
+  "runner": "local",
+  "job_name": null
+}

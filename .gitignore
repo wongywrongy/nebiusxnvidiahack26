@@ -16,3 +16,5 @@ web/dist/
 .venv/
 web/test-results/
 web/playwright-report/
+# Raw Nebius CLI output (secret references); the manifest keeps the IDs
+docs/release-final/endpoint/

@@ -1,0 +1,30 @@
+Tavily extract returned empty text or raw PDF syntax; trying direct PDF download
+
+mode=live  run=20261028-173729-554074
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve            -                      -                          -      18604   0.0340       0 ✓
+c02   send_back          send_back          spec                   spec                       none   41307   0.0565       2 ✓
+c03   send_back          send_back          currency               currency                   none    9444   0.1423       0 ✓
+c04   send_back          send_back          validity               validity                   none     110   0.0259       0 ✓
+c05   approve            send_back          -                      currency_note,spec         -     230265   0.1522       4 ✗
+c06   send_back          approve_with_note  currency               -                          none  190648   0.1172       1 ✗
+c07   send_back          send_back          status                 status                     none  108947   0.1232       8 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -     312886   0.3552       6 ✓
+
+Answer-key panel
+  right call                      6 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  1 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        0 of 8
+  unnecessary notes               0
+  fresh model spend / web credits $0.585586 / 29
+  case evidence gate              Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement
+  average time per submittal      8.9 s
+  cost per submittal (model+web)  $0.0099
+Quote gate: claims 91/235 kept (61.3% dropped); web values 39/320 kept (87.8% dropped)
+
+wrote /home/kyle/code/nebiusxnvidiahack26/.cache/accuracy-arms/runs/arms/A/scores.json
+recorded runs/arms/A/recorded/20261028-173729-554074  (commit it)
+exit 1

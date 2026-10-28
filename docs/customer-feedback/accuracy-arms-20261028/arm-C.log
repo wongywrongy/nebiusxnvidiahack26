@@ -1,0 +1,32 @@
+
+mode=live  run=20261028-180911-17c5a1
+
+case  expected           got                problems expected      found                      fix       ms   cost $ credits
+c01   approve            approve_with_note  -                      -                          -      32430   0.0429       0 ✗
+c02   send_back          send_back          spec                   spec                       none  1546704   0.3066      10 ✓
+c03   send_back          send_back          currency               currency                   none  205665   0.5292       2 ✓
+c04   send_back          send_back          validity               spec,validity              none  127884   0.3286      11 ✓
+c05   approve            approve_with_note  -                      currency_note              -     345126   0.3886       6 ✗
+c06   send_back          approve_with_note  currency               -                          none   90605   0.2819       3 ✗
+c07   send_back          send_back          status                 status                     none   76859   0.1484       3 ✓
+c08   approve_with_note  approve_with_note  currency_note          currency_note              -      76395   0.2627       7 ✓
+
+Answer-key panel
+  right call                      5 of 8
+  planted problems caught         5 of 6
+  clean packages wrongly flagged  0 of 2
+  fixes that pass the spec        0 of 5
+  invalid acceptance items        3 of 8
+  unnecessary notes               2
+  fresh model spend / web credits $5.715270 / 45
+  case evidence gate              Incomplete or invalid items; Wrong calls; Missed problems; False alarms or unnecessary notes; No evidenced passing replacement
+  INVALID c02: Campaign, allocation, day, run or item cap would be exceeded; verify: Campaign, allocation, day, run or item cap would be exceeded; couldn't confirm
+  INVALID c04: Tavily credit cap for this step reached; investigate: Tavily credit cap for this step reached; couldn't confirm; Investigation capped
+  INVALID c05: The reply was cut off at the token limit; verify.read: The reply was cut off at the token limit; couldn't confirm
+  average time per submittal      312.7 s
+  cost per submittal (model+web)  $0.2861
+Quote gate: claims 145/513 kept (71.7% dropped); web values 56/112 kept (50.0% dropped)
+
+wrote /home/kyle/code/nebiusxnvidiahack26/.cache/accuracy-arms/runs/arms/C/scores.json
+Cannot record invalid acceptance evidence; inspect the run diagnostics
+exit 1

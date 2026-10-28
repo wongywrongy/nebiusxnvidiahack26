@@ -1,0 +1,16 @@
+{
+  "run": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40717808721",
+  "event": "schedule",
+  "cron": "0 9 * * *",
+  "created_at": "2026-10-28T15:37:17Z",
+  "finished_at": "2026-10-28T15:37:36Z",
+  "conclusion": "success",
+  "cron_triggered": true,
+  "scheduled_slot_delay": "GitHub started the 09:00 UTC schedule at 15:37 UTC",
+  "recheck_step": "skipped",
+  "skip_reason": "a same-day live GitHub Actions report (07:22:37 UTC, manual run 40649387428) already existed",
+  "provider_calls": false,
+  "charge": {"model_usd": 0, "tavily_credits": 0},
+  "image": "ghcr.io/wongywrongy/speccheck@sha256:d5b22ed554d26dac83808ea53155d8a28d03bd3f2c6623171cb6b5321093bb07",
+  "public_ledger_after": {"total_usd": 1.15974648, "total_credits": 324}
+}
