@@ -53,7 +53,9 @@ async def report(case_id: Optional[str], title: str, decision: Decision, finding
         {"case_id": case_id},
     )
     for f in findings:
-        if f.id in out.finding_titles:
+        # Requirement rows keep their code title ("Does not meet: VOC (air quality)"): a reworded title once
+        # said "Missing mold resistance test data" beside a quoted value. Only web findings take the model's words.
+        if f.id in out.finding_titles and not f.requirement_id:
             f.title = out.finding_titles[f.id]
         if f.id in out.why_it_matters:
             f.why_it_matters = out.why_it_matters[f.id]
