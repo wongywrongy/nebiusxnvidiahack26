@@ -1,0 +1,17 @@
+{
+  "source_commit": "14ddb6dda5d1c95c3508af04bc573ba8c45b89c7",
+  "image": "ghcr.io/wongywrongy/speccheck@sha256:d5b22ed554d26dac83808ea53155d8a28d03bd3f2c6623171cb6b5321093bb07",
+  "local_tag": "ghcr.io/wongywrongy/speccheck:customer-feedback-14ddb6d",
+  "network": "none",
+  "credentials_present": false,
+  "locked_public_pdfs": 13,
+  "recorded_results": 10,
+  "recording": "20261028-065522-3dd974",
+  "scores_panel_checked": true,
+  "wrong_spec_checked": true,
+  "package_api_checked": true,
+  "native_pdf_png_checked": true,
+  "memo_route_checked": true,
+  "published": false,
+  "deployed": false
+}
