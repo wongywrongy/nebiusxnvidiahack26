@@ -148,6 +148,12 @@ class PropertyValue(BaseModel):
     selection_quote: Optional[str] = None
 
 
+class ReplacementOut(BaseModel):
+    """What a discontinuation notice names as its successor. Kept only when `quote` is on the fetched notice."""
+    product: Optional[str] = Field(default=None, description="The replacement product or family exactly as the notice writes it; null if none is named in the text")
+    quote: Optional[str] = Field(default=None, description="The exact sentence from the notice that names it")
+
+
 class VerifyOut(BaseModel):
     """What the model concluded after reading the web sources for one product."""
 

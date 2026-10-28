@@ -69,6 +69,7 @@ function AlternateRow({ a, c }: { a: Alternate; c?: FixCandidate }) {
         <span className="rounded-full px-2 text-xs font-semibold" style={{ color: RANK_COLOR[a.rank], boxShadow: `inset 0 0 0 1px ${RANK_COLOR[a.rank]}` }}>{RANK_LABEL[a.rank]}</span>
         <a href={a.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{a.name} ↗</a>
         {a.origin === 'current_document' && <span className="text-xs text-muted">current sheet of the same product</span>}
+        {a.origin === 'named_replacement' && <span className="text-xs text-muted">named on the discontinuation notice</span>}
       </span>
       {a.better.length > 0 && <span className="flex flex-wrap gap-x-4 gap-y-1 text-sm">{a.better.map((m) => (
         <span key={m.requirement_id}><span className="text-muted">{m.label} </span><span style={{ color: MARK[m.mark][1] }}>{m.alternate} {MARK[m.mark][0]}</span>{m.submitted && <span className="text-faint"> (submitted {m.submitted})</span>}</span>
