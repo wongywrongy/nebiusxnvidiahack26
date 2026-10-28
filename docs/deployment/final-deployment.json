@@ -181,5 +181,28 @@
  "judging_remaining": {
   "model_usd": 72.88958832,
   "tavily_credits": 5591
+ },
+ "ui_update": {
+  "source_commit": "60bbe88039c0dcb33975761250a52d2ac195092a",
+  "source_note": "ui/grouped-package (PR #23): U1 contrast, U2 package grouped by spec section, U3 review grouped by where each value came from",
+  "web_only_change": "web-only change: git diff 3d35d10..60bbe88 -- api data scripts is empty",
+  "image": "ghcr.io/wongywrongy/speccheck@sha256:92ebb134e393ff0ee129c907f2b251ab34236a8aeddee3a83be14eb287c0bd9e",
+  "image_tag": "ghcr.io/wongywrongy/speccheck:final-60bbe88",
+  "endpoint_id": "aiendpoint-e01stvb5dxevns0d62",
+  "endpoint_name": "speccheck-ui-20261028",
+  "origin_url": "https://port8000-g4h59dpw1ph8b29.tunnel.applications.eu-west1.nebius.cloud",
+  "vercel_deployment": "dpl_HQBur7HVg14SMckAFJxk3sgh3KNg",
+  "switch": {
+   "old_endpoint": "aiendpoint-e01cg2e1rfwpvfpnb0",
+   "old_endpoint_stopped": "2026-10-28T20:50:41Z",
+   "new_endpoint_created": "2026-10-28T20:50:55Z",
+   "new_endpoint_running_by": "2026-10-28T20:55:49Z",
+   "stable_url_serving_new": "2026-10-28T20:56:45Z"
+  },
+  "recorded_run": "20261028-173729-554074 (unchanged; panel not re-run)",
+  "persistent_ledger_before_check": {
+   "total_usd": 2.11041168,
+   "total_credits": 409
+  }
  }
 }
