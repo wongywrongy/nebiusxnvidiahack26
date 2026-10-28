@@ -61,7 +61,7 @@ export interface Finding {
 export interface ConfigOption { option: string; value: string; quote?: string | null; page?: number | null; claim_id: string }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
 interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
-interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean;
+export interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean;
   selection?: { model: string; page: number; quote: string; origin?: 'submitted' | 'agent_proposal' } | null }
 export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string; alternates?: Alternate[] }
 // Ranked in code (api/pipeline/alternates.py): meets_spec only when every check passed on quoted evidence.
@@ -76,6 +76,7 @@ export interface PackageRow {
   still_made: 'active' | 'discontinued' | 'unknown'
   meets: number; doesnt_meet: number; couldnt_confirm: number
   what_to_send: string[]; best_alternate?: Alternate | null; manual_review_suggested: boolean
+  return_note: string; approval_note: string // code-written drafts
 }
 export interface PackageSummary { run_id: string; rows: PackageRow[]; ready: number; need_changes: number; not_checked: number; manual_review_suggested: number }
 export type Value = string | number | string[] | null

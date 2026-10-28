@@ -1,8 +1,7 @@
-// Customer-feedback building blocks (scaffold). Presentational only: every value comes from code-decided fields
-// (Result.findings, Fix.alternates, /api/runs/{id}/package). Not wired yet — see the handoff prompt for where each
-// one goes. They use the app's tokens only (index.css), so they drop into Review, Scan-complete and the memo as-is.
+// Customer-feedback building blocks. Presentational only: every value comes from code-decided fields
+// (Result.findings, Fix.alternates, /api/runs/{id}/package). Used by Review, Scan-complete and the memo.
 import type { ReactNode } from 'react'
-import type { Alternate, Finding, Fix, PackageRow, PackageSummary, Result } from './api'
+import type { Alternate, Finding, Fix, FixCandidate, PackageRow, Result } from './api'
 
 const CAPS = 'font-mono text-xs font-medium uppercase tracking-[0.08em] text-faint'
 const SPEC_CHECKS = new Set(['spec', 'validity', 'completeness'])
@@ -58,7 +57,12 @@ const MARK: Record<string, [string, string]> = {
   worse: ['▼ weaker', 'var(--color-warn)'], unknown: ['?', 'var(--color-muted)'],
 }
 
-function AlternateRow({ a }: { a: Alternate }) {
+const host = (url: string) => { try { return new URL(url).hostname.replace(/^www\./, '') } catch { return url } }
+const unmark = (q: string) => q.replace(/\*\*|__/g, '')
+
+// c: the checked candidate behind the alternate, for its quotes and a configuration SpecCheck proposed.
+function AlternateRow({ a, c }: { a: Alternate; c?: FixCandidate }) {
+  const proposal = c?.selection?.origin === 'agent_proposal' ? c.selection : null
   return (
     <li className="flex flex-col gap-1.5 border-b border-line py-3 last:border-b-0">
       <span className="flex flex-wrap items-center gap-2">
@@ -69,7 +73,22 @@ function AlternateRow({ a }: { a: Alternate }) {
       {a.better.length > 0 && <span className="flex flex-wrap gap-x-4 gap-y-1 text-sm">{a.better.map((m) => (
         <span key={m.requirement_id}><span className="text-muted">{m.label} </span><span style={{ color: MARK[m.mark][1] }}>{m.alternate} {MARK[m.mark][0]}</span>{m.submitted && <span className="text-faint"> (submitted {m.submitted})</span>}</span>
       ))}</span>}
+      {proposal && <span className="text-sm text-soft">Proposed by SpecCheck: {proposal.model}. Confirm configuration before ordering.</span>}
       {a.rank === 'possible' && <span className="text-sm text-soft">Confirm: {a.confirm.join(', ')}</span>}
+      {c && <details className="text-sm">
+        <summary className="cursor-pointer text-muted">Evidence</summary>
+        <ul className="mt-2 flex flex-col gap-3">
+          {proposal && <li><span className="font-medium">Proposed configuration · page {proposal.page}</span>
+            <blockquote className="mt-1 border-l-2 border-edge pl-3 text-muted">“{unmark(proposal.quote)}”</blockquote></li>}
+          {c.checks.map((k, n) => <li key={n}>
+            <span className="font-medium">{k.label}</span>{k.ok === false ? ' · fails' : k.ok === null ? ' · not confirmed' : ''}
+            {k.evidence?.map((e, i) => <blockquote key={i} className="mt-1 border-l-2 border-edge pl-3 text-muted">
+              {e.excerpt && <p>“{unmark(e.excerpt)}”</p>}
+              <a href={e.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{host(e.url)} ↗</a>
+            </blockquote>)}
+          </li>)}
+        </ul>
+      </details>}
     </li>
   )
 }
@@ -82,12 +101,14 @@ export function AlternatesCard({ fix }: { fix: Fix }) {
   return (
     <div className="flex flex-col gap-1 rounded-xl border border-line bg-panel p-4">
       <span className={CAPS}>What to send instead</span>
-      {shown.length ? <ul className="flex flex-col">{shown.map((a) => <AlternateRow key={a.source_url} a={a} />)}</ul>
+      {shown.length ? <ul className="flex flex-col">{shown.map((a) => <AlternateRow key={a.source_url} a={a}
+        c={fix.candidates.find((c) => c.source_url === a.source_url)} />)}</ul>
         : <p className="text-soft">No alternate found that meets the spec. Ask the sub for a product that does.</p>}
       {failed.length > 0 && <details className="text-sm text-muted">
         <summary className="cursor-pointer">{failed.length} other candidate{failed.length > 1 ? 's' : ''} didn't meet spec</summary>
         <ul className="mt-2 flex flex-col gap-1">{failed.map((a) => <li key={a.source_url}>{a.name}: {a.failed.join(', ')}</li>)}</ul>
       </details>}
+      {shown.length > 0 && <span className="text-xs text-muted">Compared point by point against the spec, as a CSI 13.1A substitution request asks.</span>}
       {fix.query && <span className="text-xs text-faint">Searched: {fix.query}</span>}
     </div>
   )
@@ -104,40 +125,35 @@ const CELL: Record<string, [string, string, string]> = {
   active: ['✓', 'Made', 'var(--color-good)'], discontinued: ['✕', 'Discontinued', 'var(--color-bad)'],
 }
 
-function Cell({ v }: { v: string }) {
+// label: the column name, shown only on a phone where the cells stack.
+function Cell({ v, label }: { v: string; label: string }) {
   const [icon, word, color] = CELL[v] ?? ['?', v, 'var(--color-muted)']
-  return <span className="flex items-center gap-1.5 text-sm" style={{ color }}><span className="font-semibold">{icon}</span>{word}</span>
+  return <span data-cell={v} className="flex items-center gap-1.5 text-sm" style={{ color }}>
+    <span className="w-20 text-xs text-muted sm:hidden">{label}</span><span className="font-semibold">{icon}</span>{word}</span>
 }
 
-export function PackageMatrix({ summary, onOpen, decision }: {
-  summary: PackageSummary; onOpen?: (caseId: string) => void; decision?: (row: PackageRow) => ReactNode
+export function PackageMatrix({ rows, onOpen, decision }: {
+  rows: PackageRow[]; onOpen?: (caseId: string) => void; decision?: (row: PackageRow) => ReactNode
 }) {
   const cols = 'minmax(0,2fr) 110px 110px 120px minmax(0,2.2fr) 150px'
   return (
-    <div className="flex flex-col gap-3">
-      <p className="text-soft">
-        {summary.rows.length} submittals · {summary.ready} ready to forward · {summary.need_changes} need changes
-        {summary.not_checked ? ` · ${summary.not_checked} not checked` : ''}
-        {summary.manual_review_suggested ? ` · ${summary.manual_review_suggested} worth a manual look` : ''}
-      </p>
       <div className="rounded-xl border border-line">
         <div className={`hidden h-10 items-center gap-4 border-b border-line px-4 sm:grid ${CAPS}`} style={{ gridTemplateColumns: cols }}>
           <span>Submittal</span><span>Spec</span><span>Sheet</span><span>Still made</span><span>What to send</span><span>Decision</span>
         </div>
-        {summary.rows.map((r) => (
+        {rows.map((r) => (
           <div key={r.case_id} className="flex flex-col gap-2 border-b border-line px-4 py-3 last:border-b-0 sm:grid sm:items-center sm:gap-4"
             style={{ gridTemplateColumns: cols }}>
-            <button className="text-left" onClick={() => onOpen?.(r.case_id)}>
+            <button className="text-left" onClick={() => onOpen?.(r.case_id)} aria-label={`Review ${r.number ?? r.title}`}>
               <span className="block font-medium hover:underline">{r.title}</span>
               <span className="block text-xs text-muted"><span className="font-mono">{r.number ?? 'Upload'}</span>{r.sender ? ` · ${r.sender}` : ''}</span>
             </button>
-            <Cell v={r.spec} /><Cell v={r.current_sheet} /><Cell v={r.still_made} />
+            <Cell v={r.spec} label="Spec" /><Cell v={r.current_sheet} label="Sheet" /><Cell v={r.still_made} label="Still made" />
             <span className="text-sm text-soft">{r.what_to_send[0] ?? '—'}{r.what_to_send.length > 1 && <span className="text-faint"> +{r.what_to_send.length - 1}</span>}</span>
-            <span className="flex flex-col gap-0.5">{decision ? decision(r) : <span className="text-sm font-semibold">{r.stamp}</span>}
+            <span className="flex flex-col items-start gap-1">{decision ? decision(r) : <span className="text-sm font-semibold">{r.stamp}</span>}
               {r.manual_review_suggested && <span className="text-xs text-fyi">Worth a manual look</span>}</span>
           </div>
         ))}
       </div>
-    </div>
   )
 }

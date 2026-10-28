@@ -425,6 +425,8 @@ class PackageRow(BaseModel):
     doesnt_meet: int = 0
     couldnt_confirm: int = 0
     what_to_send: list[str] = []
+    return_note: str = ""  # code-written drafts (package.return_note / approval_note); no model writes them
+    approval_note: str = ""
     best_alternate: Optional[Alternate] = None
     manual_review_suggested: bool = False
 

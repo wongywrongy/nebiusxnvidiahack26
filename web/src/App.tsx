@@ -1,10 +1,12 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
   DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
-  streamEvents, uploadToInbox, setUploadSpec, archiveUrl, getJobs, getWatch, type CloudJob, type SavedChecklist,
+  streamEvents, uploadToInbox, setUploadSpec, archiveUrl, getJobs, getWatch, getPackage, type CloudJob, type SavedChecklist,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
-  type Health, type Investigation, type Recheck, type Stage, type TextPage, type Tone, type Usage, type Value,
+  type Health, type Investigation, type PackageRow, type PackageSummary, type Recheck, type Stage, type TextPage, type Tone,
+  type Usage, type Value,
 } from './api'
+import { AlternatesCard, ConfigureLines, PackageMatrix, SummaryCounters } from './Feedback'
 import { ScoreboardPage, SpecsPage } from './SecondaryPages'
 
 // Four steps, in order: what came in, what the scan found, the reviewer's call on each, what happened after.
@@ -13,22 +15,23 @@ const STEPS: [Step, string][] = [[1, 'Inbox'], [2, 'Scan'], [3, 'Review'], [4, '
 // One item's progress through a run. at: when its result arrived.
 type Row = { stage: Stage; model: string | null; at?: string; reason?: string }
 // docs: page sizes of each downloaded PDF; null when one is missing, then text holds the recorded page text.
-type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null }
-type Act = 'return' | 'approve' | 'not_checked'
+// run: the run the result came from, for its package row.
+type Loaded = { result: Result; docs: DocPages[] | null; text: TextPage[] | null; run: string }
+type Act = 'return' | 'approve' | 'not_checked' | 'manual'
 type Call = { act: Act; message: string }
 
 type Session = {
-  version: 1; step: Step; reached: Step; inbox: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>
+  version: 2; step: Step; reached: Step; inbox: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>
   calls: Record<string, Call>; current: string | null; checks: Record<string, Row>; checked: Record<string, Result>
   requested: Record<string, boolean>; drafts: Record<string, string>; scanNote: string | null; checkNote: string | null
-  checklists: SavedChecklist[]
+  checklists: SavedChecklist[]; packages: Record<string, PackageSummary | null>
 }
-const SESSION_KEY = 'speccheck.session.v1'
+const SESSION_KEY = 'speccheck.session.v2'
 function readSession(): Partial<Session> {
   try {
     const saved = JSON.parse(localStorage.getItem(SESSION_KEY) ?? 'null')
-    const maps = ['rows', 'loaded', 'calls', 'checks', 'checked', 'requested', 'drafts']
-    if (saved?.version !== 1 || ![1, 2, 3, 4].includes(saved.step) || ![1, 2, 3, 4].includes(saved.reached)
+    const maps = ['rows', 'loaded', 'calls', 'checks', 'checked', 'requested', 'drafts', 'packages']
+    if (saved?.version !== 2 || ![1, 2, 3, 4].includes(saved.step) || ![1, 2, 3, 4].includes(saved.reached)
       || !Array.isArray(saved.inbox) || !saved.inbox.every((c: Case) => typeof c.id === 'string' && Array.isArray(c.submittal))
       || (saved.checklists !== undefined && (!Array.isArray(saved.checklists) || !saved.checklists.every((c: SavedChecklist) => c && typeof c.id === 'string' && typeof c.section === 'string' && typeof c.title === 'string')))
       || maps.some((key) => !saved[key] || typeof saved[key] !== 'object' || Array.isArray(saved[key]))) return {}
@@ -62,7 +65,6 @@ const longDate = (d: string) => {
   const parsed = new Date(/^\d{4}-\d\d-\d\d$/.test(d) ? `${d}T00:00` : d)
   return Number.isNaN(parsed.getTime()) ? d : parsed.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
 }
-const ASKS_SEP = ' · '
 const fileName = (c: Case) => c.submittal[0]?.file.split('/').pop() ?? ''
 const fixOf = (r?: Result) => r?.findings.find((f) => f.fix)?.fix ?? null
 // Spec values come lower-cased ("astm e814"); acronyms back to capitals, list items joined.
@@ -129,12 +131,32 @@ export default function App() {
   const [requested, setRequested] = useState<Record<string, boolean>>(saved.requested ?? {}) // substitutions requested
   const [checklists, setChecklists] = useState<SavedChecklist[]>(saved.checklists ?? [])
   const [changingSpec, setChangingSpec] = useState(false)
+  // The package view per run, fetched once its items are all in; null when it couldn't be loaded.
+  const [packages, setPackages] = useState<Record<string, PackageSummary | null>>(saved.packages ?? {})
 
   useEffect(() => {
-    const session: Session = { version: 1, step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote, checklists }
+    const session: Session = { version: 2, step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote, checklists, packages }
     try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)) }
     catch { try { localStorage.removeItem(SESSION_KEY) } catch { /* storage may be disabled */ } }
-  }, [step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote, checklists])
+  }, [step, reached, inbox, rows, loaded, calls, current, checks, checked, requested, drafts, scanNote, checkNote, checklists, packages])
+  const fetching = useRef(new Set<string>())
+  const scanning = Object.values(rows).some((r) => !['done', 'error'].includes(r.stage))
+  useEffect(() => {
+    if (scanning) return
+    for (const [id, l] of Object.entries(loaded)) {
+      const run = l.run
+      if (fetching.current.has(run) || packages[run] === null || packages[run]?.rows.some((r) => r.case_id === id)) continue
+      fetching.current.add(run)
+      const active = generation.current
+      getPackage(run).then((p) => { if (active === generation.current) setPackages((m) => ({ ...m, [run]: p })) },
+        () => { if (active === generation.current) setPackages((m) => ({ ...m, [run]: null })) })
+        .finally(() => fetching.current.delete(run))
+    }
+  }, [scanning, loaded, packages])
+  const rowOf = (id: string): PackageRow | undefined => {
+    const run = loaded[id]?.run
+    return run ? packages[run]?.rows.find((r) => r.case_id === id) : undefined
+  }
   useEffect(() => () => { generation.current++; streams.current.forEach((close) => close()); streams.current.clear() }, [])
 
   useEffect(() => { getProject().then(setProject, () => setFailed(true)) }, [])
@@ -183,7 +205,7 @@ export default function App() {
     streams.current.forEach((close) => close()); streams.current.clear()
     setInbox([]); setRows({}); setLoaded({}); setCalls({}); setDrafts({}); setCurrent(null)
     setChecks({}); setChecked({}); setRequested({}); setScanNote(null); setCheckNote(null); setError(null)
-    setChecklists([])
+    setChecklists([]); setPackages({})
     setReached(1); go(1)
     try { localStorage.removeItem(SESSION_KEY) } catch { /* storage may be disabled */ }
   }
@@ -226,7 +248,7 @@ export default function App() {
         const docs = found.length && found.every(Boolean) ? (found as DocPages[]) : null
         const text = docs ? null : await getCaseText(id)
         if (active !== generation.current) return
-        setLoaded((m) => ({ ...m, [id]: { result, docs, text } }))
+        setLoaded((m) => ({ ...m, [id]: { result, docs, text, run: run.run_id } }))
       })
       go(2)
     } catch (e) { if (active === generation.current) setError((e as Error).message) }
@@ -303,16 +325,16 @@ export default function App() {
             checklists={checklists} changingSpec={changingSpec} onSpec={changeSpec}
             onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={() => startScan()} />
         )}
-        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error}
-          onRetry={startScan} onReview={startReview} />}
+        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error} rowOf={rowOf}
+          onRetry={startScan} onReview={startReview} onOpen={(id) => { setCurrent(id); go(3) }} />}
         {step === 3 && (
-          <ReviewStep queue={queue} loaded={loaded} calls={calls} drafts={drafts} current={current} mode={mode} onPick={setCurrent} onDecide={decide}
-            onDraft={(id, message) => setDrafts((m) => ({ ...m, [id]: message }))} />
+          <ReviewStep queue={queue} loaded={loaded} calls={calls} drafts={drafts} current={current} mode={mode} rowOf={rowOf}
+            onPick={setCurrent} onDecide={decide} onDraft={(id, message) => setDrafts((m) => ({ ...m, [id]: message }))} />
         )}
         {step === 4 && (
           <>
           {checkNote && <p className="text-muted" role="status">{checkNote}</p>}
-          <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks}
+          <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks} rowOf={rowOf}
             jobsAvailable={mode === 'live' && !!project?.jobs_available}
             checked={checked} requested={requested} error={error} recheck={project?.recheck} onCheck={checkApproved}
             onRequest={(id) => setRequested((m) => ({ ...m, [id]: true }))} />
@@ -548,16 +570,19 @@ function Icon({ kind }: { kind: 'x' | 'check' }) {
 
 // ---------- 2 · Scan ----------
 
-function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }: {
+function ScanStep({ items, rows, loaded, mode, note, error, rowOf, onRetry, onReview, onOpen }: {
   items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; note: string | null; error: string | null
-  onRetry: (id: string) => void; onReview: () => void
+  rowOf: (id: string) => PackageRow | undefined; onRetry: (id: string) => void; onReview: () => void; onOpen: (id: string) => void
 }) {
   const failed = items.filter((c) => rows[c.id]?.stage === 'error').length
   const done = items.filter((c) => loaded[c.id]).length + failed
   const complete = items.length > 0 && done === items.length
   const n = (...ds: Decision[]) => items.filter((c) => ds.includes(loaded[c.id]?.result.decision as Decision)).length
+  const matrix = items.map((c) => rowOf(c.id)).filter((r): r is PackageRow => !!r)
+  const manual = matrix.filter((r) => r.manual_review_suggested).length
   const count = complete
-    ? [`${n('send_back')} to send back`, `${n('approve', 'approve_with_note')} to approve`, ...(n('not_applicable') ? [`${n('not_applicable')} not checked`] : []), ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
+    ? [`${n('send_back')} to send back`, `${n('approve', 'approve_with_note')} to approve`, ...(n('not_applicable') ? [`${n('not_applicable')} not checked`] : []),
+      ...(manual ? [`${manual} worth a manual look`] : []), ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
     : `${done} of ${items.length} done`
   const cols = '112px minmax(0,1fr) minmax(0,1.2fr)'
   // What the scan spent, summed over the results so far: the models by name, tokens, Tavily credits, cost, wall time.
@@ -590,9 +615,11 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
           {' · '}<a href="#scoreboard" className="underline underline-offset-4 hover:text-ink">Scoreboard</a>
         </p>
       )}
-      <section className="rounded-xl border border-line">
+      {complete && matrix.length > 0 && <PackageMatrix rows={matrix} onOpen={onOpen}
+        decision={(r) => <><Pill d={r.decision} /><span className="text-xs text-muted">{r.stamp}</span></>} />}
+      {(!complete || matrix.length < items.length) && <section className="rounded-xl border border-line">
         <Table cols={cols} head={['Number', 'Submittal', 'Result']}>
-          {items.map((c) => {
+          {items.filter((c) => !complete || !rowOf(c.id)).map((c) => {
             const r = rows[c.id]
             const l = loaded[c.id]
             const [label, at] = STAGE[r.stage] ?? ['Queued', 0]
@@ -628,21 +655,22 @@ function ScanStep({ items, rows, loaded, mode, note, error, onRetry, onReview }:
             )
           })}
         </Table>
-      </section>
+      </section>}
     </>
   )
 }
 
 // ---------- 3 · Review ----------
 
-function ReviewStep({ queue, loaded, calls, drafts, current, mode, onPick, onDecide, onDraft }: {
+function ReviewStep({ queue, loaded, calls, drafts, current, mode, rowOf, onPick, onDecide, onDraft }: {
   queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; current: string | null; mode: Project['mode']
-  drafts: Record<string, string>; onPick: (id: string) => void; onDecide: (id: string, call: Call) => void
-  onDraft: (id: string, message: string) => void
+  drafts: Record<string, string>; rowOf: (id: string) => PackageRow | undefined; onPick: (id: string) => void
+  onDecide: (id: string, call: Call) => void; onDraft: (id: string, message: string) => void
 }) {
   const c = queue.find((q) => q.id === current) ?? queue[0]
   if (!c) return <Heading title="Review" count="Nothing to review" />
   const i = queue.indexOf(c)
+  const row = rowOf(c.id)
   return (
     <>
       <Heading title="Review" count={`${Object.keys(calls).filter((id) => queue.some((q) => q.id === id)).length} of ${queue.length} decided`} />
@@ -655,8 +683,9 @@ function ReviewStep({ queue, loaded, calls, drafts, current, mode, onPick, onDec
           </button>
         ))}
       </div>
-      <Reviewing key={c.id} c={c} at={i + 1} of={queue.length} l={loaded[c.id]} call={calls[c.id]} mode={mode}
+      {row ? <Reviewing key={c.id} c={c} at={i + 1} of={queue.length} l={loaded[c.id]} row={row} call={calls[c.id]} mode={mode}
         messageDraft={drafts[c.id]} onDraft={(message) => onDraft(c.id, message)} onDecide={(call) => onDecide(c.id, call)} />
+        : <p className="text-muted" role="status">Loading the package view for this run…</p>}
     </>
   )
 }
@@ -667,34 +696,10 @@ const SEVERITY_RANK: Record<Finding['severity'], number> = { critical: 0, major:
 const toneOf = (f: Finding): Tone =>
   f.verdict === 'pass' ? 'green' : f.verdict === 'fail' ? 'red' : f.verdict === 'outdated' ? 'amber' : 'blue'
 const WEB = new Set(['currency', 'status'])
-
-// What the sub has to send to clear each problem, in the reviewer's words.
-const FLAGGED = (f: Finding) => f.verdict === 'fail' || f.verdict === 'outdated'
-function asks(r: Result, section: string): string[] {
-  const out = r.findings.filter(FLAGGED).map((f) =>
-    f.check === 'currency' ? "The manufacturer's current data sheet"
-    : f.check === 'status' ? `A current product that meets ${section}`
-    : f.check === 'validity' ? `A listed system that covers ${show(f.compare?.left_value)}`
-    : /=/.test(show(f.compare?.left_value)) ? `A listed system with ${show(f.compare?.left_value)}`
-    : `${f.title}: ${show(f.compare?.left_value)} required`)
-  return [...new Set(out)]
-}
-
-function returnNote(c: Case, r: Result, best?: Fix['candidates'][number]): string {
-  return [
-    `Revise and resubmit ${c.number ?? c.title}.`,
-    reviewSummary(r),
-    `Please send:\n${asks(r, c.section).map((a) => `- ${a.charAt(0).toLowerCase()}${a.slice(1)}`).join('\n')}`,
-    ...(best ? [best.selection?.origin === 'agent_proposal'
-      ? `SpecCheck proposal: ${best.selection.model}. Confirm configuration before ordering.`
-      : `Suggested replacement: ${best.name}.`] : []),
-  ].join('\n\n')
-}
-
-function approvalNote(c: Case, r: Result): string {
-  const note = !r.validity || r.validity === 'legacy' ? reviewSummary(r) : r.note_to_subcontractor || r.summary
-  return `Please review ${c.number ?? c.title} for approval.\n\n${note}`
-}
+// Rows a reviewer has to act on: failures, an old or newer sheet, an option to specify, a major gap in the evidence.
+const needsAction = (f: Finding) => ['fail', 'outdated', 'note'].includes(f.verdict) || !!f.configure?.length
+  || (['unverified', 'pending'].includes(f.verdict) && ['critical', 'major'].includes(f.severity))
+const ACT_SAVED: Record<Act, string> = { return: 'return decision', approve: 'approval decision', not_checked: 'not checked', manual: 'flagged for manual review' }
 
 function reviewSummary(r: Result): string {
   if (r.validity && r.validity !== 'legacy') return r.summary
@@ -712,32 +717,34 @@ function webRows(f: Finding): CheckRow[] {
   const current = f.verdict === 'pass' && (now === 'unknown' || !now) ? 'Same values as current' : `Current: ${show(now)}`
   return [[f, 'Data sheet version', current, f.compare?.left_value]]
 }
+const checkRows = (fs: Finding[]): CheckRow[] => fs.flatMap((f) => WEB.has(f.check) ? webRows(f) : [[f, f.title, f.compare?.left_value, f.compare?.right_value] as CheckRow])
 
-function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }: {
-  c: Case; at: number; of: number; l: Loaded; call?: Call; mode: Project['mode']; onDecide: (call: Call) => void
+function Reviewing({ c, at, of, l, row, call, mode, messageDraft, onDraft, onDecide }: {
+  c: Case; at: number; of: number; l: Loaded; row: PackageRow; call?: Call; mode: Project['mode']; onDecide: (call: Call) => void
   messageDraft?: string; onDraft: (message: string) => void
 }) {
   const { result, docs, text } = l
   // Worst first: must fix, then out of date, then notes and couldn't-confirm.
   const issues = useMemo(() => result.findings.filter((f) => f.verdict !== 'pass' && f.verdict !== 'not_applicable')
     .sort((a, b) => TONE_RANK[toneOf(a)] - TONE_RANK[toneOf(b)] || SEVERITY_RANK[a.severity] - SEVERITY_RANK[b.severity]), [result])
+  // A discontinued product's ordering options are moot, as in the package row.
+  const acts = (f: Finding) => needsAction(f) && !(row.still_made === 'discontinued' && f.configure?.length)
+  const acting = issues.filter(acts)
+  const minor = issues.filter((f) => !acts(f))
+  const met = result.findings.filter((f) => f.verdict === 'pass')
   const marks: Placed[] = useMemo(() => result.findings.flatMap((f) =>
     f.highlights.map((h) => ({ ...h, finding: f, tone: h.kind === 'checked' ? 'green' as Tone : toneOf(f) }))), [result])
-  const first = issues.find((f) => firstMark(f)) ?? issues[0]
+  const first = acting.find((f) => firstMark(f)) ?? issues.find((f) => firstMark(f)) ?? issues[0]
   const [textPage, setTextPage] = useState(() => (first && firstMark(first)?.page) || 1)
   const fix = fixOf(result)
-  const best = fix?.candidates.find((x) => x.passes)
   const notApplicable = result.decision === 'not_applicable'
   const rec: Act = notApplicable ? 'not_checked' : result.decision === 'send_back' ? 'return' : 'approve'
   const who = c.from ?? 'sender'
-  const draft = (a: Act) => a === 'return'
-    ? returnNote(c, result, best)
-    : approvalNote(c, result)
+  const draft = (a: Act) => a === 'return' ? row.return_note : row.approval_note
   const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
-  const spec = result.findings.filter((f) => f.verdict !== 'not_applicable' && !WEB.has(f.check))
   const otherTypes = result.findings.filter((f) => f.verdict === 'not_applicable' && f.product_type && f.detail.startsWith('For other product type:'))
-  const web = result.findings.filter((f) => WEB.has(f.check))
-  const source = web.flatMap((f) => f.evidence)[0]
+  const source = result.findings.filter((f) => WEB.has(f.check)).flatMap((f) => f.evidence)[0]
+  const sortRows = (rs: CheckRow[]) => rs.sort((x, y) => TONE_RANK[toneOf(x[0])] - TONE_RANK[toneOf(y[0])])
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_440px]">
@@ -750,62 +757,58 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
 
       <aside className="order-1 flex min-w-0 flex-col gap-5 lg:order-2">
         <div className="flex flex-col gap-2">
-          <span className="text-xs text-muted"><span className="font-mono">{c.number ?? 'Upload'}</span> · {at} of {of} · from {c.from ?? 'you'}</span>
+          <span className="text-xs text-muted"><span className="font-mono">{c.number ?? 'Upload'}</span> · from {c.from ?? 'you'} · {at} of {of}</span>
           <h2 className="text-lg font-semibold leading-tight">{c.title}</h2>
-          <span className="flex flex-wrap items-center gap-2"><Pill d={result.decision} />{call && <span className="text-xs text-muted">Saved: {call.act === 'not_checked' ? 'not checked' : call.act === 'return' ? 'return decision' : 'approval decision'}</span>}</span>
+          <span className="flex flex-wrap items-center gap-2"><Pill d={result.decision} />
+            <span className="text-xs text-muted">{row.stamp}</span>
+            {call && <span className="text-xs text-muted">· Saved: {ACT_SAVED[call.act]}</span>}</span>
           <p className="text-base text-soft">{notApplicable
             ? `None of the ${result.spec_rule_count ?? result.findings.length} rules in ${result.spec_title ?? c.section} found a value in this document. Pick a different spec for it in the Inbox.`
             : reviewSummary(result)}</p>
           {result.checklist_id && <p className="text-muted">Checked against your draft checklist {result.spec_section} {result.spec_title} ({result.spec_rule_count} rules, unreviewed). Drafted by Nemotron 3 Super · edited by you · unreviewed · this browser only.</p>}
-          {result.product_type && <p className="text-muted">Product type: {result.product_type.replace(/_/g, ' ')}.</p>}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <Checks head={['Check', 'Required', 'Submitted']}
-            rows={[...spec.map((f): CheckRow => [f, f.title, f.compare?.left_value, f.compare?.right_value]), ...web.flatMap(webRows)]
-              .sort((x, y) => TONE_RANK[toneOf(x[0])] - TONE_RANK[toneOf(y[0])])} />
+        {!notApplicable && <SummaryCounters result={result} />}
+
+        {!notApplicable && <div className="flex flex-col gap-2 rounded-xl border border-line bg-panel p-4">
+          <span className={CAPS}>What to send</span>
+          {row.what_to_send.length ? <ol className="flex flex-col gap-2 text-base">{row.what_to_send.map((t, n) => (
+            <li key={t} className="flex gap-3"><span className="font-mono text-muted">{n + 1}</span><span>{t}</span></li>))}</ol>
+            : <p className="text-base text-soft">Nothing. Forward as submitted.</p>}
+        </div>}
+
+        {row.still_made !== 'discontinued' && <ConfigureLines findings={result.findings} />}
+        {fix && (result.decision === 'send_back' || row.still_made === 'discontinued') && <AlternatesCard fix={fix} />}
+
+        {(acting.length > 0 || met.length > 0 || minor.length > 0) && <div className="flex flex-col gap-2">
+          {acting.length > 0 && <Checks head={['Needs action', 'Required', 'Submitted']} rows={sortRows(checkRows(acting))} />}
+          {met.length > 0 && <details className="text-muted">
+            <summary className="cursor-pointer">{plural(met.length, 'requirement')} met ✓</summary>
+            <div className="mt-2"><Checks head={['Check', 'Required', 'Submitted']} rows={checkRows(met)} /></div>
+          </details>}
+          {minor.length > 0 && <details className="text-muted">
+            <summary className="cursor-pointer">{plural(minor.length, 'minor item')} couldn't be confirmed</summary>
+            <div className="mt-2"><Checks head={['Check', 'Required', 'Submitted']} rows={checkRows(minor)} /></div>
+          </details>}
           {otherTypes.length > 0 && <details className="text-muted">
             <summary className="cursor-pointer">{otherTypes.length} rules for other product types</summary>
             <ul className="mt-2 flex flex-col gap-2 text-xs">{otherTypes.map((f) =>
               <li key={f.id}>{f.product_type?.replace(/_/g, ' ')}: {f.title} · {f.spec_ref}</li>)}</ul>
           </details>}
-          <span className="text-xs leading-5 text-muted">
-            Sources: spec {c.section}{result.document_revision ? ` · submitted sheet ${result.document_revision}` : ''}
-            {source && <> · <a href={source.url} target="_blank" rel="noreferrer" className="underline decoration-edge underline-offset-2 hover:text-ink">{source.title || hostOf(source.url)} ↗</a></>}
-            {source?.archived_path && <> · <a href={archiveUrl(source.archived_path)} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-ink">archived copy</a></>}
-          </span>
-          <Trace result={result} mode={mode} />
-        </div>
+        </div>}
 
-        {best && (
-          <div className="flex flex-col gap-1 rounded-xl border border-good/40 p-4">
-            <span className={CAPS}>Suggested replacement</span>
-            <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
-            {best.selection?.origin === 'agent_proposal' && <p className="text-sm text-soft">
-              Proposed by SpecCheck: {best.selection.model}. Confirm configuration before ordering.
-            </p>}
-            <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes the listed checks</span>
-            <details className="mt-2 text-sm">
-              <summary className="cursor-pointer text-soft">Replacement evidence</summary>
-              <ul className="mt-2 flex flex-col gap-3">
-                {best.selection?.origin === 'agent_proposal' && <li>
-                  <span className="font-medium">Proposed configuration · page {best.selection.page}</span>
-                  <blockquote className="mt-1 border-l-2 border-edge pl-3 text-muted">
-                    <p>“{displayQuote(best.selection.quote)}”</p>
-                    <a href={best.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(best.source_url)} ↗</a>
-                  </blockquote>
-                </li>}
-                {best.checks.map((check, n) => <li key={n}>
-                  <span className="font-medium">{check.label}</span>
-                  {check.evidence?.map((e, i) => <blockquote key={i} className="mt-1 border-l-2 border-edge pl-3 text-muted">
-                    {e.excerpt && <p>“{displayQuote(e.excerpt)}”</p>}
-                    <a href={e.url} target="_blank" rel="noreferrer" className="underline underline-offset-2">{hostOf(e.url)} ↗</a>
-                  </blockquote>)}
-                </li>)}
-              </ul>
-            </details>
+        <details className="text-muted">
+          <summary className="cursor-pointer">How this was checked</summary>
+          <div className="mt-2 flex flex-col gap-2">
+            <span className="text-xs leading-5">
+              Sources: spec {c.section}{result.document_revision ? ` · submitted sheet ${result.document_revision}` : ''}
+              {source && <> · <a href={source.url} target="_blank" rel="noreferrer" className="underline decoration-edge underline-offset-2 hover:text-ink">{source.title || hostOf(source.url)} ↗</a></>}
+              {source?.archived_path && <> · <a href={archiveUrl(source.archived_path)} target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-ink">archived copy</a></>}
+              {result.product_type && ` · product type: ${result.product_type.replace(/_/g, ' ')}`}
+            </span>
+            <Trace result={result} mode={mode} />
           </div>
-        )}
+        </details>
 
         {notApplicable ? <div className="flex flex-col gap-3">
           <p className="text-muted">Upload this document again in the Inbox to choose another spec before scanning.</p>
@@ -815,7 +818,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
             <label htmlFor="message" className={CAPS}>{rec === 'return' ? `Draft for ${who}` : 'Draft for architect'}</label>
             {rec === 'return' && c.email && <span className="font-mono text-xs text-muted">{c.email}</span>}
           </span>
-          <textarea id="message" rows={9} value={message} onChange={(e) => { setMessage(e.target.value); onDraft(e.target.value) }}
+          <textarea id="message" rows={8} value={message} onChange={(e) => { setMessage(e.target.value); onDraft(e.target.value) }}
             className="resize-y rounded-lg border border-line bg-well p-3 leading-relaxed text-ink" />
           <p className="text-xs text-muted">Decisions and drafts stay in this browser. No email is sent.</p>
           <div className="flex flex-wrap gap-2">
@@ -830,6 +833,7 @@ function Reviewing({ c, at, of, l, call, mode, messageDraft, onDraft, onDecide }
                 <button className="btn" onClick={() => onDecide({ act: 'return', message: draft('return') })}>Save return</button>
               </>
             )}
+            <button className="btn" onClick={() => onDecide({ act: 'manual', message })}>Flag for manual review</button>
           </div>
         </div>}
       </aside>
@@ -1159,19 +1163,6 @@ function TextPages({ pages, marks, selId, result, page, onPage, name, href, prod
 
 // ---------- 4 · Outcome ----------
 
-// "None passed. STI W-L-1079 checked: T rating 0 hr." from the fix step, or the passing candidate.
-function replacement(fix: Fix | null): [string, boolean] {
-  if (!fix) return ['—', false]
-  if (fix.suggest) return [fix.suggest, true]
-  const c = fix.candidates[0]
-  if (!c) return ['None found', false]
-  const bad = c.checks.find((k) => k.ok === false) ?? c.checks.find((k) => k.ok === null)
-  const name = c.name.split(',')[0].replace(/^(\S+) SpecSeal System No\. /, '$1 ')  // "STI SpecSeal System No. W-L-1079, metallic…" -> "STI W-L-1079"
-  const why = bad ? (bad.note || (bad.ok === null ? `${bad.label} not stated` : bad.label)) : ''
-  const reason = !why ? '' : bad?.ok === null ? `; couldn't confirm ${bad.label}` : ` fails on ${why}`
-  return [`None passed · ${name}${reason}`, false]
-}
-
 // When the nightly re-check (scripts/recheck.py as a Nebius Serverless Job) last ran, in one line.
 const recheckLine = (r: Recheck) => {
   const flagged = r.items.filter((i) => i.status !== 'no_change').length
@@ -1207,21 +1198,24 @@ function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck 
   </div>
 }
 
-function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, jobsAvailable, onCheck, onRequest }: {
+function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, jobsAvailable, rowOf, onCheck, onRequest }: {
   queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; rows: Record<string, Row>; watched: Case[]
+  rowOf: (id: string) => PackageRow | undefined
   checks: Record<string, Row>; checked: Record<string, Result>; requested: Record<string, boolean>; error: string | null
   recheck?: Recheck | null; jobsAvailable: boolean; onCheck: () => void; onRequest: (id: string) => void
 }) {
   const notChecked = queue.filter((c) => loaded[c.id].result.decision === 'not_applicable')
   const returned = queue.filter((c) => loaded[c.id].result.decision !== 'not_applicable' && calls[c.id]?.act === 'return')
   const approved = [...queue.filter((c) => loaded[c.id].result.decision !== 'not_applicable' && calls[c.id]?.act === 'approve'), ...watched]
+  const manual = queue.filter((c) => calls[c.id]?.act === 'manual')
   const checking = approved.some((c) => checks[c.id] && checks[c.id].stage !== 'error' && !checked[c.id])
   const alerts = approved.filter((c) => discontinued(checked[c.id]))
   const back = 'minmax(0,0.8fr) minmax(0,1.2fr) minmax(0,1.4fr) minmax(0,1.4fr)'
+  const sent = '112px minmax(0,1fr) minmax(0,2fr)'
   const fwd = '112px minmax(0,1.4fr) 112px 140px 128px'
   return (
     <>
-      <Heading title="Outcome" count={`${returned.length} to return · ${approved.length - watched.length} approved`}>
+      <Heading title="Outcome" count={`${returned.length} to return · ${approved.length - watched.length} approved${manual.length ? ` · ${manual.length} for manual review` : ''}`}>
         <button className={PRIMARY} onClick={onCheck} disabled={checking || !approved.length}>
           {checking ? 'Checking…' : 'Check approved now'}
         </button>
@@ -1238,22 +1232,17 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
         <h2 className="font-semibold">Marked for return to subcontractors</h2>
         <div className="rounded-xl border border-line">
           {returned.length ? (
-            <Table cols={back} head={['Number', 'Recipient', 'Requested', 'Suggested replacement']}>
+            <Table cols={sent} head={['Number', 'Recipient', 'What to send']}>
               {returned.map((c) => {
-                const r = loaded[c.id].result
-                const asked = asks(r, c.section)
-                const [text, passes] = replacement(fixOf(r))
+                const row = rowOf(c.id)
                 return (
-                  <TableRow key={c.id} cols={back}>
+                  <TableRow key={c.id} cols={sent}>
                     <span className="font-mono text-xs text-muted">{c.number ?? 'Upload'}</span>
                     <span className="flex min-w-0 flex-col">
                       <span className="truncate">{c.from ?? 'Sender'}</span>
                       <span className="truncate text-xs text-muted">{c.product ?? c.title}</span>
                     </span>
-                    <span className="text-soft">{asked.length ? asked.join(ASKS_SEP) : '—'}</span>
-                    <span className={passes ? 'flex items-center gap-1 font-medium text-good' : 'text-xs text-muted'}>
-                      {passes && <Icon kind="check" />}{text}
-                    </span>
+                    <ol className="flex flex-col gap-1 text-soft">{row?.what_to_send.map((t) => <li key={t}>{t}</li>) ?? '—'}</ol>
                   </TableRow>
                 )
               })}
@@ -1261,6 +1250,28 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
           ) : <p className="px-4 py-6 text-muted">None marked for return.</p>}
         </div>
       </section>
+
+      {manual.length > 0 && <section className="flex flex-col gap-3">
+        <h2 className="font-semibold">Manual review</h2>
+        <div className="rounded-xl border border-line">
+          <Table cols={back} head={['Number', 'Submittal', 'Still needs a person', 'Flagged']}>
+            {manual.map((c) => {
+              const row = rowOf(c.id)
+              return (
+                <TableRow key={c.id} cols={back}>
+                  <span className="font-mono text-xs text-muted">{c.number ?? 'Upload'}</span>
+                  <span className="flex min-w-0 flex-col">
+                    <span className="truncate">{c.title}</span>
+                    <span className="truncate text-xs text-muted">{c.from ?? 'You'}</span>
+                  </span>
+                  <span className="text-soft">{row?.what_to_send.join(' · ') || (row?.couldnt_confirm ? `${plural(row.couldnt_confirm, 'item')} couldn't be confirmed` : '—')}</span>
+                  <span className="text-xs text-muted">{row ? `${row.stamp} suggested` : ''}</span>
+                </TableRow>
+              )
+            })}
+          </Table>
+        </div>
+      </section>}
 
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
@@ -1310,7 +1321,7 @@ function Alert({ c, result, sent, onRequest }: { c: Case; result: Result; sent: 
   const f = discontinued(result)!
   const when = String(f.compare?.right_value ?? '').replace(/^Discontinued\s*/, '')
   const src = f.evidence[0]
-  const best = fixOf(result)?.candidates.find((x) => x.passes)
+  const fix = fixOf(result)
   const who = c.from ?? 'the sender'
   const steps: [string, string, boolean][] = [
     ['Approved', c.watch ? longDate(c.watch.approved) : 'Today', false],
@@ -1341,16 +1352,7 @@ function Alert({ c, result, sent, onRequest }: { c: Case; result: Result; sent: 
           {src && <a href={src.url} target="_blank" rel="noreferrer" className="truncate text-xs text-muted underline decoration-edge underline-offset-2 hover:text-ink">{src.title || hostOf(src.url)} ↗</a>}
         </blockquote>
       )}
-      {best && (
-        <div className="flex flex-col gap-1 rounded-lg border border-good/40 p-3">
-          <span className={CAPS}>Suggested replacement</span>
-          <a href={best.source_url} target="_blank" rel="noreferrer" className="font-semibold hover:underline">{best.name}</a>
-          {best.selection?.origin === 'agent_proposal' && <p className="text-sm text-soft">
-            Proposed by SpecCheck: {best.selection.model}. Confirm configuration before ordering.
-          </p>}
-          <span className="flex items-center gap-1 text-xs text-good"><Icon kind="check" />Passes all checks</span>
-        </div>
-      )}
+      {fix && <AlternatesCard fix={fix} />}
       <button className="btn h-auto max-w-full self-start whitespace-normal py-2 text-left" onClick={onRequest} disabled={sent}>
         {sent ? `Request saved for ${who}` : `Save substitution request for ${who}`}
       </button>

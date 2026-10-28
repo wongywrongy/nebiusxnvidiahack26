@@ -160,3 +160,37 @@ def test_package_endpoint_summarizes_a_mock_run(isolated):
     assert rows["c07"]["still_made"] == "discontinued" and rows["c02"]["spec"] == "fails"
     assert rows["c02"]["title"] == all_cases()["c02"]["title"]
     assert isolated.get("/api/runs/nope/package").status_code == 404
+
+
+def test_drafts_are_code_templates_with_options_and_alternates():
+    configured = result("approve_with_note", [
+        finding("spec-dim", "spec", "unverified", "minor", requirement_id="dim", title="Specify option: Dims down to",
+                configure=[ConfigOption(option="EZ1", value="1 %", claim_id="k1")]),
+        finding("spec-voc", "spec", "unverified", "minor", requirement_id="voc", title="Couldn't confirm: VOC (air quality)"),
+    ])
+    r = package.row({"number": "26 51 00-01", "title": "LED troffer"}, configured)
+    assert r.what_to_send == ["Specify EZ1 (dims down to 1 %)"]
+    assert r.approval_note.splitlines() == ["Please review 26 51 00-01 LED troffer for approval: exceptions noted.",
+                                            "Specify EZ1 (dims down to 1 %)", "Not confirmed: VOC (air quality)."]
+
+    sent = result("send_back", [finding("currency-outdated", "currency", "outdated")])
+    sent.findings[0].fix = Fix(head="h", alternates=[
+        alternates.Alternate(name="Rev B", source_url="u", rank="possible", confirm=["Still made"])])
+    note = package.row({"number": "07 84 00-03"}, sent).return_note
+    assert note.splitlines()[-2:] == ["1. The manufacturer's current data sheet",
+                                      "Possible alternate to confirm: Rev B (still made)."]
+    assert "Acceptable alternate" not in note  # only a meets_spec alternate is called acceptable
+    sent.findings[0].fix.alternates[0] = alternates.Alternate(name="Rev B", source_url="u", rank="meets_spec")
+    assert package.row({}, sent).return_note.endswith("Acceptable alternate: Rev B.")
+    assert package.row({}, result("not_applicable", [])).return_note == ""
+
+
+def test_a_proposed_configuration_is_named_in_the_draft():
+    from api.schemas import Selection
+    sent = result("send_back", [finding("status-discontinued", "status", "fail")])
+    sent.findings[0].fix = Fix(head="h", candidates=[FixCandidate(
+        name="Catalog", source_url="u", passes=True, checks=[],
+        selection=Selection(model="ZX-12-D1", page=1, quote="ZX-12-D1", origin="agent_proposal"))],
+        alternates=[alternates.Alternate(name="Catalog", source_url="u", rank="meets_spec")])
+    assert package.row({}, sent).return_note.endswith(
+        "Acceptable alternate: Catalog, configured as ZX-12-D1; confirm before ordering.")

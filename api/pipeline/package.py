@@ -41,6 +41,11 @@ def best_alternate(result: Result) -> Optional[Alternate]:
     return min(alts, key=lambda a: (order[a.rank], len(a.confirm)), default=None)
 
 
+def _lc(text: str) -> str:
+    """Lower-case the first letter only, so "VOC (air quality)" keeps its acronym."""
+    return text if text[1:2].isupper() else text[:1].lower() + text[1:]
+
+
 def what_to_send(f: Finding) -> Optional[str]:
     """One plain line per finding that needs action. Templates only: no model writes these."""
     left = f.compare.left_value if f.compare else None
@@ -53,16 +58,53 @@ def what_to_send(f: Finding) -> Optional[str]:
     if f.id == "currency-newer":
         return "The newer data sheet (optional)"
     if f.configure:
-        return f"Confirm the order specifies {' or '.join(dict.fromkeys(o.option for o in f.configure))}"
+        return specify(f)
     if f.verdict == "fail" and f.check == "validity":
         return f"A listing that covers {wanted}" if wanted else "A listing that covers this job condition"
     if f.verdict == "fail" and f.check == "spec":
         if "=" in wanted and "≤" not in wanted and "≥" not in wanted:
             return f"A listed system with {wanted}"  # eq_ref, e.g. "T = F (2 hr)"
-        return f"A product with {label.lower()} {wanted}".strip()
+        return f"A product with {_lc(label)} {wanted}".strip()
     if f.verdict in ("unverified", "pending") and f.check in SPEC_CHECKS and f.severity in ("critical", "major"):
-        return f"Data showing {label.lower()}"
+        return f"Data showing {_lc(label)}"
     return None
+
+
+def specify(f: Finding) -> str:
+    """"Specify EZ1 (dims down to 1 %)": the ordering option whose quoted value meets the rule."""
+    names = " or ".join(dict.fromkeys(o.option for o in f.configure))
+    return f"Specify {names} ({_lc(f.title.removeprefix('Specify option: '))} {f.configure[0].value})"
+
+
+def _confirm(a: Alternate) -> str:
+    return ", ".join(map(_lc, a.confirm))
+
+
+def _ref(case: dict, result: Result) -> str:
+    return " ".join(x for x in (case.get("number"), case.get("title") or result.title) if x)
+
+
+def return_note(case: dict, result: Result, asks: list[str], specs: list[str], best: Optional[Alternate],
+                proposal: Optional[str]) -> str:
+    """The draft to the sub, from code only: what to send, options to specify, and at most one alternate."""
+    lines = [f"Revise and resubmit {_ref(case, result)}.", "", "Please send:"]
+    lines += [f"{i}. {a}" for i, a in enumerate(asks[:4], 1)] or ["1. A product that meets the spec"]
+    lines += specs[:2]
+    if best and best.rank == "meets_spec":
+        lines.append(f"Acceptable alternate: {best.name}" + (f", configured as {proposal}; confirm before ordering." if proposal else "."))
+    elif best:
+        lines.append(f"Possible alternate to confirm: {best.name} ({_confirm(best)}).")
+    return "\n".join(lines)
+
+
+def approval_note(case: dict, result: Result, specs: list[str], unconfirmed: list[str]) -> str:
+    """The draft to the architect: the stamp, options the order must name, and what couldn't be confirmed."""
+    stamp = STAMP["approve" if result.decision == "approve" else "approve_with_note"]
+    lines = [f"Please review {_ref(case, result)} for approval: {stamp.lower()}."]
+    lines += specs[:3]
+    if unconfirmed:
+        lines.append(f"Not confirmed: {', '.join(map(_lc, unconfirmed[:4]))}.")
+    return "\n".join(lines)
 
 
 def row(case: dict, result: Result) -> PackageRow:
@@ -88,18 +130,26 @@ def row(case: dict, result: Result) -> PackageRow:
     order = {"status": 0, "currency": 1, "validity": 2, "spec": 3, "completeness": 4}
     acting = sorted((f for f in result.findings if f.verdict not in ("pass", "not_applicable")),
                     key=lambda f: (order.get(f.check, 5), bool(f.configure)))
-    actions = list(dict.fromkeys(a for f in acting if not (made == "discontinued" and f.configure)
-                                 if (a := what_to_send(f))))
+    asks = list(dict.fromkeys(a for f in acting if not f.configure if (a := what_to_send(f))))
+    specs = [] if made == "discontinued" else list(dict.fromkeys(specify(f) for f in acting if f.configure))
     best = best_alternate(result)
+    actions = asks + specs
     if best and best.rank == "meets_spec":
         actions.insert(0, f"Send {best.name} (meets the spec)")
     elif best:
-        actions.append(f"Possible alternate: {best.name} (confirm {', '.join(best.confirm).lower()})")
+        actions.append(f"Possible alternate: {best.name} (confirm {_confirm(best)})")
+    proposal = next((c.selection.model for f in result.findings if f.fix for c in f.fix.candidates
+                     if best and c.source_url == best.source_url and c.selection
+                     and c.selection.origin == "agent_proposal"), None)
+    unconfirmed_labels = [f.title.removeprefix("Couldn't confirm: ") for f in rf
+                          if f.verdict in ("unverified", "pending") and not f.configure]
     return PackageRow(case_id=result.case_id, title=case.get("title") or result.title, number=case.get("number"),
                       sender=case.get("from"), decision=result.decision, stamp=STAMP[result.decision], spec=spec,
                       current_sheet=current, still_made=made, meets=meets, doesnt_meet=fails,
                       couldnt_confirm=unconfirmed, what_to_send=actions[:3], best_alternate=best,
-                      manual_review_suggested=result.decision in ("approve", "approve_with_note") and unconfirmed_plain >= 2)
+                      manual_review_suggested=result.decision in ("approve", "approve_with_note") and unconfirmed_plain >= 2,
+                      return_note="" if result.decision == "not_applicable" else return_note(case, result, asks, specs, best, proposal),
+                      approval_note="" if result.decision == "not_applicable" else approval_note(case, result, specs, unconfirmed_labels))
 
 
 def summarize(run_id: str, items: list[tuple[dict, Result]]) -> PackageSummary:
