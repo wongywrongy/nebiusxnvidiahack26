@@ -46,9 +46,7 @@ async function upload(index, filename, spec) {
 }
 async function screenshot(label) {
   if (label.includes('review')) await page.getByRole('img', { name: /^Page \d+$/ }).first().waitFor()
-  await page.locator('img').evaluateAll(images => Promise.all(images.map(async img => {
-    await img.decode(); if (!img.naturalWidth) throw new Error('PDF page did not render')
-  })))
+  await page.waitForFunction(() => [...document.images].every(img => img.complete && img.naturalWidth > 0))
   await page.screenshot({ path: path.join(out, `${name}-${label}.png`), fullPage: true, animations: 'disabled' })
 }
 async function scan() {

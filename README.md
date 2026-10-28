@@ -32,7 +32,7 @@ The separate wrong-spec check approved **0 of 14** documents; all 14 were marked
 | **Tavily Search, Extract and bounded Map** | Finds and retrieves current manufacturer documents |
 | **Code** | Validates quotations, compares values, applies product-type scope and owns every verdict |
 
-Unquoted claims and web values are dropped. “Couldn't confirm” is never a failure. SpecCheck suggests alternates and shows what's still unconfirmed; only a fully checked alternate is labelled acceptable. Messages remain editable drafts and are never sent. Mock results say mock, cached live calls remain labelled, and recorded fallback says replay. Checklist drafts are unreviewed. A memo covers one run; items retried into another run are separate. **No Nebius Serverless Job execution is claimed.** [Daily fallback setup and measured status](deploy/nebius/recheck-job.md).
+Unquoted claims and web values are dropped. “Couldn't confirm” is never a failure. SpecCheck suggests alternates and shows what's still unconfirmed; only a fully checked alternate is labelled acceptable. Messages remain editable drafts and are never sent. Mock results say mock, cached live calls remain labelled, and recorded fallback says replay. Checklist drafts are unreviewed. A memo covers one run; items retried into another run are separate. The daily GitHub Actions fallback has a real October 28 report: one watched item, one discontinued product, $0.0667 / 13 credits. **No Nebius Serverless Job execution is claimed.** [Schedule, caps and measured status](deploy/nebius/recheck-job.md).
 
 ## Hosting and limits
 
