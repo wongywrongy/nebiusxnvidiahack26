@@ -1,6 +1,6 @@
 """Replace the public endpoint with the release/final image, as on October 28 (deploy/nebius/README.md).
 
-Run with an authenticated Nebius CLI on PATH, in order:
+Run with an authenticated Nebius CLI (`nebius` on PATH, or NEBIUS="<cli> --config <file>"), in order:
   python docs/release-final/endpoint.py stop-old
   python docs/release-final/endpoint.py create ghcr.io/wongywrongy/speccheck@sha256:<digest> <source-commit>
   python docs/release-final/endpoint.py get-new
@@ -10,6 +10,7 @@ Settings, subnet, filesystem and MysteryBox secret references are copied from th
 only the image and SPECCHECK_COMMIT change. Outputs are saved beside this file (no secret values are returned).
 """
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -20,7 +21,7 @@ OUT = Path(__file__).parent / "endpoint"
 
 
 def nebius(*args, name):
-    out = subprocess.run(["nebius", *args, "--format", "json"], capture_output=True, text=True)
+    out = subprocess.run([*os.environ.get("NEBIUS", "nebius").split(), *args, "--format", "json"], capture_output=True, text=True)
     if out.returncode:
         sys.exit(out.stderr)
     data = json.loads(out.stdout or "{}")
