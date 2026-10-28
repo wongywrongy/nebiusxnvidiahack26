@@ -157,6 +157,7 @@ export interface Scores {
   right_call: Score; caught: Score; false_alarms: Score; fixes_passing: Score
   validity?: { invalid_items: number; requested_items: number }
   unnecessary_notes?: Score
+  wrong_spec?: { n: number; approved: number; not_applicable: number; other: number; run_id: string; mode: Project['mode'] }
   fresh_model_cost_usd?: number; fresh_web_credits?: number
   release_gate?: { scope?: 'cases'; passed: boolean; issues: string[] }
   rows: { id: string; title: string; product: string; expected: Decision; expected_problems: string[]
