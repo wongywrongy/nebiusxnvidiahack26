@@ -7,6 +7,8 @@ Release candidate based on `e8af541`. The product changes are in PR #15; the inf
 - Python: 771 passed, 2 skipped. Tests prohibit provider calls.
 - Mock browser journeys: 17 passed, including the matrix, manual-review persistence and memo.
 - Presentation checks and production web build passed.
+- Four additional fallback-admission tests passed: missing report runs, same-day live report skips, a mock report does not count, and provider calls stop at the December 15 cutoff.
+- The frozen image passed a credential-free, network-disabled check of all 13 locked PDFs, ten recorded results, the new score panel, package API, native PDF PNG and memo route. See `packaging.json`.
 - Raw mock panel remains 6/8 calls, 5/6 problems, 0/2 false alarms, 0/5 passing fixes.
 - First sandbox attempts could not run TestClient/Chromium; the successful runs used local networking outside the sandbox. Those failures did not spend provider credits.
 
