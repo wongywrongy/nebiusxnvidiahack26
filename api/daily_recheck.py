@@ -10,6 +10,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import shlex
+from contextlib import asynccontextmanager
 from datetime import datetime, timedelta, timezone
 
 from . import watch_store
@@ -54,7 +55,9 @@ def job_request(name: str):
                      restart_attempts=0, timeout=timedelta(hours=1)))
 
 
-async def create(name: str) -> str:
+@asynccontextmanager
+async def jobs():
+    """The Nebius job service, signed in as the service account. The key stays in memory."""
     from cryptography.hazmat.primitives import serialization
     from nebius.api.nebius.ai.v1 import JobServiceClient
     from nebius.base.service_account.service_account import ServiceAccount
@@ -63,10 +66,14 @@ async def create(name: str) -> str:
     key = serialization.load_pem_private_key(settings.secret("nebius_private_key").encode(), password=None)
     sdk = SDK(credentials=ServiceAccount(key, settings.nebius_public_key_id, settings.nebius_sa_id), user_agent_prefix="speccheck/1.0")
     try:
-        operation = await JobServiceClient(sdk).create(job_request(name))
-        return operation.resource_id
+        yield JobServiceClient(sdk)
     finally:
         await sdk.close()
+
+
+async def create(name: str) -> str:
+    async with jobs() as client:
+        return (await client.create(job_request(name))).resource_id
 
 
 async def launch_if_due(now: datetime | None = None) -> dict | None:

@@ -49,7 +49,7 @@ export PUBLIC_KEY_ID=$(nebius iam auth-public-key create --account-service-accou
   --data "$(cat sa.pub.pem)" --format jsonpath='{.metadata.id}')
 nebius mysterybox secret create --name speccheck-server-sa --parent-id $PROJECT_ID \
   --secret-version-payload "$(jq -nc --rawfile k sa.pem '[{key:"NEBIUS_PRIVATE_KEY",string_value:$k}]')"
-shred -u sa.pem sa.pub.pem
+shred -u sa.pub.pem   # keep sa.pem until the test job in step 4 has run, then: shred -u sa.pem
 echo $PUBLIC_KEY_ID   # if empty: nebius iam auth-public-key list-by-account --account-service-account-id $SA_ID
 ```
 
@@ -65,7 +65,25 @@ export RECHECK_SECRET_ID=$(nebius mysterybox secret get-by-name --name speccheck
   --format jsonpath='{.metadata.id}')
 ```
 
-## 4. Endpoint settings (applied with the Package H redeploy)
+## 4. Tonight: one real job from this machine
+
+`scripts/launch_recheck.py` runs the exact launch code the server uses (`api/daily_recheck.create`), waits for
+a terminal state, then confirms the job's report on the Vercel URL. The key is read from the environment and
+never printed. Run it as one line, from the prompt with `!` so it runs on this machine:
+
+```bash
+cd ~/code/nvh-final && NEBIUS_SA_ID=$SA_ID NEBIUS_PUBLIC_KEY_ID=$PUBLIC_KEY_ID NEBIUS_PROJECT_ID=$PROJECT_ID \
+  NEBIUS_PRIVATE_KEY="$(cat sa.pem)" RECHECK_MYSTERYBOX_SECRET_ID=$RECHECK_SECRET_ID \
+  SPECCHECK_IMAGE=ghcr.io/wongywrongy/speccheck@sha256:e5c92a98a7d384e3e89c21819546fc9928ce6c6971f951cf1a4bc1c888dcbab2 \
+  SPECCHECK_URL=https://speccheck-wongywrongys-projects.vercel.app .venv/bin/python scripts/launch_recheck.py
+```
+
+Exit 0 means the report is live. Otherwise it prints which assumption broke (role, env var naming, network
+or admin token) and the `nebius ai job logs` command. One job costs at most $0.50 and 40 Tavily credits.
+Only the build running tonight accepts a report from a laptop-launched job; after the H redeploy the server
+accepts only jobs it launched itself.
+
+## 5. Endpoint settings (applied with the Package H redeploy)
 
 Add to the endpoint's environment:
 
@@ -79,7 +97,7 @@ Add to the endpoint's environment:
 | `RECHECK_MYSTERYBOX_SECRET_ID` | `$RECHECK_SECRET_ID` |
 | `NEBIUS_PRIVATE_KEY` | `--env-secret NEBIUS_PRIVATE_KEY=speccheck-server-sa` |
 
-## 5. Check it
+## 6. Check it
 
 The first launch happens on the first 10-minute tick after 09:00 UTC. Then:
 
