@@ -18,6 +18,7 @@ from ..providers import ProviderError, budget, tavily
 from ..schemas import ClaimsOut, Investigation, InvestigationStep, ToolMessage, VerifyOut
 from ..web import WebClient
 from .extract import quoted
+from .spec_check import _label
 
 RESULT_CHARS = 6000
 
@@ -81,6 +82,9 @@ PROMPT = (
     "Extract the document before finishing. Quote the revision and status exactly, never infer them. "
     "A catalog's Updated timestamp or a certification code is not a printed document revision. "
     "When unconfirmed_properties are supplied, seek evidence for those properties; a revision alone does not resolve them. "
+    "Search using the model and the missing metric's printed name (property_labels), not only a generic data-sheet query. "
+    "Supplied sources were already extracted: follow their document links rather than extracting those same pages again. "
+    "Resolve relative document links against their source URL. Keep distinct model suffixes separate. "
     "When require_availability is true, seek an exact statement that this product is available or still made. "
     "A live product page or absence of a discontinuation notice is not availability evidence. "
     "Missing configuration selections remain unconfirmed; never choose an ordering example or optional driver. "
@@ -138,8 +142,9 @@ def _finish(result: Investigation, final: Finish) -> str:
     return f"{revision or 'revision unknown'}, {status}"
 
 
-async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Investigation:
+async def investigate(case: dict, submitted: ClaimsOut, web: WebClient, *, pages: list[dict] | None = None) -> Investigation:
     result = Investigation()
+    result._pages.extend(pages or [])
     allowance = (f"You have at most {settings.investigate_max_steps} tool calls, including finish, and "
                  f"{settings.investigate_credit_cap:g} Tavily credits shared across this item's investigations. "
                  f"Search costs {tavily.search_credits(settings.search_depth)}, extract costs "
@@ -150,6 +155,10 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
         "submitted_label": case.get("product") if not case.get("candidate_url") else None,
         "manufacturer_domains": case.get("manufacturer_domains", []), "candidate_url": case.get("candidate_url"),
         "unconfirmed_properties": case.get("unconfirmed_properties", []),
+        "property_labels": {p: _label(p) for p in case.get("unconfirmed_properties", [])},
+        "submitted_metric_quotes": [{"property": c.property, "quote": c.quote} for c in submitted.claims
+                                    if c.property in case.get("unconfirmed_properties", []) and not c.variant],
+        "sources": [json.loads(tool_content("extract", [p])) for p in (pages or [])[:3]],
         "require_availability": bool(case.get("require_availability")),
     })}]
     ledger = budget.LEDGER.get()
@@ -161,10 +170,16 @@ async def investigate(case: dict, submitted: ClaimsOut, web: WebClient) -> Inves
             while len(result.steps) < settings.investigate_max_steps:
                 remaining = settings.investigate_max_steps - len(result.steps)
                 credits_left = max(0, settings.investigate_credit_cap - spent - (web.credits - start_credits))
-                messages[0]["content"] = allowance + PROMPT + f"\n{credits_left:g} shared credits remain. {remaining} tool calls remain, including finish. " + (
+                fallback = ("A document extract failed. Use the remaining search to find a distributor or agency copy of "
+                            "this exact model and missing metric, without restricting search to the blocked manufacturer's domain. "
+                            "Extract that copy, then finish; do not retry the blocked assets. " if remaining == 3 and any(
+                                step.tool == "extract" and not step.succeeded for step in result.steps) else "")
+                messages[0]["content"] = allowance + PROMPT + fallback + f"\n{credits_left:g} shared credits remain. {remaining} tool calls remain, including finish. " + (
                     "Call finish now with supported evidence, or found=false." if remaining == 1 else
                     "Reserve the last call for finish; stop early when no useful source remains.")
                 tools = TOOLS if remaining > 1 else [t for t in TOOLS if t["function"]["name"] == "finish"]
+                if fallback:
+                    tools = [t for t in TOOLS if t["function"]["name"] == "search"]
                 message, usage = await router.call("investigate", ToolMessage, messages,
                                                    {"case_id": web.case_id, "tools": tools})
                 result._usage.append(usage)

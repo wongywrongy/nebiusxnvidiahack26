@@ -183,7 +183,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
     for r in requirements:
         other_type = product_type and r.product_type and _text(product_type) != _text(r.product_type)
         scoped = [] if other_type else by_prop.get(r.property, [])
-        variants = [c.variant for c in scoped if c.variant]
+        variants = [c.variant for c in scoped if c.variant and c.scope == "option"]
         found = [c for c in scoped if not c.variant or c.selection_quote]
         claim = found[0] if found else None
         ref = f"{r.section} {r.paragraph}".strip()
@@ -237,7 +237,7 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             continue
 
         if claim is None:
-            options = [c for c in scoped if c.variant and meets(r, c) is True]
+            options = [c for c in scoped if c.variant and c.scope == "option" and meets(r, c) is True]
             if options:
                 # The base product doesn't state it, but a quoted ordering option does: say exactly what to order.
                 names = list(dict.fromkeys(c.variant for c in options))

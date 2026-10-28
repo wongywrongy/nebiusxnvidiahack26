@@ -152,7 +152,9 @@ def _claims(extracted, claims, selection, pages: dict[int, str], *, allow_propos
                 or claim.model and not (model_quoted(identifier, claim.model) and model_quoted(claim.model, identifier)
                     or selection and (model_quoted(claim.model, text) and model_quoted(claim.model, selection.model)
                         or allow_proposal and selection.origin == "agent_proposal" and selection_matches(selection, claim.model, base=True)))
-                or not (model_quoted(identifier, claim.product) or model_quoted(claim.product, identifier) or family_member(claim.product, identifier)
+                or not (claim.product == extracted.product and claim.model
+                        and model_quoted(identifier, claim.model) and model_quoted(claim.model, identifier)
+                        or model_quoted(identifier, claim.product) or model_quoted(claim.product, identifier) or family_member(claim.product, identifier)
                         or allow_proposal and selection and selection.origin == "agent_proposal" and selection_matches(selection, claim.product, base=True))):
             raise ValueError("Claim identity, value and quote must survive the submitted-page gates")
         if not claim.variant and not (scope_is_product_wide(claim.scope, claim.scope_quote, claim.quote, claim.property)

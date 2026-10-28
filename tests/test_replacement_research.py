@@ -32,7 +32,8 @@ def test_replacement_research_checks_required_gaps_even_with_a_revision(monkeypa
         return VerifyOut(status=status, status_quote="X is currently available.", current_revision="Rev A", current_values=[
             dict(property="watts",value=10,unit="W",quote="Power 10 W",scope="product_wide",scope_quote="Power 10 W",
                  model="X",identity_quote="Model X",source_url=URL)]), []
-    async def research(case, *args):
+    async def research(case, *args, pages=None):
+        assert pages and pages[0]['url'] == URL
         observed.append(case)
         return Investigation()
     monkeypatch.setattr(WebClient,"search",search)
@@ -61,7 +62,7 @@ def test_final_read_prioritizes_new_document_status_and_supplementary_evidence(m
         observed.append([p["url"] for p in pages])
         return VerifyOut(status="active" if investigated else "unknown", current_revision="Rev A",
                          status_quote="X is currently available." if investigated else None), []
-    async def research(*args):
+    async def research(*args, pages=None):
         inv = Investigation(outcome="found")
         inv._document_url = URL
         inv._pages = [supplement,status,document,document]

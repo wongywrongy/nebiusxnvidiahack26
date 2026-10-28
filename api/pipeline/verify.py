@@ -145,7 +145,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
         missing or availability_missing or out.current_revision is None and (not comparable or (out.status == "unknown" and
                                   not any(classify(r["url"], domains) == "manufacturer" for r in results))
     )):
-        investigation = await investigate({**case, "unconfirmed_properties": sorted(missing)}, submitted, web)
+        investigation = await investigate({**case, "unconfirmed_properties": sorted(missing)}, submitted, web, pages=pages)
         investigation.scripted = scripted
         usage += investigation._usage
         if investigation.outcome == "found":
@@ -162,7 +162,7 @@ async def verify(case: dict, submitted: ClaimsOut, *, on_step=None, on_warning=N
             except (budget.BudgetExceeded, ProviderError) as error:
                 await web.warn("verify.read", error)
             out = newer
-            pages += investigation._pages
+            pages += [p for p in investigation._pages if p["url"] not in {source["url"] for source in pages}]
             titles[investigation._document_url] = investigation._document_title
             confirmed = gate(out, pages, submitted=submitted)
 
