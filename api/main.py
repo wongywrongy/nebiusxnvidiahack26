@@ -564,5 +564,14 @@ def _sse(ev: Event) -> str:
     return f"data: {ev.model_dump_json()}\n\n"
 
 
+@app.get("/memo/{run_id}", include_in_schema=False)
+def memo_page(run_id: str):
+    """The printable package memo is a client route of the built app."""
+    index = settings.web_dist / "index.html"
+    if not index.exists():
+        raise HTTPException(404, "Web app not built")
+    return FileResponse(index)
+
+
 if settings.web_dist.exists():
     app.mount("/", StaticFiles(directory=settings.web_dist, html=True), name="web")

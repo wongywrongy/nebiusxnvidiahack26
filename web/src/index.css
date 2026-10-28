@@ -66,3 +66,21 @@ body {
 @keyframes blink { 50% { opacity: 0.2 } }
 .blink { animation: blink 1s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+
+/* The package memo is paper: light on screen and in print. Tokens are remapped inside .memo only. */
+.memo {
+  --color-ink: #1d1f23; --color-muted: #5b5f66; --color-soft: #33363c; --color-faint: #5b5f66;
+  --color-panel: #ffffff; --color-well: #f4f3ef; --color-line: #d2cfc7; --color-edge: #8a8d93;
+  --color-good: #1d7a4e; --color-bad: #b3302c; --color-warn: #9a6400; --color-fyi: #2f5f9a;
+  color: var(--color-ink); background: #fff; min-height: 100vh;
+}
+.memo .btn { background: #fff; color: var(--color-ink); }
+.memo th { padding-right: 0.75rem; }
+@media print {
+  @page { size: letter; margin: 0.5in; }
+  body { background: #fff; }
+  .memo { padding: 0; max-width: none; }
+  .no-print { display: none !important; }
+  .memo-item { break-before: page; }
+  .memo tr, .memo blockquote { break-inside: avoid; }
+}

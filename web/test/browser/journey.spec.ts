@@ -206,3 +206,14 @@ test('flag for manual review lands in its own Outcome bucket and survives reload
   await page.getByRole('button', { name: /^3 Review/ }).click()
   await expect(page.getByText('· Saved: flagged for manual review')).toBeVisible()
 })
+
+test('the package memo opens from Scan complete with the matrix, labels and a reviewer line', async ({ page, context }) => {
+  await inbox(page)
+  await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
+  await expect(page.getByRole('heading', { name: 'Scan complete', exact: true })).toBeVisible()
+  const [memo] = await Promise.all([context.waitForEvent('page'), page.getByRole('link', { name: 'Package review memo' }).click()])
+  await expect(memo.getByText(/^Reviewer:/)).toBeVisible()
+  await expect(memo.getByText(/mock \(fixture answers\)/)).toBeVisible()
+  await expect(memo.locator('[data-cell]').first()).toBeVisible()
+  await expect(memo.getByText(/^Checked by /)).toHaveCount(1)
+})

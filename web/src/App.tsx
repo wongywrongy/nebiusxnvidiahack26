@@ -267,6 +267,9 @@ export default function App() {
   const scanned = inbox.filter((c) => rows[c.id])
   const queue = scanned.filter((c) => loaded[c.id])
 
+  // shortcut: the memo covers one run; items retried into a second run are left out until memos take several runs.
+  const memoRun = queue.map((c) => loaded[c.id].run)[0]
+
   function startReview() {
     setCurrent((queue.find((c) => !calls[c.id]) ?? queue[0])?.id ?? null)
     go(3)
@@ -325,7 +328,7 @@ export default function App() {
             checklists={checklists} changingSpec={changingSpec} onSpec={changeSpec}
             onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={() => startScan()} />
         )}
-        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error} rowOf={rowOf}
+        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error} rowOf={rowOf} memoRun={memoRun}
           onRetry={startScan} onReview={startReview} onOpen={(id) => { setCurrent(id); go(3) }} />}
         {step === 3 && (
           <ReviewStep queue={queue} loaded={loaded} calls={calls} drafts={drafts} current={current} mode={mode} rowOf={rowOf}
@@ -334,7 +337,7 @@ export default function App() {
         {step === 4 && (
           <>
           {checkNote && <p className="text-muted" role="status">{checkNote}</p>}
-          <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks} rowOf={rowOf}
+          <OutcomeStep queue={queue} loaded={loaded} calls={calls} rows={rows} watched={project?.watched ?? []} checks={checks} rowOf={rowOf} memoRun={memoRun}
             checked={checked} requested={requested} error={error} recheck={project?.recheck} onCheck={checkApproved}
             onRequest={(id) => setRequested((m) => ({ ...m, [id]: true }))} />
           </>
@@ -343,6 +346,10 @@ export default function App() {
       </main>
     </div>
   )
+}
+
+function MemoLink({ run }: { run: string }) {
+  return <a href={`/memo/${run}`} target="_blank" rel="noreferrer" className="-mt-2 self-start text-muted underline underline-offset-4 hover:text-ink">Package review memo</a>
 }
 
 function StepBar({ step, reached, onGo }: { step: Step; reached: Step; onGo: (s: Step) => void }) {
@@ -569,9 +576,9 @@ function Icon({ kind }: { kind: 'x' | 'check' }) {
 
 // ---------- 2 · Scan ----------
 
-function ScanStep({ items, rows, loaded, mode, note, error, rowOf, onRetry, onReview, onOpen }: {
+function ScanStep({ items, rows, loaded, mode, note, error, rowOf, memoRun, onRetry, onReview, onOpen }: {
   items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; note: string | null; error: string | null
-  rowOf: (id: string) => PackageRow | undefined; onRetry: (id: string) => void; onReview: () => void; onOpen: (id: string) => void
+  rowOf: (id: string) => PackageRow | undefined; memoRun?: string; onRetry: (id: string) => void; onReview: () => void; onOpen: (id: string) => void
 }) {
   const failed = items.filter((c) => rows[c.id]?.stage === 'error').length
   const done = items.filter((c) => loaded[c.id]).length + failed
@@ -616,6 +623,7 @@ function ScanStep({ items, rows, loaded, mode, note, error, rowOf, onRetry, onRe
       )}
       {complete && matrix.length > 0 && <PackageMatrix rows={matrix} onOpen={onOpen}
         decision={(r) => <><Pill d={r.decision} /><span className="text-xs text-muted">{r.stamp}</span></>} />}
+      {complete && memoRun && <MemoLink run={memoRun} />}
       {(!complete || matrix.length < items.length) && <section className="rounded-xl border border-line">
         <Table cols={cols} head={['Number', 'Submittal', 'Result']}>
           {items.filter((c) => !complete || !rowOf(c.id)).map((c) => {
@@ -1170,9 +1178,9 @@ const recheckLine = (r: Recheck) => {
   return `${r.mode === 'mock' ? 'Mock · ' : ''}Re-checked${by ? ` by ${by}` : ''} · ${when} · ${plural(r.items.length, 'item')}, ${flagged} flagged`
 }
 
-function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, rowOf, onCheck, onRequest }: {
+function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, requested, error, recheck, rowOf, memoRun, onCheck, onRequest }: {
   queue: Case[]; loaded: Record<string, Loaded>; calls: Record<string, Call>; rows: Record<string, Row>; watched: Case[]
-  rowOf: (id: string) => PackageRow | undefined
+  rowOf: (id: string) => PackageRow | undefined; memoRun?: string
   checks: Record<string, Row>; checked: Record<string, Result>; requested: Record<string, boolean>; error: string | null
   recheck?: Recheck | null; onCheck: () => void; onRequest: (id: string) => void
 }) {
@@ -1193,6 +1201,7 @@ function OutcomeStep({ queue, loaded, calls, rows, watched, checks, checked, req
         </button>
       </Heading>
       <p className="-mt-3 text-xs text-muted">Decisions and drafts are saved in this browser. No messages have been sent. The watch list includes a sample approval from 2024.</p>
+      {memoRun && <MemoLink run={memoRun} />}
       {error && <p className="text-bad" role="alert">{error}</p>}
 
       {notChecked.length > 0 && <section className="flex flex-col gap-3">

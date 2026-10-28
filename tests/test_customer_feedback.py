@@ -194,3 +194,11 @@ def test_a_proposed_configuration_is_named_in_the_draft():
         alternates=[alternates.Alternate(name="Catalog", source_url="u", rank="meets_spec")])
     assert package.row({}, sent).return_note.endswith(
         "Acceptable alternate: Catalog, configured as ZX-12-D1; confirm before ordering.")
+
+
+def test_memo_route_serves_the_app(isolated, monkeypatch, tmp_path):
+    (tmp_path / "dist").mkdir()
+    (tmp_path / "dist" / "index.html").write_text("<div id=root></div>")
+    monkeypatch.setattr(settings, "web_dist", tmp_path / "dist")
+    response = isolated.get("/memo/20261028-000000-abcdef")
+    assert response.status_code == 200 and "root" in response.text
