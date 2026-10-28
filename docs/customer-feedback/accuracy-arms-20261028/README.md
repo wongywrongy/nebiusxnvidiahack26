@@ -59,7 +59,7 @@ c08 in B kept its decision but missed its currency note (caught 0 of 1). c06 is 
 
 - **A, c05 → send back.** A fresh extraction (39 of 46 calls uncached) quoted "10 %" minimum dimming against the ≤ 5 % rule, a major failure on a clean case. The same family of code made a different call than A0, so run-to-run variance alone moves single decisions; differences of one item between arms are within noise.
 - **B** extracted about half as many claims and read about a third as many web values. Thinking made the extractor terser and the web reader nearly useless (4 values kept).
-- **C** kept far more web values (50% vs 12%) but lost precision on claims (`metric_not_in_quote` 184). Its invalid items: c02 hit the $6 run cap, c04 hit the Investigator's 8-credit step cap, c05's verify reply hit 65,536 output tokens. `MAX_OUTPUT_TOKENS` stays 65536 as instructed. c02 alone was charged **$3.65 against $0.23 of recorded usage**. The cause is not verified (likely failed or long Ultra calls settled at their hold); look at it before ever deploying Ultra.
+- **C** kept far more web values (50% vs 12%) but lost precision on claims (`metric_not_in_quote` 184). Its invalid items: c02 hit the $6 run cap, c04 hit the Investigator's 8-credit step cap, c05's verify reply hit 65,536 output tokens. `MAX_OUTPUT_TOKENS` stays 65536 as instructed. c02 alone was charged **$3.65 against $0.23 of recorded usage**. The ledger (checked during the final release) shows why: 471 paid c02 requests over its 24-minute manufacturer check, all with reported usage and none settled at a hold, so these were real calls, not timeouts. Its result kept only the usage of the calls it used. Look at this request loop before ever deploying Ultra.
 
 ## Decision (rule pre-approved by Kyle)
 

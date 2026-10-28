@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "https://port8000-d38t85f0yhyyzek.tunnel.applications.eu-west1.nebius.cloud/$1"
+      "destination": "https://port8000-gysms8dcks7n3zb.tunnel.applications.eu-west1.nebius.cloud/$1"
     }
   ],
   "headers": [
