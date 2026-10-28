@@ -1,37 +1,18 @@
-"""Authenticated controller cron requests must never forward their token through redirects."""
+"""The daily workflow never sends a credential over HTTP: keys reach the job only through MysteryBox."""
 
-import ast
-from email.message import Message
-from io import BytesIO
 from pathlib import Path
-import textwrap
-from urllib.error import HTTPError
-from urllib.request import HTTPHandler, HTTPRedirectHandler, Request, build_opener
-from urllib.response import addinfourl
-
-import pytest
+import re
 
 
-def test_nightly_request_refuses_cross_origin_redirect_before_forwarding_credentials():
+def test_nightly_workflow_keeps_credentials_out_of_http_and_job_arguments():
     workflow = (Path(__file__).resolve().parents[1] / ".github/workflows/nightly-recheck.yml").read_text()
-    script = textwrap.dedent(workflow.split("python3 - <<'PY'\n", 1)[1].split("          PY", 1)[0])
-    tree = ast.parse(script)
-    handler = next(node for node in tree.body if isinstance(node, ast.ClassDef) and node.name == "NoRedirect")
-    namespace = {"HTTPRedirectHandler": HTTPRedirectHandler}
-    exec(compile(ast.Module(body=[handler], type_ignores=[]), "nightly-workflow", "exec"), namespace)
-    assert any(isinstance(node, ast.Call) and isinstance(node.func, ast.Name) and node.func.id == "build_opener"
-               and any(isinstance(arg, ast.Name) and arg.id == "NoRedirect" for arg in node.args) for node in ast.walk(tree))
-    requests = []
-    class RedirectingServer(HTTPHandler):
-        def http_open(self, request):
-            requests.append(request)
-            headers = Message()
-            headers["Location"] = "http://untrusted.test/steal"
-            response = addinfourl(BytesIO(b""), headers, request.full_url, code=302)
-            response.msg = "Found"
-            return response
-    client = build_opener(RedirectingServer(), namespace["NoRedirect"])
-    with pytest.raises(HTTPError) as error:
-        client.open(Request("http://controller.test/api/watch/run", data=b"", headers={"X-Admin-Token": "synthetic-token"}))
-    assert error.value.code == 302 and len(requests) == 1
-    assert requests[0].host == "controller.test"
+    # The only GitHub secret is the service account key, written to a private file for the CLI profile.
+    assert re.findall(r"secrets\.(\w+)", workflow) == ["NEBIUS_SA_CREDENTIALS"]
+    assert "umask 077" in workflow
+    # Provider keys and the admin token come from MysteryBox, never as plain --env values.
+    for key in ("NEBIUS_API_KEY", "TAVILY_API_KEY", "ADMIN_TOKEN"):
+        assert f'--env-secret "{key}=$SECRET"' in workflow
+        assert f"--env {key}" not in workflow and f'--env "{key}' not in workflow
+    # Completion is read from the public report: no auth header, and curl never follows a redirect.
+    curls = [line for line in workflow.splitlines() if "curl " in line and "install.sh" not in line]
+    assert curls and all("-L" not in line and "Token" not in line and "-H" not in line for line in curls)

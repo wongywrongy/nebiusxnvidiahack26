@@ -1176,7 +1176,8 @@ function replacement(fix: Fix | null): [string, boolean] {
 const recheckLine = (r: Recheck) => {
   const flagged = r.items.filter((i) => i.status !== 'no_change').length
   const when = new Date(r.checked_at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })
-  return `${r.mode === 'mock' ? 'Mock · ' : ''}Nightly re-check · last ran ${when} (${r.runner}${r.job_name ? ` ${r.job_name}` : ''}${r.duration_ms != null ? `, ${seconds(r.duration_ms)}` : ''}): ${plural(r.items.length, 'item')}, ${flagged} flagged`
+  const by = r.job_name ? `${r.runner} ${r.job_name}` : r.runner === 'local' ? '' : r.runner
+  return `${r.mode === 'mock' ? 'Mock · ' : ''}Re-checked${by ? ` by ${by}` : ''} · ${when} · ${plural(r.items.length, 'item')}, ${flagged} flagged`
 }
 
 function CloudWatch({ enabled, initial }: { enabled: boolean; initial?: Recheck | null }) {

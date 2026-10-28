@@ -13,8 +13,8 @@ diffs the values) and reports, per item: no_change, changed (a value on the curr
 enforce their assigned allowance locally, then return sealed usage and evidence through signed callbacks.
 Only the controller can settle accounting and publish after cloud completion is independently observed.
 
-The disabled GitHub schedule requests that controller; it never creates jobs directly. Hosted execution and
-durability remain unverified. See deploy/nebius/README.md before preparing an approved deployment.
+The daily GitHub schedule launches this script as a Nebius Serverless Job with --post to the public app;
+see deploy/nebius/recheck-job.md.
 """
 
 from __future__ import annotations

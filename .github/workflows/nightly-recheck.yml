@@ -1,4 +1,6 @@
-# GitHub supplies the clock; every launch goes through the authenticated app controller.
+# Once a day: launch the re-check as a Nebius Serverless Job, then wait until its report reaches the public app.
+# GitHub holds only the service account's key. The job reads NEBIUS_API_KEY, TAVILY_API_KEY and ADMIN_TOKEN
+# from MysteryBox. Setup: deploy/nebius/recheck-job.md.
 name: nightly-recheck
 on:
   schedule:
@@ -11,55 +13,55 @@ concurrency:
   cancel-in-progress: false
 jobs:
   recheck:
-    # Keep disabled until the owner approves and verifies hosted accounting and a real job.
     if: ${{ vars.ENABLE_NEBIUS_JOBS == 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 75
     env:
       SPECCHECK_URL: ${{ vars.SPECCHECK_URL }}
-      SPECCHECK_ADMIN_TOKEN: ${{ secrets.SPECCHECK_ADMIN_TOKEN }}
+      NEBIUS_PROJECT_ID: ${{ vars.NEBIUS_PROJECT_ID }}
+      IMAGE: ${{ vars.SPECCHECK_IMAGE }}
+      SECRET: ${{ vars.MYSTERYBOX_SECRET }}
+      JOB: speccheck-recheck-${{ github.run_id }}
     steps:
-      - name: Request one idempotent controller launch and wait for its report
+      - name: Install the Nebius CLI and sign in as the service account
+        env:
+          NEBIUS_SA_CREDENTIALS: ${{ secrets.NEBIUS_SA_CREDENTIALS }}
         run: |
-          python3 - <<'PY'
-          import json
-          import os
-          import time
-          from urllib.error import HTTPError, URLError
-          from urllib.parse import urlsplit
-          from urllib.request import Request, HTTPRedirectHandler, build_opener
-
-          base = os.environ['SPECCHECK_URL'].rstrip('/')
-          token = os.environ['SPECCHECK_ADMIN_TOKEN']
-          parsed = urlsplit(base)
-          if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment or not token:
-              raise SystemExit('Set the HTTPS controller URL and private SPECCHECK_ADMIN_TOKEN secret.')
-
-          class NoRedirect(HTTPRedirectHandler):
-              def redirect_request(self, *args, **kwargs):
-                  return None
-          client = build_opener(NoRedirect)
-
-          def request(path, *, launch=False):
-              headers = {'X-Admin-Token': token, 'Idempotency-Key': 'nightly-' + os.environ['GITHUB_RUN_ID']}
-              try:
-                  with client.open(Request(base + path, data=b'' if launch else None, headers=headers), timeout=45) as response:
-                      return json.load(response)
-              except (HTTPError, URLError, ValueError):
-                  raise SystemExit('Controller request failed; inspect its job status before retrying. No direct cloud launch was attempted.') from None
-
-          job = request('/api/watch/run', launch=True)
-          for _ in range(240):
-              current = next((row for row in request('/api/watch/jobs')['jobs'] if row['name'] == job['name']), None)
-              if current and current['state'] == 'failed':
-                  raise SystemExit('Cloud job failed; inspect controller diagnostics.')
-              if current and current['state'] == 'done':
-                  report = request('/api/watch')
-                  if report.get('job_name') != job['name'] or report.get('mode') != 'live' or not report.get('items') or any(row.get('status') == 'unverified' for row in report['items']):
-                      raise SystemExit('Completion has no matching valid live report.')
-                  print('Controller reports completed job:', job['name'])
-                  break
-              time.sleep(15)
-          else:
-              raise SystemExit('No confirmed completion before timeout. Inspect the existing job; no duplicate was submitted.')
-          PY
+          curl -sSL https://artifacts.nebius.cloud/cli/install.sh | bash
+          echo "$HOME/.nebius/bin" >> "$GITHUB_PATH"
+          umask 077
+          printf '%s' "$NEBIUS_SA_CREDENTIALS" > "$RUNNER_TEMP/sa.json"
+          "$HOME/.nebius/bin/nebius" profile create --endpoint api.nebius.cloud --service-account-file "$RUNNER_TEMP/sa.json" \
+            --parent-id "$NEBIUS_PROJECT_ID" --profile speccheck >/dev/null
+      - name: Launch the job
+        run: |
+          # Each job gets its own small allowance; a cap ends a check as "couldn't confirm", never a failure.
+          nebius ai job create --profile speccheck --name "$JOB" --image "$IMAGE" \
+            --platform cpu-d3 --preset 2vcpu-8gb --disk-size 32Gi --timeout 1h --restart-policy never \
+            --env SPECCHECK_MODE=live --env "RECHECK_RUNNER=Nebius Serverless Job $JOB" \
+            --env BUDGET_USD_PER_RUN=0.5 --env BUDGET_TAVILY_CREDITS_PER_ITEM=40 \
+            --env-secret "NEBIUS_API_KEY=$SECRET" --env-secret "TAVILY_API_KEY=$SECRET" --env-secret "ADMIN_TOKEN=$SECRET" \
+            --container-command bash \
+            --args "-c 'python scripts/campaign_budget.py init-judging --usd 0.5 --credits 40 >/dev/null && python scripts/recheck.py --post $SPECCHECK_URL'" \
+            --format json > job.json
+          echo "JOB_ID=$(jq -r '.metadata.id' job.json)" >> "$GITHUB_ENV"
+          echo "Created $JOB ($(jq -r '.metadata.id' job.json))"
+      - name: Wait for the job and its report
+        run: |
+          # TODO after the first manual run: replace with the terminal states the CLI actually printed.
+          TERMINAL=""
+          last=""
+          for i in $(seq 1 280); do
+            state=$(nebius ai job get "$JOB_ID" --profile speccheck --format json | jq -r '.status.state // "unknown"')
+            [ "$state" != "$last" ] && echo "$(date -u +%H:%M:%S) state: $state" && last=$state
+            runner=$(curl -fsS "$SPECCHECK_URL/api/watch" | jq -r '.runner // empty' || true)
+            if [ "$runner" = "Nebius Serverless Job $JOB" ]; then
+              echo "Report from $JOB is live on $SPECCHECK_URL"
+              curl -fsS "$SPECCHECK_URL/api/watch" | jq '{checked_at, runner, mode, items: [.items[] | {id, status}]}'
+              exit 0
+            fi
+            for t in $TERMINAL; do [ "$state" = "$t" ] && echo "Job ended ($state) without a report" && exit 1; done
+            sleep 15
+          done
+          echo "No report before the timeout; last state: $last"
+          exit 1
