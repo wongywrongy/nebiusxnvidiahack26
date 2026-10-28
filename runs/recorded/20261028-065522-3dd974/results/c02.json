@@ -1,0 +1,1056 @@
+{
+  "case_id": "c02",
+  "title": "Firestop system, floor penetration",
+  "decision": "send_back",
+  "summary": "Send back: see what to send.",
+  "spec_section": "07 84 00",
+  "spec_title": "Firestopping",
+  "spec_rule_count": 4,
+  "spec_match_count": 1,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "VOC (air quality)",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": null,
+      "requirement_id": "req_voc_content",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "astm g21 rating",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": null,
+      "requirement_id": "req_mold_resistance",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_t_rating_min_equal_f",
+      "check": "spec",
+      "verdict": "fail",
+      "severity": "critical",
+      "title": "Does not meet: Temperature rating (T)",
+      "detail": "Temperature rating (T) is 0 Hr but Fire rating (F) is 2 Hr.",
+      "why_it_matters": "If the temperature rating is too low, the firestop may fail during a fire, allowing heat and flames to spread through the floor penetration.",
+      "requirement_id": "req_t_rating_min_equal_f",
+      "claim_id": "clm-2",
+      "product_type": null,
+      "claim_ids": [
+        "clm-2",
+        "clm-1"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-2",
+          "doc_file": "c02/3m_c-aj-2738.pdf",
+          "page": 1,
+          "quote": "T Rating — 0 Hr",
+          "boxes": [
+            {
+              "x0": 0.4456,
+              "y0": 0.0783,
+              "x1": 0.5396,
+              "y1": 0.0933
+            }
+          ],
+          "kind": "problem"
+        },
+        {
+          "claim_id": "clm-1",
+          "doc_file": "c02/3m_c-aj-2738.pdf",
+          "page": 1,
+          "quote": "F Rating — 2 Hr",
+          "boxes": [
+            {
+              "x0": 0.4459,
+              "y0": 0.0657,
+              "x1": 0.5394,
+              "y1": 0.0806
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "T = F (2 Hr)",
+        "right_label": "Submitted",
+        "right_value": "0 Hr",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "UL listed firestop system  floor penetration Temperature rating (T) equals Fire rating (F)",
+        "candidates": [],
+        "suggest": "",
+        "alternates": [],
+        "named": null
+      },
+      "configure": []
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "Test standards",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": null,
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "currency-unverified",
+      "check": "currency",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Document currency could not be confirmed",
+      "detail": "No source quoted a revision or a value; check manually.",
+      "why_it_matters": "Without knowing which document version is current, we cannot verify if the submitted information is up to date or applicable.",
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "July 30, 2015",
+        "right_label": "Current",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [],
+      "quote": null,
+      "decided_by": "tavily",
+      "fix": null,
+      "configure": []
+    }
+  ],
+  "comparison": [],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "C-AJ-2738",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "property": "f_rating_hr",
+      "value": 2.0,
+      "unit": "Hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "F Rating — 2 Hr",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "F Rating — 2 Hr",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-2",
+      "product": "C-AJ-2738",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "property": "t_rating_hr",
+      "value": 0.0,
+      "unit": "Hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "T Rating — 0 Hr",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "T Rating — 0 Hr",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "cover",
+    "system_drawing"
+  ],
+  "extracted": {
+    "product": "C-AJ-2738",
+    "manufacturer": "3M Company",
+    "model": "C-AJ-2738",
+    "selection": null,
+    "family": null,
+    "family_quote": null,
+    "document_revision": "July 30, 2015",
+    "claims": [
+      {
+        "id": "clm-1",
+        "product": "C-AJ-2738",
+        "manufacturer": "3M Company",
+        "model": "C-AJ-2738",
+        "property": "f_rating_hr",
+        "value": 2.0,
+        "unit": "Hr",
+        "page": 1,
+        "bbox": null,
+        "quote": "F Rating — 2 Hr",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "F Rating — 2 Hr",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-2",
+        "product": "C-AJ-2738",
+        "manufacturer": "3M Company",
+        "model": "C-AJ-2738",
+        "property": "t_rating_hr",
+        "value": 0.0,
+        "unit": "Hr",
+        "page": 1,
+        "bbox": null,
+        "quote": "T Rating — 0 Hr",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "T Rating — 0 Hr",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "C-AJ-2738",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "selection": null,
+      "family": null,
+      "family_quote": null,
+      "document_revision": "July 30, 2015",
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "C-AJ-2738",
+          "manufacturer": "3M Company",
+          "model": "C-AJ-2738",
+          "property": "f_rating_hr",
+          "value": 2.0,
+          "unit": "Hr",
+          "page": 1,
+          "bbox": null,
+          "quote": "F Rating — 2 Hr",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "F Rating — 2 Hr",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-2",
+          "product": "C-AJ-2738",
+          "manufacturer": "3M Company",
+          "model": "C-AJ-2738",
+          "property": "t_rating_hr",
+          "value": 0.0,
+          "unit": "Hr",
+          "page": 1,
+          "bbox": null,
+          "quote": "T Rating — 0 Hr",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "T Rating — 0 Hr",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "unknown",
+      "replacement": null,
+      "current_revision": null,
+      "status_date": null,
+      "status_quote": null,
+      "status_family": null,
+      "current_values": [],
+      "source_urls": [
+        "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+      ],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf",
+        "tier": "manufacturer",
+        "title": "CERT IFICATE OF COMPLIANCE",
+        "retrieved_at": "2026-10-28T03:49:35+00:00",
+        "sha256": "14ca939e38e152e092ae46e1f721f89b94b01fb8a8ba36140ed3cf272de8e771",
+        "excerpt": "C E R T I F I C A T E O F C O M P L I A N C E Certificate Number 20201016- R9700 Report Reference R9700 Issue Date 2020-October-16 Bruce Mahrenholz, Director North American Certification Program UL LLC Any information and documentation involving UL Mark services are provided on behalf of UL LLC (UL) or any authorized licensee of UL. For questions, please contact a local UL Customer Service Represe",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/645454O/ul-certificate-of-compliance-cp25wb-sealant.pdf",
+        "tier": "manufacturer",
+        "title": "CERT IFICATE OF COMPLIANCE - mu ltime dia",
+        "retrieved_at": "2026-10-28T03:49:35+00:00",
+        "sha256": "0fff938b4fe08d44b6884e4ad1f312169050f1785f68c0dc6c542cb92ab8e599",
+        "excerpt": "C E R T I F I C A T E O F C O M P L I A N C E Certificate Number 20201215-R9700 Report Reference R9700 Issue Date 2020-December-15 Bruce Mahrenholz, Director North American Certification Program UL LLC Any information and documentation involving UL Mark services are provided on behalf of UL LLC (UL) or any authorized licensee of UL. For questions, please contact a local UL Customer Service Represe",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/898421O/3m-tm-fire-barrier-rated-foam-fip-1-step-submittal-package.pdf",
+        "tier": "manufacturer",
+        "title": "3M™ Fire Barrier Rated Foam FIP 1-Step - Project Submittal",
+        "retrieved_at": "2026-10-28T03:49:35+00:00",
+        "sha256": "fa4804fc6fae2286c5c83cc423cbd3aadc097fa19673aaef51e51179665ed1b8",
+        "excerpt": "Project: Submitted By: Date: Comments: www.3M.com/firestop firetech1@mmm.com 1-800-328-1687 3M is a trademark of 3M company.\nProject Submittal 3M ™ Fire Barrier Rated Foam FIP 1-Step Edit Here Edit Here Edit Here Edit Here C E R T I F I C A T E O F C O M P L I A N C E Certificate Number 20130802-R9700 Report Reference R9700 Issue Date 2013-August-02 William R. Carney, Director, North American Cert",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+        "tier": "manufacturer",
+        "title": "3M™ Fire Barrier Sealant CP 25WB+ Technical Data Sheet",
+        "retrieved_at": "2026-10-28T06:55:33+00:00",
+        "sha256": "27496259516e3b62f7013f21f04b871920d122c503b23ef7996b6966d7cc9cfe",
+        "excerpt": "Fire Protection Products 3M™ Fire Barrier Sealant CP 25WB+ Page 1 of 4 Technical Data Sheet July / 2025 Product Description 3M™ Fire Barrier Sealant CP 25WB+ is a high-performance, ready-to-use, gun-grade, latex-based, intumescent sealant that dries to form a monolithic firestop seal that also acts as a barrier to airborne sound transmission. 3M™ Fire Barrier Sealant CP 25WB+ helps control the spr",
+        "archived_path": null,
+        "cache_hit": false
+      }
+    ]
+  },
+  "document_revision": "July 30, 2015",
+  "note_to_subcontractor": "Send back: see what to send.\n\nDoes not meet: Temperature rating (T): Temperature rating (T) is 0 Hr but Fire rating (F) is 2 Hr.\nDocument currency could not be confirmed: No source quoted a revision or a value; check manually.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 765,
+      "output_tokens": 28,
+      "cost_usd": 0.00005262,
+      "latency_ms": 2960,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3149,
+      "output_tokens": 317,
+      "cost_usd": 0.00123,
+      "latency_ms": 4742,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5027,
+      "output_tokens": 26,
+      "cost_usd": 0.0015315,
+      "latency_ms": 1562,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6588,
+      "output_tokens": 26,
+      "cost_usd": 0.0019998,
+      "latency_ms": 1694,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5770,
+      "output_tokens": 956,
+      "cost_usd": 0.0025914,
+      "latency_ms": 5615,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5622,
+      "output_tokens": 617,
+      "cost_usd": 0.0022419,
+      "latency_ms": 4194,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5788,
+      "output_tokens": 811,
+      "cost_usd": 0.0024663,
+      "latency_ms": 5293,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5553,
+      "output_tokens": 749,
+      "cost_usd": 0.00234,
+      "latency_ms": 4196,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5103,
+      "output_tokens": 65,
+      "cost_usd": 0.0015894,
+      "latency_ms": 1359,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4509,
+      "output_tokens": 55,
+      "cost_usd": 0.0014022,
+      "latency_ms": 1493,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4440,
+      "output_tokens": 26,
+      "cost_usd": 0.0013554,
+      "latency_ms": 1584,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7751,
+      "output_tokens": 8282,
+      "cost_usd": 0.0097791,
+      "latency_ms": 43109,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9312,
+      "output_tokens": 201,
+      "cost_usd": 0.0029745,
+      "latency_ms": 2250,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8494,
+      "output_tokens": 517,
+      "cost_usd": 0.0030135,
+      "latency_ms": 3535,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8346,
+      "output_tokens": 464,
+      "cost_usd": 0.0029214,
+      "latency_ms": 4090,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8512,
+      "output_tokens": 454,
+      "cost_usd": 0.0029622,
+      "latency_ms": 4498,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8277,
+      "output_tokens": 527,
+      "cost_usd": 0.0029574,
+      "latency_ms": 4655,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7827,
+      "output_tokens": 454,
+      "cost_usd": 0.0027567,
+      "latency_ms": 7511,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7233,
+      "output_tokens": 454,
+      "cost_usd": 0.0025785,
+      "latency_ms": 9924,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7163,
+      "output_tokens": 454,
+      "cost_usd": 0.0025575,
+      "latency_ms": 3408,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1581,
+      "output_tokens": 101,
+      "cost_usd": 0.0005652,
+      "latency_ms": 2340,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5066,
+      "output_tokens": 115,
+      "cost_usd": 0.0016233,
+      "latency_ms": 2090,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7093,
+      "output_tokens": 111,
+      "cost_usd": 0.0022278,
+      "latency_ms": 1622,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9943,
+      "output_tokens": 145,
+      "cost_usd": 0.0031134,
+      "latency_ms": 1794,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12059,
+      "output_tokens": 119,
+      "cost_usd": 0.0037248,
+      "latency_ms": 1757,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13453,
+      "output_tokens": 424,
+      "cost_usd": 0.0044175,
+      "latency_ms": 18182,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4767,
+      "output_tokens": 626,
+      "cost_usd": 0.0019935,
+      "latency_ms": 3300,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5027,
+      "output_tokens": 26,
+      "cost_usd": 0.0015315,
+      "latency_ms": 1562,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6588,
+      "output_tokens": 26,
+      "cost_usd": 0.0019998,
+      "latency_ms": 1694,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3040,
+      "output_tokens": 45,
+      "cost_usd": 0.0009525,
+      "latency_ms": 2481,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 731,
+      "output_tokens": 239,
+      "cost_usd": 0.0004344,
+      "latency_ms": 2809,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 2.0,
+  "duration_ms": 32004,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "C-AJ-2738",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 2,
+        "tool": "search",
+        "args": {
+          "query": "\"C-AJ-2738\" 3M product data sheet",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 3,
+        "tool": "search",
+        "args": {
+          "query": "C-AJ-2738 firestop sealant 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "3 results",
+        "credits": 1.0,
+        "ms": 2232,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "\"CP 25WB+\" 3M product data sheet",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 5,
+        "tool": "extract",
+        "args": {
+          "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 1.0,
+        "ms": 487,
+        "succeeded": true,
+        "source_urls": [
+          "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+        ]
+      },
+      {
+        "n": 6,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+          "document_title": "3M™ Fire Barrier Sealant CP 25WB+ Technical Data Sheet",
+          "revision_quote": "July / 2025",
+          "evidence_quote": "Technical Data Sheet July / 2025",
+          "status": "active",
+          "status_quote": "Current product 3M(TM) Fire Barrier Sealant CP 25WB+",
+          "note": "The C-AJ-2738 designation appears to be a UL system classification number rather than a product model number. Based on the UL certificates found, C-AJ-2738 refers to a firestop system that uses 3M™ Fire Barrier Sealant CP 25WB+. The technical data sheet for CP 25WB+ shows a revision date of July 2025 and indicates it is a current product."
+        },
+        "summary": "July / 2025, unknown",
+        "credits": 0.0,
+        "ms": 33,
+        "succeeded": true,
+        "source_urls": []
+      }
+    ],
+    "outcome": "found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "C-AJ-2738",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "search",
+          "args": {
+            "query": "\"C-AJ-2738\" 3M product data sheet",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 3,
+          "tool": "search",
+          "args": {
+            "query": "C-AJ-2738 firestop sealant 3M",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "3 results",
+          "credits": 1.0,
+          "ms": 2232,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 4,
+          "tool": "search",
+          "args": {
+            "query": "\"CP 25WB+\" 3M product data sheet",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 5,
+          "tool": "extract",
+          "args": {
+            "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 1.0,
+          "ms": 487,
+          "succeeded": true,
+          "source_urls": [
+            "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+          ]
+        },
+        {
+          "n": 6,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf",
+            "document_title": "3M™ Fire Barrier Sealant CP 25WB+ Technical Data Sheet",
+            "revision_quote": "July / 2025",
+            "evidence_quote": "Technical Data Sheet July / 2025",
+            "status": "active",
+            "status_quote": "Current product 3M(TM) Fire Barrier Sealant CP 25WB+",
+            "note": "The C-AJ-2738 designation appears to be a UL system classification number rather than a product model number. Based on the UL certificates found, C-AJ-2738 refers to a firestop system that uses 3M™ Fire Barrier Sealant CP 25WB+. The technical data sheet for CP 25WB+ shows a revision date of July 2025 and indicates it is a current product."
+          },
+          "summary": "July / 2025, unknown",
+          "credits": 0.0,
+          "ms": 33,
+          "succeeded": true,
+          "source_urls": []
+        }
+      ],
+      "outcome": "found",
+      "purpose": "primary",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [],
+        "source_urls": [
+          "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf",
+          "https://multimedia.3m.com/mws/media/645454O/ul-certificate-of-compliance-cp25wb-sealant.pdf",
+          "https://multimedia.3m.com/mws/media/898421O/3m-tm-fire-barrier-rated-foam-fip-1-step-submittal-package.pdf"
+        ],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "d22951a4bee40580dd82a1211b24a96ca0bb705ee8f45a313830da12caa32bf5",
+  "fresh_model_cost_usd": 0.0171003,
+  "fresh_web_credits": 2.0,
+  "queue_ms": 144,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 2,
+  "claims_kept": 2,
+  "web_values_read": 11,
+  "web_values_kept": 0
+}

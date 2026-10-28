@@ -1,3 +1,17 @@
+# Daily re-check: GitHub Actions fallback
+
+The Nebius service-account key and job secret are not configured. The release therefore prepares the fallback authorized in the final plan, `.github/workflows/daily-recheck.yml`. No Nebius Serverless Job execution is claimed.
+
+The workflow runs daily at 09:00 UTC and supports one manual commissioning run. It runs the frozen public image's existing `scripts/recheck.py`, refreshes the manufacturer's sources, and posts the actual report to the stable public URL with the admin header. Outcome already reads that persisted report and names its real runner, **GitHub Actions**.
+
+Each execution uses its own ephemeral ledger capped at **$0.50 model spend / 40 Tavily credits**, including all watched items. That is separate from the app's persistent judging ledger. Workflow executions do not overlap, today's completed GitHub Actions report is not repeated, provider calls stop after **December 15, 2026, 20:00 UTC**, and there are no automatic paid retries. Unknown findings stay unverified and cause a nonzero exit after the report is posted. A failed or timed-out run is not proof of a complete check.
+
+Required GitHub repository secrets: `NEBIUS_API_KEY`, `TAVILY_API_KEY`, `SPECCHECK_ADMIN_TOKEN` (the existing app admin token). Values must never be committed, printed or put in command arguments. Activation and the manual workflow run still need to be verified; a YAML schedule alone is not execution proof. Preserve the GitHub run URL, the actual `/api/watch` report and its cost artifact when commissioning.
+
+The previous Nebius job setup remains below for a later owner-led switch. Configure only one scheduler.
+
+---
+
 # Daily re-check as a Nebius Serverless Job, launched by the app server
 
 Nebius jobs have no schedule or trigger (CLI 0.12.296: `nebius ai job --help` lists cancel, create, delete,

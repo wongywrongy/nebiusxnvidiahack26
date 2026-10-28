@@ -1,0 +1,1411 @@
+{
+  "case_id": "c06",
+  "title": "LED downlight, corridors",
+  "decision": "approve_with_note",
+  "summary": "Approve with notes: confirm the items below.",
+  "spec_section": "26 51 00",
+  "spec_title": "Interior Lighting",
+  "spec_rule_count": 5,
+  "spec_match_count": 3,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_t_rating_hr_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Rated life (L70)",
+      "detail": "Package states 50000 hours; spec requires at least 50000 hr.",
+      "why_it_matters": null,
+      "requirement_id": "req_t_rating_hr_led",
+      "claim_id": "clm-8",
+      "product_type": null,
+      "claim_ids": [
+        "clm-8"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-8",
+          "doc_file": "c06/lithonia_ldn6_2017-10.pdf",
+          "page": 1,
+          "quote": "70% lumen maintenance at 50,000 hours.",
+          "boxes": [
+            {
+              "x0": 0.098,
+              "y0": 0.3358,
+              "x1": 0.2699,
+              "y1": 0.3471
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 50000 hr",
+        "right_label": "Submitted",
+        "right_value": "50000 hours",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.3",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_warranty_years_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Warranty",
+      "detail": "Package states 5 years; spec requires at least 5 yr.",
+      "why_it_matters": null,
+      "requirement_id": "req_warranty_years_led",
+      "claim_id": "clm-18",
+      "product_type": null,
+      "claim_ids": [
+        "clm-18"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-18",
+          "doc_file": "c06/lithonia_ldn6_2017-10.pdf",
+          "page": 1,
+          "quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+          "boxes": [
+            {
+              "x0": 0.098,
+              "y0": 0.3745,
+              "x1": 0.4213,
+              "y1": 0.386
+            },
+            {
+              "x0": 0.098,
+              "y0": 0.3868,
+              "x1": 0.4051,
+              "y1": 0.3981
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 5 yr",
+        "right_label": "Submitted",
+        "right_value": "5 years",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 1.10.B.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-lt-dlc",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: DLC listing",
+      "detail": "Listed as a qualified DLC product, where applicable.",
+      "why_it_matters": "Without DLC confirmation, we can't verify eligibility for energy rebates or compliance with project efficiency goals.",
+      "requirement_id": "lt-dlc",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "dlc standard",
+          "dlc premium"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.H",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_macadam_ellipse",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "macadam steps",
+      "detail": "Package states 3; spec requires at most 3.",
+      "why_it_matters": null,
+      "requirement_id": "req_macadam_ellipse",
+      "claim_id": "clm-10",
+      "product_type": null,
+      "claim_ids": [
+        "clm-10"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-10",
+          "doc_file": "c06/lithonia_ldn6_2017-10.pdf",
+          "page": 1,
+          "quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+          "boxes": [
+            {
+              "x0": 0.147,
+              "y0": 0.2312,
+              "x1": 0.359,
+              "y1": 0.2426
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 3",
+        "right_label": "Submitted",
+        "right_value": "3",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.6",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-lt-dim",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: Dims down to",
+      "detail": "Continuous dimming from 100 to 5 percent without flicker.",
+      "why_it_matters": "If the lights don't dim as specified, corridor lighting may be too bright at low levels or cause visual discomfort.",
+      "requirement_id": "lt-dim",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 5 %",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.05.C.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "currency-newer",
+      "check": "currency",
+      "verdict": "note",
+      "severity": "minor",
+      "title": "Different revision found; no quoted values changed",
+      "detail": "Submitted Rev. 10/25/17, web source 5/14/2026. The revision labels differ; their age order is not confirmed.",
+      "why_it_matters": "Just because the revision dates differ doesn't mean one is newer—we need actual content comparison to know if anything changed.",
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "Rev. 10/25/17",
+        "right_label": "Current",
+        "right_value": "5/14/2026",
+        "verdict": "changed",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+          "tier": "manufacturer",
+          "title": "LDN6 Round Series - LDN6 Round – 6” Open and Wallwash",
+          "retrieved_at": "2026-10-28T06:57:44+00:00",
+          "sha256": "8f9dea4724bc495e641aa02a48a5907714c7feab6a39b4a4f95ccb24e1581470",
+          "excerpt": "[Skip to Navigation Content](#nav-content) [Skip to Main Content](#main-content) [Skip to Footer Content](#footer-content)\n\n* [How to Buy](/support/how-to-buy)\n* [Our Newsroom](https://www.acuityinc.com/resources/our-newsroom)\n* [Join Our Team](https://www.acuityinc.com/careers)\n* [Login](/login)\n* United States - English\n\n  + [United States - English](/en/products/detail/564909/lithonia-lighting/",
+          "archived_path": null,
+          "cache_hit": false
+        },
+        {
+          "url": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+          "tier": "distributor",
+          "title": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+          "retrieved_at": "2026-10-28T06:57:46+00:00",
+          "sha256": "54a1d1bee117243f14d8f3f781e6a0afc2aff69a8bc0e289a928ecae263f670b",
+          "excerpt": "Catalog  \nNumber\nNotes\nType\nCONTRACTOR SELECT  LDN\nPage 1 of 2\nLithonia LDN \nLED Commercial Downlight\nLDN 6\" downlights are the most cost-effective general illumination solutions for commercial-grade \ndownlight applications. The LDN4 and LDN6 designs allow for a quiet, glare-free ceiling without \ncompromising on efficacy.\nFEATURES:\n\t¡ 55° cutoff \n\t¡ 80-90 Lumens/Watt \n\t¡ 1.0 Spacing/Mounting Heigh",
+          "archived_path": null,
+          "cache_hit": null
+        },
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+          "tier": "manufacturer",
+          "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+          "retrieved_at": "2026-10-28T06:57:44+00:00",
+          "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+          "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+          "archived_path": null,
+          "cache_hit": false
+        },
+        {
+          "url": "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch",
+          "tier": "manufacturer",
+          "title": "Lithonia Lighting® LDN6 Series LED",
+          "retrieved_at": "2026-10-28T06:59:05+00:00",
+          "sha256": "a1d43d77e0f8c8d938730b9eab12a94c7dbd1bc6a2ac10bb1bc7ba1e0bf732cc",
+          "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+          "archived_path": null,
+          "cache_hit": false
+        },
+        {
+          "url": "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf",
+          "tier": "manufacturer",
+          "title": "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf",
+          "retrieved_at": "2026-10-28T06:59:06+00:00",
+          "sha256": "ac1950a1e97855a1d035ac221af930254b5e0a3025879b32e780a636d3093530",
+          "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+          "archived_path": null,
+          "cache_hit": false
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": null,
+      "configure": []
+    }
+  ],
+  "comparison": [
+    {
+      "property": "document_revision",
+      "label": "Data sheet version",
+      "submitted": "Rev. 10/25/17",
+      "current": "5/14/2026",
+      "changed": true,
+      "source_url": null,
+      "quote": null
+    },
+    {
+      "property": "cri",
+      "label": "Color quality (CRI)",
+      "submitted": "80",
+      "current": "80",
+      "changed": false,
+      "source_url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+      "quote": "CRI | 80, 90 |"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "LDN6",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "LDN6",
+      "property": "cri",
+      "value": 80.0,
+      "unit": null,
+      "page": 3,
+      "bbox": null,
+      "quote": "CRI: 80 typical.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "CRI: 80 typical.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-8",
+      "product": "LDN6",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "LDN6",
+      "property": "l70_hours",
+      "value": 50000.0,
+      "unit": "hours",
+      "page": 1,
+      "bbox": null,
+      "quote": "70% lumen maintenance at 50,000 hours.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "70% lumen maintenance at 50,000 hours.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-10",
+      "product": "LDN6",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "LDN6",
+      "property": "macadam_steps",
+      "value": 3.0,
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-15",
+      "product": "LDN6",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "LDN6",
+      "property": "standards",
+      "value": [
+        "IESNA LM-79-08",
+        "IES",
+        "NEMA"
+      ],
+      "unit": null,
+      "page": 3,
+      "bbox": null,
+      "quote": "•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-18",
+      "product": "LDN6",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "LDN6",
+      "property": "warranty_years",
+      "value": 5.0,
+      "unit": "years",
+      "page": 1,
+      "bbox": null,
+      "quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "other",
+    "product_data"
+  ],
+  "extracted": {
+    "product": "LDN6",
+    "manufacturer": "Acuity Brands Lighting, Inc.",
+    "model": "LDN6",
+    "selection": null,
+    "family": null,
+    "family_quote": null,
+    "document_revision": "Rev. 10/25/17",
+    "claims": [
+      {
+        "id": "clm-1",
+        "product": "LDN6",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "LDN6",
+        "property": "cri",
+        "value": 80.0,
+        "unit": null,
+        "page": 3,
+        "bbox": null,
+        "quote": "CRI: 80 typical.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "CRI: 80 typical.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-8",
+        "product": "LDN6",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "LDN6",
+        "property": "l70_hours",
+        "value": 50000.0,
+        "unit": "hours",
+        "page": 1,
+        "bbox": null,
+        "quote": "70% lumen maintenance at 50,000 hours.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "70% lumen maintenance at 50,000 hours.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-10",
+        "product": "LDN6",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "LDN6",
+        "property": "macadam_steps",
+        "value": 3.0,
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-15",
+        "product": "LDN6",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "LDN6",
+        "property": "standards",
+        "value": [
+          "IESNA LM-79-08",
+          "IES",
+          "NEMA"
+        ],
+        "unit": null,
+        "page": 3,
+        "bbox": null,
+        "quote": "•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-18",
+        "product": "LDN6",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "LDN6",
+        "property": "warranty_years",
+        "value": 5.0,
+        "unit": "years",
+        "page": 1,
+        "bbox": null,
+        "quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "LDN6",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "LDN6",
+      "selection": null,
+      "family": null,
+      "family_quote": null,
+      "document_revision": "Rev. 10/25/17",
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "LDN6",
+          "property": "cri",
+          "value": 80.0,
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "CRI: 80 typical.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "CRI: 80 typical.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-8",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "LDN6",
+          "property": "l70_hours",
+          "value": 50000.0,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "70% lumen maintenance at 50,000 hours.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "70% lumen maintenance at 50,000 hours.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-10",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "LDN6",
+          "property": "macadam_steps",
+          "value": 3.0,
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-15",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "LDN6",
+          "property": "standards",
+          "value": [
+            "IESNA LM-79-08",
+            "IES",
+            "NEMA"
+          ],
+          "unit": null,
+          "page": 3,
+          "bbox": null,
+          "quote": "•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "•\t Tested in accordance with IESNA LM-79-08.\n•\t Tested to current IES and NEMA standards under stabilized laboratory conditions.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-18",
+          "product": "LDN6",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "LDN6",
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at  \nwww.acuitybrands.com/CustomerResources/Terms_and_conditions.aspx",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "unknown",
+      "replacement": null,
+      "current_revision": "5/14/2026",
+      "status_date": null,
+      "status_quote": null,
+      "status_family": null,
+      "current_values": [
+        {
+          "property": "cri",
+          "value": 80.0,
+          "unit": null,
+          "quote": "CRI | 80, 90 |",
+          "source_url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+          "model": "LDN6",
+          "identity_quote": "LDN6 Round \\u2013 6” Open and Wallwash",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "| CRI | 80, 90 |",
+          "selection_quote": null
+        },
+        {
+          "property": "cri",
+          "value": 80.0,
+          "unit": null,
+          "quote": "80CRI",
+          "source_url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+          "model": "LDN6",
+          "identity_quote": "LDN6 35K 80CRI",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "LDN6 35K 80CRI",
+          "selection_quote": null
+        }
+      ],
+      "source_urls": [
+        "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/specification-sheets",
+        "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf",
+        "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+        "/api/products/getasset/lithonia-lighting/564909/fe3931d3-6b7a-41e0-8d5e-96a6eaed7787/ldn6.pdf?abl_version=06%2f09%2f2026+23%3a16%3a52&DOC_Type=SPEC_SHEET"
+      ],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+        "tier": "manufacturer",
+        "title": "LDN6 Round Series - LDN6 Round – 6” Open and Wallwash",
+        "retrieved_at": "2026-10-28T06:57:44+00:00",
+        "sha256": "8f9dea4724bc495e641aa02a48a5907714c7feab6a39b4a4f95ccb24e1581470",
+        "excerpt": "[Skip to Navigation Content](#nav-content) [Skip to Main Content](#main-content) [Skip to Footer Content](#footer-content)\n\n* [How to Buy](/support/how-to-buy)\n* [Our Newsroom](https://www.acuityinc.com/resources/our-newsroom)\n* [Join Our Team](https://www.acuityinc.com/careers)\n* [Login](/login)\n* United States - English\n\n  + [United States - English](/en/products/detail/564909/lithonia-lighting/",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+        "tier": "distributor",
+        "title": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+        "retrieved_at": "2026-10-28T06:57:46+00:00",
+        "sha256": "54a1d1bee117243f14d8f3f781e6a0afc2aff69a8bc0e289a928ecae263f670b",
+        "excerpt": "Catalog  \nNumber\nNotes\nType\nCONTRACTOR SELECT  LDN\nPage 1 of 2\nLithonia LDN \nLED Commercial Downlight\nLDN 6\" downlights are the most cost-effective general illumination solutions for commercial-grade \ndownlight applications. The LDN4 and LDN6 designs allow for a quiet, glare-free ceiling without \ncompromising on efficacy.\nFEATURES:\n\t¡ 55° cutoff \n\t¡ 80-90 Lumens/Watt \n\t¡ 1.0 Spacing/Mounting Heigh",
+        "archived_path": null,
+        "cache_hit": null
+      },
+      {
+        "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+        "tier": "manufacturer",
+        "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+        "retrieved_at": "2026-10-28T06:57:44+00:00",
+        "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+        "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch",
+        "tier": "manufacturer",
+        "title": "Lithonia Lighting® LDN6 Series LED",
+        "retrieved_at": "2026-10-28T06:59:05+00:00",
+        "sha256": "a1d43d77e0f8c8d938730b9eab12a94c7dbd1bc6a2ac10bb1bc7ba1e0bf732cc",
+        "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf",
+        "tier": "manufacturer",
+        "title": "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf",
+        "retrieved_at": "2026-10-28T06:59:06+00:00",
+        "sha256": "ac1950a1e97855a1d035ac221af930254b5e0a3025879b32e780a636d3093530",
+        "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+        "archived_path": null,
+        "cache_hit": false
+      }
+    ]
+  },
+  "document_revision": "Rev. 10/25/17",
+  "note_to_subcontractor": "Approve with notes: confirm the items below.\n\nCouldn't confirm: DLC listing: Listed as a qualified DLC product, where applicable.\nCouldn't confirm: Dims down to: Continuous dimming from 100 to 5 percent without flicker.\nDifferent revision found; no quoted values changed: Submitted Rev. 10/25/17, web source 5/14/2026. The revision labels differ; their age order is not confirmed.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 3850,
+      "output_tokens": 85,
+      "cost_usd": 0.0002514,
+      "latency_ms": 3744,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7871,
+      "output_tokens": 2878,
+      "cost_usd": 0.0049515,
+      "latency_ms": 17098,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3149,
+      "output_tokens": 69,
+      "cost_usd": 0.0010068,
+      "latency_ms": 1660,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7063,
+      "output_tokens": 1251,
+      "cost_usd": 0.0032448,
+      "latency_ms": 7943,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6765,
+      "output_tokens": 857,
+      "cost_usd": 0.0028008,
+      "latency_ms": 4630,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6402,
+      "output_tokens": 1046,
+      "cost_usd": 0.002862,
+      "latency_ms": 6739,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6307,
+      "output_tokens": 55,
+      "cost_usd": 0.0019416,
+      "latency_ms": 1709,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6563,
+      "output_tokens": 55,
+      "cost_usd": 0.0020184,
+      "latency_ms": 1835,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2556,
+      "output_tokens": 26,
+      "cost_usd": 0.0007902,
+      "latency_ms": 1279,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9869,
+      "output_tokens": 1241,
+      "cost_usd": 0.0040776,
+      "latency_ms": 6430,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9571,
+      "output_tokens": 1243,
+      "cost_usd": 0.00399,
+      "latency_ms": 6207,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9207,
+      "output_tokens": 1233,
+      "cost_usd": 0.0038718,
+      "latency_ms": 6101,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9113,
+      "output_tokens": 1248,
+      "cost_usd": 0.0038571,
+      "latency_ms": 5707,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9369,
+      "output_tokens": 1241,
+      "cost_usd": 0.0039276,
+      "latency_ms": 5815,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5362,
+      "output_tokens": 1225,
+      "cost_usd": 0.0027111,
+      "latency_ms": 7521,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 1567,
+      "output_tokens": 102,
+      "cost_usd": 0.0005619,
+      "latency_ms": 1516,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4534,
+      "output_tokens": 106,
+      "cost_usd": 0.0014556,
+      "latency_ms": 1780,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4657,
+      "output_tokens": 63,
+      "cost_usd": 0.0014538,
+      "latency_ms": 1486,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4737,
+      "output_tokens": 101,
+      "cost_usd": 0.001512,
+      "latency_ms": 1703,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6455,
+      "output_tokens": 72,
+      "cost_usd": 0.0020013,
+      "latency_ms": 1757,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8553,
+      "output_tokens": 406,
+      "cost_usd": 0.0029313,
+      "latency_ms": 17904,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6252,
+      "output_tokens": 1021,
+      "cost_usd": 0.0027945,
+      "latency_ms": 5416,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6501,
+      "output_tokens": 20,
+      "cost_usd": 0.0019683,
+      "latency_ms": 1284,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3849,
+      "output_tokens": 20,
+      "cost_usd": 0.0011727,
+      "latency_ms": 1504,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7277,
+      "output_tokens": 1121,
+      "cost_usd": 0.003192,
+      "latency_ms": 6073,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7152,
+      "output_tokens": 1177,
+      "cost_usd": 0.0032049,
+      "latency_ms": 5592,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3414,
+      "output_tokens": 26,
+      "cost_usd": 0.0010476,
+      "latency_ms": 1314,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7063,
+      "output_tokens": 1251,
+      "cost_usd": 0.0032448,
+      "latency_ms": 7943,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6765,
+      "output_tokens": 857,
+      "cost_usd": 0.0028008,
+      "latency_ms": 4630,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3904,
+      "output_tokens": 20,
+      "cost_usd": 0.0011892,
+      "latency_ms": 1471,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 600,
+      "output_tokens": 215,
+      "cost_usd": 0.0003735,
+      "latency_ms": 2626,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 6.0,
+  "duration_ms": 155574,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "Lithonia LDN6 LED downlight datasheet specification",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2739,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 2,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6-sww.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 772,
+        "succeeded": false,
+        "source_urls": []
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6.pdf"
+        },
+        "summary": "0 extracted sources",
+        "credits": 0.0,
+        "ms": 771,
+        "succeeded": false,
+        "source_urls": []
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "Lithonia LDN6 discontinued end of life last time buy",
+          "include_domains": [
+            "acuitybrands.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2599,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 5,
+        "tool": "extract",
+        "args": {
+          "url": "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch"
+        },
+        "summary": "2 extracted sources",
+        "credits": 0.0,
+        "ms": 1771,
+        "succeeded": true,
+        "source_urls": [
+          "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch",
+          "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf"
+        ]
+      },
+      {
+        "n": 6,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch",
+          "document_title": "Lithonia Lighting® LDN6 Series LED",
+          "revision_quote": "Not specified in the document",
+          "evidence_quote": "LDN 6” downlights are the most cost-effective general illumination solutions for commercial-grade downlight applications. The LDN6 design allows for a quiet, glare-free ceiling without compromising on efficacy.",
+          "status": "active",
+          "status_quote": "LDN 6” downlights are the most cost-effective general illumination solutions for commercial-grade downlight applications.",
+          "note": "The LDN6 Series is confirmed as an active product line from Acuity Brands Lighting, Inc. The product documentation shows it is currently marketed as a cost-effective general illumination solution for commercial applications. While specific revision information wasn't found in the extracted content, the product is actively promoted with links to spec sheets and sell sheets indicating current availability."
+        },
+        "summary": "revision unknown, active",
+        "credits": 0.0,
+        "ms": 34,
+        "succeeded": true,
+        "source_urls": []
+      }
+    ],
+    "outcome": "found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "Lithonia LDN6 LED downlight datasheet specification",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2739,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6-sww.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 772,
+          "succeeded": false,
+          "source_urls": []
+        },
+        {
+          "n": 3,
+          "tool": "extract",
+          "args": {
+            "url": "https://img.acuitybrands.com/public-assets/catalog/564909/ldn6.pdf"
+          },
+          "summary": "0 extracted sources",
+          "credits": 0.0,
+          "ms": 771,
+          "succeeded": false,
+          "source_urls": []
+        },
+        {
+          "n": 4,
+          "tool": "search",
+          "args": {
+            "query": "Lithonia LDN6 discontinued end of life last time buy",
+            "include_domains": [
+              "acuitybrands.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2599,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 5,
+          "tool": "extract",
+          "args": {
+            "url": "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch"
+          },
+          "summary": "2 extracted sources",
+          "credits": 0.0,
+          "ms": 1771,
+          "succeeded": true,
+          "source_urls": [
+            "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch",
+            "http://www.acuitybrands.com/products/detail/564909/Lithonia-Lighting/LDN6-Round-Series/LDN6-Round-6-Open-and-Wallwash/-/media/products/Lithonia_Lighting/564909/document/LL_3111_LDN6-Sell-Sheet_0516_pdf.pdf"
+          ]
+        },
+        {
+          "n": 6,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://insights.acuitybrands.com/new-products-blog/ldn6-series-launch",
+            "document_title": "Lithonia Lighting® LDN6 Series LED",
+            "revision_quote": "Not specified in the document",
+            "evidence_quote": "LDN 6” downlights are the most cost-effective general illumination solutions for commercial-grade downlight applications. The LDN6 design allows for a quiet, glare-free ceiling without compromising on efficacy.",
+            "status": "active",
+            "status_quote": "LDN 6” downlights are the most cost-effective general illumination solutions for commercial-grade downlight applications.",
+            "note": "The LDN6 Series is confirmed as an active product line from Acuity Brands Lighting, Inc. The product documentation shows it is currently marketed as a cost-effective general illumination solution for commercial applications. While specific revision information wasn't found in the extracted content, the product is actively promoted with links to spec sheets and sell sheets indicating current availability."
+          },
+          "summary": "revision unknown, active",
+          "credits": 0.0,
+          "ms": 34,
+          "succeeded": true,
+          "source_urls": []
+        }
+      ],
+      "outcome": "found",
+      "purpose": "primary",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": "Rev. 09/01/22",
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [
+          {
+            "property": "l70_hours",
+            "value": 60000.0,
+            "unit": "hours",
+            "quote": "70% lumen maintenance at 60,000 hours.",
+            "source_url": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+            "model": "LDN6",
+            "identity_quote": "LDN6 ALO2 SWW1 MVOLT UGZ HSG",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "70% lumen maintenance at 60,000 hours.",
+            "selection_quote": null
+          },
+          {
+            "property": "macadam_steps",
+            "value": 3.0,
+            "unit": null,
+            "quote": "LEDs are binned to a 3-step SDCM",
+            "source_url": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+            "model": "LDN6",
+            "identity_quote": "LDN6 ALO2 SWW1 MVOLT UGZ HSG",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "LEDs are binned to a 3-step SDCM; 80 CRI minimum.",
+            "selection_quote": null
+          },
+          {
+            "property": "warranty_years",
+            "value": 5.0,
+            "unit": "years",
+            "quote": "5-year limited warranty.",
+            "source_url": "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf",
+            "model": "LDN6",
+            "identity_quote": "LDN6 ALO2 SWW1 MVOLT UGZ HSG",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "WARRANTY:\n5-year limited warranty. This is the only warranty provided and no other statements in this \nspecification sheet create any warranty of any kind. All other express and implied warranties \nare disclaimed. Complete warranty terms located at: www.acuitybrands.com/support/\nwarranty/terms-and-conditions",
+            "selection_quote": null
+          },
+          {
+            "property": "cri",
+            "value": 80.0,
+            "unit": null,
+            "quote": "CRI | 80, 90 |",
+            "source_url": "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+            "model": "LDN6",
+            "identity_quote": "LDN6 Round – 6” Open and Wallwash",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "| CRI | 80, 90 |",
+            "selection_quote": null
+          }
+        ],
+        "source_urls": [
+          "https://www.acuitybrands.com/products/detail/564909/lithonia-lighting/ldn6-round-series/ldn6-round---6-open-and-wallwash",
+          "/api/products/getasset/lithonia-lighting/564909/fe3931d3-6b7a-41e0-8d5e-96a6eaed7787/ldn6.pdf?abl_version=06%2f09%2f2026+23%3a16%3a52&DOC_Type=SPEC_SHEET",
+          "https://pdmassets.azureedge.net/library/LL/documents/specsheets/Contractor%20Select%20LDN.pdf"
+        ],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "d22951a4bee40580dd82a1211b24a96ca0bb705ee8f45a313830da12caa32bf5",
+  "fresh_model_cost_usd": 0.0669099,
+  "fresh_web_credits": 6.0,
+  "queue_ms": 112389,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 19,
+  "claims_kept": 5,
+  "web_values_read": 55,
+  "web_values_kept": 6
+}

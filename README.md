@@ -1,12 +1,13 @@
 # SpecCheck
 
-SpecCheck reads construction product submittals and checks their quoted claims against a project spec and current manufacturer documents. NVIDIA Nemotron models read and quote; code decides whether each check passes, fails or cannot be confirmed. A reviewer follows **Inbox → Scan → Review → Outcome**, with the source PDF beside every finding.
+SpecCheck checks construction submittals against the project spec and the manufacturer's current documents on the live web. Review leads with **what to send**, ordering options to specify, and ranked alternates with anything still unconfirmed. A package matrix, manual-review bucket and printable memo help the reviewer make and file the decision; NVIDIA Nemotron reads and quotes, and code decides.
 
-**[Open the live demo](https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud)** · [MIT license](LICENSE) · Solo entry, Nebius x NVIDIA Global AI Hackathon
+**[Open the live demo](https://speccheck-wongywrongys-projects.vercel.app)** · [MIT license](LICENSE) · Solo entry, Nebius x NVIDIA Global AI Hackathon
 
 ## Try it
 
 - Add the sample submittals in the Inbox, scan, review and save your decisions.
+- Read the package matrix, open a row to review **What to send**, and flag an item for manual review when it needs a person. Open **Package review memo** to print the matrix, evidence and alternate comparisons.
 - No PDFs handy? Download a **Try one** product sheet beneath the drop zone, upload it and select its spec.
 - Bring your own spec: open **Specs**, draft a checklist from the example UBC Door Hardware PDF, edit/delete rows and use it for an uploaded Schlage ND sheet. Drafts are **unreviewed**, saved for this browser, and available for 14 days. Rules for other product types are disclosed separately.
 
@@ -14,24 +15,24 @@ An upload with no quoted values matching its selected spec says **“Doesn't mat
 
 ## Measured live panel
 
-Recorded **October 22, 2026**, run **`20261022-181611-a9d0b5`**:
+Recorded **October 28, 2026**, run **`20261028-065522-3dd974`**, including all tray and watched items:
 
 | Right calls | Problems caught | Clean cases wrongly flagged | Passing replacements |
 | --- | --- | --- | --- |
-| **6 / 8** | **5 / 6** | **0 / 2** | **0 / 5** |
+| **4 / 8** | **4 / 6** | **0 / 2** | **0 / 5** |
 
-This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. **No passing replacement was found live; no Investigator rescue is claimed.** [Run evidence](docs/live-first-pass.md) · [Playground evidence](docs/playground/README.md) · [Deployment evidence](docs/deployment/README.md)
+The separate wrong-spec check approved **0 of 14** documents; all 14 were marked not applicable, live with cached calls. This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. The earlier October 22 panel was 6/8 calls and 5/6 problems; the new run adds an unnecessary note on c01 and misses c04's steel-pipe coverage problem. c05 and c06 remain wrong calls. **The strict case evidence gate does not pass. No passing replacement was found live; no planted-problem Investigator rescue is claimed.** [New evidence and comparison](docs/customer-feedback/release-20261028/README.md) · [Recorded scores](runs/recorded/20261028-065522-3dd974/scores.json) · [Deployment evidence](docs/deployment/README.md)
 
 ## Models and evidence
 
 | Component | Work |
 | --- | --- |
 | **Nemotron 3 Nano**, Nebius Token Factory | Sorts PDF pages |
-| **Nemotron 3 Super**, Nebius Token Factory | Drafts checklists, identifies draft product types, extracts quoted claims, reads manufacturer sources, investigates missing evidence and writes summaries |
+| **Nemotron 3 Super**, Nebius Token Factory | Drafts checklists, identifies draft product types, extracts quoted claims, reads manufacturer sources and writes summaries |
 | **Tavily Search, Extract and bounded Map** | Finds and retrieves current manufacturer documents |
 | **Code** | Validates quotations, compares values, applies product-type scope and owns every verdict |
 
-Unquoted claims and web values are dropped. “Couldn't confirm” is never a failure. A replacement is suggested only after its checks pass; messages remain editable drafts and are never sent. Mock results say mock, cached live calls remain labelled, and recorded fallback says replay. Checklist drafts are unreviewed. **No Nebius Serverless Job execution or nightly schedule is claimed.**
+Unquoted claims and web values are dropped. “Couldn't confirm” is never a failure. SpecCheck suggests alternates and shows what's still unconfirmed; only a fully checked alternate is labelled acceptable. Messages remain editable drafts and are never sent. Mock results say mock, cached live calls remain labelled, and recorded fallback says replay. Checklist drafts are unreviewed. A memo covers one run; items retried into another run are separate. **No Nebius Serverless Job execution is claimed.** [Daily fallback setup and measured status](deploy/nebius/recheck-job.md).
 
 ## Hosting and limits
 
