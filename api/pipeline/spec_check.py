@@ -7,7 +7,7 @@ import math
 import unicodedata
 from typing import Optional
 
-from ..schemas import Claim, Compare, Finding, Requirement
+from ..schemas import Claim, Compare, ConfigOption, Finding, Requirement
 
 UNIT_TO_BASE = {
     # length -> inches
@@ -18,6 +18,9 @@ UNIT_TO_BASE = {
 }
 
 
+NUMBER_WORDS = {w: n for n, w in enumerate("zero one two three four five six seven eight nine ten".split())}
+
+
 def to_number(value) -> Optional[float]:
     """Parse 2, '2', '3/4', '1-1/8', '<2', '1/2 hr' into a float. None if not numeric."""
     if isinstance(value, (int, float)):
@@ -25,6 +28,8 @@ def to_number(value) -> Optional[float]:
     if not isinstance(value, str):
         return None
     s = value.strip().lower().lstrip("<>~≤≥= ")
+    if s in NUMBER_WORDS:
+        return float(NUMBER_WORDS[s])
     ordinal = re.fullmatch(r"(?:class|rating|grade)\s*:?\s*(-?\d+(?:\.\d+)?)", s)
     if ordinal:
         return float(ordinal[1])
@@ -153,6 +158,20 @@ def _wanted(r: Requirement):
     return r.text
 
 
+def meets(r: Requirement, c: Claim) -> Optional[bool]:
+    """Does this one claim satisfy the requirement on its own? None when the values can't be compared.
+    Used for ordering options and alternates; the main check below keeps its multi-claim handling."""
+    if r.operator in ("gte", "lte", "eq"):
+        return numeric_compare(c.value, c.unit, r.value, r.unit, r.operator)
+    if r.operator == "contains":
+        return r.value is not None and any(_mentions(h, str(r.value)) for h in _as_list(c.value))
+    if r.operator == "any_of":
+        return any(_mentions(h, a) or _name_matches(h, a) for h in _as_list(c.value) for a in _as_list(r.value))
+    if r.operator == "exists":
+        return True
+    return None
+
+
 def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[set[str]] = None,
           product_type: Optional[str] = None) -> list[Finding]:
     """roles: the submittal's document roles; a requirement whose applies_to misses them all is not applicable."""
@@ -218,7 +237,19 @@ def check(requirements: list[Requirement], claims: list[Claim], roles: Optional[
             continue
 
         if claim is None:
-            if variants:
+            options = [c for c in scoped if c.variant and meets(r, c) is True]
+            if options:
+                # The base product doesn't state it, but a quoted ordering option does: say exactly what to order.
+                names = list(dict.fromkeys(c.variant for c in options))
+                finding = make("unverified", f"Specify option: {_label(r.property)}",
+                               f"{_label(r.property)} meets the spec only with {' or '.join(names)} "
+                               f"({_fmt(options[0].value, options[0].unit)}). Confirm the order specifies it.",
+                               severity="minor", right=f"{_fmt(options[0].value, options[0].unit)} with {names[0]}")
+                finding.configure = [ConfigOption(option=c.variant, value=_fmt(c.value, c.unit), quote=c.quote,
+                                                  page=c.page, claim_id=c.id) for c in options]
+                # claim_ids stay empty: an option is not evidence that the submitted product meets the rule.
+                findings.append(finding)
+            elif variants:
                 findings.append(make("unverified", f"Option not confirmed: {_label(r.property)}",
                                      f"Quoted values apply only to {', '.join(dict.fromkeys(variants))}. Confirm the submitted configuration.",
                                      severity="minor", right="Option dependent"))

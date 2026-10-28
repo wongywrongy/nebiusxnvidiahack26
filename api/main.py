@@ -51,7 +51,7 @@ from . import cloud_jobs, watch_store, job_control
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, save_upload, senders, try_documents
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
-from .pipeline import checklists
+from .pipeline import checklists, package
 from .pipeline.extract import checklist_path
 from .pipeline.render import page_count, page_sizes, prune_page_cache, render_page
 from .pipeline.runner import Run, execute, list_runs, load_result, prune_runs, recorded_runs, replay, run_dir
@@ -545,6 +545,22 @@ def results(run_id: str):
         raise HTTPException(404, "No such run")
     return {"results": [json.loads(p.read_text()) for p in sorted((folder / "results").glob("*.json"))],
             "done": RUNS[run_id].done.is_set() if run_id in RUNS else True}
+
+
+@app.get("/api/runs/{run_id}/package")
+def package_view(run_id: str):
+    """The whole package as one compliance matrix (rows derived in code from each result's findings)."""
+    folder = run_dir(run_id)
+    if not folder:
+        raise HTTPException(404, "No such run")
+    items = []
+    for p in sorted((folder / "results").glob("*.json")):
+        res = load_result(run_id, p.stem)
+        if res is None:
+            continue
+        case = {**all_cases(), **all_samples()}.get(res.case_id) or get_upload(res.case_id) or {}
+        items.append((_public(case) if case else {}, res))
+    return package.summarize(run_id, items)
 
 
 @app.get("/api/runs/{run_id}/results/{case_id}")

@@ -232,6 +232,26 @@ class FixCandidate(BaseModel):
     passes: bool
 
 
+class BetterMark(BaseModel):
+    """Per-requirement comparison of an alternate against what was submitted, decided in code."""
+    requirement_id: str
+    label: str
+    alternate: Optional[str] = None
+    submitted: Optional[str] = None
+    mark: Literal["better", "meets", "worse", "unknown"]
+
+
+class Alternate(BaseModel):
+    """A checked candidate, ranked in code. 'meets_spec' only when every check passed on quoted evidence."""
+    name: str
+    source_url: str
+    rank: Literal["meets_spec", "possible", "failed"]
+    confirm: list[str] = []  # labels still unconfirmed ("possible" only)
+    failed: list[str] = []  # labels that failed ("failed" only)
+    better: list[BetterMark] = []
+    origin: Literal["current_document", "named_replacement", "search"] = "search"
+
+
 class Fix(BaseModel):
     """What to send instead: candidates found online, each run through the same checks as a new submittal."""
 
@@ -239,6 +259,16 @@ class Fix(BaseModel):
     query: str = ""  # what was searched, so "nothing passed" still shows what was tried
     candidates: list[FixCandidate] = []
     suggest: str = ""  # the best passing candidate, "" when none passes
+    alternates: list[Alternate] = []  # every checked candidate, ranked in code (api/pipeline/alternates.py)
+
+
+class ConfigOption(BaseModel):
+    """An ordering option quoted on the submitted sheet whose value meets a requirement the base product can't."""
+    option: str = Field(description="Exact option phrase from the quote, e.g. 'EZ1'")
+    value: str
+    quote: Optional[str] = None
+    page: Optional[int] = None
+    claim_id: str
 
 
 class Finding(BaseModel):
@@ -260,6 +290,7 @@ class Finding(BaseModel):
     quote: Optional[str] = None  # status findings: the source's exact words
     decided_by: str = "code"
     fix: Optional[Fix] = None
+    configure: list[ConfigOption] = []  # options that would meet this requirement (verdict stays "unverified")
 
 
 class ReportOut(BaseModel):
@@ -377,6 +408,34 @@ class Result(BaseModel):
     @property
     def cost_usd(self) -> float:
         return sum(u.cost_usd for u in self.usage)
+
+
+class PackageRow(BaseModel):
+    """One submittal in the package view. Every cell is derived in code from the item's findings."""
+    case_id: str
+    title: str
+    number: Optional[str] = None
+    sender: Optional[str] = None
+    decision: Decision
+    stamp: str  # industry wording for the decision, display only
+    spec: Literal["meets", "fails", "configure", "unconfirmed", "not_checked"]
+    current_sheet: Literal["current", "outdated", "newer", "unknown"]
+    still_made: Literal["active", "discontinued", "unknown"]
+    meets: int = 0
+    doesnt_meet: int = 0
+    couldnt_confirm: int = 0
+    what_to_send: list[str] = []
+    best_alternate: Optional[Alternate] = None
+    manual_review_suggested: bool = False
+
+
+class PackageSummary(BaseModel):
+    run_id: str
+    rows: list[PackageRow]
+    ready: int = 0  # approve / approve_with_note
+    need_changes: int = 0  # send_back
+    not_checked: int = 0
+    manual_review_suggested: int = 0
 
 
 # ---------- streaming ----------

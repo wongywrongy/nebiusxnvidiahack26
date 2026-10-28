@@ -21,7 +21,7 @@ from ..llm import load_fixture
 from ..providers import budget, tavily
 from ..schemas import ClaimsOut, Evidence, Finding, Fix, FixCandidate, FixCheck, Investigation, Requirement, Usage
 from ..web import WebClient, snapshot
-from . import extract, spec_check, verify
+from . import alternates, extract, spec_check, verify
 from .decide import FLAGGED
 from .investigate import investigate
 
@@ -270,5 +270,7 @@ async def _fix(case: dict, group: str, flagged: list[Finding], requirements: lis
     best = next((c for c in cands if c.passes), None)
     suggestion = (f"SpecCheck proposal: {best.selection.model}. Confirm configuration before ordering."
                   if best and best.selection and best.selection.origin == "agent_proposal" else best.name if best else "")
-    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion)
+    origins = {k["url"]: "current_document" for k in known}
+    fix = Fix(head=_head(group, flagged, case, claims, cands), query=query, candidates=cands, suggest=suggestion,
+              alternates=alternates.rank(cands, requirements, claims.claims, origins))
     return fix, usage, web.credits + verify_credits

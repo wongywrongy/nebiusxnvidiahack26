@@ -56,12 +56,28 @@ export interface Finding {
   quote?: string | null // status findings: the source's exact words
   decided_by: string
   fix?: Fix | null
+  configure?: ConfigOption[] // ordering options that would meet this rule; verdict stays 'unverified'
 }
+export interface ConfigOption { option: string; value: string; quote?: string | null; page?: number | null; claim_id: string }
 // Send-backs only: what to send instead, each candidate run through the same checks as a new submittal.
 interface FixCheck { label: string; ok: boolean | null; note: string; requirement_id?: string | null; evidence?: Evidence[] }
 interface FixCandidate { name: string; source_url: string; documents?: Evidence[]; checks: FixCheck[]; passes: boolean;
   selection?: { model: string; page: number; quote: string; origin?: 'submitted' | 'agent_proposal' } | null }
-export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string }
+export interface Fix { head: string; query: string; candidates: FixCandidate[]; suggest: string; alternates?: Alternate[] }
+// Ranked in code (api/pipeline/alternates.py): meets_spec only when every check passed on quoted evidence.
+export interface BetterMark { requirement_id: string; label: string; alternate?: string | null; submitted?: string | null; mark: 'better' | 'meets' | 'worse' | 'unknown' }
+export interface Alternate { name: string; source_url: string; rank: 'meets_spec' | 'possible' | 'failed'; confirm: string[]; failed: string[]; better: BetterMark[]; origin: 'current_document' | 'named_replacement' | 'search' }
+// The package view (api/pipeline/package.py): one compliance-matrix row per submittal, every cell from findings.
+export interface PackageRow {
+  case_id: string; title: string; number?: string | null; sender?: string | null
+  decision: Decision; stamp: string
+  spec: 'meets' | 'fails' | 'configure' | 'unconfirmed' | 'not_checked'
+  current_sheet: 'current' | 'outdated' | 'newer' | 'unknown'
+  still_made: 'active' | 'discontinued' | 'unknown'
+  meets: number; doesnt_meet: number; couldnt_confirm: number
+  what_to_send: string[]; best_alternate?: Alternate | null; manual_review_suggested: boolean
+}
+export interface PackageSummary { run_id: string; rows: PackageRow[]; ready: number; need_changes: number; not_checked: number; manual_review_suggested: number }
 export type Value = string | number | string[] | null
 // One comparison per finding. rows: currency findings, only the fields that changed.
 export interface Compare {
@@ -233,6 +249,7 @@ export function streamEvents(runId: string, onEvent: (e: Event) => void, onEnd: 
   return () => es.close()
 }
 
+export async function getPackage(runId: string): Promise<PackageSummary> { return ok(await fetch(`/api/runs/${runId}/package`)) }
 export async function getResult(runId: string, caseId: string): Promise<Result> {
   return ok(await fetch(`/api/runs/${runId}/results/${caseId}`))
 }
