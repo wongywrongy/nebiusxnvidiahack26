@@ -19,7 +19,6 @@ export interface Project {
   mode: 'mock' | 'live'
   // Nightly re-check of approved items (scripts/recheck.py, run as a Nebius Serverless Job): when it last ran, if ever.
   recheck?: Recheck | null
-  jobs_available?: boolean
   try?: TryDocument[]
 }
 export interface Recheck {
@@ -168,15 +167,6 @@ export interface Scores {
 }
 export async function getScores(): Promise<Scores> { return ok(await fetch('/api/scores')) }
 
-export interface CloudJob {
-  name: string; id?: string | null; created_at: string; state: 'queued' | 'starting' | 'running' | 'done' | 'failed'
-  raw_state?: string | null; state_known?: boolean; poll_error?: string
-}
-export async function getJobs(): Promise<{ available: boolean; jobs: CloudJob[] }> { return ok(await fetch('/api/watch/jobs')) }
-export async function getWatch(): Promise<Recheck | null> {
-  const r = await fetch('/api/watch')
-  return r.status === 404 ? null : ok(r)
-}
 export const archiveUrl = (path: string) => `/api/evidence/${path.split('/').map(encodeURIComponent).join('/')}`
 
 export async function getProject(): Promise<Project> {

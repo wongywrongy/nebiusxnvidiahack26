@@ -39,10 +39,6 @@ class Settings(BaseSettings):
     nebius_public_key_id: str = ""
     nebius_private_key: SecretStr = SecretStr("")
     nebius_project_id: str = ""
-    nebius_secret_nebius_api_key: str = ""
-    nebius_secret_tavily_api_key: str = ""
-    worker_token: SecretStr = SecretStr("")
-    nebius_secret_worker_token: str = ""
     speccheck_image: str = ""
     speccheck_url: str = ""
     # Daily re-check job (api/daily_recheck.py): the MysteryBox secret holding NEBIUS_API_KEY, TAVILY_API_KEY and
@@ -51,9 +47,6 @@ class Settings(BaseSettings):
     recheck_hour_utc: int = Field(default=9, ge=0, le=23)
     evidence_dir: Path | None = None
     evidence_label: str = "disk"
-    # Populate only with state strings observed by the owner; COMPLETED is documented.
-    nebius_job_state_map: dict[str, Literal["queued", "starting", "running", "done", "failed"]] = {"COMPLETED": "done"}
-    watch_run_interval_s: int = Field(default=3600, ge=0)
 
     model_triage: str = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
     model_extract: str = "nvidia/nemotron-3-super-120b-a12b"
@@ -161,7 +154,7 @@ _PATTERNS = re.compile(r"(Bearer\s+)\S+|\b(sk-|tvly-|lsv2_)[A-Za-z0-9_\-]{8,}")
 
 
 def redact(text: str) -> str:
-    for k in (*KEYS, "nebius_private_key", "worker_token"):
+    for k in (*KEYS, "nebius_private_key"):
         v = settings.secret(k)
         if len(v) >= 4:
             text = text.replace(v, "***")
