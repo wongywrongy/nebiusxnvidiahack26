@@ -1,0 +1,13 @@
+{
+  "ledger": "/home/kyle/code/nebiusxnvidiahack26/evidence/budget/campaign.sqlite3 (shared local ledger, not reset)",
+  "day": "2026-10-28",
+  "before": {"model_usd": "2.20976732", "tavily_credits": 159},
+  "recording": {"run": "20261028-171142-5ca0fc", "model_usd": "0.72872730", "tavily_credits": 19},
+  "wrong_spec": {"run": "20261028-171959-1f6c87", "model_usd": "0.11095470", "tavily_credits": 8, "ceiling_model_usd": "0.50"},
+  "after": {"model_usd": "3.04944932", "tavily_credits": 186, "held_usd": 0, "held_credits": 0},
+  "local_incremental": {"model_usd": "0.83968200", "tavily_credits": 27},
+  "github_cron_run_40717808721": {"model_usd": "0", "tavily_credits": 0},
+  "public_judging_ledger_untouched_so_far": {"total_usd": 1.15974648, "total_credits": 324},
+  "hosted_verification": "pending deploy",
+  "cloud_and_ci_billing_measured": false
+}

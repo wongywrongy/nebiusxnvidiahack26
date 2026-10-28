@@ -33,9 +33,9 @@ Models read and quote; code owns the verdict. Unconfirmed evidence stays unconfi
 
 ## What I measured
 
-October 28 live recording `20261028-065522-3dd974`: **4/8 right calls, 4/6 planted problems caught, 0/2 major false alarms, 0/5 passing replacements**. All ten case/tray/watched results are valid. A separate fixed wrong-spec run approved **0/14**, with all 14 not applicable. Both use some cached calls and are small known demonstration sets, not unseen benchmarks.
+October 28 afternoon live recording `20261028-171142-5ca0fc`: **6/8 right calls, 5/6 planted problems caught, 0/2 major false alarms, 0/5 passing replacements**. All ten case/tray/watched results are valid. A wrong-spec run on the same build approved **0/14**: 13 not applicable, one sent back. Both use some cached calls and are small known demonstration sets, not unseen benchmarks.
 
-The earlier October 22 panel was 6/8 calls and 5/6 problems. This release adds an unnecessary c01 note and misses c04's pipe-coverage failure. c05/c06 remain wrong calls. The strict case evidence gate fails; no passing replacement or planted-problem Investigator rescue is claimed. [Full comparison and costs](docs/customer-feedback/release-20261028/README.md).
+The October 22 panel was also 6/8 and 5/6; no decision differs from it. The morning October 28 build had dropped to 4/8 and 4/6 (an unnecessary c01 note, a missed c04 pipe-coverage failure); PR #20 fixed both. c05/c06 remain wrong calls. The strict case evidence gate fails; no passing replacement or planted-problem Investigator rescue is claimed. [Full comparison and costs](docs/customer-feedback/accuracy-release-20261028/README.md).
 
 Verification: **771 local Python tests passed, 2 skipped, plus 4 passing fallback tests; GitHub CI reports 771 passed / 6 skipped; 17 mock browser journeys, presentation checks and web build passed**. The final recording charged $0.59806296 and 46 Tavily credits. Wrong-spec checks added no fresh charge. Public no-admin fresh smoke, all five browser journeys, the memo/Scoreboard and Check approved now also passed. [Public evidence](docs/customer-feedback/release-20261028/README.md).
 

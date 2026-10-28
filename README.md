@@ -15,13 +15,13 @@ An upload with no quoted values matching its selected spec says **“Doesn't mat
 
 ## Measured live panel
 
-Recorded **October 28, 2026**, run **`20261028-065522-3dd974`**, including all tray and watched items:
+Recorded **October 28, 2026** (afternoon), run **`20261028-171142-5ca0fc`**, including all tray and watched items:
 
 | Right calls | Problems caught | Clean cases wrongly flagged | Passing replacements |
 | --- | --- | --- | --- |
-| **4 / 8** | **4 / 6** | **0 / 2** | **0 / 5** |
+| **6 / 8** | **5 / 6** | **0 / 2** | **0 / 5** |
 
-The separate wrong-spec check approved **0 of 14** documents; all 14 were marked not applicable, live with cached calls. This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. The earlier October 22 panel was 6/8 calls and 5/6 problems; the new run adds an unnecessary note on c01 and misses c04's steel-pipe coverage problem. c05 and c06 remain wrong calls. **The strict case evidence gate does not pass. No passing replacement was found live; no planted-problem Investigator rescue is claimed.** [New evidence and comparison](docs/customer-feedback/release-20261028/README.md) · [Recorded scores](runs/recorded/20261028-065522-3dd974/scores.json) · [Deployment evidence](docs/deployment/README.md)
+The separate wrong-spec check, re-run on this build, approved **0 of 14** documents: 13 were marked not applicable and one (an LED troffer under the firestop section) was sent back instead. This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. This restores the October 22 panel (6/8, 5/6) after the morning October 28 build dropped to 4/8, 4/6: c01 approves again without an unnecessary note and c04 again catches the steel-pipe coverage problem. No decision differs from October 22. c05 and c06 remain wrong calls. **The strict case evidence gate does not pass. No passing replacement was found live; no planted-problem Investigator rescue is claimed.** [New evidence and comparison](docs/customer-feedback/accuracy-release-20261028/README.md) · [Recorded scores](runs/recorded/20261028-171142-5ca0fc/scores.json) · [Deployment evidence](docs/deployment/README.md)
 
 ## Models and evidence
 

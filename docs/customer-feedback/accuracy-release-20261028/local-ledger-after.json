@@ -1,0 +1,17 @@
+{
+  "day": "2026-10-28",
+  "usd": 3.04944932,
+  "credits": 186,
+  "held_usd": 0.0,
+  "held_credits": 0,
+  "total_usd": 7.06287276,
+  "total_credits": 715,
+  "phase": "engineering",
+  "phase_usd": 6.00426776,
+  "phase_credits": 417,
+  "usd_limit": 20.0,
+  "credit_limit": 2000,
+  "phase_usd_limit": 10.0,
+  "phase_credit_limit": 1000,
+  "blocked": false
+}
