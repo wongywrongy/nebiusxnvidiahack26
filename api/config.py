@@ -45,6 +45,10 @@ class Settings(BaseSettings):
     nebius_secret_worker_token: str = ""
     speccheck_image: str = ""
     speccheck_url: str = ""
+    # Daily re-check job (api/daily_recheck.py): the MysteryBox secret holding NEBIUS_API_KEY, TAVILY_API_KEY and
+    # ADMIN_TOKEN payload keys, and the UTC hour after which the server launches that day's job.
+    recheck_mysterybox_secret_id: str = ""
+    recheck_hour_utc: int = Field(default=9, ge=0, le=23)
     evidence_dir: Path | None = None
     evidence_label: str = "disk"
     # Populate only with state strings observed by the owner; COMPLETED is documented.

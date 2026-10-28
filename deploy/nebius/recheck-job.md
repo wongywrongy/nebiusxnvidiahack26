@@ -1,16 +1,31 @@
-# Daily re-check as a Nebius Serverless Job
+# Daily re-check as a Nebius Serverless Job, launched by the app server
 
-GitHub Actions (`.github/workflows/nightly-recheck.yml`) runs once a day at 09:17 UTC, signs in as a service
-account, and launches `nebius ai job create` with the public SpecCheck image. The job re-checks the watched
-items live, posts its report to the public URL with the admin token, and exits. The Outcome step shows
-"Re-checked by Nebius Serverless Job <name> · <date time> · N items, M flagged" only once a report exists.
+Nebius jobs have no schedule or trigger (CLI 0.12.296: `nebius ai job --help` lists cancel, create, delete,
+get, get-by-name, list, logs, operation, restart, run, ssh; `create` has no schedule flag; no top-level
+scheduler service). So the app server launches the job itself (`api/daily_recheck.py`, Nebius Python SDK):
 
-Spend per run is capped inside the job: $0.50 of Token Factory and 40 Tavily credits (one watched item today).
-A cap ends a check as "couldn't confirm".
+- After `RECHECK_HOUR_UTC` (default 09:00 UTC) it creates `speccheck-recheck-<YYYY-MM-DD>` from
+  `SPECCHECK_IMAGE`. The launch is written to `/state/runs/watch/launches.json` **before** the create call,
+  so a crash, restart or retry can never launch twice in one UTC day. A failed create is not retried that day.
+- The job starts its own ledger capped at **$0.50 and 40 Tavily credits**, re-checks the watched items live,
+  and posts its report to `SPECCHECK_URL` with the admin token it reads from MysteryBox.
+- The app accepts a report signed "Nebius Serverless Job <name>" only if this server launched `<name>`.
+  The Outcome line shows only such stored reports, and nothing when none exists.
 
-You run every command below. Keys go into prompts (`read -rs`), never into a file, an image or a URL.
+Job states (SDK `JobStatus.State`): PROVISIONING, STARTING, IMAGE_PULLING, RUNNING, CANCELLING, DELETING,
+COMPLETED, FAILED, CANCELLED, ERROR.
 
-## 1. Service account (Nebius CLI, signed in as you)
+## Where the key lives
+
+The app server is the Nebius Serverless AI endpoint `aiendpoint-e01nkwwp6azgh9ge1k` (project
+`project-e01ab4axpa005e506zq7nq`, eu-west1, cpu-d3 2vcpu-8gb, `/state` on filesystem
+`computefilesystem-e01syzwfv7rqexfcys`). The service account's private key is a MysteryBox secret injected
+into that endpoint's environment as `NEBIUS_PRIVATE_KEY` with `--env-secret`. The SDK reads it from memory;
+it is never written to disk, baked into the image or put in a URL, and logs redact it.
+
+You run every command below. Keys go into prompts or files you delete, never into chat.
+
+## 1. Service account that may create jobs
 
 ```bash
 export PROJECT_ID=project-e01ab4axpa005e506zq7nq
@@ -21,52 +36,56 @@ EDITORS=$(nebius iam group get-by-name --name editors --parent-id $TENANT_ID --f
 nebius iam group-membership create --parent-id $EDITORS --member-id $SA_ID
 ```
 
-`editors` lets it create jobs but does **not** let it read secret payloads. In the console: IAM → Groups →
-create `speccheck-secret-readers`, give it an access permit with role `mysterybox.payload-viewer` on the
-project, and add the `speccheck-recheck` service account.
+`editors` can create jobs but cannot read secret payloads. In the console: IAM → Groups → create
+`speccheck-secret-readers` with an access permit for role `mysterybox.payload-viewer` on the project, and add
+the `speccheck-recheck` service account.
 
-## 2. Authorized key
+## 2. Its key (RSA, generated locally)
 
 ```bash
-nebius iam auth-public-key generate --service-account-id $SA_ID --output ~/.nebius/speccheck-recheck.json
+umask 077
+openssl genrsa -out sa.pem 4096 && openssl rsa -in sa.pem -pubout -out sa.pub.pem
+export PUBLIC_KEY_ID=$(nebius iam auth-public-key create --account-service-account-id $SA_ID \
+  --data "$(cat sa.pub.pem)" --format jsonpath='{.metadata.id}')
+nebius mysterybox secret create --name speccheck-server-sa --parent-id $PROJECT_ID \
+  --secret-version-payload "$(jq -nc --rawfile k sa.pem '[{key:"NEBIUS_PRIVATE_KEY",string_value:$k}]')"
+shred -u sa.pem sa.pub.pem
+echo $PUBLIC_KEY_ID   # if empty: nebius iam auth-public-key list-by-account --account-service-account-id $SA_ID
 ```
 
-## 3. MysteryBox secret
-
-The endpoint already reads its keys from MysteryBox; reuse that secret if its payload keys are exactly
-`NEBIUS_API_KEY`, `TAVILY_API_KEY` and `ADMIN_TOKEN` (`nebius mysterybox secret list --parent-id $PROJECT_ID`).
-Otherwise create one. `ADMIN_TOKEN` must equal the deployed app's admin token.
+## 3. The job's keys (one secret, three payload keys)
 
 ```bash
-read -rs NEBIUS_API_KEY; read -rs TAVILY_API_KEY; read -rs ADMIN_TOKEN
+read -rs NEBIUS_API_KEY; read -rs TAVILY_API_KEY; read -rs ADMIN_TOKEN   # ADMIN_TOKEN = the app's admin token
 nebius mysterybox secret create --name speccheck-recheck --parent-id $PROJECT_ID \
   --secret-version-payload "$(jq -nc --arg a "$NEBIUS_API_KEY" --arg b "$TAVILY_API_KEY" --arg c "$ADMIN_TOKEN" \
-    '[{key:"NEBIUS_API_KEY",string_value:$a},{key:"TAVILY_API_KEY",string_value:$b},{key:"ADMIN_TOKEN",string_value:$c}]')"
+    '[{key:"NEBIUS_API_KEY",string_value:$a},{key:"TAVILY_API_KEY",string_value:$b},{key:"ADMIN_TOKEN",string_value:$c}]')" >/dev/null
 unset NEBIUS_API_KEY TAVILY_API_KEY ADMIN_TOKEN
+export RECHECK_SECRET_ID=$(nebius mysterybox secret get-by-name --name speccheck-recheck --parent-id $PROJECT_ID \
+  --format jsonpath='{.metadata.id}')
 ```
 
-## 4. GitHub settings
+## 4. Endpoint settings (applied with the Package H redeploy)
+
+Add to the endpoint's environment:
+
+| Variable | Value |
+|---|---|
+| `NEBIUS_SA_ID` | `$SA_ID` |
+| `NEBIUS_PUBLIC_KEY_ID` | `$PUBLIC_KEY_ID` |
+| `NEBIUS_PROJECT_ID` | `project-e01ab4axpa005e506zq7nq` |
+| `SPECCHECK_IMAGE` | the new image digest from Package H |
+| `SPECCHECK_URL` | `https://speccheck-wongywrongys-projects.vercel.app` |
+| `RECHECK_MYSTERYBOX_SECRET_ID` | `$RECHECK_SECRET_ID` |
+| `NEBIUS_PRIVATE_KEY` | `--env-secret NEBIUS_PRIVATE_KEY=speccheck-server-sa` |
+
+## 5. Check it
+
+The first launch happens on the first 10-minute tick after 09:00 UTC. Then:
 
 ```bash
-gh secret set NEBIUS_SA_CREDENTIALS < ~/.nebius/speccheck-recheck.json && rm ~/.nebius/speccheck-recheck.json
-gh variable set NEBIUS_PROJECT_ID --body "$PROJECT_ID"
-gh variable set SPECCHECK_URL --body https://speccheck-wongywrongys-projects.vercel.app
-gh variable set SPECCHECK_IMAGE --body ghcr.io/wongywrongy/speccheck@sha256:e5c92a98a7d384e3e89c21819546fc9928ce6c6971f951cf1a4bc1c888dcbab2
-gh variable set MYSTERYBOX_SECRET --body speccheck-recheck   # or the reused secret's name/ID
-gh variable set ENABLE_NEBIUS_JOBS --body true
+nebius ai job get-by-name --name speccheck-recheck-$(date -u +%F) --parent-id $PROJECT_ID --format json | jq .status
+curl -s https://speccheck-wongywrongys-projects.vercel.app/api/watch | jq '{checked_at, runner, items: [.items[] | {id, status}]}'
 ```
 
-## 5. First run, by hand
-
-```bash
-gh workflow run nightly-recheck --ref feat/final-push
-gh run watch
-```
-
-The "Wait" step prints every job state the CLI reports. Send those to Claude; they replace the `TERMINAL`
-TODO in the workflow. Then screenshot the job in the Nebius console (AI → Jobs) for the README.
-
-## If it is not working by 13:00 Wed
-
-Fall back to a GitHub-hosted re-check that posts the same report with `RECHECK_RUNNER` unset; the Outcome
-line then reads "Re-checked · <date time> · …" without the word Nebius.
+Screenshot the job in the console (AI → Jobs) for the README.

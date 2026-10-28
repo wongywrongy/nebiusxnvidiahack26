@@ -13,8 +13,8 @@ diffs the values) and reports, per item: no_change, changed (a value on the curr
 enforce their assigned allowance locally, then return sealed usage and evidence through signed callbacks.
 Only the controller can settle accounting and publish after cloud completion is independently observed.
 
-The daily GitHub schedule launches this script as a Nebius Serverless Job with --post to the public app;
-see deploy/nebius/recheck-job.md.
+Once a day the app server launches this script as a Nebius Serverless Job with --post to the public app
+(api/daily_recheck.py); see deploy/nebius/recheck-job.md.
 """
 
 from __future__ import annotations

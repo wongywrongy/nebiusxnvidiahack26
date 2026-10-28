@@ -59,7 +59,7 @@ def test_invalid_recheck_cannot_publish_no_change(runs_dir):
 def test_project_shows_the_latest_report(runs_dir):
     assert client.get("/api/project").json()["recheck"] is None
     assert client.get("/api/watch").status_code == 404
-    rep = {"checked_at": "2026-10-20T07:00:00+00:00", "runner": "Nebius Serverless Job", "mode": "live",
+    rep = {"checked_at": "2026-10-20T07:00:00+00:00", "runner": "local", "mode": "live",
            "items": [{"id": "c07", "status": "discontinued", "detail": "x"}]}
     assert client.post("/api/watch/report", json=rep).status_code == 403  # no admin token set: never accepted
     with pytest.MonkeyPatch.context() as mp:
@@ -67,7 +67,7 @@ def test_project_shows_the_latest_report(runs_dir):
         assert client.post("/api/watch/report", json=rep, headers={"X-Admin-Token": "wrong"}).status_code == 403
         r = client.post("/api/watch/report", json=rep, headers={"X-Admin-Token": "t-0123456789"})
     assert r.status_code == 200 and r.json()["items"] == 1
-    assert client.get("/api/project").json()["recheck"]["runner"] == "Nebius Serverless Job"
+    assert client.get("/api/project").json()["recheck"]["runner"] == "local"
     assert client.get("/api/watch").json()["items"][0]["status"] == "discontinued"
 
 

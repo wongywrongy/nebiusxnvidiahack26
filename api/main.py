@@ -47,7 +47,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
 from .config import settings, redact
-from . import cloud_jobs, watch_store, job_control
+from . import cloud_jobs, daily_recheck, watch_store, job_control
 from .pipeline.cases import add_upload, all_cases, all_samples, all_specs, get_case, get_upload, mock_ready, save_upload, senders, try_documents
 from .llm import load_fixture
 from .pipeline.ingest import pdf_pages
@@ -79,9 +79,12 @@ async def lifespan(app):
                                                budget.today(), budget.caps(),
                                                "private controller mount" if settings.controller_state_dir else "local disk")
     await cloud_jobs.setup_profile()
+    daily = asyncio.create_task(daily_recheck.loop()) if daily_recheck.configured() else None
     try:
         yield
     finally:
+        if daily:
+            daily.cancel()
         cloud_jobs.cleanup_profile()
 
 
@@ -408,6 +411,9 @@ async def watch_report(body: WatchReport, request: Request):
         raise HTTPException(403, "Reporting a re-check needs the admin token (X-Admin-Token header)")
     if settings.controller_state_dir or body.job_name:
         raise HTTPException(409, "Cloud reports must use their authenticated worker lease")
+    # Only a job this server launched may sign a report as a Nebius Serverless Job.
+    if "nebius" in body.runner.lower() and body.runner not in {daily_recheck.PREFIX + n for n in daily_recheck.launched_names()}:
+        raise HTTPException(422, "No job with that name was launched by this server")
     report = body.model_dump(mode="json")
     watch_store.report(report)
     return {"ok": True, "items": len(body.items)}
