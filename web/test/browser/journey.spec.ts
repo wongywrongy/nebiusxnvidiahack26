@@ -164,34 +164,29 @@ test('scan complete shows the package matrix and opens Review at a row', async (
   await expect(page.locator('#message')).toBeVisible()
 })
 
-test('the matrix renders every cell type', async ({ page }) => {
-  // Every spec / sheet / still-made value, through a real scan whose one row is rewritten per value.
-  const values: [string, string, string][] = [['meets', 'current', 'active'], ['fails', 'outdated', 'discontinued'],
-    ['configure', 'newer', 'unknown'], ['not_checked', 'unknown', 'unknown'], ['unconfirmed', 'unknown', 'unknown']]
-  const words = ['Meets', 'Current', 'Made', 'Fails', 'Outdated', 'Discontinued', 'Option', 'Newer exists', 'Not checked', 'Unconfirmed', 'Unknown']
-  const cells = new Set<string>()
+test('the package shows one status line only when there is news, and never Unknown', async ({ page }) => {
+  // Each sheet / still-made pair through a real scan whose one row is rewritten; null: no status line.
+  const values: [string, string, string | null][] = [['current', 'active', null], ['outdated', 'active', 'Sheet out of date'],
+    ['newer', 'unknown', 'Newer sheet online'], ['current', 'discontinued', 'Discontinued'], ['outdated', 'discontinued', 'Discontinued'],
+    ['unknown', 'not_checked', null]]
   let n = 0
   await page.route('**/api/runs/*/package', async (route) => {
     const response = await route.fetch()
     const real = await response.json()
-    const [spec, current_sheet, still_made] = values[n++ % values.length]
-    await route.fulfill({ response, json: { ...real, rows: real.rows.map((r: object) => ({ ...r, spec, current_sheet, still_made })) } })
+    const [current_sheet, still_made] = values[n++ % values.length]
+    await route.fulfill({ response, json: { ...real, rows: real.rows.map((r: object) => ({ ...r, current_sheet, still_made })) } })
   })
-  const seen = new Set<string>()
-  for (let i = 0; i < values.length; i++) {
+  for (const [, , status] of values) {
     await page.evaluate(() => localStorage.clear()).catch(() => {})
     await inbox(page)
     await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
     await expect(page.getByRole('heading', { name: 'Scan complete', exact: true })).toBeVisible()
     await expect(page.getByRole('button', { name: /^Review / })).toBeVisible()
-    for (const el of await page.locator('[data-cell]').all()) {
-      cells.add((await el.getAttribute('data-cell'))!)
-      const shown = await el.innerText()
-      for (const w of words) if (shown.endsWith(w)) seen.add(w)
-    }
+    await expect(page.locator('[data-status]')).toHaveText(status ? [new RegExp(`${status}$`)] : [])
+    await expect(page.getByRole('img', { name: /meets?|doesn't meet|not confirmed|with an option/ })).toHaveCount(1)
+    await expect(page.getByText('Unknown')).toHaveCount(0)
+    await expect(page.getByText('Worth a manual look')).toHaveCount(0)
   }
-  expect([...seen].sort()).toEqual([...words].sort())
-  expect(cells.size).toBe(11)
 })
 
 test('flag for manual review lands in its own Outcome bucket and survives reload', async ({ page }) => {
