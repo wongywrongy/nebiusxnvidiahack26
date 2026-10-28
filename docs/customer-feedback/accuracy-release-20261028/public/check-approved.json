@@ -1,0 +1,2037 @@
+{
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "recording": "20261028-171142-5ca0fc",
+  "captured_at": "2026-10-28T18:36:41.179Z",
+  "mode": "approved",
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.9350523,
+      "credits": 238,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.73108118,
+      "total_credits": 373,
+      "phase": "engineering",
+      "phase_usd": 1.73108118,
+      "phase_credits": 373,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.0649477,
+      "credits_left": 362
+    },
+    "recorded": "20261028-171142-5ca0fc",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 783.5,
+    "disk_free_gb": 9.93
+  },
+  "input": {
+    "id": "u-d9e91474",
+    "title": "off-topic.pdf",
+    "section": "07 84 00",
+    "submittal": [
+      {
+        "role": "product_data",
+        "file": "uploads/u-d9e91474/off-topic.pdf"
+      }
+    ],
+    "pages": 1,
+    "upload": true,
+    "mock_fixture": null,
+    "ready": true
+  },
+  "setup_run": {
+    "run_id": "20261028-183644-570407",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "request": {
+    "ids": [
+      "c07"
+    ],
+    "delay_ms": 700,
+    "refresh_web": true
+  },
+  "run": {
+    "run_id": "20261028-183645-888776",
+    "mode": "live",
+    "mock": [],
+    "note": null,
+    "shared_item_budget": false
+  },
+  "results": [
+    {
+      "case_id": "c07",
+      "title": "LED troffer, offices",
+      "decision": "send_back",
+      "summary": "Send back: see what to send.",
+      "spec_section": "26 51 00",
+      "spec_title": "Interior Lighting",
+      "spec_rule_count": 5,
+      "spec_match_count": 1,
+      "checklist_id": null,
+      "product_type": null,
+      "findings": [
+        {
+          "id": "spec-req_t_rating_hr_led",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Couldn't confirm: Rated life (L70)",
+          "detail": "LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.",
+          "why_it_matters": "Without confirmed long-term performance data, we cannot be sure the lights will maintain adequate brightness over time.",
+          "requirement_id": "req_t_rating_hr_led",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≥ 50000 hr",
+            "right_label": "Submitted",
+            "right_value": "Not confirmed",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.S.3",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-req_warranty_years_led",
+          "check": "spec",
+          "verdict": "pass",
+          "severity": "info",
+          "title": "Warranty",
+          "detail": "Package states 5 years; spec requires at least 5 yr.",
+          "why_it_matters": null,
+          "requirement_id": "req_warranty_years_led",
+          "claim_id": "clm-83",
+          "product_type": null,
+          "claim_ids": [
+            "clm-83"
+          ],
+          "highlights": [
+            {
+              "claim_id": "clm-83",
+              "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+              "page": 1,
+              "quote": "5-year limited warranty.",
+              "boxes": [
+                {
+                  "x0": 0.1665,
+                  "y0": 0.5082,
+                  "x1": 0.2669,
+                  "y1": 0.5196
+                }
+              ],
+              "kind": "checked"
+            }
+          ],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≥ 5 yr",
+            "right_label": "Submitted",
+            "right_value": "5 years",
+            "verdict": "pass",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 1.10.B.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-lt-dlc",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Couldn't confirm: DLC listing",
+          "detail": "Listed as a qualified DLC product, where applicable.",
+          "why_it_matters": "DLC qualification may be required for energy rebates or to meet project efficiency goals.",
+          "requirement_id": "lt-dlc",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": [
+              "dlc standard",
+              "dlc premium"
+            ],
+            "right_label": "Submitted",
+            "right_value": "Not confirmed",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.H",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-req_macadam_ellipse",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Couldn't confirm: macadam steps",
+          "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+          "why_it_matters": "Color consistency across fixtures is important for uniform lighting quality in office spaces.",
+          "requirement_id": "req_macadam_ellipse",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≤ 3",
+            "right_label": "Submitted",
+            "right_value": "Not confirmed",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.02.S.6",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "spec-lt-dim",
+          "check": "spec",
+          "verdict": "unverified",
+          "severity": "minor",
+          "title": "Couldn't confirm: Dims down to",
+          "detail": "Continuous dimming from 100 to 5 percent without flicker.",
+          "why_it_matters": "Smooth, deep dimming without flicker ensures comfort and flexibility in office lighting control.",
+          "requirement_id": "lt-dim",
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Spec requires",
+            "left_value": "≤ 5 %",
+            "right_label": "Submitted",
+            "right_value": "Not confirmed",
+            "verdict": "unverified",
+            "rows": []
+          },
+          "spec_ref": "26 51 00 2.05.C.1",
+          "evidence": [],
+          "quote": null,
+          "decided_by": "code",
+          "fix": null,
+          "configure": []
+        },
+        {
+          "id": "status-discontinued",
+          "check": "status",
+          "verdict": "fail",
+          "severity": "major",
+          "title": "Product is no longer made",
+          "detail": "The manufacturer lists it as discontinued.",
+          "why_it_matters": "A discontinued product cannot be sourced for installation or future maintenance, risking project delays.",
+          "requirement_id": null,
+          "claim_id": null,
+          "product_type": null,
+          "claim_ids": [],
+          "highlights": [],
+          "compare": {
+            "left_label": "Status",
+            "left_value": null,
+            "right_label": "Manufacturer",
+            "right_value": "Discontinued 2024-06-30",
+            "verdict": "fail",
+            "rows": []
+          },
+          "spec_ref": null,
+          "evidence": [
+            {
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "tier": "manufacturer",
+              "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+              "retrieved_at": "2026-10-28T18:37:42+00:00",
+              "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+              "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+              "archived_path": null,
+              "cache_hit": false
+            },
+            {
+              "url": "https://www.acuitybrands.com",
+              "tier": "manufacturer",
+              "title": "Acuity Brands Lighting",
+              "retrieved_at": "2026-10-28T18:37:42+00:00",
+              "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+              "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+              "archived_path": null,
+              "cache_hit": false
+            },
+            {
+              "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+              "tier": "manufacturer",
+              "title": "Technical Downloads",
+              "retrieved_at": "2026-10-28T18:37:42+00:00",
+              "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+              "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+              "archived_path": null,
+              "cache_hit": false
+            }
+          ],
+          "quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+          "decided_by": "tavily + super",
+          "fix": {
+            "head": "No passing replacement found",
+            "query": "\"LED troffer\" manufacturer specification sheet",
+            "candidates": [
+              {
+                "name": "CPX - LED Panel",
+                "source_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "documents": [
+                  {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "retrieved_at": "2026-10-28T18:38:08+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+                    "archived_path": null,
+                    "cache_hit": false
+                  },
+                  {
+                    "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                    "tier": "distributor",
+                    "title": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                    "retrieved_at": "2026-10-28T18:38:28+00:00",
+                    "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                    "excerpt": "COMMERCIAL INDOOR: CPX Catalog Number Notes Type FEATURES & SPECIFICATIONS INTENDED USE — The CPX Series LED is a low-glare panel featuring an external driver. This cost-effective, reliable flat panel is visually comfortable and can be recessed mounted. Suitable for many applications such as schools, offices, retail, convenience stores, hospitals, healthcare facilities and other commercial spaces.",
+                    "archived_path": null,
+                    "cache_hit": false
+                  },
+                  {
+                    "url": "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                    "tier": "distributor",
+                    "title": "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                    "retrieved_at": "2026-10-28T18:38:30+00:00",
+                    "sha256": "7a8c348d44e50f8e1da2a2499c2764923785acc5f9f71e2d916d0aa667d69d77",
+                    "excerpt": "Added to Cart\n\n[Skip to Main Content](#main-content \"Skip to Main Content\")   [Accessibility Statement](/customer-service/faqs/website/#how-can-i-learn-more-about-accessibility-on-zoro-com)\n\n**FREE SHIPPING** on orders over $50 after you .  [Restrictions Apply](/shipping/)\n\n[![Zoro home](/static/assets/bundle/assets/img/base/header/zoro-logo-brand.28fdd1d6.svg)](/)\n\n[Quick Order](/quick-order/)\n\n[",
+                    "archived_path": null,
+                    "cache_hit": false
+                  }
+                ],
+                "checks": [
+                  {
+                    "label": "Rated life (L70)",
+                    "check": "spec",
+                    "ok": true,
+                    "note": "60000 hours",
+                    "requirement_id": "req_t_rating_hr_led",
+                    "claim_ids": [
+                      "10"
+                    ],
+                    "evidence": [
+                      {
+                        "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "tier": "distributor",
+                        "title": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "retrieved_at": "2026-10-28T18:38:28+00:00",
+                        "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                        "excerpt": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000).",
+                        "archived_path": null,
+                        "cache_hit": false
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Warranty",
+                    "check": "spec",
+                    "ok": true,
+                    "note": "5 years",
+                    "requirement_id": "req_warranty_years_led",
+                    "claim_ids": [
+                      "13"
+                    ],
+                    "evidence": [
+                      {
+                        "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "tier": "distributor",
+                        "title": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "retrieved_at": "2026-10-28T18:38:28+00:00",
+                        "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                        "excerpt": "5-year limited warranty.",
+                        "archived_path": null,
+                        "cache_hit": false
+                      }
+                    ]
+                  },
+                  {
+                    "label": "DLC listing",
+                    "check": "spec",
+                    "ok": null,
+                    "note": "not confirmed",
+                    "requirement_id": "lt-dlc",
+                    "claim_ids": [],
+                    "evidence": []
+                  },
+                  {
+                    "label": "macadam steps",
+                    "check": "spec",
+                    "ok": null,
+                    "note": "not confirmed",
+                    "requirement_id": "req_macadam_ellipse",
+                    "claim_ids": [],
+                    "evidence": []
+                  },
+                  {
+                    "label": "Dims down to",
+                    "check": "spec",
+                    "ok": false,
+                    "note": "10 %",
+                    "requirement_id": "lt-dim",
+                    "claim_ids": [
+                      "11"
+                    ],
+                    "evidence": [
+                      {
+                        "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "tier": "distributor",
+                        "title": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "retrieved_at": "2026-10-28T18:38:28+00:00",
+                        "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                        "excerpt": "dims to 10%",
+                        "archived_path": null,
+                        "cache_hit": false
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Current document",
+                    "check": "currency",
+                    "ok": null,
+                    "note": "Rev. 06/24/21",
+                    "requirement_id": null,
+                    "claim_ids": [],
+                    "evidence": [
+                      {
+                        "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                        "tier": "distributor",
+                        "title": "CPX LED",
+                        "retrieved_at": "2026-10-28T18:38:28+00:00",
+                        "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                        "excerpt": "COMMERCIAL INDOOR: CPX Catalog Number Notes Type FEATURES & SPECIFICATIONS INTENDED USE — The CPX Series LED is a low-glare panel featuring an external driver. This cost-effective, reliable flat panel is visually comfortable and can be recessed mounted. Suitable for many applications such as schools, offices, retail, convenience stores, hospitals, healthcare facilities and other commercial spaces.",
+                        "archived_path": null,
+                        "cache_hit": false
+                      },
+                      {
+                        "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "tier": "distributor",
+                        "title": "CPX - LED Panel",
+                        "retrieved_at": "2026-10-28T18:38:28+00:00",
+                        "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                        "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+                        "archived_path": null,
+                        "cache_hit": false
+                      },
+                      {
+                        "url": "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                        "tier": "distributor",
+                        "title": "ACUITY BRANDS LIGHTING (LITHONIA) Lithonia Lighting CPX LED Flat Panel 24\"L x 24\"W, 2500-4000 Lumen, 35-50K Switchable, White (CPX-2x2-ALO7-SWW7-M4) | Zoro",
+                        "retrieved_at": "2026-10-28T18:38:30+00:00",
+                        "sha256": "7a8c348d44e50f8e1da2a2499c2764923785acc5f9f71e2d916d0aa667d69d77",
+                        "excerpt": "Added to Cart\n\n[Skip to Main Content](#main-content \"Skip to Main Content\")   [Accessibility Statement](/customer-service/faqs/website/#how-can-i-learn-more-about-accessibility-on-zoro-com)\n\n**FREE SHIPPING** on orders over $50 after you .  [Restrictions Apply](/shipping/)\n\n[![Zoro home](/static/assets/bundle/assets/img/base/header/zoro-logo-brand.28fdd1d6.svg)](/)\n\n[Quick Order](/quick-order/)\n\n[",
+                        "archived_path": null,
+                        "cache_hit": false
+                      }
+                    ]
+                  },
+                  {
+                    "label": "Still made",
+                    "check": "status",
+                    "ok": null,
+                    "note": "No quoted confirmation that this replacement is available",
+                    "requirement_id": null,
+                    "claim_ids": [],
+                    "evidence": []
+                  }
+                ],
+                "claims": [
+                  {
+                    "id": "clm-1",
+                    "product": "CPX",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "cri",
+                    "value": "80, 90",
+                    "unit": null,
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "CRI | 80, 90 |",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "CRI | 80, 90 |",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "1",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "lumens",
+                    "value": 3200,
+                    "unit": "lm",
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "Standard lumens: 3200LM 3200 Lumens",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Standard lumens: 3200LM 3200 Lumens 5000LM 5000 Lumens High Efficiency lumens: 3200LMHE 3200 Lumens",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "2",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "lumens",
+                    "value": 5000,
+                    "unit": "lm",
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "5000LM 5000 Lumens",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Standard lumens: 3200LM 3200 Lumens 5000LM 5000 Lumens High Efficiency lumens: 3200LMHE 3200 Lumens",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "3",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "lumens",
+                    "value": 6000,
+                    "unit": "lm",
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "6000LM 6000 Lumens",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "4000LM 4000 Lumens 6000LM 6000 Lumens 4000LMHE 4000 Lumens",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "4",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "cri",
+                    "value": 80,
+                    "unit": null,
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "80CRI 80 CRI",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "80CRI 80 CRI 35K 3500K 40K 4000K 50K 5000K SWL Satin White A12 Prismatic A12 Pattern MIN10 Dims to 10%",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "10",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "l70_hours",
+                    "value": 60000,
+                    "unit": "hours",
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000).",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000). 0-10V dimming driver, dims to 10% and contains non-isolated dimming leads.",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "11",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "dim_min_percent",
+                    "value": 10,
+                    "unit": "%",
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "dims to 10%",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000). 0-10V dimming driver, dims to 10% and contains non-isolated dimming leads.",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "13",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "warranty_years",
+                    "value": 5,
+                    "unit": "years",
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "5-year limited warranty.",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at: www.acuitybrands.com/support/warranty/terms-and-conditions",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "14",
+                    "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "property": "standards",
+                    "value": [
+                      "CSA certified to meet US and Canadian standards",
+                      "Damp location listed",
+                      "IC rated",
+                      "IP5X Rated",
+                      "NSF Splash Zone 2",
+                      "NOM Certified"
+                    ],
+                    "unit": null,
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "LISTINGS — CSA certified to meet US and Canadian standards. Damp location listed. IC rated. IP5X Rated. DesignLights Consortium® (DLC) qualified product. Not all versions of this product may be DLC qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified. Product is rated and certified to meet NSF Splash Zone 2. NOM Certified.",
+                    "variant": "LISTINGS — CSA certified to meet US and Canadian standards. Damp location listed. IC rated. IP5X Rated. DesignLights Consortium® (DLC) qualified product. Not all versions of this product may be DLC qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified. Product is rated and certified to meet NSF Splash Zone 2. NOM Certified.",
+                    "scope": "product_wide",
+                    "scope_quote": "LISTINGS — CSA certified to meet US and Canadian standards. Damp location listed. IC rated. IP5X Rated. DesignLights Consortium® (DLC) qualified product. Not all versions of this product may be DLC qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified. Product is rated and certified to meet NSF Splash Zone 2. NOM Certified.",
+                    "selection_quote": null
+                  }
+                ],
+                "selection": null,
+                "document_roles": [
+                  "product_data"
+                ],
+                "extracted": {
+                  "product": "CPX",
+                  "manufacturer": "Lithonia Lighting",
+                  "model": "CPX",
+                  "selection": null,
+                  "family": null,
+                  "family_quote": null,
+                  "document_revision": "3/15/2023",
+                  "claims": [
+                    {
+                      "id": "clm-1",
+                      "product": "CPX",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "cri",
+                      "value": "80, 90",
+                      "unit": null,
+                      "page": 1,
+                      "bbox": null,
+                      "quote": "CRI | 80, 90 |",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "CRI | 80, 90 |",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "1",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "lumens",
+                      "value": 3200,
+                      "unit": "lm",
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "Standard lumens: 3200LM 3200 Lumens",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "Standard lumens: 3200LM 3200 Lumens 5000LM 5000 Lumens High Efficiency lumens: 3200LMHE 3200 Lumens",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "2",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "lumens",
+                      "value": 5000,
+                      "unit": "lm",
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "5000LM 5000 Lumens",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "Standard lumens: 3200LM 3200 Lumens 5000LM 5000 Lumens High Efficiency lumens: 3200LMHE 3200 Lumens",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "3",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "lumens",
+                      "value": 6000,
+                      "unit": "lm",
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "6000LM 6000 Lumens",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "4000LM 4000 Lumens 6000LM 6000 Lumens 4000LMHE 4000 Lumens",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "4",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "cri",
+                      "value": 80,
+                      "unit": null,
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "80CRI 80 CRI",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "80CRI 80 CRI 35K 3500K 40K 4000K 50K 5000K SWL Satin White A12 Prismatic A12 Pattern MIN10 Dims to 10%",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "10",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "l70_hours",
+                      "value": 60000,
+                      "unit": "hours",
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000).",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000). 0-10V dimming driver, dims to 10% and contains non-isolated dimming leads.",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "11",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "dim_min_percent",
+                      "value": 10,
+                      "unit": "%",
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "dims to 10%",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "Greater than 70% LED lumen maintenance at 60,000 hours (L70>60,000). 0-10V dimming driver, dims to 10% and contains non-isolated dimming leads.",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "13",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "warranty_years",
+                      "value": 5,
+                      "unit": "years",
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "5-year limited warranty.",
+                      "variant": null,
+                      "scope": "product_wide",
+                      "scope_quote": "WARRANTY — 5-year limited warranty. Complete warranty terms located at: www.acuitybrands.com/support/warranty/terms-and-conditions",
+                      "selection_quote": null
+                    },
+                    {
+                      "id": "14",
+                      "product": "CPX LED LED Lay-in Panel 1' x 4', 2' x 2'and 2' x 4'",
+                      "manufacturer": "Lithonia Lighting",
+                      "model": "CPX",
+                      "property": "standards",
+                      "value": [
+                        "CSA certified to meet US and Canadian standards",
+                        "Damp location listed",
+                        "IC rated",
+                        "IP5X Rated",
+                        "NSF Splash Zone 2",
+                        "NOM Certified"
+                      ],
+                      "unit": null,
+                      "page": 2,
+                      "bbox": null,
+                      "quote": "LISTINGS — CSA certified to meet US and Canadian standards. Damp location listed. IC rated. IP5X Rated. DesignLights Consortium® (DLC) qualified product. Not all versions of this product may be DLC qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified. Product is rated and certified to meet NSF Splash Zone 2. NOM Certified.",
+                      "variant": "LISTINGS — CSA certified to meet US and Canadian standards. Damp location listed. IC rated. IP5X Rated. DesignLights Consortium® (DLC) qualified product. Not all versions of this product may be DLC qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified. Product is rated and certified to meet NSF Splash Zone 2. NOM Certified.",
+                      "scope": "product_wide",
+                      "scope_quote": "LISTINGS — CSA certified to meet US and Canadian standards. Damp location listed. IC rated. IP5X Rated. DesignLights Consortium® (DLC) qualified product. Not all versions of this product may be DLC qualified. Please check the DLC Qualified Products List at www.designlights.org/QPL to confirm which versions are qualified. Product is rated and certified to meet NSF Splash Zone 2. NOM Certified.",
+                      "selection_quote": null
+                    }
+                  ]
+                },
+                "verification": {
+                  "submitted": {
+                    "product": "CPX",
+                    "manufacturer": "Lithonia Lighting",
+                    "model": "CPX",
+                    "selection": null,
+                    "family": null,
+                    "family_quote": null,
+                    "document_revision": "3/15/2023",
+                    "claims": [
+                      {
+                        "id": "clm-1",
+                        "product": "CPX",
+                        "manufacturer": "Lithonia Lighting",
+                        "model": "CPX",
+                        "property": "cri",
+                        "value": "80, 90",
+                        "unit": null,
+                        "page": 1,
+                        "bbox": null,
+                        "quote": "CRI | 80, 90 |",
+                        "variant": null,
+                        "scope": "product_wide",
+                        "scope_quote": "CRI | 80, 90 |",
+                        "selection_quote": null
+                      }
+                    ]
+                  },
+                  "output": {
+                    "status": "unknown",
+                    "replacement": null,
+                    "current_revision": "Rev. 06/24/21",
+                    "status_date": null,
+                    "status_quote": null,
+                    "status_family": null,
+                    "current_values": [
+                      {
+                        "property": "cri",
+                        "value": "80, 90",
+                        "unit": null,
+                        "quote": "| CRI | 80, 90 |",
+                        "source_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                        "model": "CPX",
+                        "identity_quote": "CPX™ by Lithonia Lighting® is the perfect choice for a quality LED panel at an affordable price.",
+                        "variant": null,
+                        "scope": "product_wide",
+                        "scope_quote": "|  |  |\n| --- | --- |\n| Size | 1x4, 2x2, 2x4 |\n| Shape | Rectangular, Square |\n| Light Source | LED - Dynamic |\n| Dynamic Feature | Switchable White, Tunable White |\n| Lumens | 2500 LM, 3200 LM, 3400 LM, 4000 LM, 4300 LM, 5000 LM, 6000 LM, Switchable |\n| CCT / LED Color | 2700 K, 3000 K, 3500 K, 4000 K, 5000 K, Variable |\n| CRI | 80, 90 |\n| Product Type | Flat Panel |\n| Environmental Listing | Damp Location |\n| Regulatory Listing | CSA, CSAus |\n| Control Platform | Wireless SensorSwitch AIR |\n| Dimming Protocol | 0-10V |\n| Fixture Wattage | 27.6, 28.3, 29.3, 30.1, 32.5, 33.5, 34.1, 34.5, 34.9, 35.5, 35.7, 36.3, 36.7, 37.5, 42, 47.9, 48, 51 |\n| Voltage Rating | 57VDC, 120, 120-277, 120-347, 347, DC2DC 57VDC |\n| Color | White |\n| Mounting Type | Recessed, Surface, Suspended |\n| Maintenance Access | Top Access |\n| Series | CPX, CPXC |",
+                        "selection_quote": null
+                      }
+                    ],
+                    "source_urls": [
+                      "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                      "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                      "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                      "https://www.zoro.com/static/cms/enhanced_pdf/70af5be0-46c6-45bb-bc2b-418baceac09d.pdf"
+                    ],
+                    "notes": null
+                  },
+                  "sources": [
+                    {
+                      "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                      "tier": "distributor",
+                      "title": "CPX LED",
+                      "retrieved_at": "2026-10-28T18:38:28+00:00",
+                      "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                      "excerpt": "COMMERCIAL INDOOR: CPX Catalog Number Notes Type FEATURES & SPECIFICATIONS INTENDED USE — The CPX Series LED is a low-glare panel featuring an external driver. This cost-effective, reliable flat panel is visually comfortable and can be recessed mounted. Suitable for many applications such as schools, offices, retail, convenience stores, hospitals, healthcare facilities and other commercial spaces.",
+                      "archived_path": null,
+                      "cache_hit": false
+                    },
+                    {
+                      "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                      "tier": "distributor",
+                      "title": "CPX - LED Panel",
+                      "retrieved_at": "2026-10-28T18:38:28+00:00",
+                      "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                      "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+                      "archived_path": null,
+                      "cache_hit": false
+                    },
+                    {
+                      "url": "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                      "tier": "distributor",
+                      "title": "ACUITY BRANDS LIGHTING (LITHONIA) Lithonia Lighting CPX LED Flat Panel 24\"L x 24\"W, 2500-4000 Lumen, 35-50K Switchable, White (CPX-2x2-ALO7-SWW7-M4) | Zoro",
+                      "retrieved_at": "2026-10-28T18:38:30+00:00",
+                      "sha256": "7a8c348d44e50f8e1da2a2499c2764923785acc5f9f71e2d916d0aa667d69d77",
+                      "excerpt": "Added to Cart\n\n[Skip to Main Content](#main-content \"Skip to Main Content\")   [Accessibility Statement](/customer-service/faqs/website/#how-can-i-learn-more-about-accessibility-on-zoro-com)\n\n**FREE SHIPPING** on orders over $50 after you .  [Restrictions Apply](/shipping/)\n\n[![Zoro home](/static/assets/bundle/assets/img/base/header/zoro-logo-brand.28fdd1d6.svg)](/)\n\n[Quick Order](/quick-order/)\n\n[",
+                      "archived_path": null,
+                      "cache_hit": false
+                    },
+                    {
+                      "url": "https://www.zoro.com/static/cms/enhanced_pdf/70af5be0-46c6-45bb-bc2b-418baceac09d.pdf",
+                      "tier": "distributor",
+                      "title": "https://www.zoro.com/static/cms/enhanced_pdf/70af5be0-46c6-45bb-bc2b-418baceac09d.pdf",
+                      "retrieved_at": "2026-10-28T18:38:39+00:00",
+                      "sha256": "88c5579031a0a36a8285217148eda19a69f29840705a1987c8d41b8feb701d41",
+                      "excerpt": "Catalog  \nNumber\nNotes\nType\nCONTRACTOR SELECT  CPX LED\nPage 1 of 3\nCPX\n™\nLED Panel \nCPX™ from Lithonia lighting is the perfect choice for a quality LED panel at an affordable price. \nThe smooth, even lens projects a crisp and clean aesthetic. CPX is the perfect choice for budget-\nconscious school, commercial office, or small retail footprint projects.\nFEATURES:\n\t¡ Industry standard wattages\n\t¡ Lon",
+                      "archived_path": null,
+                      "cache_hit": false
+                    }
+                  ]
+                },
+                "page_sources": {
+                  "1": {
+                    "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "tier": "manufacturer",
+                    "title": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                    "retrieved_at": "2026-10-28T18:38:08+00:00",
+                    "sha256": "4f6b2696cdf9c99c8b4aaaca7852d990b92e2ea6c27e273736abb690f207bc08",
+                    "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+                    "archived_path": null,
+                    "cache_hit": false
+                  },
+                  "2": {
+                    "url": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                    "tier": "distributor",
+                    "title": "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+                    "retrieved_at": "2026-10-28T18:38:28+00:00",
+                    "sha256": "88b9885250d531e89163a8a61fbf03bcc0208fd754b426a70eff3083a6c1ee75",
+                    "excerpt": "COMMERCIAL INDOOR: CPX Catalog Number Notes Type FEATURES & SPECIFICATIONS INTENDED USE — The CPX Series LED is a low-glare panel featuring an external driver. This cost-effective, reliable flat panel is visually comfortable and can be recessed mounted. Suitable for many applications such as schools, offices, retail, convenience stores, hospitals, healthcare facilities and other commercial spaces.",
+                    "archived_path": null,
+                    "cache_hit": false
+                  },
+                  "3": {
+                    "url": "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                    "tier": "distributor",
+                    "title": "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+                    "retrieved_at": "2026-10-28T18:38:30+00:00",
+                    "sha256": "7a8c348d44e50f8e1da2a2499c2764923785acc5f9f71e2d916d0aa667d69d77",
+                    "excerpt": "Added to Cart\n\n[Skip to Main Content](#main-content \"Skip to Main Content\")   [Accessibility Statement](/customer-service/faqs/website/#how-can-i-learn-more-about-accessibility-on-zoro-com)\n\n**FREE SHIPPING** on orders over $50 after you .  [Restrictions Apply](/shipping/)\n\n[![Zoro home](/static/assets/bundle/assets/img/base/header/zoro-logo-brand.28fdd1d6.svg)](/)\n\n[Quick Order](/quick-order/)\n\n[",
+                    "archived_path": null,
+                    "cache_hit": false
+                  }
+                },
+                "passes": false
+              }
+            ],
+            "suggest": "",
+            "alternates": [
+              {
+                "name": "CPX - LED Panel",
+                "source_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "rank": "failed",
+                "confirm": [],
+                "failed": [
+                  "Dims down to"
+                ],
+                "better": [
+                  {
+                    "requirement_id": "req_t_rating_hr_led",
+                    "label": "Rated life (L70)",
+                    "alternate": "60000 hours",
+                    "submitted": null,
+                    "mark": "meets"
+                  },
+                  {
+                    "requirement_id": "req_warranty_years_led",
+                    "label": "Warranty",
+                    "alternate": "5 years",
+                    "submitted": "5 years",
+                    "mark": "meets"
+                  },
+                  {
+                    "requirement_id": "lt-dim",
+                    "label": "Dims down to",
+                    "alternate": "10 %",
+                    "submitted": null,
+                    "mark": "worse"
+                  }
+                ],
+                "origin": "named_replacement"
+              }
+            ],
+            "named": {
+              "name": "CPX A12",
+              "quote": "TL FW A12 ( flat frame) CPX A12",
+              "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+              "source": "image_ocr"
+            }
+          },
+          "configure": []
+        }
+      ],
+      "comparison": [],
+      "claims": [
+        {
+          "id": "clm-83",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "warranty_years",
+          "value": 5,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "5-year limited warranty.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "WARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed. Complete warranty terms located at:  www.acuitybrands.com/support/warranty/terms-and-conditions",
+          "selection_quote": null
+        }
+      ],
+      "selection": null,
+      "document_roles": [
+        "product_data",
+        "test_report"
+      ],
+      "extracted": {
+        "product": "2TL-2X4",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "2TL",
+        "selection": null,
+        "family": "T Series LED",
+        "family_quote": "T Series LED",
+        "document_revision": "Rev. 11/18/22",
+        "claims": [
+          {
+            "id": "clm-83",
+            "product": "2TL-2X4",
+            "manufacturer": "Acuity Brands Lighting, Inc.",
+            "model": "2TL",
+            "property": "warranty_years",
+            "value": 5,
+            "unit": "years",
+            "page": 1,
+            "bbox": null,
+            "quote": "5-year limited warranty.",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "WARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed. Complete warranty terms located at:  www.acuitybrands.com/support/warranty/terms-and-conditions",
+            "selection_quote": null
+          }
+        ]
+      },
+      "verification": {
+        "submitted": {
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "selection": null,
+          "family": "T Series LED",
+          "family_quote": "T Series LED",
+          "document_revision": "Rev. 11/18/22",
+          "claims": [
+            {
+              "id": "clm-83",
+              "product": "2TL-2X4",
+              "manufacturer": "Acuity Brands Lighting, Inc.",
+              "model": "2TL",
+              "property": "warranty_years",
+              "value": 5,
+              "unit": "years",
+              "page": 1,
+              "bbox": null,
+              "quote": "5-year limited warranty.",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "WARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed. Complete warranty terms located at:  www.acuitybrands.com/support/warranty/terms-and-conditions",
+              "selection_quote": null
+            }
+          ]
+        },
+        "output": {
+          "status": "discontinued",
+          "replacement": null,
+          "current_revision": null,
+          "status_date": "2024-06-30",
+          "status_quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+          "status_family": "TL",
+          "current_values": [],
+          "source_urls": [
+            "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+          ],
+          "notes": "Warranty years could not be confirmed from provided sources; no exact quote containing the value '5' or 'five' years was found for the 2TL or 2TL4 model."
+        },
+        "sources": [
+          {
+            "url": "https://www.acuitybrands.com",
+            "tier": "manufacturer",
+            "title": "Acuity Brands Lighting",
+            "retrieved_at": "2026-10-28T18:37:42+00:00",
+            "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+            "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+            "archived_path": null,
+            "cache_hit": false
+          },
+          {
+            "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+            "tier": "manufacturer",
+            "title": "Technical Downloads",
+            "retrieved_at": "2026-10-28T18:37:42+00:00",
+            "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+            "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+            "archived_path": null,
+            "cache_hit": false
+          },
+          {
+            "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+            "tier": "manufacturer",
+            "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+            "retrieved_at": "2026-10-28T18:37:42+00:00",
+            "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+            "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+            "archived_path": null,
+            "cache_hit": false
+          }
+        ]
+      },
+      "document_revision": "Rev. 11/18/22",
+      "note_to_subcontractor": "Send back: see what to send.\n\nCouldn't confirm: Rated life (L70): LED estimated useful life of at least 50,000 hours at 70 percent lumen maintenance, from IES LM-80 data.\nCouldn't confirm: DLC listing: Listed as a qualified DLC product, where applicable.\nCouldn't confirm: macadam steps: LEDs shall be binned within a maximum 3-step MacAdam Ellipse.\nCouldn't confirm: Dims down to: Continuous dimming from 100 to 5 percent without flicker.\nProduct is no longer made: The manufacturer lists it as discontinued.",
+      "usage": [
+        {
+          "task": "triage",
+          "tier": "triage",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "input_tokens": 2585,
+          "output_tokens": 67,
+          "cost_usd": 0.00017118,
+          "latency_ms": 1032,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 5884,
+          "output_tokens": 11997,
+          "cost_usd": 0.0125625,
+          "latency_ms": 42028,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 3436,
+          "output_tokens": 51,
+          "cost_usd": 0.0010767,
+          "latency_ms": 1297,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6190,
+          "output_tokens": 200,
+          "cost_usd": 0.002037,
+          "latency_ms": 4270,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6446,
+          "output_tokens": 26,
+          "cost_usd": 0.0019572,
+          "latency_ms": 1500,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 2439,
+          "output_tokens": 26,
+          "cost_usd": 0.0007551,
+          "latency_ms": 1217,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 3679,
+          "output_tokens": 166,
+          "cost_usd": 0.0012531,
+          "latency_ms": 1830,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6434,
+          "output_tokens": 147,
+          "cost_usd": 0.0020625,
+          "latency_ms": 1944,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6690,
+          "output_tokens": 147,
+          "cost_usd": 0.0021393,
+          "latency_ms": 1892,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 2683,
+          "output_tokens": 178,
+          "cost_usd": 0.0009651,
+          "latency_ms": 2036,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: replacement",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7893,
+          "output_tokens": 25,
+          "cost_usd": 0.0023904,
+          "latency_ms": 1495,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: replacement",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 459,
+          "output_tokens": 30,
+          "cost_usd": 0.0001647,
+          "latency_ms": 1160,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7457,
+          "output_tokens": 177,
+          "cost_usd": 0.0023964,
+          "latency_ms": 1780,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 9351,
+          "output_tokens": 60,
+          "cost_usd": 0.0028593,
+          "latency_ms": 1778,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8651,
+          "output_tokens": 95,
+          "cost_usd": 0.0026808,
+          "latency_ms": 1595,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 4617,
+          "output_tokens": 82,
+          "cost_usd": 0.0014589,
+          "latency_ms": 1905,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6756,
+          "output_tokens": 286,
+          "cost_usd": 0.0022842,
+          "latency_ms": 2461,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 2695,
+          "output_tokens": 91,
+          "cost_usd": 0.0008904,
+          "latency_ms": 1485,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6823,
+          "output_tokens": 255,
+          "cost_usd": 0.0022764,
+          "latency_ms": 2455,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7353,
+          "output_tokens": 162,
+          "cost_usd": 0.0023517,
+          "latency_ms": 2020,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6656,
+          "output_tokens": 244,
+          "cost_usd": 0.0022164,
+          "latency_ms": 2052,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 4131,
+          "output_tokens": 390,
+          "cost_usd": 0.0015903,
+          "latency_ms": 2257,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 5034,
+          "output_tokens": 284,
+          "cost_usd": 0.0017658,
+          "latency_ms": 2206,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8126,
+          "output_tokens": 340,
+          "cost_usd": 0.0027438,
+          "latency_ms": 2453,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 4064,
+          "output_tokens": 471,
+          "cost_usd": 0.0016431,
+          "latency_ms": 2903,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8193,
+          "output_tokens": 618,
+          "cost_usd": 0.0030141,
+          "latency_ms": 3179,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8723,
+          "output_tokens": 309,
+          "cost_usd": 0.002895,
+          "latency_ms": 2159,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8026,
+          "output_tokens": 309,
+          "cost_usd": 0.0026859,
+          "latency_ms": 2300,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 5501,
+          "output_tokens": 315,
+          "cost_usd": 0.0019338,
+          "latency_ms": 2208,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: verify",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 6403,
+          "output_tokens": 309,
+          "cost_usd": 0.002199,
+          "latency_ms": 1990,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "investigate",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 5825,
+          "output_tokens": 84,
+          "cost_usd": 0.0018231,
+          "latency_ms": 1812,
+          "cached": false,
+          "format": "tools",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": "tool_calls"
+        },
+        {
+          "task": "investigate",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8041,
+          "output_tokens": 73,
+          "cost_usd": 0.002478,
+          "latency_ms": 1619,
+          "cached": false,
+          "format": "tools",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": "tool_calls"
+        },
+        {
+          "task": "investigate",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8131,
+          "output_tokens": 77,
+          "cost_usd": 0.0025086,
+          "latency_ms": 1470,
+          "cached": false,
+          "format": "tools",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": "tool_calls"
+        },
+        {
+          "task": "investigate",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8661,
+          "output_tokens": 93,
+          "cost_usd": 0.002682,
+          "latency_ms": 1678,
+          "cached": false,
+          "format": "tools",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": "tool_calls"
+        },
+        {
+          "task": "investigate",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 10994,
+          "output_tokens": 66,
+          "cost_usd": 0.0033576,
+          "latency_ms": 1700,
+          "cached": false,
+          "format": "tools",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": "tool_calls"
+        },
+        {
+          "task": "investigate",
+          "tier": "verify",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 11659,
+          "output_tokens": 452,
+          "cost_usd": 0.0039045,
+          "latency_ms": 18240,
+          "cached": false,
+          "format": "tools",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": "tool_calls"
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7457,
+          "output_tokens": 177,
+          "cost_usd": 0.0023964,
+          "latency_ms": 1780,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 9351,
+          "output_tokens": 60,
+          "cost_usd": 0.0028593,
+          "latency_ms": 1778,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 8651,
+          "output_tokens": 95,
+          "cost_usd": 0.0026808,
+          "latency_ms": 1595,
+          "cached": true,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7742,
+          "output_tokens": 3322,
+          "cost_usd": 0.0053124,
+          "latency_ms": 12897,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 7374,
+          "output_tokens": 4384,
+          "cost_usd": 0.0061578,
+          "latency_ms": 16390,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 425,
+          "output_tokens": 49,
+          "cost_usd": 0.0001716,
+          "latency_ms": 1432,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "fix: extract_claims",
+          "tier": "extract",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 3866,
+          "output_tokens": 111,
+          "cost_usd": 0.0012597,
+          "latency_ms": 1936,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        },
+        {
+          "task": "report",
+          "tier": "write",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "input_tokens": 771,
+          "output_tokens": 338,
+          "cost_usd": 0.0005355,
+          "latency_ms": 2756,
+          "cached": false,
+          "format": "json_schema",
+          "reasoning_tokens": 0,
+          "thinking": "off",
+          "finish_reason": null
+        }
+      ],
+      "web_credits": 15,
+      "duration_ms": 225574,
+      "investigation": {
+        "steps": [
+          {
+            "n": 1,
+            "tool": "search",
+            "args": {
+              "query": "Lithonia Lighting CPX specification sheet datasheet",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1,
+            "ms": 4066,
+            "succeeded": true,
+            "source_urls": []
+          },
+          {
+            "n": 2,
+            "tool": "extract",
+            "args": {
+              "url": "https://img.acuitybrands.com/public-assets/catalog/1065807/non-configurable-cpx.pdf"
+            },
+            "summary": "0 extracted sources",
+            "credits": 0,
+            "ms": 1666,
+            "succeeded": false,
+            "source_urls": []
+          },
+          {
+            "n": 3,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+            },
+            "summary": "1 extracted source",
+            "credits": 1,
+            "ms": 2668,
+            "succeeded": true,
+            "source_urls": [
+              "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+            ]
+          },
+          {
+            "n": 4,
+            "tool": "search",
+            "args": {
+              "query": "CPX LED panel specification sheet Lithonia Lighting dims to 10% DLC listed L70 hours warranty years macadam steps",
+              "include_domains": [
+                "acuitybrands.com"
+              ]
+            },
+            "summary": "5 results",
+            "credits": 1,
+            "ms": 3813,
+            "succeeded": true,
+            "source_urls": []
+          },
+          {
+            "n": 5,
+            "tool": "extract",
+            "args": {
+              "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+            },
+            "summary": "1 extracted source",
+            "credits": 0,
+            "ms": 2708,
+            "succeeded": true,
+            "source_urls": [
+              "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+            ]
+          },
+          {
+            "n": 6,
+            "tool": "finish",
+            "args": {
+              "found": true,
+              "document_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+              "document_title": "CPX - LED Panel",
+              "revision_quote": "Not found in extracted content",
+              "evidence_quote": "External 0-10V dimming driver, dims to 10%; Long-life LEDs maintain greater than 70% of their lumen output at 50,000 hours; DesignLights Consortium® (DLC) qualified product; 5-year limited warranty",
+              "status": "active",
+              "status_quote": "CPX™ by Lithonia Lighting® is the perfect choice for a quality LED panel at an affordable price... Now Available with High Lumen Packages - up to 10,000 Lumens",
+              "note": "Based on the Acuity Brands product page and insights articles, the CPX series appears to be actively marketed and sold. Key specifications confirmed: dims to 10%, >70% lumen maintenance at 50,000 hours (L70), DLC qualified, and 5-year warranty. Macadam steps information was not found in the extracted content."
+            },
+            "summary": "couldn't confirm the quotes",
+            "credits": 0,
+            "ms": 110,
+            "succeeded": false,
+            "source_urls": []
+          }
+        ],
+        "outcome": "not_found",
+        "purpose": "primary",
+        "resolution": "not_resolved",
+        "scripted": null
+      },
+      "investigations": [
+        {
+          "steps": [
+            {
+              "n": 1,
+              "tool": "search",
+              "args": {
+                "query": "Lithonia Lighting CPX specification sheet datasheet",
+                "include_domains": [
+                  "acuitybrands.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1,
+              "ms": 4066,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 2,
+              "tool": "extract",
+              "args": {
+                "url": "https://img.acuitybrands.com/public-assets/catalog/1065807/non-configurable-cpx.pdf"
+              },
+              "summary": "0 extracted sources",
+              "credits": 0,
+              "ms": 1666,
+              "succeeded": false,
+              "source_urls": []
+            },
+            {
+              "n": 3,
+              "tool": "extract",
+              "args": {
+                "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+              },
+              "summary": "1 extracted source",
+              "credits": 1,
+              "ms": 2668,
+              "succeeded": true,
+              "source_urls": [
+                "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+              ]
+            },
+            {
+              "n": 4,
+              "tool": "search",
+              "args": {
+                "query": "CPX LED panel specification sheet Lithonia Lighting dims to 10% DLC listed L70 hours warranty years macadam steps",
+                "include_domains": [
+                  "acuitybrands.com"
+                ]
+              },
+              "summary": "5 results",
+              "credits": 1,
+              "ms": 3813,
+              "succeeded": true,
+              "source_urls": []
+            },
+            {
+              "n": 5,
+              "tool": "extract",
+              "args": {
+                "url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+              },
+              "summary": "1 extracted source",
+              "credits": 0,
+              "ms": 2708,
+              "succeeded": true,
+              "source_urls": [
+                "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel"
+              ]
+            },
+            {
+              "n": 6,
+              "tool": "finish",
+              "args": {
+                "found": true,
+                "document_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "document_title": "CPX - LED Panel",
+                "revision_quote": "Not found in extracted content",
+                "evidence_quote": "External 0-10V dimming driver, dims to 10%; Long-life LEDs maintain greater than 70% of their lumen output at 50,000 hours; DesignLights Consortium® (DLC) qualified product; 5-year limited warranty",
+                "status": "active",
+                "status_quote": "CPX™ by Lithonia Lighting® is the perfect choice for a quality LED panel at an affordable price... Now Available with High Lumen Packages - up to 10,000 Lumens",
+                "note": "Based on the Acuity Brands product page and insights articles, the CPX series appears to be actively marketed and sold. Key specifications confirmed: dims to 10%, >70% lumen maintenance at 50,000 hours (L70), DLC qualified, and 5-year warranty. Macadam steps information was not found in the extracted content."
+              },
+              "summary": "couldn't confirm the quotes",
+              "credits": 0,
+              "ms": 110,
+              "succeeded": false,
+              "source_urls": []
+            }
+          ],
+          "outcome": "not_found",
+          "purpose": "replacement",
+          "resolution": "not_resolved",
+          "scripted": {
+            "status": "unknown",
+            "replacement": null,
+            "current_revision": "Rev. 06/24/21",
+            "status_date": null,
+            "status_quote": null,
+            "status_family": null,
+            "current_values": [
+              {
+                "property": "cri",
+                "value": "80, 90",
+                "unit": null,
+                "quote": "| CRI | 80, 90 |",
+                "source_url": "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+                "model": "CPX",
+                "identity_quote": "CPX™ by Lithonia Lighting® is the perfect choice for a quality LED panel at an affordable price.",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "|  |  |\n| --- | --- |\n| Size | 1x4, 2x2, 2x4 |\n| Shape | Rectangular, Square |\n| Light Source | LED - Dynamic |\n| Dynamic Feature | Switchable White, Tunable White |\n| Lumens | 2500 LM, 3200 LM, 3400 LM, 4000 LM, 4300 LM, 5000 LM, 6000 LM, Switchable |\n| CCT / LED Color | 2700 K, 3000 K, 3500 K, 4000 K, 5000 K, Variable |\n| CRI | 80, 90 |\n| Product Type | Flat Panel |\n| Environmental Listing | Damp Location |\n| Regulatory Listing | CSA, CSAus |\n| Control Platform | Wireless SensorSwitch AIR |\n| Dimming Protocol | 0-10V |\n| Fixture Wattage | 27.6, 28.3, 29.3, 30.1, 32.5, 33.5, 34.1, 34.5, 34.9, 35.5, 35.7, 36.3, 36.7, 37.5, 42, 47.9, 48, 51 |\n| Voltage Rating | 57VDC, 120, 120-277, 120-347, 347, DC2DC 57VDC |\n| Color | White |\n| Mounting Type | Recessed, Surface, Suspended |\n| Maintenance Access | Top Access |\n| Series | CPX, CPXC |",
+                "selection_quote": null
+              }
+            ],
+            "source_urls": [
+              "https://s1.img-b.com/build.com/mediabase/specifications/lithonia_lighting/1755416/lithonia-lighting-cpx-2x2-3200lm-m4-g2-specification-sheet.pdf",
+              "https://www.acuitybrands.com/products/detail/1065807/lithonia-lighting/cpx/led-panel",
+              "https://www.zoro.com/lithonia-lighting-cpx-led-flat-panel-24l-x-24w-2500-4000-lumen-35-50k-switchable-white-cpx-2x2-alo7-sww7-m4/i/G504950624",
+              "https://www.zoro.com/static/cms/enhanced_pdf/70af5be0-46c6-45bb-bc2b-418baceac09d.pdf"
+            ],
+            "notes": null
+          }
+        }
+      ],
+      "mode": "live",
+      "replayed_from": null,
+      "warnings": [],
+      "diagnostics": [],
+      "validity": "valid",
+      "config_hash": "501f647e2268fb2dbaa69e922a3adcfc710a05e07885e041b4d051667eb0e52d",
+      "fresh_model_cost_usd": 0.0948846,
+      "fresh_web_credits": 15,
+      "queue_ms": 12,
+      "ocr_pages": 0,
+      "archived_submittals": [],
+      "evidence_label": null,
+      "claims_extracted": 130,
+      "claims_kept": 12,
+      "web_values_read": 7,
+      "web_values_kept": 1
+    }
+  ],
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 1.0299369,
+      "credits": 253,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.82596578,
+      "total_credits": 388,
+      "phase": "engineering",
+      "phase_usd": 1.82596578,
+      "phase_credits": 388,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 6.9700631,
+      "credits_left": 347
+    },
+    "recorded": "20261028-171142-5ca0fc",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 1013.3,
+    "disk_free_gb": 9.93
+  },
+  "browser_errors": [],
+  "cost": {
+    "usd": 0.0948846,
+    "credits": 15
+  }
+}

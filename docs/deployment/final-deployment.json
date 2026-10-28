@@ -1,129 +1,185 @@
 {
-  "source_commit": "14ddb6dda5d1c95c3508af04bc573ba8c45b89c7",
-  "release_merge": "57e51155b955dc367db3ec7d148ebbdde7d0029a",
-  "image": "ghcr.io/wongywrongy/speccheck@sha256:d5b22ed554d26dac83808ea53155d8a28d03bd3f2c6623171cb6b5321093bb07",
-  "project": "project-e01ab4axpa005e506zq7nq",
-  "endpoint_id": "aiendpoint-e01fxw4c8jd1yq6nn5",
-  "filesystem_id": "computefilesystem-e01syzwfv7rqexfcys",
-  "platform": "cpu-d3",
-  "preset": "2vcpu-8gb",
-  "disk_gib": 32,
-  "persistent_mount": "/state",
+ "source_commit": "3d35d10186fd9a03a510cea749c95c2e9e72f182",
+ "source_note": "release/final: master 30ca3ec + per-item scores fix 4138a41 + custom-checklist fix 1e7f436 + smoke probe 20cca85; later commits are docs and evidence only",
+ "image": "ghcr.io/wongywrongy/speccheck@sha256:4be93dc8eeb1de118218e5e16f96e2ead88aaf6ce4cc32cf31211111f77878e1",
+ "image_tag": "ghcr.io/wongywrongy/speccheck:final-3d35d10",
+ "project": "project-e01ab4axpa005e506zq7nq",
+ "endpoint_id": "aiendpoint-e01cg2e1rfwpvfpnb0",
+ "endpoint_name": "speccheck-final-20261028",
+ "filesystem_id": "computefilesystem-e01syzwfv7rqexfcys",
+ "platform": "cpu-d3",
+ "preset": "2vcpu-8gb",
+ "disk_gib": 32,
+ "persistent_mount": "/state",
+ "auth": "none",
+ "url": "https://speccheck-wongywrongys-projects.vercel.app",
+ "origin_url": "https://port8000-gysms8dcks7n3zb.tunnel.applications.eu-west1.nebius.cloud",
+ "vercel_project": "prj_vtszsJ4wNZ1pd7lZ1CpmpMf0D3eK",
+ "vercel_deployment": "dpl_68tw1EwhVyfmwJUXLnhp6JCtJicY",
+ "switch": {
+  "old_endpoint_stopped": "2026-10-28T19:44:58Z",
+  "new_endpoint_created": "2026-10-28T19:45:16Z",
+  "new_endpoint_running_by": "2026-10-28T19:51:35Z",
+  "stable_url_serving_new": "2026-10-28T19:52:00Z"
+ },
+ "caps": {
+  "budget_usd_per_run": 3.0,
+  "budget_usd_per_day": 8.0,
+  "budget_tavily_credits_per_item": 60.0,
+  "budget_tavily_credits_per_day": 600.0,
+  "max_concurrency": 2
+ },
+ "recorded_run": "20261028-173729-554074",
+ "recorded_on_code": "4e6066b (master 30ca3ec); stock-case model requests identical on 3d35d10, see docs/release-final/stock-request-parity.json",
+ "live_panel": {
+  "right_call": "6/8",
+  "caught": "5/6",
+  "false_alarms": "1/2",
+  "unnecessary_notes": 0,
+  "fixes_passing": "0/5"
+ },
+ "cost_usd_per_item": 0.125803,
+ "time_ms_per_item": 114026,
+ "wrong_spec": {
+  "approved": 0,
+  "of": 14,
+  "not_applicable": 13,
+  "sent_back": 1,
+  "run_id": "20261028-183608-dfa1b9"
+ },
+ "variance": "Same-day run 20261028-171142-5ca0fc on PR #20 code differed only on c05 (approve with note): c05 flips between runs.",
+ "strict_case_evidence_gate_passed": false,
+ "not_claimed": [
+  "passing replacement",
+  "Investigator rescue",
+  "Nebius Serverless Job run",
+  "human study or time saving",
+  "Nemotron 3 Ultra in production"
+ ],
+ "tests": {
+  "python_mock_suite": "801 passed, 6 skipped",
+  "mock_panel": "6/8, 5/6, 0/2, 0/5, 1 unnecessary note (unchanged)",
+  "web_build": "clean",
+  "image_offline_proof": "network-disabled, no credentials: serves 20261028-173729-554074; no .env, no runs/scores.json"
+ },
+ "persistent_ledger_before_switch": {
+  "day": "2026-10-28",
+  "usd": 1.0299369,
+  "credits": 253,
+  "held_usd": 0.0,
+  "held_credits": 0,
+  "total_usd": 1.82596578,
+  "total_credits": 388,
+  "phase": "engineering",
+  "phase_usd": 1.82596578,
+  "phase_credits": 388,
+  "usd_limit": 75.0,
+  "credit_limit": 6000,
+  "phase_usd_limit": 75.0,
+  "phase_credit_limit": 6000,
+  "blocked": false
+ },
+ "persistent_ledger_after_switch": {
+  "day": "2026-10-28",
+  "usd": 1.0299369,
+  "credits": 253,
+  "held_usd": 0.0,
+  "held_credits": 0,
+  "total_usd": 1.82596578,
+  "total_credits": 388,
+  "phase": "engineering",
+  "phase_usd": 1.82596578,
+  "phase_credits": 388,
+  "usd_limit": 75.0,
+  "credit_limit": 6000,
+  "phase_usd_limit": 75.0,
+  "phase_credit_limit": 6000,
+  "blocked": false
+ },
+ "recheck": {
+  "runner": "GitHub Actions",
+  "manual_commissioning_verified": true,
+  "reported_at": "2026-10-28T07:22:37Z",
+  "cron": "0 9 * * *",
+  "cron_execution_observed": true,
+  "cron_execution": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40717808721",
+  "cron_result": "Skipped providers because the same-day live report already existed",
+  "cron_provider_execution_observed": false,
+  "nebius_job_executed": false,
+  "image": "ghcr.io/wongywrongy/speccheck@sha256:d5b22ed554d26dac83808ea53155d8a28d03bd3f2c6623171cb6b5321093bb07"
+ },
+ "previous_manifest": "final-deployment-20261028-afternoon.json",
+ "public_checks": {
   "url": "https://speccheck-wongywrongys-projects.vercel.app",
-  "origin_url": "https://port8000-j0946t8fwr9bm40.tunnel.applications.eu-west1.nebius.cloud",
-  "vercel_project": "prj_vtszsJ4wNZ1pd7lZ1CpmpMf0D3eK",
-  "vercel_deployment": "dpl_EXj2AECCKYWpF6SpvqBxbwKXkiEa",
-  "code_frozen": true,
-  "frozen_at": "2026-10-28T07:57:48+00:00",
-  "caps": {
-    "budget_usd_per_run": 3.0,
-    "budget_usd_per_day": 8.0,
-    "budget_tavily_credits_per_item": 60.0,
-    "budget_tavily_credits_per_day": 600.0,
-    "max_concurrency": 2
+  "admin_token": false,
+  "smoke": "passed; run 20261028-195228-e527df (c01 + stamped off-topic probe, fresh Nano and Super calls)",
+  "browser_journeys": {
+   "a": {
+    "passed": true,
+    "run": "20261028-195240-316ca1",
+    "usd": 0,
+    "credits": 0
+   },
+   "b": {
+    "passed": true,
+    "run": "20261028-195245-25cf26",
+    "usd": 0,
+    "credits": 0
+   },
+   "c": {
+    "passed": true,
+    "run": "20261028-195254-7e6132",
+    "usd": 0.0732213,
+    "credits": 1
+   },
+   "d": {
+    "passed": true,
+    "run": "20261028-195511-4911e1",
+    "usd": 0.1960011,
+    "credits": 13
+   },
+   "e": {
+    "passed": true,
+    "run": "20261028-195917-3db065",
+    "usd": 0.0027249,
+    "credits": 0
+   }
   },
-  "recorded_run": "20261028-065522-3dd974",
-  "live_panel": "4/8, 4/6, 0/2, 0/5",
-  "wrong_spec": {
-    "approved": 0,
-    "of": 14
+  "journey_meaning": {
+   "a": "off-topic upload: not checked, 0 web credits",
+   "b": "Try-one RectorSeal upload: quoted values",
+   "c": "UBC spec -> drafted checklist edited -> Schlage ND: ND passes, other product types set aside",
+   "d": "tray scan of 7 -> matrix -> Review -> Outcome",
+   "e": "same product under two specs"
   },
-  "strict_case_evidence_gate_passed": false,
-  "tests": {
-    "mock_browser_passed": 17,
-    "presentation": "passed",
-    "web_build": "passed",
-    "public_no_admin_smoke": "passed",
-    "public_browser_a_e": "passed",
-    "public_memo_pdf": "passed",
-    "public_scoreboard": "passed",
-    "public_fresh_check_approved": "passed",
-    "python_local": "771 passed, 2 skipped; 4 additional fallback tests passed",
-    "python_ci": "771 passed, 6 skipped"
-  },
-  "ci": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40650816124",
-  "image_ci": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40651206922",
-  "persistent_ledger_before_switch": {
-    "day": "2026-10-28",
-    "usd": 0.3307227,
-    "credits": 178,
-    "held_usd": 0.0,
-    "held_credits": 0,
-    "total_usd": 1.12675158,
-    "total_credits": 313,
-    "phase": "engineering",
-    "phase_usd": 1.12675158,
-    "phase_credits": 313,
-    "usd_limit": 75.0,
-    "credit_limit": 6000,
-    "phase_usd_limit": 75.0,
-    "phase_credit_limit": 6000,
-    "blocked": false
-  },
-  "persistent_ledger_after_switch": {
-    "day": "2026-10-28",
-    "usd": 0.3307227,
-    "credits": 178,
-    "held_usd": 0.0,
-    "held_credits": 0,
-    "total_usd": 1.12675158,
-    "total_credits": 313,
-    "phase": "engineering",
-    "phase_usd": 1.12675158,
-    "phase_credits": 313,
-    "usd_limit": 75.0,
-    "credit_limit": 6000,
-    "phase_usd_limit": 75.0,
-    "phase_credit_limit": 6000,
-    "blocked": false
-  },
-  "final_judging_ledger": {
-    "day": "2026-10-28",
-    "usd": 0.3637176,
-    "credits": 189,
-    "held_usd": 0.0,
-    "held_credits": 0,
-    "total_usd": 1.15974648,
-    "total_credits": 324,
-    "phase": "engineering",
-    "phase_usd": 1.15974648,
-    "phase_credits": 324,
-    "usd_limit": 75.0,
-    "credit_limit": 6000,
-    "phase_usd_limit": 75.0,
-    "phase_credit_limit": 6000,
-    "blocked": false
-  },
-  "recheck": {
-    "runner": "GitHub Actions",
-    "execution": "https://github.com/wongywrongy/nebiusxnvidiahack26/actions/runs/40649387428",
-    "reported_at": "2026-10-28T07:22:37Z",
-    "manual_commissioning_verified": true,
-    "cron": "0 9 * * *",
-    "cron_execution_observed": false,
-    "nebius_job_executed": false
-  },
-  "superseded_endpoint_removed": true,
-  "accounting": {
-    "continuation_model_usd": "0.69773058",
-    "continuation_tavily_credits": 70,
-    "local_recording_model_usd": "0.59806296",
-    "local_recording_credits": 46,
-    "wrong_spec_model_usd": "0",
-    "wrong_spec_credits": 0,
-    "github_job_model_usd": "0.06667272",
-    "github_job_credits": 13,
-    "hosted_verification_model_usd": "0.03299490",
-    "hosted_verification_credits": 11,
-    "judging_model_usd_remaining": 73.84025352,
-    "judging_credits_remaining": 5676,
-    "cloud_and_ci_billing_measured": false,
-    "future_daily_fallback_ceiling": {
-      "model_usd": 0.5,
-      "tavily_credits": 40,
-      "until": "2026-12-15T20:00:00Z"
-    }
-  },
-  "evidence": "docs/customer-feedback/release-20261028/",
-  "superseded_endpoint_removed_at": "2026-10-28T07:56:09Z"
+  "memo_pdf_and_scoreboard": "passed; Scoreboard shows 20261028-173729-554074",
+  "check_approved_now": "passed; fresh web, quoted Lithonia discontinued notice",
+  "memo_item_captures": "c02, c03, c05, c07 from the official run's memo",
+  "spend": {
+   "usd": 0.2844459,
+   "credits": 21
+  }
+ },
+ "old_endpoint_deleted_after_checks": "aiendpoint-e01y93s8ffx7g7wern",
+ "final_judging_ledger": {
+  "day": "2026-10-28",
+  "usd": 1.3143828,
+  "credits": 274,
+  "held_usd": 0.0,
+  "held_credits": 0,
+  "total_usd": 2.11041168,
+  "total_credits": 409,
+  "phase": "engineering",
+  "phase_usd": 2.11041168,
+  "phase_credits": 409,
+  "usd_limit": 75.0,
+  "credit_limit": 6000,
+  "phase_usd_limit": 75.0,
+  "phase_credit_limit": 6000,
+  "blocked": false
+ },
+ "judging_remaining": {
+  "model_usd": 72.88958832,
+  "tavily_credits": 5591
+ }
 }

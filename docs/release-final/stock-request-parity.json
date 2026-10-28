@@ -1,0 +1,8 @@
+{
+  "baseline": "4138a41 (arm A code 4e6066b + per-item scores fix)",
+  "release": "release/final",
+  "method": "docs/release-final/parity.py: mock run of c01-c08 recording every router.call (task, messages, context), hashed per task",
+  "identical_tasks": {"triage": 8, "extract_claims": 14, "verify": 12, "report": 8, "replacement": 1},
+  "differs": {"extract_requirements": "draft prompt only; live stock cases load the reviewed data/requirements/*.json and never call it"},
+  "provider_calls": 0
+}

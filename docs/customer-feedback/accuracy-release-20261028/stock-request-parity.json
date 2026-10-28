@@ -1,0 +1,8 @@
+{
+  "baseline": "8f91ae9",
+  "stock_cases": 8,
+  "batches_checked": 13,
+  "identical_prompts_schemas_and_context": true,
+  "provider_calls": 0,
+  "scope": "ordinary extraction; custom-checklist changes only"
+}

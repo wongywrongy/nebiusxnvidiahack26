@@ -1,0 +1,89 @@
+{
+  "ledger": "/home/kyle/code/nebiusxnvidiahack26/evidence/budget/campaign.sqlite3 (shared local ledger, not reset)",
+  "day": "2026-10-28",
+  "before": {
+    "model_usd": "2.20976732",
+    "tavily_credits": 159
+  },
+  "recording": {
+    "run": "20261028-171142-5ca0fc",
+    "model_usd": "0.72872730",
+    "tavily_credits": 19
+  },
+  "wrong_spec": {
+    "run": "20261028-171959-1f6c87",
+    "model_usd": "0.11095470",
+    "tavily_credits": 8,
+    "ceiling_model_usd": "0.50"
+  },
+  "after": {
+    "model_usd": "3.04944932",
+    "tavily_credits": 186,
+    "held_usd": 0,
+    "held_credits": 0
+  },
+  "local_incremental": {
+    "model_usd": "0.83968200",
+    "tavily_credits": 27
+  },
+  "github_cron_run_40717808721": {
+    "model_usd": "0",
+    "tavily_credits": 0
+  },
+  "hosted_verification": {
+    "before": {
+      "day": "2026-10-28",
+      "usd": 0.3637176,
+      "credits": 189,
+      "held_usd": 0.0,
+      "held_credits": 0,
+      "total_usd": 1.15974648,
+      "total_credits": 324,
+      "phase": "engineering",
+      "phase_usd": 1.15974648,
+      "phase_credits": 324,
+      "usd_limit": 75.0,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75.0,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "after": {
+      "day": "2026-10-28",
+      "usd": 1.0299369,
+      "credits": 253,
+      "held_usd": 0.0,
+      "held_credits": 0,
+      "total_usd": 1.82596578,
+      "total_credits": 388,
+      "phase": "engineering",
+      "phase_usd": 1.82596578,
+      "phase_credits": 388,
+      "usd_limit": 75.0,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75.0,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "incremental_model_usd": "0.66621930",
+    "incremental_tavily_credits": 64,
+    "first_image_attempt": {
+      "model_usd": "0.43977120",
+      "tavily_credits": 36
+    },
+    "fixed_image_acceptance": {
+      "model_usd": "0.22644810",
+      "tavily_credits": 28
+    },
+    "includes_failed_attempts": true
+  },
+  "cloud_and_ci_billing_measured": false,
+  "public_judging_baseline": {
+    "total_usd": 1.15974648,
+    "total_credits": 324
+  },
+  "judging_remaining": {
+    "model_usd": 73.17403422,
+    "tavily_credits": 5612
+  }
+}

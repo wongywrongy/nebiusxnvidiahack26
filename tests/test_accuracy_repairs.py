@@ -56,6 +56,25 @@ def test_pdf_word_wrap_can_be_normalized_without_joining_separate_quotes():
     assert not extract.quoted('AB20', 'AB-20')
 
 
+@pytest.mark.parametrize('quote', ['Grade 3 cylindrical lock', 'Grade 1 cylindrical lock'])
+def test_custom_metric_descriptions_cannot_supply_product_evidence(monkeypatch, quote):
+    rule = Requirement(id='grade', section='08 71 00', paragraph='2.3', property='grade', operator='eq',
+                       value=1, text='All hardware shall be Grade 1 cylindrical lock')
+    async def read(task, schema, messages, ctx):
+        assert ctx['thinking'] == 'on' and rule.text in messages[0]['content']
+        return ClaimsOut(product='ZX-10', manufacturer='Maker', model='ZX-10', claims=[dict(
+            id='grade', product='ZX-10', model='ZX-10', manufacturer='Maker', property='grade',
+            value=3 if quote.startswith('Grade 3') else 1, page=1, quote=quote,
+            scope='product_wide', scope_quote=quote)]), Usage(task=task, tier='extract', model='test')
+    monkeypatch.setattr(extract.router, 'call', read)
+    pages = [{'page': 1, 'text': 'Model ZX-10. Grade 3 cylindrical lock'}]
+    out, _ = asyncio.run(extract.extract_claims(None, pages, extract.all_product_data(pages), ['grade'], requirements=[rule]))
+    if quote.startswith('Grade 3'):
+        assert out.claims and spec_check.check([rule], out.claims)[0].verdict == 'fail'
+    else:
+        assert not out.claims
+
+
 @pytest.mark.parametrize('borrow_quote', [False, True])
 def test_continuation_header_establishes_identity_but_not_values(monkeypatch, borrow_quote):
     monkeypatch.setattr(extract, 'page_batches', lambda pages, limit: ([p] for p in pages))

@@ -1,0 +1,2170 @@
+{
+  "case_id": "c07",
+  "title": "LED troffer, offices",
+  "decision": "send_back",
+  "summary": "Send back: see what to send.",
+  "spec_section": "26 51 00",
+  "spec_title": "Interior Lighting",
+  "spec_rule_count": 5,
+  "spec_match_count": 2,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_t_rating_hr_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Rated life (L70)",
+      "detail": "L90 60000 hours is quoted; lumen output only declines, so L70 is at least as long. Spec requires at least 50000 hr.",
+      "why_it_matters": null,
+      "requirement_id": "req_t_rating_hr_led",
+      "claim_id": "clm-11",
+      "product_type": null,
+      "claim_ids": [
+        "clm-11"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-11",
+          "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+          "page": 1,
+          "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+          "boxes": [
+            {
+              "x0": 0.249,
+              "y0": 0.3277,
+              "x1": 0.4884,
+              "y1": 0.339
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 50000 hr",
+        "right_label": "Submitted",
+        "right_value": "L90 60000 hours",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.3",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_warranty_years_led",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Warranty",
+      "detail": "Package states 5 years; spec requires at least 5 yr.",
+      "why_it_matters": null,
+      "requirement_id": "req_warranty_years_led",
+      "claim_id": "clm-21",
+      "product_type": null,
+      "claim_ids": [
+        "clm-21"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-21",
+          "doc_file": "c07/lithonia_2tl4_2022-11.pdf",
+          "page": 1,
+          "quote": "5-year limited warranty.",
+          "boxes": [
+            {
+              "x0": 0.1665,
+              "y0": 0.5082,
+              "x1": 0.2669,
+              "y1": 0.5196
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≥ 5 yr",
+        "right_label": "Submitted",
+        "right_value": "5 years",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 1.10.B.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-lt-dlc",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: DLC listing",
+      "detail": "Listed as a qualified DLC product, where applicable.",
+      "why_it_matters": "Without DLC confirmation, we can’t verify eligibility for energy rebates or compliance with project sustainability goals.",
+      "requirement_id": "lt-dlc",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "dlc standard",
+          "dlc premium"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.H",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_macadam_ellipse",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Couldn't confirm: macadam steps",
+      "detail": "LEDs shall be binned within a maximum 3-step MacAdam Ellipse.",
+      "why_it_matters": "LEDs outside the 3-step MacAdam Ellipse may show noticeable color differences between fixtures, affecting lighting quality in office spaces.",
+      "requirement_id": "req_macadam_ellipse",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 3",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.02.S.6",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-lt-dim",
+      "check": "spec",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Specify option: Dims down to",
+      "detail": "Dims down to meets the spec only with EZB (0.1 %). Confirm the order specifies it.",
+      "why_it_matters": "If the dimming isn’t set to go low enough, the lights won’t perform as needed for tasks like presentations or evening work, reducing usability.",
+      "requirement_id": "lt-dim",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 5 %",
+        "right_label": "Submitted",
+        "right_value": "0.1 % with EZB",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "26 51 00 2.05.C.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": [
+        {
+          "option": "EZB",
+          "value": "0.1 %",
+          "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "page": 2,
+          "claim_id": "clm-2"
+        }
+      ]
+    },
+    {
+      "id": "status-discontinued",
+      "check": "status",
+      "verdict": "fail",
+      "severity": "major",
+      "title": "Product Availability Issue",
+      "detail": "The manufacturer lists it as discontinued.",
+      "why_it_matters": "A discontinued product can’t be sourced for this job or future maintenance, risking delays and long-term support problems.",
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Status",
+        "left_value": null,
+        "right_label": "Manufacturer",
+        "right_value": "Discontinued 2024-06-30",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+          "tier": "manufacturer",
+          "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+          "retrieved_at": "2026-10-28T03:48:03+00:00",
+          "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+          "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://www.acuitybrands.com",
+          "tier": "manufacturer",
+          "title": "Acuity Brands Lighting",
+          "retrieved_at": "2026-10-28T03:48:03+00:00",
+          "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+          "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+          "tier": "manufacturer",
+          "title": "Technical Downloads",
+          "retrieved_at": "2026-10-28T03:48:03+00:00",
+          "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+          "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+          "archived_path": null,
+          "cache_hit": true
+        }
+      ],
+      "quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+      "decided_by": "tavily + super",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "\"LED troffer\" manufacturer specification sheet",
+        "candidates": [
+          {
+            "name": "ZR-D LED Troffer Spec Sheet - industrialzone.com",
+            "source_url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+            "documents": [
+              {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "c27417983b3932efb733590c27848471201d1473840b9e8bf57251d8ada76443",
+                "excerpt": "ZR\nD\nFamily\nSize\nSeries\nLumen Package\nCRI/CCT\nLens*\nVoltage\nControls\nFactory Installed Options**\nZR\n14\nD\n30L\n3,000 Lumens\n40L\n4,000 Lumens\n50L\n5,000 Lumens\n60L\n6,000 Lumens\n830\n80 CRI, \n3000K\n835\n80 CRI, \n3500K\n840\n80 CRI, \n4000K\n850\n80 CRI, \n5000K\nAR\nFLX Arc \nCV\nZR Curve\nSQ\nSquare \nUNV \n\t- Universal 120-277V\nUC\n\t- 120-347V\n\t- Not available with 26L or 30L \nlumen packages\n\t- Available only with10V",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://www.creelighting.com/news/cree-expands-award-winning-zr-series-led-troffer-family",
+                "tier": "distributor",
+                "title": "https://www.creelighting.com/news/cree-expands-award-winning-zr-series-led-troffer-family",
+                "retrieved_at": "2026-10-28T17:42:08+00:00",
+                "sha256": "b783da9ed9610741d6ffd7114748bafbdd9e8a516686185deaf1d3d9de0683ba",
+                "excerpt": "![Cree Lighting Logo](https://cms.creelighting.com/app/uploads/2021/10/creelighting-r-horizontal-ko-logo.png)\n\n## Main Navigation\n\n## [Products](/products/)\n\n### [Outdoor Lighting](/products/outdoor/)\n\n### [Indoor Lighting](/products/indoor/)\n\n### [Intelligent Solutions](/products/intelligent-lighting/)\n\n### [Technology](/products/technology/)\n\n## [Applications](/applications/)\n\n### [Gas Stations ",
+                "archived_path": null,
+                "cache_hit": false
+              },
+              {
+                "url": "https://www.creelighting.com/news/cree-introduces-innovative-new-zr-rk-led-troffer-retrofit-kit",
+                "tier": "distributor",
+                "title": "https://www.creelighting.com/news/cree-introduces-innovative-new-zr-rk-led-troffer-retrofit-kit",
+                "retrieved_at": "2026-10-28T17:42:09+00:00",
+                "sha256": "813d24733dcaf1bcf06108878980c106f26d50449565ed8011bcddda09050c6a",
+                "excerpt": "[English](?lang=en)\n\n[![Cree Lighting Logo](https://cms.creelighting.com/app/uploads/2021/10/creelighting-r-horizontal-ko-logo.png)](/)\n\n\n\n\n## Breadcrumb Navigation\n\n* [News](/news/)\n* Cree Introduces Innovative New ZR-RK LED Troffer Retrofit Kit\n\n# Cree Introduces Innovative New ZR-RK LED Troffer Retrofit Kit\n\nPublished on: 5/22/2017\n\n---\n\n*Transition Outdated Fluorescent to Outstanding LED Techn",
+                "archived_path": null,
+                "cache_hit": false
+              }
+            ],
+            "checks": [
+              {
+                "label": "Rated life (L70)",
+                "check": "spec",
+                "ok": null,
+                "note": "not confirmed",
+                "requirement_id": "req_t_rating_hr_led",
+                "claim_ids": [],
+                "evidence": []
+              },
+              {
+                "label": "Warranty",
+                "check": "spec",
+                "ok": true,
+                "note": "5 years",
+                "requirement_id": "req_warranty_years_led",
+                "claim_ids": [
+                  "cl-5"
+                ],
+                "evidence": [
+                  {
+                    "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                    "tier": "distributor",
+                    "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                    "retrieved_at": "2026-10-28T03:48:13+00:00",
+                    "sha256": "b71b3e4421864a96c21d39207b561cd7e386078a683d65a3860ac3623c35e658",
+                    "excerpt": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                    "archived_path": null,
+                    "cache_hit": true
+                  }
+                ]
+              },
+              {
+                "label": "DLC listing",
+                "check": "spec",
+                "ok": true,
+                "note": "",
+                "requirement_id": "lt-dlc",
+                "claim_ids": [
+                  "cl-8"
+                ],
+                "evidence": [
+                  {
+                    "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                    "tier": "distributor",
+                    "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                    "retrieved_at": "2026-10-28T03:48:13+00:00",
+                    "sha256": "be0ecbc8cc7ce66e7d8809c03634221c07104846c516055e00820e024168be5a",
+                    "excerpt": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                    "archived_path": null,
+                    "cache_hit": true
+                  }
+                ]
+              },
+              {
+                "label": "macadam steps",
+                "check": "spec",
+                "ok": null,
+                "note": "not confirmed",
+                "requirement_id": "req_macadam_ellipse",
+                "claim_ids": [],
+                "evidence": []
+              },
+              {
+                "label": "Dims down to",
+                "check": "spec",
+                "ok": null,
+                "note": "not confirmed",
+                "requirement_id": "lt-dim",
+                "claim_ids": [],
+                "evidence": []
+              },
+              {
+                "label": "Current document",
+                "check": "currency",
+                "ok": null,
+                "note": "not confirmed",
+                "requirement_id": null,
+                "claim_ids": [],
+                "evidence": []
+              },
+              {
+                "label": "Still made",
+                "check": "status",
+                "ok": null,
+                "note": "No quoted confirmation that this replacement is available",
+                "requirement_id": null,
+                "claim_ids": [],
+                "evidence": []
+              }
+            ],
+            "claims": [
+              {
+                "id": "cl-1",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "cri",
+                "value": "80+",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "CRI: 80+ ",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "CRI: 80+ ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-4",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "watts",
+                "value": "18-70",
+                "unit": "W",
+                "page": 1,
+                "bbox": null,
+                "quote": "Input Power: 18-70W ",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Input Power: 18-70W ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-5",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "warranty_years",
+                "value": 5.0,
+                "unit": "years",
+                "page": 1,
+                "bbox": null,
+                "quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-6",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "input_watts_120v",
+                "value": "18-70",
+                "unit": "W",
+                "page": 1,
+                "bbox": null,
+                "quote": "Input Power: 18-70W ",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Input Power: 18-70W ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-7",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "input_watts_277v",
+                "value": "18-70",
+                "unit": "W",
+                "page": 1,
+                "bbox": null,
+                "quote": "Input Power: 18-70W ",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Input Power: 18-70W ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-8",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "dlc_listed",
+                "value": [
+                  "DLC",
+                  "DLC Premium"
+                ],
+                "unit": null,
+                "page": 2,
+                "bbox": null,
+                "quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-2",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "efficacy_lm_per_w",
+                "value": "<=159",
+                "unit": "LPW",
+                "page": 1,
+                "bbox": null,
+                "quote": "Efficacy: Up to 159 LPW",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "Efficacy: Up to 159 LPW",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-1-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "cri",
+                "value": "80+",
+                "unit": null,
+                "page": 1,
+                "bbox": null,
+                "quote": "CRI: 80+ ",
+                "variant": "CRI: 80+ ",
+                "scope": "unknown",
+                "scope_quote": "CRI: 80+ ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-4-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "watts",
+                "value": "18-70",
+                "unit": "W",
+                "page": 1,
+                "bbox": null,
+                "quote": "Input Power: 18-70W ",
+                "variant": "Input Power: 18-70W ",
+                "scope": "unknown",
+                "scope_quote": "Input Power: 18-70W ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-5-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "warranty_years",
+                "value": 5.0,
+                "unit": "years",
+                "page": 1,
+                "bbox": null,
+                "quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                "variant": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                "scope": "unknown",
+                "scope_quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-6-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "input_watts_120v",
+                "value": "18-70",
+                "unit": "W",
+                "page": 1,
+                "bbox": null,
+                "quote": "Input Power: 18-70W ",
+                "variant": "Input Power: 18-70W ",
+                "scope": "unknown",
+                "scope_quote": "Input Power: 18-70W ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-7-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "input_watts_277v",
+                "value": "18-70",
+                "unit": "W",
+                "page": 1,
+                "bbox": null,
+                "quote": "Input Power: 18-70W ",
+                "variant": "Input Power: 18-70W ",
+                "scope": "unknown",
+                "scope_quote": "Input Power: 18-70W ",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-8-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "dlc_listed",
+                "value": [
+                  "DLC",
+                  "DLC Premium"
+                ],
+                "unit": null,
+                "page": 2,
+                "bbox": null,
+                "quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                "variant": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                "scope": "unknown",
+                "scope_quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-2-bundle",
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "property": "efficacy_lm_per_w",
+                "value": "<=159",
+                "unit": "LPW",
+                "page": 1,
+                "bbox": null,
+                "quote": "Efficacy: Up to 159 LPW",
+                "variant": "Efficacy: Up to 159 LPW",
+                "scope": "unknown",
+                "scope_quote": "Efficacy: Up to 159 LPW",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-1-chunk-7",
+                "product": "ZR",
+                "manufacturer": "Cree, Inc.",
+                "model": "ZR-D",
+                "property": "efficacy_lm_per_w",
+                "value": 125.0,
+                "unit": "lumens per watt",
+                "page": 8,
+                "bbox": null,
+                "quote": "class-leading efficiency at 125 lumens per watt (LPW)",
+                "variant": "class-leading efficiency at 125 lumens per watt (LPW)",
+                "scope": "unknown",
+                "scope_quote": "The ZR-C Commercial line provides affordable performance with premium rebate eligibility, capturing maximum energy savings and rebates for the most competitive projects. The line boasts class-leading efficiency at 125 lumens per watt (LPW), making it up to 10 percent more efficient compared to other products.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-2-chunk-8",
+                "product": "ZR",
+                "manufacturer": "Cree, Inc.",
+                "model": "ZR-D",
+                "property": "efficacy_lm_per_w",
+                "value": 130.0,
+                "unit": "lumens per watt",
+                "page": 8,
+                "bbox": null,
+                "quote": "130 lumens per watt",
+                "variant": "130 lumens per watt",
+                "scope": "unknown",
+                "scope_quote": "For customers seeking enhanced energy savings, the ZR-FD High Efficiency troffer is the perfect solution. The line delivers premium performance with 130 lumens per watt and optional SmartCast Technology to reduce energy savings up to 70 percent.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-4-chunk-9",
+                "product": "ZR",
+                "manufacturer": "Cree, Inc.",
+                "model": "ZR-D",
+                "property": "cri",
+                "value": 90.0,
+                "unit": null,
+                "page": 8,
+                "bbox": null,
+                "quote": "90+ CRI",
+                "variant": "90+ CRI",
+                "scope": "unknown",
+                "scope_quote": "For applications requiring color accuracy, the ZR-T TrueWhite troffer delivers 90+ CRI, lifetime color consistency and an 11 percent boost in efficacy, from 90 to 100 LPW.",
+                "selection_quote": null
+              },
+              {
+                "id": "cl-5-chunk-10",
+                "product": "ZR",
+                "manufacturer": "Cree, Inc.",
+                "model": "ZR-D",
+                "property": "dlc_listed",
+                "value": [
+                  "DesignLights Consortium® (DLC®) Premium 4.1 eligibility"
+                ],
+                "unit": null,
+                "page": 9,
+                "bbox": null,
+                "quote": "With DesignLights Consortium® (DLC®) Premium 4.1 eligibility, the ZR-RK Retrofit Kit can also maximize rebates nationwide, lowering upfront costs by as much as 40 percent.",
+                "variant": "With DesignLights Consortium® (DLC®) Premium 4.1 eligibility, the ZR-RK Retrofit Kit can also maximize rebates nationwide, lowering upfront costs by as much as 40 percent.",
+                "scope": "unknown",
+                "scope_quote": "The ZR-RK Series maximizes retrofit application savings with an upgrade to 132 lumens per watt (LPW) performance, and dramatically reduces energy and maintenance costs for savings of up to 70 percent over T8 fluorescent luminaires. With DesignLights Consortium® (DLC®) Premium 4.1 eligibility, the ZR-RK Retrofit Kit can also maximize rebates nationwide, lowering upfront costs by as much as 40 percent.",
+                "selection_quote": null
+              }
+            ],
+            "selection": null,
+            "document_roles": [
+              "product_data"
+            ],
+            "extracted": {
+              "product": "ZR",
+              "manufacturer": "Cree Lighting",
+              "model": "ZR",
+              "selection": null,
+              "family": null,
+              "family_quote": null,
+              "document_revision": "V8 08/29/2025",
+              "claims": [
+                {
+                  "id": "cl-1",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "cri",
+                  "value": "80+",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "CRI: 80+ ",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "CRI: 80+ ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-4",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "watts",
+                  "value": "18-70",
+                  "unit": "W",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Input Power: 18-70W ",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Input Power: 18-70W ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-5",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "warranty_years",
+                  "value": 5.0,
+                  "unit": "years",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-6",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "input_watts_120v",
+                  "value": "18-70",
+                  "unit": "W",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Input Power: 18-70W ",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Input Power: 18-70W ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-7",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "input_watts_277v",
+                  "value": "18-70",
+                  "unit": "W",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Input Power: 18-70W ",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Input Power: 18-70W ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-8",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "dlc_listed",
+                  "value": [
+                    "DLC",
+                    "DLC Premium"
+                  ],
+                  "unit": null,
+                  "page": 2,
+                  "bbox": null,
+                  "quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-2",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "efficacy_lm_per_w",
+                  "value": "<=159",
+                  "unit": "LPW",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Efficacy: Up to 159 LPW",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Efficacy: Up to 159 LPW",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-1-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "cri",
+                  "value": "80+",
+                  "unit": null,
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "CRI: 80+ ",
+                  "variant": "CRI: 80+ ",
+                  "scope": "unknown",
+                  "scope_quote": "CRI: 80+ ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-4-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "watts",
+                  "value": "18-70",
+                  "unit": "W",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Input Power: 18-70W ",
+                  "variant": "Input Power: 18-70W ",
+                  "scope": "unknown",
+                  "scope_quote": "Input Power: 18-70W ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-5-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "warranty_years",
+                  "value": 5.0,
+                  "unit": "years",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                  "variant": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                  "scope": "unknown",
+                  "scope_quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-6-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "input_watts_120v",
+                  "value": "18-70",
+                  "unit": "W",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Input Power: 18-70W ",
+                  "variant": "Input Power: 18-70W ",
+                  "scope": "unknown",
+                  "scope_quote": "Input Power: 18-70W ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-7-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "input_watts_277v",
+                  "value": "18-70",
+                  "unit": "W",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Input Power: 18-70W ",
+                  "variant": "Input Power: 18-70W ",
+                  "scope": "unknown",
+                  "scope_quote": "Input Power: 18-70W ",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-8-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "dlc_listed",
+                  "value": [
+                    "DLC",
+                    "DLC Premium"
+                  ],
+                  "unit": null,
+                  "page": 2,
+                  "bbox": null,
+                  "quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                  "variant": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                  "scope": "unknown",
+                  "scope_quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-2-bundle",
+                  "product": "ZR",
+                  "manufacturer": "Cree Lighting",
+                  "model": "ZR",
+                  "property": "efficacy_lm_per_w",
+                  "value": "<=159",
+                  "unit": "LPW",
+                  "page": 1,
+                  "bbox": null,
+                  "quote": "Efficacy: Up to 159 LPW",
+                  "variant": "Efficacy: Up to 159 LPW",
+                  "scope": "unknown",
+                  "scope_quote": "Efficacy: Up to 159 LPW",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-1-chunk-7",
+                  "product": "ZR",
+                  "manufacturer": "Cree, Inc.",
+                  "model": "ZR-D",
+                  "property": "efficacy_lm_per_w",
+                  "value": 125.0,
+                  "unit": "lumens per watt",
+                  "page": 8,
+                  "bbox": null,
+                  "quote": "class-leading efficiency at 125 lumens per watt (LPW)",
+                  "variant": "class-leading efficiency at 125 lumens per watt (LPW)",
+                  "scope": "unknown",
+                  "scope_quote": "The ZR-C Commercial line provides affordable performance with premium rebate eligibility, capturing maximum energy savings and rebates for the most competitive projects. The line boasts class-leading efficiency at 125 lumens per watt (LPW), making it up to 10 percent more efficient compared to other products.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-2-chunk-8",
+                  "product": "ZR",
+                  "manufacturer": "Cree, Inc.",
+                  "model": "ZR-D",
+                  "property": "efficacy_lm_per_w",
+                  "value": 130.0,
+                  "unit": "lumens per watt",
+                  "page": 8,
+                  "bbox": null,
+                  "quote": "130 lumens per watt",
+                  "variant": "130 lumens per watt",
+                  "scope": "unknown",
+                  "scope_quote": "For customers seeking enhanced energy savings, the ZR-FD High Efficiency troffer is the perfect solution. The line delivers premium performance with 130 lumens per watt and optional SmartCast Technology to reduce energy savings up to 70 percent.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-4-chunk-9",
+                  "product": "ZR",
+                  "manufacturer": "Cree, Inc.",
+                  "model": "ZR-D",
+                  "property": "cri",
+                  "value": 90.0,
+                  "unit": null,
+                  "page": 8,
+                  "bbox": null,
+                  "quote": "90+ CRI",
+                  "variant": "90+ CRI",
+                  "scope": "unknown",
+                  "scope_quote": "For applications requiring color accuracy, the ZR-T TrueWhite troffer delivers 90+ CRI, lifetime color consistency and an 11 percent boost in efficacy, from 90 to 100 LPW.",
+                  "selection_quote": null
+                },
+                {
+                  "id": "cl-5-chunk-10",
+                  "product": "ZR",
+                  "manufacturer": "Cree, Inc.",
+                  "model": "ZR-D",
+                  "property": "dlc_listed",
+                  "value": [
+                    "DesignLights Consortium® (DLC®) Premium 4.1 eligibility"
+                  ],
+                  "unit": null,
+                  "page": 9,
+                  "bbox": null,
+                  "quote": "With DesignLights Consortium® (DLC®) Premium 4.1 eligibility, the ZR-RK Retrofit Kit can also maximize rebates nationwide, lowering upfront costs by as much as 40 percent.",
+                  "variant": "With DesignLights Consortium® (DLC®) Premium 4.1 eligibility, the ZR-RK Retrofit Kit can also maximize rebates nationwide, lowering upfront costs by as much as 40 percent.",
+                  "scope": "unknown",
+                  "scope_quote": "The ZR-RK Series maximizes retrofit application savings with an upgrade to 132 lumens per watt (LPW) performance, and dramatically reduces energy and maintenance costs for savings of up to 70 percent over T8 fluorescent luminaires. With DesignLights Consortium® (DLC®) Premium 4.1 eligibility, the ZR-RK Retrofit Kit can also maximize rebates nationwide, lowering upfront costs by as much as 40 percent.",
+                  "selection_quote": null
+                }
+              ]
+            },
+            "verification": {
+              "submitted": {
+                "product": "ZR",
+                "manufacturer": "Cree Lighting",
+                "model": "ZR",
+                "selection": null,
+                "family": null,
+                "family_quote": null,
+                "document_revision": "V8 08/29/2025",
+                "claims": [
+                  {
+                    "id": "cl-1",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "cri",
+                    "value": "80+",
+                    "unit": null,
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "CRI: 80+ ",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "CRI: 80+ ",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-4",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "watts",
+                    "value": "18-70",
+                    "unit": "W",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Input Power: 18-70W ",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Input Power: 18-70W ",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-5",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "warranty_years",
+                    "value": 5.0,
+                    "unit": "years",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Limited Warranty†: 5 years standard for luminaire, SmartCast controls, and Lutron AWNR and AWNS controls; up \nto 5 years for SmartCast® accessories; 1 year for luminaire accessories and replacement parts",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-6",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "input_watts_120v",
+                    "value": "18-70",
+                    "unit": "W",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Input Power: 18-70W ",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Input Power: 18-70W ",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-7",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "input_watts_277v",
+                    "value": "18-70",
+                    "unit": "W",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Input Power: 18-70W ",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Input Power: 18-70W ",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-8",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "dlc_listed",
+                    "value": [
+                      "DLC",
+                      "DLC Premium"
+                    ],
+                    "unit": null,
+                    "page": 2,
+                    "bbox": null,
+                    "quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "•\t DLC and DLC Premium qualified versions available. Please refer to https://qpl.\ndesignlights.org/solid-state-lighting for most current information",
+                    "selection_quote": null
+                  },
+                  {
+                    "id": "cl-2",
+                    "product": "ZR",
+                    "manufacturer": "Cree Lighting",
+                    "model": "ZR",
+                    "property": "efficacy_lm_per_w",
+                    "value": "<=159",
+                    "unit": "LPW",
+                    "page": 1,
+                    "bbox": null,
+                    "quote": "Efficacy: Up to 159 LPW",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Efficacy: Up to 159 LPW",
+                    "selection_quote": null
+                  }
+                ]
+              },
+              "output": {
+                "status": "unknown",
+                "replacement": null,
+                "current_revision": null,
+                "status_date": null,
+                "status_quote": null,
+                "status_family": null,
+                "current_values": [],
+                "source_urls": [],
+                "notes": null
+              },
+              "sources": [
+                {
+                  "url": "https://files.creelighting.com/documents/Slavery-and-Human-Trafficking-Statement_Final_Signed-2024.pdf",
+                  "tier": "distributor",
+                  "title": "https://files.creelighting.com/documents/Slavery-and-Human-Trafficking-Statement_Final_Signed-2024.pdf",
+                  "retrieved_at": "2026-10-28T17:42:09+00:00",
+                  "sha256": "d6f1a551b2469f4eeda0953327e51a052c38ff44f28c885acf5d52f594157bae",
+                  "excerpt": "SLAVERY AND HUMAN TRAFFICKING STATEMENT  \nModern Slavery Act of 2015 \nThis statement sets out the steps taken by Cree Lighting USA LLC (Cree Lighting)  during \nfinancial year 2023 to prevent modern slavery and human trafficking in our business and \nsupply chains. The Modern Slavery Act of 2015 requires suppliers of goods or services that \nhave a global total turnover exceeding £36 million to provi",
+                  "archived_path": null,
+                  "cache_hit": null
+                },
+                {
+                  "url": "https://www.creelighting.com/news/cree-expands-award-winning-zr-series-led-troffer-family",
+                  "tier": "distributor",
+                  "title": "Cree Expands Award-Winning ZR Series LED Troffer Family",
+                  "retrieved_at": "2026-10-28T17:42:08+00:00",
+                  "sha256": "b783da9ed9610741d6ffd7114748bafbdd9e8a516686185deaf1d3d9de0683ba",
+                  "excerpt": "![Cree Lighting Logo](https://cms.creelighting.com/app/uploads/2021/10/creelighting-r-horizontal-ko-logo.png)\n\n## Main Navigation\n\n## [Products](/products/)\n\n### [Outdoor Lighting](/products/outdoor/)\n\n### [Indoor Lighting](/products/indoor/)\n\n### [Intelligent Solutions](/products/intelligent-lighting/)\n\n### [Technology](/products/technology/)\n\n## [Applications](/applications/)\n\n### [Gas Stations ",
+                  "archived_path": null,
+                  "cache_hit": false
+                },
+                {
+                  "url": "https://www.creelighting.com/news/cree-introduces-innovative-new-zr-rk-led-troffer-retrofit-kit",
+                  "tier": "distributor",
+                  "title": "Cree Introduces Innovative New ZR-RK LED Troffer Retrofit ...",
+                  "retrieved_at": "2026-10-28T17:42:09+00:00",
+                  "sha256": "813d24733dcaf1bcf06108878980c106f26d50449565ed8011bcddda09050c6a",
+                  "excerpt": "[English](?lang=en)\n\n[![Cree Lighting Logo](https://cms.creelighting.com/app/uploads/2021/10/creelighting-r-horizontal-ko-logo.png)](/)\n\n\n\n\n## Breadcrumb Navigation\n\n* [News](/news/)\n* Cree Introduces Innovative New ZR-RK LED Troffer Retrofit Kit\n\n# Cree Introduces Innovative New ZR-RK LED Troffer Retrofit Kit\n\nPublished on: 5/22/2017\n\n---\n\n*Transition Outdated Fluorescent to Outstanding LED Techn",
+                  "archived_path": null,
+                  "cache_hit": false
+                }
+              ]
+            },
+            "page_sources": {
+              "1": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "b71b3e4421864a96c21d39207b561cd7e386078a683d65a3860ac3623c35e658",
+                "excerpt": "ZR\nD\nFamily\nSize\nSeries\nLumen Package\nCRI/CCT\nLens*\nVoltage\nControls\nFactory Installed Options**\nZR\n14\nD\n30L\n3,000 Lumens\n40L\n4,000 Lumens\n50L\n5,000 Lumens\n60L\n6,000 Lumens\n830\n80 CRI, \n3000K\n835\n80 CRI, \n3500K\n840\n80 CRI, \n4000K\n850\n80 CRI, \n5000K\nAR\nFLX Arc \nCV\nZR Curve\nSQ\nSquare \nUNV \n\t- Universal 120-277V\nUC\n\t- 120-347V\n\t- Not available with 26L or 30L \nlumen packages\n\t- Available only with10V",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "2": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "be0ecbc8cc7ce66e7d8809c03634221c07104846c516055e00820e024168be5a",
+                "excerpt": "Product Specifications\nSMARTCAST® TECHNOLOGY\nSmartCast® Technology is the most intuitive and easiest to install intelligent \nlight solution on the market. SmartCast Technology delivers up to 70% \nenergy savings at up to half the cost of other solutions. Luminaires combine \nbest-in-class light with onboard sensors and intelligence to deliver a better \nlight experience. Extreme energy productivity, ",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "3": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "a457075f4e6a61aa7433f47819b9547d384f12134e5b2003ba46db80a8d74ea1",
+                "excerpt": "Delivered Lumens & Electrical Data\nSize\nLumen Package\nCRI\nControl\nInitial Delivered  \nLumens\nWattage\nCurrent (A)\nEB/GT Wattage\nEB/GT Current (A)\n120-277V\n120-347V/347V**\n120V\n208V\n240V\n277V\n347V\n120-277V\n120V\n208V\n240V\n277V\n2x2\n26L\n80\n10V5\n2,600\n18\nN/A\n0.17\n0.10\n0.08\n0.07\nN/A\n21\n0.19\n0.11\n0.09\n0.08\n10V1, SC1, AWNR, AWNS\n18\n18\n0.17\n0.10\n0.08\n0.07\n0.05\n21\n0.19\n0.11\n0.09\n0.08\n1x4, 2x2, 2x4\n30L\n80\n10V",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "4": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "b776457544e81942ff024e5d7eecdbd168b7c360d9b7af9c913efb6f0544865a",
+                "excerpt": "ZR14™, ZR22™, and ZR24™ LED Troffers - Version D\nReference https://www.creelighting.com/products/indoor/troffers/zr-series for detailed photometric data.\nReference https://www.creelighting.com/products/indoor/troffers/zr-series for detailed photometric data.\nCoefficients Of Utilization –  \nZonal Cavity Method\nRC %:\n80\nRW %:\n70\n50\n30\n10\nRCR: 0\n119\n119\n119\n119\n1\n108\n103\n98\n94\n2\n98\n89\n82\n76\n3\n89\n78\n6",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "5": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "c5eda52d47b3b68334a30720f5d876500006ecc927519bb4b71175a60e9a0055",
+                "excerpt": "ZR14™, ZR22™, and ZR24™ LED Troffers - Version D\nOpen Space\nSpacing\nLumen \nPackage\nInitial Delivered \nLumens\nWattage\nLPW\nw/ft2\nAverage \nfc\n8 x 8\n26L\n2,600\n18\n144\n0.27\n36\n30L\n3,000\n21\n143\n0.32\n42\n40L\n4,000\n27\n148\n0.41\n56\n50L\n5,000\n35\n143\n0.53\n70\n8 x 10\n26L\n2,600\n18\n144\n0.23\n30\n30L\n3,000\n21\n143\n0.26\n35\n40L\n4,000\n27\n148\n0.34\n47\n50L\n5,000\n35\n143\n0.44\n58\n10 x 10\n26L\n2,600\n18\n144\n0.18\n24\n30L\n3,000\n21\n14",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "6": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "f52f0f2195e9d5db583e883b2f86f0a5cd98860cf6033eb93e6b22700d030c9d",
+                "excerpt": "ZR14™, ZR22™, and ZR24™ LED Troffers - Version D\nLens Assembly \nCV\nAR\nSQ\nInner Optic Overlay Diffuser Accessories \nWavy\nPerforated\nStriped\nDiffuse\nBrushed Metal\nInner Optic Overlay Diffuser Accessories (for use with AR Lens only)\nField-Installed\nFor use with 10V1, 10V5 and  AWNR Controls\nWavy Inner Optic Diffuser, 10-Pack\nFLX-WVD-4 (1x4 & 2x4 luminaires)\nFLX-WVD-2 (2x2 luminaires)\nPerforated Inner",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "7": {
+                "url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "tier": "distributor",
+                "title": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+                "retrieved_at": "2026-10-28T03:48:13+00:00",
+                "sha256": "a6cd4f1b722af4c5415e0114ace0b98b9f27c6f12c5305a7ef3271649827cd28",
+                "excerpt": "ZR14™, ZR22™, and ZR24™ LED Troffers - Version D\nReplacement Kits\nEB Replacement Kit  \nFLX-EBKIT-IO \n- Replaces EB driver in existing ZR/FLX luminaires \n- Available only with UNV voltage\nLens Replacement Kits\nRLK\nProduct\nLens\nControls\nReplacement Lens Kit\nFLX14/24 \n- For use with 1x4  \n   and 2x4  \n   luminaires \nFLX22 \n- For use with 2x2  \n   luminaires\nCRV \n- ZR Curve \nARC \n- FLX Arc  \nSQ \n- Squ",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              "8": {
+                "url": "https://www.creelighting.com/news/cree-expands-award-winning-zr-series-led-troffer-family",
+                "tier": "distributor",
+                "title": "https://www.creelighting.com/news/cree-expands-award-winning-zr-series-led-troffer-family",
+                "retrieved_at": "2026-10-28T17:42:08+00:00",
+                "sha256": "b783da9ed9610741d6ffd7114748bafbdd9e8a516686185deaf1d3d9de0683ba",
+                "excerpt": "![Cree Lighting Logo](https://cms.creelighting.com/app/uploads/2021/10/creelighting-r-horizontal-ko-logo.png)\n\n## Main Navigation\n\n## [Products](/products/)\n\n### [Outdoor Lighting](/products/outdoor/)\n\n### [Indoor Lighting](/products/indoor/)\n\n### [Intelligent Solutions](/products/intelligent-lighting/)\n\n### [Technology](/products/technology/)\n\n## [Applications](/applications/)\n\n### [Gas Stations ",
+                "archived_path": null,
+                "cache_hit": false
+              },
+              "9": {
+                "url": "https://www.creelighting.com/news/cree-introduces-innovative-new-zr-rk-led-troffer-retrofit-kit",
+                "tier": "distributor",
+                "title": "https://www.creelighting.com/news/cree-introduces-innovative-new-zr-rk-led-troffer-retrofit-kit",
+                "retrieved_at": "2026-10-28T17:42:09+00:00",
+                "sha256": "813d24733dcaf1bcf06108878980c106f26d50449565ed8011bcddda09050c6a",
+                "excerpt": "[English](?lang=en)\n\n[![Cree Lighting Logo](https://cms.creelighting.com/app/uploads/2021/10/creelighting-r-horizontal-ko-logo.png)](/)\n\n\n\n\n## Breadcrumb Navigation\n\n* [News](/news/)\n* Cree Introduces Innovative New ZR-RK LED Troffer Retrofit Kit\n\n# Cree Introduces Innovative New ZR-RK LED Troffer Retrofit Kit\n\nPublished on: 5/22/2017\n\n---\n\n*Transition Outdated Fluorescent to Outstanding LED Techn",
+                "archived_path": null,
+                "cache_hit": false
+              }
+            },
+            "passes": false
+          }
+        ],
+        "suggest": "",
+        "alternates": [
+          {
+            "name": "ZR-D LED Troffer Spec Sheet - industrialzone.com",
+            "source_url": "https://www.industrialzone.com/pdf/ZRDLEDTrofferSpecSheet.pdf",
+            "rank": "possible",
+            "confirm": [
+              "Rated life (L70)",
+              "macadam steps",
+              "Dims down to",
+              "Current document",
+              "Still made"
+            ],
+            "failed": [],
+            "better": [
+              {
+                "requirement_id": "req_warranty_years_led",
+                "label": "Warranty",
+                "alternate": "5 years",
+                "submitted": "5 years",
+                "mark": "meets"
+              }
+            ],
+            "origin": "search"
+          }
+        ],
+        "named": null
+      },
+      "configure": []
+    }
+  ],
+  "comparison": [],
+  "claims": [
+    {
+      "id": "clm-2",
+      "product": "2TL-2X4",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL",
+      "property": "dim_min_percent",
+      "value": 0.1,
+      "unit": "%",
+      "page": 2,
+      "bbox": null,
+      "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+      "variant": "EZB",
+      "scope": "option",
+      "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-11",
+      "product": "2TL-2X4",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL",
+      "property": "l90_hours",
+      "value": 60000.0,
+      "unit": "hours",
+      "page": 1,
+      "bbox": null,
+      "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "Long-life LEDs, coupled with high-efficiency drivers, provide superior level and quality of illumination for extended service life. 90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-18",
+      "product": "2TL-2X4",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL",
+      "property": "standards",
+      "value": [
+        "CSA",
+        "IC"
+      ],
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "LISTINGS — CSA certified to U.S. and Canadian standards. IC rated.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-21",
+      "product": "2TL-2X4",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL",
+      "property": "warranty_years",
+      "value": 5.0,
+      "unit": "years",
+      "page": 1,
+      "bbox": null,
+      "quote": "5-year limited warranty.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "WARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed.",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "product_data",
+    "system_drawing"
+  ],
+  "extracted": {
+    "product": "2TL-2X4",
+    "manufacturer": "Acuity Brands Lighting, Inc.",
+    "model": "2TL",
+    "selection": null,
+    "family": "T Series LED",
+    "family_quote": "T Series LED",
+    "document_revision": "Rev. 11/18/22",
+    "claims": [
+      {
+        "id": "clm-2",
+        "product": "2TL-2X4",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "2TL",
+        "property": "dim_min_percent",
+        "value": 0.1,
+        "unit": "%",
+        "page": 2,
+        "bbox": null,
+        "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+        "variant": "EZB",
+        "scope": "option",
+        "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-11",
+        "product": "2TL-2X4",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "2TL",
+        "property": "l90_hours",
+        "value": 60000.0,
+        "unit": "hours",
+        "page": 1,
+        "bbox": null,
+        "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Long-life LEDs, coupled with high-efficiency drivers, provide superior level and quality of illumination for extended service life. 90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-18",
+        "product": "2TL-2X4",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "2TL",
+        "property": "standards",
+        "value": [
+          "CSA",
+          "IC"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "LISTINGS — CSA certified to U.S. and Canadian standards. IC rated.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-21",
+        "product": "2TL-2X4",
+        "manufacturer": "Acuity Brands Lighting, Inc.",
+        "model": "2TL",
+        "property": "warranty_years",
+        "value": 5.0,
+        "unit": "years",
+        "page": 1,
+        "bbox": null,
+        "quote": "5-year limited warranty.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "WARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed.",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "2TL-2X4",
+      "manufacturer": "Acuity Brands Lighting, Inc.",
+      "model": "2TL",
+      "selection": null,
+      "family": "T Series LED",
+      "family_quote": "T Series LED",
+      "document_revision": "Rev. 11/18/22",
+      "claims": [
+        {
+          "id": "clm-2",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "dim_min_percent",
+          "value": 0.1,
+          "unit": "%",
+          "page": 2,
+          "bbox": null,
+          "quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "variant": "EZB",
+          "scope": "option",
+          "scope_quote": "EZB eldoLED dims to  0.1% (0-10 volt dimming)",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-11",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "l90_hours",
+          "value": 60000.0,
+          "unit": "hours",
+          "page": 1,
+          "bbox": null,
+          "quote": "90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Long-life LEDs, coupled with high-efficiency drivers, provide superior level and quality of illumination for extended service life. 90% LED lumen maintenance at 60,000 hours (L90/60,000).",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-18",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "standards",
+          "value": [
+            "CSA",
+            "IC"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "CSA certified to U.S. and Canadian standards. IC rated.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "LISTINGS — CSA certified to U.S. and Canadian standards. IC rated.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-21",
+          "product": "2TL-2X4",
+          "manufacturer": "Acuity Brands Lighting, Inc.",
+          "model": "2TL",
+          "property": "warranty_years",
+          "value": 5.0,
+          "unit": "years",
+          "page": 1,
+          "bbox": null,
+          "quote": "5-year limited warranty.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "WARRANTY — 5-year limited warranty. This is the only warranty provided and no other statements in this specification sheet create any warranty of any kind. All other express and implied warranties are disclaimed.",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "discontinued",
+      "replacement": null,
+      "current_revision": null,
+      "status_date": "2024-06-30",
+      "status_quote": "As of **June 30th, 2024**, the TL family will be discontinued.",
+      "status_family": "TL",
+      "current_values": [],
+      "source_urls": [
+        "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2"
+      ],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://www.acuitybrands.com",
+        "tier": "manufacturer",
+        "title": "Acuity Brands Lighting",
+        "retrieved_at": "2026-10-28T03:48:03+00:00",
+        "sha256": "e8d6c39fea50131b036e705c0044789953aa5973fab11574f9f4ffae19ff77bd",
+        "excerpt": "![site logo](/-/media/abl/acuitybrands/images/home/new-acuity-brands-logo-green-220x70.png?h=70&w=220&la=en&hash=3AA54071025D0D22CB8DDE5AF22D2F14)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ab_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remov",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://lithonia.acuitybrands.com/resources/technical-downloads",
+        "tier": "manufacturer",
+        "title": "Technical Downloads",
+        "retrieved_at": "2026-10-28T03:48:03+00:00",
+        "sha256": "61e48a059c644090d045027385c9bb9daac5b3601f68074fab75697d8b42f785",
+        "excerpt": "![site logo](/-/media/abl/lithonia/images/lithonia-lighting_stack.png?h=60&w=208&la=en&hash=582F70A4DE060C7C850C67D9832A4599)\n![Close Mobile Search Bar](/Assets/img/close-modal-blue-grey.png)\n![Scroll To Top](/-/media/abl/shared-content/images/top-of-page-button/ll_top_icon_60x60.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compare](/Assets/img/compare-remove.png)\n![Remove Compa",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://insights.acuitybrands.com/product-updates-blog/discontinuation-notice-lithonia-lighting-tl-recessed-luminaire-2",
+        "tier": "manufacturer",
+        "title": "Discontinuation Notice: Lithonia Lighting® TL Recessed Luminaire",
+        "retrieved_at": "2026-10-28T03:48:03+00:00",
+        "sha256": "1ebee4b87f42370f6833e4bcb10e96f554327af9fde2c464c22b459e76a993a4",
+        "excerpt": "* [English](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/)\n\n* [Français](javascript:void(0))\n  + English\n  + Español\n  + Français\n\n[![](https://res.cloudinary.com/uf-550569/image/upload/v1759170165/KE2-Therm_568x66_u673dj.png)](https://ke2therm.com/fr-ca/)\n\n* [Español]",
+        "archived_path": null,
+        "cache_hit": true
+      }
+    ]
+  },
+  "document_revision": "Rev. 11/18/22",
+  "note_to_subcontractor": "Send back: see what to send.\n\nCouldn't confirm: DLC listing: Listed as a qualified DLC product, where applicable.\nCouldn't confirm: macadam steps: LEDs shall be binned within a maximum 3-step MacAdam Ellipse.\nSpecify option: Dims down to: Dims down to meets the spec only with EZB (0.1 %). Confirm the order specifies it.\nProduct Availability Issue: The manufacturer lists it as discontinued.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 2585,
+      "output_tokens": 68,
+      "cost_usd": 0.00017142,
+      "latency_ms": 1087,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5924,
+      "output_tokens": 3075,
+      "cost_usd": 0.0045447,
+      "latency_ms": 14808,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3497,
+      "output_tokens": 20,
+      "cost_usd": 0.0010671,
+      "latency_ms": 1610,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6251,
+      "output_tokens": 131,
+      "cost_usd": 0.0019932,
+      "latency_ms": 2197,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6507,
+      "output_tokens": 20,
+      "cost_usd": 0.0019701,
+      "latency_ms": 2020,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2500,
+      "output_tokens": 52,
+      "cost_usd": 0.0007968,
+      "latency_ms": 1804,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: replacement",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7893,
+      "output_tokens": 25,
+      "cost_usd": 0.0023904,
+      "latency_ms": 1452,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: replacement",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 461,
+      "output_tokens": 11,
+      "cost_usd": 0.0001482,
+      "latency_ms": 1102,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6261,
+      "output_tokens": 1211,
+      "cost_usd": 0.0029682,
+      "latency_ms": 6137,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 427,
+      "output_tokens": 51,
+      "cost_usd": 0.000174,
+      "latency_ms": 1385,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13239,
+      "output_tokens": 1428,
+      "cost_usd": 0.0052569,
+      "latency_ms": 6403,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4481,
+      "output_tokens": 26,
+      "cost_usd": 0.0013677,
+      "latency_ms": 1569,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 2770,
+      "output_tokens": 881,
+      "cost_usd": 0.0016239,
+      "latency_ms": 4627,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5354,
+      "output_tokens": 127,
+      "cost_usd": 0.0017205,
+      "latency_ms": 1874,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3644,
+      "output_tokens": 903,
+      "cost_usd": 0.0019059,
+      "latency_ms": 4760,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5511,
+      "output_tokens": 76,
+      "cost_usd": 0.0017217,
+      "latency_ms": 1756,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7664,
+      "output_tokens": 77,
+      "cost_usd": 0.0023685,
+      "latency_ms": 1758,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9508,
+      "output_tokens": 68,
+      "cost_usd": 0.0029136,
+      "latency_ms": 1843,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 11764,
+      "output_tokens": 70,
+      "cost_usd": 0.0035922,
+      "latency_ms": 2351,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13626,
+      "output_tokens": 70,
+      "cost_usd": 0.0041508,
+      "latency_ms": 2199,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 15088,
+      "output_tokens": 266,
+      "cost_usd": 0.0047658,
+      "latency_ms": 16296,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6261,
+      "output_tokens": 1211,
+      "cost_usd": 0.0029682,
+      "latency_ms": 6137,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 427,
+      "output_tokens": 51,
+      "cost_usd": 0.000174,
+      "latency_ms": 1385,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 13239,
+      "output_tokens": 1428,
+      "cost_usd": 0.0052569,
+      "latency_ms": 6403,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6067,
+      "output_tokens": 990,
+      "cost_usd": 0.0027111,
+      "latency_ms": 4483,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 662,
+      "output_tokens": 354,
+      "cost_usd": 0.0005172,
+      "latency_ms": 2579,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 8.0,
+  "duration_ms": 108947,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "Cree Lighting ZR series LED troffer specification data sheet",
+          "include_domains": [
+            "creelighting.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2339,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 2,
+        "tool": "search",
+        "args": {
+          "query": "Cree Lighting ZR series troffer specification sheet PDF",
+          "include_domains": [
+            "creelighting.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 3793,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 3,
+        "tool": "search",
+        "args": {
+          "query": "ZR series LED troffer Cree Lighting specification sheet",
+          "include_domains": [
+            "creelighting.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 3023,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "ZR series troffer Cree Lighting product page",
+          "include_domains": [
+            "creelighting.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2432,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 5,
+        "tool": "search",
+        "args": {
+          "query": "ZR series LED troffer Cree Lighting zr-series",
+          "include_domains": [
+            "creelighting.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2135,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 6,
+        "tool": "finish",
+        "args": {
+          "found": false,
+          "status": "unknown",
+          "note": "After searching Cree Lighting's website, I found references to the ZR series including ZR-RK retrofit kits, ZR-FD high efficiency models, ZR-T TrueWhite, and ZR-C Commercial models. However, I was unable to locate the specific manufacturer's document/data sheet for the exact \"ZR\" model/product as requested. The ZR-RK series shows a discontinuation notice (\"Important: This product has low inventory and is being discontinued\"), but this appears to apply specifically to the retrofit kit variant, not necessarily the entire ZR series family. Without accessing the actual product data sheet for the base ZR model, I cannot confirm the specific properties requested (CRI, dimming percentage, DLC listing, efficacy, input watts, L70 hours, MacAdam steps, warranty, or watts) or provide definitive availability status for the exact ZR model."
+        },
+        "summary": "couldn't confirm a document",
+        "credits": 0.0,
+        "ms": 46,
+        "succeeded": false,
+        "source_urls": []
+      }
+    ],
+    "outcome": "not_found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "Cree Lighting ZR series LED troffer specification data sheet",
+            "include_domains": [
+              "creelighting.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2339,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "search",
+          "args": {
+            "query": "Cree Lighting ZR series troffer specification sheet PDF",
+            "include_domains": [
+              "creelighting.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 3793,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 3,
+          "tool": "search",
+          "args": {
+            "query": "ZR series LED troffer Cree Lighting specification sheet",
+            "include_domains": [
+              "creelighting.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 3023,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 4,
+          "tool": "search",
+          "args": {
+            "query": "ZR series troffer Cree Lighting product page",
+            "include_domains": [
+              "creelighting.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2432,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 5,
+          "tool": "search",
+          "args": {
+            "query": "ZR series LED troffer Cree Lighting zr-series",
+            "include_domains": [
+              "creelighting.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2135,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 6,
+          "tool": "finish",
+          "args": {
+            "found": false,
+            "status": "unknown",
+            "note": "After searching Cree Lighting's website, I found references to the ZR series including ZR-RK retrofit kits, ZR-FD high efficiency models, ZR-T TrueWhite, and ZR-C Commercial models. However, I was unable to locate the specific manufacturer's document/data sheet for the exact \"ZR\" model/product as requested. The ZR-RK series shows a discontinuation notice (\"Important: This product has low inventory and is being discontinued\"), but this appears to apply specifically to the retrofit kit variant, not necessarily the entire ZR series family. Without accessing the actual product data sheet for the base ZR model, I cannot confirm the specific properties requested (CRI, dimming percentage, DLC listing, efficacy, input watts, L70 hours, MacAdam steps, warranty, or watts) or provide definitive availability status for the exact ZR model."
+          },
+          "summary": "couldn't confirm a document",
+          "credits": 0.0,
+          "ms": 46,
+          "succeeded": false,
+          "source_urls": []
+        }
+      ],
+      "outcome": "not_found",
+      "purpose": "replacement",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "15251ce97314cc3e06f59069a6ec031666572727996befff6b10ac2b5c8ef685",
+  "fresh_model_cost_usd": 0.0481299,
+  "fresh_web_credits": 8.0,
+  "queue_ms": 232317,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 65,
+  "claims_kept": 22,
+  "web_values_read": 8,
+  "web_values_kept": 0,
+  "drop_reasons": {
+    "claim:metric_not_in_quote": 8,
+    "claim:quote_not_on_page": 9,
+    "claim:unit_not_in_quote": 11,
+    "claim:value_not_in_quote": 15,
+    "web:identity_not_on_source": 2,
+    "web:quote_not_on_source": 6
+  }
+}

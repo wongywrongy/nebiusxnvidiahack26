@@ -15,22 +15,28 @@ An upload with no quoted values matching its selected spec says **“Doesn't mat
 
 ## Measured live panel
 
-Recorded **October 28, 2026**, run **`20261028-065522-3dd974`**, including all tray and watched items:
+Live run **`20261028-173729-554074`**, recorded **October 28, 2026** on the code the public endpoint serves (eight known cases plus the tray and watched items). The Scoreboard shows this run.
 
-| Right calls | Problems caught | Clean cases wrongly flagged | Passing replacements |
-| --- | --- | --- | --- |
-| **4 / 8** | **4 / 6** | **0 / 2** | **0 / 5** |
+| Right calls | Problems caught | Clean cases wrongly flagged | Unnecessary notes | Passing replacements |
+| --- | --- | --- | --- | --- |
+| **6 / 8** | **5 / 6** | **1 / 2** | **0** | **0 / 5** |
 
-The separate wrong-spec check approved **0 of 14** documents; all 14 were marked not applicable, live with cached calls. This is a small known demonstration set, partly cached, rather than an unseen accuracy benchmark. The earlier October 22 panel was 6/8 calls and 5/6 problems; the new run adds an unnecessary note on c01 and misses c04's steel-pipe coverage problem. c05 and c06 remain wrong calls. **The strict case evidence gate does not pass. No passing replacement was found live; no planted-problem Investigator rescue is claimed.** [New evidence and comparison](docs/customer-feedback/release-20261028/README.md) · [Recorded scores](runs/recorded/20261028-065522-3dd974/scores.json) · [Deployment evidence](docs/deployment/README.md)
+Wrong-spec check on the same code: **0 of 14** approved (13 not applicable, 1 sent back). Average **$0.126** and **114 s** per item. This is a small known set, partly cached, not an unseen benchmark. c05 and c06 are the wrong calls.
+
+**Run-to-run variance:** a same-day run on the earlier PR #20 code (`20261028-171142-5ca0fc`) differed only on clean case c05, which it approved with a note instead of sending back (0/2 false alarms, 1 unnecessary note). c05 flips between runs.
+
+A same-day A/B tested Nemotron 3 Ultra (5/8, about 5× the cost per item) and reasoning on every Super step (4/8); neither ships. **The strict case evidence gate does not pass. No passing replacement was found live; no Investigator rescue is claimed.** [A/B evidence](docs/customer-feedback/accuracy-arms-20261028/README.md) · [Recorded scores](runs/recorded/20261028-173729-554074/scores.json) · [Deployment and public checks](docs/deployment/README.md)
 
 ## Models and evidence
 
 | Component | Work |
 | --- | --- |
 | **Nemotron 3 Nano**, Nebius Token Factory | Sorts PDF pages |
-| **Nemotron 3 Super**, Nebius Token Factory | Drafts checklists, identifies draft product types, extracts quoted claims, reads manufacturer sources and writes summaries |
+| **Nemotron 3 Super**, Nebius Token Factory | Drafts checklists (with reasoning on), identifies draft product types, extracts quoted claims, reads manufacturer sources and writes summaries. Nemotron 3 Ultra was tested for these steps on October 28 and not adopted |
 | **Tavily Search, Extract and bounded Map** | Finds and retrieves current manufacturer documents |
 | **Code** | Validates quotations, compares values, applies product-type scope and owns every verdict |
+
+In short: Nemotron 3 Nano sorts pages; Nemotron 3 Super reads data sheets, checks the manufacturer's site and writes the notes, on Nebius Token Factory; Tavily finds current manufacturer documents; code makes every decision.
 
 Unquoted claims and web values are dropped. “Couldn't confirm” is never a failure. SpecCheck suggests alternates and shows what's still unconfirmed; only a fully checked alternate is labelled acceptable. Messages remain editable drafts and are never sent. Mock results say mock, cached live calls remain labelled, and recorded fallback says replay. Checklist drafts are unreviewed. A memo covers one run; items retried into another run are separate. The daily GitHub Actions fallback has a real October 28 report: one watched item, one discontinued product, $0.0667 / 13 credits. **No Nebius Serverless Job execution is claimed.** [Schedule, caps and measured status](deploy/nebius/recheck-job.md).
 

@@ -1,0 +1,1257 @@
+{
+  "case_id": "c01",
+  "title": "Firestop sealant, through-penetrations",
+  "decision": "approve",
+  "summary": "Approve: meets the spec as submitted. Assembly proof remains pending.",
+  "spec_section": "07 84 00",
+  "spec_title": "Firestopping",
+  "spec_rule_count": 4,
+  "spec_match_count": 3,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "VOC (air quality)",
+      "detail": "Package states 26 g/L; spec requires at most 250 g/L.",
+      "why_it_matters": null,
+      "requirement_id": "req_voc_content",
+      "claim_id": "clm-18",
+      "product_type": null,
+      "claim_ids": [
+        "clm-18"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-18",
+          "doc_file": "c01/sti_specseal_lci_tds_2025.pdf",
+          "page": 2,
+          "quote": "VOC Content**\n26 g/L",
+          "boxes": [
+            {
+              "x0": 0.2361,
+              "y0": 0.4525,
+              "x1": 0.3286,
+              "y1": 0.4665
+            },
+            {
+              "x0": 0.7333,
+              "y0": 0.4525,
+              "x1": 0.7723,
+              "y1": 0.4665
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "26 g/L",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "astm g21 rating",
+      "detail": "Package states 0; spec requires exactly 0.",
+      "why_it_matters": null,
+      "requirement_id": "req_mold_resistance",
+      "claim_id": "clm-1",
+      "product_type": null,
+      "claim_ids": [
+        "clm-1"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-1",
+          "doc_file": "c01/sti_specseal_lci_tds_2025.pdf",
+          "page": 2,
+          "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "boxes": [
+            {
+              "x0": 0.1518,
+              "y0": 0.2845,
+              "x1": 0.4129,
+              "y1": 0.2984
+            },
+            {
+              "x0": 0.749,
+              "y0": 0.2845,
+              "x1": 0.7565,
+              "y1": 0.2984
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "0",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_t_rating_min_equal_f",
+      "check": "spec",
+      "verdict": "pending",
+      "severity": "info",
+      "title": "Pending assembly proof",
+      "detail": "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.",
+      "why_it_matters": "Without confirmed ratings, we cannot be sure the sealant will perform as needed during a fire, which could put building occupants at risk.",
+      "requirement_id": "req_t_rating_min_equal_f",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "T = F",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Test standards",
+      "detail": "Package states ASTM E814 (UL1479), ASTM E1966 (UL2079), CAN/ULC-S115, ASTM E119 (UL263), ASTM E84 (UL723), ASTM C834, Type C, Grade 0; allowed: astm e814, astm e119, ul 1479.",
+      "why_it_matters": null,
+      "requirement_id": "fs-std",
+      "claim_id": "clm-16",
+      "product_type": null,
+      "claim_ids": [
+        "clm-16"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-16",
+          "doc_file": "c01/sti_specseal_lci_tds_2025.pdf",
+          "page": 1,
+          "quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+          "boxes": [
+            {
+              "x0": 0.0294,
+              "y0": 0.7516,
+              "x1": 0.0879,
+              "y1": 0.7667
+            },
+            {
+              "x0": 0.0877,
+              "y0": 0.7528,
+              "x1": 0.0946,
+              "y1": 0.7616
+            },
+            {
+              "x0": 0.0945,
+              "y0": 0.7516,
+              "x1": 0.61,
+              "y1": 0.7667
+            },
+            {
+              "x0": 0.0294,
+              "y0": 0.7667,
+              "x1": 0.5871,
+              "y1": 0.7818
+            },
+            {
+              "x0": 0.0294,
+              "y0": 0.7819,
+              "x1": 0.568,
+              "y1": 0.797
+            },
+            {
+              "x0": 0.0294,
+              "y0": 0.797,
+              "x1": 0.6053,
+              "y1": 0.8121
+            },
+            {
+              "x0": 0.0294,
+              "y0": 0.8122,
+              "x1": 0.2214,
+              "y1": 0.8273
+            },
+            {
+              "x0": 0.2213,
+              "y0": 0.8134,
+              "x1": 0.2282,
+              "y1": 0.8222
+            },
+            {
+              "x0": 0.2281,
+              "y0": 0.8122,
+              "x1": 0.5888,
+              "y1": 0.8273
+            },
+            {
+              "x0": 0.0294,
+              "y0": 0.8273,
+              "x1": 0.5685,
+              "y1": 0.8424
+            },
+            {
+              "x0": 0.0294,
+              "y0": 0.8425,
+              "x1": 0.4546,
+              "y1": 0.8576
+            }
+          ],
+          "kind": "checked"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": [
+          "ASTM E814 (UL1479)",
+          "ASTM E1966 (UL2079)",
+          "CAN/ULC-S115",
+          "ASTM E119 (UL263)",
+          "ASTM E84 (UL723)",
+          "ASTM C834, Type C, Grade 0"
+        ],
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "currency-current",
+      "check": "currency",
+      "verdict": "pass",
+      "severity": "info",
+      "title": "Compared values match current sources",
+      "detail": "",
+      "why_it_matters": null,
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "undated",
+        "right_label": "Current",
+        "right_value": "unknown",
+        "verdict": "pass",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:53+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:53+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:53+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:53+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "VOC Content**\n26 g/L",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:55+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:55+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:55+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+          "archived_path": null,
+          "cache_hit": true
+        },
+        {
+          "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "tier": "distributor",
+          "title": "SpecSeal® LCI Intumescent Sealant",
+          "retrieved_at": "2026-10-28T06:55:55+00:00",
+          "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+          "excerpt": "VOC Content**\n26 g/L",
+          "archived_path": null,
+          "cache_hit": true
+        }
+      ],
+      "quote": null,
+      "decided_by": "tavily + super",
+      "fix": null,
+      "configure": []
+    }
+  ],
+  "comparison": [
+    {
+      "property": "astm_g21_rating",
+      "label": "astm g21 rating",
+      "submitted": "0",
+      "current": "0",
+      "changed": false,
+      "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+      "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0"
+    },
+    {
+      "property": "penetrant_types",
+      "label": "Pipe types covered",
+      "submitted": "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size, Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX), Insulated pipes including heating, cooling, and condensation applications, Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling, Structural Steel and Metal Ductwork including HVAC, bath and dryer vents",
+      "current": "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size, Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX), Insulated pipes including heating, cooling, and condensation applications, Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling, Structural Steel and Metal Ductwork including HVAC, bath and dryer vents",
+      "changed": false,
+      "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+      "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents."
+    },
+    {
+      "property": "service_temp_max_f",
+      "label": "Highest service temperature",
+      "submitted": "185 °F",
+      "current": "185 °F",
+      "changed": false,
+      "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+      "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)"
+    },
+    {
+      "property": "voc_g_per_l",
+      "label": "VOC (air quality)",
+      "submitted": "26 g/L",
+      "current": "26 g/L",
+      "changed": false,
+      "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+      "quote": "VOC Content**\n26 g/L"
+    }
+  ],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "SpecSeal® LCI Intumescent Sealant",
+      "manufacturer": "Specified Technologies Inc.",
+      "model": "ZSFOD5062 25171",
+      "property": "astm_g21_rating",
+      "value": "0",
+      "unit": null,
+      "page": 2,
+      "bbox": null,
+      "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-13",
+      "product": "SpecSeal® LCI Intumescent Sealant",
+      "manufacturer": "Specified Technologies Inc.",
+      "model": "ZSFOD5062 25171",
+      "property": "penetrant_types",
+      "value": [
+        "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size",
+        "Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX)",
+        "Insulated pipes including heating, cooling, and condensation applications",
+        "Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling",
+        "Structural Steel and Metal Ductwork including HVAC, bath and dryer vents"
+      ],
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-14",
+      "product": "SpecSeal® LCI Intumescent Sealant",
+      "manufacturer": "Specified Technologies Inc.",
+      "model": "ZSFOD5062 25171",
+      "property": "service_temp_max_f",
+      "value": 185.0,
+      "unit": "°F",
+      "page": 2,
+      "bbox": null,
+      "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-16",
+      "product": "SpecSeal® LCI Intumescent Sealant",
+      "manufacturer": "Specified Technologies Inc.",
+      "model": "ZSFOD5062 25171",
+      "property": "standards",
+      "value": [
+        "ASTM E814 (UL1479)",
+        "ASTM E1966 (UL2079)",
+        "CAN/ULC-S115",
+        "ASTM E119 (UL263)",
+        "ASTM E84 (UL723)",
+        "ASTM C834, Type C, Grade 0"
+      ],
+      "unit": null,
+      "page": 1,
+      "bbox": null,
+      "quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-18",
+      "product": "SpecSeal® LCI Intumescent Sealant",
+      "manufacturer": "Specified Technologies Inc.",
+      "model": "ZSFOD5062 25171",
+      "property": "voc_g_per_l",
+      "value": 26.0,
+      "unit": "g/L",
+      "page": 2,
+      "bbox": null,
+      "quote": "VOC Content**\n26 g/L",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "VOC Content**\n26 g/L",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "cover",
+    "product_data"
+  ],
+  "extracted": {
+    "product": "SpecSeal® LCI Intumescent Sealant",
+    "manufacturer": "Specified Technologies Inc.",
+    "model": "ZSFOD5062 25171",
+    "selection": null,
+    "family": null,
+    "family_quote": null,
+    "document_revision": null,
+    "claims": [
+      {
+        "id": "clm-1",
+        "product": "SpecSeal® LCI Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": "ZSFOD5062 25171",
+        "property": "astm_g21_rating",
+        "value": "0",
+        "unit": null,
+        "page": 2,
+        "bbox": null,
+        "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-13",
+        "product": "SpecSeal® LCI Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": "ZSFOD5062 25171",
+        "property": "penetrant_types",
+        "value": [
+          "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size",
+          "Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX)",
+          "Insulated pipes including heating, cooling, and condensation applications",
+          "Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling",
+          "Structural Steel and Metal Ductwork including HVAC, bath and dryer vents"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-14",
+        "product": "SpecSeal® LCI Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": "ZSFOD5062 25171",
+        "property": "service_temp_max_f",
+        "value": 185.0,
+        "unit": "°F",
+        "page": 2,
+        "bbox": null,
+        "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-16",
+        "product": "SpecSeal® LCI Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": "ZSFOD5062 25171",
+        "property": "standards",
+        "value": [
+          "ASTM E814 (UL1479)",
+          "ASTM E1966 (UL2079)",
+          "CAN/ULC-S115",
+          "ASTM E119 (UL263)",
+          "ASTM E84 (UL723)",
+          "ASTM C834, Type C, Grade 0"
+        ],
+        "unit": null,
+        "page": 1,
+        "bbox": null,
+        "quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-18",
+        "product": "SpecSeal® LCI Intumescent Sealant",
+        "manufacturer": "Specified Technologies Inc.",
+        "model": "ZSFOD5062 25171",
+        "property": "voc_g_per_l",
+        "value": 26.0,
+        "unit": "g/L",
+        "page": 2,
+        "bbox": null,
+        "quote": "VOC Content**\n26 g/L",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "VOC Content**\n26 g/L",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "SpecSeal® LCI Intumescent Sealant",
+      "manufacturer": "Specified Technologies Inc.",
+      "model": "ZSFOD5062 25171",
+      "selection": null,
+      "family": null,
+      "family_quote": null,
+      "document_revision": null,
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "SpecSeal® LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": "ZSFOD5062 25171",
+          "property": "astm_g21_rating",
+          "value": "0",
+          "unit": null,
+          "page": 2,
+          "bbox": null,
+          "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-13",
+          "product": "SpecSeal® LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": "ZSFOD5062 25171",
+          "property": "penetrant_types",
+          "value": [
+            "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size",
+            "Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX)",
+            "Insulated pipes including heating, cooling, and condensation applications",
+            "Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling",
+            "Structural Steel and Metal Ductwork including HVAC, bath and dryer vents"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-14",
+          "product": "SpecSeal® LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": "ZSFOD5062 25171",
+          "property": "service_temp_max_f",
+          "value": 185.0,
+          "unit": "°F",
+          "page": 2,
+          "bbox": null,
+          "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-16",
+          "product": "SpecSeal® LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": "ZSFOD5062 25171",
+          "property": "standards",
+          "value": [
+            "ASTM E814 (UL1479)",
+            "ASTM E1966 (UL2079)",
+            "CAN/ULC-S115",
+            "ASTM E119 (UL263)",
+            "ASTM E84 (UL723)",
+            "ASTM C834, Type C, Grade 0"
+          ],
+          "unit": null,
+          "page": 1,
+          "bbox": null,
+          "quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-18",
+          "product": "SpecSeal® LCI Intumescent Sealant",
+          "manufacturer": "Specified Technologies Inc.",
+          "model": "ZSFOD5062 25171",
+          "property": "voc_g_per_l",
+          "value": 26.0,
+          "unit": "g/L",
+          "page": 2,
+          "bbox": null,
+          "quote": "VOC Content**\n26 g/L",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "VOC Content**\n26 g/L",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "unknown",
+      "replacement": null,
+      "current_revision": null,
+      "status_date": null,
+      "status_quote": null,
+      "status_family": null,
+      "current_values": [
+        {
+          "property": "astm_g21_rating",
+          "value": "0",
+          "unit": null,
+          "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "model": "ZSFOD5062 25171",
+          "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+          "selection_quote": null
+        },
+        {
+          "property": "penetrant_types",
+          "value": [
+            "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size",
+            "Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX)",
+            "Insulated pipes including heating, cooling, and condensation applications",
+            "Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling",
+            "Structural Steel and Metal Ductwork including HVAC, bath and dryer vents"
+          ],
+          "unit": null,
+          "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+          "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "model": "ZSFOD5062 25171",
+          "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+          "selection_quote": null
+        },
+        {
+          "property": "service_temp_max_f",
+          "value": 185.0,
+          "unit": "°F",
+          "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+          "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "model": "ZSFOD5062 25171",
+          "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+          "selection_quote": null
+        },
+        {
+          "property": "voc_g_per_l",
+          "value": 26.0,
+          "unit": "g/L",
+          "quote": "VOC Content**\n26 g/L",
+          "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "model": "ZSFOD5062 25171",
+          "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "VOC Content**\n26 g/L",
+          "selection_quote": null
+        }
+      ],
+      "source_urls": [
+        "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+        "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf"
+      ],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf",
+        "tier": "manufacturer",
+        "title": "SpecSeal® LCI Intumescent Sealant",
+        "retrieved_at": "2026-10-28T06:55:50+00:00",
+        "sha256": "96db65ad6a57e261beb31c007f3d9886e052c3b97dd930802ff563d60a7f7ac9",
+        "excerpt": "P R O D U C T D A T A S H E E T 1 of 3 Specified Technologies Inc. • Somerville, NJ 08876 • Technical Service 1-800-992-1180 • www.stifirestop.com SpecSeal® LCI Intumescent Sealant • ZSFOD5062 22326 SpecSeal® LCI Intumescent Sealant SpecSeal® LCI Sealant is a versatile and economical intumescent sealant that has excellent caulking properties as well as high build properties on vertical or overhead",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+        "tier": "distributor",
+        "title": "SpecSeal® LCI Intumescent Sealant",
+        "retrieved_at": "2026-10-28T06:55:53+00:00",
+        "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+        "excerpt": "P\nR\nO\nD\nU\nC\nT\n \nD\nA\nT\nA\n \nS\nH\nE\nE\nT\n1 of 3\nSpecified Technologies Inc.  •  Somerville, NJ 08876   •  Technical Service 1-800-992-1180  •  www.stifirestop.com\nSpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171\nSpecSeal® LCI Intumescent Sealant\nSpecSeal® LCI Sealant is a versatile and economical intumescent sealant that has \nexcellent caulking properties as well as high build properties on vertic",
+        "archived_path": null,
+        "cache_hit": true
+      },
+      {
+        "url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+        "tier": "distributor",
+        "title": "SpecSeal® LCI Intumescent Sealant",
+        "retrieved_at": "2026-10-28T06:55:55+00:00",
+        "sha256": "8f70c90a27150cac09f789524274aa044aa0e7bc2aeb94e919c048a842f60689",
+        "excerpt": "P\nR\nO\nD\nU\nC\nT\n \nD\nA\nT\nA\n \nS\nH\nE\nE\nT\n1 of 3\nSpecified Technologies Inc.  •  Somerville, NJ 08876   •  Technical Service 1-800-992-1180  •  www.stifirestop.com\nSpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171\nSpecSeal® LCI Intumescent Sealant\nSpecSeal® LCI Sealant is a versatile and economical intumescent sealant that has \nexcellent caulking properties as well as high build properties on vertic",
+        "archived_path": null,
+        "cache_hit": true
+      }
+    ]
+  },
+  "document_revision": null,
+  "note_to_subcontractor": "Approve: meets the spec as submitted. Assembly proof remains pending.\n\nPending assembly proof: Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 1805,
+      "output_tokens": 66,
+      "cost_usd": 0.00012414,
+      "latency_ms": 2883,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5021,
+      "output_tokens": 3345,
+      "cost_usd": 0.0045168,
+      "latency_ms": 15887,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4728,
+      "output_tokens": 2789,
+      "cost_usd": 0.0039285,
+      "latency_ms": 12829,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5089,
+      "output_tokens": 2445,
+      "cost_usd": 0.0037272,
+      "latency_ms": 10938,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5090,
+      "output_tokens": 2293,
+      "cost_usd": 0.0035907,
+      "latency_ms": 10091,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5736,
+      "output_tokens": 444,
+      "cost_usd": 0.0021204,
+      "latency_ms": 4220,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 7822,
+      "output_tokens": 103,
+      "cost_usd": 0.0024393,
+      "latency_ms": 1888,
+      "cached": true,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 9713,
+      "output_tokens": 3002,
+      "cost_usd": 0.0056157,
+      "latency_ms": 18162,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 5089,
+      "output_tokens": 2445,
+      "cost_usd": 0.0037272,
+      "latency_ms": 10938,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 4728,
+      "output_tokens": 2789,
+      "cost_usd": 0.0039285,
+      "latency_ms": 12829,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 429,
+      "output_tokens": 147,
+      "cost_usd": 0.000261,
+      "latency_ms": 1550,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 0.0,
+  "duration_ms": 18604,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "SpecSeal LCI ZSFOD5062 25171 discontinued",
+          "include_domains": [
+            "stifirestop.com"
+          ],
+          "topic": "general"
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 2,
+        "tool": "search",
+        "args": {
+          "query": "\"SpecSeal LCI\" discontinued",
+          "include_domains": [
+            "stifirestop.com"
+          ],
+          "topic": "general"
+        },
+        "summary": "4 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 3,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+          "document_title": "SpecSeal® LCI Intumescent Sealant",
+          "revision_quote": "None",
+          "evidence_quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+          "status": "active",
+          "status_quote": "None",
+          "note": "The product data sheet for model ZSFOD5062 25171 shows a 2025 copyright and no discontinuation notice was found; the product appears to be currently active."
+        },
+        "summary": "revision unknown, unknown",
+        "credits": 0.0,
+        "ms": 82,
+        "succeeded": true,
+        "source_urls": []
+      }
+    ],
+    "outcome": "found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "SpecSeal LCI ZSFOD5062 25171 discontinued",
+            "include_domains": [
+              "stifirestop.com"
+            ],
+            "topic": "general"
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "search",
+          "args": {
+            "query": "\"SpecSeal LCI\" discontinued",
+            "include_domains": [
+              "stifirestop.com"
+            ],
+            "topic": "general"
+          },
+          "summary": "4 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 3,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "document_title": "SpecSeal® LCI Intumescent Sealant",
+            "revision_quote": "None",
+            "evidence_quote": "SpecSeal® LCI Sealant is the basis for systems that meet the exacting criteria of ASTM E814 (UL1479), ASTM E1966 (UL2079) and CAN/ULC-S115 as well as to the time-temperature requirements of ASTM E119 (UL263). LCI provides up to a 4-hour fire rating for typical service penetrations through concrete or wood floors, concrete or masonry walls, as well as gypsum board walls. SpecSeal® LCI Sealant meets Class A finish requirements for Flame Spread and Smoke Development when tested in accordance with ASTM E84 (UL723). Meets or exceeds the requirements of ASTM C834, Type C, Grade 0.",
+            "status": "active",
+            "status_quote": "None",
+            "note": "The product data sheet for model ZSFOD5062 25171 shows a 2025 copyright and no discontinuation notice was found; the product appears to be currently active."
+          },
+          "summary": "revision unknown, unknown",
+          "credits": 0.0,
+          "ms": 82,
+          "succeeded": true,
+          "source_urls": []
+        }
+      ],
+      "outcome": "found",
+      "purpose": "primary",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [
+          {
+            "property": "astm_g21_rating",
+            "value": "0",
+            "unit": null,
+            "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+            "selection_quote": null
+          },
+          {
+            "property": "penetrant_types",
+            "value": [
+              "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size",
+              "Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX)",
+              "Insulated pipes including heating, cooling, and condensation applications",
+              "Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling",
+              "Structural Steel and Metal Ductwork including HVAC, bath and dryer vents"
+            ],
+            "unit": null,
+            "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade \nsize; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); \nInsulated pipes including heating, cooling, and condensation applications; Common electrical \nservice and power distribution (service entrance, cable trays, busways), telephone, data, \nand TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+            "selection_quote": null
+          },
+          {
+            "property": "service_temp_max_f",
+            "value": 185.0,
+            "unit": "°F",
+            "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+            "selection_quote": null
+          },
+          {
+            "property": "voc_g_per_l",
+            "value": 26.0,
+            "unit": "g/L",
+            "quote": "VOC Content**\n26 g/L",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "VOC Content**\n26 g/L",
+            "selection_quote": null
+          },
+          {
+            "property": "astm_g21_rating",
+            "value": "0",
+            "unit": null,
+            "quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Mold & Fungus Growth Rating (ASTM G21)\n0",
+            "selection_quote": null
+          },
+          {
+            "property": "penetrant_types",
+            "value": [
+              "Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size",
+              "Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX)",
+              "Insulated pipes including heating, cooling, and condensation applications",
+              "Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling",
+              "Structural Steel and Metal Ductwork including HVAC, bath and dryer vents"
+            ],
+            "unit": null,
+            "quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "Penetrant types include:  Metallic penetrants (steel, iron, copper pipe, copper tubing, steel conduit and EMT) up to 36 in (914 mm) trade size; Non-metallic penetrants (Conduits & Tubing including PVC, CPVC, ABS, and PEX); Insulated pipes including heating, cooling, and condensation applications; Common electrical service and power distribution (service entrance, cable trays, busways), telephone, data, and TV cabling; Structural Steel and Metal Ductwork including HVAC, bath and dryer vents.",
+            "selection_quote": null
+          },
+          {
+            "property": "service_temp_max_f",
+            "value": 185.0,
+            "unit": "°F",
+            "quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "In Service Temperature\nLess than or equal to 185°F (85°C)",
+            "selection_quote": null
+          },
+          {
+            "property": "voc_g_per_l",
+            "value": 26.0,
+            "unit": "g/L",
+            "quote": "VOC Content**\n26 g/L",
+            "source_url": "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English",
+            "model": "ZSFOD5062 25171",
+            "identity_quote": "SpecSeal® LCI Intumescent Sealant  •  ZSFOD5062 25171",
+            "variant": null,
+            "scope": "product_wide",
+            "scope_quote": "VOC Content**\n26 g/L",
+            "selection_quote": null
+          }
+        ],
+        "source_urls": [
+          "https://files.stifirestop.com/4.%20Product%20Data%20Sheets/1.%20English/PDS_LCI%20Intumescent%20Sealant.pdf",
+          "https://cdn.bfldr.com/97UPJRLN/at/b3svh5bngpbjq5x5mx49gbv/PDS_LCI_Intumescent_Sealant_English"
+        ],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "15251ce97314cc3e06f59069a6ec031666572727996befff6b10ac2b5c8ef685",
+  "fresh_model_cost_usd": 0.0056157,
+  "fresh_web_credits": 0.0,
+  "queue_ms": 0,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 20,
+  "claims_kept": 5,
+  "web_values_read": 25,
+  "web_values_kept": 12,
+  "drop_reasons": {
+    "claim:bad_page": 13,
+    "claim:metric_not_in_quote": 1,
+    "claim:value_not_in_quote": 1,
+    "web:quote_not_on_source": 13
+  }
+}
