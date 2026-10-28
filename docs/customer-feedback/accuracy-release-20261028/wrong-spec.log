@@ -1,0 +1,17 @@
+w-c01                  26 51 00  not_applicable     Firestop sealant, through-penetrations
+w-c02                  26 51 00  not_applicable     Firestop system, floor penetration
+w-c03                  26 51 00  not_applicable     Firestop sealant, cable penetrations
+w-c04                  26 51 00  not_applicable     Firestop system, steel pipe through gypsum wall
+w-c05                  07 84 00  send_back          LED troffer, classrooms
+w-c06                  07 84 00  not_applicable     LED downlight, corridors
+w-c07                  07 84 00  not_applicable     LED troffer, offices
+w-c08                  07 84 00  not_applicable     Exit sign
+w-off-topic            07 84 00  not_applicable     Off-topic PDF
+w-try0-265100          26 51 00  not_applicable     RectorSeal Metacaulk 1000
+w-try1-265100          26 51 00  not_applicable     Tremco TREMstop Acrylic
+w-try2-078400          07 84 00  not_applicable     Keystone KT-BPLED40 LED panel
+w-try3-078400          07 84 00  not_applicable     Schlage ND Series Grade 1 locks
+w-try3-265100          26 51 00  not_applicable     Schlage ND Series Grade 1 locks
+
+wrong spec: 14 documents · 0 approved · 13 not applicable · 1 other   (run 20261028-171959-1f6c87, live)
+wrote wrong_spec into /tmp/claude-1000/-home-kyle-code-nebiusxnvidiahack26/ebd8ce34-f7b4-426c-bdb9-5bff2b0333c3/scratchpad/ws-scores.json

@@ -1,0 +1,786 @@
+{
+  "case_id": "c02",
+  "title": "Firestop system, floor penetration",
+  "decision": "send_back",
+  "summary": "Send back: see what to send.",
+  "spec_section": "07 84 00",
+  "spec_title": "Firestopping",
+  "spec_rule_count": 4,
+  "spec_match_count": 1,
+  "checklist_id": null,
+  "product_type": null,
+  "findings": [
+    {
+      "id": "spec-req_voc_content",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "VOC (air quality)",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": null,
+      "requirement_id": "req_voc_content",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "≤ 250 g/L",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.B",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_mold_resistance",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "astm g21 rating",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": null,
+      "requirement_id": "req_mold_resistance",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "= 0",
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.02.C",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "spec-req_t_rating_min_equal_f",
+      "check": "spec",
+      "verdict": "fail",
+      "severity": "critical",
+      "title": "Does not meet: Temperature rating (T)",
+      "detail": "Temperature rating (T) is 0 Hr but Fire rating (F) is 2 Hr.",
+      "why_it_matters": "If the temperature rating is too low, the firestop may fail during a fire, allowing heat and flames to spread through the floor penetration.",
+      "requirement_id": "req_t_rating_min_equal_f",
+      "claim_id": "clm-2",
+      "product_type": null,
+      "claim_ids": [
+        "clm-2",
+        "clm-1"
+      ],
+      "highlights": [
+        {
+          "claim_id": "clm-2",
+          "doc_file": "c02/3m_c-aj-2738.pdf",
+          "page": 1,
+          "quote": "T Rating — 0 Hr",
+          "boxes": [
+            {
+              "x0": 0.4456,
+              "y0": 0.0783,
+              "x1": 0.5396,
+              "y1": 0.0933
+            }
+          ],
+          "kind": "problem"
+        },
+        {
+          "claim_id": "clm-1",
+          "doc_file": "c02/3m_c-aj-2738.pdf",
+          "page": 1,
+          "quote": "F Rating — 2 Hr",
+          "boxes": [
+            {
+              "x0": 0.4459,
+              "y0": 0.0657,
+              "x1": 0.5394,
+              "y1": 0.0806
+            }
+          ],
+          "kind": "problem"
+        }
+      ],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": "T = F (2 Hr)",
+        "right_label": "Submitted",
+        "right_value": "0 Hr",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": {
+        "head": "No passing replacement found",
+        "query": "UL listed firestop system  floor penetration Temperature rating (T) equals Fire rating (F)",
+        "candidates": [],
+        "suggest": "",
+        "alternates": [],
+        "named": null
+      },
+      "configure": []
+    },
+    {
+      "id": "spec-fs-std",
+      "check": "spec",
+      "verdict": "not_applicable",
+      "severity": "info",
+      "title": "Test standards",
+      "detail": "Applies to product_data only.",
+      "why_it_matters": null,
+      "requirement_id": "fs-std",
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Spec requires",
+        "left_value": [
+          "astm e814",
+          "astm e119",
+          "ul 1479"
+        ],
+        "right_label": "Submitted",
+        "right_value": "Not confirmed",
+        "verdict": "fail",
+        "rows": []
+      },
+      "spec_ref": "07 84 00 2.04.A.1",
+      "evidence": [],
+      "quote": null,
+      "decided_by": "code",
+      "fix": null,
+      "configure": []
+    },
+    {
+      "id": "currency-unverified",
+      "check": "currency",
+      "verdict": "unverified",
+      "severity": "minor",
+      "title": "Document currency could not be confirmed",
+      "detail": "No source quoted a revision or a value; check manually.",
+      "why_it_matters": "Without knowing which document version is current, we cannot verify if the submitted information is up to date or applicable.",
+      "requirement_id": null,
+      "claim_id": null,
+      "product_type": null,
+      "claim_ids": [],
+      "highlights": [],
+      "compare": {
+        "left_label": "Submitted",
+        "left_value": "July 30, 2015",
+        "right_label": "Current",
+        "right_value": "Not confirmed",
+        "verdict": "unverified",
+        "rows": []
+      },
+      "spec_ref": null,
+      "evidence": [],
+      "quote": null,
+      "decided_by": "tavily",
+      "fix": null,
+      "configure": []
+    }
+  ],
+  "comparison": [],
+  "claims": [
+    {
+      "id": "clm-1",
+      "product": "2000 Series",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "property": "f_rating_hr",
+      "value": 2.0,
+      "unit": "Hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "F Rating — 2 Hr",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "F Rating — 2 Hr",
+      "selection_quote": null
+    },
+    {
+      "id": "clm-2",
+      "product": "2000 Series",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "property": "t_rating_hr",
+      "value": 0.0,
+      "unit": "Hr",
+      "page": 1,
+      "bbox": null,
+      "quote": "T Rating — 0 Hr",
+      "variant": null,
+      "scope": "product_wide",
+      "scope_quote": "T Rating — 0 Hr",
+      "selection_quote": null
+    }
+  ],
+  "selection": null,
+  "document_roles": [
+    "cover",
+    "system_drawing"
+  ],
+  "extracted": {
+    "product": "2000 Series",
+    "manufacturer": "3M Company",
+    "model": "C-AJ-2738",
+    "selection": null,
+    "family": null,
+    "family_quote": null,
+    "document_revision": "July 30, 2015",
+    "claims": [
+      {
+        "id": "clm-1",
+        "product": "2000 Series",
+        "manufacturer": "3M Company",
+        "model": "C-AJ-2738",
+        "property": "f_rating_hr",
+        "value": 2.0,
+        "unit": "Hr",
+        "page": 1,
+        "bbox": null,
+        "quote": "F Rating — 2 Hr",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "F Rating — 2 Hr",
+        "selection_quote": null
+      },
+      {
+        "id": "clm-2",
+        "product": "2000 Series",
+        "manufacturer": "3M Company",
+        "model": "C-AJ-2738",
+        "property": "t_rating_hr",
+        "value": 0.0,
+        "unit": "Hr",
+        "page": 1,
+        "bbox": null,
+        "quote": "T Rating — 0 Hr",
+        "variant": null,
+        "scope": "product_wide",
+        "scope_quote": "T Rating — 0 Hr",
+        "selection_quote": null
+      }
+    ]
+  },
+  "verification": {
+    "submitted": {
+      "product": "2000 Series",
+      "manufacturer": "3M Company",
+      "model": "C-AJ-2738",
+      "selection": null,
+      "family": null,
+      "family_quote": null,
+      "document_revision": "July 30, 2015",
+      "claims": [
+        {
+          "id": "clm-1",
+          "product": "2000 Series",
+          "manufacturer": "3M Company",
+          "model": "C-AJ-2738",
+          "property": "f_rating_hr",
+          "value": 2.0,
+          "unit": "Hr",
+          "page": 1,
+          "bbox": null,
+          "quote": "F Rating — 2 Hr",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "F Rating — 2 Hr",
+          "selection_quote": null
+        },
+        {
+          "id": "clm-2",
+          "product": "2000 Series",
+          "manufacturer": "3M Company",
+          "model": "C-AJ-2738",
+          "property": "t_rating_hr",
+          "value": 0.0,
+          "unit": "Hr",
+          "page": 1,
+          "bbox": null,
+          "quote": "T Rating — 0 Hr",
+          "variant": null,
+          "scope": "product_wide",
+          "scope_quote": "T Rating — 0 Hr",
+          "selection_quote": null
+        }
+      ]
+    },
+    "output": {
+      "status": "unknown",
+      "replacement": null,
+      "current_revision": null,
+      "status_date": null,
+      "status_quote": null,
+      "status_family": null,
+      "current_values": [],
+      "source_urls": [],
+      "notes": null
+    },
+    "sources": [
+      {
+        "url": "https://multimedia.3m.com/mws/media/1809217O/3m-perfect-it-iii-machine-polish-09376-tds-ceemea.pdf",
+        "tier": "manufacturer",
+        "title": "[PDF] 3M PRODUCT DATA SHEET",
+        "retrieved_at": "2026-10-28T17:11:55+00:00",
+        "sha256": "b60a9bfc6b1ad88548978e675808dbc035484672c856890ec751532a0a0a11c5",
+        "excerpt": "Technical Data Sheet Effective: 28/02/2020 Supersedes: 03/10/2000 Page 1 of 3 Automotive Aftermarket Division 3M™ 09376 Perfect-it™ III Machine Polish 1) Part Numbers 09376 (1.0 kilo bottle. 12 bottles per carton) 2) Description and end uses 3M™ 09376 Perfect-it™ III Machine Polish is a very high gloss polish for use on refinish paints to remove compounding scratches, for example, after 3M™ 09374 ",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/645454O/ul-certificate-of-compliance-cp25wb-sealant.pdf",
+        "tier": "manufacturer",
+        "title": "CERT IFICATE OF COMPLIANCE - mu ltime dia",
+        "retrieved_at": "2026-10-28T17:11:55+00:00",
+        "sha256": "0fff938b4fe08d44b6884e4ad1f312169050f1785f68c0dc6c542cb92ab8e599",
+        "excerpt": "C E R T I F I C A T E O F C O M P L I A N C E Certificate Number 20201215-R9700 Report Reference R9700 Issue Date 2020-December-15 Bruce Mahrenholz, Director North American Certification Program UL LLC Any information and documentation involving UL Mark services are provided on behalf of UL LLC (UL) or any authorized licensee of UL. For questions, please contact a local UL Customer Service Represe",
+        "archived_path": null,
+        "cache_hit": false
+      },
+      {
+        "url": "https://multimedia.3m.com/mws/media/1947187O/3m-perfect-it-gelcoat-compound-polish.pdf",
+        "tier": "manufacturer",
+        "title": "[PDF] Technical Data Sheet - 3M",
+        "retrieved_at": "2026-10-28T17:11:55+00:00",
+        "sha256": "d24a593d6681f3f83c340c8e9353e85ad22d091d8be897b86d22fef7c5d2f0c6",
+        "excerpt": "Technical Data Sheet Effective: 05/01/2021 Supersedes: First Issue Page 1 of 3 Automotive Aftermarket Division 3M™ Perfect-It™ Gelcoat Compound + Polish 1) Part Numbers 30344E 946 ml 30345E 3.6 l 2) Description and end uses 3M™ Perfect-It™ Gelcoat Compound + Polish is designed to remove P1000 and finer sand scratches with a 3M™ compounding pad. It is designed to work over a broad range of climates",
+        "archived_path": null,
+        "cache_hit": false
+      }
+    ]
+  },
+  "document_revision": "July 30, 2015",
+  "note_to_subcontractor": "Send back: see what to send.\n\nDoes not meet: Temperature rating (T): Temperature rating (T) is 0 Hr but Fire rating (F) is 2 Hr.\nDocument currency could not be confirmed: No source quoted a revision or a value; check manually.",
+  "usage": [
+    {
+      "task": "triage",
+      "tier": "triage",
+      "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "input_tokens": 765,
+      "output_tokens": 28,
+      "cost_usd": 0.00005262,
+      "latency_ms": 2960,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3184,
+      "output_tokens": 313,
+      "cost_usd": 0.0012369,
+      "latency_ms": 3389,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3450,
+      "output_tokens": 26,
+      "cost_usd": 0.0010584,
+      "latency_ms": 1543,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 6585,
+      "output_tokens": 26,
+      "cost_usd": 0.0019989,
+      "latency_ms": 1550,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "verify",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3410,
+      "output_tokens": 26,
+      "cost_usd": 0.0010464,
+      "latency_ms": 1552,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 8967,
+      "output_tokens": 524,
+      "cost_usd": 0.0031617,
+      "latency_ms": 6044,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 12519,
+      "output_tokens": 213,
+      "cost_usd": 0.0039474,
+      "latency_ms": 2718,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 14622,
+      "output_tokens": 126,
+      "cost_usd": 0.0045,
+      "latency_ms": 1878,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 16469,
+      "output_tokens": 491,
+      "cost_usd": 0.0053826,
+      "latency_ms": 3940,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 18788,
+      "output_tokens": 607,
+      "cost_usd": 0.0061827,
+      "latency_ms": 4617,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "investigate",
+      "tier": "verify",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 22267,
+      "output_tokens": 531,
+      "cost_usd": 0.007158,
+      "latency_ms": 25523,
+      "cached": false,
+      "format": "tools",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": "tool_calls"
+    },
+    {
+      "task": "fix: extract_claims",
+      "tier": "extract",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 3075,
+      "output_tokens": 45,
+      "cost_usd": 0.000963,
+      "latency_ms": 1686,
+      "cached": false,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    },
+    {
+      "task": "report",
+      "tier": "write",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "input_tokens": 731,
+      "output_tokens": 239,
+      "cost_usd": 0.0004344,
+      "latency_ms": 2809,
+      "cached": true,
+      "format": "json_schema",
+      "reasoning_tokens": 0,
+      "thinking": "off",
+      "finish_reason": null
+    }
+  ],
+  "web_credits": 6.0,
+  "duration_ms": 70128,
+  "investigation": {
+    "steps": [
+      {
+        "n": 1,
+        "tool": "search",
+        "args": {
+          "query": "C-AJ-2738 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 2,
+        "tool": "search",
+        "args": {
+          "query": "CP 25WB+ data sheet 3M",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 2680,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 3,
+        "tool": "extract",
+        "args": {
+          "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 0,
+        "succeeded": true,
+        "source_urls": [
+          "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+        ]
+      },
+      {
+        "n": 4,
+        "tool": "search",
+        "args": {
+          "query": "\"2000 Series\" 3M firestop",
+          "include_domains": [
+            "3m.com"
+          ]
+        },
+        "summary": "5 results",
+        "credits": 1.0,
+        "ms": 3293,
+        "succeeded": true,
+        "source_urls": []
+      },
+      {
+        "n": 5,
+        "tool": "extract",
+        "args": {
+          "url": "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf"
+        },
+        "summary": "1 extracted source",
+        "credits": 0.0,
+        "ms": 445,
+        "succeeded": true,
+        "source_urls": [
+          "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf"
+        ]
+      },
+      {
+        "n": 6,
+        "tool": "finish",
+        "args": {
+          "found": true,
+          "document_url": "https://multimedia.3m.com/mws/media/201508O/3m-fire-barrier-silicone-sealant-2000-technical-data-sheet.pdf",
+          "document_title": "3M™ Fire Barrier Silicone Sealant 2000+ Product Data Sheet",
+          "revision_quote": "Product Data Sheet",
+          "evidence_quote": "3M™ Fire Barrier Silicone Sealant 2000+ is a ready-to-use, gun-grade, one-component silicone elastomer that cures upon exposure to atmospheric humidity to form a flexible firestop seal.",
+          "status": "active",
+          "status_quote": "3M™ Fire Barrier Silicone Sealant 2000+ is a ready-to-use, gun-grade, one-component silicone elastomer...",
+          "note": "The product is part of the 2000 Series and the model C-AJ-2738 refers to a UL-listed firestop system using this sealant. The TDS confirms the product is currently available (no discontinuation indicated)."
+        },
+        "summary": "couldn't confirm a document",
+        "credits": 0.0,
+        "ms": 62,
+        "succeeded": false,
+        "source_urls": []
+      }
+    ],
+    "outcome": "not_found",
+    "purpose": "primary",
+    "resolution": "not_resolved",
+    "scripted": null
+  },
+  "investigations": [
+    {
+      "steps": [
+        {
+          "n": 1,
+          "tool": "search",
+          "args": {
+            "query": "C-AJ-2738 3M",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 2,
+          "tool": "search",
+          "args": {
+            "query": "CP 25WB+ data sheet 3M",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 2680,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 3,
+          "tool": "extract",
+          "args": {
+            "url": "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 0,
+          "succeeded": true,
+          "source_urls": [
+            "https://multimedia.3m.com/mws/media/201504O/3m-fire-barrier-sealant-cp-25wb-technical-data-sheet.pdf"
+          ]
+        },
+        {
+          "n": 4,
+          "tool": "search",
+          "args": {
+            "query": "\"2000 Series\" 3M firestop",
+            "include_domains": [
+              "3m.com"
+            ]
+          },
+          "summary": "5 results",
+          "credits": 1.0,
+          "ms": 3293,
+          "succeeded": true,
+          "source_urls": []
+        },
+        {
+          "n": 5,
+          "tool": "extract",
+          "args": {
+            "url": "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf"
+          },
+          "summary": "1 extracted source",
+          "credits": 0.0,
+          "ms": 445,
+          "succeeded": true,
+          "source_urls": [
+            "https://multimedia.3m.com/mws/media/375464O/ul-certificate-of-compliance-ic-15wb-sealant.pdf"
+          ]
+        },
+        {
+          "n": 6,
+          "tool": "finish",
+          "args": {
+            "found": true,
+            "document_url": "https://multimedia.3m.com/mws/media/201508O/3m-fire-barrier-silicone-sealant-2000-technical-data-sheet.pdf",
+            "document_title": "3M™ Fire Barrier Silicone Sealant 2000+ Product Data Sheet",
+            "revision_quote": "Product Data Sheet",
+            "evidence_quote": "3M™ Fire Barrier Silicone Sealant 2000+ is a ready-to-use, gun-grade, one-component silicone elastomer that cures upon exposure to atmospheric humidity to form a flexible firestop seal.",
+            "status": "active",
+            "status_quote": "3M™ Fire Barrier Silicone Sealant 2000+ is a ready-to-use, gun-grade, one-component silicone elastomer...",
+            "note": "The product is part of the 2000 Series and the model C-AJ-2738 refers to a UL-listed firestop system using this sealant. The TDS confirms the product is currently available (no discontinuation indicated)."
+          },
+          "summary": "couldn't confirm a document",
+          "credits": 0.0,
+          "ms": 62,
+          "succeeded": false,
+          "source_urls": []
+        }
+      ],
+      "outcome": "not_found",
+      "purpose": "primary",
+      "resolution": "not_resolved",
+      "scripted": {
+        "status": "unknown",
+        "replacement": null,
+        "current_revision": null,
+        "status_date": null,
+        "status_quote": null,
+        "status_family": null,
+        "current_values": [],
+        "source_urls": [],
+        "notes": null
+      }
+    }
+  ],
+  "mode": "live",
+  "replayed_from": null,
+  "warnings": [],
+  "diagnostics": [],
+  "validity": "valid",
+  "config_hash": "81f818080034ef0f6e7b42313ee3e6a2212a960942917af32eb375bd0f999974",
+  "fresh_model_cost_usd": 0.036636,
+  "fresh_web_credits": 6.0,
+  "queue_ms": 373,
+  "ocr_pages": 0,
+  "archived_submittals": [],
+  "evidence_label": null,
+  "claims_extracted": 2,
+  "claims_kept": 2,
+  "web_values_read": 0,
+  "web_values_kept": 0
+}
