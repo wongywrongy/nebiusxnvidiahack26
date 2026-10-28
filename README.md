@@ -1,6 +1,6 @@
 # SpecCheck
 
-SpecCheck checks construction submittals against the project spec and the manufacturer's current documents on the live web. Review leads with **what to send**, ordering options to specify, and ranked alternates with anything still unconfirmed. A package matrix, manual-review bucket and printable memo help the reviewer make and file the decision; NVIDIA Nemotron reads and quotes, and code decides.
+SpecCheck checks construction submittals against the project spec and the manufacturer's current documents on the live web. Review leads with **what to send**, ordering options to specify, and ranked alternates with anything still unconfirmed. A package view grouped by spec section, manual-review bucket and printable memo help the reviewer make and file the decision; NVIDIA Nemotron reads and quotes, and code decides.
 
 **[Open the live demo](https://speccheck-wongywrongys-projects.vercel.app)** · [MIT license](LICENSE) · Solo entry, Nebius x NVIDIA Global AI Hackathon
 
@@ -15,7 +15,7 @@ An upload with no quoted values matching its selected spec says **“Doesn't mat
 
 ## Measured live panel
 
-Live run **`20261028-173729-554074`**, recorded **October 28, 2026** on the code the public endpoint serves (eight known cases plus the tray and watched items). The Scoreboard shows this run.
+Live run **`20261028-173729-554074`**, recorded **October 28, 2026** on the pipeline code the public endpoint serves (the later UI update changed only `web/`; see the [deploy record](docs/deployment/final-deployment.json)) (eight known cases plus the tray and watched items). The Scoreboard shows this run.
 
 | Right calls | Problems caught | Clean cases wrongly flagged | Unnecessary notes | Passing replacements |
 | --- | --- | --- | --- | --- |
