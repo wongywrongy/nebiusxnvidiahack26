@@ -109,6 +109,8 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
     diagnostics: list[Diagnostic] = []
     counts = dict.fromkeys(metrics.FIELDS, 0)
     count_token = metrics.COUNTS.set(counts)
+    reasons: dict[str, int] = {}
+    reason_token = metrics.REASONS.set(reasons)
 
     async def investigating(tool: str):
         run.emit("investigate", f"Investigating: {tool} …", case_id, settings.models["verify"])
@@ -272,7 +274,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                 fresh_web_credits=run.ledger.fresh_credits.get(case_id, 0.0),
                 ocr_pages=len(ocr_pages),
                 archived_submittals=archived_submittals, evidence_label=settings.evidence_label if archived else None,
-                **counts,
+                **counts, drop_reasons=dict(sorted(reasons.items())),
             )
             (run.dir / "results" / f"{case_id}.json").write_text(result.model_dump_json(indent=2))
             run.results[case_id] = result
@@ -297,6 +299,7 @@ async def run_case(run: Run, case_id: str, sem: asyncio.Semaphore) -> Result:
                                      "diagnostics": [d.model_dump() for d in diagnostics]}
             (run.dir / "attempts.json").write_text(json.dumps(run.attempts, indent=2))
             metrics.COUNTS.reset(count_token)
+            metrics.REASONS.reset(reason_token)
 
 
 async def execute(run: Run) -> Run:

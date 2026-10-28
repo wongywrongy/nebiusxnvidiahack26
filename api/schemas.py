@@ -419,6 +419,7 @@ class Result(BaseModel):
     claims_kept: int = 0
     web_values_read: int = 0
     web_values_kept: int = 0
+    drop_reasons: dict[str, int] = {}  # quote gate: "claim:<reason>" / "web:<reason>" -> count (api/pipeline/metrics.py)
 
     @property
     def cost_usd(self) -> float:

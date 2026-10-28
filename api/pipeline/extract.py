@@ -196,9 +196,27 @@ async def extract_claims(case_id: Optional[str], pages: list[dict], labels: Tria
                 c.variant = option[1]
             if not c.variant and (scope := re.search(r"^((?:non[\s-]*configurable|configurable|optional)[^:]{0,100}):", _plain(c.quote or ""), re.I)):
                 c.variant = scope[1].strip()
-        out.claims = [c for c in out.claims if c.property in properties and c.page in texts and quoted(c.quote, texts[c.page])
-                      and value_quoted(c.value, c.quote, c.property) and metric_quoted(c.property, c.quote) and unit_quoted(c.unit, c.quote, c.property)
-                      and (not c.variant or quoted(c.variant, c.quote or ""))]
+        def gate(c) -> Optional[str]:
+            """The first quote gate this claim fails, or None when it is kept."""
+            if c.property not in properties:
+                return "not_requested"
+            if c.page not in texts:
+                return "bad_page"
+            if not quoted(c.quote, texts[c.page]):
+                return "quote_not_on_page"
+            if not value_quoted(c.value, c.quote, c.property):
+                return "value_not_in_quote"
+            if not metric_quoted(c.property, c.quote):
+                return "metric_not_in_quote"
+            if not unit_quoted(c.unit, c.quote, c.property):
+                return "unit_not_in_quote"
+            if c.variant and not quoted(c.variant, c.quote or ""):
+                return "variant_not_in_quote"
+            return None
+        verdicts = [(c, gate(c)) for c in out.claims]
+        for _, reason in verdicts:
+            metrics.drop("claim", reason)
+        out.claims = [c for c, reason in verdicts if reason is None]
         if out.claims:
             names = [out.model, out.family, *[c.model or c.product for c in out.claims], out.product]
             identity = next((name for name in names if name and any(
