@@ -1,4 +1,4 @@
-"""Replace the public endpoint with the release/final image, as on October 28 (deploy/nebius/README.md).
+"""Replace the public endpoint with a new image, as on October 28 (deploy/nebius/README.md). Second use: the ui/grouped-package image.
 
 Run with an authenticated Nebius CLI (`nebius` on PATH, or NEBIUS="<cli> --config <file>"), in order:
   python docs/release-final/endpoint.py stop-old
@@ -15,7 +15,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-OLD = "aiendpoint-e01y93s8ffx7g7wern"
+OLD = "aiendpoint-e01cg2e1rfwpvfpnb0"  # speccheck-final-20261028; was aiendpoint-e01y93s8ffx7g7wern
 FS = {"source": "computefilesystem-e01syzwfv7rqexfcys", "container_path": "/state", "mode": "READ_WRITE"}
 OUT = Path(__file__).parent / "endpoint"
 
@@ -46,7 +46,7 @@ elif mode == "create":
     old = get(OLD, "old-before-create")
     assert old["status"]["state"] == "STOPPED", "one writer: stop the old endpoint first"
     s, m = old["spec"], old["metadata"]
-    args = ["ai", "endpoint", "create", "--parent-id", m["parent_id"], "--name", "speccheck-final-20261028",
+    args = ["ai", "endpoint", "create", "--parent-id", m["parent_id"], "--name", "speccheck-ui-20261028",
             "--image", image, "--platform", s["platform"], "--preset", s["preset"], "--disk-size", "32Gi",
             "--container-port", "8000", "--auth", "none", "--subnet-id", s["subnet_id"],
             "--volume", f"{FS['source']}:/state:rw"]

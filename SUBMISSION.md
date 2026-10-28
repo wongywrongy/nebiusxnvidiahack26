@@ -22,8 +22,8 @@ When I showed an early version to a GC practitioner, the feedback was simple: do
 
 You drop in submittal PDFs and pick the spec section. SpecCheck reads the pages, pulls quoted values for each spec requirement, then checks the manufacturer's live website for a newer data sheet or a discontinued notice. You get:
 
-- a package matrix: one row per submittal, showing whether it meets the spec, whether the sheet is current and whether the product is still made;
-- a review for each item, with the PDF beside the findings, the quotes and links behind each one, and **What to send**: the exact fix, the ordering option to specify when one exists, and ranked possible alternates with what's still unconfirmed;
+- a package view grouped by spec section: each submittal shows its documents, one square per spec rule (meets, doesn't meet, meets with an ordering option, not confirmed), and a status line only when the sheet is out of date, a newer sheet is online, or the product is discontinued;
+- a review for each item, with the PDF beside the findings, the quotes and links behind each one grouped by where each value came from (the submitted PDF page or the manufacturer's site), and **What to send**: the exact fix, the ordering option to specify when one exists, and ranked possible alternates with what's still unconfirmed;
 - an Outcome page where you save decisions or flag items for manual review, plus a printable package review memo;
 - a "Check approved now" button that re-checks already-approved products against the manufacturer's current site.
 
@@ -54,6 +54,7 @@ Models read and quote. Code makes every decision. A value with no matching quote
 - It catches real problems a quick read misses: a fire-rating mismatch (c02), an outdated data sheet (c03) and a discontinued product (c07, from "Check approved now"), each ending on what to send instead.
 - Honest output. Mock, cached, replayed and unreviewed results are labelled as such. Unconfirmed stays unconfirmed. Alternates say "possible" until every check passes.
 - A wrong-spec guard: 14 documents uploaded under the wrong spec section, 0 approved.
+- A package review an engineer can scan: grouped by spec section, every rule traced to the PDF page or web source behind it, and every text colour pair at 4.5:1 or better (docs/release-final/ui-grouped/contrast.md).
 
 ## What we learned
 
@@ -73,7 +74,7 @@ Models read and quote. Code makes every decision. A value with no matching quote
 
 1. Open https://speccheck-wongywrongys-projects.vercel.app (no login).
 2. In the Inbox, add the sample submittals and click **Scan**. A live scan takes a minute or two per item.
-3. Read the package matrix, open a row, and read **What to send**.
+3. Read the package, grouped by spec section, open a row, and read **What to send**. Click a page tag to jump the PDF to the quote.
 4. Save decisions, open **Outcome**, and try **Check approved now** on the approved Lithonia troffer.
 5. Click **Package review memo** and print it.
 6. No PDFs handy? Download a **Try one** product sheet under the drop zone, upload it and pick its spec.
@@ -98,7 +99,7 @@ Procore, Nomic, Trunk Tools and BuildSync do compliance tables and deviation rep
 
 ## Official numbers
 
-Live run `20261028-173729-554074`, recorded October 28 on the deployed code (8 known cases):
+Live run `20261028-173729-554074`, recorded October 28 on the deployed pipeline code (the later UI update changed only web/; see the deploy record) (8 known cases):
 
 | Right calls | Problems caught | Clean cases wrongly flagged | Unnecessary notes | Passing replacements |
 | --- | --- | --- | --- | --- |
@@ -119,7 +120,7 @@ Measured rows only. Sources are `FEEDBACK.md` and `docs/customer-feedback/accura
 ### Nebius (Token Factory, Serverless Endpoint, filesystem)
 
 - **Used for:** all model calls (Nemotron 3 Nano and Super) through Token Factory's OpenAI-compatible API; hosting the public app on a Serverless Endpoint in eu-west1 with a persistent filesystem at `/state`.
-- **What worked:** the persistent filesystem kept the ledger, uploads and re-check report across every endpoint replacement; today's swap read exactly $1.82596578 / 388 credits before and after today's swap. Endpoint creation from a GHCR digest with MysteryBox secret references worked from the CLI. In captured live calls we saw no 429s.
+- **What worked:** the persistent filesystem kept the ledger, uploads and re-check report across every endpoint replacement; the ledger read the same before and after each of today's endpoint swaps (for example $2.11041168 / 409 credits across the UI swap; docs/deployment/final-deployment.json). Endpoint creation from a GHCR digest with MysteryBox secret references worked from the CLI. In captured live calls we saw no 429s.
 - **Needs work:** eu-north1 rejected a 2-vCPU endpoint with `ResourceExhausted: compute.instance.non-gpu.vcpu (limit 0)`; eu-west1 had 200 vCPUs free. Browser SSO for the CLI expired mid-release, and there is no `iam login` command (auth happens on the first request). Two Nano calls hit our 180 s client timeout during a seven-item scan on Oct 27, and their reserved cost stayed held until settled.
 - **Onboarding:** the OpenAI-compatible API needed no new SDK for model calls. Finding a region with CPU quota took an authenticated quota listing.
 - **Would use again?** Yes.

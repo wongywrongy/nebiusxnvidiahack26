@@ -1,13 +1,13 @@
 # SpecCheck
 
-SpecCheck checks construction submittals against the project spec and the manufacturer's current documents on the live web. Review leads with **what to send**, ordering options to specify, and ranked alternates with anything still unconfirmed. A package matrix, manual-review bucket and printable memo help the reviewer make and file the decision; NVIDIA Nemotron reads and quotes, and code decides.
+SpecCheck checks construction submittals against the project spec and the manufacturer's current documents on the live web. Review leads with **what to send**, ordering options to specify, and ranked alternates with anything still unconfirmed. A package view grouped by spec section, manual-review bucket and printable memo help the reviewer make and file the decision; NVIDIA Nemotron reads and quotes, and code decides.
 
 **[Open the live demo](https://speccheck-wongywrongys-projects.vercel.app)** · [MIT license](LICENSE) · Solo entry, Nebius x NVIDIA Global AI Hackathon
 
 ## Try it
 
 - Add the sample submittals in the Inbox, scan, review and save your decisions.
-- Read the package matrix, open a row to review **What to send**, and flag an item for manual review when it needs a person. Open **Package review memo** to print the matrix, evidence and alternate comparisons.
+- Read the package, grouped by spec section, open a row to review **What to send**, and flag an item for manual review when it needs a person. Open **Package review memo** to print the matrix, evidence and alternate comparisons.
 - No PDFs handy? Download a **Try one** product sheet beneath the drop zone, upload it and select its spec.
 - Bring your own spec: open **Specs**, draft a checklist from the example UBC Door Hardware PDF, edit/delete rows and use it for an uploaded Schlage ND sheet. Drafts are **unreviewed**, saved for this browser, and available for 14 days. Rules for other product types are disclosed separately.
 
@@ -15,7 +15,7 @@ An upload with no quoted values matching its selected spec says **“Doesn't mat
 
 ## Measured live panel
 
-Live run **`20261028-173729-554074`**, recorded **October 28, 2026** on the code the public endpoint serves (eight known cases plus the tray and watched items). The Scoreboard shows this run.
+Live run **`20261028-173729-554074`**, recorded **October 28, 2026** on the pipeline code the public endpoint serves (the later UI update changed only `web/`; see the [deploy record](docs/deployment/final-deployment.json)) (eight known cases plus the tray and watched items). The Scoreboard shows this run.
 
 | Right calls | Problems caught | Clean cases wrongly flagged | Unnecessary notes | Passing replacements |
 | --- | --- | --- | --- | --- |

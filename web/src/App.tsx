@@ -1,12 +1,12 @@
 import { forwardRef, Fragment, useEffect, useImperativeHandle, useMemo, useRef, useState, type DragEvent, type ReactNode } from 'react'
 import {
-  DECISION_COLOR, DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
+  DECISION_LABEL, addToInbox, getCaseText, getDocPages, getHealth, getProject, getResult, modelName, pageUrl, scan,
   streamEvents, uploadToInbox, setUploadSpec, archiveUrl, getPackage, type SavedChecklist,
   type Case, type CompareRow, type Decision, type DocPages, type Finding, type Fix, type Mark, type Project, type Result,
   type Health, type Investigation, type PackageRow, type PackageSummary, type Recheck, type Stage, type TextPage, type Tone,
   type Usage, type Value,
 } from './api'
-import { AlternatesCard, ConfigureLines, PackageMatrix, SummaryCounters } from './Feedback'
+import { AlternatesCard, ConfigureLines, Glyph, KIND, PackageBands, SummaryCounters, ruleState } from './Feedback'
 import { ScoreboardPage, SpecsPage } from './SecondaryPages'
 
 // Four steps, in order: what came in, what the scan found, the reviewer's call on each, what happened after.
@@ -53,7 +53,6 @@ const STAGE: Partial<Record<Stage, [string, number]>> = {
   investigate: ['Investigating', 0.72],
   done: ['Writing summary', 0.98],
 }
-const KIND: Record<string, string> = { product_data: 'Product data', system_drawing: 'System drawing' }
 const TRAY_MIME = 'application/x-speccheck-item'
 const CAPS = 'font-mono text-xs font-medium uppercase tracking-[0.08em] text-faint'
 const PRIMARY = 'flare h-10 shrink-0 rounded-lg px-4 font-semibold disabled:cursor-not-allowed disabled:opacity-40'
@@ -329,7 +328,7 @@ export default function App() {
             checklists={checklists} changingSpec={changingSpec} onSpec={changeSpec}
             onRemove={(id) => setInbox((i) => i.filter((c) => c.id !== id))} onScan={() => startScan()} />
         )}
-        {step === 2 && <ScanStep items={scanned} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error} rowOf={rowOf} memoRun={memoRun}
+        {step === 2 && <ScanStep items={scanned} specs={project?.specs ?? []} rows={rows} loaded={loaded} mode={mode} note={scanNote} error={error} rowOf={rowOf} memoRun={memoRun}
           onRetry={startScan} onReview={startReview} onOpen={(id) => { setCurrent(id); go(3) }} />}
         {step === 3 && (
           <ReviewStep queue={queue} loaded={loaded} calls={calls} drafts={drafts} current={current} mode={mode} rowOf={rowOf}
@@ -387,11 +386,18 @@ function Heading({ title, count, children }: { title: string; count: string; chi
   )
 }
 
-function Pill({ d }: { d: Decision }) {
-  const c = DECISION_COLOR[d]
+// [border, fill, text] per decision; each text is >= 4.5:1 on its fill.
+const PILL: Record<Decision, [string, string, string]> = {
+  send_back: ['#e5534b', '#3a1414', '#ff9e99'], approve_with_note: ['#6f95c8', '#12233a', '#a9c8f0'],
+  approve: ['#2e9e68', '#10291d', '#6be0a6'], not_applicable: ['var(--color-edge)', 'transparent', 'var(--color-muted)'],
+}
+
+// label: the stamp, where the pill stands alone (the package table).
+function Pill({ d, label }: { d: Decision; label?: string }) {
+  const [border, fill, text] = PILL[d]
   return (
     <span className="inline-flex h-6 shrink-0 items-center rounded-full px-2 text-xs font-semibold"
-      style={{ color: c, background: `${c}1f`, boxShadow: `inset 0 0 0 1px ${c}59` }}>{DECISION_LABEL[d]}</span>
+      style={{ color: text, background: fill, boxShadow: `inset 0 0 0 1px ${border}` }}>{label ?? DECISION_LABEL[d]}</span>
   )
 }
 
@@ -577,8 +583,8 @@ function Icon({ kind }: { kind: 'x' | 'check' }) {
 
 // ---------- 2 · Scan ----------
 
-function ScanStep({ items, rows, loaded, mode, note, error, rowOf, memoRun, onRetry, onReview, onOpen }: {
-  items: Case[]; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; note: string | null; error: string | null
+function ScanStep({ items, specs, rows, loaded, mode, note, error, rowOf, memoRun, onRetry, onReview, onOpen }: {
+  items: Case[]; specs: Project['specs']; rows: Record<string, Row>; loaded: Record<string, Loaded>; mode: Project['mode']; note: string | null; error: string | null
   rowOf: (id: string) => PackageRow | undefined; memoRun?: string; onRetry: (id: string) => void; onReview: () => void; onOpen: (id: string) => void
 }) {
   const failed = items.filter((c) => rows[c.id]?.stage === 'error').length
@@ -586,10 +592,9 @@ function ScanStep({ items, rows, loaded, mode, note, error, rowOf, memoRun, onRe
   const complete = items.length > 0 && done === items.length
   const n = (...ds: Decision[]) => items.filter((c) => ds.includes(loaded[c.id]?.result.decision as Decision)).length
   const matrix = items.map((c) => rowOf(c.id)).filter((r): r is PackageRow => !!r)
-  const manual = matrix.filter((r) => r.manual_review_suggested).length
   const count = complete
     ? [`${n('send_back')} to send back`, `${n('approve', 'approve_with_note')} to approve`, ...(n('not_applicable') ? [`${n('not_applicable')} not checked`] : []),
-      ...(manual ? [`${manual} worth a manual look`] : []), ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
+      ...(failed ? [`${failed} couldn't scan`] : [])].join(' · ')
     : `${done} of ${items.length} done`
   const cols = '112px minmax(0,1fr) minmax(0,1.2fr)'
   // What the scan spent, summed over the results so far: the models by name, tokens, Tavily credits, cost, wall time.
@@ -622,8 +627,9 @@ function ScanStep({ items, rows, loaded, mode, note, error, rowOf, memoRun, onRe
           {' · '}<a href="#scoreboard" className="underline underline-offset-4 hover:text-ink">Scoreboard</a>
         </p>
       )}
-      {complete && matrix.length > 0 && <PackageMatrix rows={matrix} onOpen={onOpen}
-        decision={(r) => <><Pill d={r.decision} /><span className="text-xs text-muted">{r.stamp}</span></>} />}
+      {complete && matrix.length > 0 && <PackageBands rows={matrix} specs={specs} onOpen={onOpen}
+        cases={Object.fromEntries(items.map((c) => [c.id, c]))} results={Object.fromEntries(items.map((c) => [c.id, loaded[c.id]?.result]))}
+        decision={(r) => <Pill d={r.decision} label={r.stamp} />} />}
       {complete && memoRun && <MemoLink run={memoRun} />}
       {(!complete || matrix.length < items.length) && <section className="rounded-xl border border-line">
         <Table cols={cols} head={['Number', 'Submittal', 'Result']}>
@@ -738,12 +744,18 @@ function Reviewing({ c, at, of, l, row, call, mode, messageDraft, onDraft, onDec
   // A discontinued product's ordering options are moot, as in the package row.
   const acts = (f: Finding) => needsAction(f) && !(row.still_made === 'discontinued' && f.configure?.length)
   const acting = issues.filter(acts)
-  const minor = issues.filter((f) => !acts(f))
-  const met = result.findings.filter((f) => f.verdict === 'pass')
   const marks: Placed[] = useMemo(() => result.findings.flatMap((f) =>
     f.highlights.map((h) => ({ ...h, finding: f, tone: h.kind === 'checked' ? 'green' as Tone : toneOf(f) }))), [result])
   const first = acting.find((f) => firstMark(f)) ?? issues.find((f) => firstMark(f)) ?? issues[0]
   const [textPage, setTextPage] = useState(() => (first && firstMark(first)?.page) || 1)
+  // A page tag selects its finding and turns the document to that page.
+  const [selId, setSelId] = useState(first?.id ?? null)
+  const pdf = useRef<{ scrollTo: (key: string) => void }>(null)
+  const showMark = (f: Finding, h: Mark) => {
+    setSelId(f.id)
+    if (docs) pdf.current?.scrollTo(pageKey(h.doc_file ?? c.submittal[0]?.file ?? null, h.page))
+    else if (h.page) setTextPage(h.page)
+  }
   const fix = fixOf(result)
   const notApplicable = result.decision === 'not_applicable'
   const rec: Act = notApplicable ? 'not_checked' : result.decision === 'send_back' ? 'return' : 'approve'
@@ -752,14 +764,13 @@ function Reviewing({ c, at, of, l, row, call, mode, messageDraft, onDraft, onDec
   const [message, setMessage] = useState(messageDraft ?? (call?.act === rec ? call.message : draft(rec)))
   const otherTypes = result.findings.filter((f) => f.verdict === 'not_applicable' && f.product_type && f.detail.startsWith('For other product type:'))
   const source = result.findings.filter((f) => WEB.has(f.check)).flatMap((f) => f.evidence)[0]
-  const sortRows = (rs: CheckRow[]) => rs.sort((x, y) => TONE_RANK[toneOf(x[0])] - TONE_RANK[toneOf(y[0])])
 
   return (
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_440px]">
       <section className="order-2 flex min-w-0 flex-col gap-3 lg:order-1 lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:self-start">
         {docs
-          ? <PdfPages caseId={result.case_id} docs={docs} marks={marks} selId={first?.id ?? null} result={result} href={c.submittal[0]?.url} />
-          : <TextPages pages={text ?? []} marks={marks} selId={first?.id ?? null} result={result} page={textPage} onPage={setTextPage}
+          ? <PdfPages ref={pdf} caseId={result.case_id} docs={docs} marks={marks} selId={selId} result={result} href={c.submittal[0]?.url} />
+          : <TextPages pages={text ?? []} marks={marks} selId={selId} result={result} page={textPage} onPage={setTextPage}
               name={fileName(c)} href={c.submittal[0]?.url} product={c.product} />}
       </section>
 
@@ -788,16 +799,8 @@ function Reviewing({ c, at, of, l, row, call, mode, messageDraft, onDraft, onDec
         {row.still_made !== 'discontinued' && <ConfigureLines findings={result.findings} />}
         {fix && (result.decision === 'send_back' || row.still_made === 'discontinued') && <AlternatesCard fix={fix} />}
 
-        {(acting.length > 0 || met.length > 0 || minor.length > 0) && <div className="flex flex-col gap-2">
-          {acting.length > 0 && <Checks head={['Needs action', 'Required', 'Submitted']} rows={sortRows(checkRows(acting))} />}
-          {met.length > 0 && <details className="text-muted">
-            <summary className="cursor-pointer">{plural(met.length, 'requirement')} met ✓</summary>
-            <div className="mt-2"><Checks head={['Check', 'Required', 'Submitted']} rows={checkRows(met)} /></div>
-          </details>}
-          {minor.length > 0 && <details className="text-muted">
-            <summary className="cursor-pointer">{plural(minor.length, 'minor item')} couldn't be confirmed</summary>
-            <div className="mt-2"><Checks head={['Check', 'Required', 'Submitted']} rows={checkRows(minor)} /></div>
-          </details>}
+        <RuleGroups c={c} result={result} acts={acts} selId={selId} onMark={showMark} />
+        {otherTypes.length > 0 && <div className="flex flex-col gap-2">
           {otherTypes.length > 0 && <details className="text-muted">
             <summary className="cursor-pointer">{otherTypes.length} rules for other product types</summary>
             <ul className="mt-2 flex flex-col gap-2 text-xs">{otherTypes.map((f) =>
@@ -930,23 +933,73 @@ function investigationLine(s: Investigation['steps'][number]) {
   return `${s.tool} ${target} → ${s.summary}`
 }
 
-function Checks({ head, rows }: { head: string[]; rows: CheckRow[] }) {
-  const cols = 'minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr)'
+// The rules, grouped by where each value came from: a submitted document, the manufacturer's site, or nowhere yet.
+function RuleGroups({ c, result, acts, selId, onMark }: {
+  c: Case; result: Result; acts: (f: Finding) => boolean; selId: string | null; onMark: (f: Finding, h: Mark) => void
+}) {
+  const files = c.submittal.map((d) => d.file)
+  const base = (f: string) => f.split('/').pop()
+  // The submitted file a finding's highlights point at; with one document, unnamed highlights belong to it.
+  const fileOf = (f: Finding) => {
+    const named = f.highlights.find((h) => h.doc_file)?.doc_file
+    return named ? files.find((x) => base(x) === base(named)) ?? files[0] : f.highlights.length && files.length === 1 ? files[0] : undefined
+  }
+  const fs = result.findings.filter((f) => f.verdict !== 'not_applicable')
+  const web = fs.filter((f) => WEB.has(f.check) || (f.evidence.length > 0 && !f.highlights.length))
+  const open = fs.filter((f) => !web.includes(f) && f.requirement_id && ['unverified', 'pending'].includes(f.verdict) && !f.highlights.length)
+  const rest = fs.filter((f) => !web.includes(f) && !open.includes(f))
+  const evidence = web.flatMap((f) => f.evidence)
+  const checked = evidence.map((e) => e.retrieved_at).filter((d): d is string => !!d).sort().pop()
+  const source = evidence[0]
+  const groups: { key: string; head: ReactNode; note?: string; rows: CheckRow[]; file?: string }[] = [
+    ...files.map((file) => ({ key: file, file, head: <>Submitted · <span className="font-mono">{base(file)}</span></>,
+      rows: checkRows(rest.filter((f) => (fileOf(f) ?? files[0]) === file)) })),
+    { key: 'web', head: <>Manufacturer's site{checked ? ` · checked ${longDate(checked)}` : ''}{source && <> · <a href={source.url} target="_blank" rel="noreferrer"
+        className="underline decoration-edge underline-offset-2 hover:text-ink">{source.title || hostOf(source.url)} ↗</a></>}</>, rows: checkRows(web) },
+    { key: 'open', head: 'Not confirmed from the documents', note: 'Check these by hand, or ask the sub for data that states them.', rows: checkRows(open) },
+  ].filter((g) => g.rows.length)
+  if (!groups.length) return null
+  // Rows that need action first, then the rest worst first.
+  const rank = ([f]: CheckRow) => (acts(f) ? 0 : 4) + TONE_RANK[toneOf(f)]
+  const cols = '18px minmax(0,1.1fr) minmax(0,1fr) 44px'
+  const row = (g: { file?: string }) => ([f, label, a, b]: CheckRow, i: number) => {
+    const on = g.file ? f.highlights.filter((x) => !x.doc_file || base(x.doc_file) === base(g.file!)) : f.highlights
+    const h = on.find((x) => x.boxes.length) ?? on.find((x) => x.page)
+    return (
+      <li key={`${f.id}-${i}`} className="grid items-start gap-x-3 border-b border-line px-3 py-2 last:border-b-0" style={{ gridTemplateColumns: cols }}>
+        <Glyph s={ruleState(f)} />
+        <span className="min-w-0 break-words">{label}{f.spec_ref && <span className="block text-xs text-muted">{f.spec_ref}</span>}</span>
+        <span className="min-w-0 break-words">
+          <span style={{ color: f.verdict === 'pass' ? undefined : TONE_COLOR[toneOf(f)] }}>{show(b)}</span>
+          {a != null && a !== '' && <span className="block text-xs text-muted">{WEB.has(f.check) ? show(a) : `Spec: ${show(a)}`}</span>}
+        </span>
+        {h?.page ? <button onClick={() => onMark(f, h)} aria-label={`Show ${label} on page ${h.page}`} aria-pressed={f.id === selId}
+          className={`h-6 justify-self-end rounded border border-edge px-1.5 font-mono text-xs ${f.id === selId ? 'bg-selected text-ink' : 'text-soft hover:text-ink'}`}>p.{h.page}</button>
+          : <span />}
+      </li>
+    )
+  }
   return (
-    <div className="overflow-hidden rounded-xl border border-line">
-      <div className={`grid h-9 items-center gap-3 border-b border-line bg-well px-3 ${CAPS}`} style={{ gridTemplateColumns: cols }}>
-        {head.map((h) => <span key={h}>{h}</span>)}
-      </div>
-      {rows.map(([f, label, a, b], i) => (
-        <div key={`${f.id}-${i}`} className="grid items-baseline gap-3 border-b border-line px-3 py-2 last:border-b-0" style={{ gridTemplateColumns: cols }}>
-          <span className="flex min-w-0 items-baseline gap-2">
-            <span className="h-2 w-2 shrink-0 translate-y-[-1px] rounded-full" style={{ background: TONE_COLOR[toneOf(f)] }} aria-hidden />
-            <span className="min-w-0 break-words">{label}{f.spec_ref && <span className="block text-xs text-muted">{f.spec_ref}</span>}</span>
-          </span>
-          <span className="min-w-0 break-words text-muted">{show(a)}</span>
-          <span className="min-w-0 break-words" style={{ color: f.verdict === 'pass' ? undefined : TONE_COLOR[toneOf(f)] }}>{show(b)}</span>
-        </div>
-      ))}
+    <div className="flex flex-col gap-3">
+      {groups.map((g) => {
+        const rows = [...g.rows].sort((x, y) => rank(x) - rank(y))
+        // Long groups keep the minor not-confirmed rows behind one line.
+        const tucked = rows.length > 4 ? rows.filter(([f]) => !acts(f) && ruleState(f) === 'unconfirmed') : []
+        const shown = rows.filter((r) => !tucked.includes(r))
+        return (
+          <section key={g.key} className="overflow-hidden rounded-xl border border-line">
+            <header className="flex flex-col gap-0.5 border-b border-line bg-well px-3 py-2">
+              <span className="text-xs font-medium text-soft">{g.head}</span>
+              {g.note && <span className="text-xs text-muted">{g.note}</span>}
+            </header>
+            <ul className="bg-panel">{shown.map(row(g))}</ul>
+            {tucked.length > 0 && <details className="border-t border-line bg-panel text-muted">
+              <summary className="cursor-pointer px-3 py-2 text-xs">{tucked.length} more not confirmed</summary>
+              <ul className="border-t border-line">{tucked.map(row(g))}</ul>
+            </details>}
+          </section>
+        )
+      })}
     </div>
   )
 }

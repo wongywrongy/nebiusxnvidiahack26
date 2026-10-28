@@ -76,7 +76,7 @@ test('synthetic draft editing saves real upload-only rules and persists browser 
   await page.getByRole('button', { name: 'Scan 1 submittal', exact: true }).click()
   await page.getByRole('button', { name: 'Start review', exact: true }).click()
   await expect(page.getByText(/Checked against your draft checklist 08 71 00 Door Hardware \(1 rules, unreviewed\)/)).toBeVisible()
-  await page.getByText(/couldn't be confirmed$/).click()
+  await expect(page.getByText('Not confirmed from the documents', { exact: true })).toBeVisible()
   await expect(page.getByText('08 71 00 2.1.A', { exact: true })).toBeVisible()
   await page.screenshot({ path: '/tmp/speccheck-playground-draft-review.png', fullPage: true })
   await page.getByRole('button', { name: 'Mark as not checked' }).click()
