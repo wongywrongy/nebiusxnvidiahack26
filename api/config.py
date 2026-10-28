@@ -20,6 +20,7 @@ FORCE_MOCK: ContextVar[bool] = ContextVar("force_mock", default=False)
 PRICES: dict[str, tuple[float, float]] = {
     "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B": (0.06, 0.24),
     "nvidia/nemotron-3-super-120b-a12b": (0.30, 0.90),
+    "nvidia/Nemotron-3-Ultra-550b-a55b": (1.00, 3.00),  # /v1/models?verbose=true pricing, 2026-10-28
 }
 KEYS = ("nebius_api_key", "tavily_api_key", "admin_token")
 LIVE_REQUIRES = ("nebius_api_key", "tavily_api_key")
@@ -54,6 +55,7 @@ class Settings(BaseSettings):
     model_extract: str = "nvidia/nemotron-3-super-120b-a12b"
     model_verify: str = "nvidia/nemotron-3-super-120b-a12b"
     model_write: str = "nvidia/nemotron-3-super-120b-a12b"
+    model_draft: str = "nvidia/nemotron-3-super-120b-a12b"  # checklist drafting only; never the scan path
 
     # Nemotron 3 models think before answering unless told not to. Every call here is extraction into a fixed JSON
     # schema, so thinking only spends output tokens (and can run into max_output_tokens). "off" asks the server not to
@@ -121,7 +123,7 @@ class Settings(BaseSettings):
 
     @property
     def models(self) -> dict[str, str]:
-        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write")}
+        return {r: getattr(self, f"model_{r}") for r in ("triage", "extract", "verify", "write", "draft")}
 
     @property
     def keys_present(self) -> dict[str, bool]:
