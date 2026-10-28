@@ -3,9 +3,20 @@
   "framework": null,
   "buildCommand": "",
   "rewrites": [
-    { "source": "/(.*)", "destination": "https://port8000-xbq07jkkdkpet9f.tunnel.applications.eu-west1.nebius.cloud/$1" }
+    {
+      "source": "/(.*)",
+      "destination": "https://port8000-j0946t8fwr9bm40.tunnel.applications.eu-west1.nebius.cloud/$1"
+    }
   ],
   "headers": [
-    { "source": "/(.*)", "headers": [{ "key": "x-vercel-enable-rewrite-caching", "value": "0" }] }
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "0"
+        }
+      ]
+    }
   ]
 }

@@ -1,0 +1,1332 @@
+{
+  "case": "b",
+  "url": "https://speccheck-wongywrongys-projects.vercel.app",
+  "captured_at": "2026-10-28T07:46:04.565Z",
+  "runs": [
+    {
+      "run_id": "20261028-074607-f8468e",
+      "mode": "live",
+      "mock": [],
+      "note": null,
+      "shared_item_budget": false,
+      "results": [
+        {
+          "case_id": "u-b0042c9b",
+          "title": "rectorseal-metacaulk.pdf",
+          "decision": "approve_with_note",
+          "summary": "Approve with notes: confirm the items below. Assembly proof remains pending.",
+          "spec_section": "07 84 00",
+          "spec_title": "Firestopping",
+          "spec_rule_count": 4,
+          "spec_match_count": 1,
+          "checklist_id": null,
+          "product_type": null,
+          "findings": [
+            {
+              "id": "spec-req_voc_content",
+              "check": "spec",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "VOC (air quality)",
+              "detail": "Package states < 10 g/L; spec requires at most 250 g/L.",
+              "why_it_matters": null,
+              "requirement_id": "req_voc_content",
+              "claim_id": "clm-18",
+              "product_type": null,
+              "claim_ids": [
+                "clm-18"
+              ],
+              "highlights": [
+                {
+                  "claim_id": "clm-18",
+                  "doc_file": "uploads/u-b0042c9b/rectorseal-metacaulk.pdf",
+                  "page": 2,
+                  "quote": "VOC < 10 g/L",
+                  "boxes": [
+                    {
+                      "x0": 0.6831,
+                      "y0": 0.7287,
+                      "x1": 0.7066,
+                      "y1": 0.7433
+                    },
+                    {
+                      "x0": 0.8883,
+                      "y0": 0.7287,
+                      "x1": 0.9346,
+                      "y1": 0.7433
+                    }
+                  ],
+                  "kind": "checked"
+                }
+              ],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "≤ 250 g/L",
+                "right_label": "Submitted",
+                "right_value": "< 10 g/L",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.02.B",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null,
+              "configure": []
+            },
+            {
+              "id": "spec-req_mold_resistance",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Couldn't confirm: astm g21 rating",
+              "detail": "Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.",
+              "why_it_matters": "Without confirmed mold resistance, long-term performance in damp areas could be compromised.",
+              "requirement_id": "req_mold_resistance",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "= 0",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.02.C",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null,
+              "configure": []
+            },
+            {
+              "id": "spec-req_t_rating_min_equal_f",
+              "check": "spec",
+              "verdict": "pending",
+              "severity": "info",
+              "title": "Pending assembly proof",
+              "detail": "Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.",
+              "why_it_matters": "We need to verify the actual fire and temperature ratings match what’s required for the wall or floor assembly where this will be installed.",
+              "requirement_id": "req_t_rating_min_equal_f",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": "T = F",
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.04.A.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null,
+              "configure": []
+            },
+            {
+              "id": "spec-fs-std",
+              "check": "spec",
+              "verdict": "unverified",
+              "severity": "minor",
+              "title": "Couldn't confirm: Test standards",
+              "detail": "Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+              "why_it_matters": "Knowing which test standard was followed ensures the product was evaluated correctly for firestopping performance.",
+              "requirement_id": "fs-std",
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Spec requires",
+                "left_value": [
+                  "astm e814",
+                  "astm e119",
+                  "ul 1479"
+                ],
+                "right_label": "Submitted",
+                "right_value": "Not confirmed",
+                "verdict": "unverified",
+                "rows": []
+              },
+              "spec_ref": "07 84 00 2.04.A.1",
+              "evidence": [],
+              "quote": null,
+              "decided_by": "code",
+              "fix": null,
+              "configure": []
+            },
+            {
+              "id": "currency-current",
+              "check": "currency",
+              "verdict": "pass",
+              "severity": "info",
+              "title": "Compared values match current sources",
+              "detail": "",
+              "why_it_matters": null,
+              "requirement_id": null,
+              "claim_id": null,
+              "product_type": null,
+              "claim_ids": [],
+              "highlights": [],
+              "compare": {
+                "left_label": "Submitted",
+                "left_value": "undated",
+                "right_label": "Current",
+                "right_value": "unknown",
+                "verdict": "pass",
+                "rows": []
+              },
+              "spec_ref": null,
+              "evidence": [
+                {
+                  "url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+                  "tier": "distributor",
+                  "title": "METACAULK® 1000",
+                  "retrieved_at": "2026-10-27T21:35:29+00:00",
+                  "sha256": "8e31c4661bd6d79991a454c3a1ceec07cf84b28ab88764d697d3f9ccc5405697",
+                  "excerpt": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)",
+                  "archived_path": null,
+                  "cache_hit": true
+                }
+              ],
+              "quote": null,
+              "decided_by": "tavily + super",
+              "fix": null,
+              "configure": []
+            }
+          ],
+          "comparison": [
+            {
+              "property": "voc_g_per_l",
+              "label": "VOC (air quality)",
+              "submitted": "< 10 g/L",
+              "current": "< 10 g/L",
+              "changed": false,
+              "source_url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+              "quote": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)"
+            }
+          ],
+          "claims": [
+            {
+              "id": "clm-5",
+              "product": "Metacaulk® 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": "Metacaulk® 1000",
+              "property": "document_revision",
+              "value": "R50101-0225",
+              "unit": null,
+              "page": 3,
+              "bbox": null,
+              "quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+              "selection_quote": null
+            },
+            {
+              "id": "clm-18",
+              "product": "Metacaulk® 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": "Metacaulk® 1000",
+              "property": "voc_g_per_l",
+              "value": "< 10",
+              "unit": "g/L",
+              "page": 2,
+              "bbox": null,
+              "quote": "VOC < 10 g/L",
+              "variant": null,
+              "scope": "product_wide",
+              "scope_quote": "VOC < 10 g/L",
+              "selection_quote": null
+            }
+          ],
+          "selection": null,
+          "document_roles": [
+            "product_data"
+          ],
+          "extracted": {
+            "product": "Metacaulk® 1000",
+            "manufacturer": "RectorSeal, LLC",
+            "model": "Metacaulk® 1000",
+            "selection": null,
+            "family": null,
+            "family_quote": null,
+            "document_revision": null,
+            "claims": [
+              {
+                "id": "clm-5",
+                "product": "Metacaulk® 1000",
+                "manufacturer": "RectorSeal, LLC",
+                "model": "Metacaulk® 1000",
+                "property": "document_revision",
+                "value": "R50101-0225",
+                "unit": null,
+                "page": 3,
+                "bbox": null,
+                "quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                "selection_quote": null
+              },
+              {
+                "id": "clm-18",
+                "product": "Metacaulk® 1000",
+                "manufacturer": "RectorSeal, LLC",
+                "model": "Metacaulk® 1000",
+                "property": "voc_g_per_l",
+                "value": "< 10",
+                "unit": "g/L",
+                "page": 2,
+                "bbox": null,
+                "quote": "VOC < 10 g/L",
+                "variant": null,
+                "scope": "product_wide",
+                "scope_quote": "VOC < 10 g/L",
+                "selection_quote": null
+              }
+            ]
+          },
+          "verification": {
+            "submitted": {
+              "product": "Metacaulk® 1000",
+              "manufacturer": "RectorSeal, LLC",
+              "model": "Metacaulk® 1000",
+              "selection": null,
+              "family": null,
+              "family_quote": null,
+              "document_revision": null,
+              "claims": [
+                {
+                  "id": "clm-5",
+                  "product": "Metacaulk® 1000",
+                  "manufacturer": "RectorSeal, LLC",
+                  "model": "Metacaulk® 1000",
+                  "property": "document_revision",
+                  "value": "R50101-0225",
+                  "unit": null,
+                  "page": 3,
+                  "bbox": null,
+                  "quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "©2025 RectorSeal. All rights reserved. R50101-0225",
+                  "selection_quote": null
+                },
+                {
+                  "id": "clm-18",
+                  "product": "Metacaulk® 1000",
+                  "manufacturer": "RectorSeal, LLC",
+                  "model": "Metacaulk® 1000",
+                  "property": "voc_g_per_l",
+                  "value": "< 10",
+                  "unit": "g/L",
+                  "page": 2,
+                  "bbox": null,
+                  "quote": "VOC < 10 g/L",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "VOC < 10 g/L",
+                  "selection_quote": null
+                }
+              ]
+            },
+            "output": {
+              "status": "unknown",
+              "replacement": null,
+              "current_revision": null,
+              "status_date": null,
+              "status_quote": null,
+              "status_family": null,
+              "current_values": [
+                {
+                  "property": "voc_g_per_l",
+                  "value": "< 10",
+                  "unit": "g/L",
+                  "quote": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)",
+                  "source_url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+                  "model": "Metacaulk® 1000",
+                  "identity_quote": "Product Name Metacaulk™ 1000 Intumescent Firestop Sealant",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)",
+                  "selection_quote": null
+                },
+                {
+                  "property": "voc_g_per_l",
+                  "value": "< 10",
+                  "unit": "g/L",
+                  "quote": "VOC < 10 g/L",
+                  "source_url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                  "model": "Metacaulk® 1000",
+                  "identity_quote": "METACAULK™ 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "VOC < 10 g/L ASTM E 84, UL 723 Tunnel Test Flame Spread 0 Smoke Index 0",
+                  "selection_quote": null
+                },
+                {
+                  "property": "voc_g_per_l",
+                  "value": "< 10",
+                  "unit": "g/L",
+                  "quote": "VOC\n< 10 g/L",
+                  "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                  "model": "Metacaulk® 1000",
+                  "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                  "variant": null,
+                  "scope": "product_wide",
+                  "scope_quote": "VOC\n< 10 g/L\nASTM E 84, UL 723 Tunnel Test\nFlame Spread\n0\nSmoke Index \n0",
+                  "selection_quote": null
+                }
+              ],
+              "source_urls": [
+                "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf"
+              ],
+              "notes": null
+            },
+            "sources": [
+              {
+                "url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+                "tier": "distributor",
+                "title": "METACAULK® 1000",
+                "retrieved_at": "2026-10-27T21:35:29+00:00",
+                "sha256": "8e31c4661bd6d79991a454c3a1ceec07cf84b28ab88764d697d3f9ccc5405697",
+                "excerpt": "S A F E T Y D A T A S H E E T METACAULK® 1000 Intumescent, water-based firestop sealant Page 1 GHS CLASSIFICATION Physical Hazards: None Health Hazards Acute Toxicity: Oral: Not Classified Dermal: Not Classified Inhalation: Not Classified Skin Corrosion/Irritation: Not Classified Serious Eye Damage/Eye Irritation: Not Classified Respiratory or Skin Sensitization: Not Classified Germ Cell Mutagenic",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                "tier": "distributor",
+                "title": "Metacaulk 1000 Firestopping Sealant - Product Data",
+                "retrieved_at": "2026-10-27T21:35:29+00:00",
+                "sha256": "456ba417206aee1ff0eb88412855a3c300978dad459b1d58d1e53f8d585aebf0",
+                "excerpt": "METACAULK® 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T Page 1 of 3 Description Metacaulk® 1000 is a single component, general purpose fire rated sealant and smoke seal for construction joints and through-penetrations. Metacaulk 1000 is a water based, extremely intumescent, non-sag caulking grade sealant that is easy to apply. It cures to an elastomeric seal that is sui",
+                "archived_path": null,
+                "cache_hit": true
+              },
+              {
+                "url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "tier": "distributor",
+                "title": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                "retrieved_at": "2026-10-27T21:35:32+00:00",
+                "sha256": "28c1cf68d267333640f191ffdbb891bd9a8a35215a3f2e34fd72266d9537d770",
+                "excerpt": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T\nPage 1 of 3\nDescription\nMetacaulk® 1000 is a single component, general purpose fire rated sealant and \nsmoke seal for construction joints and through-penetrations. Metacaulk 1000 \nis a water based, extremely intumescent, non-sag caulking grade sealant that \nis easy to apply. It cures to an elastomeric seal that is ",
+                "archived_path": null,
+                "cache_hit": true
+              }
+            ]
+          },
+          "document_revision": null,
+          "note_to_subcontractor": "Approve with notes: confirm the items below. Assembly proof remains pending.\n\nCouldn't confirm: astm g21 rating: Firestopping materials shall have mold and mildew resistance rating of zero(0) in accordance with ASTM G21.\nPending assembly proof: Product data does not establish a specific assembly's F/T ratings. Confirm the listed assembly separately.\nCouldn't confirm: Test standards: Tested in accordance with ASTM E814, ASTM E119 or UL 1479.",
+          "usage": [
+            {
+              "task": "triage",
+              "tier": "triage",
+              "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+              "input_tokens": 1913,
+              "output_tokens": 67,
+              "cost_usd": 0.00013086,
+              "latency_ms": 1322,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4667,
+              "output_tokens": 2915,
+              "cost_usd": 0.0040236,
+              "latency_ms": 12760,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "extract_claims",
+              "tier": "extract",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 435,
+              "output_tokens": 7,
+              "cost_usd": 0.0001368,
+              "latency_ms": 1018,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3389,
+              "output_tokens": 188,
+              "cost_usd": 0.0011859,
+              "latency_ms": 1994,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4074,
+              "output_tokens": 285,
+              "cost_usd": 0.0014787,
+              "latency_ms": 5795,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "verify",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 4345,
+              "output_tokens": 222,
+              "cost_usd": 0.0015033,
+              "latency_ms": 4187,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 1567,
+              "output_tokens": 100,
+              "cost_usd": 0.0005601,
+              "latency_ms": 835,
+              "cached": true,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 3890,
+              "output_tokens": 93,
+              "cost_usd": 0.0012507,
+              "latency_ms": 1554,
+              "cached": true,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 5928,
+              "output_tokens": 53,
+              "cost_usd": 0.0018261,
+              "latency_ms": 2633,
+              "cached": true,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 7532,
+              "output_tokens": 84,
+              "cost_usd": 0.0023352,
+              "latency_ms": 3524,
+              "cached": true,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 10000,
+              "output_tokens": 189,
+              "cost_usd": 0.0031701,
+              "latency_ms": 3875,
+              "cached": true,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "investigate",
+              "tier": "verify",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 10435,
+              "output_tokens": 398,
+              "cost_usd": 0.0034887,
+              "latency_ms": 21446,
+              "cached": true,
+              "format": "tools",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": "tool_calls"
+            },
+            {
+              "task": "report",
+              "tier": "write",
+              "model": "nvidia/nemotron-3-super-120b-a12b",
+              "input_tokens": 629,
+              "output_tokens": 240,
+              "cost_usd": 0.0004047,
+              "latency_ms": 3339,
+              "cached": true,
+              "format": "json_schema",
+              "reasoning_tokens": 0,
+              "thinking": "off",
+              "finish_reason": null
+            }
+          ],
+          "web_credits": 0,
+          "duration_ms": 217,
+          "investigation": {
+            "steps": [
+              {
+                "n": 1,
+                "tool": "search",
+                "args": {
+                  "query": "RectorSeal Metacaulk 1000 technical data sheet specification",
+                  "include_domains": [
+                    "rectorseal.com"
+                  ]
+                },
+                "summary": "5 results",
+                "credits": 0,
+                "ms": 4,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 2,
+                "tool": "search",
+                "args": {
+                  "query": "Metacaulk 1000 spec sheet pdf rectorseal",
+                  "include_domains": [
+                    "rectorseal.com"
+                  ]
+                },
+                "summary": "5 results",
+                "credits": 0,
+                "ms": 3,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 3,
+                "tool": "extract",
+                "args": {
+                  "url": "https://rectorseal.com/metacaulk-1000-group"
+                },
+                "summary": "1 extracted source",
+                "credits": 0,
+                "ms": 4,
+                "succeeded": true,
+                "source_urls": [
+                  "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-Spanish.pdf"
+                ]
+              },
+              {
+                "n": 4,
+                "tool": "extract",
+                "args": {
+                  "url": "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-English.pdf"
+                },
+                "summary": "1 extracted source",
+                "credits": 0,
+                "ms": 4,
+                "succeeded": true,
+                "source_urls": [
+                  "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-English.pdf"
+                ]
+              },
+              {
+                "n": 5,
+                "tool": "search",
+                "args": {
+                  "query": "Metacaulk 1000 discontinued RectorSeal",
+                  "include_domains": [
+                    "rectorseal.com"
+                  ]
+                },
+                "summary": "2 results",
+                "credits": 0,
+                "ms": 3,
+                "succeeded": true,
+                "source_urls": []
+              },
+              {
+                "n": 6,
+                "tool": "finish",
+                "args": {
+                  "found": true,
+                  "document_url": "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-English.pdf",
+                  "document_title": "Metacaulk® 1000 Spec Sheet",
+                  "status": "active",
+                  "note": "Found the manufacturer's spec sheet for Metacaulk® 1000 via RectorSeal's official document repository. While the exact revision number/date was not clearly visible in the extracted text preview, the document confirms the product specifications and classifications. No discontinuation notices were found in searches, and the product continues to be featured in current RectorSeal firestopping solutions pages, indicating it remains active."
+                },
+                "summary": "couldn't confirm the quotes",
+                "credits": 0,
+                "ms": 35,
+                "succeeded": false,
+                "source_urls": []
+              }
+            ],
+            "outcome": "not_found",
+            "purpose": "primary",
+            "resolution": "not_resolved",
+            "scripted": null
+          },
+          "investigations": [
+            {
+              "steps": [
+                {
+                  "n": 1,
+                  "tool": "search",
+                  "args": {
+                    "query": "RectorSeal Metacaulk 1000 technical data sheet specification",
+                    "include_domains": [
+                      "rectorseal.com"
+                    ]
+                  },
+                  "summary": "5 results",
+                  "credits": 0,
+                  "ms": 4,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 2,
+                  "tool": "search",
+                  "args": {
+                    "query": "Metacaulk 1000 spec sheet pdf rectorseal",
+                    "include_domains": [
+                      "rectorseal.com"
+                    ]
+                  },
+                  "summary": "5 results",
+                  "credits": 0,
+                  "ms": 3,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 3,
+                  "tool": "extract",
+                  "args": {
+                    "url": "https://rectorseal.com/metacaulk-1000-group"
+                  },
+                  "summary": "1 extracted source",
+                  "credits": 0,
+                  "ms": 4,
+                  "succeeded": true,
+                  "source_urls": [
+                    "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-Spanish.pdf"
+                  ]
+                },
+                {
+                  "n": 4,
+                  "tool": "extract",
+                  "args": {
+                    "url": "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-English.pdf"
+                  },
+                  "summary": "1 extracted source",
+                  "credits": 0,
+                  "ms": 4,
+                  "succeeded": true,
+                  "source_urls": [
+                    "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-English.pdf"
+                  ]
+                },
+                {
+                  "n": 5,
+                  "tool": "search",
+                  "args": {
+                    "query": "Metacaulk 1000 discontinued RectorSeal",
+                    "include_domains": [
+                      "rectorseal.com"
+                    ]
+                  },
+                  "summary": "2 results",
+                  "credits": 0,
+                  "ms": 3,
+                  "succeeded": true,
+                  "source_urls": []
+                },
+                {
+                  "n": 6,
+                  "tool": "finish",
+                  "args": {
+                    "found": true,
+                    "document_url": "https://rectorseal.bynder.com/asset/fdf9cd4a-d2f0-43e7-bc37-c762541ecd13/Spec-Sheet-English.pdf",
+                    "document_title": "Metacaulk® 1000 Spec Sheet",
+                    "status": "active",
+                    "note": "Found the manufacturer's spec sheet for Metacaulk® 1000 via RectorSeal's official document repository. While the exact revision number/date was not clearly visible in the extracted text preview, the document confirms the product specifications and classifications. No discontinuation notices were found in searches, and the product continues to be featured in current RectorSeal firestopping solutions pages, indicating it remains active."
+                  },
+                  "summary": "couldn't confirm the quotes",
+                  "credits": 0,
+                  "ms": 35,
+                  "succeeded": false,
+                  "source_urls": []
+                }
+              ],
+              "outcome": "not_found",
+              "purpose": "primary",
+              "resolution": "not_resolved",
+              "scripted": {
+                "status": "unknown",
+                "replacement": null,
+                "current_revision": null,
+                "status_date": null,
+                "status_quote": null,
+                "status_family": null,
+                "current_values": [
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "< 10",
+                    "unit": "g/L",
+                    "quote": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)",
+                    "source_url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+                    "model": "Metacaulk® 1000",
+                    "identity_quote": "Product Name Metacaulk™ 1000 Intumescent Firestop Sealant",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "Volatile Organic Compounds (VOC) Content (theoretical percentage by weight): < 1% or (< 10 g/L)",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "< 10",
+                    "unit": "g/L",
+                    "quote": "VOC < 10 g/L",
+                    "source_url": "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf",
+                    "model": "Metacaulk® 1000",
+                    "identity_quote": "METACAULK™ 1000 Highly Intumescent Firestop Sealant P R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "VOC < 10 g/L ASTM E 84, UL 723 Tunnel Test Flame Spread 0 Smoke Index 0",
+                    "selection_quote": null
+                  },
+                  {
+                    "property": "voc_g_per_l",
+                    "value": "< 10",
+                    "unit": "g/L",
+                    "quote": "VOC\n< 10 g/L",
+                    "source_url": "https://rectorseal.bynder.com/asset/57ee3073-e728-44a4-992a-66a819a17d68/Spec-Sheet-English.pdf",
+                    "model": "Metacaulk® 1000",
+                    "identity_quote": "METACAULK® 1000\nHighly Intumescent Firestop Sealant\nP R O D U C T D A T A S H E E T",
+                    "variant": null,
+                    "scope": "product_wide",
+                    "scope_quote": "VOC\n< 10 g/L\nASTM E 84, UL 723 Tunnel Test\nFlame Spread\n0\nSmoke Index \n0",
+                    "selection_quote": null
+                  }
+                ],
+                "source_urls": [
+                  "https://www.buildsite.com/pdf/rectorseal/Metacaulk-1000-Firestopping-Sealant-Product-Data-2091122.pdf"
+                ],
+                "notes": null
+              }
+            }
+          ],
+          "mode": "live",
+          "replayed_from": null,
+          "warnings": [],
+          "diagnostics": [],
+          "validity": "valid",
+          "config_hash": "d22951a4bee40580dd82a1211b24a96ca0bb705ee8f45a313830da12caa32bf5",
+          "fresh_model_cost_usd": 0,
+          "fresh_web_credits": 0,
+          "queue_ms": 20,
+          "ocr_pages": 0,
+          "archived_submittals": [],
+          "evidence_label": null,
+          "claims_extracted": 20,
+          "claims_kept": 2,
+          "web_values_read": 3,
+          "web_values_kept": 3
+        }
+      ],
+      "events": [
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 15,
+          "stage": "queued",
+          "message": "Waiting",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 20,
+          "stage": "ingest",
+          "message": "Reading the pages",
+          "model": null,
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 35,
+          "stage": "triage",
+          "message": "Sorting pages",
+          "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 40,
+          "stage": "extract",
+          "message": "Comparing to the spec",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 74,
+          "stage": "spec_check",
+          "message": "Checked against 07 84 00: 1 of 4 rules matched",
+          "model": "code",
+          "data": {
+            "section": "07 84 00",
+            "title": "Firestopping",
+            "rules": 4,
+            "matched": 1,
+            "product_type": null,
+            "other_product_type_rules": 0,
+            "checklist_id": null
+          }
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 77,
+          "stage": "verify",
+          "message": "Checking the manufacturer online",
+          "model": "tavily + nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "spec": {
+              "pass": 1,
+              "fail": 0,
+              "unverified": 2
+            }
+          }
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 155,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 162,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 168,
+          "stage": "investigate",
+          "message": "Investigating: extract …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 175,
+          "stage": "investigate",
+          "message": "Investigating: extract …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 182,
+          "stage": "investigate",
+          "message": "Investigating: search …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 188,
+          "stage": "investigate",
+          "message": "Investigating: finish …",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": null
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 223,
+          "stage": "report",
+          "message": "Writing the result",
+          "model": "nvidia/nemotron-3-super-120b-a12b",
+          "data": {
+            "web": {
+              "sheet": "Compared values match current sources",
+              "verdict": "pass",
+              "sources": [
+                {
+                  "url": "https://www.siglers.com/mwdownloads/download/link/id/7282",
+                  "tier": "distributor"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "run_id": "20261028-074607-f8468e",
+          "case_id": "u-b0042c9b",
+          "t_ms": 242,
+          "stage": "done",
+          "message": "approve_with_note",
+          "model": null,
+          "data": {
+            "decision": "approve_with_note",
+            "summary": "Approve with notes: confirm the items below. Assembly proof remains pending.",
+            "usage": [
+              {
+                "task": "triage",
+                "tier": "triage",
+                "model": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+                "input_tokens": 1913,
+                "output_tokens": 67,
+                "cost_usd": 0.00013086,
+                "latency_ms": 1322,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4667,
+                "output_tokens": 2915,
+                "cost_usd": 0.0040236,
+                "latency_ms": 12760,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "extract_claims",
+                "tier": "extract",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 435,
+                "output_tokens": 7,
+                "cost_usd": 0.0001368,
+                "latency_ms": 1018,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3389,
+                "output_tokens": 188,
+                "cost_usd": 0.0011859,
+                "latency_ms": 1994,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4074,
+                "output_tokens": 285,
+                "cost_usd": 0.0014787,
+                "latency_ms": 5795,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "verify",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 4345,
+                "output_tokens": 222,
+                "cost_usd": 0.0015033,
+                "latency_ms": 4187,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 1567,
+                "output_tokens": 100,
+                "cost_usd": 0.0005601,
+                "latency_ms": 835,
+                "cached": true,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 3890,
+                "output_tokens": 93,
+                "cost_usd": 0.0012507,
+                "latency_ms": 1554,
+                "cached": true,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 5928,
+                "output_tokens": 53,
+                "cost_usd": 0.0018261,
+                "latency_ms": 2633,
+                "cached": true,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 7532,
+                "output_tokens": 84,
+                "cost_usd": 0.0023352,
+                "latency_ms": 3524,
+                "cached": true,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 10000,
+                "output_tokens": 189,
+                "cost_usd": 0.0031701,
+                "latency_ms": 3875,
+                "cached": true,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "investigate",
+                "tier": "verify",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 10435,
+                "output_tokens": 398,
+                "cost_usd": 0.0034887,
+                "latency_ms": 21446,
+                "cached": true,
+                "format": "tools",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": "tool_calls"
+              },
+              {
+                "task": "report",
+                "tier": "write",
+                "model": "nvidia/nemotron-3-super-120b-a12b",
+                "input_tokens": 629,
+                "output_tokens": 240,
+                "cost_usd": 0.0004047,
+                "latency_ms": 3339,
+                "cached": true,
+                "format": "json_schema",
+                "reasoning_tokens": 0,
+                "thinking": "off",
+                "finish_reason": null
+              }
+            ],
+            "web_credits": 0
+          }
+        },
+        {}
+      ]
+    }
+  ],
+  "before": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.3360735,
+      "credits": 178,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.13210238,
+      "total_credits": 313,
+      "phase": "engineering",
+      "phase_usd": 1.13210238,
+      "phase_credits": 313,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.6639265,
+      "credits_left": 422
+    },
+    "recorded": "20261028-065522-3dd974",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 619.4,
+    "disk_free_gb": 9.94
+  },
+  "inputs": [
+    {
+      "id": "u-b0042c9b",
+      "filename": "rectorseal-metacaulk.pdf",
+      "spec": "07 84 00",
+      "input": 0
+    }
+  ],
+  "passed": true,
+  "after": {
+    "mode": "live",
+    "keys": {
+      "NEBIUS_API_KEY": true,
+      "TAVILY_API_KEY": true,
+      "ADMIN_TOKEN": true
+    },
+    "models": {
+      "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+      "extract": "nvidia/nemotron-3-super-120b-a12b",
+      "verify": "nvidia/nemotron-3-super-120b-a12b",
+      "write": "nvidia/nemotron-3-super-120b-a12b",
+      "draft": "nvidia/nemotron-3-super-120b-a12b"
+    },
+    "today": {
+      "day": "2026-10-28",
+      "usd": 0.3360735,
+      "credits": 178,
+      "held_usd": 0,
+      "held_credits": 0,
+      "total_usd": 1.13210238,
+      "total_credits": 313,
+      "phase": "engineering",
+      "phase_usd": 1.13210238,
+      "phase_credits": 313,
+      "usd_limit": 75,
+      "credit_limit": 6000,
+      "phase_usd_limit": 75,
+      "phase_credit_limit": 6000,
+      "blocked": false
+    },
+    "budget": {
+      "usd_left": 7.6639265,
+      "credits_left": 422
+    },
+    "recorded": "20261028-065522-3dd974",
+    "caps": {
+      "budget_usd_per_run": 3,
+      "budget_usd_per_day": 8,
+      "budget_tavily_credits_per_item": 60,
+      "budget_tavily_credits_per_day": 600,
+      "max_concurrency": 2
+    },
+    "scan_shared_item_budget": true,
+    "uptime_s": 625.7,
+    "disk_free_gb": 9.94
+  },
+  "cost": {
+    "usd": 0,
+    "credits": 0
+  }
+}

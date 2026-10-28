@@ -1,0 +1,47 @@
+{
+  "mode": "live",
+  "keys": {
+    "NEBIUS_API_KEY": true,
+    "TAVILY_API_KEY": true,
+    "ADMIN_TOKEN": true
+  },
+  "models": {
+    "triage": "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",
+    "extract": "nvidia/nemotron-3-super-120b-a12b",
+    "verify": "nvidia/nemotron-3-super-120b-a12b",
+    "write": "nvidia/nemotron-3-super-120b-a12b",
+    "draft": "nvidia/nemotron-3-super-120b-a12b"
+  },
+  "today": {
+    "day": "2026-10-28",
+    "usd": 0.3637176,
+    "credits": 189,
+    "held_usd": 0.0,
+    "held_credits": 0,
+    "total_usd": 1.15974648,
+    "total_credits": 324,
+    "phase": "engineering",
+    "phase_usd": 1.15974648,
+    "phase_credits": 324,
+    "usd_limit": 75.0,
+    "credit_limit": 6000,
+    "phase_usd_limit": 75.0,
+    "phase_credit_limit": 6000,
+    "blocked": false
+  },
+  "budget": {
+    "usd_left": 7.6362824,
+    "credits_left": 411.0
+  },
+  "recorded": "20261028-065522-3dd974",
+  "caps": {
+    "budget_usd_per_run": 3.0,
+    "budget_usd_per_day": 8.0,
+    "budget_tavily_credits_per_item": 60.0,
+    "budget_tavily_credits_per_day": 600.0,
+    "max_concurrency": 2
+  },
+  "scan_shared_item_budget": true,
+  "uptime_s": 1322.0,
+  "disk_free_gb": 9.94
+}

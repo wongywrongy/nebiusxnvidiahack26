@@ -1,0 +1,20 @@
+{
+  "continuation_model_usd": "0.69773058",
+  "continuation_tavily_credits": 70,
+  "local_recording_model_usd": "0.59806296",
+  "local_recording_credits": 46,
+  "wrong_spec_model_usd": "0",
+  "wrong_spec_credits": 0,
+  "github_job_model_usd": "0.06667272",
+  "github_job_credits": 13,
+  "hosted_verification_model_usd": "0.03299490",
+  "hosted_verification_credits": 11,
+  "judging_model_usd_remaining": 73.84025352,
+  "judging_credits_remaining": 5676,
+  "cloud_and_ci_billing_measured": false,
+  "future_daily_fallback_ceiling": {
+    "model_usd": 0.5,
+    "tavily_credits": 40,
+    "until": "2026-12-15T20:00:00Z"
+  }
+}

@@ -12,6 +12,6 @@
   "package_api_checked": true,
   "native_pdf_png_checked": true,
   "memo_route_checked": true,
-  "published": false,
-  "deployed": false
+  "published": true,
+  "deployed": true
 }
