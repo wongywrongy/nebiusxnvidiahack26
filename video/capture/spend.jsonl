@@ -1,0 +1,48 @@
+{"seg":"seg1","attempt":1,"at":"2026-10-27T23:12:12.007Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg2","attempt":1,"at":"2026-10-27T23:13:01.875Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg3","attempt":1,"at":"2026-10-27T23:14:12.991Z","usd":0.026205,"credits":2,"result":"ok"}
+{"seg":"seg4","attempt":1,"at":"2026-10-27T23:17:04.989Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg7","attempt":1,"at":"2026-10-27T23:17:24.794Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg4","attempt":1,"at":"2026-10-27T23:18:35.374Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg7","attempt":1,"at":"2026-10-27T23:18:53.796Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg5","attempt":1,"at":"2026-10-27T23:23:27.876Z","usd":0.086838,"credits":42,"result":"ok"}
+{"seg":"seg6","attempt":1,"at":"2026-10-27T23:34:40.271Z","usd":0,"credits":0,"result":"Error: response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."}
+{"seg":"seg6","attempt":2,"at":"2026-10-27T23:35:03.305Z","usd":0,"credits":0,"result":"Error: response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."}
+{"seg":"seg6","attempt":3,"at":"2026-10-27T23:35:26.386Z","usd":0,"credits":0,"result":"Error: response.json: Protocol error (Network.getResponseBody): Request content was evicted from inspector cache\nResponse body is not available for a response that was navigated away from. Read response.body() before triggering any navigation."}
+{"seg":"seg6","attempt":1,"at":"2026-10-27T23:40:29.513Z","usd":0.009475,"credits":0,"result":"ok"}
+{"seg":"seg1","attempt":1,"at":"2026-10-28T00:30:00.193Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg2","attempt":1,"at":"2026-10-28T00:30:24.250Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg7","attempt":1,"at":"2026-10-28T00:30:44.684Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg3","attempt":1,"at":"2026-10-28T00:33:15.597Z","usd":0.04819,"credits":11,"result":"ok"}
+{"seg":"seg3","attempt":1,"at":"2026-10-28T00:34:46.396Z","usd":0.02149,"credits":0,"result":"ok"}
+{"seg":"seg4","attempt":1,"at":"2026-10-28T00:35:26.380Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"outcome","attempt":1,"at":"2026-10-28T00:38:23.514Z","usd":0.053035,"credits":38,"result":"ok"}
+{"seg":"seg6","attempt":1,"at":"2026-10-28T00:42:26.450Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"seg3","attempt":1,"at":"2026-10-28T01:02:16.834Z","usd":0.01095,"credits":1,"result":"ok"}
+{"seg":"seg4","attempt":1,"at":"2026-10-28T01:03:02.991Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"outcome","attempt":1,"at":"2026-10-28T01:04:26.920Z","usd":0.011368,"credits":39,"result":"ok"}
+{"shots":"ca","at":"2026-10-28T02:15:59.931Z","usd":0.077388,"credits":41}
+{"shots":"b","at":"2026-10-28T02:31:17.018Z","usd":0,"credits":0}
+{"seg":"c1","attempt":1,"at":"2026-10-28T03:35:57.173Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"c2","attempt":1,"at":"2026-10-28T03:37:47.499Z","usd":0.049971,"credits":10,"result":"ok"}
+{"seg":"c3","attempt":1,"at":"2026-10-28T03:38:09.191Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"c4","attempt":1,"at":"2026-10-28T03:40:39.207Z","usd":0.031685,"credits":33,"result":"ok"}
+{"seg":"c5","attempt":1,"at":"2026-10-28T03:41:11.112Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"c6","attempt":1,"at":"2026-10-28T03:54:38.742Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"c7","attempt":1,"at":"2026-10-28T04:13:18.532Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"c5","attempt":1,"at":"2026-10-28T04:18:29.124Z","usd":-0.133861,"credits":0,"result":"ok"}
+{"seg":"k2","attempt":1,"at":"2026-10-28T21:06:46.683Z","usd":0,"credits":0,"result":"Error: mark complete: element has no box"}
+{"seg":"k2","attempt":2,"at":"2026-10-28T21:07:13.224Z","usd":0,"credits":0,"result":"Error: mark complete: element has no box"}
+{"seg":"k2","attempt":1,"at":"2026-10-28T21:08:02.372Z","usd":0,"credits":0,"result":"Error: mark complete: element has no box"}
+{"seg":"k2","attempt":2,"at":"2026-10-28T21:08:29.126Z","usd":0,"credits":0,"result":"Error: mark complete: element has no box"}
+{"seg":"k2","attempt":1,"at":"2026-10-28T21:09:28.771Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"k3","attempt":1,"at":"2026-10-28T21:09:54.354Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"k6","attempt":1,"at":"2026-10-28T21:10:14.204Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"k7","attempt":1,"at":"2026-10-28T21:10:30.265Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"k1","attempt":1,"at":"2026-10-28T21:12:51.609Z","usd":0.113601,"credits":2,"result":"TimeoutError: page.waitForFunction: Timeout 120000ms exceeded."}
+{"seg":"k1","attempt":1,"at":"2026-10-28T21:13:31.917Z","usd":0.07662,"credits":1,"result":"ok"}
+{"seg":"k4","attempt":1,"at":"2026-10-28T21:18:55.091Z","usd":-0.007208,"credits":40,"result":"ok"}
+{"seg":"k5","attempt":1,"at":"2026-10-28T21:22:22.272Z","usd":0.040365,"credits":4,"result":"TimeoutError: locator.evaluate: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('aside details summary').filter({ hasText: 'rules for other product types' }).first()\u001b[22m\n"}
+{"seg":"k5","attempt":1,"at":"2026-10-28T21:25:17.319Z","usd":0.018449,"credits":0,"result":"ok"}
+{"seg":"k5","attempt":1,"at":"2026-10-29T02:27:14.193Z","usd":0,"credits":0,"result":"ok"}
+{"seg":"k5","attempt":1,"at":"2026-10-29T02:28:34.072Z","usd":0,"credits":0,"result":"ok"}

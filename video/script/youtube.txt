@@ -1,0 +1,8 @@
+Title: SpecCheck: construction submittals checked against the spec and the live web (Nemotron on Nebius Token Factory)
+
+Description:
+SpecCheck checks construction submittals against the project spec and the manufacturer's live website, then says what to send instead: Nemotron 3 Nano and Super on Nebius Token Factory read and quote, Tavily fetches current manufacturer documents, and plain code makes every decision. Try it at https://speccheck-wongywrongys-projects.vercel.app and read the code at https://github.com/wongywrongy/nebiusxnvidiahack26.
+
+Nebius × NVIDIA Global AI Hackathon · Best Apps and Agents
+
+Tags: SpecCheck, construction, submittals, AEC, NVIDIA Nemotron, Nemotron 3 Super, Nemotron 3 Nano, Nebius, Nebius Token Factory, Tavily, AI agents, hackathon

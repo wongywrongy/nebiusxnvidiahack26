@@ -1,0 +1,631 @@
+{
+ "run_id": "20261028-173729-554074",
+ "base_url": "https://speccheck-wongywrongys-projects.vercel.app",
+ "repo": "github.com/wongywrongy/nebiusxnvidiahack26",
+ "event": "Nebius × NVIDIA Global AI Hackathon · Best Apps and Agents",
+ "wpm": 150,
+ "line_pad_s": 0.35,
+ "caption_fix": {
+  "spec ?check": "SpecCheck",
+  "tav[a-z]+ly|tavoli|tavili|tabelite": "Tavily",
+  "nebi?ou?s|nebia's|nebias": "Nebius",
+  "nemo ?tron|nematron|nemetron": "Nemotron",
+  "nvidia": "NVIDIA"
+ },
+ "segments": [
+  {
+   "id": "seg0",
+   "scene": "S1",
+   "name": "Title",
+   "type": "title",
+   "shot": "inbox",
+   "vo": "This is SpecCheck. It checks construction submittals against the project spec and the manufacturer's live website, and tells you exactly what to send instead.",
+   "tag": [
+    [
+     "Checks",
+     "@checks"
+    ],
+    [
+     "submittals",
+     "@submittals"
+    ],
+    [
+     "against",
+     "@against"
+    ],
+    [
+     "the",
+     "@project"
+    ],
+    [
+     "spec",
+     "@spec"
+    ],
+    [
+     "and",
+     "@manufacturer's"
+    ],
+    [
+     "the",
+     "@live"
+    ],
+    [
+     "web",
+     "@website,"
+    ]
+   ],
+   "send": "@tells you",
+   "vo_offset_s": 0.3
+  },
+  {
+   "id": "seg1",
+   "scene": "S2",
+   "name": "Context",
+   "type": "context",
+   "vo": "Before a product goes into a building, the subcontractor sends its data sheets, called a submittal, and someone has to check every line against the architect's spec. Miss something and it comes back revise and resubmit, and the job loses weeks.",
+   "cues": {
+    "spec": "@Before",
+    "specLabel": "@goes",
+    "product": "@subcontractor",
+    "productLabel": "@called",
+    "arrow": "@check every",
+    "match": "@against",
+    "shrink": "@Miss",
+    "doc": "@Miss",
+    "roles": "@Miss",
+    "role1": "@something",
+    "role2": "@and it",
+    "travel": "@Miss",
+    "back": "@comes back",
+    "stamp": "@revise",
+    "weeks": "@weeks."
+   }
+  },
+  {
+   "id": "seg2",
+   "scene": "S3",
+   "name": "Scan",
+   "type": "live",
+   "vo": "So I drop in the package and press Scan. NVIDIA Nemotron 3 Nano sorts the pages. Nemotron 3 Super reads every value with its exact quote. Tavily pulls each manufacturer's current documents. Both models run on Nebius Token Factory, and code makes every decision.",
+   "vo_offset_s": 0,
+   "clips": [
+    {
+     "id": "k1",
+     "label": "Live scan",
+     "anchors": [
+      [
+       1.7,
+       0
+      ],
+      [
+       "scan_click",
+       "@@Scan."
+      ]
+     ],
+     "until": "@NVIDIA",
+     "stop": 9.12
+    },
+    {
+     "id": "k2",
+     "label": "Replay of the recorded live run",
+     "anchors": [
+      [
+       "scanning",
+       "@NVIDIA"
+      ],
+      [
+       21.9,
+       "@@decision."
+      ]
+     ],
+     "until": "end",
+     "stop": 22.0,
+     "note": "stops on 'Scan complete' with the plain results table; the matrix that replaces it at 22.2 s prints 'N not confirmed'"
+    }
+   ],
+   "nodes": [
+    {
+     "title": "Nemotron 3 Nano",
+     "note": "sorts pages",
+     "at": "@Nemotron 3 Nano"
+    },
+    {
+     "title": "Nemotron 3 Super",
+     "note": "reads and quotes",
+     "at": "@Nemotron 3 Super"
+    },
+    {
+     "title": "Tavily",
+     "note": "manufacturer's live documents",
+     "at": "@Tavily"
+    },
+    {
+     "title": "Code",
+     "note": "decides",
+     "at": "@code makes"
+    }
+   ],
+   "cues": {
+    "bracket": "@Both",
+    "label": "@Nebius"
+   }
+  },
+  {
+   "id": "seg3",
+   "scene": "S4",
+   "name": "Matrix",
+   "type": "matrix",
+   "vo": "The whole package comes back as one matrix: what meets the spec, which sheets are out of date, and what's still being made.",
+   "headline": {
+    "text": "The whole package at a glance",
+    "at": "@The whole"
+   },
+   "highlights": [
+    {
+     "shot": "matrix",
+     "box": [
+      1060,
+      318,
+      198,
+      340
+     ],
+     "at": "@what meets",
+     "out": "@which sheets"
+    },
+    {
+     "shot": "matrix",
+     "box": [
+      436,
+      417,
+      106,
+      14
+     ],
+     "at": "@which sheets",
+     "out": "end",
+     "note": "ink bounds of the 'Sheet out of date' line; the Product data chip above ends at y 410"
+    }
+   ],
+   "label": "Replay of the recorded live run",
+   "crops": [
+    {
+     "shot": "matrix",
+     "crop": [
+      184,
+      272,
+      436,
+      396
+     ]
+    },
+    {
+     "shot": "matrix",
+     "crop": [
+      818,
+      272,
+      438,
+      396
+     ]
+    }
+   ],
+   "note": "Two crops of the same matrix rows: the Spec rules column between them prints 'N not confirmed' counts"
+  },
+  {
+   "id": "seg4",
+   "scene": "S5",
+   "name": "Catch 1 (c02)",
+   "type": "catch",
+   "n": 1,
+   "vo": "This firestop system has a two-hour fire rating but a zero-hour temperature rating. The spec needs them to match, so SpecCheck says exactly what to send: a listed system rated two hours for both.",
+   "vo_offset_s": 0,
+   "headline": {
+    "text": "Doesn't meet spec",
+    "at": "@This firestop"
+   },
+   "detail": {
+    "text": "T 0 hr, but the spec needs T = F (2 hr)",
+    "at": "@zero-hour"
+   },
+   "page": {
+    "shot": "review-c02",
+    "crop": [
+     176,
+     8,
+     624,
+     832
+    ]
+   },
+   "insets": [
+    {
+     "shot": "review-c02",
+     "box": "group",
+     "at": "@zero-hour",
+     "out": "end",
+     "slot": 0
+    },
+    {
+     "shot": "review-c02",
+     "box": "send",
+     "at": "@exactly what",
+     "out": "end",
+     "slot": 1
+    }
+   ],
+   "label": "Replay of the recorded live run",
+   "note": "no box of ours on the page: the app's own quote marks sit flush against the line above, so a box with 8 px padding would cross that text; the insets carry the finding"
+  },
+  {
+   "id": "seg5",
+   "scene": "S6",
+   "name": "Catch 2 (c03)",
+   "type": "catch",
+   "n": 2,
+   "vo": "This sealant sheet is from 2005. The manufacturer's current sheet raised the service temperature from 120 to 180 degrees. What to send: the current data sheet.",
+   "vo_offset_s": 0,
+   "headline": {
+    "text": "Outdated data sheet",
+    "at": "@This sealant"
+   },
+   "detail": {
+    "text": "2005 sheet: 120 °F · current sheet: 180 °F",
+    "at": "@raised"
+   },
+   "page": {
+    "shot": "review-c03",
+    "crop": [
+     176,
+     12,
+     624,
+     830
+    ]
+   },
+   "insets": [
+    {
+     "shot": "review-c03",
+     "box": "group",
+     "at": "@raised",
+     "out": "end",
+     "slot": 0
+    },
+    {
+     "shot": "review-c03-send",
+     "box": "send",
+     "at": "@What to send",
+     "out": "end",
+     "slot": 1
+    }
+   ],
+   "label": "Replay of the recorded live run",
+   "note": "no box of ours on the page: the app's own quote marks sit flush against the line above, so a box with 8 px padding would cross that text; the insets carry the finding"
+  },
+  {
+   "id": "seg6",
+   "scene": "S7",
+   "name": "Catch 3 (c07)",
+   "type": "catch",
+   "n": 3,
+   "vo": "This light fixture was approved in March 2024. One click re-checks it against the manufacturer's site. It was discontinued that June, and their notice is quoted right here. What to send: a current product that meets the spec.",
+   "vo_offset_s": 0,
+   "lead": {
+    "id": "k4",
+    "label": "Live re-check",
+    "crop": [
+     176,
+     86,
+     1088,
+     96
+    ],
+    "anchors": [
+     [
+      1.6,
+      0
+     ],
+     [
+      "check_click",
+      48
+     ],
+     [
+      258.2,
+      118
+     ]
+    ],
+    "until": 120,
+    "stop": 258.2
+   },
+   "headline": {
+    "text": "Discontinued",
+    "at": "@This light"
+   },
+   "detail": {
+    "text": "Approved Mar 12, 2024 · discontinued Jun 30, 2024",
+    "at": "@It was"
+   },
+   "page": {
+    "shot": "outcome-c07",
+    "crop": [
+     184,
+     388,
+     1072,
+     302
+    ],
+    "wide": true
+   },
+   "insets": [
+    {
+     "shot": "memo-c07",
+     "box": "label+line",
+     "at": "@What to send",
+     "out": "end",
+     "slot": 2,
+     "caption": "Package memo · replay of the recorded live run"
+    }
+   ],
+   "highlights": [
+    {
+     "shot": "outcome-c07",
+     "box": "dates",
+     "at": "@discontinued",
+     "out": "end"
+    },
+    {
+     "shot": "outcome-c07",
+     "box": "quote",
+     "at": "@their notice",
+     "out": "end"
+    }
+   ],
+   "label": "Live re-check"
+  },
+  {
+   "id": "seg7",
+   "scene": "S8",
+   "name": "Any spec",
+   "type": "catch",
+   "vo": "It works on any spec. Here's a door hardware section it's never seen. Nemotron Super drafts the rules, I trim them, and a lockset is checked against them, with rules for other hardware set aside.",
+   "vo_offset_s": 0,
+   "lead": {
+    "id": "k5",
+    "label": "Live",
+    "anchors": [
+     [
+      1.2,
+      0
+     ],
+     [
+      "upload",
+      "@Here's"
+     ],
+     [
+      "drafted",
+      "@Nemotron Super"
+     ],
+     [
+      "first_row",
+      "@drafts"
+     ],
+     [
+      "delete",
+      "@trim"
+     ],
+     [
+      "uploaded",
+      "@and a lockset"
+     ],
+     [
+      "scan_ready",
+      "@checked"
+     ]
+    ],
+    "until": "@against them,",
+    "stop": 18.2
+   },
+   "headline": {
+    "text": "Any spec",
+    "at": "@It works"
+   },
+   "page": {
+    "shot": "schlage",
+    "crop": "pdf"
+   },
+   "insets": [
+    {
+     "shot": "schlage",
+     "box": "model",
+     "at": "@checked",
+     "out": "end",
+     "slot": 0
+    },
+    {
+     "shot": "schlage",
+     "box": "datasheet",
+     "at": "@against them,",
+     "out": "end",
+     "slot": 0
+    },
+    {
+     "shot": "schlage",
+     "box": "other",
+     "at": "@set aside.",
+     "out": "end",
+     "slot": 0
+    }
+   ],
+   "highlights": [
+    {
+     "clip": "k5",
+     "mark": "first_row",
+     "within": "table",
+     "from": "first_row",
+     "to": 6.68,
+     "note": "the table jumps down at 6.70 s (frame differencing), so the box is gone before it",
+     "at": "@drafts"
+    },
+    {
+     "clip": "k5",
+     "mark": "delete_row",
+     "within": "table_at_delete",
+     "from": 6.75,
+     "to": 8.22,
+     "note": "the last rule, from when the table settles until the script click removes it at 8.23 s"
+    },
+    {
+     "clip": "k5",
+     "box": [
+      201,
+      229,
+      1019,
+      79
+     ],
+     "from": "uploaded",
+     "to": "until",
+     "note": "the uploaded schlage-nd.pdf row with its Check against picker: ink bounds measured on the clip frame at 16.8 s, inside the row's rules at y 213 and 319"
+    }
+   ],
+   "label": "Live"
+  },
+  {
+   "id": "seg8",
+   "scene": "S9",
+   "name": "Under the hood",
+   "type": "gate",
+   "shot": "review-c02-hi",
+   "box": "mark",
+   "vo": "Under the hood, every value has to be quoted from the page it came from, and code compares it to the spec. Anything unproven goes to a person, never faked.",
+   "cues": {
+    "head": "@Under",
+    "claim": "@every value",
+    "page": "@quoted",
+    "value": "@page it",
+    "compare": "@code compares",
+    "verdict": "@spec.",
+    "unproven": "@Anything"
+   },
+   "pad_s": 0.3
+  },
+  {
+   "id": "seg9",
+   "scene": "S9",
+   "name": "Under the hood (trace)",
+   "type": "trace",
+   "shot": "trace",
+   "vo": "And every call is traced: which model, how many tokens, what it cost.",
+   "cues": {
+    "rows": "@every call"
+   },
+   "label": "Replay of the recorded live run"
+  },
+  {
+   "id": "seg10",
+   "scene": "S10",
+   "name": "How it runs",
+   "type": "arch",
+   "vo": "It's live, served through Vercel from a Nebius Serverless Endpoint with persistent storage. Spend is reserved before every call, and approved products are re-checked every day.",
+   "boxes": [
+    {
+     "title": "Vercel",
+     "note": "public URL",
+     "at": "@It's live"
+    },
+    {
+     "title": "Nebius Serverless Endpoint",
+     "note": "runs the app",
+     "at": "@Nebius"
+    },
+    {
+     "title": "Nebius Token Factory",
+     "note": "Nemotron 3 Nano + Super",
+     "at": "@with persistent"
+    },
+    {
+     "title": "Tavily",
+     "note": "manufacturer documents",
+     "at": "@Spend"
+    },
+    {
+     "title": "GitHub Actions",
+     "note": "daily re-check",
+     "at": "@approved"
+    }
+   ]
+  },
+  {
+   "id": "seg11",
+   "scene": "S11",
+   "name": "Memo",
+   "type": "memo",
+   "vo": "The reviewer gets one printable memo for the whole package.",
+   "vo_offset_s": 0,
+   "chip": {
+    "text": "Print view",
+    "at": "@printable"
+   },
+   "label": "Replay of the recorded live run",
+   "pages": [
+    {
+     "shot": "memo-top",
+     "crop": [
+      312,
+      0,
+      816,
+      766
+     ],
+     "at": 0
+    },
+    {
+     "doc": "memo-print-p1",
+     "at": "@printable"
+    }
+   ]
+  },
+  {
+   "id": "seg12",
+   "scene": "S11",
+   "name": "Result",
+   "type": "results",
+   "vo": "On our test cases, SpecCheck caught {caught.n} of {caught.of} planted problems.",
+   "number": {
+    "n": "{caught.n}",
+    "of": "{caught.of}",
+    "at": "@caught"
+   }
+  },
+  {
+   "id": "seg13",
+   "scene": "S12",
+   "name": "Close",
+   "type": "close",
+   "vo": "Models read and quote. Code decides. Try SpecCheck at the link below.",
+   "words": [
+    [
+     "Models",
+     "@Models"
+    ],
+    [
+     "read",
+     "@read"
+    ],
+    [
+     "and",
+     "@and"
+    ],
+    [
+     "quote.",
+     "@quote."
+    ]
+   ],
+   "words2": [
+    [
+     "Code",
+     "@Code"
+    ],
+    [
+     "decides.",
+     "@decides."
+    ]
+   ],
+   "cues": {
+    "end": "@Try",
+    "event": "@link"
+   },
+   "pad_s": 2.0
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+node_modules/
+.venv/
+out/
+audio/
+capture/frames/
+capture/clips/
+capture/state/
+capture/*-failure-*.png
+capture/data/
+capture/*.log
+capture/gate.*.json
+shots/
+tools/*.log
+node_modules
+.venv
