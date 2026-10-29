@@ -1,6 +1,6 @@
-# Accuracy fixes for Claude's morning review
+# Accuracy fixes for the morning review
 
-Extraction commit: `03d61eb`, followed by the draft-feedback/configuration and evidence commit on branch `fix/review-accuracy`, based on released master `5385a08`. [Draft PR #20](https://github.com/wongywrongy/nebiusxnvidiahack26/pull/20) is for Claude's morning review. This branch is **not merged or deployed**. Production remains frozen at runtime `14ddb6d`; the video worktree is untouched.
+Extraction commit: `03d61eb`, followed by the draft-feedback/configuration and evidence commit on branch `fix/review-accuracy`, based on released master `5385a08`. [Draft PR #20](https://github.com/wongywrongy/nebiusxnvidiahack26/pull/20) is for the morning review. This branch is **not merged or deployed**. Production remains frozen at runtime `14ddb6d`; the video worktree is untouched.
 
 ## Confirmed fixes
 

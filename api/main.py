@@ -146,7 +146,7 @@ def _live_needs_admin(request: Request) -> None:
         raise HTTPException(403, "Live runs need the admin token (X-Admin-Token header). The public demo plays recorded runs.")
 
 
-# ponytail: in-memory per process and keyed on the socket address; behind a proxy read X-Forwarded-For from it.
+# In-memory per process and keyed on the socket address; behind a proxy read X-Forwarded-For from it.
 _uploads_by_ip: dict[str, deque] = defaultdict(deque)
 
 

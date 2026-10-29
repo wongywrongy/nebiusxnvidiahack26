@@ -78,7 +78,7 @@ def _norm(s: str) -> str:
 
 
 def _boxes(page, rects) -> list[Box]:
-    # ponytail: assumes unrotated pages; rotated scans need page.rotation_matrix applied to rects
+    # Assumes unrotated pages; rotated scans need page.rotation_matrix applied to rects
     w, h = page.rect.width, page.rect.height
     return [{"x0": round(r[0] / w, 4), "y0": round(r[1] / h, 4), "x1": round(r[2] / w, 4), "y1": round(r[3] / h, 4)} for r in rects]
 

@@ -107,7 +107,7 @@ def unavailable_reason() -> str:
 
 
 def _add_today(usd: float = 0.0, credits: float = 0.0) -> None:
-    # ponytail: read-modify-write with no lock, fine for one worker; use a DB row if we run several.
+    # Read-modify-write with no lock, fine for one worker; use a DB row if we run several.
     p = _day_file()
     t = json.loads(p.read_text()) if p.exists() else {"usd": 0.0, "credits": 0.0}
     t = {"usd": round(t["usd"] + usd, 6), "credits": t["credits"] + credits}

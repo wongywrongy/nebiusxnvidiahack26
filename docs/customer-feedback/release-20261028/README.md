@@ -52,7 +52,7 @@ The recorded live memo was rendered and printed from the exact release image, wi
 
 ## Earlier Package D work recovered
 
-The prior Claude session already ran all three Try-one products and the UBC/Schlage pair live in `20261028-040006-28d2af`. The source results remain on disk; `prior-package-d.json` preserves their hashes, real traces and measured charges. Two of four items triggered primary investigations (Metacaulk and TREMstop); **0 resolved, 0 capped**. The Schlage draft in that earlier test did not match after a mechanical first-30 trim. This release does not repeat that experiment or claim an Investigator rescue. The production bring-your-own journey is checked separately below. Kyle’s original manual timing sheet is preserved here; no human timing or permissioned practitioner quote has been supplied.
+An earlier session already ran all three Try-one products and the UBC/Schlage pair live in `20261028-040006-28d2af`. The source results remain on disk; `prior-package-d.json` preserves their hashes, real traces and measured charges. Two of four items triggered primary investigations (Metacaulk and TREMstop); **0 resolved, 0 capped**. The Schlage draft in that earlier test did not match after a mechanical first-30 trim. This release does not repeat that experiment or claim an Investigator rescue. The production bring-your-own journey is checked separately below. Kyle’s original manual timing sheet is preserved here; no human timing or permissioned practitioner quote has been supplied.
 
 ## Public release verification and freeze
 
